@@ -89,13 +89,6 @@
  *   JRCapture API</a> documentation.
  **/
 
-/**
- * @file
- * Main API for interacting with the Janrain Capture for iOS library
- *
- * If you wish to include third party authentication <!--and sharing--> in your iPhone or iPad
- * applications, you can use the JRCapture class to achieve this.
- **/
 
 #import <Foundation/Foundation.h>
 #import "JRCaptureObject.h"
@@ -104,76 +97,83 @@
 #import "JRCaptureError.h"
 
 /**
+ * @file
+ * Main API for interacting with the Janrain Capture for iOS library
+ *
+ * If you wish to include third party authentication <!--and sharing--> in your iPhone or iPad
+ * applications, you can use the JRCapture class to achieve this.
+ **/
+
+/**
  * You can add conventional login authentication. Blah blah blah
  * TODO
  **/
 typedef enum
 {
 /**
- * JRConventionalSigninNone - No conventional login dialog added
+ * No conventional login dialog added
  **/
  JRConventionalSigninNone = 0,
 
 /**
- * JRConventionalSigninUsernamePassword - Conventional login dialog added prompting the user for their username and
+ * Conventional login dialog added prompting the user for their username and
  * password combination. Use this if your Capture instance is set up to accept a \c username argument when signing in
- * directly to your server.
+ * directly to your server
  **/
  JRConventionalSigninUsernamePassword,
 
 /**
- * JRConventionalSigninEmailPassword - Conventional login dialog added prompting the user for their email and password
+ * Conventional login dialog added prompting the user for their email and password
  * combination. Use this if your Capture instance is set up to accept a \c email argument when signing in
-  * directly to your server.
+  * directly to your server
  **/
  JRConventionalSigninEmailPassword,
 } JRConventionalSigninType;
 
 /**
- * Sent as an argument to the captureAuthenticationDidSucceedForUser:status: delegate method.
+ * Sent as an argument to the JRCaptureSigninDelegate#captureAuthenticationDidSucceedForUser:status: delegate method.
  *
- * There are three possible values for captureRecordStatus, indicating the creation state of the record.
+ * There are three possible values for \c captureRecordStatus, indicating the creation state of the record.
  *
- * @note
- *   During Capture authentication, if authenticating through the Engage for iOS portion of the library, the library
- *   automatically posts the authentication token to the Capture server. Capture will attempt to sign the user in,
- *   using the rich data available from the social identity provider.  One of three results will occur:
- *       - Returning User — The user’s record already exists on the Capture server. The record is retrieved from the
- *         Capture server and passed back to your application.
- *       - New User, Record Created — The user’s record does not already exist on the Capture server, but it is
- *         automatically created and passed back to your application.  Your application may wish to collect additional
- *         information about the user and push that information back to the Capture server.
- *       - New User, Record Not Created* — The user’s record was not automatically created because required information
- *         that was not available in the data returned by the social identity provider. (For example, your Capture
- *         instance may require an email address, but Twitter does not provide an email address, so the record cannot
- *         be automatically created on Capture when the user signs in with Twitter.)  An incomplete user record is
- *         passed back to your application, where it is your application’s responsibility to collect the missing
- *         required data and invoke the user record creation on Capture.
- *             - Your application should present UI to collect the missing information and any additional information
- *               you wish to collect
- *             - Your application should store this information in the user record object returned by Capture
- *             - Once the information is collected, your application needs to invoke record creation on Capture
+ * During Capture authentication, if authenticating through the Engage for iOS portion of the library, the library
+ * automatically posts the authentication token to the Capture server. Capture will attempt to sign the user in,
+ * using the rich data available from the social identity provider.  One of three results will occur:
+ *     - Returning User — The user’s record already exists on the Capture server. The record is retrieved from the
+ *       Capture server and passed back to your application.
+ *     - New User, Record Created — The user’s record does not already exist on the Capture server, but it is
+ *       automatically created and passed back to your application.  Your application may wish to collect additional
+ *       information about the user and push that information back to the Capture server.
+ *     - New User, Record Not Created* — The user’s record was not automatically created because required information
+ *       that was not available in the data returned by the social identity provider. (For example, your Capture
+ *       instance may require an email address, but Twitter does not provide an email address, so the record cannot
+ *       be automatically created on Capture when the user signs in with Twitter.)  An incomplete user record is
+ *       passed back to your application, where it is your application’s responsibility to collect the missing
+ *       required data and invoke the user record creation on Capture.
+ *           - Your application should present UI to collect the missing information and any additional information
+ *             you wish to collect
+ *           - Your application should store this information in the user record object returned by Capture
+ *           - Once the information is collected, your application needs to invoke record creation on Capture
  *
  *  * If your Capture instance does not require information such as an email address, this scenario should not occur.
  **/
 typedef enum
 {
 /**
- * JRCaptureRecordExists indicates that the user had an existing Capture record and that record has been retrieved.
- * Your application should update its state to reflect the user being signed-in.
+ * Indicates that the user had an existing Capture record and that record has been retrieved.
+ * Your application should update its state to reflect the user being signed-in
  **/
  JRCaptureRecordNewlyCreated,          /* now it exists, and it is new */
 
 /**
- * JRCaptureRecordNewlyCreated indicates that this is a new user and that a new Capture record has already been
+ * Indicates that this is a new user and that a new Capture record has already been
  * automatically created. Your application may wish to collect additional new-user information and push that
- * information back to the Capture server.
+ * information back to the Capture server
  **/
  JRCaptureRecordExists,                /* already created, not new */
 
 
 /**
- * JRCaptureRecordMissingRequiredFields indicates that this is a new user but there was not enough information
+ * Indicates that this is a new user but there was not enough information
  * from the social sign-in provider to fill the required user record fields. (For example, your Capture instance
  * may require an email address, but Twitter does not provide an email address, so the record cannot be created on
  * Capture when the user signs in with Twitter.)  The partially complete user record is passed back to your application,
@@ -252,14 +252,14 @@ typedef enum
  * @code
  "auth_info":
  {
- "profile":
- {
- "displayName": "brian",
- "preferredUsername": "brian",
- "url": "http:\/\/brian.myopenid.com\/",
- "providerName": "Other",
- "identifier": "http:\/\/brian.myopenid.com\/"
- }
+   "profile":
+   {
+     "displayName": "brian",
+     "preferredUsername": "brian",
+     "url": "http://brian.myopenid.com/",
+     "providerName": "Other",
+     "identifier": "http://brian.myopenid.com/"
+   }
  }
  * @endcode
  *
@@ -432,20 +432,20 @@ typedef enum
  *   should never be stored on the device, in code or otherwise.</em>
  *
  * @param captureApidDomain
- *   The domain of your Capture APID server (e.g., @"mobile.dev.janraincapture.com")
+ *   The domain of your Capture APID server (e.g., \@"mobile.dev.janraincapture.com")
  *
  * @param captureUIDomain
- *   The domain of your Capture UI instance (e.g., @"mobile.dev.janraincapture.com"); this may be the same as the
+ *   The domain of your Capture UI instance (e.g., \@"mobile.dev.janraincapture.com"); this may be the same as the
  *   captureApidDomain
  *
  * @param clientId
  *   This is your 32-character client ID for Capture. You can find this on your Capture Dashboard
- *   on <a href="http://rpxnow.com">https://janraincapture.com/home</a>. <em>Please do not use your client secret.
+ *   on <a href="http://janraincapture.com">https://janraincapture.com/home</a>. <em>Please do not use your client secret.
  *   The client secret should never be stored on the device, in code or otherwise.</em>
  *
  * @param entityTypeName
- *   The type name of your Capture record entities (e.g., @"sample_user"). You can find this on your
- *   Capture Dashboard on <a href="http://rpxnow.com">https://janraincapture.com/home</a>.
+ *   The type name of your Capture record entities (e.g., \@"sample_user"). You can find this on your
+ *   Capture Dashboard on <a href="http://janraincapture.com">https://janraincapture.com/home</a>
  **/
 + (void)setEngageAppId:(NSString *)appId captureApidDomain:(NSString *)captureApidDomain
        captureUIDomain:(NSString *)captureUIDomain clientId:(NSString *)clientId
@@ -479,18 +479,21 @@ typedef enum
  * Use this method to begin authentication, adding the option for your users to log directly into Capture through
  * your conventional signin mechanism. By using this method to initiate signin, the library automatically adds
  * a direct login form, above the list of social providers, that allows your users to login with a username/password
- * or email/password combination. Depending on how your Capture application is configured, you pass to this method a
- * JRConventionalSigninType of either JRConventionalSigninUsernamePassword or JRConventionalSigninEmailPassword.
- * Based on this argument, the dialog will prompt your user to either enter their username or email.
+ * or email/password combination.
  *
  * @param conventionalSigninType
  *   A JRConventionalSigninType that tells the library to either prompt the user for their username/password
  *   combination or their email/password combination. This value must match what is configured for your Capture UI
  *   application. If you are unsure which one to use, try one, and if signin fails, try the other. If you pass in
- *   JRConventionalSigninNone, this method will do exactly what the startEngageSigninDialogForDelegate:() does
+ *   JRConventionalSigninNone, this method will do exactly what the startEngageSigninDialogForDelegate:() method does
  *
  * @param delegate
  *   The JRCaptureSigninDelegate object that wishes to receive messages regarding user authentication
+ *
+ * @note
+ * Depending on how your Capture application is configured, you pass to this method a
+ * JRConventionalSigninType of either JRConventionalSigninUsernamePassword or JRConventionalSigninEmailPassword.
+ * Based on this argument, the dialog will prompt your user to either enter their username or email.
  **/
 + (void)startEngageSigninDialogWithConventionalSignin:(JRConventionalSigninType)conventionalSigninType
                                           forDelegate:(id<JRCaptureSigninDelegate>)delegate;
@@ -511,14 +514,24 @@ typedef enum
 + (void)startEngageSigninDialogOnProvider:(NSString*)provider
                               forDelegate:(id<JRCaptureSigninDelegate>)delegate;
 
+/**
+ * Use this function to begin authentication. The Engage for iOS portion of the library will
+ * pop up a modal dialog and take the user through the sign-in process.
+ *
+ * @param customInterfaceOverrides
+ *   A dictionary of objects and properties, indexed by the set of
+ *   \link customInterface pre-defined custom interface keys\endlink, to be used by the library to customize the
+ *   look and feel of the user interface and/or add a native login experience
+ **/
++ (void)startEngageSigninDialogWithCustomInterfaceOverrides:(NSDictionary*)customInterfaceOverrides
+                                                forDelegate:(id<JRCaptureSigninDelegate>)delegate;
+
 #ifdef JRCAPTURE_CONVENTIONAL_SIGNIN
 /**
  * Use this method to begin authentication, adding the option for your users to log directly into Capture through
  * your conventional signin mechanism. By using this method to initiate signin, the library automatically adds
  * a direct login form, above the list of social providers, that allows your users to login with a username/password
- * or email/password combination. Depending on how your Capture application is configured, you pass to this method a
- * JRConventionalSigninType of either JRConventionalSigninUsernamePassword or JRConventionalSigninEmailPassword.
- * Based on this argument, the dialog will prompt your user to either enter their username or email.
+ * or email/password combination.
  *
  * @param conventionalSigninType
  *   A JRConventionalSigninType that tells the library to either prompt the user for their username/password
@@ -531,8 +544,9 @@ typedef enum
  *   look and feel of the user interface and/or add a native login experience
  *
  * @note
- * Any values specified in the \e customInterfaceOverrides dictionary will override the corresponding
- * values specified the dictionary passed into the setCustomInterfaceDefaults:() method.
+ * Depending on how your Capture application is configured, you pass to this method a
+ * JRConventionalSigninType of either JRConventionalSigninUsernamePassword or JRConventionalSigninEmailPassword.
+ * Based on this argument, the dialog will prompt your user to either enter their username or email.
  **/
 + (void)startEngageSigninDialogWithConventionalSignin:(JRConventionalSigninType)conventionalSigninState
                           andCustomInterfaceOverrides:(NSDictionary*)customInterfaceOverrides
@@ -543,20 +557,16 @@ typedef enum
  * Use this method to begin authentication for one specific provider. The library will
  * pop up a modal dialog, skipping the list of providers, and take the user straight to the sign-in
  * flow of the passed provider. The user will not be able to return to the list of providers.
-*
-* @param provider
-*   The name of the provider on which the user will authenticate. For a list of possible strings,
-*   please see the \ref basicProviders "List of Providers"
-*
-* @param customInterfaceOverrides
-*   A dictionary of objects and properties, indexed by the set of
-*   \link customInterface pre-defined custom interface keys\endlink, to be used by the library to customize the look
-*   and feel of the user interface and/or add a native login experience
-*
-* @note
-* Any values specified in the \e customInterfaceOverrides dictionary will override the corresponding
-* values specified the dictionary passed into the setCustomInterfaceDefaults:() method.
-**/
+ *
+ * @param provider
+ *   The name of the provider on which the user will authenticate. For a list of possible strings,
+ *   please see the \ref basicProviders "List of Providers"
+ *
+ * @param customInterfaceOverrides
+ *   A dictionary of objects and properties, indexed by the set of
+ *   \link customInterface pre-defined custom interface keys\endlink, to be used by the library to customize the look
+ *   and feel of the user interface and/or add a native login experience
+ **/
 + (void)startEngageSigninDialogOnProvider:(NSString*)provider
              withCustomInterfaceOverrides:(NSDictionary*)customInterfaceOverrides
                               forDelegate:(id<JRCaptureSigninDelegate>)delegate;

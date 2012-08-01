@@ -35,40 +35,30 @@
 /**
  * @mainpage Janrain Engage for iOS, version 2
  *
- * <a href="http://rpxnow.com/docs/iphone">
+ * <a href="http://TODO">
  * The Janrain Engage for iOS SDK</a> makes it easy to include third party authentication and
- * social publishing in your iPhone or iPad applications.  This Objective-C library includes the same key
+ * social sharing in your iPhone or iPad applications.  This Objective-C library includes the same key
  * features as our web version, as well as additional features created specifically for the mobile
  * platform. With as few as three lines of code, you can authenticate your users with their
  * accounts on Google, Yahoo!, Facebook, etc., and they can immediately publish their
  * activities to multiple social networks, including Facebook, Twitter, LinkedIn, MySpace,
  * and Yahoo, through one simple interface.
  *
- * Beyond authentication and social sharing, the latest release of the Engage for iOS SDK
- * now allows mobile apps to:
- *   - Share content, activities, game scores or invitations via Email or SMS
- *   - Customize the login experience by displaying native and social login options on the same screen
- *   - Track popularity and click through rates on various links included in the
- *     shared email message with automatic URL shortening for up to 5 URLs
- *   - Provide an additional level of security with forced re-authentication when
- *     users are about to make a purchase or conduct a sensitive transaction
- *   - Configure and maintain separate lists of providers for mobile and web apps
- *   - Match the look and feel of the iPhone or iPad app with customizable background colors,
- *     images, and navigation bar tints
- *
  * Before you begin, you need to have created a
  * <a href="https://rpxnow.com/signup_createapp_plus">Janrain Engage application</a>,
  * which you can do on <a href="http://rpxnow.com">http://rpxnow.com</a>
  *
  * For an overview of how the library works and how you can take advantage of the library's
- * features, please see the <a href="http://rpxnow.com/docs/iphone#user_experience">"Overview"</a>
- * section of our documentation.
+ * features, please see the <a href="http://TODO">
+ *   Overview</a> section of our documentation.
  *
- * To begin using the SDK, please see the
- * <a href="http://rpxnow.com/docs/iphone#quick">"Quick Start Guide"</a>.
+ * To begin using the SDK, please see the <a href="http://TODO">
+ * Engage for iOS guide</a>.
  *
  * For more detailed documentation of the library's API, you can use
- * the <a href="http://rpxnow.com/docs/iphone_api/annotated.html">"JREngage API"</a> documentation.
+ * the <a href="http://TODO">
+ *   JREngage API</a> or <a href="http://TODO">
+ *   JRCapture API</a> documentation.
  **/
 
 /* Preprocessor directive that conditionally compiles the code that uses the weakly-linked MessageUI.Framework.
@@ -227,6 +217,16 @@
 /*@}*/
 @end
 
+/**
+ * @brief
+ * Protocol adopted by an object that wishes to receive notifications when and information about a
+ * user that authenticates with your application and publishes activities to their social networks.
+ *
+ * This protocol will notify the delegate(s) when authentication and social publishing succeed or fail,
+ * it will provide the delegate(s) with the authenticated user's profile data, and, if server-side
+ * authentication is desired, it can provide the delegate(s) with the data payload returned by your
+ * server's token URL.
+ **/
 @protocol JREngageSharingDelegate <JREngageSigninDelegate>
 @optional
 

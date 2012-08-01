@@ -34,29 +34,131 @@
 @class JRCaptureObject;
 @class JRCaptureUser;
 
+/**
+ * @brief
+ * Protocol adopted by an object ...
+ **/
 @protocol JRCaptureUserDelegate <JRCaptureObjectDelegate>
 @optional
+/**
+ * Sent if ...
+ *
+ * @param user
+ *   user
+ *
+ * @param context
+ *   context
+ **/
 - (void)createDidSucceedForUser:(JRCaptureUser *)user context:(NSObject *)context;
+
+/**
+ * Sent if ...
+ *
+ * @param user
+ *   user
+ *
+ * @param error
+ *   error
+ *
+ * @param context
+ *   context
+ **/
 - (void)createDidFailForUser:(JRCaptureUser *)user withError:(NSError *)error context:(NSObject *)context;
 
+/**
+ * Sent if ...
+ *
+ * @param fetchedUser
+ *   fetchedUser
+ *
+ * @param context
+ *   context
+ **/
 - (void)fetchUserDidSucceed:(JRCaptureUser *)fetchedUser context:(NSObject *)context;
+
+/**
+ * Sent if ...
+ *
+ * @param error
+ *   error
+ *
+ * @param context
+ *   context
+ **/
 - (void)fetchUserDidFailWithError:(NSError *)error context:(NSObject *)context;
 
 
 #ifdef JRCAPTURE_FETCH_LAST_UPDATED
+/**
+ * Sent if ...
+ *
+ * @param serverLastUpdated
+ *   serverLastUpdated
+ *
+ * @param isOutdated
+ *   isOutdated
+ *
+ * @param context
+ *   context
+ **/
 - (void)fetchLastUpdatedDidSucceed:(JRDateTime *)serverLastUpdated isOutdated:(BOOL)isOutdated context:(NSObject *)context;
+
+/**
+ * Sent if ...
+ *
+ * @param error
+ *   error
+ *
+ * @param context
+ *   context
+ **/
 - (void)fetchLastUpdatedDidFailWithError:(NSError *)error context:(NSObject *)context;
 #endif // JRCAPTURE_FETCH_LAST_UPDATED
 @end
 
+/**
+ * @brief
+ * The top-level class that holds the Capture user record
+ **/
 @interface JRCaptureUser (JRCaptureUser_Extras) <NSCoding>
+
+/**
+ * Sent if ...
+ *
+ * @param delegate
+ *   delegate
+ *
+ * @param context
+ *   context
+ **/
 - (void)createOnCaptureForDelegate:(id<JRCaptureUserDelegate>)delegate context:(NSObject *)context;
 
+/**
+ * Sent if ...
+ *
+ * @param delegate
+ *   delegate
+ *
+ * @param context
+ *   context
+ **/
 + (void)fetchCaptureUserFromServerForDelegate:(id<JRCaptureUserDelegate>)delegate context:(NSObject *)context;
 
 #ifdef JRCAPTURE_FETCH_LAST_UPDATED
+/**
+ * Sent if ...
+ *
+ * @param delegate
+ *   delegate
+ *
+ * @param context
+ *   context
+ **/
 - (void)fetchLastUpdatedFromServerForDelegate:(id<JRCaptureUserDelegate>)delegate context:(NSObject *)context;
 #endif // JRCAPTURE_FETCH_LAST_UPDATED
 
+/**
+ * @internal
+ **/
 + (id)captureUserObjectFromDictionary:(NSDictionary*)dictionary;
 @end

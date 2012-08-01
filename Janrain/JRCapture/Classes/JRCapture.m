@@ -92,10 +92,18 @@
 }
 
 + (void)startEngageSigninDialogOnProvider:(NSString *)provider
-                                forDelegate:(id <JRCaptureSigninDelegate>)delegate
+                              forDelegate:(id <JRCaptureSigninDelegate>)delegate
 {
     [JREngageWrapper startAuthenticationDialogOnProvider:provider
                             withCustomInterfaceOverrides:nil forDelegate:delegate];
+}
+
++ (void)startEngageSigninDialogWithCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
+                                                forDelegate:(id <JRCaptureSigninDelegate>)delegate
+{
+    [JREngageWrapper startAuthenticationDialogWithNativeSignin:JRConventionalSigninNone
+                                   andCustomInterfaceOverrides:customInterfaceOverrides
+                                                   forDelegate:delegate];
 }
 
 + (void)startEngageSigninDialogWithConventionalSignin:(JRConventionalSigninType)conventionalSigninType

@@ -56,6 +56,9 @@
  * @param object
  *   object
  *
+ * @param error
+ *   error
+ *
  * @param context
  *   context
  **/
@@ -66,6 +69,12 @@
  *
  * @param object
  *   object
+ *
+ * @param replacedArray
+ *   replacedArray
+ *
+ * @param arrayName
+ *   replacedArray
  *
  * @param context
  *   context
@@ -79,6 +88,12 @@
  * @param object
  *   object
  *
+ * @param arrayName
+ *   object
+ *
+ * @param error
+ *   object
+ *
  * @param context
  *   context
  **/
@@ -88,9 +103,9 @@
 
 /**
  * @brief
- * Protocol adopted by an object ...
+ * Base class for all Capture objects and plural elements
  **/
-@interface JRCaptureObject : NSObject //<NSCopying>
+@interface JRCaptureObject : NSObject
 @property (readonly) BOOL canBeUpdatedOnCapture; /**< foo */
 
 /**
