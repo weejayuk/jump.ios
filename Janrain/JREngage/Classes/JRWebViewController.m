@@ -73,6 +73,7 @@
 
 - (void)setUserAgentDefault:(NSString *)userAgent
 {
+    DLog(@"UA: %@", userAgent);
     if (userAgent)
     {
         NSDictionary *uAdefault = [[NSDictionary alloc] initWithObjectsAndKeys:userAgent, @"UserAgent", nil];
@@ -172,6 +173,7 @@
     //[self webViewWithUrl:[NSURL URLWithString:@"http://whatsmyuseragent.com"]];
     [self webViewWithUrl:[sessionData startUrlForCurrentProvider]];
     [myWebView becomeFirstResponder];
+    myWebView.scalesPageToFit = YES;
 
     [infoBar fadeIn];
 }
@@ -214,7 +216,7 @@
 
     NSString* tag = (NSString*)userdata;
 
-    if ([tag isEqualToString:@"rpx_result"])
+    if ([tag isEqualToString:MEU_CONNECTION_TAG])
     {
         DLog(@"payload: %@", payload);
         DLog(@"tag:     %@", tag);
@@ -316,7 +318,7 @@
             }
         }
     }
-    else if ([tag isEqualToString:@"request"])
+    else if ([tag isEqualToString:WINDOWS_LIVE_LOAD])
     {
         connectionDataAlreadyDownloadedThis = YES;
         [myWebView loadHTMLString:payload baseURL:[request URL]];
@@ -331,12 +333,12 @@
 
     [self stopProgress];
 
-    if ([tag isEqualToString:@"rpx_result"])
+    if ([tag isEqualToString:MEU_CONNECTION_TAG])
     {
         userHitTheBackButton = NO; /* Because authentication failed for whatever reason. */
         [sessionData triggerAuthenticationDidFailWithError:error];
     }
-    else if ([tag isEqualToString:@"request"])
+    else if ([tag isEqualToString:WINDOWS_LIVE_LOAD])
     {
         userHitTheBackButton = NO; /* Because authentication failed for whatever reason. */
         [sessionData triggerAuthenticationDidFailWithError:error];
@@ -360,8 +362,7 @@
 
     DLog("Sending request to connection manager: %@", request);
 
-    [JRConnectionManager createConnectionFromRequest:request forDelegate:self
-                                             withTag:[NSString stringWithString:@"request"]];
+    [JRConnectionManager createConnectionFromRequest:request forDelegate:self withTag:WINDOWS_LIVE_LOAD];
     return YES;
 }
 
@@ -370,14 +371,13 @@
 {
     DLog(@"request: %@", [[request URL] absoluteString]);
 
-    NSString *thatURL = [NSString stringWithFormat:@"%@/signin/device", [sessionData baseUrl]];
+    NSString *mobileEndpointUrl = [NSString stringWithFormat:@"%@/signin/device", [sessionData baseUrl]];
 
-    if ([[[request URL] absoluteString] hasPrefix:thatURL])
+    if ([[[request URL] absoluteString] hasPrefix:mobileEndpointUrl])
     {
         DLog(@"request url has prefix: %@", [sessionData baseUrl]);
 
-        NSString* tag = @"rpx_result";
-        [JRConnectionManager createConnectionFromRequest:request forDelegate:self withTag:tag];
+        [JRConnectionManager createConnectionFromRequest:request forDelegate:self withTag:MEU_CONNECTION_TAG];
 
         keepProgress = YES;
         return NO;
@@ -391,6 +391,8 @@
 
 - (void)fixPadWindowSize
 {
+    DLog(@"");
+    //return;
     if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad) return;
 
     if (!([sessionData.currentProvider.name isEqualToString:@"google"]) ||

@@ -37,6 +37,8 @@
 
 @class JRSessionData;
 @class JRInfoBar;
+static NSString *const WINDOWS_LIVE_LOAD = @"request";
+static NSString *const MEU_CONNECTION_TAG = @"rpx_result";
 
 @interface JRWebViewController : UIViewController <UINavigationBarDelegate, UIWebViewDelegate, JRConnectionManagerDelegate>
 {
