@@ -856,3 +856,34 @@ div.groupHeader
   margin-top: 20px;
   margin-bottom: 0px;
 }
+
+#DoxyEmbeddedTable
+{
+/*	text-align: center; */
+	margin: 10px;
+	border: 1px solid black;
+/*	border-collapse: collapse; */
+/*	border: 0; */
+/*	background: #FF0000; */
+}
+
+#HeadRow
+{
+  text-align: center; 
+	font-size: 14px;
+	font-weight: bold;
+	border-bottom: 3px double #000000;
+}
+
+#BodyRow
+{
+	border: 1px solid #000000;
+	padding: 6px 8px;
+}
+
+#MiddleColumn
+{
+	border: 1px solid black;
+/*	border-right: 1px solid #000000; */
+/*	border-left: 1px solid #000000; */
+}

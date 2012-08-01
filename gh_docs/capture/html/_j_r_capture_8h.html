@@ -106,13 +106,13 @@ Enumerations</h2></td></tr>
 <p>You can add conventional login authentication. Blah blah blah TODO </p>
 <dl><dt><b>Enumerator: </b></dt><dd><table border="0" cellspacing="2" cellpadding="0">
 <tr><td valign="top"><em><a class="anchor" id="a81883e0353653c380e362f4fb358380fa427fca2e55c5608139a6c7edd93027cf"></a><!-- doxytag: member="JRConventionalSigninNone" ref="a81883e0353653c380e362f4fb358380fa427fca2e55c5608139a6c7edd93027cf" args="" -->JRConventionalSigninNone</em>&nbsp;</td><td>
-<p>JRConventionalSigninNone - No conventional login dialog added </p>
+<p>No conventional login dialog added </p>
 </td></tr>
 <tr><td valign="top"><em><a class="anchor" id="a81883e0353653c380e362f4fb358380facc53492be010ced536ca34303badc419"></a><!-- doxytag: member="JRConventionalSigninUsernamePassword" ref="a81883e0353653c380e362f4fb358380facc53492be010ced536ca34303badc419" args="" -->JRConventionalSigninUsernamePassword</em>&nbsp;</td><td>
-<p>JRConventionalSigninUsernamePassword - Conventional login dialog added prompting the user for their username and password combination. Use this if your Capture instance is set up to accept a <code>username</code> argument when signing in directly to your server. </p>
+<p>Conventional login dialog added prompting the user for their username and password combination. Use this if your Capture instance is set up to accept a <code>username</code> argument when signing in directly to your server </p>
 </td></tr>
 <tr><td valign="top"><em><a class="anchor" id="a81883e0353653c380e362f4fb358380fa2dd24d58781fca770ef8cb17f145fa7a"></a><!-- doxytag: member="JRConventionalSigninEmailPassword" ref="a81883e0353653c380e362f4fb358380fa2dd24d58781fca770ef8cb17f145fa7a" args="" -->JRConventionalSigninEmailPassword</em>&nbsp;</td><td>
-<p>JRConventionalSigninEmailPassword - Conventional login dialog added prompting the user for their email and password combination. Use this if your Capture instance is set up to accept a <code>email</code> argument when signing in directly to your server. </p>
+<p>Conventional login dialog added prompting the user for their email and password combination. Use this if your Capture instance is set up to accept a <code>email</code> argument when signing in directly to your server </p>
 </td></tr>
 </table>
 </dd>
@@ -130,9 +130,10 @@ Enumerations</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<p>Sent as an argument to the captureAuthenticationDidSucceedForUser:status: delegate method.</p>
-<p>There are three possible values for captureRecordStatus, indicating the creation state of the record.</p>
-<dl class="note"><dt><b>Note:</b></dt><dd>During Capture authentication, if authenticating through the Engage for iOS portion of the library, the library automatically posts the authentication token to the Capture server. Capture will attempt to sign the user in, using the rich data available from the social identity provider. One of three results will occur:<ul>
+<p>Sent as an argument to the <a class="el" href="protocol_j_r_capture_signin_delegate-p.html#aa5dc2ae621394b1a97b55eb3fca6b2ef">captureAuthenticationDidSucceedForUser:status: (JRCaptureSigninDelegate-p)</a> delegate method.</p>
+<p>There are three possible values for <code>captureRecordStatus</code>, indicating the creation state of the record.</p>
+<p>During Capture authentication, if authenticating through the Engage for iOS portion of the library, the library automatically posts the authentication token to the Capture server. Capture will attempt to sign the user in, using the rich data available from the social identity provider. One of three results will occur:</p>
+<ul>
 <li>Returning User — The user’s record already exists on the Capture server. The record is retrieved from the Capture server and passed back to your application.</li>
 <li>New User, Record Created — The user’s record does not already exist on the Capture server, but it is automatically created and passed back to your application. Your application may wish to collect additional information about the user and push that information back to the Capture server.</li>
 <li>New User, Record Not Created* — The user’s record was not automatically created because required information that was not available in the data returned by the social identity provider. (For example, your Capture instance may require an email address, but Twitter does not provide an email address, so the record cannot be automatically created on Capture when the user signs in with Twitter.) An incomplete user record is passed back to your application, where it is your application’s responsibility to collect the missing required data and invoke the user record creation on Capture.<ul>
@@ -142,17 +143,16 @@ Enumerations</h2></td></tr>
 </ul>
 </li>
 </ul>
-</dd></dl>
 <p>* If your Capture instance does not require information such as an email address, this scenario should not occur. </p>
 <dl><dt><b>Enumerator: </b></dt><dd><table border="0" cellspacing="2" cellpadding="0">
 <tr><td valign="top"><em><a class="anchor" id="a3de9970dfc3458baae757eb39c61da6ea03a24e635b6bd33e39b5a8d7c6312bc6"></a><!-- doxytag: member="JRCaptureRecordNewlyCreated" ref="a3de9970dfc3458baae757eb39c61da6ea03a24e635b6bd33e39b5a8d7c6312bc6" args="" -->JRCaptureRecordNewlyCreated</em>&nbsp;</td><td>
-<p>JRCaptureRecordExists indicates that the user had an existing Capture record and that record has been retrieved. Your application should update its state to reflect the user being signed-in. </p>
+<p>Indicates that the user had an existing Capture record and that record has been retrieved. Your application should update its state to reflect the user being signed-in </p>
 </td></tr>
 <tr><td valign="top"><em><a class="anchor" id="a3de9970dfc3458baae757eb39c61da6eac3f7e16ffb87cb23da9ec678913d23ef"></a><!-- doxytag: member="JRCaptureRecordExists" ref="a3de9970dfc3458baae757eb39c61da6eac3f7e16ffb87cb23da9ec678913d23ef" args="" -->JRCaptureRecordExists</em>&nbsp;</td><td>
-<p>JRCaptureRecordNewlyCreated indicates that this is a new user and that a new Capture record has already been automatically created. Your application may wish to collect additional new-user information and push that information back to the Capture server. </p>
+<p>Indicates that this is a new user and that a new Capture record has already been automatically created. Your application may wish to collect additional new-user information and push that information back to the Capture server </p>
 </td></tr>
 <tr><td valign="top"><em><a class="anchor" id="a3de9970dfc3458baae757eb39c61da6ea499981cbbe7244158c34a9839dad6e6d"></a><!-- doxytag: member="JRCaptureRecordMissingRequiredFields" ref="a3de9970dfc3458baae757eb39c61da6ea499981cbbe7244158c34a9839dad6e6d" args="" -->JRCaptureRecordMissingRequiredFields</em>&nbsp;</td><td>
-<p>JRCaptureRecordMissingRequiredFields indicates that this is a new user but there was not enough information from the social sign-in provider to fill the required user record fields. (For example, your Capture instance may require an email address, but Twitter does not provide an email address, so the record cannot be created on Capture when the user signs in with Twitter.) The partially complete user record is passed back to your application, where it is your application’s responsibility to collect the missing required data and create the user record on Capture:</p>
+<p>Indicates that this is a new user but there was not enough information from the social sign-in provider to fill the required user record fields. (For example, your Capture instance may require an email address, but Twitter does not provide an email address, so the record cannot be created on Capture when the user signs in with Twitter.) The partially complete user record is passed back to your application, where it is your application’s responsibility to collect the missing required data and create the user record on Capture:</p>
 <ul>
 <li>Your application should present a dialog to collect the missing information and any additional information you wish to collect</li>
 <li>Your application should store this information in the <a class="el" href="interface_j_r_capture_user.html" title="A JRCaptureUser object.">JRCaptureUser</a> instance returned by Capture</li>

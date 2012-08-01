@@ -87,7 +87,10 @@ Static Public Member Functions</h2></td></tr>
 <tr><td colspan="2"><div class="groupText"><p><a class="anchor" id="amgrp3bda902acb7aa7a3bd86e480af6f33d5"></a> Methods that initiate signin through the Engage for iOS dialogs </p>
 </div></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">(void)&nbsp;</td><td class="memItemRight" valign="bottom">+ <a class="el" href="interface_j_r_capture.html#a6ab2f79d48e2d6313c9ac7ecdef2eaeb">startEngageSigninDialogForDelegate:</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">(void)&nbsp;</td><td class="memItemRight" valign="bottom">+ <a class="el" href="interface_j_r_capture.html#ac677ba1447df249d7aa1a6d26ae6d679">startEngageSigninDialogWithConventionalSignin:forDelegate:</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">(void)&nbsp;</td><td class="memItemRight" valign="bottom">+ <a class="el" href="interface_j_r_capture.html#ac9d44518ce61b79fd1aca5f893051cfa">startEngageSigninDialogOnProvider:forDelegate:</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">(void)&nbsp;</td><td class="memItemRight" valign="bottom">+ <a class="el" href="interface_j_r_capture.html#a0e3173e3436d294e733429dc2ba17c90">startEngageSigninDialogWithCustomInterfaceOverrides:forDelegate:</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">(void)&nbsp;</td><td class="memItemRight" valign="bottom">+ <a class="el" href="interface_j_r_capture.html#a93f00f60d48096150931655b2e2f28e5">startEngageSigninDialogWithConventionalSignin:andCustomInterfaceOverrides:forDelegate:</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">(void)&nbsp;</td><td class="memItemRight" valign="bottom">+ <a class="el" href="interface_j_r_capture.html#a38a9719dda3cd64bc7204a010c4002e5">startEngageSigninDialogOnProvider:withCustomInterfaceOverrides:forDelegate:</a></td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -140,11 +143,10 @@ Static Public Member Functions</h2></td></tr>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>appId</em>&nbsp;</td><td>This is your 20-character application ID for Engage. You can find this on your application's Engage Dashboard on <a href="http://rpxnow.com">http://rpxnow.com</a>. <em>Please do not use your API key. The API key should never be stored on the device, in code or otherwise.</em></td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>captureApidDomain</em>&nbsp;</td><td>The domain of your Capture APID server (e.g., "mobile.dev.janraincapture.com")</td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>captureUIDomain</em>&nbsp;</td><td>The domain of your Capture UI instance (e.g., "mobile.dev.janraincapture.com"); this may be the same as the captureApidDomain</td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>clientId</em>&nbsp;</td><td>This is your 32-character client ID for Capture. You can find this on your Capture Dashboard on <a href="http://rpxnow.com">https://janraincapture.com/home</a>. <em>Please do not use your client secret. The client secret should never be stored on the device, in code or otherwise.</em></td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>entityTypeName</em>&nbsp;</td><td>The type name of your Capture record entities (e.g., "sample_user"). You can find this on your
-   Capture Dashboard on &lt;a href="<a href="http://rpxnow.com">http://rpxnow.com</a>"&gt;<a href="https://janraincapture.com/home">https://janraincapture.com/home</a>. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>captureApidDomain</em>&nbsp;</td><td>The domain of your Capture APID server (e.g., @"mobile.dev.janraincapture.com")</td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>captureUIDomain</em>&nbsp;</td><td>The domain of your Capture UI instance (e.g., @"mobile.dev.janraincapture.com"); this may be the same as the captureApidDomain</td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>clientId</em>&nbsp;</td><td>This is your 32-character client ID for Capture. You can find this on your Capture Dashboard on <a href="http://janraincapture.com">https://janraincapture.com/home</a>. <em>Please do not use your client secret. The client secret should never be stored on the device, in code or otherwise.</em></td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>entityTypeName</em>&nbsp;</td><td>The type name of your Capture record entities (e.g., @"sample_user"). You can find this on your Capture Dashboard on <a href="http://janraincapture.com">https://janraincapture.com/home</a> </td></tr>
   </table>
   </dd>
 </dl>
@@ -173,6 +175,42 @@ Static Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a class="anchor" id="ac677ba1447df249d7aa1a6d26ae6d679"></a><!-- doxytag: member="JRCapture::startEngageSigninDialogWithConventionalSignin:forDelegate:" ref="ac677ba1447df249d7aa1a6d26ae6d679" args="(JRConventionalSigninType conventionalSigninType,[forDelegate] id&lt; JRCaptureSigninDelegate &gt; delegate)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">+ (void) startEngageSigninDialogWithConventionalSignin: </td>
+          <td></td>
+          <td class="paramtype">(<a class="el" href="_j_r_capture_8h.html#a81883e0353653c380e362f4fb358380f">JRConventionalSigninType</a>)&nbsp;</td>
+          <td class="paramname"> <em>conventionalSigninType</em></td>
+        </tr>
+        <tr>
+          <td class="paramkey">forDelegate:</td>
+          <td></td>
+          <td class="paramtype">(id&lt;<a class="el" href="protocol_j_r_capture_signin_delegate-p.html">JRCaptureSigninDelegate</a>&gt;)&nbsp;</td>
+          <td class="paramname"> <em>delegate</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Use this method to begin authentication, adding the option for your users to log directly into Capture through your conventional signin mechanism. By using this method to initiate signin, the library automatically adds a direct login form, above the list of social providers, that allows your users to login with a username/password or email/password combination.</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>conventionalSigninType</em>&nbsp;</td><td>A JRConventionalSigninType that tells the library to either prompt the user for their username/password combination or their email/password combination. This value must match what is configured for your Capture UI application. If you are unsure which one to use, try one, and if signin fails, try the other. If you pass in JRConventionalSigninNone, this method will do exactly what the <a class="el" href="interface_j_r_capture.html#a6ab2f79d48e2d6313c9ac7ecdef2eaeb">startEngageSigninDialogForDelegate:</a> method does</td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>delegate</em>&nbsp;</td><td>The <a class="el" href="protocol_j_r_capture_signin_delegate-p.html" title="Protocol adopted by an object that wishes to receive notifications when and information about a user ...">JRCaptureSigninDelegate</a> object that wishes to receive messages regarding user authentication</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>Depending on how your Capture application is configured, you pass to this method a JRConventionalSigninType of either JRConventionalSigninUsernamePassword or JRConventionalSigninEmailPassword. Based on this argument, the dialog will prompt your user to either enter their username or email. </dd></dl>
 
 </div>
 </div>
@@ -211,6 +249,82 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a0e3173e3436d294e733429dc2ba17c90"></a><!-- doxytag: member="JRCapture::startEngageSigninDialogWithCustomInterfaceOverrides:forDelegate:" ref="a0e3173e3436d294e733429dc2ba17c90" args="(NSDictionary *customInterfaceOverrides,[forDelegate] id&lt; JRCaptureSigninDelegate &gt; delegate)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">+ (void) startEngageSigninDialogWithCustomInterfaceOverrides: </td>
+          <td></td>
+          <td class="paramtype">(NSDictionary*)&nbsp;</td>
+          <td class="paramname"> <em>customInterfaceOverrides</em></td>
+        </tr>
+        <tr>
+          <td class="paramkey">forDelegate:</td>
+          <td></td>
+          <td class="paramtype">(id&lt;<a class="el" href="protocol_j_r_capture_signin_delegate-p.html">JRCaptureSigninDelegate</a>&gt;)&nbsp;</td>
+          <td class="paramname"> <em>delegate</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Use this function to begin authentication. The Engage for iOS portion of the library will pop up a modal dialog and take the user through the sign-in process.</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>customInterfaceOverrides</em>&nbsp;</td><td>A dictionary of objects and properties, indexed by the set of <a class="el" href="">pre-defined custom interface keys</a>, to be used by the library to customize the look and feel of the user interface and/or add a native login experience </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a93f00f60d48096150931655b2e2f28e5"></a><!-- doxytag: member="JRCapture::startEngageSigninDialogWithConventionalSignin:andCustomInterfaceOverrides:forDelegate:" ref="a93f00f60d48096150931655b2e2f28e5" args="(JRConventionalSigninType conventionalSigninState,[andCustomInterfaceOverrides] NSDictionary *customInterfaceOverrides,[forDelegate] id&lt; JRCaptureSigninDelegate &gt; delegate)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">+ (void) startEngageSigninDialogWithConventionalSignin: </td>
+          <td></td>
+          <td class="paramtype">(<a class="el" href="_j_r_capture_8h.html#a81883e0353653c380e362f4fb358380f">JRConventionalSigninType</a>)&nbsp;</td>
+          <td class="paramname"> <em>conventionalSigninState</em></td>
+        </tr>
+        <tr>
+          <td class="paramkey">andCustomInterfaceOverrides:</td>
+          <td></td>
+          <td class="paramtype">(NSDictionary*)&nbsp;</td>
+          <td class="paramname"> <em>customInterfaceOverrides</em></td>
+        </tr>
+        <tr>
+          <td class="paramkey">forDelegate:</td>
+          <td></td>
+          <td class="paramtype">(id&lt;<a class="el" href="protocol_j_r_capture_signin_delegate-p.html">JRCaptureSigninDelegate</a>&gt;)&nbsp;</td>
+          <td class="paramname"> <em>delegate</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Use this method to begin authentication, adding the option for your users to log directly into Capture through your conventional signin mechanism. By using this method to initiate signin, the library automatically adds a direct login form, above the list of social providers, that allows your users to login with a username/password or email/password combination.</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>conventionalSigninType</em>&nbsp;</td><td>A JRConventionalSigninType that tells the library to either prompt the user for their username/password combination or their email/password combination. This value must match what is configured for your Capture UI application. If you are unsure which one to use, try one, and if signin fails, try the other.</td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>customInterfaceOverrides</em>&nbsp;</td><td>A dictionary of objects and properties, indexed by the set of <a class="el" href="">pre-defined custom interface keys</a>, to be used by the library to customize the look and feel of the user interface and/or add a native login experience</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>Depending on how your Capture application is configured, you pass to this method a JRConventionalSigninType of either JRConventionalSigninUsernamePassword or JRConventionalSigninEmailPassword. Based on this argument, the dialog will prompt your user to either enter their username or email. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a38a9719dda3cd64bc7204a010c4002e5"></a><!-- doxytag: member="JRCapture::startEngageSigninDialogOnProvider:withCustomInterfaceOverrides:forDelegate:" ref="a38a9719dda3cd64bc7204a010c4002e5" args="(NSString *provider,[withCustomInterfaceOverrides] NSDictionary *customInterfaceOverrides,[forDelegate] id&lt; JRCaptureSigninDelegate &gt; delegate)" -->
 <div class="memitem">
 <div class="memproto">
@@ -245,11 +359,10 @@ Static Public Member Functions</h2></td></tr>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>provider</em>&nbsp;</td><td>The name of the provider on which the user will authenticate. For a list of possible strings, please see the <a class="el" href="_providers.html#basicProviders">List of Providers</a></td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>customInterfaceOverrides</em>&nbsp;</td><td>A dictionary of objects and properties, indexed by the set of <a class="el" href="">pre-defined custom interface keys</a>, to be used by the library to customize the look and feel of the user interface and/or add a native login experience</td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>customInterfaceOverrides</em>&nbsp;</td><td>A dictionary of objects and properties, indexed by the set of <a class="el" href="">pre-defined custom interface keys</a>, to be used by the library to customize the look and feel of the user interface and/or add a native login experience </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="note"><dt><b>Note:</b></dt><dd>Any values specified in the <em>customInterfaceOverrides</em> dictionary will override the corresponding values specified the dictionary passed into the setCustomInterfaceDefaults:() method. </dd></dl>
 
 </div>
 </div>

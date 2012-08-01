@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>JRCapture: &lt;JRCaptureObjectDelegate&gt; Protocol Reference</title>
+<title>JRCapture: &lt;JRCaptureUserDelegate&gt; Protocol Reference</title>
 
 <link href="https://ajax.googleapis.com/ajax/libs/yui/2.6.0/build/reset-fonts-grids/reset-fonts-grids.css" media="screen" rel="Stylesheet" type="text/css" />
 <link href="https://docj27ko03fnu.cloudfront.net/rel/css/2bb009d73339d0d58d219aa0fe64c58b.css" media="screen" rel="stylesheet" type="text/css" />
@@ -68,45 +68,45 @@
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>&lt;JRCaptureObjectDelegate&gt; Protocol Reference</h1>  </div>
+<h1>&lt;JRCaptureUserDelegate&gt; Protocol Reference</h1>  </div>
 </div>
 <div class="contents">
-<!-- doxytag: class="JRCaptureObjectDelegate-p" -->
+<!-- doxytag: class="JRCaptureUserDelegate-p" --><!-- doxytag: inherits="JRCaptureObjectDelegate-p" -->
 <p>Protocol adopted by an object ...  
 <a href="#_details">More...</a></p>
 
-<p><code>#import &lt;<a class="el" href="_j_r_capture_object_8h_source.html">JRCaptureObject.h</a>&gt;</code></p>
+<p><code>#import &lt;<a class="el" href="_j_r_capture_user_09_extras_8h_source.html">JRCaptureUser+Extras.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for &lt;JRCaptureObjectDelegate&gt;:</div>
+Inheritance diagram for &lt;JRCaptureUserDelegate&gt;:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="protocol_j_r_capture_object_delegate-p.png" usemap="#&lt;JRCaptureObjectDelegate&gt;_map" alt=""/>
-  <map id="&lt;JRCaptureObjectDelegate&gt;_map" name="&lt;JRCaptureObjectDelegate&gt;_map">
-<area href="protocol_j_r_capture_user_delegate-p.html" alt="&lt;JRCaptureUserDelegate&gt;" shape="rect" coords="0,56,173,80"/>
+  <img src="protocol_j_r_capture_user_delegate-p.png" usemap="#&lt;JRCaptureUserDelegate&gt;_map" alt=""/>
+  <map id="&lt;JRCaptureUserDelegate&gt;_map" name="&lt;JRCaptureUserDelegate&gt;_map">
+<area href="protocol_j_r_capture_object_delegate-p.html" alt="&lt;JRCaptureObjectDelegate&gt;" shape="rect" coords="0,0,173,24"/>
 </map>
 </div>
 
-<p><a href="protocol_j_r_capture_object_delegate-p-members.html">List of all members.</a></p>
+<p><a href="protocol_j_r_capture_user_delegate-p-members.html">List of all members.</a></p>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">(void)&nbsp;</td><td class="memItemRight" valign="bottom">- <a class="el" href="protocol_j_r_capture_object_delegate-p.html#afa043773e69351fc3115d7ae765986db">updateDidSucceedForObject:context:</a></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">(void)&nbsp;</td><td class="memItemRight" valign="bottom">- <a class="el" href="protocol_j_r_capture_object_delegate-p.html#affff9e5fe9d03312a4d5db8b39ba5ff0">updateDidFailForObject:withError:context:</a></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">(void)&nbsp;</td><td class="memItemRight" valign="bottom">- <a class="el" href="protocol_j_r_capture_object_delegate-p.html#a141c8cf074f0c4add85e7cbd401af037">replaceArrayDidSucceedForObject:newArray:named:context:</a></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">(void)&nbsp;</td><td class="memItemRight" valign="bottom">- <a class="el" href="protocol_j_r_capture_object_delegate-p.html#aa184a8cf924378fe43f91ec8df44a2b2">replaceArrayDidFailForObject:arrayNamed:withError:context:</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">(void)&nbsp;</td><td class="memItemRight" valign="bottom">- <a class="el" href="protocol_j_r_capture_user_delegate-p.html#af13db4523474af53dcc49be8c2ed0b6c">createDidSucceedForUser:context:</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">(void)&nbsp;</td><td class="memItemRight" valign="bottom">- <a class="el" href="protocol_j_r_capture_user_delegate-p.html#ac30cd808ab5137adbbbb52df10e68105">createDidFailForUser:withError:context:</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">(void)&nbsp;</td><td class="memItemRight" valign="bottom">- <a class="el" href="protocol_j_r_capture_user_delegate-p.html#a431332addeb6e5c59981bebb49f09720">fetchUserDidSucceed:context:</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">(void)&nbsp;</td><td class="memItemRight" valign="bottom">- <a class="el" href="protocol_j_r_capture_user_delegate-p.html#a013961de568de4e26b28b21fc0d41aa3">fetchUserDidFailWithError:context:</a></td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
 <p>Protocol adopted by an object ... </p>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="afa043773e69351fc3115d7ae765986db"></a><!-- doxytag: member="JRCaptureObjectDelegate&#45;p::updateDidSucceedForObject:context:" ref="afa043773e69351fc3115d7ae765986db" args="(JRCaptureObject *object,[context] NSObject *context)" -->
+<a class="anchor" id="af13db4523474af53dcc49be8c2ed0b6c"></a><!-- doxytag: member="JRCaptureUserDelegate&#45;p::createDidSucceedForUser:context:" ref="af13db4523474af53dcc49be8c2ed0b6c" args="(JRCaptureUser *user,[context] NSObject *context)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">- (void) updateDidSucceedForObject: </td>
+          <td class="memname">- (void) createDidSucceedForUser: </td>
           <td></td>
-          <td class="paramtype">(<a class="el" href="interface_j_r_capture_object.html">JRCaptureObject</a> *)&nbsp;</td>
-          <td class="paramname"> <em>object</em></td>
+          <td class="paramtype">(<a class="el" href="interface_j_r_capture_user.html">JRCaptureUser</a> *)&nbsp;</td>
+          <td class="paramname"> <em>user</em></td>
         </tr>
         <tr>
           <td class="paramkey">context:</td>
@@ -125,7 +125,7 @@ Public Member Functions</h2></td></tr>
 <p>Sent if ...</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>object</em>&nbsp;</td><td>object</td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>user</em>&nbsp;</td><td>user</td></tr>
     <tr><td valign="top"></td><td valign="top"><em>context</em>&nbsp;</td><td>context </td></tr>
   </table>
   </dd>
@@ -133,15 +133,15 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="affff9e5fe9d03312a4d5db8b39ba5ff0"></a><!-- doxytag: member="JRCaptureObjectDelegate&#45;p::updateDidFailForObject:withError:context:" ref="affff9e5fe9d03312a4d5db8b39ba5ff0" args="(JRCaptureObject *object,[withError] NSError *error,[context] NSObject *context)" -->
+<a class="anchor" id="ac30cd808ab5137adbbbb52df10e68105"></a><!-- doxytag: member="JRCaptureUserDelegate&#45;p::createDidFailForUser:withError:context:" ref="ac30cd808ab5137adbbbb52df10e68105" args="(JRCaptureUser *user,[withError] NSError *error,[context] NSObject *context)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">- (void) updateDidFailForObject: </td>
+          <td class="memname">- (void) createDidFailForUser: </td>
           <td></td>
-          <td class="paramtype">(<a class="el" href="interface_j_r_capture_object.html">JRCaptureObject</a> *)&nbsp;</td>
-          <td class="paramname"> <em>object</em></td>
+          <td class="paramtype">(<a class="el" href="interface_j_r_capture_user.html">JRCaptureUser</a> *)&nbsp;</td>
+          <td class="paramname"> <em>user</em></td>
         </tr>
         <tr>
           <td class="paramkey">withError:</td>
@@ -166,7 +166,7 @@ Public Member Functions</h2></td></tr>
 <p>Sent if ...</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>object</em>&nbsp;</td><td>object</td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>user</em>&nbsp;</td><td>user</td></tr>
     <tr><td valign="top"></td><td valign="top"><em>error</em>&nbsp;</td><td>error</td></tr>
     <tr><td valign="top"></td><td valign="top"><em>context</em>&nbsp;</td><td>context </td></tr>
   </table>
@@ -175,27 +175,15 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a141c8cf074f0c4add85e7cbd401af037"></a><!-- doxytag: member="JRCaptureObjectDelegate&#45;p::replaceArrayDidSucceedForObject:newArray:named:context:" ref="a141c8cf074f0c4add85e7cbd401af037" args="(JRCaptureObject *object,[newArray] NSArray *replacedArray,[named] NSString *arrayName,[context] NSObject *context)" -->
+<a class="anchor" id="a431332addeb6e5c59981bebb49f09720"></a><!-- doxytag: member="JRCaptureUserDelegate&#45;p::fetchUserDidSucceed:context:" ref="a431332addeb6e5c59981bebb49f09720" args="(JRCaptureUser *fetchedUser,[context] NSObject *context)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">- (void) replaceArrayDidSucceedForObject: </td>
+          <td class="memname">- (void) fetchUserDidSucceed: </td>
           <td></td>
-          <td class="paramtype">(<a class="el" href="interface_j_r_capture_object.html">JRCaptureObject</a> *)&nbsp;</td>
-          <td class="paramname"> <em>object</em></td>
-        </tr>
-        <tr>
-          <td class="paramkey">newArray:</td>
-          <td></td>
-          <td class="paramtype">(NSArray *)&nbsp;</td>
-          <td class="paramname"> <em>replacedArray</em></td>
-        </tr>
-        <tr>
-          <td class="paramkey">named:</td>
-          <td></td>
-          <td class="paramtype">(NSString *)&nbsp;</td>
-          <td class="paramname"> <em>arrayName</em></td>
+          <td class="paramtype">(<a class="el" href="interface_j_r_capture_user.html">JRCaptureUser</a> *)&nbsp;</td>
+          <td class="paramname"> <em>fetchedUser</em></td>
         </tr>
         <tr>
           <td class="paramkey">context:</td>
@@ -214,9 +202,7 @@ Public Member Functions</h2></td></tr>
 <p>Sent if ...</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>object</em>&nbsp;</td><td>object</td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>replacedArray</em>&nbsp;</td><td>replacedArray</td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>arrayName</em>&nbsp;</td><td>replacedArray</td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>fetchedUser</em>&nbsp;</td><td>fetchedUser</td></tr>
     <tr><td valign="top"></td><td valign="top"><em>context</em>&nbsp;</td><td>context </td></tr>
   </table>
   </dd>
@@ -224,24 +210,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aa184a8cf924378fe43f91ec8df44a2b2"></a><!-- doxytag: member="JRCaptureObjectDelegate&#45;p::replaceArrayDidFailForObject:arrayNamed:withError:context:" ref="aa184a8cf924378fe43f91ec8df44a2b2" args="(JRCaptureObject *object,[arrayNamed] NSString *arrayName,[withError] NSError *error,[context] NSObject *context)" -->
+<a class="anchor" id="a013961de568de4e26b28b21fc0d41aa3"></a><!-- doxytag: member="JRCaptureUserDelegate&#45;p::fetchUserDidFailWithError:context:" ref="a013961de568de4e26b28b21fc0d41aa3" args="(NSError *error,[context] NSObject *context)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">- (void) replaceArrayDidFailForObject: </td>
-          <td></td>
-          <td class="paramtype">(<a class="el" href="interface_j_r_capture_object.html">JRCaptureObject</a> *)&nbsp;</td>
-          <td class="paramname"> <em>object</em></td>
-        </tr>
-        <tr>
-          <td class="paramkey">arrayNamed:</td>
-          <td></td>
-          <td class="paramtype">(NSString *)&nbsp;</td>
-          <td class="paramname"> <em>arrayName</em></td>
-        </tr>
-        <tr>
-          <td class="paramkey">withError:</td>
+          <td class="memname">- (void) fetchUserDidFailWithError: </td>
           <td></td>
           <td class="paramtype">(NSError *)&nbsp;</td>
           <td class="paramname"> <em>error</em></td>
@@ -263,9 +237,7 @@ Public Member Functions</h2></td></tr>
 <p>Sent if ...</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>object</em>&nbsp;</td><td>object</td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>arrayName</em>&nbsp;</td><td>object</td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>error</em>&nbsp;</td><td>object</td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>error</em>&nbsp;</td><td>error</td></tr>
     <tr><td valign="top"></td><td valign="top"><em>context</em>&nbsp;</td><td>context </td></tr>
   </table>
   </dd>
@@ -274,7 +246,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this protocol was generated from the following file:<ul>
-<li>/Users/lillialexis/Capture/jump.ios/Janrain/JRCapture/Classes/CaptureUserModel/<a class="el" href="_j_r_capture_object_8h_source.html">JRCaptureObject.h</a></li>
+<li>/Users/lillialexis/Capture/jump.ios/Janrain/JRCapture/Classes/CaptureUserModel/<a class="el" href="_j_r_capture_user_09_extras_8h_source.html">JRCaptureUser+Extras.h</a></li>
 </ul>
 </div>
             </div>

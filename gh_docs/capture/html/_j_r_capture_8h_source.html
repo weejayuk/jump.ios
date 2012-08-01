@@ -95,21 +95,21 @@
 <a name="l00033"></a>00033 <span class="comment"> Date:   Tuesday, January 31, 2012</span>
 <a name="l00034"></a>00034 <span class="comment">* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */</span>
 <a name="l00035"></a>00035 
-<a name="l00100"></a>00100 <span class="preprocessor">#import &lt;Foundation/Foundation.h&gt;</span>
-<a name="l00101"></a>00101 <span class="preprocessor">#import &quot;JRCaptureObject.h&quot;</span>
-<a name="l00102"></a>00102 <span class="preprocessor">#import &quot;JRCaptureUser.h&quot;</span>
-<a name="l00103"></a>00103 <span class="preprocessor">#import &quot;JRCaptureUser+Extras.h&quot;</span>
-<a name="l00104"></a>00104 <span class="preprocessor">#import &quot;JRCaptureError.h&quot;</span>
-<a name="l00105"></a>00105 
-<a name="l00110"></a><a class="code" href="_j_r_capture_8h.html#a81883e0353653c380e362f4fb358380f">00110</a> <span class="keyword">typedef</span> <span class="keyword">enum</span>
-<a name="l00111"></a>00111 {
-<a name="l00115"></a>00115  <a class="code" href="_j_r_capture_8h.html#a81883e0353653c380e362f4fb358380fa427fca2e55c5608139a6c7edd93027cf">JRConventionalSigninNone</a> = 0,
-<a name="l00116"></a><a class="code" href="_j_r_capture_8h.html#a81883e0353653c380e362f4fb358380fa427fca2e55c5608139a6c7edd93027cf">00116</a> 
-<a name="l00122"></a>00122  JRConventionalSigninUsernamePassword,
-<a name="l00123"></a><a class="code" href="_j_r_capture_8h.html#a81883e0353653c380e362f4fb358380facc53492be010ced536ca34303badc419">00123</a> 
-<a name="l00129"></a>00129  JRConventionalSigninEmailPassword,
-<a name="l00130"></a><a class="code" href="_j_r_capture_8h.html#a81883e0353653c380e362f4fb358380fa2dd24d58781fca770ef8cb17f145fa7a">00130</a> } JRConventionalSigninType;
-<a name="l00131"></a>00131 
+<a name="l00093"></a>00093 <span class="preprocessor">#import &lt;Foundation/Foundation.h&gt;</span>
+<a name="l00094"></a>00094 <span class="preprocessor">#import &quot;JRCaptureObject.h&quot;</span>
+<a name="l00095"></a>00095 <span class="preprocessor">#import &quot;JRCaptureUser.h&quot;</span>
+<a name="l00096"></a>00096 <span class="preprocessor">#import &quot;JRCaptureUser+Extras.h&quot;</span>
+<a name="l00097"></a>00097 <span class="preprocessor">#import &quot;JRCaptureError.h&quot;</span>
+<a name="l00098"></a>00098 
+<a name="l00111"></a><a class="code" href="_j_r_capture_8h.html#a81883e0353653c380e362f4fb358380f">00111</a> <span class="keyword">typedef</span> <span class="keyword">enum</span>
+<a name="l00112"></a>00112 {
+<a name="l00116"></a><a class="code" href="_j_r_capture_8h.html#a81883e0353653c380e362f4fb358380fa427fca2e55c5608139a6c7edd93027cf">00116</a>  <a class="code" href="_j_r_capture_8h.html#a81883e0353653c380e362f4fb358380fa427fca2e55c5608139a6c7edd93027cf">JRConventionalSigninNone</a> = 0,
+<a name="l00117"></a>00117 
+<a name="l00123"></a><a class="code" href="_j_r_capture_8h.html#a81883e0353653c380e362f4fb358380facc53492be010ced536ca34303badc419">00123</a>  JRConventionalSigninUsernamePassword,
+<a name="l00124"></a>00124 
+<a name="l00130"></a><a class="code" href="_j_r_capture_8h.html#a81883e0353653c380e362f4fb358380fa2dd24d58781fca770ef8cb17f145fa7a">00130</a>  JRConventionalSigninEmailPassword,
+<a name="l00131"></a>00131 } JRConventionalSigninType;
+<a name="l00132"></a>00132 
 <a name="l00159"></a><a class="code" href="_j_r_capture_8h.html#a3de9970dfc3458baae757eb39c61da6e">00159</a> <span class="keyword">typedef</span> <span class="keyword">enum</span>
 <a name="l00160"></a>00160 {
 <a name="l00165"></a><a class="code" href="_j_r_capture_8h.html#a3de9970dfc3458baae757eb39c61da6ea03a24e635b6bd33e39b5a8d7c6312bc6">00165</a>  JRCaptureRecordNewlyCreated,          <span class="comment">/* now it exists, and it is new */</span>
@@ -167,36 +167,39 @@
 <a name="l00476"></a>00476 
 <a name="l00477"></a>00477 <span class="preprocessor">#ifdef JRCAPTURE_CONVENTIONAL_SIGNIN</span>
 <a name="l00478"></a>00478 <span class="preprocessor"></span>
-<a name="l00495"></a>00495 + (void)startEngageSigninDialogWithConventionalSignin:(<a class="code" href="_j_r_capture_8h.html#a81883e0353653c380e362f4fb358380f">JRConventionalSigninType</a>)conventionalSigninType
-<a name="l00496"></a>00496                                           forDelegate:(<span class="keywordtype">id</span>&lt;<a class="code" href="protocol_j_r_capture_signin_delegate-p.html" title="Protocol adopted by an object that wishes to receive notifications when and information about a user ...">JRCaptureSigninDelegate</a>&gt;)delegate;
-<a name="l00497"></a>00497 <span class="preprocessor">#endif // JRCAPTURE_CONVENTIONAL_SIGNIN</span>
-<a name="l00498"></a>00498 <span class="preprocessor"></span>
-<a name="l00511"></a>00511 + (void)startEngageSigninDialogOnProvider:(NSString*)provider
-<a name="l00512"></a>00512                               forDelegate:(<span class="keywordtype">id</span>&lt;<a class="code" href="protocol_j_r_capture_signin_delegate-p.html" title="Protocol adopted by an object that wishes to receive notifications when and information about a user ...">JRCaptureSigninDelegate</a>&gt;)delegate;
-<a name="l00513"></a>00513 
-<a name="l00514"></a>00514 <span class="preprocessor">#ifdef JRCAPTURE_CONVENTIONAL_SIGNIN</span>
-<a name="l00515"></a>00515 <span class="preprocessor"></span>
-<a name="l00537"></a>00537 + (void)startEngageSigninDialogWithConventionalSignin:(<a class="code" href="_j_r_capture_8h.html#a81883e0353653c380e362f4fb358380f">JRConventionalSigninType</a>)conventionalSigninState
-<a name="l00538"></a>00538                           andCustomInterfaceOverrides:(NSDictionary*)customInterfaceOverrides
-<a name="l00539"></a>00539                                           forDelegate:(<span class="keywordtype">id</span>&lt;<a class="code" href="protocol_j_r_capture_signin_delegate-p.html" title="Protocol adopted by an object that wishes to receive notifications when and information about a user ...">JRCaptureSigninDelegate</a>&gt;)delegate;
-<a name="l00540"></a>00540 <span class="preprocessor">#endif // JRCAPTURE_CONVENTIONAL_SIGNIN</span>
-<a name="l00541"></a>00541 <span class="preprocessor"></span>
-<a name="l00560"></a>00560 + (void)startEngageSigninDialogOnProvider:(NSString*)provider
-<a name="l00561"></a>00561              withCustomInterfaceOverrides:(NSDictionary*)customInterfaceOverrides
-<a name="l00562"></a>00562                               forDelegate:(<span class="keywordtype">id</span>&lt;<a class="code" href="protocol_j_r_capture_signin_delegate-p.html" title="Protocol adopted by an object that wishes to receive notifications when and information about a user ...">JRCaptureSigninDelegate</a>&gt;)delegate;
-<a name="l00563"></a>00563 
-<a name="l00564"></a>00564 
-<a name="l00565"></a>00565 <span class="preprocessor">#ifdef JRENGAGE_SHARING_WITH_CAPTURE</span>
-<a name="l00566"></a>00566 <span class="preprocessor"></span>
-<a name="l00573"></a>00573 + (void)startEngageSharingDialogWithActivity:(JRActivityObject*)activity
-<a name="l00574"></a>00574                                  forDelegate:(<span class="keywordtype">id</span>&lt;JRCaptureSharingDelegate&gt;)delegate;
-<a name="l00575"></a>00575 
-<a name="l00592"></a>00592 + (void)startEngageSharingDialogWithActivity:(JRActivityObject*)activity
-<a name="l00593"></a>00593                 withCustomInterfaceOverrides:(NSDictionary*)customInterfaceOverrides
-<a name="l00594"></a>00594                                  forDelegate:(<span class="keywordtype">id</span>&lt;JRCaptureSharingDelegate&gt;)delegate;
-<a name="l00595"></a>00595 <span class="preprocessor">#endif // JRENGAGE_SHARING_WITH_CAPTURE</span>
-<a name="l00596"></a>00596 <span class="preprocessor"></span><span class="keyword">@end</span>
-<a name="l00597"></a>00597 
+<a name="l00498"></a>00498 + (void)startEngageSigninDialogWithConventionalSignin:(<a class="code" href="_j_r_capture_8h.html#a81883e0353653c380e362f4fb358380f">JRConventionalSigninType</a>)conventionalSigninType
+<a name="l00499"></a>00499                                           forDelegate:(<span class="keywordtype">id</span>&lt;<a class="code" href="protocol_j_r_capture_signin_delegate-p.html" title="Protocol adopted by an object that wishes to receive notifications when and information about a user ...">JRCaptureSigninDelegate</a>&gt;)delegate;
+<a name="l00500"></a>00500 <span class="preprocessor">#endif // JRCAPTURE_CONVENTIONAL_SIGNIN</span>
+<a name="l00501"></a>00501 <span class="preprocessor"></span>
+<a name="l00514"></a>00514 + (void)startEngageSigninDialogOnProvider:(NSString*)provider
+<a name="l00515"></a>00515                               forDelegate:(<span class="keywordtype">id</span>&lt;<a class="code" href="protocol_j_r_capture_signin_delegate-p.html" title="Protocol adopted by an object that wishes to receive notifications when and information about a user ...">JRCaptureSigninDelegate</a>&gt;)delegate;
+<a name="l00516"></a>00516 
+<a name="l00526"></a>00526 + (void)startEngageSigninDialogWithCustomInterfaceOverrides:(NSDictionary*)customInterfaceOverrides
+<a name="l00527"></a>00527                                                 forDelegate:(<span class="keywordtype">id</span>&lt;<a class="code" href="protocol_j_r_capture_signin_delegate-p.html" title="Protocol adopted by an object that wishes to receive notifications when and information about a user ...">JRCaptureSigninDelegate</a>&gt;)delegate;
+<a name="l00528"></a>00528 
+<a name="l00529"></a>00529 <span class="preprocessor">#ifdef JRCAPTURE_CONVENTIONAL_SIGNIN</span>
+<a name="l00530"></a>00530 <span class="preprocessor"></span>
+<a name="l00551"></a>00551 + (void)startEngageSigninDialogWithConventionalSignin:(<a class="code" href="_j_r_capture_8h.html#a81883e0353653c380e362f4fb358380f">JRConventionalSigninType</a>)conventionalSigninState
+<a name="l00552"></a>00552                           andCustomInterfaceOverrides:(NSDictionary*)customInterfaceOverrides
+<a name="l00553"></a>00553                                           forDelegate:(<span class="keywordtype">id</span>&lt;<a class="code" href="protocol_j_r_capture_signin_delegate-p.html" title="Protocol adopted by an object that wishes to receive notifications when and information about a user ...">JRCaptureSigninDelegate</a>&gt;)delegate;
+<a name="l00554"></a>00554 <span class="preprocessor">#endif // JRCAPTURE_CONVENTIONAL_SIGNIN</span>
+<a name="l00555"></a>00555 <span class="preprocessor"></span>
+<a name="l00570"></a>00570 + (void)startEngageSigninDialogOnProvider:(NSString*)provider
+<a name="l00571"></a>00571              withCustomInterfaceOverrides:(NSDictionary*)customInterfaceOverrides
+<a name="l00572"></a>00572                               forDelegate:(<span class="keywordtype">id</span>&lt;<a class="code" href="protocol_j_r_capture_signin_delegate-p.html" title="Protocol adopted by an object that wishes to receive notifications when and information about a user ...">JRCaptureSigninDelegate</a>&gt;)delegate;
+<a name="l00573"></a>00573 
+<a name="l00574"></a>00574 
+<a name="l00575"></a>00575 <span class="preprocessor">#ifdef JRENGAGE_SHARING_WITH_CAPTURE</span>
+<a name="l00576"></a>00576 <span class="preprocessor"></span>
+<a name="l00583"></a>00583 + (void)startEngageSharingDialogWithActivity:(JRActivityObject*)activity
+<a name="l00584"></a>00584                                  forDelegate:(<span class="keywordtype">id</span>&lt;JRCaptureSharingDelegate&gt;)delegate;
+<a name="l00585"></a>00585 
+<a name="l00602"></a>00602 + (void)startEngageSharingDialogWithActivity:(JRActivityObject*)activity
+<a name="l00603"></a>00603                 withCustomInterfaceOverrides:(NSDictionary*)customInterfaceOverrides
+<a name="l00604"></a>00604                                  forDelegate:(<span class="keywordtype">id</span>&lt;JRCaptureSharingDelegate&gt;)delegate;
+<a name="l00605"></a>00605 <span class="preprocessor">#endif // JRENGAGE_SHARING_WITH_CAPTURE</span>
+<a name="l00606"></a>00606 <span class="preprocessor"></span><span class="keyword">@end</span>
+<a name="l00607"></a>00607 
 </pre></div></div>
 </div>
             </div>

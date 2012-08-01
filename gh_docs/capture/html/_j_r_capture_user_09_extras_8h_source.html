@@ -93,35 +93,41 @@
 <a name="l00031"></a>00031 <span class="preprocessor">#import &lt;Foundation/Foundation.h&gt;</span>
 <a name="l00032"></a>00032 <span class="preprocessor">#import &quot;JRCaptureUser.h&quot;</span>
 <a name="l00033"></a>00033 
-<a name="l00034"></a>00034 <span class="keyword">@class</span> <a class="code" href="interface_j_r_capture_object.html" title="Protocol adopted by an object ...">JRCaptureObject</a>;
+<a name="l00034"></a>00034 <span class="keyword">@class</span> <a class="code" href="interface_j_r_capture_object.html" title="Base class for all Capture objects and plural elements.">JRCaptureObject</a>;
 <a name="l00035"></a>00035 <span class="keyword">@class</span> <a class="code" href="interface_j_r_capture_user.html" title="A JRCaptureUser object.">JRCaptureUser</a>;
 <a name="l00036"></a>00036 
-<a name="l00037"></a>00037 <span class="keyword">@protocol </span>JRCaptureUserDelegate &lt;<a class="code" href="protocol_j_r_capture_object_delegate-p.html" title="Protocol adopted by an object ...">JRCaptureObjectDelegate</a>&gt;
-<a name="l00038"></a>00038 <span class="keyword">@optional</span>
-<a name="l00039"></a>00039 - (void)createDidSucceedForUser:(<a class="code" href="interface_j_r_capture_user.html" title="A JRCaptureUser object.">JRCaptureUser</a> *)user context:(NSObject *)context;
-<a name="l00040"></a>00040 - (void)createDidFailForUser:(<a class="code" href="interface_j_r_capture_user.html" title="A JRCaptureUser object.">JRCaptureUser</a> *)user withError:(NSError *)error context:(NSObject *)context;
-<a name="l00041"></a>00041 
-<a name="l00042"></a>00042 - (void)fetchUserDidSucceed:(<a class="code" href="interface_j_r_capture_user.html" title="A JRCaptureUser object.">JRCaptureUser</a> *)fetchedUser context:(NSObject *)context;
-<a name="l00043"></a>00043 - (void)fetchUserDidFailWithError:(NSError *)error context:(NSObject *)context;
-<a name="l00044"></a>00044 
-<a name="l00045"></a>00045 
-<a name="l00046"></a>00046 <span class="preprocessor">#ifdef JRCAPTURE_FETCH_LAST_UPDATED</span>
-<a name="l00047"></a>00047 <span class="preprocessor"></span>- (void)fetchLastUpdatedDidSucceed:(JRDateTime *)serverLastUpdated isOutdated:(BOOL)isOutdated context:(NSObject *)context;
-<a name="l00048"></a>00048 - (void)fetchLastUpdatedDidFailWithError:(NSError *)error context:(NSObject *)context;
-<a name="l00049"></a>00049 <span class="preprocessor">#endif // JRCAPTURE_FETCH_LAST_UPDATED</span>
-<a name="l00050"></a>00050 <span class="preprocessor"></span><span class="keyword">@end</span>
-<a name="l00051"></a>00051 
-<a name="l00052"></a>00052 <span class="keyword">@interface </span><a class="code" href="interface_j_r_capture_user.html" title="A JRCaptureUser object.">JRCaptureUser</a> (JRCaptureUser_Extras) &lt;NSCoding&gt;
-<a name="l00053"></a>00053 - (void)createOnCaptureForDelegate:(<span class="keywordtype">id</span>&lt;JRCaptureUserDelegate&gt;)delegate context:(NSObject *)context;
-<a name="l00054"></a>00054 
-<a name="l00055"></a>00055 + (void)fetchCaptureUserFromServerForDelegate:(<span class="keywordtype">id</span>&lt;JRCaptureUserDelegate&gt;)delegate context:(NSObject *)context;
-<a name="l00056"></a>00056 
-<a name="l00057"></a>00057 <span class="preprocessor">#ifdef JRCAPTURE_FETCH_LAST_UPDATED</span>
-<a name="l00058"></a>00058 <span class="preprocessor"></span>- (void)fetchLastUpdatedFromServerForDelegate:(<span class="keywordtype">id</span>&lt;JRCaptureUserDelegate&gt;)delegate context:(NSObject *)context;
-<a name="l00059"></a>00059 <span class="preprocessor">#endif // JRCAPTURE_FETCH_LAST_UPDATED</span>
-<a name="l00060"></a>00060 <span class="preprocessor"></span>
-<a name="l00061"></a>00061 + (id)captureUserObjectFromDictionary:(NSDictionary*)dictionary;
-<a name="l00062"></a>00062 <span class="keyword">@end</span>
+<a name="l00041"></a><a class="code" href="protocol_j_r_capture_user_delegate-p.html">00041</a> <span class="keyword">@protocol </span><a class="code" href="protocol_j_r_capture_user_delegate-p.html" title="Protocol adopted by an object ...">JRCaptureUserDelegate</a> &lt;<a class="code" href="protocol_j_r_capture_object_delegate-p.html" title="Protocol adopted by an object ...">JRCaptureObjectDelegate</a>&gt;
+<a name="l00042"></a>00042 <span class="keyword">@optional</span>
+<a name="l00052"></a>00052 - (void)createDidSucceedForUser:(<a class="code" href="interface_j_r_capture_user.html" title="A JRCaptureUser object.">JRCaptureUser</a> *)user context:(NSObject *)context;
+<a name="l00053"></a>00053 
+<a name="l00066"></a>00066 - (void)createDidFailForUser:(<a class="code" href="interface_j_r_capture_user.html" title="A JRCaptureUser object.">JRCaptureUser</a> *)user withError:(NSError *)error context:(NSObject *)context;
+<a name="l00067"></a>00067 
+<a name="l00077"></a>00077 - (void)fetchUserDidSucceed:(<a class="code" href="interface_j_r_capture_user.html" title="A JRCaptureUser object.">JRCaptureUser</a> *)fetchedUser context:(NSObject *)context;
+<a name="l00078"></a>00078 
+<a name="l00088"></a>00088 - (void)fetchUserDidFailWithError:(NSError *)error context:(NSObject *)context;
+<a name="l00089"></a>00089 
+<a name="l00090"></a>00090 
+<a name="l00091"></a>00091 <span class="preprocessor">#ifdef JRCAPTURE_FETCH_LAST_UPDATED</span>
+<a name="l00092"></a>00092 <span class="preprocessor"></span>
+<a name="l00104"></a>00104 - (void)fetchLastUpdatedDidSucceed:(<a class="code" href="_j_r_capture_types_8h.html#a7b5b53c1f74c3c428839bcfaa0c3743b">JRDateTime</a> *)serverLastUpdated isOutdated:(BOOL)isOutdated context:(NSObject *)context;
+<a name="l00105"></a>00105 
+<a name="l00115"></a>00115 - (void)fetchLastUpdatedDidFailWithError:(NSError *)error context:(NSObject *)context;
+<a name="l00116"></a>00116 <span class="preprocessor">#endif // JRCAPTURE_FETCH_LAST_UPDATED</span>
+<a name="l00117"></a>00117 <span class="preprocessor"></span><span class="keyword">@end</span>
+<a name="l00118"></a>00118 
+<a name="l00123"></a>00123 <span class="keyword">@interface </span><a class="code" href="interface_j_r_capture_user.html" title="A JRCaptureUser object.">JRCaptureUser</a> (JRCaptureUser_Extras) &lt;NSCoding&gt;
+<a name="l00124"></a>00124 
+<a name="l00134"></a>00134 - (void)createOnCaptureForDelegate:(<span class="keywordtype">id</span>&lt;<a class="code" href="protocol_j_r_capture_user_delegate-p.html" title="Protocol adopted by an object ...">JRCaptureUserDelegate</a>&gt;)delegate context:(NSObject *)context;
+<a name="l00135"></a>00135 
+<a name="l00145"></a>00145 + (void)fetchCaptureUserFromServerForDelegate:(<span class="keywordtype">id</span>&lt;<a class="code" href="protocol_j_r_capture_user_delegate-p.html" title="Protocol adopted by an object ...">JRCaptureUserDelegate</a>&gt;)delegate context:(NSObject *)context;
+<a name="l00146"></a>00146 
+<a name="l00147"></a>00147 <span class="preprocessor">#ifdef JRCAPTURE_FETCH_LAST_UPDATED</span>
+<a name="l00148"></a>00148 <span class="preprocessor"></span>
+<a name="l00157"></a>00157 - (void)fetchLastUpdatedFromServerForDelegate:(<span class="keywordtype">id</span>&lt;<a class="code" href="protocol_j_r_capture_user_delegate-p.html" title="Protocol adopted by an object ...">JRCaptureUserDelegate</a>&gt;)delegate context:(NSObject *)context;
+<a name="l00158"></a>00158 <span class="preprocessor">#endif // JRCAPTURE_FETCH_LAST_UPDATED</span>
+<a name="l00159"></a>00159 <span class="preprocessor"></span>
+<a name="l00163"></a>00163 + (id)captureUserObjectFromDictionary:(NSDictionary*)dictionary;
+<a name="l00164"></a>00164 <span class="keyword">@end</span>
 </pre></div></div>
 </div>
             </div>

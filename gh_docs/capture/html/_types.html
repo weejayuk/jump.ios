@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>JRCapture: </title>
+<title>JRCapture: Mapping Reference</title>
 
 <link href="https://ajax.googleapis.com/ajax/libs/yui/2.6.0/build/reset-fonts-grids/reset-fonts-grids.css" media="screen" rel="Stylesheet" type="text/css" />
 <link href="https://docj27ko03fnu.cloudfront.net/rel/css/2bb009d73339d0d58d219aa0fe64c58b.css" media="screen" rel="stylesheet" type="text/css" />
@@ -56,25 +56,65 @@
     </ul>
   </div>
 </div>
+<div class="header">
+  <div class="headertitle">
+<h1>Mapping Reference </h1>  </div>
+</div>
 <div class="contents">
-<p>Capture and Objective-C Types</p>
-<p><a class="anchor" id="types"></a>  
-<table border="1px solid black">
-<tr><b><td>Schema Type  </td><td>Json Type         </td><td>Obj-C Type   </td><td>JRCapture Type            </td><td>Recursive  </td><td>Typedeffed  </td><td>Can Change  </td><td>Notes  </td></b></tr>
-<tr><td>string          </td><td>String            </td><td>NSString     </td><td>NSString                  </td><td>           </td><td>No          </td><td>            </td><td>       </td></tr>
-<tr><td>boolean         </td><td>Boolean           </td><td>NSNumber     </td><td>JRBoolean                 </td><td>           </td><td>Yes         </td><td>            </td><td>       </td></tr>
-<tr><td>integer         </td><td>Number            </td><td>NSNumber     </td><td>JRInteger                 </td><td>           </td><td>Yes         </td><td>            </td><td>       </td></tr>
-<tr><td>decimal         </td><td>Number            </td><td>NSNumber     </td><td>NSNumber                  </td><td>           </td><td>No          </td><td>            </td><td>       </td></tr>
-<tr><td>date            </td><td>String            </td><td>NSDate       </td><td>JRDate                    </td><td>           </td><td>Yes         </td><td>            </td><td>       </td></tr>
-<tr><td>dateTime        </td><td>String            </td><td>NSDate       </td><td>JRDateTime                </td><td>           </td><td>Yes         </td><td>            </td><td>       </td></tr>
-<tr><td>ipAddress       </td><td>String            </td><td>NSString     </td><td>JRIpAddress               </td><td>           </td><td>Yes         </td><td>            </td><td>       </td></tr>
-<tr><td>password        </td><td>String or Object  </td><td>NSObject     </td><td>JRPassword                </td><td>           </td><td>Yes         </td><td>            </td><td>       </td></tr>
-<tr><td>JSON            </td><td>(any type)        </td><td>NSObject     </td><td>JRJsonObject              </td><td>           </td><td>Yes         </td><td>            </td><td>The JSON type is unstructured data; it only has to be valid parseable JSON.</td></tr>
-<tr><td>plural          </td><td>Array             </td><td>NSArray      </td><td>NSArray or JRSimpleArray  </td><td>Yes        </td><td>No/Yes      </td><td>            </td><td>Primitive child attributes of plurals may have the constraint locally-unique.</td></tr>
-<tr><td>object          </td><td>Object            </td><td>NSObject     </td><td>JR<PropertyName           </td><td>Yes        </td><td>No          </td><td>            </td><td>       </td></tr>
-<tr><td>uuid            </td><td>String            </td><td>NSString     </td><td>JRUuid                    </td><td>           </td><td>Yes         </td><td>            </td><td>Not an externally usable type.</td></tr>
-<tr><td>id              </td><td>Number            </td><td>NSNumber     </td><td>JRObjectId                </td><td>           </td><td>Yes         </td><td>            </td><td>Not an externally usable type.</td></tr>
+<p>The Capture schema, the JSON language, Objective-C, and the JUMP for iOS libraries all use different nomenclature when referring to types. For example, the schema may define a property as having type <code>"string"</code>, which is the same as the JSON <code>"String"</code> and the Objective-C foundational class <code>"NSString"</code>.</p>
+<p>Some types do not perfectly map between systems. For example, a <code>boolean</code> on Capture can have the values <code>true</code>, <code>false</code>, and <code>null</code>, while an <code>NSBoolean</code> in Objective-C can only be <code>YES</code> or <code>NO</code>. On the other hand an <code>NSNumber</code> can represent <code>true</code>, <code>false</code>, and <code>null</code>, but it can also hold many other things that won't be accepted by the Capture API (such as <code>-100</code>).</p>
+<p>To ensure that your objects can correctly update themselves on Capture, we had to use an <code>NSNumber</code> to hold boolean properties. To make it perfectly clear that boolean properties cannot be just any number, we typedeffed them <code>JRBoolean</code>. Your IDE's auto-complete should suggest JRBoolean when setting a boolean property, but since underneath it is just an NSNumber, you can set it to <code>null</code> as well.</p>
+<p>The compiler won't stop you from setting a <code>JRBoolean</code> to a non-boolean value, but you will get an error when you try and update your object on Capture.</p>
+<p><a class="anchor" id="typesTable"></a> </p>
+<table  id="DoxyEmbeddedTable">
+<tr id="HeadRow">
+<td id="FirstColumn">Schema Type</td><td id="MiddleColumn">Json Type</td><td id="MiddleColumn">Obj-C Type</td><td id="MiddleColumn"><a class="el" href="interface_j_r_capture.html" title="Main API for interacting with the Janrain Capture for iOS library.">JRCapture</a> Type</td><td id="MiddleColumn">Recursive</td><td id="MiddleColumn">Typedeffed</td><td id="LastColumn">Notes </td></tr>
+<tr id="BodyRow">
+<td id="FirstColumn">string</td><td id="MiddleColumn">String</td><td id="MiddleColumn">NSString</td><td id="MiddleColumn">NSString</td><td id="MiddleColumn"></td><td id="MiddleColumn">No</td><td id="LastColumn"></td></tr>
+<tr id="BodyRow">
+<td id="FirstColumn">boolean</td><td id="MiddleColumn">Boolean</td><td id="MiddleColumn">NSNumber</td><td id="MiddleColumn"><a class="el" href="_j_r_capture_types_8h.html#ab3d87e7a9b641d2732af671ea5631bfc">JRBoolean</a></td><td id="MiddleColumn"></td><td id="MiddleColumn"><b>Yes</b> </td><td id="LastColumn"></td></tr>
+<tr id="BodyRow">
+<td id="FirstColumn">integer</td><td id="MiddleColumn">Number</td><td id="MiddleColumn">NSNumber</td><td id="MiddleColumn"><a class="el" href="_j_r_capture_types_8h.html#a43765c79c9520cc532c8cd27c96f1011">JRInteger</a></td><td id="MiddleColumn"></td><td id="MiddleColumn"><b>Yes</b> </td><td id="LastColumn"></td></tr>
+<tr id="BodyRow">
+<td id="FirstColumn">decimal</td><td id="MiddleColumn">Number</td><td id="MiddleColumn">NSNumber</td><td id="MiddleColumn">NSNumber</td><td id="MiddleColumn"></td><td id="MiddleColumn">No</td><td id="LastColumn"></td></tr>
+<tr id="BodyRow">
+<td id="FirstColumn">date</td><td id="MiddleColumn">String</td><td id="MiddleColumn">NSDate</td><td id="MiddleColumn"><a class="el" href="_j_r_capture_types_8h.html#a2bf0800274f8dbce11464715ccd868f0">JRDate</a></td><td id="MiddleColumn"></td><td id="MiddleColumn"><b>Yes</b> </td><td id="LastColumn"></td></tr>
+<tr id="BodyRow">
+<td id="FirstColumn">dateTime</td><td id="MiddleColumn">String</td><td id="MiddleColumn">NSDate</td><td id="MiddleColumn"><a class="el" href="_j_r_capture_types_8h.html#a7b5b53c1f74c3c428839bcfaa0c3743b">JRDateTime</a></td><td id="MiddleColumn"></td><td id="MiddleColumn"><b>Yes</b> </td><td id="LastColumn"></td></tr>
+<tr id="BodyRow">
+<td id="FirstColumn">ipAddress</td><td id="MiddleColumn">String</td><td id="MiddleColumn">NSString</td><td id="MiddleColumn"><a class="el" href="_j_r_capture_types_8h.html#aeef0a186e306b5fe21510d22d0a24c12">JRIpAddress</a></td><td id="MiddleColumn"></td><td id="MiddleColumn"><b>Yes</b> </td><td id="LastColumn"></td></tr>
+<tr id="BodyRow">
+<td id="FirstColumn">password</td><td id="MiddleColumn">String or Object</td><td id="MiddleColumn">NSObject</td><td id="MiddleColumn"><a class="el" href="_j_r_capture_types_8h.html#ae4d41033c8d50bc4e0da3e7c04eb49fe">JRPassword</a></td><td id="MiddleColumn"></td><td id="MiddleColumn"><b>Yes</b> </td><td id="LastColumn"></td></tr>
+<tr id="BodyRow">
+<td id="FirstColumn">JSON</td><td id="MiddleColumn">(any type)</td><td id="MiddleColumn">NSObject</td><td id="MiddleColumn"><a class="el" href="_j_r_capture_types_8h.html#ab04a6ac2657056665528412e64be7a5f">JRJsonObject</a></td><td id="MiddleColumn"></td><td id="MiddleColumn"><b>Yes</b> </td><td id="LastColumn">The JSON type is unstructured data; it only has to be valid parseable JSON. </td></tr>
+<tr id="BodyRow">
+<td id="FirstColumn">plural</td><td id="MiddleColumn">Array</td><td id="MiddleColumn">NSArray</td><td id="MiddleColumn">NSArray or <a class="el" href="_j_r_capture_types_8h.html#a634970be09000b37e2a95a88b6304239">JRStringArray</a></td><td id="MiddleColumn"><b>Yes</b> </td><td id="MiddleColumn">No/<b>Yes</b> </td><td id="LastColumn">Primitive child attributes of plurals may have the constraint locally-unique. </td></tr>
+<tr id="BodyRow">
+<td id="FirstColumn">object</td><td id="MiddleColumn">Object</td><td id="MiddleColumn">NSObject</td><td id="MiddleColumn">JR&lt;<em>PropertyName</em>&gt;</td><td id="MiddleColumn"><b>Yes</b> </td><td id="MiddleColumn">No</td><td id="LastColumn"></td></tr>
+<tr id="BodyRow">
+<td id="FirstColumn">uuid</td><td id="MiddleColumn">String</td><td id="MiddleColumn">NSString</td><td id="MiddleColumn"><a class="el" href="_j_r_capture_types_8h.html#a4d9b01cb6fc97ae3bf1a792c8acf3467">JRUuid</a></td><td id="MiddleColumn"></td><td id="MiddleColumn"><b>Yes</b> </td><td id="LastColumn">Not an externally usable type. </td></tr>
+<tr id="LastRow">
+<td id="FirstColumn">id</td><td id="MiddleColumn">Number</td><td id="MiddleColumn">NSNumber</td><td id="MiddleColumn"><a class="el" href="_j_r_capture_types_8h.html#a18c623300bb92acd5d2949642793caeb">JRObjectId</a></td><td id="MiddleColumn"></td><td id="MiddleColumn"><b>Yes</b> </td><td id="LastColumn">Not an externally usable type. </td></tr>
 </table>
+<p><a class="anchor" id="types"></a>  
+<!--
+<table border="1px solid black">
+<tr><b><td>Schema Type  </td><td>Json Type         </td><td>Obj-C Type   </td><td>JRCapture Type                   </td><td>Recursive  </td><td>Typedeffed    </td><td>Notes  </td></b></tr>
+<tr><td>string          </td><td>String            </td><td>NSString     </td><td>NSString                         </td><td>           </td><td>No            </td><td>       </td></tr>
+<tr><td>boolean         </td><td>Boolean           </td><td>NSNumber     </td><td>JRBoolean                        </td><td>           </td><td><b>Yes</b>    </td><td>       </td></tr>
+<tr><td>integer         </td><td>Number            </td><td>NSNumber     </td><td>JRInteger                        </td><td>           </td><td><b>Yes</b>    </td><td>       </td></tr>
+<tr><td>decimal         </td><td>Number            </td><td>NSNumber     </td><td>NSNumber                         </td><td>           </td><td>No            </td><td>       </td></tr>
+<tr><td>date            </td><td>String            </td><td>NSDate       </td><td>JRDate                           </td><td>           </td><td><b>Yes</b>    </td><td>       </td></tr>
+<tr><td>dateTime        </td><td>String            </td><td>NSDate       </td><td>JRDateTime                       </td><td>           </td><td><b>Yes</b>    </td><td>       </td></tr>
+<tr><td>ipAddress       </td><td>String            </td><td>NSString     </td><td>JRIpAddress                      </td><td>           </td><td><b>Yes</b>    </td><td>       </td></tr>
+<tr><td>password        </td><td>String or Object  </td><td>NSObject     </td><td>JRPassword                       </td><td>           </td><td><b>Yes</b>    </td><td>       </td></tr>
+<tr><td>JSON            </td><td>(any type)        </td><td>NSObject     </td><td>JRJsonObject                     </td><td>           </td><td><b>Yes</b>    </td><td>The JSON type is unstructured data; it only has to be valid parseable JSON.</td></tr>
+<tr><td>plural          </td><td>Array             </td><td>NSArray      </td><td>NSArray or JRSimpleArray         </td><td><b>Yes</b> </td><td>No/<b>Yes</b> </td><td>Primitive child attributes of plurals may have the constraint locally-unique.</td></tr>
+<tr><td>object          </td><td>Object            </td><td>NSObject     </td><td>JR&lt;<em>PropertyName</em>&gt;  </td><td><b>Yes</b> </td><td>No            </td><td>       </td></tr>
+<tr><td>uuid            </td><td>String            </td><td>NSString     </td><td>JRUuid                           </td><td>           </td><td><b>Yes</b>    </td><td>Not an externally usable type.</td></tr>
+<tr><td>id              </td><td>Number            </td><td>NSNumber     </td><td>JRObjectId                       </td><td>           </td><td><b>Yes</b>    </td><td>Not an externally usable type.</td></tr>
+</table>
+-->
  </div>
             </div>
            <!-- end -->
