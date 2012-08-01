@@ -52,7 +52,7 @@
  * collected as they use your application.
  *
  * For directions on doing so, please see <a href="http://TODO">
- *   the Capture for iOS guide<\a>
+ *   the Capture for iOS guide</a>
  * on our <a href="http://developers.janrain.com/documentation/mobile-libraries/">developers portal</a>.
  *
  * Before you begin, you need to have created a
@@ -502,7 +502,7 @@ typedef enum
  * flow of the passed provider. The user will not be able to return to the list of providers.
  *
  * @param provider
- *   The name of the provider on which the user will authenticate.  For a list of possible strings,
+ *   The name of the provider on which the user will authenticate. For a list of possible strings,
  *   please see the \ref basicProviders "List of Providers"
  *
  * @param delegate
