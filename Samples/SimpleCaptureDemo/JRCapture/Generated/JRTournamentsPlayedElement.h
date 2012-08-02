@@ -37,18 +37,18 @@
  * @brief A list of the tournaments in which the player has competed
  **/
 @interface JRTournamentsPlayedElement : JRCaptureObject
-@property (nonatomic, readonly) JRObjectId *tournamentsPlayedElementId; /**< Simple identifier for this sub-entity @note The \e id of the object should not be set. // TODO: etc. */ 
-@property (nonatomic, copy)     JRDecimal *moneyWon; /**< The amount of money won, if any */ 
-@property (nonatomic, copy)     JRInteger *placed; /**< Where the player placed in the tournament @note This is a property of type \ref types "integer", which is a typedef of \e NSNumber. The accepted values can only be <code>[NSNumber numberWithInteger:<em>myInteger</em>]</code>, <code>[NSNumber numberWithInt:<em>myInt</em>]</code>, or <code>nil</code> */ 
-@property (nonatomic, copy)     JRDateTime *tournamentDate; /**< The date and time that the tournament started @note This is a property of type \ref types "dateTime", which is a typedef of \e NSDate. The accepted format should be an ISO8601 dateTime string (e.g., <code>yyyy-MM-dd HH:mm:ss.SSSSSS ZZZ</code>) */ 
-@property (nonatomic, copy)     JRBoolean *wonMoney; /**< Whether or not the player won any money @note This is a property of type \ref types "boolean", which is a typedef of \e NSNumber. The accepted values can only be <code>[NSNumber numberWithBool:<em>myBool</em>]</code> or <code>nil</code> */ 
+@property (nonatomic, readonly) JRObjectId *tournamentsPlayedElementId; /**< Simple identifier for this sub-entity @note The \e id of the object should not be set. */ 
+@property (nonatomic, copy)     JRDecimal *moneyWon; /**< The amount of money won, if any @note A ::JRDecimal property is a property of type \ref typesTable "decimal" and a typedef of \e NSNumber. Accepted values can be, for example, <code>[NSNumber numberWithNumber:<em>myDecimal</em>]</code>, <code>nil</code>, etc. */ 
+@property (nonatomic, copy)     JRInteger *placed; /**< Where the player placed in the tournament @note A ::JRInteger property is a property of type ef typesTable "integer" and a typedef of \e NSNumber. The accepted values can only be <code>[NSNumber numberWithInteger:<em>myInteger</em>]</code>, <code>[NSNumber numberWithInt:<em>myInt</em>]</code>, or <code>nil</code> */ 
+@property (nonatomic, copy)     JRDateTime *tournamentDate; /**< The date and time that the tournament started @note A ::JRDateTime property is a property of type \ref typesTable "dateTime" and a typedef of \e NSDate. The accepted format should be an ISO 8601 dateTime string (e.g., <code>yyyy-MM-dd HH:mm:ss.SSSSSS ZZZ</code>) */ 
+@property (nonatomic, copy)     JRBoolean *wonMoney; /**< Whether or not the player won any money @note A ::JRBoolean property is a property of type \ref typesTable "boolean" and a typedef of \e NSNumber. The accepted values can only be <code>[NSNumber numberWithBool:<em>myBool</em>]</code> or <code>nil</code> */ 
 
 /**
  * @name Constructors
  **/
 /*@{*/
 /**
- * Default constructor. Returns an empty JRTournamentsPlayedElement object
+ * Default instance constructor. Returns an empty JRTournamentsPlayedElement object
  *
  * @return
  *   A JRTournamentsPlayedElement object
@@ -56,7 +56,7 @@
 - (id)init;
 
 /**
- * Returns an empty JRTournamentsPlayedElement object
+ * Default class constructor. Returns an empty JRTournamentsPlayedElement object
  *
  * @return
  *   A JRTournamentsPlayedElement object
@@ -73,6 +73,11 @@
  * TODO: Doxygen doc
  **/
 - (BOOL)needsUpdate;
+
+/**
+ * TODO: Doxygen doc
+ **/
+- (void)updateOnCaptureForDelegate:(id<JRCaptureObjectDelegate>)delegate context:(NSObject *)context;
 /*@}*/
 
 /**

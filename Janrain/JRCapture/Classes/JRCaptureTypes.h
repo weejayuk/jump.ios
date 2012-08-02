@@ -234,7 +234,33 @@ typedef NSObject JRPassword;
 typedef NSObject JRJsonObject;
 
 /**
- * 
+ * Plurals contain collections of elements, where an element is just an object stored in a plural. Like objects, plural
+ * elements can contain primitive values, sub-objects, or sub-plurals.  Plurals only store one type of element, and
+ * that element’s attributes are defined in the schema.  Some plurals just store lists of strings.  For example, the
+ * JRCaptureUser#profiles plural stores JRProfilesElements, and the JRProfile#quotes plural stores a list of strings
+ * (quotes).
+ *
+ * For both types of plurals (plurals with strings and plurals with objects) use \e NSArrays to hold their elements.
+ * When the Capture User Model is generated, the script will determine if the plural property contains a list of strings
+ * or a list of elements.
+ *
+ * If the plural only contains a list of strings, this property is typedeffed to \e JRStringArray. \e JRStringArray
+ * properties should only contain \e NSStrings. Your IDE's auto-complete should suggest \e JRStringArray when setting
+ * a plural of strings. For example, the JRProfile#books array and the JRProfile#heros array both holds a lists of
+ * strings (books and heroes, respectively).
+ *
+ * If the plural contains elements that are more than just a string, a sub-object is created for that element. For
+ * example, the JRCaptureUser contains an \e NSArray property called JRCaptureUser#statuses. This array contains
+ * objects of type JRStatusesElements.
+ *
+ * When adding elements to an array, you should only add the elements that belong in that array.
+ *
+ * @warning
+ *   The compiler won't stop you from setting a most objects to arrays. For example, you could add an \e NSDictionary
+ *   to a \e JRStringArray, which is only supposed to hold \e NSStrings. As this value will not be accepted by Capture,
+ *   the JUMP for iOS library will filter the array, accepting only the correct element type, before replacing it on
+ *   Capture.
+ *
  * @sa
  *   For more information, please see the \ref typesTable "Type Mapping Reference Page"
  **/
@@ -327,5 +353,4 @@ typedef NSNumber JRObjectId;
 @endhtmlonly
  *
  **/
-//@htmlonly
-//@endhtmlonly
+

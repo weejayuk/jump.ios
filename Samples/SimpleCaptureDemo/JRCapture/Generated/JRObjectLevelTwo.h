@@ -47,7 +47,7 @@
  **/
 /*@{*/
 /**
- * Default constructor. Returns an empty JRObjectLevelTwo object
+ * Default instance constructor. Returns an empty JRObjectLevelTwo object
  *
  * @return
  *   A JRObjectLevelTwo object
@@ -55,7 +55,7 @@
 - (id)init;
 
 /**
- * Returns an empty JRObjectLevelTwo object
+ * Default class constructor. Returns an empty JRObjectLevelTwo object
  *
  * @return
  *   A JRObjectLevelTwo object
@@ -72,6 +72,11 @@
  * TODO: Doxygen doc
  **/
 - (BOOL)needsUpdate;
+
+/**
+ * TODO: Doxygen doc
+ **/
+- (void)updateOnCaptureForDelegate:(id<JRCaptureObjectDelegate>)delegate context:(NSObject *)context;
 /*@}*/
 
 @end

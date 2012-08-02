@@ -46,7 +46,7 @@
  **/
 /*@{*/
 /**
- * Default constructor. Returns an empty JRPluralTestAlphabeticElement object
+ * Default instance constructor. Returns an empty JRPluralTestAlphabeticElement object
  *
  * @return
  *   A JRPluralTestAlphabeticElement object
@@ -54,7 +54,7 @@
 - (id)init;
 
 /**
- * Returns an empty JRPluralTestAlphabeticElement object
+ * Default class constructor. Returns an empty JRPluralTestAlphabeticElement object
  *
  * @return
  *   A JRPluralTestAlphabeticElement object
@@ -71,6 +71,11 @@
  * TODO: Doxygen doc
  **/
 - (BOOL)needsUpdate;
+
+/**
+ * TODO: Doxygen doc
+ **/
+- (void)updateOnCaptureForDelegate:(id<JRCaptureObjectDelegate>)delegate context:(NSObject *)context;
 /*@}*/
 
 @end

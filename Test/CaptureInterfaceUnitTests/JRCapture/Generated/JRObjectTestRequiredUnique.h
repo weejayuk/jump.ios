@@ -46,44 +46,58 @@
  **/
 /*@{*/
 /**
- * Default constructor. Returns an empty JRObjectTestRequiredUnique object
+ * Default instance constructor. Returns an empty JRObjectTestRequiredUnique object
  *
  * @return
  *   A JRObjectTestRequiredUnique object
- * 
- * @note
- * Method creates a JRObjectTestRequiredUnique object without the required properties TODO: MAKE A LIST!
- * These properties are required when updating the object on Capture.
+ *
+ * @note 
+ * Method creates a object without the required properties: \e requiredString, \e requiredUniqueString.
+ * These properties are required when updating the object on Capture. That is, you must set them before calling
+ * updateOnCaptureForDelegate:context:().
  **/
 - (id)init;
 
 /**
- * Returns an empty JRObjectTestRequiredUnique object
+ * Default class constructor. Returns an empty JRObjectTestRequiredUnique object
  *
  * @return
  *   A JRObjectTestRequiredUnique object
- * 
- * @note
- * Method creates a JRObjectTestRequiredUnique object without the required properties TODO: MAKE A LIST!
- * These properties are required when updating the object on Capture.
+ *
+ * @note 
+ * Method creates a object without the required properties: \e requiredString, \e requiredUniqueString.
+ * These properties are required when updating the object on Capture. That is, you must set them before calling
+ * updateOnCaptureForDelegate:context:().
  **/
 + (id)objectTestRequiredUnique;
 
 /**
- * Returns a JRObjectTestRequiredUnique object initialized with the given
- * *
+ * Returns a JRObjectTestRequiredUnique object initialized with the given required properties: \c newRequiredString, \c newRequiredUniqueString
+ *
+ * @param newRequiredString
+ *   The object's \e requiredString property
+ *
+ * @param newRequiredUniqueString
+ *   The object's \e requiredUniqueString property
+ * 
  * @return
- *   A JRObjectTestRequiredUnique object initialized with the given
+ *   A JRObjectTestRequiredUnique object initialized with the given required properties: \e newRequiredString, \e newRequiredUniqueString.
  *   If the required arguments are \e nil or \e [NSNull null], returns \e nil
  **/
 - (id)initWithRequiredString:(NSString *)newRequiredString andRequiredUniqueString:(NSString *)newRequiredUniqueString;
 
 /**
- * Returns a JRObjectTestRequiredUnique object initialized with the given
- * *
+ * Returns a JRObjectTestRequiredUnique object initialized with the given required properties: \c requiredString, \c requiredUniqueString
+ *
+ * @param requiredString
+ *   The object's \e requiredString property
+ *
+ * @param requiredUniqueString
+ *   The object's \e requiredUniqueString property
+ * 
  * @return
- *   A JRObjectTestRequiredUnique object initialized with the given
- *   If the required arguments are \e nil or \e [NSNull null], returns \e nil,
+ *   A JRObjectTestRequiredUnique object initialized with the given required properties: \e requiredString, \e requiredUniqueString.
+ *   If the required arguments are \e nil or \e [NSNull null], returns \e nil
  **/
 + (id)objectTestRequiredUniqueWithRequiredString:(NSString *)requiredString andRequiredUniqueString:(NSString *)requiredUniqueString;
 
@@ -97,6 +111,11 @@
  * TODO: Doxygen doc
  **/
 - (BOOL)needsUpdate;
+
+/**
+ * TODO: Doxygen doc
+ **/
+- (void)updateOnCaptureForDelegate:(id<JRCaptureObjectDelegate>)delegate context:(NSObject *)context;
 /*@}*/
 
 @end

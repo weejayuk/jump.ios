@@ -41,16 +41,16 @@
 ###################################################################
 # MINIMUM INSTANCE CONSTRUCTOR (W/O REQUIRED PROPERTIES)
 #
-#                                          (Section only here when there are required properties)     
-#                                                                        |
-# /**                                                                    |
-#  * Default constructor. Returns an empty <objectClass> object.         |
-#  *                                                                     |
-#  * @return                                                             |
-#  *   A <objectClass> object                                            |
-#  *                                                                     |
-#  * @note Method creates a <objectClass> object without the required    |
-#  * properties <requiredProperties>.  These properties are required  <--+
+#                                              (Section only here when there are required properties)     
+#                                                                          |
+# /**                                                                      |
+#  * Default instance constructor. Returns an empty <objectClass> object.  |
+#  *                                                                       |
+#  * @return                                                               |
+#  *   A <objectClass> object                                              |
+#  *                                                                       |
+#  * @note Method creates a <objectClass> object without the required      |
+#  * properties: <requiredProperties>.  These properties are required <----+
 #  * when updating the object on Capture.
 #  **/
 # - (id)init
@@ -71,11 +71,11 @@
 
 my @minConstructorDocParts = (
 "/**
- * Default constructor. Returns an empty ",""," object
+ * Default instance constructor. Returns an empty ",""," object
  *
  * \@return
  *   A ",""," object\n",
-"", 
+"","", 
 " **/\n");
 
 my @minConstructorParts = (
@@ -97,7 +97,7 @@ my @minConstructorParts = (
 # (Method only here when there are required properties)
 # 
 # /**
-#  * Returns a <objectClass> object initialized with the given <requiredProperties>
+#  * Returns a <objectClass> object initialized with the given required properties: <requiredProperties>
 #  *
 #  * @param <requiredProperty>
 #  *   <requiredPropertyDescription>
@@ -132,12 +132,12 @@ my @minConstructorParts = (
 
 my @constructorDocParts = (
 "/**
- * Returns a ",""," object initialized with the given","","
+ * Returns a ",""," object initialized with the given required properties: ","","
  *",
 "", 
-" *
+" 
  * \@return
- *   A ",""," object initialized with the given","","\n",
+ *   A ",""," object initialized with the given required properties: ","",".\n",
 " *   If the required arguments are \\e nil or \\e [NSNull null], returns \\e nil
  **/\n");
 
@@ -165,13 +165,14 @@ my @constructorParts = (
 #                      (Section only here when there are required properties)     
 #                                               |
 # /**                                           |
-#  * Returns an empty <objectClass> object      |
+#  * Default class constructor. Returns an      |
+#  * empty <objectClass> object                 |
 #  *                                            |
 #  * @return                                    |
 #  *   A <objectClass> object                   |
 #  *                                            V
 #  * @note Method creates a <objectClass> object without the required
-#  * properties <requiredProperties>.  These properties are required
+#  * properties: <requiredProperties>.  These properties are required
 #  * when updating the object on Capture.
 #  **/
 # + (id)<objectName>    
@@ -182,11 +183,11 @@ my @constructorParts = (
 
 my @minClassConstructorDocParts = (
 "/**
- * Returns an empty ",""," object
+ * Default class constructor. Returns an empty ",""," object
  *
  * \@return
  *   A ",""," object\n",
-"", 
+"","", 
 " **/\n");
 
 my @minClassConstructorParts = (
@@ -200,13 +201,13 @@ my @minClassConstructorParts = (
 # (Method only here when there are required properties)
 # 
 # /**
-#  * Returns a <objectClass> object initialized with the given <requiredProperties>
+#  * Returns a <objectClass> object initialized with the given required properties: <requiredProperties>
 #  *
 #  * @param <requiredProperty>
 #  *   <requiredPropertyDescription>
 #  *
 #  * @return
-#  *   A <objectClass> object initialized with the given <requiredProperties>
+#  *   A <objectClass> object initialized with the given required properties: <requiredProperties>
 #  *   If the required arguments are \e nil or \e [NSNull null], returns \e nil
 #  **/
 # + (id)<objectName><requiredProperties>        
@@ -217,13 +218,13 @@ my @minClassConstructorParts = (
 
 my @classConstructorDocParts = (
 "/**
- * Returns a ",""," object initialized with the given","","
+ * Returns a ",""," object initialized with the given required properties: ","","
  *",
 "", 
-" *
+" 
  * \@return
- *   A ",""," object initialized with the given","","\n",
-" *   If the required arguments are \\e nil or \\e [NSNull null], returns \\e nil,
+ *   A ",""," object initialized with the given required properties: ","",".\n",
+" *   If the required arguments are \\e nil or \\e [NSNull null], returns \\e nil
  **/\n");
 
 my @classConstructorParts = (
@@ -727,7 +728,8 @@ my @dirtyPropertySnapshotParts = (
 my @updateRemotelyDocParts = (
 "/**
  * TODO: Doxygen doc
- **/\n");
+ **/
+- (void)updateOnCaptureForDelegate:(id<JRCaptureObjectDelegate>)delegate context:(NSObject *)context;\n");
 
 my @toUpdateDictionaryParts = (
 "- (NSDictionary *)toUpdateDictionary",

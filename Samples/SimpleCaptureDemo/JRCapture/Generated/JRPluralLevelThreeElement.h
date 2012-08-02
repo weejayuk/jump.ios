@@ -37,7 +37,7 @@
  * @brief An example of plurals nested in plurals, level 3
  **/
 @interface JRPluralLevelThreeElement : JRCaptureObject
-@property (nonatomic, readonly) JRObjectId *pluralLevelThreeElementId; /**< Simple identifier for this sub-entity @note The \e id of the object should not be set. // TODO: etc. */ 
+@property (nonatomic, readonly) JRObjectId *pluralLevelThreeElementId; /**< Simple identifier for this sub-entity @note The \e id of the object should not be set. */ 
 @property (nonatomic, copy)     NSString *level; /**< The object's \e level property */ 
 @property (nonatomic, copy)     NSString *name; /**< The object's \e name property */ 
 
@@ -46,7 +46,7 @@
  **/
 /*@{*/
 /**
- * Default constructor. Returns an empty JRPluralLevelThreeElement object
+ * Default instance constructor. Returns an empty JRPluralLevelThreeElement object
  *
  * @return
  *   A JRPluralLevelThreeElement object
@@ -54,7 +54,7 @@
 - (id)init;
 
 /**
- * Returns an empty JRPluralLevelThreeElement object
+ * Default class constructor. Returns an empty JRPluralLevelThreeElement object
  *
  * @return
  *   A JRPluralLevelThreeElement object
@@ -71,6 +71,11 @@
  * TODO: Doxygen doc
  **/
 - (BOOL)needsUpdate;
+
+/**
+ * TODO: Doxygen doc
+ **/
+- (void)updateOnCaptureForDelegate:(id<JRCaptureObjectDelegate>)delegate context:(NSObject *)context;
 /*@}*/
 
 @end

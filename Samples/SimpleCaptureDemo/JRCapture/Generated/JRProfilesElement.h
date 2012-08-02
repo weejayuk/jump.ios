@@ -38,15 +38,15 @@
  * @brief A JRProfilesElement object
  **/
 @interface JRProfilesElement : JRCaptureObject
-@property (nonatomic, readonly) JRObjectId *profilesElementId; /**< Simple identifier for this sub-entity @note The \e id of the object should not be set. // TODO: etc. */ 
-@property (nonatomic, copy)     JRJsonObject *accessCredentials; /**< User's authorization credentials for this provider @note This is a property of type \ref types "json", which can be an \e NSDictionary, \e NSArray, \e NSString, etc., and is therefore is a typedef of \e NSObject */ 
+@property (nonatomic, readonly) JRObjectId *profilesElementId; /**< Simple identifier for this sub-entity @note The \e id of the object should not be set. */ 
+@property (nonatomic, copy)     JRJsonObject *accessCredentials; /**< User's authorization credentials for this provider @note A ::JRJsonObject property is a property of type \ref typesTable "json", which can be an \e NSDictionary, \e NSArray, \e NSString, etc., and is therefore is a typedef of \e NSObject */ 
 @property (nonatomic, copy)     NSString *domain; /**< The object's \e domain property */ 
-@property (nonatomic, copy)     JRStringArray *followers; /**< User's followers @note This is an array of \c NSStrings representing a list of \c identifier objects TODO: Add note about how setting the array requires a replace on capture and how you can set it with an array of stringPluralElements or just an array of strings */ 
-@property (nonatomic, copy)     JRStringArray *following; /**< Who the user is following @note This is an array of \c NSStrings representing a list of \c identifier objects TODO: Add note about how setting the array requires a replace on capture and how you can set it with an array of stringPluralElements or just an array of strings */ 
-@property (nonatomic, copy)     JRStringArray *friends; /**< User's friends @note This is an array of \c NSStrings representing a list of \c identifier objects TODO: Add note about how setting the array requires a replace on capture and how you can set it with an array of stringPluralElements or just an array of strings */ 
+@property (nonatomic, copy)     JRStringArray *followers; /**< User's followers @note  A ::JRStringArray property is a plural (array) that holds a list of \e NSStrings. As it is an array, it is therefore a typedef of \e NSArray. This array of \c NSStrings represents a list of \c identifier */ 
+@property (nonatomic, copy)     JRStringArray *following; /**< Who the user is following @note  A ::JRStringArray property is a plural (array) that holds a list of \e NSStrings. As it is an array, it is therefore a typedef of \e NSArray. This array of \c NSStrings represents a list of \c identifier */ 
+@property (nonatomic, copy)     JRStringArray *friends; /**< User's friends @note  A ::JRStringArray property is a plural (array) that holds a list of \e NSStrings. As it is an array, it is therefore a typedef of \e NSArray. This array of \c NSStrings represents a list of \c identifier */ 
 @property (nonatomic, copy)     NSString *identifier; /**< Profile provider unique identifier */ 
 @property (nonatomic, retain)   JRProfile *profile; /**< The object's \e profile property */ 
-@property (nonatomic, copy)     JRJsonObject *provider; /**< Provider for this profile @note This is a property of type \ref types "json", which can be an \e NSDictionary, \e NSArray, \e NSString, etc., and is therefore is a typedef of \e NSObject */ 
+@property (nonatomic, copy)     JRJsonObject *provider; /**< Provider for this profile @note A ::JRJsonObject property is a property of type \ref typesTable "json", which can be an \e NSDictionary, \e NSArray, \e NSString, etc., and is therefore is a typedef of \e NSObject */ 
 @property (nonatomic, copy)     NSString *remote_key; /**< PrimaryKey field from Engage */ 
 
 /**
@@ -54,44 +54,58 @@
  **/
 /*@{*/
 /**
- * Default constructor. Returns an empty JRProfilesElement object
+ * Default instance constructor. Returns an empty JRProfilesElement object
  *
  * @return
  *   A JRProfilesElement object
- * 
- * @note
- * Method creates a JRProfilesElement object without the required properties TODO: MAKE A LIST!
- * These properties are required when updating the object on Capture.
+ *
+ * @note 
+ * Method creates a object without the required properties: \e domain, \e identifier.
+ * These properties are required when updating the object on Capture. That is, you must set them before calling
+ * updateOnCaptureForDelegate:context:().
  **/
 - (id)init;
 
 /**
- * Returns an empty JRProfilesElement object
+ * Default class constructor. Returns an empty JRProfilesElement object
  *
  * @return
  *   A JRProfilesElement object
- * 
- * @note
- * Method creates a JRProfilesElement object without the required properties TODO: MAKE A LIST!
- * These properties are required when updating the object on Capture.
+ *
+ * @note 
+ * Method creates a object without the required properties: \e domain, \e identifier.
+ * These properties are required when updating the object on Capture. That is, you must set them before calling
+ * updateOnCaptureForDelegate:context:().
  **/
 + (id)profilesElement;
 
 /**
- * Returns a JRProfilesElement object initialized with the given
- * *
+ * Returns a JRProfilesElement object initialized with the given required properties: \c newDomain, \c newIdentifier
+ *
+ * @param newDomain
+ *   The object's \e domain property
+ *
+ * @param newIdentifier
+ *   Profile provider unique identifier
+ * 
  * @return
- *   A JRProfilesElement object initialized with the given
+ *   A JRProfilesElement object initialized with the given required properties: \e newDomain, \e newIdentifier.
  *   If the required arguments are \e nil or \e [NSNull null], returns \e nil
  **/
 - (id)initWithDomain:(NSString *)newDomain andIdentifier:(NSString *)newIdentifier;
 
 /**
- * Returns a JRProfilesElement object initialized with the given
- * *
+ * Returns a JRProfilesElement object initialized with the given required properties: \c domain, \c identifier
+ *
+ * @param domain
+ *   The object's \e domain property
+ *
+ * @param identifier
+ *   Profile provider unique identifier
+ * 
  * @return
- *   A JRProfilesElement object initialized with the given
- *   If the required arguments are \e nil or \e [NSNull null], returns \e nil,
+ *   A JRProfilesElement object initialized with the given required properties: \e domain, \e identifier.
+ *   If the required arguments are \e nil or \e [NSNull null], returns \e nil
  **/
 + (id)profilesElementWithDomain:(NSString *)domain andIdentifier:(NSString *)identifier;
 
@@ -120,6 +134,11 @@
  * TODO: Doxygen doc
  **/
 - (BOOL)needsUpdate;
+
+/**
+ * TODO: Doxygen doc
+ **/
+- (void)updateOnCaptureForDelegate:(id<JRCaptureObjectDelegate>)delegate context:(NSObject *)context;
 /*@}*/
 
 @end

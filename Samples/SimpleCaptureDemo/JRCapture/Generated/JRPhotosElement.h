@@ -37,7 +37,7 @@
  * @brief A JRPhotosElement object
  **/
 @interface JRPhotosElement : JRCaptureObject
-@property (nonatomic, readonly) JRObjectId *photosElementId; /**< Simple identifier for this sub-entity @note The \e id of the object should not be set. // TODO: etc. */ 
+@property (nonatomic, readonly) JRObjectId *photosElementId; /**< Simple identifier for this sub-entity @note The \e id of the object should not be set. */ 
 @property (nonatomic, copy)     NSString *type; /**< The object's \e type property */ 
 @property (nonatomic, copy)     NSString *value; /**< The object's \e value property */ 
 
@@ -46,7 +46,7 @@
  **/
 /*@{*/
 /**
- * Default constructor. Returns an empty JRPhotosElement object
+ * Default instance constructor. Returns an empty JRPhotosElement object
  *
  * @return
  *   A JRPhotosElement object
@@ -54,7 +54,7 @@
 - (id)init;
 
 /**
- * Returns an empty JRPhotosElement object
+ * Default class constructor. Returns an empty JRPhotosElement object
  *
  * @return
  *   A JRPhotosElement object
@@ -71,6 +71,11 @@
  * TODO: Doxygen doc
  **/
 - (BOOL)needsUpdate;
+
+/**
+ * TODO: Doxygen doc
+ **/
+- (void)updateOnCaptureForDelegate:(id<JRCaptureObjectDelegate>)delegate context:(NSObject *)context;
 /*@}*/
 
 @end

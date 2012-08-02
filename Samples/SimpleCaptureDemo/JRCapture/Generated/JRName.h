@@ -49,7 +49,7 @@
  **/
 /*@{*/
 /**
- * Default constructor. Returns an empty JRName object
+ * Default instance constructor. Returns an empty JRName object
  *
  * @return
  *   A JRName object
@@ -57,7 +57,7 @@
 - (id)init;
 
 /**
- * Returns an empty JRName object
+ * Default class constructor. Returns an empty JRName object
  *
  * @return
  *   A JRName object
@@ -74,6 +74,11 @@
  * TODO: Doxygen doc
  **/
 - (BOOL)needsUpdate;
+
+/**
+ * TODO: Doxygen doc
+ **/
+- (void)updateOnCaptureForDelegate:(id<JRCaptureObjectDelegate>)delegate context:(NSObject *)context;
 /*@}*/
 
 @end

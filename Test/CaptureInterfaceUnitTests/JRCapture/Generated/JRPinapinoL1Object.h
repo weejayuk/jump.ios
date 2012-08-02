@@ -40,14 +40,14 @@
 @interface JRPinapinoL1Object : JRCaptureObject
 @property (nonatomic, copy)     NSString *string1; /**< The object's \e string1 property */ 
 @property (nonatomic, copy)     NSString *string2; /**< The object's \e string2 property */ 
-@property (nonatomic, copy)     NSArray *pinapinoL2Plural; /**< The object's \e pinapinoL2Plural property @note This is an array of \c JRPinapinoL2PluralElement objects */ 
+@property (nonatomic, copy)     NSArray *pinapinoL2Plural; /**< The object's \e pinapinoL2Plural property @note This is an array of JRPinapinoL2PluralElement objects */ 
 
 /**
  * @name Constructors
  **/
 /*@{*/
 /**
- * Default constructor. Returns an empty JRPinapinoL1Object object
+ * Default instance constructor. Returns an empty JRPinapinoL1Object object
  *
  * @return
  *   A JRPinapinoL1Object object
@@ -55,7 +55,7 @@
 - (id)init;
 
 /**
- * Returns an empty JRPinapinoL1Object object
+ * Default class constructor. Returns an empty JRPinapinoL1Object object
  *
  * @return
  *   A JRPinapinoL1Object object
@@ -77,6 +77,11 @@
  * TODO: Doxygen doc
  **/
 - (BOOL)needsUpdate;
+
+/**
+ * TODO: Doxygen doc
+ **/
+- (void)updateOnCaptureForDelegate:(id<JRCaptureObjectDelegate>)delegate context:(NSObject *)context;
 /*@}*/
 
 @end

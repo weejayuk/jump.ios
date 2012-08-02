@@ -40,14 +40,14 @@
 @interface JRPinoLevelTwo : JRCaptureObject
 @property (nonatomic, copy)     NSString *level; /**< The object's \e level property */ 
 @property (nonatomic, copy)     NSString *name; /**< The object's \e name property */ 
-@property (nonatomic, copy)     NSArray *pinoLevelThree; /**< An example of plurals nested in objects, level 3, plural @note This is an array of \c JRPinoLevelThreeElement objects */ 
+@property (nonatomic, copy)     NSArray *pinoLevelThree; /**< An example of plurals nested in objects, level 3, plural @note This is an array of JRPinoLevelThreeElement objects */ 
 
 /**
  * @name Constructors
  **/
 /*@{*/
 /**
- * Default constructor. Returns an empty JRPinoLevelTwo object
+ * Default instance constructor. Returns an empty JRPinoLevelTwo object
  *
  * @return
  *   A JRPinoLevelTwo object
@@ -55,7 +55,7 @@
 - (id)init;
 
 /**
- * Returns an empty JRPinoLevelTwo object
+ * Default class constructor. Returns an empty JRPinoLevelTwo object
  *
  * @return
  *   A JRPinoLevelTwo object
@@ -77,6 +77,11 @@
  * TODO: Doxygen doc
  **/
 - (BOOL)needsUpdate;
+
+/**
+ * TODO: Doxygen doc
+ **/
+- (void)updateOnCaptureForDelegate:(id<JRCaptureObjectDelegate>)delegate context:(NSObject *)context;
 /*@}*/
 
 @end

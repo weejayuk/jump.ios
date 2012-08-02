@@ -41,14 +41,14 @@
 @property (nonatomic, copy)     NSString *color; /**< The object's \e color property */ 
 @property (nonatomic, copy)     NSString *eyeColor; /**< The object's \e eyeColor property */ 
 @property (nonatomic, copy)     NSString *hairColor; /**< The object's \e hairColor property */ 
-@property (nonatomic, copy)     JRDecimal *height; /**< The object's \e height property */ 
+@property (nonatomic, copy)     JRDecimal *height; /**< The object's \e height property @note A ::JRDecimal property is a property of type \ref typesTable "decimal" and a typedef of \e NSNumber. Accepted values can be, for example, <code>[NSNumber numberWithNumber:<em>myDecimal</em>]</code>, <code>nil</code>, etc. */ 
 
 /**
  * @name Constructors
  **/
 /*@{*/
 /**
- * Default constructor. Returns an empty JRBodyType object
+ * Default instance constructor. Returns an empty JRBodyType object
  *
  * @return
  *   A JRBodyType object
@@ -56,7 +56,7 @@
 - (id)init;
 
 /**
- * Returns an empty JRBodyType object
+ * Default class constructor. Returns an empty JRBodyType object
  *
  * @return
  *   A JRBodyType object
@@ -73,6 +73,11 @@
  * TODO: Doxygen doc
  **/
 - (BOOL)needsUpdate;
+
+/**
+ * TODO: Doxygen doc
+ **/
+- (void)updateOnCaptureForDelegate:(id<JRCaptureObjectDelegate>)delegate context:(NSObject *)context;
 /*@}*/
 
 @end

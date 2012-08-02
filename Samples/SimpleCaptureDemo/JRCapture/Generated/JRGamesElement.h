@@ -37,18 +37,18 @@
  * @brief A JRGamesElement object
  **/
 @interface JRGamesElement : JRCaptureObject
-@property (nonatomic, readonly) JRObjectId *gamesElementId; /**< Simple identifier for this sub-entity @note The \e id of the object should not be set. // TODO: etc. */ 
-@property (nonatomic, copy)     JRBoolean *isFavorite; /**< If the game is a favorite @note This is a property of type \ref types "boolean", which is a typedef of \e NSNumber. The accepted values can only be <code>[NSNumber numberWithBool:<em>myBool</em>]</code> or <code>nil</code> */ 
+@property (nonatomic, readonly) JRObjectId *gamesElementId; /**< Simple identifier for this sub-entity @note The \e id of the object should not be set. */ 
+@property (nonatomic, copy)     JRBoolean *isFavorite; /**< If the game is a favorite @note A ::JRBoolean property is a property of type \ref typesTable "boolean" and a typedef of \e NSNumber. The accepted values can only be <code>[NSNumber numberWithBool:<em>myBool</em>]</code> or <code>nil</code> */ 
 @property (nonatomic, copy)     NSString *name; /**< The name of the game */ 
-@property (nonatomic, copy)     JRStringArray *opponents; /**< The object's \e opponents property @note This is an array of \c NSStrings representing a list of \c name objects TODO: Add note about how setting the array requires a replace on capture and how you can set it with an array of stringPluralElements or just an array of strings */ 
-@property (nonatomic, copy)     JRInteger *rating; /**< User's rating of the game @note This is a property of type \ref types "integer", which is a typedef of \e NSNumber. The accepted values can only be <code>[NSNumber numberWithInteger:<em>myInteger</em>]</code>, <code>[NSNumber numberWithInt:<em>myInt</em>]</code>, or <code>nil</code> */ 
+@property (nonatomic, copy)     JRStringArray *opponents; /**< The object's \e opponents property @note  A ::JRStringArray property is a plural (array) that holds a list of \e NSStrings. As it is an array, it is therefore a typedef of \e NSArray. This array of \c NSStrings represents a list of \c name */ 
+@property (nonatomic, copy)     JRInteger *rating; /**< User's rating of the game @note A ::JRInteger property is a property of type ef typesTable "integer" and a typedef of \e NSNumber. The accepted values can only be <code>[NSNumber numberWithInteger:<em>myInteger</em>]</code>, <code>[NSNumber numberWithInt:<em>myInt</em>]</code>, or <code>nil</code> */ 
 
 /**
  * @name Constructors
  **/
 /*@{*/
 /**
- * Default constructor. Returns an empty JRGamesElement object
+ * Default instance constructor. Returns an empty JRGamesElement object
  *
  * @return
  *   A JRGamesElement object
@@ -56,7 +56,7 @@
 - (id)init;
 
 /**
- * Returns an empty JRGamesElement object
+ * Default class constructor. Returns an empty JRGamesElement object
  *
  * @return
  *   A JRGamesElement object
@@ -78,6 +78,11 @@
  * TODO: Doxygen doc
  **/
 - (BOOL)needsUpdate;
+
+/**
+ * TODO: Doxygen doc
+ **/
+- (void)updateOnCaptureForDelegate:(id<JRCaptureObjectDelegate>)delegate context:(NSObject *)context;
 /*@}*/
 
 /**

@@ -37,8 +37,8 @@
  * @brief E-mail address for this Contact.
  **/
 @interface JREmailsElement : JRCaptureObject
-@property (nonatomic, readonly) JRObjectId *emailsElementId; /**< Simple identifier for this sub-entity @note The \e id of the object should not be set. // TODO: etc. */ 
-@property (nonatomic, copy)     JRBoolean *primary; /**< The object's \e primary property @note This is a property of type \ref types "boolean", which is a typedef of \e NSNumber. The accepted values can only be <code>[NSNumber numberWithBool:<em>myBool</em>]</code> or <code>nil</code> */ 
+@property (nonatomic, readonly) JRObjectId *emailsElementId; /**< Simple identifier for this sub-entity @note The \e id of the object should not be set. */ 
+@property (nonatomic, copy)     JRBoolean *primary; /**< The object's \e primary property @note A ::JRBoolean property is a property of type \ref typesTable "boolean" and a typedef of \e NSNumber. The accepted values can only be <code>[NSNumber numberWithBool:<em>myBool</em>]</code> or <code>nil</code> */ 
 @property (nonatomic, copy)     NSString *type; /**< The object's \e type property */ 
 @property (nonatomic, copy)     NSString *value; /**< The object's \e value property */ 
 
@@ -47,7 +47,7 @@
  **/
 /*@{*/
 /**
- * Default constructor. Returns an empty JREmailsElement object
+ * Default instance constructor. Returns an empty JREmailsElement object
  *
  * @return
  *   A JREmailsElement object
@@ -55,7 +55,7 @@
 - (id)init;
 
 /**
- * Returns an empty JREmailsElement object
+ * Default class constructor. Returns an empty JREmailsElement object
  *
  * @return
  *   A JREmailsElement object
@@ -72,6 +72,11 @@
  * TODO: Doxygen doc
  **/
 - (BOOL)needsUpdate;
+
+/**
+ * TODO: Doxygen doc
+ **/
+- (void)updateOnCaptureForDelegate:(id<JRCaptureObjectDelegate>)delegate context:(NSObject *)context;
 /*@}*/
 
 /**

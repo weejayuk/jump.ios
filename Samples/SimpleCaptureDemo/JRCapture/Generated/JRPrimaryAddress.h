@@ -53,7 +53,7 @@
  **/
 /*@{*/
 /**
- * Default constructor. Returns an empty JRPrimaryAddress object
+ * Default instance constructor. Returns an empty JRPrimaryAddress object
  *
  * @return
  *   A JRPrimaryAddress object
@@ -61,7 +61,7 @@
 - (id)init;
 
 /**
- * Returns an empty JRPrimaryAddress object
+ * Default class constructor. Returns an empty JRPrimaryAddress object
  *
  * @return
  *   A JRPrimaryAddress object
@@ -78,6 +78,11 @@
  * TODO: Doxygen doc
  **/
 - (BOOL)needsUpdate;
+
+/**
+ * TODO: Doxygen doc
+ **/
+- (void)updateOnCaptureForDelegate:(id<JRCaptureObjectDelegate>)delegate context:(NSObject *)context;
 /*@}*/
 
 @end

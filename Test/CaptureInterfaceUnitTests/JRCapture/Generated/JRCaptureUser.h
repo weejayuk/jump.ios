@@ -55,22 +55,22 @@
  * @brief A JRCaptureUser object
  **/
 @interface JRCaptureUser : JRCaptureObject
-@property (nonatomic, readonly) JRUuid *uuid; /**< Globally unique indentifier for this entity @note This is a property of type \ref types "uuid", which is a typedef of \e NSString */ 
-@property (nonatomic, readonly) JRDateTime *created; /**< When this entity was created @note This is a property of type \ref types "dateTime", which is a typedef of \e NSDate. The accepted format should be an ISO8601 dateTime string (e.g., <code>yyyy-MM-dd HH:mm:ss.SSSSSS ZZZ</code>) */ 
-@property (nonatomic, readonly) JRDateTime *lastUpdated; /**< When this entity was last updated @note This is a property of type \ref types "dateTime", which is a typedef of \e NSDate. The accepted format should be an ISO8601 dateTime string (e.g., <code>yyyy-MM-dd HH:mm:ss.SSSSSS ZZZ</code>) */ 
+@property (nonatomic, readonly) JRUuid *uuid; /**< Globally unique indentifier for this entity @note A ::JRUuid property is a property of type \ref typesTable "uuid" and a typedef of \e NSString */ 
+@property (nonatomic, readonly) JRDateTime *created; /**< When this entity was created @note A ::JRDateTime property is a property of type \ref typesTable "dateTime" and a typedef of \e NSDate. The accepted format should be an ISO 8601 dateTime string (e.g., <code>yyyy-MM-dd HH:mm:ss.SSSSSS ZZZ</code>) */ 
+@property (nonatomic, readonly) JRDateTime *lastUpdated; /**< When this entity was last updated @note A ::JRDateTime property is a property of type \ref typesTable "dateTime" and a typedef of \e NSDate. The accepted format should be an ISO 8601 dateTime string (e.g., <code>yyyy-MM-dd HH:mm:ss.SSSSSS ZZZ</code>) */ 
 @property (nonatomic, copy)     NSString *email; /**< The object's \e email property */ 
-@property (nonatomic, copy)     JRBoolean *basicBoolean; /**< Basic boolean property for testing getting/setting with NSNumbers and primitives, updating, and replacing @note This is a property of type \ref types "boolean", which is a typedef of \e NSNumber. The accepted values can only be <code>[NSNumber numberWithBool:<em>myBool</em>]</code> or <code>nil</code> */ 
+@property (nonatomic, copy)     JRBoolean *basicBoolean; /**< Basic boolean property for testing getting/setting with NSNumbers and primitives, updating, and replacing @note A ::JRBoolean property is a property of type \ref typesTable "boolean" and a typedef of \e NSNumber. The accepted values can only be <code>[NSNumber numberWithBool:<em>myBool</em>]</code> or <code>nil</code> */ 
 @property (nonatomic, copy)     NSString *basicString; /**< Basic string property for testing getting/setting, updating, and replacing */ 
-@property (nonatomic, copy)     JRInteger *basicInteger; /**< Basic integer property for testing getting/setting with NSNumbers and primitives, updating, and replacing @note This is a property of type \ref types "integer", which is a typedef of \e NSNumber. The accepted values can only be <code>[NSNumber numberWithInteger:<em>myInteger</em>]</code>, <code>[NSNumber numberWithInt:<em>myInt</em>]</code>, or <code>nil</code> */ 
-@property (nonatomic, copy)     JRDecimal *basicDecimal; /**< Basic decimal property for testing getting/setting with various NSNumbers, updating, and replacing */ 
-@property (nonatomic, copy)     JRDate *basicDate; /**< Basic date property for testing getting/setting with various formats, updating, and replacing @note This is a property of type \ref types "date", which is a typedef of \e NSDate. The accepted format should be an ISO8601 date string (e.g., <code>yyyy-MM-dd</code>) */ 
-@property (nonatomic, copy)     JRDateTime *basicDateTime; /**< Basic dateTime property for testing getting/setting with various formats, updating, and replacing @note This is a property of type \ref types "dateTime", which is a typedef of \e NSDate. The accepted format should be an ISO8601 dateTime string (e.g., <code>yyyy-MM-dd HH:mm:ss.SSSSSS ZZZ</code>) */ 
-@property (nonatomic, copy)     JRIpAddress *basicIpAddress; /**< Basic ipAddress property for testing getting/setting with various formats, updating, and replacing @note This is a property of type \ref types "ipAddress", which is a typedef of \e NSString. */ 
-@property (nonatomic, copy)     JRPassword *basicPassword; /**< Property used to test password strings, getting/setting with various formats, updating, and replacing @note This is a property of type \ref types "password", which can be either an \e NSString or \e NSDictionary, and is therefore is a typedef of \e NSObject */ 
-@property (nonatomic, copy)     JRJsonObject *jsonNumber; /**< Property used to test json numbers, getting/setting with various formats, updating, and replacing @note This is a property of type \ref types "json", which can be an \e NSDictionary, \e NSArray, \e NSString, etc., and is therefore is a typedef of \e NSObject */ 
-@property (nonatomic, copy)     JRJsonObject *jsonString; /**< Property used to test json strings, getting/setting with various formats, updating, and replacing @note This is a property of type \ref types "json", which can be an \e NSDictionary, \e NSArray, \e NSString, etc., and is therefore is a typedef of \e NSObject */ 
-@property (nonatomic, copy)     JRJsonObject *jsonArray; /**< Property used to test json arrays, getting/setting with various formats, updating, and replacing @note This is a property of type \ref types "json", which can be an \e NSDictionary, \e NSArray, \e NSString, etc., and is therefore is a typedef of \e NSObject */ 
-@property (nonatomic, copy)     JRJsonObject *jsonDictionary; /**< Property used to test json dictionaries, getting/setting with various formats, updating, and replacing @note This is a property of type \ref types "json", which can be an \e NSDictionary, \e NSArray, \e NSString, etc., and is therefore is a typedef of \e NSObject */ 
+@property (nonatomic, copy)     JRInteger *basicInteger; /**< Basic integer property for testing getting/setting with NSNumbers and primitives, updating, and replacing @note A ::JRInteger property is a property of type ef typesTable "integer" and a typedef of \e NSNumber. The accepted values can only be <code>[NSNumber numberWithInteger:<em>myInteger</em>]</code>, <code>[NSNumber numberWithInt:<em>myInt</em>]</code>, or <code>nil</code> */ 
+@property (nonatomic, copy)     JRDecimal *basicDecimal; /**< Basic decimal property for testing getting/setting with various NSNumbers, updating, and replacing @note A ::JRDecimal property is a property of type \ref typesTable "decimal" and a typedef of \e NSNumber. Accepted values can be, for example, <code>[NSNumber numberWithNumber:<em>myDecimal</em>]</code>, <code>nil</code>, etc. */ 
+@property (nonatomic, copy)     JRDate *basicDate; /**< Basic date property for testing getting/setting with various formats, updating, and replacing @note A ::JRDate property is a property of type \ref typesTable "date" and a typedef of \e NSDate. The accepted format should be an ISO 8601 date string (e.g., <code>yyyy-MM-dd</code>) */ 
+@property (nonatomic, copy)     JRDateTime *basicDateTime; /**< Basic dateTime property for testing getting/setting with various formats, updating, and replacing @note A ::JRDateTime property is a property of type \ref typesTable "dateTime" and a typedef of \e NSDate. The accepted format should be an ISO 8601 dateTime string (e.g., <code>yyyy-MM-dd HH:mm:ss.SSSSSS ZZZ</code>) */ 
+@property (nonatomic, copy)     JRIpAddress *basicIpAddress; /**< Basic ipAddress property for testing getting/setting with various formats, updating, and replacing @note A ::JRIpAddress property is a property of type \ref typesTable "ipAddress" and a typedef of \e NSString. */ 
+@property (nonatomic, copy)     JRPassword *basicPassword; /**< Property used to test password strings, getting/setting with various formats, updating, and replacing @note A ::JRPassword property is a property of type \ref typesTable "password", which can be either an \e NSString or \e NSDictionary, and is therefore is a typedef of \e NSObject */ 
+@property (nonatomic, copy)     JRJsonObject *jsonNumber; /**< Property used to test json numbers, getting/setting with various formats, updating, and replacing @note A ::JRJsonObject property is a property of type \ref typesTable "json", which can be an \e NSDictionary, \e NSArray, \e NSString, etc., and is therefore is a typedef of \e NSObject */ 
+@property (nonatomic, copy)     JRJsonObject *jsonString; /**< Property used to test json strings, getting/setting with various formats, updating, and replacing @note A ::JRJsonObject property is a property of type \ref typesTable "json", which can be an \e NSDictionary, \e NSArray, \e NSString, etc., and is therefore is a typedef of \e NSObject */ 
+@property (nonatomic, copy)     JRJsonObject *jsonArray; /**< Property used to test json arrays, getting/setting with various formats, updating, and replacing @note A ::JRJsonObject property is a property of type \ref typesTable "json", which can be an \e NSDictionary, \e NSArray, \e NSString, etc., and is therefore is a typedef of \e NSObject */ 
+@property (nonatomic, copy)     JRJsonObject *jsonDictionary; /**< Property used to test json dictionaries, getting/setting with various formats, updating, and replacing @note A ::JRJsonObject property is a property of type \ref typesTable "json", which can be an \e NSDictionary, \e NSArray, \e NSString, etc., and is therefore is a typedef of \e NSObject */ 
 @property (nonatomic, copy)     NSString *stringTestJson; /**< Property used to test getting/setting, updating, and replacing strings that contain valid json objects, json characters, etc. */ 
 @property (nonatomic, copy)     NSString *stringTestEmpty; /**< Property used to test getting/setting, updating, and replacing empty strings */ 
 @property (nonatomic, copy)     NSString *stringTestNull; /**< Property used to test getting/setting, updating, and replacing null strings */ 
@@ -83,24 +83,24 @@
 @property (nonatomic, copy)     NSString *stringTestLength; /**< Property used to test getting/setting, updating, and replacing strings that have the length attribute defined */ 
 @property (nonatomic, copy)     NSString *stringTestCaseSensitive; /**< Property used to test getting/setting, updating, and replacing strings that have the case-sensitive attribute defined */ 
 @property (nonatomic, copy)     NSString *stringTestFeatures; /**< Property used to test getting/setting, updating, and replacing strings that have the features attribute defined */ 
-@property (nonatomic, copy)     NSArray *basicPlural; /**< Basic plural property for testing getting/setting, updating, and replacing @note This is an array of \c JRBasicPluralElement objects */ 
+@property (nonatomic, copy)     NSArray *basicPlural; /**< Basic plural property for testing getting/setting, updating, and replacing @note This is an array of JRBasicPluralElement objects */ 
 @property (nonatomic, retain)   JRBasicObject *basicObject; /**< Basic object property for testing getting/setting, updating, and replacing */ 
 @property (nonatomic, retain)   JRObjectTestRequired *objectTestRequired; /**< Object for testing getting/setting, updating, and replacing properties when one property has the constraint of being required */ 
-@property (nonatomic, copy)     NSArray *pluralTestUnique; /**< Plural for testing getting/setting, updating, and replacing elements when one element property has the constraint of being unique @note This is an array of \c JRPluralTestUniqueElement objects */ 
+@property (nonatomic, copy)     NSArray *pluralTestUnique; /**< Plural for testing getting/setting, updating, and replacing elements when one element property has the constraint of being unique @note This is an array of JRPluralTestUniqueElement objects */ 
 @property (nonatomic, retain)   JRObjectTestRequiredUnique *objectTestRequiredUnique; /**< Object for testing getting/setting, updating, and replacing properties when the properties have the constraints of being required and unique */ 
-@property (nonatomic, copy)     NSArray *pluralTestAlphabetic; /**< Plural for testing getting/setting, updating, and replacing elements when one element property has the constraint of being alphabetic @note This is an array of \c JRPluralTestAlphabeticElement objects */ 
-@property (nonatomic, copy)     JRStringArray *simpleStringPluralOne; /**< Plural property for testing getting/setting, updating, and replacing lists of strings/JRStringPluralElements @note This is an array of \c NSStrings representing a list of \c simpleTypeOne objects TODO: Add note about how setting the array requires a replace on capture and how you can set it with an array of stringPluralElements or just an array of strings */ 
-@property (nonatomic, copy)     JRStringArray *simpleStringPluralTwo; /**< Another plural property for testing getting/setting, updating, and replacing lists of strings/JRStringPluralElements @note This is an array of \c NSStrings representing a list of \c simpleTypeTwo objects TODO: Add note about how setting the array requires a replace on capture and how you can set it with an array of stringPluralElements or just an array of strings */ 
-@property (nonatomic, copy)     NSArray *pinapL1Plural; /**< Plural in a plural (element in a plural in an element in a plural) @note This is an array of \c JRPinapL1PluralElement objects */ 
+@property (nonatomic, copy)     NSArray *pluralTestAlphabetic; /**< Plural for testing getting/setting, updating, and replacing elements when one element property has the constraint of being alphabetic @note This is an array of JRPluralTestAlphabeticElement objects */ 
+@property (nonatomic, copy)     JRStringArray *simpleStringPluralOne; /**< Plural property for testing getting/setting, updating, and replacing lists of strings/JRStringPluralElements @note  A ::JRStringArray property is a plural (array) that holds a list of \e NSStrings. As it is an array, it is therefore a typedef of \e NSArray. This array of \c NSStrings represents a list of \c simpleTypeOne */ 
+@property (nonatomic, copy)     JRStringArray *simpleStringPluralTwo; /**< Another plural property for testing getting/setting, updating, and replacing lists of strings/JRStringPluralElements @note  A ::JRStringArray property is a plural (array) that holds a list of \e NSStrings. As it is an array, it is therefore a typedef of \e NSArray. This array of \c NSStrings represents a list of \c simpleTypeTwo */ 
+@property (nonatomic, copy)     NSArray *pinapL1Plural; /**< Plural in a plural (element in a plural in an element in a plural) @note This is an array of JRPinapL1PluralElement objects */ 
 @property (nonatomic, retain)   JRPinoL1Object *pinoL1Object; /**< Plural in an object (element in a plural in an object) */ 
-@property (nonatomic, copy)     NSArray *onipL1Plural; /**< Object in a plural (object in an element in a plural) @note This is an array of \c JROnipL1PluralElement objects */ 
+@property (nonatomic, copy)     NSArray *onipL1Plural; /**< Object in a plural (object in an element in a plural) @note This is an array of JROnipL1PluralElement objects */ 
 @property (nonatomic, retain)   JROinoL1Object *oinoL1Object; /**< Object in a object */ 
-@property (nonatomic, copy)     NSArray *pinapinapL1Plural; /**< Plural in a plural in a plural (element in a plural in an element in a plural in an element in a plural) @note This is an array of \c JRPinapinapL1PluralElement objects */ 
-@property (nonatomic, copy)     NSArray *pinonipL1Plural; /**< Plural in an object in a plural (element in a plural in an object in an element in a plural) @note This is an array of \c JRPinonipL1PluralElement objects */ 
+@property (nonatomic, copy)     NSArray *pinapinapL1Plural; /**< Plural in a plural in a plural (element in a plural in an element in a plural in an element in a plural) @note This is an array of JRPinapinapL1PluralElement objects */ 
+@property (nonatomic, copy)     NSArray *pinonipL1Plural; /**< Plural in an object in a plural (element in a plural in an object in an element in a plural) @note This is an array of JRPinonipL1PluralElement objects */ 
 @property (nonatomic, retain)   JRPinapinoL1Object *pinapinoL1Object; /**< Plural in a plural in an object (element in a plural in an element in a plural in an object) */ 
 @property (nonatomic, retain)   JRPinoinoL1Object *pinoinoL1Object; /**< Plural in an object in a object (element in a plural in an object in an object) */ 
-@property (nonatomic, copy)     NSArray *onipinapL1Plural; /**< Object in a plural in a plural (object in an element in a plural in an element in a plural) @note This is an array of \c JROnipinapL1PluralElement objects */ 
-@property (nonatomic, copy)     NSArray *oinonipL1Plural; /**< Object in an object in a plural (object in an object in an element in a plural) @note This is an array of \c JROinonipL1PluralElement objects */ 
+@property (nonatomic, copy)     NSArray *onipinapL1Plural; /**< Object in a plural in a plural (object in an element in a plural in an element in a plural) @note This is an array of JROnipinapL1PluralElement objects */ 
+@property (nonatomic, copy)     NSArray *oinonipL1Plural; /**< Object in an object in a plural (object in an object in an element in a plural) @note This is an array of JROinonipL1PluralElement objects */ 
 @property (nonatomic, retain)   JROnipinoL1Object *onipinoL1Object; /**< Object in a plural in an object (object in an element in a plural in an object) */ 
 @property (nonatomic, retain)   JROinoinoL1Object *oinoinoL1Object; /**< Object in an object in a object */ 
 
@@ -109,7 +109,7 @@
  **/
 /*@{*/
 /**
- * Default constructor. Returns an empty JRCaptureUser object
+ * Default instance constructor. Returns an empty JRCaptureUser object
  *
  * @return
  *   A JRCaptureUser object
@@ -117,7 +117,7 @@
 - (id)init;
 
 /**
- * Returns an empty JRCaptureUser object
+ * Default class constructor. Returns an empty JRCaptureUser object
  *
  * @return
  *   A JRCaptureUser object
@@ -189,6 +189,11 @@
  * TODO: Doxygen doc
  **/
 - (BOOL)needsUpdate;
+
+/**
+ * TODO: Doxygen doc
+ **/
+- (void)updateOnCaptureForDelegate:(id<JRCaptureObjectDelegate>)delegate context:(NSObject *)context;
 /*@}*/
 
 /**

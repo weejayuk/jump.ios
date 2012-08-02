@@ -46,44 +46,52 @@
  **/
 /*@{*/
 /**
- * Default constructor. Returns an empty JRObjectTestRequired object
+ * Default instance constructor. Returns an empty JRObjectTestRequired object
  *
  * @return
  *   A JRObjectTestRequired object
- * 
- * @note
- * Method creates a JRObjectTestRequired object without the required properties TODO: MAKE A LIST!
- * These properties are required when updating the object on Capture.
+ *
+ * @note 
+ * Method creates a object without the required properties: \e requiredString.
+ * These properties are required when updating the object on Capture. That is, you must set them before calling
+ * updateOnCaptureForDelegate:context:().
  **/
 - (id)init;
 
 /**
- * Returns an empty JRObjectTestRequired object
+ * Default class constructor. Returns an empty JRObjectTestRequired object
  *
  * @return
  *   A JRObjectTestRequired object
- * 
- * @note
- * Method creates a JRObjectTestRequired object without the required properties TODO: MAKE A LIST!
- * These properties are required when updating the object on Capture.
+ *
+ * @note 
+ * Method creates a object without the required properties: \e requiredString.
+ * These properties are required when updating the object on Capture. That is, you must set them before calling
+ * updateOnCaptureForDelegate:context:().
  **/
 + (id)objectTestRequired;
 
 /**
- * Returns a JRObjectTestRequired object initialized with the given
- * *
+ * Returns a JRObjectTestRequired object initialized with the given required properties: \c newRequiredString
+ *
+ * @param newRequiredString
+ *   The object's \e requiredString property
+ * 
  * @return
- *   A JRObjectTestRequired object initialized with the given
+ *   A JRObjectTestRequired object initialized with the given required properties: \e newRequiredString.
  *   If the required arguments are \e nil or \e [NSNull null], returns \e nil
  **/
 - (id)initWithRequiredString:(NSString *)newRequiredString;
 
 /**
- * Returns a JRObjectTestRequired object initialized with the given
- * *
+ * Returns a JRObjectTestRequired object initialized with the given required properties: \c requiredString
+ *
+ * @param requiredString
+ *   The object's \e requiredString property
+ * 
  * @return
- *   A JRObjectTestRequired object initialized with the given
- *   If the required arguments are \e nil or \e [NSNull null], returns \e nil,
+ *   A JRObjectTestRequired object initialized with the given required properties: \e requiredString.
+ *   If the required arguments are \e nil or \e [NSNull null], returns \e nil
  **/
 + (id)objectTestRequiredWithRequiredString:(NSString *)requiredString;
 
@@ -97,6 +105,11 @@
  * TODO: Doxygen doc
  **/
 - (BOOL)needsUpdate;
+
+/**
+ * TODO: Doxygen doc
+ **/
+- (void)updateOnCaptureForDelegate:(id<JRCaptureObjectDelegate>)delegate context:(NSObject *)context;
 /*@}*/
 
 @end
