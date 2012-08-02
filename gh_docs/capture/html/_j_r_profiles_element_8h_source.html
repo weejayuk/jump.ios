@@ -106,22 +106,24 @@
 <a name="l00047"></a><a class="code" href="interface_j_r_profiles_element.html#a33cb55f8f7d63e1f8265f78a17a86b5b">00047</a> @property (nonatomic, copy)     <a class="code" href="_j_r_capture_types_8h.html#a634970be09000b37e2a95a88b6304239">JRStringArray</a> *<a class="code" href="interface_j_r_profiles_element.html#a33cb55f8f7d63e1f8265f78a17a86b5b">following</a>; 
 <a name="l00048"></a><a class="code" href="interface_j_r_profiles_element.html#a9d7c3a1c774174394e2aa40450f1a248">00048</a> @property (nonatomic, copy)     <a class="code" href="_j_r_capture_types_8h.html#a634970be09000b37e2a95a88b6304239">JRStringArray</a> *<a class="code" href="interface_j_r_profiles_element.html#a9d7c3a1c774174394e2aa40450f1a248">followers</a>; 
 <a name="l00049"></a><a class="code" href="interface_j_r_profiles_element.html#abae96ac487fe8b908dfcbbd2f5cf62c8">00049</a> @property (nonatomic, retain)   <a class="code" href="interface_j_r_profile.html" title="A JRProfile object.">JRProfile</a> *<a class="code" href="interface_j_r_profiles_element.html#abae96ac487fe8b908dfcbbd2f5cf62c8">profile</a>; 
-<a name="l00065"></a>00065 - (id)<a class="code" href="interface_j_r_profiles_element.html#a4213bb26f5207ee3f402fe463badc691">init</a>;
-<a name="l00066"></a>00066 
-<a name="l00077"></a>00077 + (id)<a class="code" href="interface_j_r_profiles_element.html#a6bba55bc3f4ebb2aac6f4d59461e80b4">profilesElement</a>;
-<a name="l00078"></a>00078 
-<a name="l00086"></a>00086 - (id)initWithIdentifier:(NSString *)newIdentifier andDomain:(NSString *)newDomain;
-<a name="l00087"></a>00087 
-<a name="l00095"></a>00095 + (id)profilesElementWithIdentifier:(NSString *)identifier andDomain:(NSString *)domain;
-<a name="l00096"></a>00096 
-<a name="l00106"></a>00106 - (void)replaceFriendsArrayOnCaptureForDelegate:(<span class="keywordtype">id</span>&lt;<a class="code" href="protocol_j_r_capture_object_delegate-p.html" title="Protocol adopted by an object ...">JRCaptureObjectDelegate</a>&gt;)delegate context:(NSObject *)context;
-<a name="l00107"></a>00107 
-<a name="l00111"></a>00111 - (void)replaceFollowingArrayOnCaptureForDelegate:(<span class="keywordtype">id</span>&lt;<a class="code" href="protocol_j_r_capture_object_delegate-p.html" title="Protocol adopted by an object ...">JRCaptureObjectDelegate</a>&gt;)delegate context:(NSObject *)context;
-<a name="l00112"></a>00112 
-<a name="l00116"></a>00116 - (void)replaceFollowersArrayOnCaptureForDelegate:(<span class="keywordtype">id</span>&lt;<a class="code" href="protocol_j_r_capture_object_delegate-p.html" title="Protocol adopted by an object ...">JRCaptureObjectDelegate</a>&gt;)delegate context:(NSObject *)context;
-<a name="l00117"></a>00117 
-<a name="l00121"></a>00121 - (BOOL)<a class="code" href="interface_j_r_profiles_element.html#af2cac3fbd2fd4944b7219004c6ce8be4">needsUpdate</a>;
-<a name="l00124"></a>00124 <span class="keyword">@end</span>
+<a name="l00066"></a>00066 - (id)<a class="code" href="interface_j_r_profiles_element.html#a4213bb26f5207ee3f402fe463badc691">init</a>;
+<a name="l00067"></a>00067 
+<a name="l00079"></a>00079 + (id)<a class="code" href="interface_j_r_profiles_element.html#a6bba55bc3f4ebb2aac6f4d59461e80b4">profilesElement</a>;
+<a name="l00080"></a>00080 
+<a name="l00094"></a>00094 - (id)initWithIdentifier:(NSString *)newIdentifier andDomain:(NSString *)newDomain;
+<a name="l00095"></a>00095 
+<a name="l00109"></a>00109 + (id)profilesElementWithIdentifier:(NSString *)identifier andDomain:(NSString *)domain;
+<a name="l00110"></a>00110 
+<a name="l00120"></a>00120 - (void)replaceFriendsArrayOnCaptureForDelegate:(<span class="keywordtype">id</span>&lt;<a class="code" href="protocol_j_r_capture_object_delegate-p.html" title="Protocol adopted by an object ...">JRCaptureObjectDelegate</a>&gt;)delegate context:(NSObject *)context;
+<a name="l00121"></a>00121 
+<a name="l00125"></a>00125 - (void)replaceFollowingArrayOnCaptureForDelegate:(<span class="keywordtype">id</span>&lt;<a class="code" href="protocol_j_r_capture_object_delegate-p.html" title="Protocol adopted by an object ...">JRCaptureObjectDelegate</a>&gt;)delegate context:(NSObject *)context;
+<a name="l00126"></a>00126 
+<a name="l00130"></a>00130 - (void)replaceFollowersArrayOnCaptureForDelegate:(<span class="keywordtype">id</span>&lt;<a class="code" href="protocol_j_r_capture_object_delegate-p.html" title="Protocol adopted by an object ...">JRCaptureObjectDelegate</a>&gt;)delegate context:(NSObject *)context;
+<a name="l00131"></a>00131 
+<a name="l00135"></a>00135 - (BOOL)<a class="code" href="interface_j_r_profiles_element.html#af2cac3fbd2fd4944b7219004c6ce8be4">needsUpdate</a>;
+<a name="l00136"></a>00136 
+<a name="l00140"></a>00140 - (void)updateOnCaptureForDelegate:(<span class="keywordtype">id</span>&lt;<a class="code" href="protocol_j_r_capture_object_delegate-p.html" title="Protocol adopted by an object ...">JRCaptureObjectDelegate</a>&gt;)delegate context:(NSObject *)context;
+<a name="l00143"></a>00143 <span class="keyword">@end</span>
 </pre></div></div>
 </div>
             </div>

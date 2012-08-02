@@ -97,6 +97,7 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">(void)&nbsp;</td><td class="memItemRight" valign="bottom">- <a class="el" href="interface_j_r_profiles_element.html#a65a31cab10210d483e7adef134e9bb25">replaceFollowingArrayOnCaptureForDelegate:context:</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">(void)&nbsp;</td><td class="memItemRight" valign="bottom">- <a class="el" href="interface_j_r_profiles_element.html#a8e76a9caa06c8d5bb007168a775b8d9b">replaceFollowersArrayOnCaptureForDelegate:context:</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">(BOOL)&nbsp;</td><td class="memItemRight" valign="bottom">- <a class="el" href="interface_j_r_profiles_element.html#af2cac3fbd2fd4944b7219004c6ce8be4">needsUpdate</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">(void)&nbsp;</td><td class="memItemRight" valign="bottom">- <a class="el" href="interface_j_r_profiles_element.html#a307b20b8cb70eec684e7197550c9f4c3">updateOnCaptureForDelegate:context:</a></td></tr>
 <tr><td colspan="2"><h2><a name="properties"></a>
 Properties</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">NSString *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_j_r_profiles_element.html#a9f959f934052d9eb2127db501de2de9d">identifier</a></td></tr>
@@ -134,9 +135,9 @@ Constructors</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<p>Default constructor. Returns an empty <a class="el" href="interface_j_r_profiles_element.html" title="A JRProfilesElement object.">JRProfilesElement</a> object</p>
+<p>Default instance constructor. Returns an empty <a class="el" href="interface_j_r_profiles_element.html" title="A JRProfilesElement object.">JRProfilesElement</a> object</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>A <a class="el" href="interface_j_r_profiles_element.html" title="A JRProfilesElement object.">JRProfilesElement</a> object</dd></dl>
-<dl class="note"><dt><b>Note:</b></dt><dd>Method creates a <a class="el" href="interface_j_r_profiles_element.html" title="A JRProfilesElement object.">JRProfilesElement</a> object without the required properties TODO: MAKE A LIST! These properties are required when updating the object on Capture. </dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>Method creates a object without the required properties: <em>identifier</em>, <em>domain</em>. These properties are required when updating the object on Capture. That is, you must set them before calling <a class="el" href="interface_j_r_profiles_element.html#a307b20b8cb70eec684e7197550c9f4c3">updateOnCaptureForDelegate:context:</a>. </dd></dl>
 
 </div>
 </div>
@@ -154,9 +155,9 @@ Constructors</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<p>Returns an empty <a class="el" href="interface_j_r_profiles_element.html" title="A JRProfilesElement object.">JRProfilesElement</a> object</p>
+<p>Default class constructor. Returns an empty <a class="el" href="interface_j_r_profiles_element.html" title="A JRProfilesElement object.">JRProfilesElement</a> object</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>A <a class="el" href="interface_j_r_profiles_element.html" title="A JRProfilesElement object.">JRProfilesElement</a> object</dd></dl>
-<dl class="note"><dt><b>Note:</b></dt><dd>Method creates a <a class="el" href="interface_j_r_profiles_element.html" title="A JRProfilesElement object.">JRProfilesElement</a> object without the required properties TODO: MAKE A LIST! These properties are required when updating the object on Capture. </dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>Method creates a object without the required properties: <em>identifier</em>, <em>domain</em>. These properties are required when updating the object on Capture. That is, you must set them before calling <a class="el" href="interface_j_r_profiles_element.html#a307b20b8cb70eec684e7197550c9f4c3">updateOnCaptureForDelegate:context:</a>. </dd></dl>
 
 </div>
 </div>
@@ -184,8 +185,15 @@ Constructors</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<p>Returns a <a class="el" href="interface_j_r_profiles_element.html" title="A JRProfilesElement object.">JRProfilesElement</a> object initialized with the given * </p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>A <a class="el" href="interface_j_r_profiles_element.html" title="A JRProfilesElement object.">JRProfilesElement</a> object initialized with the given If the required arguments are <em>nil</em> or <em></em>[NSNull null], returns <em>nil</em> </dd></dl>
+<p>Returns a <a class="el" href="interface_j_r_profiles_element.html" title="A JRProfilesElement object.">JRProfilesElement</a> object initialized with the given required properties: <code>newIdentifier</code>, <code>newDomain</code> </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>newIdentifier</em>&nbsp;</td><td>Profile provider unique identifier</td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>newDomain</em>&nbsp;</td><td>The object's <em>domain</em> property</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>A <a class="el" href="interface_j_r_profiles_element.html" title="A JRProfilesElement object.">JRProfilesElement</a> object initialized with the given required properties: <em>newIdentifier</em>, <em>newDomain</em>. If the required arguments are <em>nil</em> or <em></em>[NSNull null], returns <em>nil</em> </dd></dl>
 
 </div>
 </div>
@@ -213,8 +221,15 @@ Constructors</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<p>Returns a <a class="el" href="interface_j_r_profiles_element.html" title="A JRProfilesElement object.">JRProfilesElement</a> object initialized with the given * </p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>A <a class="el" href="interface_j_r_profiles_element.html" title="A JRProfilesElement object.">JRProfilesElement</a> object initialized with the given If the required arguments are <em>nil</em> or <em></em>[NSNull null], returns <em>nil</em>, </dd></dl>
+<p>Returns a <a class="el" href="interface_j_r_profiles_element.html" title="A JRProfilesElement object.">JRProfilesElement</a> object initialized with the given required properties: <code>identifier</code>, <code>domain</code> </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>identifier</em>&nbsp;</td><td>Profile provider unique identifier</td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>domain</em>&nbsp;</td><td>The object's <em>domain</em> property</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>A <a class="el" href="interface_j_r_profiles_element.html" title="A JRProfilesElement object.">JRProfilesElement</a> object initialized with the given required properties: <em>identifier</em>, <em>domain</em>. If the required arguments are <em>nil</em> or <em></em>[NSNull null], returns <em>nil</em> </dd></dl>
 
 </div>
 </div>
@@ -322,6 +337,36 @@ Constructors</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a307b20b8cb70eec684e7197550c9f4c3"></a><!-- doxytag: member="JRProfilesElement::updateOnCaptureForDelegate:context:" ref="a307b20b8cb70eec684e7197550c9f4c3" args="(id&lt; JRCaptureObjectDelegate &gt; delegate,[context] NSObject *context)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">- (void) updateOnCaptureForDelegate: </td>
+          <td></td>
+          <td class="paramtype">(id&lt; <a class="el" href="protocol_j_r_capture_object_delegate-p.html">JRCaptureObjectDelegate</a> &gt;)&nbsp;</td>
+          <td class="paramname"> <em>delegate</em></td>
+        </tr>
+        <tr>
+          <td class="paramkey">context:</td>
+          <td></td>
+          <td class="paramtype">(NSObject *)&nbsp;</td>
+          <td class="paramname"> <em>context</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>TODO: Doxygen doc </p>
+
+<p>Reimplemented from <a class="el" href="interface_j_r_capture_object.html#a307b20b8cb70eec684e7197550c9f4c3">JRCaptureObject</a>.</p>
+
+</div>
+</div>
 <hr/><h2>Properties</h2>
 <a class="anchor" id="a9f959f934052d9eb2127db501de2de9d"></a><!-- doxytag: member="JRProfilesElement::identifier" ref="a9f959f934052d9eb2127db501de2de9d" args="" -->
 <div class="memitem">
@@ -362,7 +407,7 @@ Constructors</h2></td></tr>
 </div>
 <div class="memdoc">
 <p>Provider for this profile </p>
-<dl class="note"><dt><b>Note:</b></dt><dd>This is a property of type <a class="el" href="_types.html#types">json</a>, which can be an <em>NSDictionary</em>, <em>NSArray</em>, <em>NSString</em>, etc., and is therefore is a typedef of <em>NSObject</em> </dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>A <a class="el" href="_j_r_capture_types_8h.html#ab04a6ac2657056665528412e64be7a5f">JRJsonObject</a> property is a property of type <a class="el" href="_types.html#typesTable">json</a>, which can be an <em>NSDictionary</em>, <em>NSArray</em>, <em>NSString</em>, etc., and is therefore is a typedef of <em>NSObject</em> </dd></dl>
 
 </div>
 </div>
@@ -391,7 +436,7 @@ Constructors</h2></td></tr>
 </div>
 <div class="memdoc">
 <p>User's authorization credentials for this provider </p>
-<dl class="note"><dt><b>Note:</b></dt><dd>This is a property of type <a class="el" href="_types.html#types">json</a>, which can be an <em>NSDictionary</em>, <em>NSArray</em>, <em>NSString</em>, etc., and is therefore is a typedef of <em>NSObject</em> </dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>A <a class="el" href="_j_r_capture_types_8h.html#ab04a6ac2657056665528412e64be7a5f">JRJsonObject</a> property is a property of type <a class="el" href="_types.html#typesTable">json</a>, which can be an <em>NSDictionary</em>, <em>NSArray</em>, <em>NSString</em>, etc., and is therefore is a typedef of <em>NSObject</em> </dd></dl>
 
 </div>
 </div>
@@ -406,7 +451,7 @@ Constructors</h2></td></tr>
 </div>
 <div class="memdoc">
 <p>User's friends </p>
-<dl class="note"><dt><b>Note:</b></dt><dd>This is an array of <code>NSStrings</code> representing a list of <code>identifier</code> objects TODO: Add note about how setting the array requires a replace on capture and how you can set it with an array of stringPluralElements or just an array of strings </dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>A <a class="el" href="_j_r_capture_types_8h.html#a634970be09000b37e2a95a88b6304239">JRStringArray</a> property is a plural (array) that holds a list of <em>NSStrings</em>. As it is an array, it is therefore a typedef of <em>NSArray</em>. This array of <code>NSStrings</code> represents a list of <code>identifier</code> </dd></dl>
 
 </div>
 </div>
@@ -421,7 +466,7 @@ Constructors</h2></td></tr>
 </div>
 <div class="memdoc">
 <p>Who the user is following </p>
-<dl class="note"><dt><b>Note:</b></dt><dd>This is an array of <code>NSStrings</code> representing a list of <code>identifier</code> objects TODO: Add note about how setting the array requires a replace on capture and how you can set it with an array of stringPluralElements or just an array of strings </dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>A <a class="el" href="_j_r_capture_types_8h.html#a634970be09000b37e2a95a88b6304239">JRStringArray</a> property is a plural (array) that holds a list of <em>NSStrings</em>. As it is an array, it is therefore a typedef of <em>NSArray</em>. This array of <code>NSStrings</code> represents a list of <code>identifier</code> </dd></dl>
 
 </div>
 </div>
@@ -436,7 +481,7 @@ Constructors</h2></td></tr>
 </div>
 <div class="memdoc">
 <p>User's followers </p>
-<dl class="note"><dt><b>Note:</b></dt><dd>This is an array of <code>NSStrings</code> representing a list of <code>identifier</code> objects TODO: Add note about how setting the array requires a replace on capture and how you can set it with an array of stringPluralElements or just an array of strings </dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>A <a class="el" href="_j_r_capture_types_8h.html#a634970be09000b37e2a95a88b6304239">JRStringArray</a> property is a plural (array) that holds a list of <em>NSStrings</em>. As it is an array, it is therefore a typedef of <em>NSArray</em>. This array of <code>NSStrings</code> represents a list of <code>identifier</code> </dd></dl>
 
 </div>
 </div>

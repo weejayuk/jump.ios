@@ -122,6 +122,7 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">(void)&nbsp;</td><td class="memItemRight" valign="bottom">- <a class="el" href="interface_j_r_profile.html#a980ccb94953694cd3bcaf09272bf5c1e">replaceTurnOnsArrayOnCaptureForDelegate:context:</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">(void)&nbsp;</td><td class="memItemRight" valign="bottom">- <a class="el" href="interface_j_r_profile.html#a7fc89e78f68091edf0dc54faff9312b5">replaceTvShowsArrayOnCaptureForDelegate:context:</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">(BOOL)&nbsp;</td><td class="memItemRight" valign="bottom">- <a class="el" href="interface_j_r_profile.html#af2cac3fbd2fd4944b7219004c6ce8be4">needsUpdate</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">(void)&nbsp;</td><td class="memItemRight" valign="bottom">- <a class="el" href="interface_j_r_profile.html#a307b20b8cb70eec684e7197550c9f4c3">updateOnCaptureForDelegate:context:</a></td></tr>
 <tr><td colspan="2"><h2><a name="properties"></a>
 Properties</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">NSString *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_j_r_profile.html#ab7b94c9e1b13a3d7eee34df373364291">displayName</a></td></tr>
@@ -208,7 +209,7 @@ Constructors</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<p>Default constructor. Returns an empty <a class="el" href="interface_j_r_profile.html" title="A JRProfile object.">JRProfile</a> object</p>
+<p>Default instance constructor. Returns an empty <a class="el" href="interface_j_r_profile.html" title="A JRProfile object.">JRProfile</a> object</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>A <a class="el" href="interface_j_r_profile.html" title="A JRProfile object.">JRProfile</a> object </dd></dl>
 
 </div>
@@ -227,7 +228,7 @@ Constructors</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<p>Returns an empty <a class="el" href="interface_j_r_profile.html" title="A JRProfile object.">JRProfile</a> object</p>
+<p>Default class constructor. Returns an empty <a class="el" href="interface_j_r_profile.html" title="A JRProfile object.">JRProfile</a> object</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>A <a class="el" href="interface_j_r_profile.html" title="A JRProfile object.">JRProfile</a> object </dd></dl>
 
 </div>
@@ -1036,6 +1037,36 @@ Constructors</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a307b20b8cb70eec684e7197550c9f4c3"></a><!-- doxytag: member="JRProfile::updateOnCaptureForDelegate:context:" ref="a307b20b8cb70eec684e7197550c9f4c3" args="(id&lt; JRCaptureObjectDelegate &gt; delegate,[context] NSObject *context)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">- (void) updateOnCaptureForDelegate: </td>
+          <td></td>
+          <td class="paramtype">(id&lt; <a class="el" href="protocol_j_r_capture_object_delegate-p.html">JRCaptureObjectDelegate</a> &gt;)&nbsp;</td>
+          <td class="paramname"> <em>delegate</em></td>
+        </tr>
+        <tr>
+          <td class="paramkey">context:</td>
+          <td></td>
+          <td class="paramtype">(NSObject *)&nbsp;</td>
+          <td class="paramname"> <em>context</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>TODO: Doxygen doc </p>
+
+<p>Reimplemented from <a class="el" href="interface_j_r_capture_object.html#a307b20b8cb70eec684e7197550c9f4c3">JRCaptureObject</a>.</p>
+
+</div>
+</div>
 <hr/><h2>Properties</h2>
 <a class="anchor" id="ab7b94c9e1b13a3d7eee34df373364291"></a><!-- doxytag: member="JRProfile::displayName" ref="ab7b94c9e1b13a3d7eee34df373364291" args="" -->
 <div class="memitem">
@@ -1090,7 +1121,7 @@ Constructors</h2></td></tr>
 </div>
 <div class="memdoc">
 <p>The date this Contact was first added to the user's address book or friends list. </p>
-<dl class="note"><dt><b>Note:</b></dt><dd>This is a property of type <a class="el" href="_types.html#types">dateTime</a>, which is a typedef of <em>NSDate</em>. The accepted format should be an ISO8601 dateTime string (e.g., <code>yyyy-MM-dd HH:mm:ss.SSSSSS ZZZ</code>) </dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>A <a class="el" href="_j_r_capture_types_8h.html#a7b5b53c1f74c3c428839bcfaa0c3743b">JRDateTime</a> property is a property of type <a class="el" href="_types.html#typesTable">dateTime</a> and a typedef of <em>NSDate</em>. The accepted format should be an ISO 8601 dateTime string (e.g., <code>yyyy-MM-dd HH:mm:ss.SSSSSS ZZZ</code>) </dd></dl>
 
 </div>
 </div>
@@ -1105,7 +1136,7 @@ Constructors</h2></td></tr>
 </div>
 <div class="memdoc">
 <p>The most recent date the details of this Contact were updated. </p>
-<dl class="note"><dt><b>Note:</b></dt><dd>This is a property of type <a class="el" href="_types.html#types">dateTime</a>, which is a typedef of <em>NSDate</em>. The accepted format should be an ISO8601 dateTime string (e.g., <code>yyyy-MM-dd HH:mm:ss.SSSSSS ZZZ</code>) </dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>A <a class="el" href="_j_r_capture_types_8h.html#a7b5b53c1f74c3c428839bcfaa0c3743b">JRDateTime</a> property is a property of type <a class="el" href="_types.html#typesTable">dateTime</a> and a typedef of <em>NSDate</em>. The accepted format should be an ISO 8601 dateTime string (e.g., <code>yyyy-MM-dd HH:mm:ss.SSSSSS ZZZ</code>) </dd></dl>
 
 </div>
 </div>
@@ -1134,7 +1165,7 @@ Constructors</h2></td></tr>
 </div>
 <div class="memdoc">
 <p>The wedding anniversary of this contact. </p>
-<dl class="note"><dt><b>Note:</b></dt><dd>This is a property of type <a class="el" href="_types.html#types">date</a>, which is a typedef of <em>NSDate</em>. The accepted format should be an ISO8601 date string (e.g., <code>yyyy-MM-dd</code>) </dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>A <a class="el" href="_j_r_capture_types_8h.html#a2bf0800274f8dbce11464715ccd868f0">JRDate</a> property is a property of type <a class="el" href="_types.html#typesTable">date</a> and a typedef of <em>NSDate</em>. The accepted format should be an ISO 8601 date string (e.g., <code>yyyy-MM-dd</code>) </dd></dl>
 
 </div>
 </div>
@@ -1191,7 +1222,7 @@ Constructors</h2></td></tr>
 </div>
 <div class="memdoc">
 <p>E-mail address for this Contact. </p>
-<dl class="note"><dt><b>Note:</b></dt><dd>This is an array of <code><a class="el" href="interface_j_r_emails_element.html" title="E-mail address for this Contact.">JREmailsElement</a></code> objects </dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>This is an array of <a class="el" href="interface_j_r_emails_element.html" title="E-mail address for this Contact.">JREmailsElement</a> objects </dd></dl>
 
 </div>
 </div>
@@ -1206,7 +1237,7 @@ Constructors</h2></td></tr>
 </div>
 <div class="memdoc">
 <p>URL of a web page relating to this Contact. </p>
-<dl class="note"><dt><b>Note:</b></dt><dd>This is an array of <code><a class="el" href="interface_j_r_urls_element.html" title="URL of a web page relating to this Contact.">JRUrlsElement</a></code> objects </dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>This is an array of <a class="el" href="interface_j_r_urls_element.html" title="URL of a web page relating to this Contact.">JRUrlsElement</a> objects </dd></dl>
 
 </div>
 </div>
@@ -1221,7 +1252,7 @@ Constructors</h2></td></tr>
 </div>
 <div class="memdoc">
 <p>Phone number for this Contact. </p>
-<dl class="note"><dt><b>Note:</b></dt><dd>This is an array of <code><a class="el" href="interface_j_r_phone_numbers_element.html" title="Phone number for this Contact.">JRPhoneNumbersElement</a></code> objects </dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>This is an array of <a class="el" href="interface_j_r_phone_numbers_element.html" title="Phone number for this Contact.">JRPhoneNumbersElement</a> objects </dd></dl>
 
 </div>
 </div>
@@ -1236,7 +1267,7 @@ Constructors</h2></td></tr>
 </div>
 <div class="memdoc">
 <p>Instant messaging address for this Contact. </p>
-<dl class="note"><dt><b>Note:</b></dt><dd>This is an array of <code><a class="el" href="interface_j_r_ims_element.html" title="Instant messaging address for this Contact.">JRImsElement</a></code> objects </dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>This is an array of <a class="el" href="interface_j_r_ims_element.html" title="Instant messaging address for this Contact.">JRImsElement</a> objects </dd></dl>
 
 </div>
 </div>
@@ -1251,7 +1282,7 @@ Constructors</h2></td></tr>
 </div>
 <div class="memdoc">
 <p>URL of a photo of this contact. </p>
-<dl class="note"><dt><b>Note:</b></dt><dd>This is an array of <code><a class="el" href="interface_j_r_profile_photos_element.html" title="URL of a photo of this contact.">JRProfilePhotosElement</a></code> objects </dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>This is an array of <a class="el" href="interface_j_r_profile_photos_element.html" title="URL of a photo of this contact.">JRProfilePhotosElement</a> objects </dd></dl>
 
 </div>
 </div>
@@ -1266,7 +1297,7 @@ Constructors</h2></td></tr>
 </div>
 <div class="memdoc">
 <p>A user-defined category or label for this contact. </p>
-<dl class="note"><dt><b>Note:</b></dt><dd>This is an array of <code>NSStrings</code> representing a list of <code>tag</code> objects TODO: Add note about how setting the array requires a replace on capture and how you can set it with an array of stringPluralElements or just an array of strings </dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>A <a class="el" href="_j_r_capture_types_8h.html#a634970be09000b37e2a95a88b6304239">JRStringArray</a> property is a plural (array) that holds a list of <em>NSStrings</em>. As it is an array, it is therefore a typedef of <em>NSArray</em>. This array of <code>NSStrings</code> represents a list of <code>tag</code> </dd></dl>
 
 </div>
 </div>
@@ -1281,7 +1312,7 @@ Constructors</h2></td></tr>
 </div>
 <div class="memdoc">
 <p>A bi-directionally asserted relationship type that was established between the user and this contact by the Service Provider. </p>
-<dl class="note"><dt><b>Note:</b></dt><dd>This is an array of <code>NSStrings</code> representing a list of <code>relationship</code> objects TODO: Add note about how setting the array requires a replace on capture and how you can set it with an array of stringPluralElements or just an array of strings </dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>A <a class="el" href="_j_r_capture_types_8h.html#a634970be09000b37e2a95a88b6304239">JRStringArray</a> property is a plural (array) that holds a list of <em>NSStrings</em>. As it is an array, it is therefore a typedef of <em>NSArray</em>. This array of <code>NSStrings</code> represents a list of <code>relationship</code> </dd></dl>
 
 </div>
 </div>
@@ -1296,7 +1327,7 @@ Constructors</h2></td></tr>
 </div>
 <div class="memdoc">
 <p>A physical mailing address for this Contact. </p>
-<dl class="note"><dt><b>Note:</b></dt><dd>This is an array of <code><a class="el" href="interface_j_r_addresses_element.html" title="A physical mailing address for this Contact.">JRAddressesElement</a></code> objects </dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>This is an array of <a class="el" href="interface_j_r_addresses_element.html" title="A physical mailing address for this Contact.">JRAddressesElement</a> objects </dd></dl>
 
 </div>
 </div>
@@ -1311,7 +1342,7 @@ Constructors</h2></td></tr>
 </div>
 <div class="memdoc">
 <p>Describes a current or past organizational affiliation of this contact. </p>
-<dl class="note"><dt><b>Note:</b></dt><dd>This is an array of <code><a class="el" href="interface_j_r_organizations_element.html" title="Describes a current or past organizational affiliation of this contact.">JROrganizationsElement</a></code> objects </dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>This is an array of <a class="el" href="interface_j_r_organizations_element.html" title="Describes a current or past organizational affiliation of this contact.">JROrganizationsElement</a> objects </dd></dl>
 
 </div>
 </div>
@@ -1326,7 +1357,7 @@ Constructors</h2></td></tr>
 </div>
 <div class="memdoc">
 <p>Describes an account held by this Contact, which MAY be on the Service Provider's service, or MAY be on a different service. </p>
-<dl class="note"><dt><b>Note:</b></dt><dd>This is an array of <code><a class="el" href="interface_j_r_accounts_element.html" title="Describes an account held by this Contact, which MAY be on the Service Provider&#39;s service...">JRAccountsElement</a></code> objects </dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>This is an array of <a class="el" href="interface_j_r_accounts_element.html" title="Describes an account held by this Contact, which MAY be on the Service Provider&#39;s service...">JRAccountsElement</a> objects </dd></dl>
 
 </div>
 </div>
@@ -1467,7 +1498,7 @@ Constructors</h2></td></tr>
 </div>
 <div class="memdoc">
 <p>Person's statement about who or what they are looking for, or what they are interested in meeting people for. </p>
-<dl class="note"><dt><b>Note:</b></dt><dd>This is an array of <code>NSStrings</code> representing a list of <code>value</code> objects TODO: Add note about how setting the array requires a replace on capture and how you can set it with an array of stringPluralElements or just an array of strings </dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>A <a class="el" href="_j_r_capture_types_8h.html#a634970be09000b37e2a95a88b6304239">JRStringArray</a> property is a plural (array) that holds a list of <em>NSStrings</em>. As it is an array, it is therefore a typedef of <em>NSArray</em>. This array of <code>NSStrings</code> represents a list of <code>value</code> </dd></dl>
 
 </div>
 </div>
@@ -1636,7 +1667,7 @@ Constructors</h2></td></tr>
 </div>
 <div class="memdoc">
 <p>Person's favorite books. </p>
-<dl class="note"><dt><b>Note:</b></dt><dd>This is an array of <code>NSStrings</code> representing a list of <code>book</code> objects TODO: Add note about how setting the array requires a replace on capture and how you can set it with an array of stringPluralElements or just an array of strings </dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>A <a class="el" href="_j_r_capture_types_8h.html#a634970be09000b37e2a95a88b6304239">JRStringArray</a> property is a plural (array) that holds a list of <em>NSStrings</em>. As it is an array, it is therefore a typedef of <em>NSArray</em>. This array of <code>NSStrings</code> represents a list of <code>book</code> </dd></dl>
 
 </div>
 </div>
@@ -1651,7 +1682,7 @@ Constructors</h2></td></tr>
 </div>
 <div class="memdoc">
 <p>Person's favorite cars. </p>
-<dl class="note"><dt><b>Note:</b></dt><dd>This is an array of <code>NSStrings</code> representing a list of <code>car</code> objects TODO: Add note about how setting the array requires a replace on capture and how you can set it with an array of stringPluralElements or just an array of strings </dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>A <a class="el" href="_j_r_capture_types_8h.html#a634970be09000b37e2a95a88b6304239">JRStringArray</a> property is a plural (array) that holds a list of <em>NSStrings</em>. As it is an array, it is therefore a typedef of <em>NSArray</em>. This array of <code>NSStrings</code> represents a list of <code>car</code> </dd></dl>
 
 </div>
 </div>
@@ -1666,7 +1697,7 @@ Constructors</h2></td></tr>
 </div>
 <div class="memdoc">
 <p>Description of the person's children. </p>
-<dl class="note"><dt><b>Note:</b></dt><dd>This is an array of <code>NSStrings</code> representing a list of <code>value</code> objects TODO: Add note about how setting the array requires a replace on capture and how you can set it with an array of stringPluralElements or just an array of strings </dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>A <a class="el" href="_j_r_capture_types_8h.html#a634970be09000b37e2a95a88b6304239">JRStringArray</a> property is a plural (array) that holds a list of <em>NSStrings</em>. As it is an array, it is therefore a typedef of <em>NSArray</em>. This array of <code>NSStrings</code> represents a list of <code>value</code> </dd></dl>
 
 </div>
 </div>
@@ -1681,7 +1712,7 @@ Constructors</h2></td></tr>
 </div>
 <div class="memdoc">
 <p>Person's favorite food. </p>
-<dl class="note"><dt><b>Note:</b></dt><dd>This is an array of <code>NSStrings</code> representing a list of <code>food</code> objects TODO: Add note about how setting the array requires a replace on capture and how you can set it with an array of stringPluralElements or just an array of strings </dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>A <a class="el" href="_j_r_capture_types_8h.html#a634970be09000b37e2a95a88b6304239">JRStringArray</a> property is a plural (array) that holds a list of <em>NSStrings</em>. As it is an array, it is therefore a typedef of <em>NSArray</em>. This array of <code>NSStrings</code> represents a list of <code>food</code> </dd></dl>
 
 </div>
 </div>
@@ -1696,7 +1727,7 @@ Constructors</h2></td></tr>
 </div>
 <div class="memdoc">
 <p>Person's favorite heroes. </p>
-<dl class="note"><dt><b>Note:</b></dt><dd>This is an array of <code>NSStrings</code> representing a list of <code>hero</code> objects TODO: Add note about how setting the array requires a replace on capture and how you can set it with an array of stringPluralElements or just an array of strings </dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>A <a class="el" href="_j_r_capture_types_8h.html#a634970be09000b37e2a95a88b6304239">JRStringArray</a> property is a plural (array) that holds a list of <em>NSStrings</em>. As it is an array, it is therefore a typedef of <em>NSArray</em>. This array of <code>NSStrings</code> represents a list of <code>hero</code> </dd></dl>
 
 </div>
 </div>
@@ -1711,7 +1742,7 @@ Constructors</h2></td></tr>
 </div>
 <div class="memdoc">
 <p>Person's interests, hobbies or passions. </p>
-<dl class="note"><dt><b>Note:</b></dt><dd>This is an array of <code>NSStrings</code> representing a list of <code>interest</code> objects TODO: Add note about how setting the array requires a replace on capture and how you can set it with an array of stringPluralElements or just an array of strings </dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>A <a class="el" href="_j_r_capture_types_8h.html#a634970be09000b37e2a95a88b6304239">JRStringArray</a> property is a plural (array) that holds a list of <em>NSStrings</em>. As it is an array, it is therefore a typedef of <em>NSArray</em>. This array of <code>NSStrings</code> represents a list of <code>interest</code> </dd></dl>
 
 </div>
 </div>
@@ -1726,7 +1757,7 @@ Constructors</h2></td></tr>
 </div>
 <div class="memdoc">
 <p>Person's favorite jobs, or job interests and skills. </p>
-<dl class="note"><dt><b>Note:</b></dt><dd>This is an array of <code>NSStrings</code> representing a list of <code>jobInterest</code> objects TODO: Add note about how setting the array requires a replace on capture and how you can set it with an array of stringPluralElements or just an array of strings </dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>A <a class="el" href="_j_r_capture_types_8h.html#a634970be09000b37e2a95a88b6304239">JRStringArray</a> property is a plural (array) that holds a list of <em>NSStrings</em>. As it is an array, it is therefore a typedef of <em>NSArray</em>. This array of <code>NSStrings</code> represents a list of <code>jobInterest</code> </dd></dl>
 
 </div>
 </div>
@@ -1741,7 +1772,7 @@ Constructors</h2></td></tr>
 </div>
 <div class="memdoc">
 <p>The object's <em>languages</em> property </p>
-<dl class="note"><dt><b>Note:</b></dt><dd>This is an array of <code>NSStrings</code> representing a list of <code>language</code> objects TODO: Add note about how setting the array requires a replace on capture and how you can set it with an array of stringPluralElements or just an array of strings </dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>A <a class="el" href="_j_r_capture_types_8h.html#a634970be09000b37e2a95a88b6304239">JRStringArray</a> property is a plural (array) that holds a list of <em>NSStrings</em>. As it is an array, it is therefore a typedef of <em>NSArray</em>. This array of <code>NSStrings</code> represents a list of <code>language</code> </dd></dl>
 
 </div>
 </div>
@@ -1756,7 +1787,7 @@ Constructors</h2></td></tr>
 </div>
 <div class="memdoc">
 <p>List of the languages that the person speaks as ISO 639-1 codes. </p>
-<dl class="note"><dt><b>Note:</b></dt><dd>This is an array of <code>NSStrings</code> representing a list of <code>languageSpoken</code> objects TODO: Add note about how setting the array requires a replace on capture and how you can set it with an array of stringPluralElements or just an array of strings </dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>A <a class="el" href="_j_r_capture_types_8h.html#a634970be09000b37e2a95a88b6304239">JRStringArray</a> property is a plural (array) that holds a list of <em>NSStrings</em>. As it is an array, it is therefore a typedef of <em>NSArray</em>. This array of <code>NSStrings</code> represents a list of <code>languageSpoken</code> </dd></dl>
 
 </div>
 </div>
@@ -1771,7 +1802,7 @@ Constructors</h2></td></tr>
 </div>
 <div class="memdoc">
 <p>Person's favorite movies. </p>
-<dl class="note"><dt><b>Note:</b></dt><dd>This is an array of <code>NSStrings</code> representing a list of <code>movie</code> objects TODO: Add note about how setting the array requires a replace on capture and how you can set it with an array of stringPluralElements or just an array of strings </dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>A <a class="el" href="_j_r_capture_types_8h.html#a634970be09000b37e2a95a88b6304239">JRStringArray</a> property is a plural (array) that holds a list of <em>NSStrings</em>. As it is an array, it is therefore a typedef of <em>NSArray</em>. This array of <code>NSStrings</code> represents a list of <code>movie</code> </dd></dl>
 
 </div>
 </div>
@@ -1786,7 +1817,7 @@ Constructors</h2></td></tr>
 </div>
 <div class="memdoc">
 <p>Person's favorite music. </p>
-<dl class="note"><dt><b>Note:</b></dt><dd>This is an array of <code>NSStrings</code> representing a list of <code>music</code> objects TODO: Add note about how setting the array requires a replace on capture and how you can set it with an array of stringPluralElements or just an array of strings </dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>A <a class="el" href="_j_r_capture_types_8h.html#a634970be09000b37e2a95a88b6304239">JRStringArray</a> property is a plural (array) that holds a list of <em>NSStrings</em>. As it is an array, it is therefore a typedef of <em>NSArray</em>. This array of <code>NSStrings</code> represents a list of <code>music</code> </dd></dl>
 
 </div>
 </div>
@@ -1801,7 +1832,7 @@ Constructors</h2></td></tr>
 </div>
 <div class="memdoc">
 <p>Description of the person's pets </p>
-<dl class="note"><dt><b>Note:</b></dt><dd>This is an array of <code>NSStrings</code> representing a list of <code>value</code> objects TODO: Add note about how setting the array requires a replace on capture and how you can set it with an array of stringPluralElements or just an array of strings </dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>A <a class="el" href="_j_r_capture_types_8h.html#a634970be09000b37e2a95a88b6304239">JRStringArray</a> property is a plural (array) that holds a list of <em>NSStrings</em>. As it is an array, it is therefore a typedef of <em>NSArray</em>. This array of <code>NSStrings</code> represents a list of <code>value</code> </dd></dl>
 
 </div>
 </div>
@@ -1830,7 +1861,7 @@ Constructors</h2></td></tr>
 </div>
 <div class="memdoc">
 <p>Person's favorite quotes </p>
-<dl class="note"><dt><b>Note:</b></dt><dd>This is an array of <code>NSStrings</code> representing a list of <code>quote</code> objects TODO: Add note about how setting the array requires a replace on capture and how you can set it with an array of stringPluralElements or just an array of strings </dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>A <a class="el" href="_j_r_capture_types_8h.html#a634970be09000b37e2a95a88b6304239">JRStringArray</a> property is a plural (array) that holds a list of <em>NSStrings</em>. As it is an array, it is therefore a typedef of <em>NSArray</em>. This array of <code>NSStrings</code> represents a list of <code>quote</code> </dd></dl>
 
 </div>
 </div>
@@ -1845,7 +1876,7 @@ Constructors</h2></td></tr>
 </div>
 <div class="memdoc">
 <p>Person's favorite sports </p>
-<dl class="note"><dt><b>Note:</b></dt><dd>This is an array of <code>NSStrings</code> representing a list of <code>sport</code> objects TODO: Add note about how setting the array requires a replace on capture and how you can set it with an array of stringPluralElements or just an array of strings </dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>A <a class="el" href="_j_r_capture_types_8h.html#a634970be09000b37e2a95a88b6304239">JRStringArray</a> property is a plural (array) that holds a list of <em>NSStrings</em>. As it is an array, it is therefore a typedef of <em>NSArray</em>. This array of <code>NSStrings</code> represents a list of <code>sport</code> </dd></dl>
 
 </div>
 </div>
@@ -1860,7 +1891,7 @@ Constructors</h2></td></tr>
 </div>
 <div class="memdoc">
 <p>Person's turn offs. </p>
-<dl class="note"><dt><b>Note:</b></dt><dd>This is an array of <code>NSStrings</code> representing a list of <code>turnOff</code> objects TODO: Add note about how setting the array requires a replace on capture and how you can set it with an array of stringPluralElements or just an array of strings </dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>A <a class="el" href="_j_r_capture_types_8h.html#a634970be09000b37e2a95a88b6304239">JRStringArray</a> property is a plural (array) that holds a list of <em>NSStrings</em>. As it is an array, it is therefore a typedef of <em>NSArray</em>. This array of <code>NSStrings</code> represents a list of <code>turnOff</code> </dd></dl>
 
 </div>
 </div>
@@ -1875,7 +1906,7 @@ Constructors</h2></td></tr>
 </div>
 <div class="memdoc">
 <p>Person's turn ons. </p>
-<dl class="note"><dt><b>Note:</b></dt><dd>This is an array of <code>NSStrings</code> representing a list of <code>turnOn</code> objects TODO: Add note about how setting the array requires a replace on capture and how you can set it with an array of stringPluralElements or just an array of strings </dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>A <a class="el" href="_j_r_capture_types_8h.html#a634970be09000b37e2a95a88b6304239">JRStringArray</a> property is a plural (array) that holds a list of <em>NSStrings</em>. As it is an array, it is therefore a typedef of <em>NSArray</em>. This array of <code>NSStrings</code> represents a list of <code>turnOn</code> </dd></dl>
 
 </div>
 </div>
@@ -1904,7 +1935,7 @@ Constructors</h2></td></tr>
 </div>
 <div class="memdoc">
 <p>Person's favorite TV shows. </p>
-<dl class="note"><dt><b>Note:</b></dt><dd>This is an array of <code>NSStrings</code> representing a list of <code>tvShow</code> objects TODO: Add note about how setting the array requires a replace on capture and how you can set it with an array of stringPluralElements or just an array of strings </dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>A <a class="el" href="_j_r_capture_types_8h.html#a634970be09000b37e2a95a88b6304239">JRStringArray</a> property is a plural (array) that holds a list of <em>NSStrings</em>. As it is an array, it is therefore a typedef of <em>NSArray</em>. This array of <code>NSStrings</code> represents a list of <code>tvShow</code> </dd></dl>
 
 </div>
 </div>

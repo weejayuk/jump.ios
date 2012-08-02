@@ -103,6 +103,7 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">(void)&nbsp;</td><td class="memItemRight" valign="bottom">- <a class="el" href="interface_j_r_capture_user.html#a7b52a219a40b8620998c60de248034e1">replaceStatusesArrayOnCaptureForDelegate:context:</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">(void)&nbsp;</td><td class="memItemRight" valign="bottom">- <a class="el" href="interface_j_r_capture_user.html#a9db27893cbdafda95d9b798be5af1d5c">replaceProfilesArrayOnCaptureForDelegate:context:</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">(BOOL)&nbsp;</td><td class="memItemRight" valign="bottom">- <a class="el" href="interface_j_r_capture_user.html#af2cac3fbd2fd4944b7219004c6ce8be4">needsUpdate</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">(void)&nbsp;</td><td class="memItemRight" valign="bottom">- <a class="el" href="interface_j_r_capture_user.html#a307b20b8cb70eec684e7197550c9f4c3">updateOnCaptureForDelegate:context:</a></td></tr>
 <tr><td colspan="2"><h2><a name="properties"></a>
 Properties</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">NSString *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_j_r_capture_user.html#a8b2d60b850f54c220bbf35f323c7ae0e">aboutMe</a></td></tr>
@@ -146,7 +147,7 @@ Constructors</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<p>Default constructor. Returns an empty <a class="el" href="interface_j_r_capture_user.html" title="A JRCaptureUser object.">JRCaptureUser</a> object</p>
+<p>Default instance constructor. Returns an empty <a class="el" href="interface_j_r_capture_user.html" title="A JRCaptureUser object.">JRCaptureUser</a> object</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>A <a class="el" href="interface_j_r_capture_user.html" title="A JRCaptureUser object.">JRCaptureUser</a> object </dd></dl>
 
 </div>
@@ -165,7 +166,7 @@ Constructors</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<p>Returns an empty <a class="el" href="interface_j_r_capture_user.html" title="A JRCaptureUser object.">JRCaptureUser</a> object</p>
+<p>Default class constructor. Returns an empty <a class="el" href="interface_j_r_capture_user.html" title="A JRCaptureUser object.">JRCaptureUser</a> object</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>A <a class="el" href="interface_j_r_capture_user.html" title="A JRCaptureUser object.">JRCaptureUser</a> object </dd></dl>
 
 </div>
@@ -271,6 +272,36 @@ Constructors</h2></td></tr>
 <p>TODO: Doxygen doc </p>
 
 <p>Reimplemented from <a class="el" href="interface_j_r_capture_object.html#af2cac3fbd2fd4944b7219004c6ce8be4">JRCaptureObject</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a307b20b8cb70eec684e7197550c9f4c3"></a><!-- doxytag: member="JRCaptureUser::updateOnCaptureForDelegate:context:" ref="a307b20b8cb70eec684e7197550c9f4c3" args="(id&lt; JRCaptureObjectDelegate &gt; delegate,[context] NSObject *context)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">- (void) updateOnCaptureForDelegate: </td>
+          <td></td>
+          <td class="paramtype">(id&lt; <a class="el" href="protocol_j_r_capture_object_delegate-p.html">JRCaptureObjectDelegate</a> &gt;)&nbsp;</td>
+          <td class="paramname"> <em>delegate</em></td>
+        </tr>
+        <tr>
+          <td class="paramkey">context:</td>
+          <td></td>
+          <td class="paramtype">(NSObject *)&nbsp;</td>
+          <td class="paramname"> <em>context</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>TODO: Doxygen doc </p>
+
+<p>Reimplemented from <a class="el" href="interface_j_r_capture_object.html#a307b20b8cb70eec684e7197550c9f4c3">JRCaptureObject</a>.</p>
 
 </div>
 </div>
@@ -384,7 +415,7 @@ Constructors</h2></td></tr>
 </div>
 <div class="memdoc">
 <p>The object's <em>display</em> property </p>
-<dl class="note"><dt><b>Note:</b></dt><dd>This is a property of type <a class="el" href="_types.html#types">json</a>, which can be an <em>NSDictionary</em>, <em>NSArray</em>, <em>NSString</em>, etc., and is therefore is a typedef of <em>NSObject</em> </dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>A <a class="el" href="_j_r_capture_types_8h.html#ab04a6ac2657056665528412e64be7a5f">JRJsonObject</a> property is a property of type <a class="el" href="_types.html#typesTable">json</a>, which can be an <em>NSDictionary</em>, <em>NSArray</em>, <em>NSString</em>, etc., and is therefore is a typedef of <em>NSObject</em> </dd></dl>
 
 </div>
 </div>
@@ -399,7 +430,7 @@ Constructors</h2></td></tr>
 </div>
 <div class="memdoc">
 <p>The object's <em>photos</em> property </p>
-<dl class="note"><dt><b>Note:</b></dt><dd>This is an array of <code><a class="el" href="interface_j_r_photos_element.html" title="A JRPhotosElement object.">JRPhotosElement</a></code> objects </dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>This is an array of <a class="el" href="interface_j_r_photos_element.html" title="A JRPhotosElement object.">JRPhotosElement</a> objects </dd></dl>
 
 </div>
 </div>
@@ -442,7 +473,7 @@ Constructors</h2></td></tr>
 </div>
 <div class="memdoc">
 <p>The object's <em>emailVerified</em> property </p>
-<dl class="note"><dt><b>Note:</b></dt><dd>This is a property of type <a class="el" href="_types.html#types">dateTime</a>, which is a typedef of <em>NSDate</em>. The accepted format should be an ISO8601 dateTime string (e.g., <code>yyyy-MM-dd HH:mm:ss.SSSSSS ZZZ</code>) </dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>A <a class="el" href="_j_r_capture_types_8h.html#a7b5b53c1f74c3c428839bcfaa0c3743b">JRDateTime</a> property is a property of type <a class="el" href="_types.html#typesTable">dateTime</a> and a typedef of <em>NSDate</em>. The accepted format should be an ISO 8601 dateTime string (e.g., <code>yyyy-MM-dd HH:mm:ss.SSSSSS ZZZ</code>) </dd></dl>
 
 </div>
 </div>
@@ -457,7 +488,7 @@ Constructors</h2></td></tr>
 </div>
 <div class="memdoc">
 <p>The object's <em>password</em> property </p>
-<dl class="note"><dt><b>Note:</b></dt><dd>This is a property of type <a class="el" href="_types.html#types">password</a>, which can be either an <em>NSString</em> or <em>NSDictionary</em>, and is therefore is a typedef of <em>NSObject</em> </dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>A <a class="el" href="_j_r_capture_types_8h.html#ae4d41033c8d50bc4e0da3e7c04eb49fe">JRPassword</a> property is a property of type <a class="el" href="_types.html#typesTable">password</a>, which can be either an <em>NSString</em> or <em>NSDictionary</em>, and is therefore is a typedef of <em>NSObject</em> </dd></dl>
 
 </div>
 </div>
@@ -472,7 +503,7 @@ Constructors</h2></td></tr>
 </div>
 <div class="memdoc">
 <p>The object's <em>lastLogin</em> property </p>
-<dl class="note"><dt><b>Note:</b></dt><dd>This is a property of type <a class="el" href="_types.html#types">dateTime</a>, which is a typedef of <em>NSDate</em>. The accepted format should be an ISO8601 dateTime string (e.g., <code>yyyy-MM-dd HH:mm:ss.SSSSSS ZZZ</code>) </dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>A <a class="el" href="_j_r_capture_types_8h.html#a7b5b53c1f74c3c428839bcfaa0c3743b">JRDateTime</a> property is a property of type <a class="el" href="_types.html#typesTable">dateTime</a> and a typedef of <em>NSDate</em>. The accepted format should be an ISO 8601 dateTime string (e.g., <code>yyyy-MM-dd HH:mm:ss.SSSSSS ZZZ</code>) </dd></dl>
 
 </div>
 </div>
@@ -543,7 +574,7 @@ Constructors</h2></td></tr>
 </div>
 <div class="memdoc">
 <p>The object's <em>birthday</em> property </p>
-<dl class="note"><dt><b>Note:</b></dt><dd>This is a property of type <a class="el" href="_types.html#types">date</a>, which is a typedef of <em>NSDate</em>. The accepted format should be an ISO8601 date string (e.g., <code>yyyy-MM-dd</code>) </dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>A <a class="el" href="_j_r_capture_types_8h.html#a2bf0800274f8dbce11464715ccd868f0">JRDate</a> property is a property of type <a class="el" href="_types.html#typesTable">date</a> and a typedef of <em>NSDate</em>. The accepted format should be an ISO 8601 date string (e.g., <code>yyyy-MM-dd</code>) </dd></dl>
 
 </div>
 </div>
@@ -572,7 +603,7 @@ Constructors</h2></td></tr>
 </div>
 <div class="memdoc">
 <p>The object's <em>statuses</em> property </p>
-<dl class="note"><dt><b>Note:</b></dt><dd>This is an array of <code><a class="el" href="interface_j_r_statuses_element.html" title="A JRStatusesElement object.">JRStatusesElement</a></code> objects </dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>This is an array of <a class="el" href="interface_j_r_statuses_element.html" title="A JRStatusesElement object.">JRStatusesElement</a> objects </dd></dl>
 
 </div>
 </div>
@@ -587,7 +618,7 @@ Constructors</h2></td></tr>
 </div>
 <div class="memdoc">
 <p>The object's <em>profiles</em> property </p>
-<dl class="note"><dt><b>Note:</b></dt><dd>This is an array of <code><a class="el" href="interface_j_r_profiles_element.html" title="A JRProfilesElement object.">JRProfilesElement</a></code> objects </dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>This is an array of <a class="el" href="interface_j_r_profiles_element.html" title="A JRProfilesElement object.">JRProfilesElement</a> objects </dd></dl>
 
 </div>
 </div>
