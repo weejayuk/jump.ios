@@ -68,7 +68,6 @@
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">typedef NSString&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_j_r_capture_types_8h.html#ace0906b0f61f2f54bf76352bd42e8474">JRString</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">typedef NSNumber&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_j_r_capture_types_8h.html#ab3d87e7a9b641d2732af671ea5631bfc">JRBoolean</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">typedef NSNumber&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_j_r_capture_types_8h.html#a439488d2ae5956f916d5b9d8c24df152">JRDecimal</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">typedef NSNumber&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_j_r_capture_types_8h.html#a43765c79c9520cc532c8cd27c96f1011">JRInteger</a></td></tr>
@@ -84,21 +83,6 @@ Typedefs</h2></td></tr>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
 <p>Types used by the library's generated Capture user model </p>
 <hr/><h2>Typedef Documentation</h2>
-<a class="anchor" id="ace0906b0f61f2f54bf76352bd42e8474"></a><!-- doxytag: member="JRCaptureTypes.h::JRString" ref="ace0906b0f61f2f54bf76352bd42e8474" args="" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef NSString <a class="el" href="_j_r_capture_types_8h.html#ace0906b0f61f2f54bf76352bd42e8474">JRString</a></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-<p>TODO </p>
-<dl class="see"><dt><b>See also:</b></dt><dd>For more information, please see the <a class="el" href="_types.html#typesTable">Type Mapping Reference Page</a> </dd></dl>
-
-</div>
-</div>
 <a class="anchor" id="ab3d87e7a9b641d2732af671ea5631bfc"></a><!-- doxytag: member="JRCaptureTypes.h::JRBoolean" ref="ab3d87e7a9b641d2732af671ea5631bfc" args="" -->
 <div class="memitem">
 <div class="memproto">
@@ -109,8 +93,12 @@ Typedefs</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<p>TODO </p>
-<dl class="see"><dt><b>See also:</b></dt><dd>For more information, please see the <a class="el" href="_types.html#typesTable">Type Mapping Reference Page</a> </dd></dl>
+<p>Some types do not perfectly map between Objective-C and Capture. For example, a <em>boolean</em> on Capture can have the values <code>true</code>, <code>false</code>, and <code>null</code>, while an <em>NSBoolean</em> in Objective-C can only be <code>true</code> or <code>false</code>. On the other hand, an <em>NSNumber</em> can represent <code>true</code>, <code>false</code>, and <code>null</code>, but it can also hold many other things that won't be accepted by the Capture API (such as <code>-100</code>) when the property has the type <em>boolean</em>.</p>
+<p>To ensure that your objects can correctly update themselves on Capture (i.e., contain <code>null</code>), we use an <em>NSNumber</em> to hold <em>boolean</em> properties. To make it perfectly clear that <em>boolean</em> properties cannot be just any number, we typedeffed them <em>JRBoolean</em>. Your IDE's auto-complete should suggest <em>JRBoolean</em> when setting a <em>boolean</em> property, but since underneath it is just an <em>NSNumber</em>, you can set it to <code>null</code> as well.</p>
+<p>When setting a property of type <em>JRBoolean</em>, you can set it as you would an <em>NSNumber</em>. Additionally, for your convenience, Capture objects that have <em>boolean</em> properties will provide getters and setters that accept and return primitive booleans. For example, the <a class="el" href="interface_j_r_phone_numbers_element.html#af6562479c30ab89cad94149be4b83cf0">JRPhoneNumbersElement.primary</a> property has the following getters/setters: <a class="el" href="interface_j_r_phone_numbers_element.html#af6562479c30ab89cad94149be4b83cf0">JRPhoneNumbersElement.primary()</a>, JRPhoneNumbersElement.setPrimary(), <a class="el" href="interface_j_r_phone_numbers_element.html#a61ae6c3175c3b3926ec9c75b408b9010">setPrimaryWithBool: (JRPhoneNumbersElement)</a>, and <a class="el" href="interface_j_r_phone_numbers_element.html#a14d7ba7bdcae312ed2046df19e6f18fc">getPrimaryBoolValue (JRPhoneNumbersElement)</a>.</p>
+<dl class="note"><dt><b>Note:</b></dt><dd>In Capture there is a difference between a <em>boolean</em> with the value <code>false</code> and a <em>boolean</em> with the value <code>null</code>.</dd></dl>
+<dl class="warning"><dt><b>Warning:</b></dt><dd>The compiler won't stop you from setting a <em>JRBoolean</em> to a non-boolean value, the JUMP for iOS library will automatically convert your <em>JRBoolean</em> properties to the equivalent boolean value when updating the object on Capture.</dd></dl>
+<dl class="see"><dt><b>See also:</b></dt><dd>For more information, please see the <a class="el" href="_types.html#typesTable">Type Mapping Reference Page</a>. </dd></dl>
 
 </div>
 </div>
@@ -124,8 +112,10 @@ Typedefs</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<p>TODO </p>
-<dl class="see"><dt><b>See also:</b></dt><dd>For more information, please see the <a class="el" href="_types.html#typesTable">Type Mapping Reference Page</a> </dd></dl>
+<p>Some types do not perfectly map between Objective-C and Capture. For example, a <em>decimal</em> on Capture is more or less equivalent to an <em>NSNumber</em> in Objective-C. On the other hand an <em>NSNumber</em> can hold values that won't be accepted by the Capture API (such as <code>true</code>).</p>
+<p>To ensure that your objects can correctly update themselves on Capture, we use an <em>NSNumber</em> to hold <em>decimal</em> properties. To make it perfectly clear that these properties correspond to the type <em>decimal</em>, and they cannot be just any number, we typedeffed them <em>JRDecimal</em>. Your IDE's auto-complete should suggest <em>JRDecimal</em> when setting a <em>decimal</em> property. Also, since, underneath, it is just an <em>NSNumber</em>, you can set it to <code>null</code> as well.</p>
+<dl class="warning"><dt><b>Warning:</b></dt><dd>The compiler won't stop you from setting a <em>JRDecimal</em> to a value that may not be accepted by Capture, but you will get an error when you try and update your object on Capture.</dd></dl>
+<dl class="see"><dt><b>See also:</b></dt><dd>For more information, please see the <a class="el" href="_types.html#typesTable">Type Mapping Reference Page</a>. </dd></dl>
 
 </div>
 </div>
@@ -139,8 +129,12 @@ Typedefs</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<p>TODO </p>
-<dl class="see"><dt><b>See also:</b></dt><dd>For more information, please see the <a class="el" href="_types.html#typesTable">Type Mapping Reference Page</a> </dd></dl>
+<p>Some types do not perfectly map between Objective-C and Capture. For example, a <em>integer</em> on Capture can hold both integers and <code>null</code>, while an <em>NSInteger</em> in Objective-C can only hold integers and can't be <code>null</code>. On the other hand an <em>NSNumber</em> can represent <code>true</code>, <code>false</code>, and <code>null</code>, but it can also hold many other things that won't be accepted by the Capture API (such as <code>-100</code>) when the property has the type <em>integer</em>.</p>
+<p>To ensure that your objects can correctly update themselves on Capture, we had to use an <em>NSNumber</em> to hold <em>integer</em> properties. To make it perfectly clear that <em>integer</em> properties cannot be just any number, we typedeffed them <em>JRInteger</em>. Your IDE's auto-complete should suggest <em>JRInteger</em> when setting a <em>integer</em> property, but since underneath it is just an <em>NSNumber</em>, you can set it to <code>null</code> as well.</p>
+<p>When setting a property of type <em>JRInteger</em>, you can set it as you would an NSNumber. Additionally, for your convenience, Capture objects that have <em>integer</em> properties will provide getters and setters that accept and return primitive integers. The same goes for <em>JRBooleans</em>. For example, the <a class="el" href="interface_j_r_phone_numbers_element.html#af6562479c30ab89cad94149be4b83cf0">JRPhoneNumbersElement.primary</a> property (a <code>boolean</code>) has the following getters/setters: <a class="el" href="interface_j_r_phone_numbers_element.html#af6562479c30ab89cad94149be4b83cf0">JRPhoneNumbersElement.primary()</a>, JRPhoneNumbersElement.setPrimary(), <a class="el" href="interface_j_r_phone_numbers_element.html#a61ae6c3175c3b3926ec9c75b408b9010">setPrimaryWithBool: (JRPhoneNumbersElement)</a>, and <a class="el" href="interface_j_r_phone_numbers_element.html#a14d7ba7bdcae312ed2046df19e6f18fc">getPrimaryBoolValue (JRPhoneNumbersElement)</a>.</p>
+<dl class="note"><dt><b>Note:</b></dt><dd>In Capture there is a difference between an <em>integer</em> with the value <code>0</code> and an  integer with the value <code>null</code>.</dd></dl>
+<dl class="warning"><dt><b>Warning:</b></dt><dd>The compiler won't stop you from setting a <em>JRInteger</em> to a non-integer value, the JUMP for iOS library will automatically convert your <em>JRInteger</em> properties to the equivalent integer value when updating the object on Capture.</dd></dl>
+<dl class="see"><dt><b>See also:</b></dt><dd>For more information, please see the <a class="el" href="_types.html#typesTable">Type Mapping Reference Page</a>. </dd></dl>
 
 </div>
 </div>
@@ -154,8 +148,11 @@ Typedefs</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<p>TODO </p>
-<dl class="see"><dt><b>See also:</b></dt><dd>For more information, please see the <a class="el" href="_types.html#typesTable">Type Mapping Reference Page</a> </dd></dl>
+<p>Some types do not perfectly map between Objective-C and Capture. For example, a property of type <em>date</em> on Capture can hold only hold values that correspond to the <a href="http://dotat.at/tmp/ISO_8601-2004_E.pdf">ISO 8601 date format</a> (e.g., <code>yyyy-MM-dd</code>), while an <em>NSDate</em> on Objective-C can hold many more values and formats.</p>
+<p>To ensure that your objects can correctly update themselves on Capture, we had to use an <em>NSDate</em> to hold <em>date</em> properties. To make it perfectly clear that <em>date</em> properties cannot be just any date, we typedeffed them <em>JRDate</em>. Your IDE's auto-complete should suggest <em>JRDate</em> when setting a <em>date</em> property, but since underneath it is just an <em>NSDate</em>, you can set it to <code>null</code> as well.</p>
+<dl class="note"><dt><b>Note:</b></dt><dd>In Capture there is a difference between the type <em>date</em> and the type <em>dateTime</em>. Properties of either type will use an <em>NSDate</em> to store its value.</dd></dl>
+<dl class="warning"><dt><b>Warning:</b></dt><dd>The compiler won't stop you from setting a <em>JRDate</em> to any valid date value, but the JUMP for iOS library will automatically convert your <em>JRDate</em> properties to acceptable <a href="http://dotat.at/tmp/ISO_8601-2004_E.pdf">ISO 8601 dates</a> (e.g., <code>yyyy-MM-dd</code>) when updating the object on Capture.</dd></dl>
+<dl class="see"><dt><b>See also:</b></dt><dd>For more information, please see the <a class="el" href="_types.html#typesTable">Type Mapping Reference Page</a>. </dd></dl>
 
 </div>
 </div>
@@ -169,8 +166,11 @@ Typedefs</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<p>TODO </p>
-<dl class="see"><dt><b>See also:</b></dt><dd>For more information, please see the <a class="el" href="_types.html#typesTable">Type Mapping Reference Page</a> </dd></dl>
+<p>Some types do not perfectly map between Objective-C and Capture. For example, a property of type <em>dateTime</em> on Capture can hold only hold values that correspond to the <a href="http://dotat.at/tmp/ISO_8601-2004_E.pdf">ISO 8601 dateTime format</a> (e.g., <code><code>yyyy-MM-dd</code> HH:mm:ss.SSSSSS ZZZ</code>), while an <em>NSDate</em> on Objective-C can hold many more values and formats.</p>
+<p>To ensure that your objects can correctly update themselves on Capture, we had to use an <em>NSDate</em> to hold <em>dateTime</em> properties. To make it perfectly clear that <em>dateTime</em> properties cannot be just any date, we typedeffed them <em>JRDateTime</em>. Your IDE's auto-complete should suggest <em>JRDateTime</em> when setting a <em>dateTime</em> property, but since underneath it is just an <em>NSDate</em>, you can set it to <code>null</code> as well.</p>
+<dl class="note"><dt><b>Note:</b></dt><dd>In Capture there is a difference between the type <em>date</em> and the type <em>dateTime</em>. Properties of either type will use an <em>NSDate</em> to store its value.</dd></dl>
+<dl class="warning"><dt><b>Warning:</b></dt><dd>The compiler won't stop you from setting a <em>JRDateTime</em> to any valid date value, but the JUMP for iOS library will automatically convert your <em>JRDateTime</em> properties to acceptable <a href="http://dotat.at/tmp/ISO_8601-2004_E.pdf">ISO 8601 dateTimes</a> (e.g., <code>yyyy-MM-dd HH:mm:ss.SSSSSS ZZZ</code>) when updating the object on Capture.</dd></dl>
+<dl class="see"><dt><b>See also:</b></dt><dd>For more information, please see the <a class="el" href="_types.html#typesTable">Type Mapping Reference Page</a>. </dd></dl>
 
 </div>
 </div>
@@ -184,8 +184,10 @@ Typedefs</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<p>TODO </p>
-<dl class="see"><dt><b>See also:</b></dt><dd>For more information, please see the <a class="el" href="_types.html#typesTable">Type Mapping Reference Page</a> </dd></dl>
+<p>Some types do not perfectly map between Objective-C and Capture. For example, a property of type <em>ipAddress</em> on Capture can hold only hold valid IPAddresses (e.g., <code>"192.168.0.1"</code>) or <code>null</code>, where valid IPAddresses are stored as <em>NSStrings</em> in Objective-C.</p>
+<p>To ensure that your objects can correctly update themselves on Capture, we use an <em>NSString</em> to hold <em>ipAddress</em> properties. To make it perfectly clear that <em>ipAddress</em> properties cannot be just any string, we typedeffed them <em>JRIpAddress</em>. Your IDE's auto-complete should suggest <em>JRIpAddress</em> when setting a <em>ipAddress</em> property, but since underneath it is just an <em>NSString</em>, you can set it to <code>null</code> as well.</p>
+<dl class="warning"><dt><b>Warning:</b></dt><dd>The compiler won't stop you from setting a <em>JRIpAddress</em> to a value that may not be accepted by Capture, but you will get an error when you try and update your object on Capture.</dd></dl>
+<dl class="see"><dt><b>See also:</b></dt><dd>For more information, please see the <a class="el" href="_types.html#typesTable">Type Mapping Reference Page</a>. </dd></dl>
 
 </div>
 </div>
@@ -199,8 +201,10 @@ Typedefs</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<p>TODO </p>
-<dl class="see"><dt><b>See also:</b></dt><dd>For more information, please see the <a class="el" href="_types.html#typesTable">Type Mapping Reference Page</a> </dd></dl>
+<p>Some types do not perfectly map between Objective-C and Capture. For example, a property of type <em>password</em> on Capture can hold both strings and dictionaries. As such, we use an <em>NSObject</em> to hold password properties, though what is stored in the <em>NSObject</em> will either be an <em>NSString</em> or <em>NSDictionary</em>.</p>
+<p>To ensure that your objects can correctly update themselves on Capture, we use an <em>NSObject</em> to hold <em>password</em> properties. To make it perfectly clear that <em>password</em> properties can be strings or dictionaries, we typedeffed them <em>JRPassword</em>. Your IDE's auto-complete should suggest <em>JRPassword</em> when setting a <em>password</em> property, but since underneath it is just an <em>NSObject</em>, you can set it to <code>null</code> as well.</p>
+<dl class="warning"><dt><b>Warning:</b></dt><dd>The compiler won't stop you from setting a <em>JRPassword</em> to a value that may not be accepted by Capture, but you will get an error when you try and update your object on Capture.</dd></dl>
+<dl class="see"><dt><b>See also:</b></dt><dd>For more information, please see the <a class="el" href="_types.html#typesTable">Type Mapping Reference Page</a>. </dd></dl>
 
 </div>
 </div>
@@ -214,9 +218,12 @@ Typedefs</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<p>Any object hierarchy that JSONKit can serialize. This includes and is limited to NSArray, NSDictionary, NSString, NSNumber, and NSNull.</p>
+<p>Some types do not perfectly map between Objective-C and Capture. For example, a property of type <em>json</em> on Capture can hold any valid <a href="http://www.json.org/">JSON</a> object (objects, arrays, strings, numbers, booleans, or null). When deserializing properties of type <em>json</em>, the JUMP for iOS library stores the result in an <em>NSObject</em> property. That is, a <em>json</em> property can hold any object hierarchy that JSONKit can serialize. This includes and is limited to <em>NSArray</em>, <em>NSDictionary</em>, <em>NSString</em>, <em>NSNumber</em>, and <em>NSNull</em>.</p>
 <p>For more information on JSONKit and what it can serialize check the README in the project: <a href="https://github.com/johnezang/JSONKit">https://github.com/johnezang/JSONKit</a></p>
-<dl class="see"><dt><b>See also:</b></dt><dd>For more information, please see the <a class="el" href="_types.html#typesTable">Type Mapping Reference Page</a> </dd></dl>
+<p>To ensure that your objects can correctly update themselves on Capture, we use an <em>NSObject</em> to hold <em>json</em> properties. To make it perfectly clear that <em>json</em> properties can only be types that are accepted by JSONKit, we typedeffed them <em>JRJsonObject</em>. Your IDE's auto-complete should suggest <em>JRJsonObject</em> when setting a <em>json</em> property, but since underneath it is just an <em>NSObject</em>, you can set it to <code>null</code> as well.</p>
+<dl class="note"><dt><b>Note:</b></dt><dd>If the JSON returned by Capture is an object, this property will hold an <em>NSDictionary</em>. If the JSON returned by Capture is an array, this property will hold an <em>NSArray</em>. If it is a string, <em>NSString</em>, number or boolean, <em>NSNumber</em>, and if the property is <code>null</code>, it will hold <code>nil</code>.</dd></dl>
+<dl class="warning"><dt><b>Warning:</b></dt><dd>The compiler won't stop you from setting a <em>JRJsonObject</em> to a value that may not be accepted by Capture or JSONKit, but you will get an error when you try and update your object on Capture.</dd></dl>
+<dl class="see"><dt><b>See also:</b></dt><dd>For more information, please see the <a class="el" href="_types.html#typesTable">Type Mapping Reference Page</a>. </dd></dl>
 
 </div>
 </div>
@@ -230,7 +237,6 @@ Typedefs</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<p>TODO </p>
 <dl class="see"><dt><b>See also:</b></dt><dd>For more information, please see the <a class="el" href="_types.html#typesTable">Type Mapping Reference Page</a> </dd></dl>
 
 </div>
@@ -245,8 +251,8 @@ Typedefs</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<p>TODO </p>
-<dl class="see"><dt><b>See also:</b></dt><dd>For more information, please see the <a class="el" href="_types.html#typesTable">Type Mapping Reference Page</a> </dd></dl>
+<p>Some types do not perfectly map between Objective-C and Capture. For example, a property of type <em>uuid</em> on Capture holds a string and cannot be modified by a client; that is, <em>uuid</em> properties are read-only. To make this clear, the JUMP for iOS library stores the <em>uuid</em> property as an <em>NSString</em> typedeffed as a <em>JRUuid</em>.</p>
+<dl class="see"><dt><b>See also:</b></dt><dd>For more information, please see the <a class="el" href="_types.html#typesTable">Type Mapping Reference Page</a>. </dd></dl>
 
 </div>
 </div>
@@ -260,8 +266,9 @@ Typedefs</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<p>TODO </p>
-<dl class="see"><dt><b>See also:</b></dt><dd>For more information, please see the <a class="el" href="_types.html#typesTable">Type Mapping Reference Page</a> </dd></dl>
+<p>Some types do not perfectly map between Objective-C and Capture. For example, a property of type <em>id</em> on Capture holds a integer id and cannot be modified by a client; that is, <em>id</em> properties are read-only. To make this clear, the JUMP for iOS library stores the <em>uuid</em> property as an <em>NSNumber</em> typedeffed as a <em>JRObjectId</em>.</p>
+<dl class="note"><dt><b>Note:</b></dt><dd>Only the top-level <a class="el" href="interface_j_r_capture_user.html" title="A JRCaptureUser object.">JRCaptureUser</a> and elements of plurals have <em>id</em> properties. As there can be several plural elements that are similar ( </dd></dl>
+<dl class="see"><dt><b>See also:</b></dt><dd>For more information, please see the <a class="el" href="_types.html#typesTable">Type Mapping Reference Page</a>. </dd></dl>
 
 </div>
 </div>
