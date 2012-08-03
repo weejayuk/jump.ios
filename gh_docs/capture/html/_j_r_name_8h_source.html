@@ -96,20 +96,22 @@
 <a name="l00034"></a>00034 <span class="preprocessor">#import &quot;JRNSDate+ISO8601_CaptureDateTimeString.h&quot;</span>
 <a name="l00035"></a>00035 
 <a name="l00039"></a><a class="code" href="interface_j_r_name.html">00039</a> <span class="keyword">@interface </span><a class="code" href="interface_j_r_name.html" title="A JRName object.">JRName</a> : <a class="code" href="interface_j_r_capture_object.html" title="Base class for all Capture objects and plural elements.">JRCaptureObject</a>
-<a name="l00040"></a><a class="code" href="interface_j_r_name.html#aa662cd823d4413b9a25da54da0f0171d">00040</a> @property (nonatomic, copy)     NSString *<a class="code" href="interface_j_r_name.html#aa662cd823d4413b9a25da54da0f0171d">formatted</a>; 
-<a name="l00041"></a><a class="code" href="interface_j_r_name.html#af81f220f3535bd95b540f96ae0e4c812">00041</a> @property (nonatomic, copy)     NSString *<a class="code" href="interface_j_r_name.html#af81f220f3535bd95b540f96ae0e4c812">familyName</a>; 
-<a name="l00042"></a><a class="code" href="interface_j_r_name.html#a3de41256b1dbf4cbefc02d885bec370b">00042</a> @property (nonatomic, copy)     NSString *<a class="code" href="interface_j_r_name.html#a3de41256b1dbf4cbefc02d885bec370b">givenName</a>; 
-<a name="l00043"></a><a class="code" href="interface_j_r_name.html#afa720d2ffdb5f7cc3c5771def5e186fc">00043</a> @property (nonatomic, copy)     NSString *<a class="code" href="interface_j_r_name.html#afa720d2ffdb5f7cc3c5771def5e186fc">middleName</a>; 
-<a name="l00044"></a><a class="code" href="interface_j_r_name.html#a1ddd1cf88f9998af05bd613b5f3b6bc3">00044</a> @property (nonatomic, copy)     NSString *<a class="code" href="interface_j_r_name.html#a1ddd1cf88f9998af05bd613b5f3b6bc3">honorificPrefix</a>; 
-<a name="l00045"></a><a class="code" href="interface_j_r_name.html#af2a9beaaa54cb9fa597e50c27f0ebd97">00045</a> @property (nonatomic, copy)     NSString *<a class="code" href="interface_j_r_name.html#af2a9beaaa54cb9fa597e50c27f0ebd97">honorificSuffix</a>; 
-<a name="l00057"></a>00057 - (id)<a class="code" href="interface_j_r_name.html#a4213bb26f5207ee3f402fe463badc691">init</a>;
-<a name="l00058"></a>00058 
-<a name="l00065"></a>00065 + (id)<a class="code" href="interface_j_r_name.html#afebb6f20afb9261dc9d430190042acb9">name</a>;
-<a name="l00066"></a>00066 
-<a name="l00091"></a>00091 - (BOOL)<a class="code" href="interface_j_r_name.html#af2cac3fbd2fd4944b7219004c6ce8be4">needsUpdate</a>;
-<a name="l00092"></a>00092 
-<a name="l00096"></a>00096 - (void)updateOnCaptureForDelegate:(<span class="keywordtype">id</span>&lt;<a class="code" href="protocol_j_r_capture_object_delegate-p.html" title="Protocol adopted by an object ...">JRCaptureObjectDelegate</a>&gt;)delegate context:(NSObject *)context;
-<a name="l00099"></a>00099 <span class="keyword">@end</span>
+<a name="l00059"></a><a class="code" href="interface_j_r_name.html#aa352d02ec672a52c1c9e2ea0ac472cc3">00059</a> @property (readonly) BOOL <a class="code" href="interface_j_r_name.html#aa352d02ec672a52c1c9e2ea0ac472cc3">canBeUpdatedOnCapture</a>;
+<a name="l00060"></a>00060 
+<a name="l00061"></a><a class="code" href="interface_j_r_name.html#aa662cd823d4413b9a25da54da0f0171d">00061</a> @property (nonatomic, copy)     NSString *<a class="code" href="interface_j_r_name.html#aa662cd823d4413b9a25da54da0f0171d">formatted</a>; 
+<a name="l00062"></a><a class="code" href="interface_j_r_name.html#af81f220f3535bd95b540f96ae0e4c812">00062</a> @property (nonatomic, copy)     NSString *<a class="code" href="interface_j_r_name.html#af81f220f3535bd95b540f96ae0e4c812">familyName</a>; 
+<a name="l00063"></a><a class="code" href="interface_j_r_name.html#a3de41256b1dbf4cbefc02d885bec370b">00063</a> @property (nonatomic, copy)     NSString *<a class="code" href="interface_j_r_name.html#a3de41256b1dbf4cbefc02d885bec370b">givenName</a>; 
+<a name="l00064"></a><a class="code" href="interface_j_r_name.html#afa720d2ffdb5f7cc3c5771def5e186fc">00064</a> @property (nonatomic, copy)     NSString *<a class="code" href="interface_j_r_name.html#afa720d2ffdb5f7cc3c5771def5e186fc">middleName</a>; 
+<a name="l00065"></a><a class="code" href="interface_j_r_name.html#a1ddd1cf88f9998af05bd613b5f3b6bc3">00065</a> @property (nonatomic, copy)     NSString *<a class="code" href="interface_j_r_name.html#a1ddd1cf88f9998af05bd613b5f3b6bc3">honorificPrefix</a>; 
+<a name="l00066"></a><a class="code" href="interface_j_r_name.html#af2a9beaaa54cb9fa597e50c27f0ebd97">00066</a> @property (nonatomic, copy)     NSString *<a class="code" href="interface_j_r_name.html#af2a9beaaa54cb9fa597e50c27f0ebd97">honorificSuffix</a>; 
+<a name="l00078"></a>00078 - (id)<a class="code" href="interface_j_r_name.html#a4213bb26f5207ee3f402fe463badc691">init</a>;
+<a name="l00079"></a>00079 
+<a name="l00086"></a>00086 + (id)<a class="code" href="interface_j_r_name.html#afebb6f20afb9261dc9d430190042acb9">name</a>;
+<a name="l00087"></a>00087 
+<a name="l00112"></a>00112 - (BOOL)<a class="code" href="interface_j_r_name.html#af2cac3fbd2fd4944b7219004c6ce8be4">needsUpdate</a>;
+<a name="l00113"></a>00113 
+<a name="l00117"></a>00117 - (void)updateOnCaptureForDelegate:(<span class="keywordtype">id</span>&lt;<a class="code" href="protocol_j_r_capture_object_delegate-p.html" title="Protocol adopted by an object that wishes to update local a JRCaptureObject or array on the Capture s...">JRCaptureObjectDelegate</a>&gt;)delegate context:(NSObject *)context;
+<a name="l00120"></a>00120 <span class="keyword">@end</span>
 </pre></div></div>
 </div>
             </div>

@@ -72,7 +72,7 @@
 </div>
 <div class="contents">
 <!-- doxytag: class="JRCaptureObjectDelegate-p" -->
-<p>Protocol adopted by an object ...  
+<p>Protocol adopted by an object that wishes to update local a <a class="el" href="interface_j_r_capture_object.html" title="Base class for all Capture objects and plural elements.">JRCaptureObject</a> or array on the Capture server.  
 <a href="#_details">More...</a></p>
 
 <p><code>#import &lt;<a class="el" href="_j_r_capture_object_8h_source.html">JRCaptureObject.h</a>&gt;</code></p>
@@ -96,7 +96,7 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">(void)&nbsp;</td><td class="memItemRight" valign="bottom">- <a class="el" href="protocol_j_r_capture_object_delegate-p.html#aa184a8cf924378fe43f91ec8df44a2b2">replaceArrayDidFailForObject:arrayNamed:withError:context:</a></td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
-<p>Protocol adopted by an object ... </p>
+<p>Protocol adopted by an object that wishes to update local a <a class="el" href="interface_j_r_capture_object.html" title="Base class for all Capture objects and plural elements.">JRCaptureObject</a> or array on the Capture server. </p>
 <hr/><h2>Member Function Documentation</h2>
 <a class="anchor" id="afa043773e69351fc3115d7ae765986db"></a><!-- doxytag: member="JRCaptureObjectDelegate&#45;p::updateDidSucceedForObject:context:" ref="afa043773e69351fc3115d7ae765986db" args="(JRCaptureObject *object,[context] NSObject *context)" -->
 <div class="memitem">
@@ -122,11 +122,11 @@ Public Member Functions</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<p>Sent if ...</p>
+<p>Sent if a call to <a class="el" href="interface_j_r_capture_object.html#a307b20b8cb70eec684e7197550c9f4c3">updateOnCaptureForDelegate:context: (JRCaptureObject)</a> succeeded for the <a class="el" href="interface_j_r_capture_object.html" title="Base class for all Capture objects and plural elements.">JRCaptureObject</a> on which the selector was performed.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>object</em>&nbsp;</td><td>object</td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>context</em>&nbsp;</td><td>context </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>object</em>&nbsp;</td><td>The object on which the selector <a class="el" href="interface_j_r_capture_object.html#a307b20b8cb70eec684e7197550c9f4c3">updateOnCaptureForDelegate:context: (JRCaptureObject)</a> was performed</td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>context</em>&nbsp;</td><td>The same NSObject that was sent to the method <a class="el" href="interface_j_r_capture_object.html#a307b20b8cb70eec684e7197550c9f4c3">updateOnCaptureForDelegate:context: (JRCaptureObject)</a>. The <em>context</em> argument is used if you would like to send some data through the asynchronous network call back to your delegate, or <code>nil</code>. This object will be passed back to your <a class="el" href="protocol_j_r_capture_object_delegate-p.html" title="Protocol adopted by an object that wishes to update local a JRCaptureObject or array on the Capture s...">JRCaptureObjectDelegate</a> as is. Contexts are used across most of the asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the context is entirely optional and at your discretion. </td></tr>
   </table>
   </dd>
 </dl>
@@ -163,12 +163,12 @@ Public Member Functions</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<p>Sent if ...</p>
+<p>Sent if a call to <a class="el" href="interface_j_r_capture_object.html#a307b20b8cb70eec684e7197550c9f4c3">updateOnCaptureForDelegate:context: (JRCaptureObject)</a> failed for the <a class="el" href="interface_j_r_capture_object.html" title="Base class for all Capture objects and plural elements.">JRCaptureObject</a> on which the selector was performed.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>object</em>&nbsp;</td><td>object</td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>error</em>&nbsp;</td><td>error</td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>context</em>&nbsp;</td><td>context </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>object</em>&nbsp;</td><td>The object on which the selector <a class="el" href="interface_j_r_capture_object.html#a307b20b8cb70eec684e7197550c9f4c3">updateOnCaptureForDelegate:context: (JRCaptureObject)</a> was performed</td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>error</em>&nbsp;</td><td>The cause of the failure. Please see the list of <a class="el" href="_j_r_capture_error_8h.html#captureErrors">Capture Errors</a> for more information</td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>context</em>&nbsp;</td><td>The same NSObject that was sent to the method <a class="el" href="interface_j_r_capture_object.html#a307b20b8cb70eec684e7197550c9f4c3">updateOnCaptureForDelegate:context: (JRCaptureObject)</a>. The <em>context</em> argument is used if you would like to send some data through the asynchronous network call back to your delegate, or <code>nil</code>. This object will be passed back to your <a class="el" href="protocol_j_r_capture_object_delegate-p.html" title="Protocol adopted by an object that wishes to update local a JRCaptureObject or array on the Capture s...">JRCaptureObjectDelegate</a> as is. Contexts are used across most of the asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the context is entirely optional and at your discretion. </td></tr>
   </table>
   </dd>
 </dl>
@@ -211,16 +211,17 @@ Public Member Functions</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<p>Sent if ...</p>
+<p>Sent if a call to <code>replace&lt;<em>ArrayName</em>&gt;ArrayOnCaptureForDelegate:context:</code> succeeded for the <a class="el" href="interface_j_r_capture_object.html" title="Base class for all Capture objects and plural elements.">JRCaptureObject</a> on which the selector was performed.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>object</em>&nbsp;</td><td>object</td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>replacedArray</em>&nbsp;</td><td>replacedArray</td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>arrayName</em>&nbsp;</td><td>replacedArray</td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>context</em>&nbsp;</td><td>context </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>object</em>&nbsp;</td><td>The object on which the selector <code>replace&lt;<em>ArrayName</em>&gt;ArrayOnCaptureForDelegate:context:</code> was performed</td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>replacedArray</em>&nbsp;</td><td>A pointer to the new array.</td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>arrayName</em>&nbsp;</td><td>The name of the array property. For example, if the method <a class="el" href="interface_j_r_capture_user.html#a7b52a219a40b8620998c60de248034e1">replaceStatusesArrayOnCaptureForDelegate:context: (JRCaptureUser)</a> was called, this argument would have the value <code>"statuses"</code> </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>context</em>&nbsp;</td><td>The same NSObject that was sent to the method <a class="el" href="interface_j_r_capture_object.html#a307b20b8cb70eec684e7197550c9f4c3">updateOnCaptureForDelegate:context: (JRCaptureObject)</a>. The <em>context</em> argument is used if you would like to send some data through the asynchronous network call back to your delegate, or <code>nil</code>. This object will be passed back to your <a class="el" href="protocol_j_r_capture_object_delegate-p.html" title="Protocol adopted by an object that wishes to update local a JRCaptureObject or array on the Capture s...">JRCaptureObjectDelegate</a> as is. Contexts are used across most of the asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the context is entirely optional and at your discretion.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="warning"><dt><b>Warning:</b></dt><dd>When successful, the new array will be added to the object's property, replacing the existing NSArray. The new array will contain new, but equivalent elements as the array did before the replace. That is to say, the elements will be the same, but they will have new pointers. You should not hold onto any references to the array or its elements when you are replacing an array on Capture. The old pointers will become invalid, and the new array will be stored in the object as well as getting returned to you, as the <em>replacedArray</em> argument of this method. </dd></dl>
 
 </div>
 </div>
@@ -260,13 +261,13 @@ Public Member Functions</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<p>Sent if ...</p>
+<p>Sent if a call to <code>replace&lt;<em>ArrayName</em>&gt;ArrayOnCaptureForDelegate:context:</code> failed for the <a class="el" href="interface_j_r_capture_object.html" title="Base class for all Capture objects and plural elements.">JRCaptureObject</a> on which the selector was performed.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>object</em>&nbsp;</td><td>object</td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>arrayName</em>&nbsp;</td><td>object</td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>error</em>&nbsp;</td><td>object</td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>context</em>&nbsp;</td><td>context </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>object</em>&nbsp;</td><td>The object on which the selector <code>replace&lt;<em>ArrayName</em>&gt;ArrayOnCaptureForDelegate:context:</code> was performed</td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>arrayName</em>&nbsp;</td><td>The name of the array property. For example, if the method <a class="el" href="interface_j_r_capture_user.html#a7b52a219a40b8620998c60de248034e1">replaceStatusesArrayOnCaptureForDelegate:context: (JRCaptureUser)</a> was called, this argument would have the value <code>"statuses"</code> </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>error</em>&nbsp;</td><td>The cause of the failure. Please see the list of <a class="el" href="_j_r_capture_error_8h.html#captureErrors">Capture Errors</a> for more information</td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>context</em>&nbsp;</td><td>The same NSObject that was sent to the method <a class="el" href="interface_j_r_capture_object.html#a307b20b8cb70eec684e7197550c9f4c3">updateOnCaptureForDelegate:context: (JRCaptureObject)</a>. The <em>context</em> argument is used if you would like to send some data through the asynchronous network call back to your delegate, or <code>nil</code>. This object will be passed back to your <a class="el" href="protocol_j_r_capture_object_delegate-p.html" title="Protocol adopted by an object that wishes to update local a JRCaptureObject or array on the Capture s...">JRCaptureObjectDelegate</a> as is. Contexts are used across most of the asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the context is entirely optional and at your discretion. </td></tr>
   </table>
   </dd>
 </dl>

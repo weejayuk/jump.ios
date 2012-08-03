@@ -96,19 +96,21 @@
 <a name="l00034"></a>00034 <span class="preprocessor">#import &quot;JRNSDate+ISO8601_CaptureDateTimeString.h&quot;</span>
 <a name="l00035"></a>00035 
 <a name="l00039"></a><a class="code" href="interface_j_r_body_type.html">00039</a> <span class="keyword">@interface </span><a class="code" href="interface_j_r_body_type.html" title="Person&amp;#39;s body characteristics.">JRBodyType</a> : <a class="code" href="interface_j_r_capture_object.html" title="Base class for all Capture objects and plural elements.">JRCaptureObject</a>
-<a name="l00040"></a><a class="code" href="interface_j_r_body_type.html#a61b61c7da9fc955f912984369ced5503">00040</a> @property (nonatomic, copy)     NSString *<a class="code" href="interface_j_r_body_type.html#a61b61c7da9fc955f912984369ced5503">build</a>; 
-<a name="l00041"></a><a class="code" href="interface_j_r_body_type.html#aaa2fcf8e7f23ce1b7b19553e71ee0f40">00041</a> @property (nonatomic, copy)     NSString *<a class="code" href="interface_j_r_body_type.html#aaa2fcf8e7f23ce1b7b19553e71ee0f40">eyeColor</a>; 
-<a name="l00042"></a><a class="code" href="interface_j_r_body_type.html#a08781ee022c3134b72ea54da3686f4ee">00042</a> @property (nonatomic, copy)     NSString *<a class="code" href="interface_j_r_body_type.html#a08781ee022c3134b72ea54da3686f4ee">hairColor</a>; 
-<a name="l00043"></a><a class="code" href="interface_j_r_body_type.html#aae1c9958fe5fb235541bee866c3e0b6d">00043</a> @property (nonatomic, copy)     <a class="code" href="_j_r_capture_types_8h.html#a439488d2ae5956f916d5b9d8c24df152">JRDecimal</a> *<a class="code" href="interface_j_r_body_type.html#aae1c9958fe5fb235541bee866c3e0b6d">height</a>; 
-<a name="l00044"></a><a class="code" href="interface_j_r_body_type.html#a11307b17e2d3404c5d31aa9a64c34ccd">00044</a> @property (nonatomic, copy)     NSString *<a class="code" href="interface_j_r_body_type.html#a11307b17e2d3404c5d31aa9a64c34ccd">color</a>; 
-<a name="l00056"></a>00056 - (id)<a class="code" href="interface_j_r_body_type.html#a4213bb26f5207ee3f402fe463badc691">init</a>;
-<a name="l00057"></a>00057 
-<a name="l00064"></a>00064 + (id)<a class="code" href="interface_j_r_body_type.html#a48166caa3a8010438a9dfe6a3a7ad84f">bodyType</a>;
-<a name="l00065"></a>00065 
-<a name="l00090"></a>00090 - (BOOL)<a class="code" href="interface_j_r_body_type.html#af2cac3fbd2fd4944b7219004c6ce8be4">needsUpdate</a>;
-<a name="l00091"></a>00091 
-<a name="l00095"></a>00095 - (void)updateOnCaptureForDelegate:(<span class="keywordtype">id</span>&lt;<a class="code" href="protocol_j_r_capture_object_delegate-p.html" title="Protocol adopted by an object ...">JRCaptureObjectDelegate</a>&gt;)delegate context:(NSObject *)context;
-<a name="l00098"></a>00098 <span class="keyword">@end</span>
+<a name="l00059"></a><a class="code" href="interface_j_r_body_type.html#aa352d02ec672a52c1c9e2ea0ac472cc3">00059</a> @property (readonly) BOOL <a class="code" href="interface_j_r_body_type.html#aa352d02ec672a52c1c9e2ea0ac472cc3">canBeUpdatedOnCapture</a>;
+<a name="l00060"></a>00060 
+<a name="l00061"></a><a class="code" href="interface_j_r_body_type.html#a61b61c7da9fc955f912984369ced5503">00061</a> @property (nonatomic, copy)     NSString *<a class="code" href="interface_j_r_body_type.html#a61b61c7da9fc955f912984369ced5503">build</a>; 
+<a name="l00062"></a><a class="code" href="interface_j_r_body_type.html#aaa2fcf8e7f23ce1b7b19553e71ee0f40">00062</a> @property (nonatomic, copy)     NSString *<a class="code" href="interface_j_r_body_type.html#aaa2fcf8e7f23ce1b7b19553e71ee0f40">eyeColor</a>; 
+<a name="l00063"></a><a class="code" href="interface_j_r_body_type.html#a08781ee022c3134b72ea54da3686f4ee">00063</a> @property (nonatomic, copy)     NSString *<a class="code" href="interface_j_r_body_type.html#a08781ee022c3134b72ea54da3686f4ee">hairColor</a>; 
+<a name="l00064"></a><a class="code" href="interface_j_r_body_type.html#aae1c9958fe5fb235541bee866c3e0b6d">00064</a> @property (nonatomic, copy)     <a class="code" href="_j_r_capture_types_8h.html#a439488d2ae5956f916d5b9d8c24df152">JRDecimal</a> *<a class="code" href="interface_j_r_body_type.html#aae1c9958fe5fb235541bee866c3e0b6d">height</a>; 
+<a name="l00065"></a><a class="code" href="interface_j_r_body_type.html#a11307b17e2d3404c5d31aa9a64c34ccd">00065</a> @property (nonatomic, copy)     NSString *<a class="code" href="interface_j_r_body_type.html#a11307b17e2d3404c5d31aa9a64c34ccd">color</a>; 
+<a name="l00077"></a>00077 - (id)<a class="code" href="interface_j_r_body_type.html#a4213bb26f5207ee3f402fe463badc691">init</a>;
+<a name="l00078"></a>00078 
+<a name="l00085"></a>00085 + (id)<a class="code" href="interface_j_r_body_type.html#a48166caa3a8010438a9dfe6a3a7ad84f">bodyType</a>;
+<a name="l00086"></a>00086 
+<a name="l00111"></a>00111 - (BOOL)<a class="code" href="interface_j_r_body_type.html#af2cac3fbd2fd4944b7219004c6ce8be4">needsUpdate</a>;
+<a name="l00112"></a>00112 
+<a name="l00116"></a>00116 - (void)updateOnCaptureForDelegate:(<span class="keywordtype">id</span>&lt;<a class="code" href="protocol_j_r_capture_object_delegate-p.html" title="Protocol adopted by an object that wishes to update local a JRCaptureObject or array on the Capture s...">JRCaptureObjectDelegate</a>&gt;)delegate context:(NSObject *)context;
+<a name="l00119"></a>00119 <span class="keyword">@end</span>
 </pre></div></div>
 </div>
             </div>

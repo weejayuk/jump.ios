@@ -97,6 +97,7 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">(void)&nbsp;</td><td class="memItemRight" valign="bottom">- <a class="el" href="interface_j_r_body_type.html#a307b20b8cb70eec684e7197550c9f4c3">updateOnCaptureForDelegate:context:</a></td></tr>
 <tr><td colspan="2"><h2><a name="properties"></a>
 Properties</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">BOOL&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_j_r_body_type.html#aa352d02ec672a52c1c9e2ea0ac472cc3">canBeUpdatedOnCapture</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">NSString *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_j_r_body_type.html#a61b61c7da9fc955f912984369ced5503">build</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">NSString *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_j_r_body_type.html#aaa2fcf8e7f23ce1b7b19553e71ee0f40">eyeColor</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">NSString *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_j_r_body_type.html#a08781ee022c3134b72ea54da3686f4ee">hairColor</a></td></tr>
@@ -203,6 +204,25 @@ Constructors</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Properties</h2>
+<a class="anchor" id="aa352d02ec672a52c1c9e2ea0ac472cc3"></a><!-- doxytag: member="JRBodyType::canBeUpdatedOnCapture" ref="aa352d02ec672a52c1c9e2ea0ac472cc3" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">- (BOOL) canBeUpdatedOnCapture<code> [read, assign]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p><code>YES</code> if this object can be updated on Capture with the method <a class="el" href="interface_j_r_body_type.html#a307b20b8cb70eec684e7197550c9f4c3">updateOnCaptureForDelegate:context:</a>. <code>NO</code> if it can't.</p>
+<p>Use this property to determine if the object or element can be updated on Capture or if this object's parent array needs to be replaced first. As this object, or one of its ancestors, is an element of a plural, this object may or may not be updated on Capture. If an element of a plural was added locally (newly allocated on the client), then the array must be replaced before the element can use the method <a class="el" href="interface_j_r_body_type.html#a307b20b8cb70eec684e7197550c9f4c3">updateOnCaptureForDelegate:context:</a>. Even if <a class="el" href="interface_j_r_body_type.html#af2cac3fbd2fd4944b7219004c6ce8be4">needsUpdate</a> returns <code>YES</code>, this object cannot be updated on Capture unless <a class="el" href="interface_j_r_body_type.html#aa352d02ec672a52c1c9e2ea0ac472cc3">JRBodyType.canBeUpdatedOnCapture</a> also returns <code>YES</code>.</p>
+<p>That is, if any elements of a plural have changed, (added, removed, or reordered) the array must be replaced on Capture with the appropriate <code>replace&lt;<em>ArrayName</em>&gt;ArrayOnCaptureForDelegate:context:</code> method, before updating the elements. As such, this should be done immediately.</p>
+<dl class="note"><dt><b>Note:</b></dt><dd>Replacing the array will also update any local changes to the properties of a <a class="el" href="interface_j_r_body_type.html" title="Person&#39;s body characteristics.">JRBodyType</a>, including sub-arrays and sub-objects. </dd></dl>
+
+<p>Reimplemented from <a class="el" href="interface_j_r_capture_object.html#aa352d02ec672a52c1c9e2ea0ac472cc3">JRCaptureObject</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a61b61c7da9fc955f912984369ced5503"></a><!-- doxytag: member="JRBodyType::build" ref="a61b61c7da9fc955f912984369ced5503" args="" -->
 <div class="memitem">
 <div class="memproto">

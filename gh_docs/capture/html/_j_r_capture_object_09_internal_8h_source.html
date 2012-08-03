@@ -99,9 +99,9 @@
 <a name="l00037"></a>00037 <span class="keyword">@end</span>
 <a name="l00038"></a>00038 
 <a name="l00039"></a>00039 <span class="keyword">@class</span> <a class="code" href="interface_j_r_capture_object.html" title="Base class for all Capture objects and plural elements.">JRCaptureObject</a>;
-<a name="l00040"></a>00040 <span class="keyword">@protocol </span><a class="code" href="protocol_j_r_capture_object_delegate-p.html" title="Protocol adopted by an object ...">JRCaptureObjectDelegate</a>;
+<a name="l00040"></a>00040 <span class="keyword">@protocol </span><a class="code" href="protocol_j_r_capture_object_delegate-p.html" title="Protocol adopted by an object that wishes to update local a JRCaptureObject or array on the Capture s...">JRCaptureObjectDelegate</a>;
 <a name="l00041"></a>00041 
-<a name="l00042"></a>00042 <span class="keyword">@protocol </span>JRCaptureObjectTesterDelegate &lt;<a class="code" href="protocol_j_r_capture_object_delegate-p.html" title="Protocol adopted by an object ...">JRCaptureObjectDelegate</a>&gt;
+<a name="l00042"></a>00042 <span class="keyword">@protocol </span>JRCaptureObjectTesterDelegate &lt;<a class="code" href="protocol_j_r_capture_object_delegate-p.html" title="Protocol adopted by an object that wishes to update local a JRCaptureObject or array on the Capture s...">JRCaptureObjectDelegate</a>&gt;
 <a name="l00043"></a>00043 <span class="keyword">@optional</span>
 <a name="l00044"></a>00044 - (void)updateCaptureObject:(<a class="code" href="interface_j_r_capture_object.html" title="Base class for all Capture objects and plural elements.">JRCaptureObject</a> *)object didSucceedWithResult:(NSString *)result context:(NSObject *)context;
 <a name="l00045"></a>00045 - (void)updateCaptureObject:(<a class="code" href="interface_j_r_capture_object.html" title="Base class for all Capture objects and plural elements.">JRCaptureObject</a> *)object didFailWithResult:(NSString *)result context:(NSObject *)context;
@@ -114,7 +114,7 @@
 <a name="l00052"></a>00052 - (void)replaceDidFailForObject:(<a class="code" href="interface_j_r_capture_object.html" title="Base class for all Capture objects and plural elements.">JRCaptureObject</a> *)object withError:(NSError *)error context:(NSObject *)context;
 <a name="l00053"></a>00053 <span class="keyword">@end</span>
 <a name="l00054"></a>00054 
-<a name="l00055"></a>00055 <span class="keyword">@protocol </span>JRCaptureUserTesterDelegate &lt;<a class="code" href="protocol_j_r_capture_user_delegate-p.html" title="Protocol adopted by an object ...">JRCaptureUserDelegate</a>&gt;
+<a name="l00055"></a>00055 <span class="keyword">@protocol </span>JRCaptureUserTesterDelegate &lt;<a class="code" href="protocol_j_r_capture_user_delegate-p.html" title="Protocol adopted by an object that wishes to update a local JRCaptureUser on the Capture server or fe...">JRCaptureUserDelegate</a>&gt;
 <a name="l00056"></a>00056 <span class="keyword">@optional</span>
 <a name="l00057"></a>00057 - (void)createCaptureUser:(<a class="code" href="interface_j_r_capture_object.html" title="Base class for all Capture objects and plural elements.">JRCaptureObject</a> *)object didSucceedWithResult:(NSString *)result context:(NSObject *)context;
 <a name="l00058"></a>00058 - (void)createCaptureUser:(<a class="code" href="interface_j_r_capture_object.html" title="Base class for all Capture objects and plural elements.">JRCaptureObject</a> *)object didFailWithResult:(NSString *)result context:(NSObject *)context;
@@ -139,10 +139,10 @@
 <a name="l00077"></a>00077 - (<span class="keywordtype">void</span>)updateFromDictionary:(NSDictionary*)dictionary withPath:(NSString *)capturePath;
 <a name="l00078"></a>00078 - (<span class="keywordtype">void</span>)replaceFromDictionary:(NSDictionary*)dictionary withPath:(NSString *)capturePath;
 <a name="l00079"></a>00079 
-<a name="l00080"></a>00080 - (<span class="keywordtype">void</span>)replaceOnCaptureForDelegate:(<span class="keywordtype">id</span>&lt;<a class="code" href="protocol_j_r_capture_object_delegate-p.html" title="Protocol adopted by an object ...">JRCaptureObjectDelegate</a>&gt;)delegate context:(NSObject *)context;
+<a name="l00080"></a>00080 - (<span class="keywordtype">void</span>)replaceOnCaptureForDelegate:(<span class="keywordtype">id</span>&lt;<a class="code" href="protocol_j_r_capture_object_delegate-p.html" title="Protocol adopted by an object that wishes to update local a JRCaptureObject or array on the Capture s...">JRCaptureObjectDelegate</a>&gt;)delegate context:(NSObject *)context;
 <a name="l00081"></a>00081 
 <a name="l00082"></a>00082 - (<span class="keywordtype">void</span>)replaceArrayOnCapture:(NSArray *)array named:(NSString *)arrayName isArrayOfStrings:(BOOL)isStringArray withType:(NSString *)type
-<a name="l00083"></a>00083                   forDelegate:(<span class="keywordtype">id</span>&lt;<a class="code" href="protocol_j_r_capture_object_delegate-p.html" title="Protocol adopted by an object ...">JRCaptureObjectDelegate</a>&gt;)delegate withContext:(NSObject *)context;
+<a name="l00083"></a>00083                   forDelegate:(<span class="keywordtype">id</span>&lt;<a class="code" href="protocol_j_r_capture_object_delegate-p.html" title="Protocol adopted by an object that wishes to update local a JRCaptureObject or array on the Capture s...">JRCaptureObjectDelegate</a>&gt;)delegate withContext:(NSObject *)context;
 <a name="l00084"></a>00084 
 <a name="l00085"></a>00085 - (BOOL)isEqualByPrivateProperties:(<a class="code" href="interface_j_r_capture_object.html" title="Base class for all Capture objects and plural elements.">JRCaptureObject</a> *)otherObj;
 <a name="l00086"></a>00086 @end

@@ -96,25 +96,27 @@
 <a name="l00034"></a>00034 <span class="preprocessor">#import &quot;JRNSDate+ISO8601_CaptureDateTimeString.h&quot;</span>
 <a name="l00035"></a>00035 
 <a name="l00039"></a><a class="code" href="interface_j_r_current_location.html">00039</a> <span class="keyword">@interface </span><a class="code" href="interface_j_r_current_location.html" title="A JRCurrentLocation object.">JRCurrentLocation</a> : <a class="code" href="interface_j_r_capture_object.html" title="Base class for all Capture objects and plural elements.">JRCaptureObject</a>
-<a name="l00040"></a><a class="code" href="interface_j_r_current_location.html#aa662cd823d4413b9a25da54da0f0171d">00040</a> @property (nonatomic, copy)     NSString *<a class="code" href="interface_j_r_current_location.html#aa662cd823d4413b9a25da54da0f0171d">formatted</a>; 
-<a name="l00041"></a><a class="code" href="interface_j_r_current_location.html#acb278ddc9fd47c415037ee632fae3a8c">00041</a> @property (nonatomic, copy)     NSString *<a class="code" href="interface_j_r_current_location.html#acb278ddc9fd47c415037ee632fae3a8c">streetAddress</a>; 
-<a name="l00042"></a><a class="code" href="interface_j_r_current_location.html#a01e9d3e5b81660938be4f04c9b3b8883">00042</a> @property (nonatomic, copy)     NSString *<a class="code" href="interface_j_r_current_location.html#a01e9d3e5b81660938be4f04c9b3b8883">extendedAddress</a>; 
-<a name="l00043"></a><a class="code" href="interface_j_r_current_location.html#af2dd5eb0d2b1c788100c3a67da6e029c">00043</a> @property (nonatomic, copy)     NSString *<a class="code" href="interface_j_r_current_location.html#af2dd5eb0d2b1c788100c3a67da6e029c">locality</a>; 
-<a name="l00044"></a><a class="code" href="interface_j_r_current_location.html#aeb8d59308871052a718aacf6b535d772">00044</a> @property (nonatomic, copy)     NSString *<a class="code" href="interface_j_r_current_location.html#aeb8d59308871052a718aacf6b535d772">region</a>; 
-<a name="l00045"></a><a class="code" href="interface_j_r_current_location.html#a793c67c5a17ed2800b3fe87713fb0671">00045</a> @property (nonatomic, copy)     NSString *<a class="code" href="interface_j_r_current_location.html#a793c67c5a17ed2800b3fe87713fb0671">postalCode</a>; 
-<a name="l00046"></a><a class="code" href="interface_j_r_current_location.html#ac43fccf5b90b83871417ff9ab12cca02">00046</a> @property (nonatomic, copy)     NSString *<a class="code" href="interface_j_r_current_location.html#ac43fccf5b90b83871417ff9ab12cca02">poBox</a>; 
-<a name="l00047"></a><a class="code" href="interface_j_r_current_location.html#a7aa278da3902be2d5a367f17eabc4e0e">00047</a> @property (nonatomic, copy)     NSString *<a class="code" href="interface_j_r_current_location.html#a7aa278da3902be2d5a367f17eabc4e0e">country</a>; 
-<a name="l00048"></a><a class="code" href="interface_j_r_current_location.html#a67cbd4e3e2a1cb8d871617d39d3416ae">00048</a> @property (nonatomic, copy)     <a class="code" href="_j_r_capture_types_8h.html#a439488d2ae5956f916d5b9d8c24df152">JRDecimal</a> *<a class="code" href="interface_j_r_current_location.html#a67cbd4e3e2a1cb8d871617d39d3416ae">longitude</a>; 
-<a name="l00049"></a><a class="code" href="interface_j_r_current_location.html#aeb3a9965decafea77a8ed55006a8576c">00049</a> @property (nonatomic, copy)     <a class="code" href="_j_r_capture_types_8h.html#a439488d2ae5956f916d5b9d8c24df152">JRDecimal</a> *<a class="code" href="interface_j_r_current_location.html#aeb3a9965decafea77a8ed55006a8576c">latitude</a>; 
-<a name="l00050"></a><a class="code" href="interface_j_r_current_location.html#a40ff878797d6b2d341b6d0861c4a6c91">00050</a> @property (nonatomic, copy)     NSString *<a class="code" href="interface_j_r_current_location.html#a40ff878797d6b2d341b6d0861c4a6c91">type</a>; 
-<a name="l00062"></a>00062 - (id)<a class="code" href="interface_j_r_current_location.html#a4213bb26f5207ee3f402fe463badc691">init</a>;
-<a name="l00063"></a>00063 
-<a name="l00070"></a>00070 + (id)<a class="code" href="interface_j_r_current_location.html#abde01b178acb3fdb3b638ef6ef47ce6b">currentLocation</a>;
-<a name="l00071"></a>00071 
-<a name="l00096"></a>00096 - (BOOL)<a class="code" href="interface_j_r_current_location.html#af2cac3fbd2fd4944b7219004c6ce8be4">needsUpdate</a>;
-<a name="l00097"></a>00097 
-<a name="l00101"></a>00101 - (void)updateOnCaptureForDelegate:(<span class="keywordtype">id</span>&lt;<a class="code" href="protocol_j_r_capture_object_delegate-p.html" title="Protocol adopted by an object ...">JRCaptureObjectDelegate</a>&gt;)delegate context:(NSObject *)context;
-<a name="l00104"></a>00104 <span class="keyword">@end</span>
+<a name="l00059"></a><a class="code" href="interface_j_r_current_location.html#aa352d02ec672a52c1c9e2ea0ac472cc3">00059</a> @property (readonly) BOOL <a class="code" href="interface_j_r_current_location.html#aa352d02ec672a52c1c9e2ea0ac472cc3">canBeUpdatedOnCapture</a>;
+<a name="l00060"></a>00060 
+<a name="l00061"></a><a class="code" href="interface_j_r_current_location.html#aa662cd823d4413b9a25da54da0f0171d">00061</a> @property (nonatomic, copy)     NSString *<a class="code" href="interface_j_r_current_location.html#aa662cd823d4413b9a25da54da0f0171d">formatted</a>; 
+<a name="l00062"></a><a class="code" href="interface_j_r_current_location.html#acb278ddc9fd47c415037ee632fae3a8c">00062</a> @property (nonatomic, copy)     NSString *<a class="code" href="interface_j_r_current_location.html#acb278ddc9fd47c415037ee632fae3a8c">streetAddress</a>; 
+<a name="l00063"></a><a class="code" href="interface_j_r_current_location.html#a01e9d3e5b81660938be4f04c9b3b8883">00063</a> @property (nonatomic, copy)     NSString *<a class="code" href="interface_j_r_current_location.html#a01e9d3e5b81660938be4f04c9b3b8883">extendedAddress</a>; 
+<a name="l00064"></a><a class="code" href="interface_j_r_current_location.html#af2dd5eb0d2b1c788100c3a67da6e029c">00064</a> @property (nonatomic, copy)     NSString *<a class="code" href="interface_j_r_current_location.html#af2dd5eb0d2b1c788100c3a67da6e029c">locality</a>; 
+<a name="l00065"></a><a class="code" href="interface_j_r_current_location.html#aeb8d59308871052a718aacf6b535d772">00065</a> @property (nonatomic, copy)     NSString *<a class="code" href="interface_j_r_current_location.html#aeb8d59308871052a718aacf6b535d772">region</a>; 
+<a name="l00066"></a><a class="code" href="interface_j_r_current_location.html#a793c67c5a17ed2800b3fe87713fb0671">00066</a> @property (nonatomic, copy)     NSString *<a class="code" href="interface_j_r_current_location.html#a793c67c5a17ed2800b3fe87713fb0671">postalCode</a>; 
+<a name="l00067"></a><a class="code" href="interface_j_r_current_location.html#ac43fccf5b90b83871417ff9ab12cca02">00067</a> @property (nonatomic, copy)     NSString *<a class="code" href="interface_j_r_current_location.html#ac43fccf5b90b83871417ff9ab12cca02">poBox</a>; 
+<a name="l00068"></a><a class="code" href="interface_j_r_current_location.html#a7aa278da3902be2d5a367f17eabc4e0e">00068</a> @property (nonatomic, copy)     NSString *<a class="code" href="interface_j_r_current_location.html#a7aa278da3902be2d5a367f17eabc4e0e">country</a>; 
+<a name="l00069"></a><a class="code" href="interface_j_r_current_location.html#a67cbd4e3e2a1cb8d871617d39d3416ae">00069</a> @property (nonatomic, copy)     <a class="code" href="_j_r_capture_types_8h.html#a439488d2ae5956f916d5b9d8c24df152">JRDecimal</a> *<a class="code" href="interface_j_r_current_location.html#a67cbd4e3e2a1cb8d871617d39d3416ae">longitude</a>; 
+<a name="l00070"></a><a class="code" href="interface_j_r_current_location.html#aeb3a9965decafea77a8ed55006a8576c">00070</a> @property (nonatomic, copy)     <a class="code" href="_j_r_capture_types_8h.html#a439488d2ae5956f916d5b9d8c24df152">JRDecimal</a> *<a class="code" href="interface_j_r_current_location.html#aeb3a9965decafea77a8ed55006a8576c">latitude</a>; 
+<a name="l00071"></a><a class="code" href="interface_j_r_current_location.html#a40ff878797d6b2d341b6d0861c4a6c91">00071</a> @property (nonatomic, copy)     NSString *<a class="code" href="interface_j_r_current_location.html#a40ff878797d6b2d341b6d0861c4a6c91">type</a>; 
+<a name="l00083"></a>00083 - (id)<a class="code" href="interface_j_r_current_location.html#a4213bb26f5207ee3f402fe463badc691">init</a>;
+<a name="l00084"></a>00084 
+<a name="l00091"></a>00091 + (id)<a class="code" href="interface_j_r_current_location.html#abde01b178acb3fdb3b638ef6ef47ce6b">currentLocation</a>;
+<a name="l00092"></a>00092 
+<a name="l00117"></a>00117 - (BOOL)<a class="code" href="interface_j_r_current_location.html#af2cac3fbd2fd4944b7219004c6ce8be4">needsUpdate</a>;
+<a name="l00118"></a>00118 
+<a name="l00122"></a>00122 - (void)updateOnCaptureForDelegate:(<span class="keywordtype">id</span>&lt;<a class="code" href="protocol_j_r_capture_object_delegate-p.html" title="Protocol adopted by an object that wishes to update local a JRCaptureObject or array on the Capture s...">JRCaptureObjectDelegate</a>&gt;)delegate context:(NSObject *)context;
+<a name="l00125"></a>00125 <span class="keyword">@end</span>
 </pre></div></div>
 </div>
             </div>

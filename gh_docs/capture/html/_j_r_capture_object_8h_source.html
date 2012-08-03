@@ -94,27 +94,28 @@
 <a name="l00032"></a>00032 
 <a name="l00033"></a>00033 <span class="keyword">@class</span> <a class="code" href="interface_j_r_capture_object.html" title="Base class for all Capture objects and plural elements.">JRCaptureObject</a>;
 <a name="l00034"></a>00034 
-<a name="l00039"></a><a class="code" href="protocol_j_r_capture_object_delegate-p.html">00039</a> <span class="keyword">@protocol </span><a class="code" href="protocol_j_r_capture_object_delegate-p.html" title="Protocol adopted by an object ...">JRCaptureObjectDelegate</a> &lt;NSObject&gt;
+<a name="l00039"></a><a class="code" href="protocol_j_r_capture_object_delegate-p.html">00039</a> <span class="keyword">@protocol </span><a class="code" href="protocol_j_r_capture_object_delegate-p.html" title="Protocol adopted by an object that wishes to update local a JRCaptureObject or array on the Capture s...">JRCaptureObjectDelegate</a> &lt;NSObject&gt;
 <a name="l00040"></a>00040 <span class="keyword">@optional</span>
 <a name="l00041"></a>00041 
-<a name="l00051"></a>00051 - (void)updateDidSucceedForObject:(<a class="code" href="interface_j_r_capture_object.html" title="Base class for all Capture objects and plural elements.">JRCaptureObject</a> *)object context:(NSObject *)context;
-<a name="l00052"></a>00052 
-<a name="l00065"></a>00065 - (void)updateDidFailForObject:(<a class="code" href="interface_j_r_capture_object.html" title="Base class for all Capture objects and plural elements.">JRCaptureObject</a> *)object withError:(NSError *)error context:(NSObject *)context;
-<a name="l00066"></a>00066 
-<a name="l00082"></a>00082 - (void)replaceArrayDidSucceedForObject:(<a class="code" href="interface_j_r_capture_object.html" title="Base class for all Capture objects and plural elements.">JRCaptureObject</a> *)object newArray:(NSArray *)replacedArray
-<a name="l00083"></a>00083                                   named:(NSString *)arrayName context:(NSObject *)context;
-<a name="l00084"></a>00084 
-<a name="l00100"></a>00100 - (void)replaceArrayDidFailForObject:(<a class="code" href="interface_j_r_capture_object.html" title="Base class for all Capture objects and plural elements.">JRCaptureObject</a> *)object arrayNamed:(NSString *)arrayName
-<a name="l00101"></a>00101                            withError:(NSError *)error context:(NSObject *)context;
-<a name="l00102"></a>00102 <span class="keyword">@end</span>
-<a name="l00103"></a>00103 
-<a name="l00108"></a><a class="code" href="interface_j_r_capture_object.html">00108</a> <span class="keyword">@interface </span><a class="code" href="interface_j_r_capture_object.html" title="Base class for all Capture objects and plural elements.">JRCaptureObject</a> : NSObject
-<a name="l00109"></a><a class="code" href="interface_j_r_capture_object.html#aa352d02ec672a52c1c9e2ea0ac472cc3">00109</a> @property (readonly) BOOL <a class="code" href="interface_j_r_capture_object.html#aa352d02ec672a52c1c9e2ea0ac472cc3">canBeUpdatedOnCapture</a>; 
-<a name="l00140"></a>00140 - (BOOL)<a class="code" href="interface_j_r_capture_object.html#af2cac3fbd2fd4944b7219004c6ce8be4">needsUpdate</a>;
-<a name="l00141"></a>00141 
-<a name="l00151"></a>00151 - (void)updateOnCaptureForDelegate:(<span class="keywordtype">id</span>&lt;<a class="code" href="protocol_j_r_capture_object_delegate-p.html" title="Protocol adopted by an object ...">JRCaptureObjectDelegate</a>&gt;)delegate context:(NSObject *)context;
-<a name="l00152"></a>00152 <span class="keyword">@end</span>
-<a name="l00153"></a>00153 
+<a name="l00056"></a>00056 - (void)updateDidSucceedForObject:(<a class="code" href="interface_j_r_capture_object.html" title="Base class for all Capture objects and plural elements.">JRCaptureObject</a> *)object context:(NSObject *)context;
+<a name="l00057"></a>00057 
+<a name="l00075"></a>00075 - (void)updateDidFailForObject:(<a class="code" href="interface_j_r_capture_object.html" title="Base class for all Capture objects and plural elements.">JRCaptureObject</a> *)object withError:(NSError *)error context:(NSObject *)context;
+<a name="l00076"></a>00076 
+<a name="l00107"></a>00107 - (void)replaceArrayDidSucceedForObject:(<a class="code" href="interface_j_r_capture_object.html" title="Base class for all Capture objects and plural elements.">JRCaptureObject</a> *)object newArray:(NSArray *)replacedArray
+<a name="l00108"></a>00108                                   named:(NSString *)arrayName context:(NSObject *)context;
+<a name="l00109"></a>00109 
+<a name="l00132"></a>00132 - (void)replaceArrayDidFailForObject:(<a class="code" href="interface_j_r_capture_object.html" title="Base class for all Capture objects and plural elements.">JRCaptureObject</a> *)object arrayNamed:(NSString *)arrayName
+<a name="l00133"></a>00133                            withError:(NSError *)error context:(NSObject *)context;
+<a name="l00134"></a>00134 <span class="keyword">@end</span>
+<a name="l00135"></a>00135 
+<a name="l00140"></a><a class="code" href="interface_j_r_capture_object.html">00140</a> <span class="keyword">@interface </span><a class="code" href="interface_j_r_capture_object.html" title="Base class for all Capture objects and plural elements.">JRCaptureObject</a> : NSObject
+<a name="l00160"></a><a class="code" href="interface_j_r_capture_object.html#aa352d02ec672a52c1c9e2ea0ac472cc3">00160</a> @property (readonly) BOOL <a class="code" href="interface_j_r_capture_object.html#aa352d02ec672a52c1c9e2ea0ac472cc3">canBeUpdatedOnCapture</a>;
+<a name="l00161"></a>00161 
+<a name="l00191"></a>00191 - (BOOL)<a class="code" href="interface_j_r_capture_object.html#af2cac3fbd2fd4944b7219004c6ce8be4">needsUpdate</a>;
+<a name="l00192"></a>00192 
+<a name="l00205"></a>00205 - (void)updateOnCaptureForDelegate:(<span class="keywordtype">id</span>&lt;<a class="code" href="protocol_j_r_capture_object_delegate-p.html" title="Protocol adopted by an object that wishes to update local a JRCaptureObject or array on the Capture s...">JRCaptureObjectDelegate</a>&gt;)delegate context:(NSObject *)context;
+<a name="l00206"></a>00206 <span class="keyword">@end</span>
+<a name="l00207"></a>00207 
 </pre></div></div>
 </div>
             </div>
