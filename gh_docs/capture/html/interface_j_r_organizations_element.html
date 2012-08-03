@@ -173,7 +173,14 @@ Constructors</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<p>TODO: Doxygen doc </p>
+<p>Use this method to determine if the object or element needs to be updated remotely. That is, if there are local changes to any of the object/elements's properties or sub-objects, then this object will need to be updated on Capture. You can update an object on Capture by using the method <a class="el" href="interface_j_r_organizations_element.html#a307b20b8cb70eec684e7197550c9f4c3">updateOnCaptureForDelegate:context:</a>.</p>
+<dl class="return"><dt><b>Returns:</b></dt><dd><code>YES</code> if this object or any of it's sub-objects have any properties that have changed locally. This does not include properties that are arrays, if any, or the elements contained within the arrays. <code>NO</code> if no non-array properties or sub-objects have changed locally.</dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>This method recursively checks all of the sub-objects of <a class="el" href="interface_j_r_organizations_element.html" title="Describes a current or past organizational affiliation of this contact.">JROrganizationsElement</a>:<ul>
+<li><a class="el" href="interface_j_r_organizations_element.html#afecec56bdd60eaa7e9d6e78a9ba9db44">JROrganizationsElement.location</a></li>
+</ul>
+</dd></dl>
+<dl class="user"><dt><b></b></dt><dd>If any of these objects are new, or if they need to be updated, this method returns <code>YES</code>.</dd></dl>
+<dl class="warning"><dt><b>Warning:</b></dt><dd>This object, or one of its ancestors, is an element of a plural. If any elements of the plural have changed, (added or removed) the array must be replaced on Capture before the elements or their sub-objects can be updated. Please use the appropriate <code>replace&lt;<em>ArrayName</em>&gt;ArrayOnCaptureForDelegate:context:</code> method first. Even if <a class="el" href="interface_j_r_capture_object.html#af2cac3fbd2fd4944b7219004c6ce8be4">needsUpdate (JRCaptureObject)</a> returns <code>YES</code>, this object cannot be updated on Capture unless <a class="el" href="interface_j_r_capture_object.html#aa352d02ec672a52c1c9e2ea0ac472cc3">JRCaptureObject.canBeUpdatedOnCapture</a> also returns <code>YES</code>. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="interface_j_r_capture_object.html#af2cac3fbd2fd4944b7219004c6ce8be4">JRCaptureObject</a>.</p>
 
@@ -186,7 +193,7 @@ Constructors</h2></td></tr>
         <tr>
           <td class="memname">- (void) updateOnCaptureForDelegate: </td>
           <td></td>
-          <td class="paramtype">(id&lt; <a class="el" href="protocol_j_r_capture_object_delegate-p.html">JRCaptureObjectDelegate</a> &gt;)&nbsp;</td>
+          <td class="paramtype">(id&lt;<a class="el" href="protocol_j_r_capture_object_delegate-p.html">JRCaptureObjectDelegate</a>&gt;)&nbsp;</td>
           <td class="paramname"> <em>delegate</em></td>
         </tr>
         <tr>

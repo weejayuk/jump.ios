@@ -269,7 +269,21 @@ Constructors</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<p>TODO: Doxygen doc </p>
+<p>Use this method to determine if the object or element needs to be updated remotely. That is, if there are local changes to any of the object/elements's properties or sub-objects, then this object will need to be updated on Capture. You can update an object on Capture by using the method <a class="el" href="interface_j_r_capture_user.html#a307b20b8cb70eec684e7197550c9f4c3">updateOnCaptureForDelegate:context:</a>.</p>
+<dl class="return"><dt><b>Returns:</b></dt><dd><code>YES</code> if this object or any of it's sub-objects have any properties that have changed locally. This does not include properties that are arrays, if any, or the elements contained within the arrays. <code>NO</code> if no non-array properties or sub-objects have changed locally.</dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>This method recursively checks all of the sub-objects of <a class="el" href="interface_j_r_capture_user.html" title="A JRCaptureUser object.">JRCaptureUser</a>:<ul>
+<li><a class="el" href="interface_j_r_capture_user.html#ae76cb82379df4727c442f53c10bf7c9b">JRCaptureUser.primaryAddress</a></li>
+</ul>
+</dd></dl>
+<dl class="user"><dt><b></b></dt><dd>If any of these objects are new, or if they need to be updated, this method returns <code>YES</code>.</dd></dl>
+<dl class="warning"><dt><b>Warning:</b></dt><dd>This method recursively checks all of the sub-objects of <a class="el" href="interface_j_r_capture_user.html" title="A JRCaptureUser object.">JRCaptureUser</a> but does not check any of the arrays of the <a class="el" href="interface_j_r_capture_user.html" title="A JRCaptureUser object.">JRCaptureUser</a> or the arrays' elements:<ul>
+<li><a class="el" href="interface_j_r_capture_user.html#ab8bf21a696a8ee76ecbe92c6281e7eaf">JRCaptureUser.photos</a>, <a class="el" href="interface_j_r_photos_element.html" title="A JRPhotosElement object.">JRPhotosElement</a></li>
+<li><a class="el" href="interface_j_r_capture_user.html#ac4cbabcb367315dd0c7ce046a6b9fa39">JRCaptureUser.statuses</a>, <a class="el" href="interface_j_r_statuses_element.html" title="A JRStatusesElement object.">JRStatusesElement</a></li>
+<li><a class="el" href="interface_j_r_capture_user.html#a050b9b4c60ee425216536afe7ee0f466">JRCaptureUser.profiles</a>, <a class="el" href="interface_j_r_profiles_element.html" title="A JRProfilesElement object.">JRProfilesElement</a></li>
+</ul>
+</dd></dl>
+<dl class="user"><dt><b></b></dt><dd>If you have added or removed any elements from the arrays, you must call the following methods to update the array on Capture: <a class="el" href="interface_j_r_capture_user.html#ac039057500ec2cd556ed97203ccfec86">replacePhotosArrayOnCaptureForDelegate:context:</a>, <a class="el" href="interface_j_r_capture_user.html#a7b52a219a40b8620998c60de248034e1">replaceStatusesArrayOnCaptureForDelegate:context:</a>, <a class="el" href="interface_j_r_capture_user.html#a9db27893cbdafda95d9b798be5af1d5c">replaceProfilesArrayOnCaptureForDelegate:context:</a></dd></dl>
+<dl class="user"><dt><b></b></dt><dd>Otherwise, if the array elements' <a class="el" href="interface_j_r_capture_object.html#aa352d02ec672a52c1c9e2ea0ac472cc3">JRCaptureObject.canBeUpdatedOnCapture</a> and <a class="el" href="interface_j_r_capture_object.html#af2cac3fbd2fd4944b7219004c6ce8be4">needsUpdate (JRCaptureObject)</a> returns <code>YES</code>, you can update the elements by calling <a class="el" href="interface_j_r_capture_user.html#a307b20b8cb70eec684e7197550c9f4c3">updateOnCaptureForDelegate:context:</a>. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="interface_j_r_capture_object.html#af2cac3fbd2fd4944b7219004c6ce8be4">JRCaptureObject</a>.</p>
 
@@ -282,7 +296,7 @@ Constructors</h2></td></tr>
         <tr>
           <td class="memname">- (void) updateOnCaptureForDelegate: </td>
           <td></td>
-          <td class="paramtype">(id&lt; <a class="el" href="protocol_j_r_capture_object_delegate-p.html">JRCaptureObjectDelegate</a> &gt;)&nbsp;</td>
+          <td class="paramtype">(id&lt;<a class="el" href="protocol_j_r_capture_object_delegate-p.html">JRCaptureObjectDelegate</a>&gt;)&nbsp;</td>
           <td class="paramname"> <em>delegate</em></td>
         </tr>
         <tr>
