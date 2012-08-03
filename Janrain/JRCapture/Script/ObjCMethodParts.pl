@@ -742,22 +742,11 @@ my @toUpdateDictionaryParts = (
     return [NSDictionary dictionaryWithDictionary:dictionary];",
 "\n}\n\n");
 
-#my @updateRemotelyParts = (
-#"- (void)updateObjectOnCaptureForDelegate:(id<JRCaptureObjectDelegate>)delegate withContext:(NSObject *)context",
-#"\n{\n",
-#"    NSDictionary *newContext = [NSDictionary dictionaryWithObjectsAndKeys:
-#                                                     self, \@\"captureObject\",
-#                                                     self.captureObjectPath, \@\"capturePath\",
-#                                                     delegate, \@\"delegate\",
-#                                                     context, \@\"callerContext\", nil];
-#
-#    [JRCaptureInterface updateCaptureObject:[self toUpdateDictionary]
-#//                                     withId:
-#                                     atPath:self.captureObjectPath
-#                                  withToken:[JRCaptureData accessToken]
-#                                forDelegate:self
-#                                withContext:newContext];",
-#"\n}\n\n");
+my @updateRemotelyParts = (
+"- (void)updateOnCaptureForDelegate:(id<JRCaptureObjectDelegate>)delegate context:(NSObject *)context",
+"\n{\n",
+"    [super updateOnCaptureForDelegate:delegate context:context];",
+"\n}\n\n");
 
 
 ###################################################################
@@ -883,7 +872,17 @@ my @isEqualObjectParts = (
 
 my @needsUpdateDocParts = (
 "/**
- * TODO: Doxygen doc
+ * Use this method to determine if the object or element needs to be updated remotely.
+ * That is, if there are local changes to any of the object/elements's properties or 
+ * sub-objects, then this object will need to be updated on Capture. You can update
+ * an object on Capture by using the method updateOnCaptureForDelegate:context:().
+ *
+ * \@return
+ * \\c YES if this object or any of it's sub-objects have any properties that have changed
+ * locally. This does not include properties that are arrays, if any, or the elements contained 
+ * within the arrays. \\c NO if no non-array properties or sub-objects have changed locally.",
+ "","",
+ "","","","
  **/\n");
  
 my @needsUpdateParts = (
@@ -1241,9 +1240,9 @@ sub getToUpdateDictParts {
   return @toUpdateDictionaryParts;
 }
 
-#sub getUpdateRemotelyParts {
-#  return @updateRemotelyParts;
-#}
+sub getUpdateRemotelyParts {
+  return @updateRemotelyParts;
+}
 
 sub getToReplaceDictParts {
   return @toReplaceDictionaryParts;

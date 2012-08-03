@@ -66,7 +66,7 @@
 @property (nonatomic, copy)     JRDate *exampleDate; /**< Example of a basic date property @note A ::JRDate property is a property of type \ref typesTable "date" and a typedef of \e NSDate. The accepted format should be an ISO 8601 date string (e.g., <code>yyyy-MM-dd</code>) */ 
 @property (nonatomic, copy)     JRDateTime *exampleDateTime; /**< Example of a basic dateTime property @note A ::JRDateTime property is a property of type \ref typesTable "dateTime" and a typedef of \e NSDate. The accepted format should be an ISO 8601 dateTime string (e.g., <code>yyyy-MM-dd HH:mm:ss.SSSSSS ZZZ</code>) */ 
 @property (nonatomic, copy)     JRDecimal *exampleDecimal; /**< Example of a basic decimal property @note A ::JRDecimal property is a property of type \ref typesTable "decimal" and a typedef of \e NSNumber. Accepted values can be, for example, <code>[NSNumber numberWithNumber:<em>myDecimal</em>]</code>, <code>nil</code>, etc. */ 
-@property (nonatomic, copy)     JRInteger *exampleInteger; /**< Example of a basic integer property @note A ::JRInteger property is a property of type ef typesTable "integer" and a typedef of \e NSNumber. The accepted values can only be <code>[NSNumber numberWithInteger:<em>myInteger</em>]</code>, <code>[NSNumber numberWithInt:<em>myInt</em>]</code>, or <code>nil</code> */ 
+@property (nonatomic, copy)     JRInteger *exampleInteger; /**< Example of a basic integer property @note A ::JRInteger property is a property of type \ref typesTable "integer" and a typedef of \e NSNumber. The accepted values can only be <code>[NSNumber numberWithInteger:<em>myInteger</em>]</code>, <code>[NSNumber numberWithInt:<em>myInt</em>]</code>, or <code>nil</code> */ 
 @property (nonatomic, copy)     JRIpAddress *exampleIpAddress; /**< Example of a basic ipAddress property @note A ::JRIpAddress property is a property of type \ref typesTable "ipAddress" and a typedef of \e NSString. */ 
 @property (nonatomic, copy)     JRJsonObject *exampleJson; /**< Example of a basic ipAddress property @note A ::JRJsonObject property is a property of type \ref typesTable "json", which can be an \e NSDictionary, \e NSArray, \e NSString, etc., and is therefore is a typedef of \e NSObject */ 
 @property (nonatomic, copy)     NSString *exampleString; /**< Example of a basic string property */ 
@@ -197,7 +197,54 @@
 - (void)replaceTournamentsPlayedArrayOnCaptureForDelegate:(id<JRCaptureObjectDelegate>)delegate context:(NSObject *)context;
 
 /**
- * TODO: Doxygen doc
+ * Use this method to determine if the object or element needs to be updated remotely.
+ * That is, if there are local changes to any of the object/elements's properties or 
+ * sub-objects, then this object will need to be updated on Capture. You can update
+ * an object on Capture by using the method updateOnCaptureForDelegate:context:().
+ *
+ * @return
+ * \c YES if this object or any of it's sub-objects have any properties that have changed
+ * locally. This does not include properties that are arrays, if any, or the elements contained 
+ * within the arrays. \c NO if no non-array properties or sub-objects have changed locally.
+ *
+ * @note
+ * This method recursively checks all of the sub-objects of JRCaptureUser:
+ *   - JRCaptureUser#bestHand
+ *   - JRCaptureUser#objectLevelOne
+ *   - JRCaptureUser#pinoLevelOne
+ *   - JRCaptureUser#primaryAddress
+ * .
+ * @par
+ * If any of these objects are new, or if they need to be updated, this method returns \c YES.
+ *
+ * @warning
+ * This method recursively checks all of the sub-objects of JRCaptureUser
+ * but does not check any of the arrays of the JRCaptureUser or the arrays' elements:
+ *   - JRCaptureUser#exampleStringPlural, JRExampleStringPluralElement
+ *   - JRCaptureUser#favoriteHands, JRFavoriteHandsElement
+ *   - JRCaptureUser#games, JRGamesElement
+ *   - JRCaptureUser#onipLevelOne, JROnipLevelOneElement
+ *   - JRCaptureUser#photos, JRPhotosElement
+ *   - JRCaptureUser#pluralLevelOne, JRPluralLevelOneElement
+ *   - JRCaptureUser#profiles, JRProfilesElement
+ *   - JRCaptureUser#statuses, JRStatusesElement
+ *   - JRCaptureUser#tournamentsPlayed, JRTournamentsPlayedElement
+ * .
+ * @par
+ * If you have added or removed any elements from the arrays, you must call the following methods
+ * to update the array on Capture: replaceExampleStringPluralArrayOnCaptureForDelegate:context:(),
+ *   replaceFavoriteHandsArrayOnCaptureForDelegate:context:(),
+ *   replaceGamesArrayOnCaptureForDelegate:context:(),
+ *   replaceOnipLevelOneArrayOnCaptureForDelegate:context:(),
+ *   replacePhotosArrayOnCaptureForDelegate:context:(),
+ *   replacePluralLevelOneArrayOnCaptureForDelegate:context:(),
+ *   replaceProfilesArrayOnCaptureForDelegate:context:(),
+ *   replaceStatusesArrayOnCaptureForDelegate:context:(),
+ *   replaceTournamentsPlayedArrayOnCaptureForDelegate:context:()
+ *
+ * @par
+ * Otherwise, if the array elements' JRCaptureObject#canBeUpdatedOnCapture and JRCaptureObject#needsUpdate returns \c YES, you can update
+ * the elements by calling updateOnCaptureForDelegate:context:().
  **/
 - (BOOL)needsUpdate;
 

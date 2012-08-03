@@ -74,7 +74,28 @@
 - (void)replacePinoinoL3PluralArrayOnCaptureForDelegate:(id<JRCaptureObjectDelegate>)delegate context:(NSObject *)context;
 
 /**
- * TODO: Doxygen doc
+ * Use this method to determine if the object or element needs to be updated remotely.
+ * That is, if there are local changes to any of the object/elements's properties or 
+ * sub-objects, then this object will need to be updated on Capture. You can update
+ * an object on Capture by using the method updateOnCaptureForDelegate:context:().
+ *
+ * @return
+ * \c YES if this object or any of it's sub-objects have any properties that have changed
+ * locally. This does not include properties that are arrays, if any, or the elements contained 
+ * within the arrays. \c NO if no non-array properties or sub-objects have changed locally.
+ *
+ * @warning
+ * This method recursively checks all of the sub-objects of JRPinoinoL2Object
+ * but does not check any of the arrays of the JRPinoinoL2Object or the arrays' elements:
+ *   - JRPinoinoL2Object#pinoinoL3Plural, JRPinoinoL3PluralElement
+ * .
+ * @par
+ * If you have added or removed any elements from the arrays, you must call the following methods
+ * to update the array on Capture: replacePinoinoL3PluralArrayOnCaptureForDelegate:context:()
+ *
+ * @par
+ * Otherwise, if the array elements' JRCaptureObject#canBeUpdatedOnCapture and JRCaptureObject#needsUpdate returns \c YES, you can update
+ * the elements by calling updateOnCaptureForDelegate:context:().
  **/
 - (BOOL)needsUpdate;
 

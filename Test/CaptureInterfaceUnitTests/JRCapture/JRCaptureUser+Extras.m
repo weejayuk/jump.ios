@@ -190,9 +190,10 @@
     NSObject        *callerContext = [myContext objectForKey:@"callerContext"];
     id<JRCaptureUserDelegate>
                      delegate      = [myContext objectForKey:@"delegate"];
-
+#ifdef JRCAPTURE_FETCH_LAST_UPDATED
     if ([delegate respondsToSelector:@selector(fetchLastUpdatedDidFailWithError:context:)])
         [delegate fetchLastUpdatedDidFailWithError:[JRCaptureError errorFromResult:result] context:callerContext];
+#endif //JRCAPTURE_FETCH_LAST_UPDATED
 }
 
 - (void)getCaptureObjectDidSucceedWithResult:(NSObject *)result context:(NSObject *)context
@@ -219,7 +220,7 @@
 
     if (![resultDictionary objectForKey:@"result"])
         return [self getCaptureObjectDidFailWithResult:[JRCaptureError invalidDataErrorForResult:result] context:context];
-
+#ifdef JRCAPTURE_FETCH_LAST_UPDATED
     if ([capturePath isEqualToString:@"/lastUpdated"])
     {
         const SEL lastUpdatedSelector = NSSelectorFromString(@"lastUpdated");
@@ -246,6 +247,7 @@
     {
         return [self getCaptureObjectDidFailWithResult:[JRCaptureError invalidDataErrorForResult:result] context:context];
     }
+#endif //JRCAPTURE_FETCH_LAST_UPDATED
 }
 @end
 

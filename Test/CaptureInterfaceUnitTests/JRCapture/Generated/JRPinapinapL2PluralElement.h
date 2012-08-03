@@ -74,7 +74,35 @@
 - (void)replacePinapinapL3PluralArrayOnCaptureForDelegate:(id<JRCaptureObjectDelegate>)delegate context:(NSObject *)context;
 
 /**
- * TODO: Doxygen doc
+ * Use this method to determine if the object or element needs to be updated remotely.
+ * That is, if there are local changes to any of the object/elements's properties or 
+ * sub-objects, then this object will need to be updated on Capture. You can update
+ * an object on Capture by using the method updateOnCaptureForDelegate:context:().
+ *
+ * @return
+ * \c YES if this object or any of it's sub-objects have any properties that have changed
+ * locally. This does not include properties that are arrays, if any, or the elements contained 
+ * within the arrays. \c NO if no non-array properties or sub-objects have changed locally.
+ *
+ * @warning
+ * This object, or one of its ancestors, is an element of a plural. If any elements of the plural have changed,
+ * (added or removed) the array must be replaced on Capture before the elements or their sub-objects can be
+ * updated. Please use the appropriate <code>replace&lt;<em>ArrayName</em>&gt;ArrayOnCaptureForDelegate:context:</code>
+ * method first. Even if JRCaptureObject#needsUpdate returns \c YES, this object cannot be updated on Capture unless
+ * JRCaptureObject#canBeUpdatedOnCapture also returns \c YES.
+ *
+ * @par
+ * This method recursively checks all of the sub-objects of JRPinapinapL2PluralElement
+ * but does not check any of the arrays of the JRPinapinapL2PluralElement or the arrays' elements:
+ *   - JRPinapinapL2PluralElement#pinapinapL3Plural, JRPinapinapL3PluralElement
+ * .
+ * @par
+ * If you have added or removed any elements from the arrays, you must call the following methods
+ * to update the array on Capture: replacePinapinapL3PluralArrayOnCaptureForDelegate:context:()
+ *
+ * @par
+ * Otherwise, if the array elements' JRCaptureObject#canBeUpdatedOnCapture and JRCaptureObject#needsUpdate returns \c YES, you can update
+ * the elements by calling updateOnCaptureForDelegate:context:().
  **/
 - (BOOL)needsUpdate;
 

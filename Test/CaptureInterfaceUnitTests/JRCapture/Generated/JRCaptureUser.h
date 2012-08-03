@@ -61,7 +61,7 @@
 @property (nonatomic, copy)     NSString *email; /**< The object's \e email property */ 
 @property (nonatomic, copy)     JRBoolean *basicBoolean; /**< Basic boolean property for testing getting/setting with NSNumbers and primitives, updating, and replacing @note A ::JRBoolean property is a property of type \ref typesTable "boolean" and a typedef of \e NSNumber. The accepted values can only be <code>[NSNumber numberWithBool:<em>myBool</em>]</code> or <code>nil</code> */ 
 @property (nonatomic, copy)     NSString *basicString; /**< Basic string property for testing getting/setting, updating, and replacing */ 
-@property (nonatomic, copy)     JRInteger *basicInteger; /**< Basic integer property for testing getting/setting with NSNumbers and primitives, updating, and replacing @note A ::JRInteger property is a property of type ef typesTable "integer" and a typedef of \e NSNumber. The accepted values can only be <code>[NSNumber numberWithInteger:<em>myInteger</em>]</code>, <code>[NSNumber numberWithInt:<em>myInt</em>]</code>, or <code>nil</code> */ 
+@property (nonatomic, copy)     JRInteger *basicInteger; /**< Basic integer property for testing getting/setting with NSNumbers and primitives, updating, and replacing @note A ::JRInteger property is a property of type \ref typesTable "integer" and a typedef of \e NSNumber. The accepted values can only be <code>[NSNumber numberWithInteger:<em>myInteger</em>]</code>, <code>[NSNumber numberWithInt:<em>myInt</em>]</code>, or <code>nil</code> */ 
 @property (nonatomic, copy)     JRDecimal *basicDecimal; /**< Basic decimal property for testing getting/setting with various NSNumbers, updating, and replacing @note A ::JRDecimal property is a property of type \ref typesTable "decimal" and a typedef of \e NSNumber. Accepted values can be, for example, <code>[NSNumber numberWithNumber:<em>myDecimal</em>]</code>, <code>nil</code>, etc. */ 
 @property (nonatomic, copy)     JRDate *basicDate; /**< Basic date property for testing getting/setting with various formats, updating, and replacing @note A ::JRDate property is a property of type \ref typesTable "date" and a typedef of \e NSDate. The accepted format should be an ISO 8601 date string (e.g., <code>yyyy-MM-dd</code>) */ 
 @property (nonatomic, copy)     JRDateTime *basicDateTime; /**< Basic dateTime property for testing getting/setting with various formats, updating, and replacing @note A ::JRDateTime property is a property of type \ref typesTable "dateTime" and a typedef of \e NSDate. The accepted format should be an ISO 8601 dateTime string (e.g., <code>yyyy-MM-dd HH:mm:ss.SSSSSS ZZZ</code>) */ 
@@ -186,7 +186,63 @@
 - (void)replaceOinonipL1PluralArrayOnCaptureForDelegate:(id<JRCaptureObjectDelegate>)delegate context:(NSObject *)context;
 
 /**
- * TODO: Doxygen doc
+ * Use this method to determine if the object or element needs to be updated remotely.
+ * That is, if there are local changes to any of the object/elements's properties or 
+ * sub-objects, then this object will need to be updated on Capture. You can update
+ * an object on Capture by using the method updateOnCaptureForDelegate:context:().
+ *
+ * @return
+ * \c YES if this object or any of it's sub-objects have any properties that have changed
+ * locally. This does not include properties that are arrays, if any, or the elements contained 
+ * within the arrays. \c NO if no non-array properties or sub-objects have changed locally.
+ *
+ * @note
+ * This method recursively checks all of the sub-objects of JRCaptureUser:
+ *   - JRCaptureUser#basicObject
+ *   - JRCaptureUser#objectTestRequired
+ *   - JRCaptureUser#objectTestRequiredUnique
+ *   - JRCaptureUser#pinoL1Object
+ *   - JRCaptureUser#oinoL1Object
+ *   - JRCaptureUser#pinapinoL1Object
+ *   - JRCaptureUser#pinoinoL1Object
+ *   - JRCaptureUser#onipinoL1Object
+ *   - JRCaptureUser#oinoinoL1Object
+ * .
+ * @par
+ * If any of these objects are new, or if they need to be updated, this method returns \c YES.
+ *
+ * @warning
+ * This method recursively checks all of the sub-objects of JRCaptureUser
+ * but does not check any of the arrays of the JRCaptureUser or the arrays' elements:
+ *   - JRCaptureUser#basicPlural, JRBasicPluralElement
+ *   - JRCaptureUser#pluralTestUnique, JRPluralTestUniqueElement
+ *   - JRCaptureUser#pluralTestAlphabetic, JRPluralTestAlphabeticElement
+ *   - JRCaptureUser#simpleStringPluralOne, JRSimpleStringPluralOneElement
+ *   - JRCaptureUser#simpleStringPluralTwo, JRSimpleStringPluralTwoElement
+ *   - JRCaptureUser#pinapL1Plural, JRPinapL1PluralElement
+ *   - JRCaptureUser#onipL1Plural, JROnipL1PluralElement
+ *   - JRCaptureUser#pinapinapL1Plural, JRPinapinapL1PluralElement
+ *   - JRCaptureUser#pinonipL1Plural, JRPinonipL1PluralElement
+ *   - JRCaptureUser#onipinapL1Plural, JROnipinapL1PluralElement
+ *   - JRCaptureUser#oinonipL1Plural, JROinonipL1PluralElement
+ * .
+ * @par
+ * If you have added or removed any elements from the arrays, you must call the following methods
+ * to update the array on Capture: replaceBasicPluralArrayOnCaptureForDelegate:context:(),
+ *   replacePluralTestUniqueArrayOnCaptureForDelegate:context:(),
+ *   replacePluralTestAlphabeticArrayOnCaptureForDelegate:context:(),
+ *   replaceSimpleStringPluralOneArrayOnCaptureForDelegate:context:(),
+ *   replaceSimpleStringPluralTwoArrayOnCaptureForDelegate:context:(),
+ *   replacePinapL1PluralArrayOnCaptureForDelegate:context:(),
+ *   replaceOnipL1PluralArrayOnCaptureForDelegate:context:(),
+ *   replacePinapinapL1PluralArrayOnCaptureForDelegate:context:(),
+ *   replacePinonipL1PluralArrayOnCaptureForDelegate:context:(),
+ *   replaceOnipinapL1PluralArrayOnCaptureForDelegate:context:(),
+ *   replaceOinonipL1PluralArrayOnCaptureForDelegate:context:()
+ *
+ * @par
+ * Otherwise, if the array elements' JRCaptureObject#canBeUpdatedOnCapture and JRCaptureObject#needsUpdate returns \c YES, you can update
+ * the elements by calling updateOnCaptureForDelegate:context:().
  **/
 - (BOOL)needsUpdate;
 
