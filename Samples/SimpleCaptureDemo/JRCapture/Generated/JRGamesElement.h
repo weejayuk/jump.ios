@@ -70,7 +70,48 @@
  **/
 /*@{*/
 /**
- * TODO: DOXYGEN DOCS
+ * Use this method to replace the JRGamesElement#opponents array on Capture after adding, removing,
+ * or reordering elements. You should call this method immediately after you perform any of these actions.
+ * This method will replace the entire array on Capture, including all of its elements and their sub-arrays and
+ * sub-objects. When successful, the new array will be added to the JRGamesElement#opponents property,
+ * replacing the existing NSArray.
+ *
+ * If the array is replaced successfully, the method JRCaptureObjectDelegate#replaceArrayDidSucceedForObject:newArray:named:context:
+ * will be called on your delegate. This method will return a pointer to the new array, which is also the same pointer
+ * stored in the JRGamesElement#opponents property, and the name of the replaced array: \c "opponents".
+ *
+ * If unsuccessful, the method JRCaptureObjectDelegate#replaceArrayDidFailForObject:arrayNamed:withError:context:
+ * will be called on your delegate.
+ *
+ * @param delegate
+ *   The JRCaptureObjectDelegate that implements the optional delegate methods JRCaptureObjectDelegate#replaceArrayDidSucceedForObject:newArray:named:context:
+ *   and JRCaptureObjectDelegate#replaceArrayDidFailForObject:arrayNamed:withError:context:.
+ *
+ * @param context
+ *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
+ *   This object will be passed back to your JRCaptureObjectDelegate as is.Contexts are used across most of the
+ *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
+ *   context is entirely optional and at your discretion.
+ *
+ * @warning
+ * When successful, the new array will be added to the JRGamesElement#opponents property,
+ * replacing the existing NSArray. The new array will contain new, but equivalent JROpponentsElement
+ * objects. That is to say, the elements will be the same, but they will have new pointers. You should not hold onto
+ * any references to the JRGamesElement#opponents or JROpponentsElement objects
+ * when you are replacing this array on Capture, as the pointers will become invalid.
+ * 
+ * @note
+ * After the array have been replaced on Capture, you can now call JROpponentsElement#updateOnCaptureForDelegate:context:()
+ * on the array's elements. You can check the JROpponentsElement#canBeUpdatedOnCapture property to determine
+ * if an element can be updated or not. If the JROpponentsElement#canBeUpdatedOnCapture property is equal
+ * to \c NO you should replace the JRGamesElement#opponents array on Capture. Replacing the array will also
+ * update any local changes to the properties of a JROpponentsElement, including sub-arrays and sub-objects.
+ *
+ * @par
+ * If you haven't added, removed, or reordered any of the elements of the JRGamesElement#opponents array, but
+ * you have locally updated the properties of a JROpponentsElement, you can just call
+ * JROpponentsElement#updateOnCaptureForDelegate:context:() to update the local changes on the Capture server.
+ * The JROpponentsElement#canBeUpdatedOnCapture property will let you know if you can do this.
  **/
 - (void)replaceOpponentsArrayOnCaptureForDelegate:(id<JRCaptureObjectDelegate>)delegate context:(NSObject *)context;
 
@@ -118,22 +159,22 @@
  **/
 /*@{*/
 /**
- * TODO
- **/
+ * Returns the primitive boolean value stored in the isFavorite property. Will return \c NO if the
+ * isFavorite is  nil. **/
 - (BOOL)getIsFavoriteBoolValue;
 
 /**
- * TODO
+ * Sets the isFavorite property to a the primitive boolean value.
  **/
 - (void)setIsFavoriteWithBool:(BOOL)boolVal;
 
 /**
- * TODO
- **/
+ * Returns the primitive integer value stored in the rating property. Will return \c 0 if the
+ * rating is  nil. **/
 - (NSInteger)getRatingIntegerValue;
 
 /**
- * TODO
+ * Sets the rating property to a the primitive integer value.
  **/
 - (void)setRatingWithInteger:(NSInteger)integerVal;
 /*@}*/

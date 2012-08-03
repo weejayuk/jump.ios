@@ -209,7 +209,8 @@ typedef enum
  * occur if the \c JREngage library failed to configure, or if the dialog is already being displayed, etc.
  *
  * @param error
- *   The error that occurred during configuration
+ *   The error that occurred during configuration. Please see the list of \ref captureErrors "Capture Errors" for more
+ *   information // TODO: Update to link for Engage errors
  *
  * @note
  * This message is only sent if your application tries to show a Engage for iOS dialog, and not necessarily
@@ -314,7 +315,8 @@ typedef enum
  * Sent when authentication failed and could not be recovered by the library.
  *
  * @param error
- *   The error that occurred during authentication
+ *   The error that occurred during authentication. Please see the list of \ref captureErrors "Capture Errors" for more
+ *   information // TODO: Update to link for Engage errors
  *
  * @param provider
  *   The name of the provider on which the user tried to authenticate. For a list of possible strings,
@@ -330,7 +332,8 @@ typedef enum
  * Sent when the call to the Capture server has failed.
  *
  * @param error
- *   The error that occurred during Capture authentication
+ *   The error that occurred during Capture authentication. Please see the list of \ref captureErrors "Capture Errors"
+ *   for more information
  **/
 - (void)captureAuthenticationDidFailWithError:(NSError*)error;
 @end
@@ -355,7 +358,8 @@ typedef enum
  * occur if the \c JREngage library failed to configure, or if the dialog is already being displayed, etc.
  *
  * @param error
- *   The error that occurred during configuration
+ *   The error that occurred during configuration. Please see the list of \ref captureErrors "Capture Errors" for more
+ *   information // TODO: Update to link for Engage errors
  *
  * @note
  * This message is only sent if your application tries to show a Engage for iOS dialog, and not necessarily
@@ -397,7 +401,8 @@ typedef enum
  *   The activity the user was trying to share
  *
  * @param error
- *   The error that occurred during sharing
+ *   The error that occurred during sharing. Please see the list of \ref captureErrors "Capture Errors" for more
+ *   information // TODO: Update to link for Engage errors
  *
  * @param provider
  *   The name of the provider on which the user attempted to share the activity. For a list of possible strings,

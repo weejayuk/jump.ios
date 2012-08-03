@@ -37,6 +37,27 @@
  * @brief A JRName object
  **/
 @interface JRName : JRCaptureObject
+/**
+ * \c YES if this object can be updated on Capture with the method JRName#updateOnCaptureForDelegate:context:().
+ * \c NO if it can't.
+ *
+ * Use this property to determine if the object or element can be updated on Capture or if this object's parent array
+ * needs to be replaced first. As this object, or one of its ancestors, is an element of a plural, this object may or
+ * may not be updated on Capture. If an element of a plural was added locally (newly allocated on the client), then the
+ * array must be replaced before the element can use the method JRName#updateOnCaptureForDelegate:context:().
+ * Even if JRName#needsUpdate returns \c YES, this object cannot be updated on Capture unless
+ * JRName#canBeUpdatedOnCapture also returns \c YES.
+ *
+ * That is, if any elements of a plural have changed, (added, removed, or reordered) the array
+ * must be replaced on Capture with the appropriate <code>replace&lt;<em>ArrayName</em>&gt;ArrayOnCaptureForDelegate:context:</code>
+ * method, before updating the elements. As such, this should be done immediately.
+ *
+ * @note
+ * Replacing the array will also update any local changes to the properties of a JRName, including
+ * sub-arrays and sub-objects.
+ **/
+@property (readonly) BOOL canBeUpdatedOnCapture;
+
 @property (nonatomic, copy)     NSString *familyName; /**< The family name of this Contact, or 'Last Name' in most Western languages */ 
 @property (nonatomic, copy)     NSString *formatted; /**< The full name, including all middle names, titles, and suffixes as appropriate, formatted for display */ 
 @property (nonatomic, copy)     NSString *givenName; /**< The given name of this Contact, or 'First Name' in most Western languages */ 

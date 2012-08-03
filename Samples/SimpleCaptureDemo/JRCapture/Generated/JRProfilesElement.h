@@ -116,17 +116,140 @@
  **/
 /*@{*/
 /**
- * TODO: DOXYGEN DOCS
+ * Use this method to replace the JRProfilesElement#followers array on Capture after adding, removing,
+ * or reordering elements. You should call this method immediately after you perform any of these actions.
+ * This method will replace the entire array on Capture, including all of its elements and their sub-arrays and
+ * sub-objects. When successful, the new array will be added to the JRProfilesElement#followers property,
+ * replacing the existing NSArray.
+ *
+ * If the array is replaced successfully, the method JRCaptureObjectDelegate#replaceArrayDidSucceedForObject:newArray:named:context:
+ * will be called on your delegate. This method will return a pointer to the new array, which is also the same pointer
+ * stored in the JRProfilesElement#followers property, and the name of the replaced array: \c "followers".
+ *
+ * If unsuccessful, the method JRCaptureObjectDelegate#replaceArrayDidFailForObject:arrayNamed:withError:context:
+ * will be called on your delegate.
+ *
+ * @param delegate
+ *   The JRCaptureObjectDelegate that implements the optional delegate methods JRCaptureObjectDelegate#replaceArrayDidSucceedForObject:newArray:named:context:
+ *   and JRCaptureObjectDelegate#replaceArrayDidFailForObject:arrayNamed:withError:context:.
+ *
+ * @param context
+ *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
+ *   This object will be passed back to your JRCaptureObjectDelegate as is.Contexts are used across most of the
+ *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
+ *   context is entirely optional and at your discretion.
+ *
+ * @warning
+ * When successful, the new array will be added to the JRProfilesElement#followers property,
+ * replacing the existing NSArray. The new array will contain new, but equivalent JRFollowersElement
+ * objects. That is to say, the elements will be the same, but they will have new pointers. You should not hold onto
+ * any references to the JRProfilesElement#followers or JRFollowersElement objects
+ * when you are replacing this array on Capture, as the pointers will become invalid.
+ * 
+ * @note
+ * After the array have been replaced on Capture, you can now call JRFollowersElement#updateOnCaptureForDelegate:context:()
+ * on the array's elements. You can check the JRFollowersElement#canBeUpdatedOnCapture property to determine
+ * if an element can be updated or not. If the JRFollowersElement#canBeUpdatedOnCapture property is equal
+ * to \c NO you should replace the JRProfilesElement#followers array on Capture. Replacing the array will also
+ * update any local changes to the properties of a JRFollowersElement, including sub-arrays and sub-objects.
+ *
+ * @par
+ * If you haven't added, removed, or reordered any of the elements of the JRProfilesElement#followers array, but
+ * you have locally updated the properties of a JRFollowersElement, you can just call
+ * JRFollowersElement#updateOnCaptureForDelegate:context:() to update the local changes on the Capture server.
+ * The JRFollowersElement#canBeUpdatedOnCapture property will let you know if you can do this.
  **/
 - (void)replaceFollowersArrayOnCaptureForDelegate:(id<JRCaptureObjectDelegate>)delegate context:(NSObject *)context;
 
 /**
- * TODO: DOXYGEN DOCS
+ * Use this method to replace the JRProfilesElement#following array on Capture after adding, removing,
+ * or reordering elements. You should call this method immediately after you perform any of these actions.
+ * This method will replace the entire array on Capture, including all of its elements and their sub-arrays and
+ * sub-objects. When successful, the new array will be added to the JRProfilesElement#following property,
+ * replacing the existing NSArray.
+ *
+ * If the array is replaced successfully, the method JRCaptureObjectDelegate#replaceArrayDidSucceedForObject:newArray:named:context:
+ * will be called on your delegate. This method will return a pointer to the new array, which is also the same pointer
+ * stored in the JRProfilesElement#following property, and the name of the replaced array: \c "following".
+ *
+ * If unsuccessful, the method JRCaptureObjectDelegate#replaceArrayDidFailForObject:arrayNamed:withError:context:
+ * will be called on your delegate.
+ *
+ * @param delegate
+ *   The JRCaptureObjectDelegate that implements the optional delegate methods JRCaptureObjectDelegate#replaceArrayDidSucceedForObject:newArray:named:context:
+ *   and JRCaptureObjectDelegate#replaceArrayDidFailForObject:arrayNamed:withError:context:.
+ *
+ * @param context
+ *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
+ *   This object will be passed back to your JRCaptureObjectDelegate as is.Contexts are used across most of the
+ *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
+ *   context is entirely optional and at your discretion.
+ *
+ * @warning
+ * When successful, the new array will be added to the JRProfilesElement#following property,
+ * replacing the existing NSArray. The new array will contain new, but equivalent JRFollowingElement
+ * objects. That is to say, the elements will be the same, but they will have new pointers. You should not hold onto
+ * any references to the JRProfilesElement#following or JRFollowingElement objects
+ * when you are replacing this array on Capture, as the pointers will become invalid.
+ * 
+ * @note
+ * After the array have been replaced on Capture, you can now call JRFollowingElement#updateOnCaptureForDelegate:context:()
+ * on the array's elements. You can check the JRFollowingElement#canBeUpdatedOnCapture property to determine
+ * if an element can be updated or not. If the JRFollowingElement#canBeUpdatedOnCapture property is equal
+ * to \c NO you should replace the JRProfilesElement#following array on Capture. Replacing the array will also
+ * update any local changes to the properties of a JRFollowingElement, including sub-arrays and sub-objects.
+ *
+ * @par
+ * If you haven't added, removed, or reordered any of the elements of the JRProfilesElement#following array, but
+ * you have locally updated the properties of a JRFollowingElement, you can just call
+ * JRFollowingElement#updateOnCaptureForDelegate:context:() to update the local changes on the Capture server.
+ * The JRFollowingElement#canBeUpdatedOnCapture property will let you know if you can do this.
  **/
 - (void)replaceFollowingArrayOnCaptureForDelegate:(id<JRCaptureObjectDelegate>)delegate context:(NSObject *)context;
 
 /**
- * TODO: DOXYGEN DOCS
+ * Use this method to replace the JRProfilesElement#friends array on Capture after adding, removing,
+ * or reordering elements. You should call this method immediately after you perform any of these actions.
+ * This method will replace the entire array on Capture, including all of its elements and their sub-arrays and
+ * sub-objects. When successful, the new array will be added to the JRProfilesElement#friends property,
+ * replacing the existing NSArray.
+ *
+ * If the array is replaced successfully, the method JRCaptureObjectDelegate#replaceArrayDidSucceedForObject:newArray:named:context:
+ * will be called on your delegate. This method will return a pointer to the new array, which is also the same pointer
+ * stored in the JRProfilesElement#friends property, and the name of the replaced array: \c "friends".
+ *
+ * If unsuccessful, the method JRCaptureObjectDelegate#replaceArrayDidFailForObject:arrayNamed:withError:context:
+ * will be called on your delegate.
+ *
+ * @param delegate
+ *   The JRCaptureObjectDelegate that implements the optional delegate methods JRCaptureObjectDelegate#replaceArrayDidSucceedForObject:newArray:named:context:
+ *   and JRCaptureObjectDelegate#replaceArrayDidFailForObject:arrayNamed:withError:context:.
+ *
+ * @param context
+ *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
+ *   This object will be passed back to your JRCaptureObjectDelegate as is.Contexts are used across most of the
+ *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
+ *   context is entirely optional and at your discretion.
+ *
+ * @warning
+ * When successful, the new array will be added to the JRProfilesElement#friends property,
+ * replacing the existing NSArray. The new array will contain new, but equivalent JRFriendsElement
+ * objects. That is to say, the elements will be the same, but they will have new pointers. You should not hold onto
+ * any references to the JRProfilesElement#friends or JRFriendsElement objects
+ * when you are replacing this array on Capture, as the pointers will become invalid.
+ * 
+ * @note
+ * After the array have been replaced on Capture, you can now call JRFriendsElement#updateOnCaptureForDelegate:context:()
+ * on the array's elements. You can check the JRFriendsElement#canBeUpdatedOnCapture property to determine
+ * if an element can be updated or not. If the JRFriendsElement#canBeUpdatedOnCapture property is equal
+ * to \c NO you should replace the JRProfilesElement#friends array on Capture. Replacing the array will also
+ * update any local changes to the properties of a JRFriendsElement, including sub-arrays and sub-objects.
+ *
+ * @par
+ * If you haven't added, removed, or reordered any of the elements of the JRProfilesElement#friends array, but
+ * you have locally updated the properties of a JRFriendsElement, you can just call
+ * JRFriendsElement#updateOnCaptureForDelegate:context:() to update the local changes on the Capture server.
+ * The JRFriendsElement#canBeUpdatedOnCapture property will let you know if you can do this.
  **/
 - (void)replaceFriendsArrayOnCaptureForDelegate:(id<JRCaptureObjectDelegate>)delegate context:(NSObject *)context;
 

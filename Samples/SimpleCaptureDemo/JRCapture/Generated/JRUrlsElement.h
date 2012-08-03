@@ -99,12 +99,12 @@
  **/
 /*@{*/
 /**
- * TODO
- **/
+ * Returns the primitive boolean value stored in the primary property. Will return \c NO if the
+ * primary is  nil. **/
 - (BOOL)getPrimaryBoolValue;
 
 /**
- * TODO
+ * Sets the primary property to a the primitive boolean value.
  **/
 - (void)setPrimaryWithBool:(BOOL)boolVal;
 /*@}*/

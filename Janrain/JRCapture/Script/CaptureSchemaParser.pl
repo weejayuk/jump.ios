@@ -733,7 +733,29 @@ sub recursiveParse {
     # e.g.:
     #   self.captureObjectPath = [NSString stringWithFormat:@"%@/%@", capturePath, @"exampleElement"];
     $updateFromDictSection[6]  = "\@\"" . $pathAppend . "\"";  
-    $replaceFromDictSection[6] = "\@\"" . $pathAppend . "\"";      
+    $replaceFromDictSection[6] = "\@\"" . $pathAppend . "\"";     
+    
+    
+    $propertiesSection .= "/**\n" . 
+                          " * \\c YES if this object can be updated on Capture with the method " . $className . "#updateOnCaptureForDelegate:context:().\n" .
+                          " * \\c NO if it can't.\n" .
+                          " *\n" .
+                          " * Use this property to determine if the object or element can be updated on Capture or if this object's parent array\n" . 
+                          " * needs to be replaced first. As this object, or one of its ancestors, is an element of a plural, this object may or\n" .
+                          " * may not be updated on Capture. If an element of a plural was added locally (newly allocated on the client), then the\n" .
+                          " * array must be replaced before the element can use the method " . $className . "#updateOnCaptureForDelegate:context:().\n" .
+                          " * Even if " . $className . "#needsUpdate returns \\c YES, this object cannot be updated on Capture unless\n" . 
+                          " * " . $className . "#canBeUpdatedOnCapture also returns \\c YES.\n" . 
+                          " *\n" . 
+                          " * That is, if any elements of a plural have changed, (added, removed, or reordered) the array\n" . 
+                          " * must be replaced on Capture with the appropriate <code>replace&lt;<em>ArrayName</em>&gt;ArrayOnCaptureForDelegate:context:</code>\n" . 
+                          " * method, before updating the elements. As such, this should be done immediately.\n" .
+                          " *\n" . 
+                          " * \@note\n" . 
+                          " * Replacing the array will also update any local changes to the properties of a " . $className . ", including\n" . 
+                          " * sub-arrays and sub-objects.\n" .
+                          " **/\n" . 
+                          "\@property (readonly) BOOL canBeUpdatedOnCapture;\n\n";
   
   } else {
   ################################################################################
@@ -1088,7 +1110,7 @@ sub recursiveParse {
        
       }
       
-      $replaceArrayIntfSection .= createArrayReplaceMethodDeclaration($propertyName);
+      $replaceArrayIntfSection .= createArrayReplaceMethodDeclaration($propertyName, $className);
       $replaceArrayImplSection .= createArrayReplaceMethodImplementation($propertyName, $isStringArray, $stringArrayType);  
       
     ######## OBJECT (DICTIONARY) ########
@@ -1630,18 +1652,28 @@ sub recursiveParse {
     $hFile .= "/**\n * \@name Primitive Getters/Setters \n **/\n/*\@{*/\n";
 
     for (my $i = 0; $i < @booleanProperties; $i++) {
-      $hFile .= "/**\n * TODO\n **/\n";
+      $hFile .= "/**\n" .
+                " * Returns the primitive boolean value stored in the " . $booleanProperties[$i] . " property. Will return \\c NO if the\n" .
+                " * " . $booleanProperties[$i] . " is \e nil." . 
+                " **/\n";
       $hFile .= "- (BOOL)get" . ucfirst($booleanProperties[$i]) . "BoolValue;\n\n";
-      $hFile .= "/**\n * TODO\n **/\n";
+      $hFile .= "/**\n" .
+                " * Sets the " . $booleanProperties[$i] . " property to a the primitive boolean value.\n" .
+                " **/\n";
       $hFile .= "- (void)set" . ucfirst($booleanProperties[$i]) . "WithBool:(BOOL)boolVal;\n";
       
       if ($current != $total) { $hFile .= "\n"; } $current++;
     }
     
     for (my $i = 0; $i < @integerProperties; $i++) {
-      $hFile .= "/**\n * TODO\n **/\n";
+      $hFile .= "/**\n" .
+                " * Returns the primitive integer value stored in the " . $integerProperties[$i] . " property. Will return \\c 0 if the\n" .
+                " * " . $integerProperties[$i] . " is \e nil." . 
+                " **/\n";
       $hFile .= "- (NSInteger)get" . ucfirst($integerProperties[$i]) . "IntegerValue;\n\n";
-      $hFile .= "/**\n * TODO\n **/\n";
+      $hFile .= "/**\n" .
+                " * Sets the " . $integerProperties[$i] . " property to a the primitive integer value.\n" .
+                " **/\n";
       $hFile .= "- (void)set" . ucfirst($integerProperties[$i]) . "WithInteger:(NSInteger)integerVal;\n";
     
       if ($current != $total) { $hFile .= "\n"; } $current++;

@@ -36,81 +36,109 @@
 
 /**
  * @brief
- * Protocol adopted by an object ...
+ * Protocol adopted by an object that wishes to update a local JRCaptureUser on the Capture server or fetch the remote
+ * JRCaptureUser from the Capture server
  **/
 @protocol JRCaptureUserDelegate <JRCaptureObjectDelegate>
 @optional
 /**
- * Sent if ...
+ * Sent if a call to JRCaptureUser#createOnCaptureForDelegate:context:() succeeded for the JRCaptureUser on which
+ * the selector was performed.
  *
  * @param user
- *   user
+ *   The JRCaptureUser on which the selector JRCaptureUser#createOnCaptureForDelegate:context:() was performed
  *
  * @param context
- *   context
+ *   The same NSObject that was sent to the method JRCaptureUser#createOnCaptureForDelegate:context:().
+ *   The \e context argument is used if you would like to send some data through the asynchronous network call back
+ *   to your delegate, or \c nil. This object will be passed back to your JRCaptureUserDelegate as is. Contexts are
+ *   used across most of the asynchronous Capture methods to facilitate correlation of the response messages with the
+ *   calling code. Use of the context is entirely optional and at your discretion.
  **/
 - (void)createDidSucceedForUser:(JRCaptureUser *)user context:(NSObject *)context;
 
 /**
- * Sent if ...
+ * Sent if a call to JRCaptureUser#createOnCaptureForDelegate:context:() failed for the JRCaptureUser on which
+ * the selector was performed.
  *
  * @param user
- *   user
+ *   The JRCaptureUser on which the selector JRCaptureUser#createOnCaptureForDelegate:context:() was performed
  *
  * @param error
- *   error
+ *   The cause of the failure. Please see the list of \ref captureErrors "Capture Errors" for more information
  *
  * @param context
- *   context
+ *   The same NSObject that was sent to the method JRCaptureUser#createOnCaptureForDelegate:context:().
+ *   The \e context argument is used if you would like to send some data through the asynchronous network call back
+ *   to your delegate, or \c nil. This object will be passed back to your JRCaptureUserDelegate as is. Contexts are
+ *   used across most of the asynchronous Capture methods to facilitate correlation of the response messages with the
+ *   calling code. Use of the context is entirely optional and at your discretion.
  **/
 - (void)createDidFailForUser:(JRCaptureUser *)user withError:(NSError *)error context:(NSObject *)context;
 
 /**
- * Sent if ...
+ * Sent if a call to JRCaptureUser#fetchCaptureUserFromServerForDelegate:context:() succeeded
  *
  * @param fetchedUser
- *   fetchedUser
+ *   The JRCaptureUser that was fetched from the Capture server
  *
  * @param context
- *   context
+ *   The same NSObject that was sent to the method JRCaptureUser#fetchCaptureUserFromServerForDelegate:context:().
+ *   The \e context argument is used if you would like to send some data through the asynchronous network call back
+ *   to your delegate, or \c nil. This object will be passed back to your JRCaptureUserDelegate as is. Contexts are
+ *   used across most of the asynchronous Capture methods to facilitate correlation of the response messages with the
+ *   calling code. Use of the context is entirely optional and at your discretion.
  **/
 - (void)fetchUserDidSucceed:(JRCaptureUser *)fetchedUser context:(NSObject *)context;
 
 /**
- * Sent if ...
+ * Sent if a call to JRCaptureUser#fetchCaptureUserFromServerForDelegate:context:() failed
  *
  * @param error
- *   error
+ *   The cause of the failure. Please see the list of \ref captureErrors "Capture Errors" for more information
  *
  * @param context
- *   context
+ *   The same NSObject that was sent to the method JRCaptureUser#fetchCaptureUserFromServerForDelegate:context:().
+ *   The \e context argument is used if you would like to send some data through the asynchronous network call back
+ *   to your delegate, or \c nil. This object will be passed back to your JRCaptureUserDelegate as is. Contexts are
+ *   used across most of the asynchronous Capture methods to facilitate correlation of the response messages with the
+ *   calling code. Use of the context is entirely optional and at your discretion.
  **/
 - (void)fetchUserDidFailWithError:(NSError *)error context:(NSObject *)context;
 
 
 #ifdef JRCAPTURE_FETCH_LAST_UPDATED
 /**
- * Sent if ...
+ * Sent if a call to JRCaptureUser#fetchLastUpdatedFromServerForDelegate:context:() succeeded
  *
  * @param serverLastUpdated
- *   serverLastUpdated
+ *   The \e lastUpdated timestamp from the Capture server for the user on which the
+ *   JRCaptureUser#fetchLastUpdatedFromServerForDelegate:context:() selector was performed
  *
  * @param isOutdated
- *   isOutdated
+ *   \c YES if the local \e lastUpdated and the \e serverLastUpdated don't match, \c NO otherwise
  *
  * @param context
- *   context
+ *   The same NSObject that was sent to the method JRCaptureObject#updateOnCaptureForDelegate:context:().
+ *   The \e context argument is used if you would like to send some data through the asynchronous network call back
+ *   to your delegate, or \c nil. This object will be passed back to your JRCaptureObjectDelegate as is. Contexts are
+ *   used across most of the asynchronous Capture methods to facilitate correlation of the response messages with the
+ *   calling code. Use of the context is entirely optional and at your discretion.
  **/
 - (void)fetchLastUpdatedDidSucceed:(JRDateTime *)serverLastUpdated isOutdated:(BOOL)isOutdated context:(NSObject *)context;
 
 /**
- * Sent if ...
+ * Sent if a call to JRCaptureUser#fetchLastUpdatedFromServerForDelegate:context:() failed
  *
  * @param error
- *   error
+ *   The cause of the failure. Please see the list of \ref captureErrors "Capture Errors" for more information
  *
  * @param context
- *   context
+ *   The same NSObject that was sent to the method JRCaptureObject#updateOnCaptureForDelegate:context:().
+ *   The \e context argument is used if you would like to send some data through the asynchronous network call back
+ *   to your delegate, or \c nil. This object will be passed back to your JRCaptureObjectDelegate as is. Contexts are
+ *   used across most of the asynchronous Capture methods to facilitate correlation of the response messages with the
+ *   calling code. Use of the context is entirely optional and at your discretion.
  **/
 - (void)fetchLastUpdatedDidFailWithError:(NSError *)error context:(NSObject *)context;
 #endif // JRCAPTURE_FETCH_LAST_UPDATED
@@ -129,7 +157,10 @@
  *   delegate
  *
  * @param context
- *   context
+ *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
+ *   This object will be passed back to your JRCaptureUserDelegate as is.Contexts are used across most of the
+ *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
+ *   context is entirely optional and at your discretion.
  **/
 - (void)createOnCaptureForDelegate:(id<JRCaptureUserDelegate>)delegate context:(NSObject *)context;
 
@@ -140,7 +171,10 @@
  *   delegate
  *
  * @param context
- *   context
+ *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
+ *   This object will be passed back to your JRCaptureUserDelegate as is.Contexts are used across most of the
+ *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
+ *   context is entirely optional and at your discretion.
  **/
 + (void)fetchCaptureUserFromServerForDelegate:(id<JRCaptureUserDelegate>)delegate context:(NSObject *)context;
 
@@ -152,7 +186,10 @@
  *   delegate
  *
  * @param context
- *   context
+ *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
+ *   This object will be passed back to your JRCaptureUserDelegate as is.Contexts are used across most of the
+ *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
+ *   context is entirely optional and at your discretion.
  **/
 - (void)fetchLastUpdatedFromServerForDelegate:(id<JRCaptureUserDelegate>)delegate context:(NSObject *)context;
 #endif // JRCAPTURE_FETCH_LAST_UPDATED

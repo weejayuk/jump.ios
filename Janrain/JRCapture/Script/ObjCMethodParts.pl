@@ -1066,11 +1066,52 @@ sub getArrayComparisonImplementation {
 
 sub createArrayReplaceMethodDeclaration { 
   my $propertyName = $_[0];
+  my $className    = $_[1];
 
   my $methodDeclaration = 
        "\n"  .
        "/**\n" . 
-       " * TODO: DOXYGEN DOCS\n" . 
+       " * Use this method to replace the " . $className . "#" . $propertyName . " array on Capture after adding, removing,\n" . 
+       " * or reordering elements. You should call this method immediately after you perform any of these actions.\n" .
+       " * This method will replace the entire array on Capture, including all of its elements and their sub-arrays and\n" .
+       " * sub-objects. When successful, the new array will be added to the " . $className . "#" . $propertyName . " property,\n" . 
+       " * replacing the existing NSArray.\n" .
+       " *\n" . 
+       " * If the array is replaced successfully, the method JRCaptureObjectDelegate#replaceArrayDidSucceedForObject:newArray:named:context:\n" . 
+       " * will be called on your delegate. This method will return a pointer to the new array, which is also the same pointer\n" .
+       " * stored in the " . $className . "#" . $propertyName . " property, and the name of the replaced array: \\c \"" . $propertyName . "\".\n" .
+       " *\n" .
+       " * If unsuccessful, the method JRCaptureObjectDelegate#replaceArrayDidFailForObject:arrayNamed:withError:context:\n" .
+       " * will be called on your delegate.\n" .
+       " *\n" . 
+       " * \@param delegate\n" . 
+       " *   The JRCaptureObjectDelegate that implements the optional delegate methods JRCaptureObjectDelegate#replaceArrayDidSucceedForObject:newArray:named:context:\n" .
+       " *   and JRCaptureObjectDelegate#replaceArrayDidFailForObject:arrayNamed:withError:context:.\n" .
+       " *\n" . 
+       " * \@param context\n" . 
+       " *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \\c nil.\n" .
+       " *   This object will be passed back to your JRCaptureObjectDelegate as is.Contexts are used across most of the\n" .
+       " *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the\n" .
+       " *   context is entirely optional and at your discretion.\n" .
+       " *\n" . 
+       " * \@warning\n" . 
+       " * When successful, the new array will be added to the " . $className . "#" . $propertyName . " property,\n" . 
+       " * replacing the existing NSArray. The new array will contain new, but equivalent JR" . ucfirst($propertyName) . "Element\n" . 
+       " * objects. That is to say, the elements will be the same, but they will have new pointers. You should not hold onto\n" . 
+       " * any references to the " . $className . "#" . $propertyName . " or JR" . ucfirst($propertyName) . "Element objects\n" . 
+       " * when you are replacing this array on Capture, as the pointers will become invalid.\n" .
+       " * \n" . 
+       " * \@note\n" . 
+       " * After the array have been replaced on Capture, you can now call JR" . ucfirst($propertyName) . "Element#updateOnCaptureForDelegate:context:()\n" .  
+       " * on the array's elements. You can check the JR" . ucfirst($propertyName) . "Element#canBeUpdatedOnCapture property to determine\n" .  
+       " * if an element can be updated or not. If the JR" . ucfirst($propertyName) . "Element#canBeUpdatedOnCapture property is equal\n" . 
+       " * to \\c NO you should replace the " . $className . "#" . $propertyName . " array on Capture. Replacing the array will also\n" . 
+       " * update any local changes to the properties of a JR" . ucfirst($propertyName) . "Element, including sub-arrays and sub-objects.\n" . 
+       " *\n * \@par\n" . 
+       " * If you haven't added, removed, or reordered any of the elements of the " . $className . "#" . $propertyName . " array, but\n" . 
+       " * you have locally updated the properties of a JR" . ucfirst($propertyName) . "Element, you can just call\n" . 
+       " * JR" . ucfirst($propertyName) . "Element#updateOnCaptureForDelegate:context:() to update the local changes on the Capture server.\n" . 
+       " * The JR" . ucfirst($propertyName) . "Element#canBeUpdatedOnCapture property will let you know if you can do this.\n" .
        " **/\n" . 
        "- (void)replace" . ucfirst($propertyName) . "ArrayOnCaptureForDelegate:(id<JRCaptureObjectDelegate>)delegate context:(NSObject *)context;\n";
 

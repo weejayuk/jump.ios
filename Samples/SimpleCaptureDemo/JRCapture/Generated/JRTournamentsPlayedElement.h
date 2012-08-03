@@ -100,22 +100,22 @@
  **/
 /*@{*/
 /**
- * TODO
- **/
+ * Returns the primitive boolean value stored in the wonMoney property. Will return \c NO if the
+ * wonMoney is  nil. **/
 - (BOOL)getWonMoneyBoolValue;
 
 /**
- * TODO
+ * Sets the wonMoney property to a the primitive boolean value.
  **/
 - (void)setWonMoneyWithBool:(BOOL)boolVal;
 
 /**
- * TODO
- **/
+ * Returns the primitive integer value stored in the placed property. Will return \c 0 if the
+ * placed is  nil. **/
 - (NSInteger)getPlacedIntegerValue;
 
 /**
- * TODO
+ * Sets the placed property to a the primitive integer value.
  **/
 - (void)setPlacedWithInteger:(NSInteger)integerVal;
 /*@}*/

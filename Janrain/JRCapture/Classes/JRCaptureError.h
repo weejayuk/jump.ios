@@ -31,76 +31,107 @@
 
 #import <Foundation/Foundation.h>
 
+/**
+ * @file
+ * @anchor captureErrors
+ *
+ * Capture-related error codes and explanations that you may receive through the delegate methods of the
+ * JRCaptureObjectDelegate, JRCaptureUserDelegate, and JRCaptureSigninDelegate protocols.
+ **/
+
+
 #define GENERIC_ERROR_RANGE 1000
 #define LOCAL_APID_ERROR_RANGE 2000
 #define APID_ERROR_RANGE 3000
 #define CAPTURE_WRAPPED_ENGAGE_ERROR_RANGE 4000
 #define CAPTURE_WRAPPED_WEBVIEW_ERROR_RANGE 5000
 
+/**
+ * Generic Capture errors
+ **/
 typedef enum
 {
-    JRCaptureErrorGeneric = GENERIC_ERROR_RANGE,
+    JRCaptureErrorGeneric = GENERIC_ERROR_RANGE, /**< Generic Capture error */
 } JRCaptureGenericError;
 
+/**
+ * Errors received from the JRCaptureObjectDelegate, JRCaptureUserDelegate, and JRCaptureSigninDelegate protocols
+ * when they fail locally
+ **/
 typedef enum
 {
-    JRCaptureLocalApidErrorGeneric              = LOCAL_APID_ERROR_RANGE,
-    JRCaptureLocalApidErrorInvalidArrayElement  = JRCaptureLocalApidErrorGeneric + 101,
-    JRCaptureLocalApidErrorUrlConnection        = JRCaptureLocalApidErrorGeneric + 201,
-    JRCaptureLocalApidErrorConnectionDidFail    = JRCaptureLocalApidErrorGeneric + 202,
-    JRCaptureLocalApidErrorInvalidResultClass   = JRCaptureLocalApidErrorGeneric + 301,
-    JRCaptureLocalApidErrorInvalidResultStat    = JRCaptureLocalApidErrorGeneric + 302,
-    JRCaptureLocalApidErrorInvalidResultData    = JRCaptureLocalApidErrorGeneric + 303,
-    JRCaptureLocalApidErrorMissingAccessToken   = JRCaptureLocalApidErrorGeneric + 400,
-    JRCaptureLocalApidErrorSelectorNotAvailable = JRCaptureLocalApidErrorGeneric + 500,
+    JRCaptureLocalApidErrorGeneric              = LOCAL_APID_ERROR_RANGE,               /**< Generic error */
+    JRCaptureLocalApidErrorInvalidArrayElement  = JRCaptureLocalApidErrorGeneric + 101, /**< Error returned when an object or its parent is an element of an array, and the array needs to be replaced on Capture first. @sa JRCaptureObject#canBeUpdatedOnCapture */
+    JRCaptureLocalApidErrorUrlConnection        = JRCaptureLocalApidErrorGeneric + 201, /**< Error returned when a URL connection could not be established */
+    JRCaptureLocalApidErrorConnectionDidFail    = JRCaptureLocalApidErrorGeneric + 202, /**< Error returned when a URL connection failed */
+    JRCaptureLocalApidErrorInvalidResultClass   = JRCaptureLocalApidErrorGeneric + 301, /**< Error returned when the JSON returned by Capture wasn't the expected structure (e.g., a string when expecting a plural) */
+    JRCaptureLocalApidErrorInvalidResultStat    = JRCaptureLocalApidErrorGeneric + 302, /**< Error returned when the stat returned by Capture is missing or something unexpected */
+    JRCaptureLocalApidErrorInvalidResultData    = JRCaptureLocalApidErrorGeneric + 303, /**< Error returned when the data returned by Capture was unexpected or incorrect */
+    JRCaptureLocalApidErrorMissingAccessToken   = JRCaptureLocalApidErrorGeneric + 400, /**< Error returned when some of the JRCaptureObject or JRCaptureUser methods are called, require an \c access_token and there is no valid \c access_token */
+    JRCaptureLocalApidErrorSelectorNotAvailable = JRCaptureLocalApidErrorGeneric + 500, /**< Error returned when a selector is not available */
 } JRCaptureLocalApidError;
 
+/**
+ * Errors received from the JRCaptureObjectDelegate, JRCaptureUserDelegate, and JRCaptureSigninDelegate protocols
+ * when they fail on the Capture server. These errors correspond to the error listed on the
+ * <a href="http://developers.janrain.com/documentation/capture/api-use-and-error-codes/">
+ *     Capture RESTful API Documentation Page</a>
+ **/
 typedef enum
 {
     JRCaptureApidErrorGeneric                  = APID_ERROR_RANGE,
-    JRCaptureApidErrorMissingArgument          = JRCaptureApidErrorGeneric + 100,
-    JRCaptureApidErrorInvalidArgument          = JRCaptureApidErrorGeneric + 200,
-    JRCaptureApidErrorDuplicateArgument        = JRCaptureApidErrorGeneric + 201,
-    JRCaptureApidErrorInvalidAuthMethod        = JRCaptureApidErrorGeneric + 205,
-    JRCaptureApidErrorUnknownApplication       = JRCaptureApidErrorGeneric + 221,
-    JRCaptureApidErrorUnknownEntityType        = JRCaptureApidErrorGeneric + 222,
-    JRCaptureApidErrorUnknownAttribute         = JRCaptureApidErrorGeneric + 223,
-    JRCaptureApidErrorEntityTypeExists         = JRCaptureApidErrorGeneric + 232,
-    JRCaptureApidErrorAttributeExists          = JRCaptureApidErrorGeneric + 233,
-    JRCaptureApidErrorReservedAttribute        = JRCaptureApidErrorGeneric + 234,
-    JRCaptureApidErrorRecordNotFound           = JRCaptureApidErrorGeneric + 310,
-    JRCaptureApidErrorIdInNewRecord            = JRCaptureApidErrorGeneric + 320,
-    JRCaptureApidErrorTimestampMismatch        = JRCaptureApidErrorGeneric + 330,
-    JRCaptureApidErrorInvalidDataFormat        = JRCaptureApidErrorGeneric + 340,
-    JRCaptureApidErrorInvalidJsonType          = JRCaptureApidErrorGeneric + 341,
-    JRCaptureApidErrorInvalidDateTime          = JRCaptureApidErrorGeneric + 342,
-    JRCaptureApidErrorConstraintViolation      = JRCaptureApidErrorGeneric + 360,
-    JRCaptureApidErrorUniqueViolation          = JRCaptureApidErrorGeneric + 361,
-    JRCaptureApidErrorMissingRequiredAttribute = JRCaptureApidErrorGeneric + 362,
-    JRCaptureApidErrorLengthViolation          = JRCaptureApidErrorGeneric + 363,
-    JRCaptureApidErrorInvalidClientCredentials = JRCaptureApidErrorGeneric + 402,
-    JRCaptureApidErrorClientPermissionError    = JRCaptureApidErrorGeneric + 403,
-    JRCaptureApidErrorAccessTokenExpired       = JRCaptureApidErrorGeneric + 414,
-    JRCaptureApidErrorAuthorizationCodeExpired = JRCaptureApidErrorGeneric + 415,
-    JRCaptureApidErrorVerificationCodeExpired  = JRCaptureApidErrorGeneric + 416,
-    JRCaptureApidErrorCreationTokenExpired     = JRCaptureApidErrorGeneric + 417,
-    JRCaptureApidErrorRedirectUriMismatch      = JRCaptureApidErrorGeneric + 420,
-    JRCaptureApidErrorApiFeatureDisabled       = JRCaptureApidErrorGeneric + 480,
-    JRCaptureApidErrorUnexpectedError          = JRCaptureApidErrorGeneric + 500,
-    JRCaptureApidErrorApiLimitError            = JRCaptureApidErrorGeneric + 510,
+    JRCaptureApidErrorMissingArgument          = JRCaptureApidErrorGeneric + 100, /**< Error returned when a required argument was not supplied */
+    JRCaptureApidErrorInvalidArgument          = JRCaptureApidErrorGeneric + 200, /**< Error returned when the argument was malformed, or its value was invalid for some other reason */
+    JRCaptureApidErrorDuplicateArgument        = JRCaptureApidErrorGeneric + 201, /**< Error returned when two or more supplied arguments may not have been included in the same call; for example, both \c id and \c uuid in \c entity.update */
+    JRCaptureApidErrorInvalidAuthMethod        = JRCaptureApidErrorGeneric + 205, /**< Error returned when the request used an http auth method other than Basic or OAuth */
+    JRCaptureApidErrorUnknownApplication       = JRCaptureApidErrorGeneric + 221, /**< Error returned when the application id does not exist */
+    JRCaptureApidErrorUnknownEntityType        = JRCaptureApidErrorGeneric + 222, /**< Error returned when the entity type does not exist */
+    JRCaptureApidErrorUnknownAttribute         = JRCaptureApidErrorGeneric + 223, /**< Error returned when an attribute does not exist. This can occur when trying to create or update a record, or when modifying an attribute */
+    JRCaptureApidErrorEntityTypeExists         = JRCaptureApidErrorGeneric + 232, /**< Error returned when the client attempts to create an entity type that already exists */
+    JRCaptureApidErrorAttributeExists          = JRCaptureApidErrorGeneric + 233, /**< Error returned when the client attempts to create an attribute that already exists */
+    JRCaptureApidErrorReservedAttribute        = JRCaptureApidErrorGeneric + 234, /**< Error returned when the client attempts to modify a reserved attribute; can occur if you try to delete, rename, or write to a reserved attribute */
+    JRCaptureApidErrorRecordNotFound           = JRCaptureApidErrorGeneric + 310, /**< Error returned when the client refers to an entity or plural element that does not exist */
+    JRCaptureApidErrorIdInNewRecord            = JRCaptureApidErrorGeneric + 320, /**< Error returned when the client attempts to specify a record id in a new entity or plural element */
+    JRCaptureApidErrorTimestampMismatch        = JRCaptureApidErrorGeneric + 330, /**< Error returned when the \c created or \c lastUpdated value does not match the supplied argument */
+    JRCaptureApidErrorInvalidDataFormat        = JRCaptureApidErrorGeneric + 340, /**< Error returned when a JSON value was not formatted correctly according to the attribute type in the schema */
+    JRCaptureApidErrorInvalidJsonType          = JRCaptureApidErrorGeneric + 341, /**< Error returned when a value did not match the expected JSON type according to the schema */
+    JRCaptureApidErrorInvalidDateTime          = JRCaptureApidErrorGeneric + 342, /**< Error returned when a \c date or \c dateTime value was not valid, for example if it was not formatted correctly or was out of range */
+    JRCaptureApidErrorConstraintViolation      = JRCaptureApidErrorGeneric + 360, /**< Error returned when a constraint was violated */
+    JRCaptureApidErrorUniqueViolation          = JRCaptureApidErrorGeneric + 361, /**< Error returned when a unique or locally-unique constraint was violated */
+    JRCaptureApidErrorMissingRequiredAttribute = JRCaptureApidErrorGeneric + 362, /**< Error returned when an attribute with the required constraint was either missing or set to null */
+    JRCaptureApidErrorLengthViolation          = JRCaptureApidErrorGeneric + 363, /**< Error returned when a string value violated an attribute’s length constraint */
+    JRCaptureApidErrorInvalidClientCredentials = JRCaptureApidErrorGeneric + 402, /**< Error returned when the client id does not exist or the client secret was wrong */
+    JRCaptureApidErrorClientPermissionError    = JRCaptureApidErrorGeneric + 403, /**< Error returned when the client does not have permission to perform the action; needs a feature */
+    JRCaptureApidErrorAccessTokenExpired       = JRCaptureApidErrorGeneric + 414, /**< Error returned when the supplied \c access_token has expired */
+    JRCaptureApidErrorAuthorizationCodeExpired = JRCaptureApidErrorGeneric + 415, /**< Error returned when the supplied \c authorization_code has expired */
+    JRCaptureApidErrorVerificationCodeExpired  = JRCaptureApidErrorGeneric + 416, /**< Error returned when the supplied \c verification_code has expired */
+    JRCaptureApidErrorCreationTokenExpired     = JRCaptureApidErrorGeneric + 417, /**< Error returned when the supplied \c creation_token has expired */
+    JRCaptureApidErrorRedirectUriMismatch      = JRCaptureApidErrorGeneric + 420, /**< Error returned when the redirectUri did not match. Occurs in the oauth/token API call with the \c authorization_code grant type */
+    JRCaptureApidErrorApiFeatureDisabled       = JRCaptureApidErrorGeneric + 480, /**< Error returned when the API call was temporarily disabled for maintenance, and will be available again shortly */
+    JRCaptureApidErrorUnexpectedError          = JRCaptureApidErrorGeneric + 500, /**< Error returned when an unexpected internal error; Janrain is notified when this occurs */
+    JRCaptureApidErrorApiLimitError            = JRCaptureApidErrorGeneric + 510, /**< Error returned when the limit on total number of simultaneous API calls has been reached */
 } JRCaptureApidError;
 
+/**
+ * Generic errors received from the JRCaptureSigninDelegate protocols when sign-in through Engage fails
+ **/
 typedef enum
 {
-    JRCaptureWrappedEngageErrorGeneric                = CAPTURE_WRAPPED_ENGAGE_ERROR_RANGE,
-    JRCaptureWrappedEngageErrorInvalidEndpointPayload = JRCaptureWrappedEngageErrorGeneric + 100,
+    JRCaptureWrappedEngageErrorGeneric                = CAPTURE_WRAPPED_ENGAGE_ERROR_RANGE,       /**< Generic error */
+    JRCaptureWrappedEngageErrorInvalidEndpointPayload = JRCaptureWrappedEngageErrorGeneric + 100, /**< Capture Mobile Endpoint URL payload is invalid */
 } JRCaptureWrappedEngageError;
 
+/**
+ * @internal (for now)
+ **/
 typedef enum
 {
     JRCaptureWebviewErrorGeneric = CAPTURE_WRAPPED_WEBVIEW_ERROR_RANGE,
 } JRCaptureWebviewError;
 
+/**
+ * @internal (for now)
+ **/
 @interface JRCaptureError : NSObject
 + (NSError *)errorFromResult:(NSObject *)result;
 @end

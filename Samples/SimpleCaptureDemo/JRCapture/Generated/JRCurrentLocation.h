@@ -37,6 +37,27 @@
  * @brief A JRCurrentLocation object
  **/
 @interface JRCurrentLocation : JRCaptureObject
+/**
+ * \c YES if this object can be updated on Capture with the method JRCurrentLocation#updateOnCaptureForDelegate:context:().
+ * \c NO if it can't.
+ *
+ * Use this property to determine if the object or element can be updated on Capture or if this object's parent array
+ * needs to be replaced first. As this object, or one of its ancestors, is an element of a plural, this object may or
+ * may not be updated on Capture. If an element of a plural was added locally (newly allocated on the client), then the
+ * array must be replaced before the element can use the method JRCurrentLocation#updateOnCaptureForDelegate:context:().
+ * Even if JRCurrentLocation#needsUpdate returns \c YES, this object cannot be updated on Capture unless
+ * JRCurrentLocation#canBeUpdatedOnCapture also returns \c YES.
+ *
+ * That is, if any elements of a plural have changed, (added, removed, or reordered) the array
+ * must be replaced on Capture with the appropriate <code>replace&lt;<em>ArrayName</em>&gt;ArrayOnCaptureForDelegate:context:</code>
+ * method, before updating the elements. As such, this should be done immediately.
+ *
+ * @note
+ * Replacing the array will also update any local changes to the properties of a JRCurrentLocation, including
+ * sub-arrays and sub-objects.
+ **/
+@property (readonly) BOOL canBeUpdatedOnCapture;
+
 @property (nonatomic, copy)     NSString *country; /**< The object's \e country property */ 
 @property (nonatomic, copy)     NSString *extendedAddress; /**< The object's \e extendedAddress property */ 
 @property (nonatomic, copy)     NSString *formatted; /**< The object's \e formatted property */ 

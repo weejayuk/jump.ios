@@ -69,7 +69,48 @@
  **/
 /*@{*/
 /**
- * TODO: DOXYGEN DOCS
+ * Use this method to replace the JRPinapL1PluralElement#pinapL2Plural array on Capture after adding, removing,
+ * or reordering elements. You should call this method immediately after you perform any of these actions.
+ * This method will replace the entire array on Capture, including all of its elements and their sub-arrays and
+ * sub-objects. When successful, the new array will be added to the JRPinapL1PluralElement#pinapL2Plural property,
+ * replacing the existing NSArray.
+ *
+ * If the array is replaced successfully, the method JRCaptureObjectDelegate#replaceArrayDidSucceedForObject:newArray:named:context:
+ * will be called on your delegate. This method will return a pointer to the new array, which is also the same pointer
+ * stored in the JRPinapL1PluralElement#pinapL2Plural property, and the name of the replaced array: \c "pinapL2Plural".
+ *
+ * If unsuccessful, the method JRCaptureObjectDelegate#replaceArrayDidFailForObject:arrayNamed:withError:context:
+ * will be called on your delegate.
+ *
+ * @param delegate
+ *   The JRCaptureObjectDelegate that implements the optional delegate methods JRCaptureObjectDelegate#replaceArrayDidSucceedForObject:newArray:named:context:
+ *   and JRCaptureObjectDelegate#replaceArrayDidFailForObject:arrayNamed:withError:context:.
+ *
+ * @param context
+ *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
+ *   This object will be passed back to your JRCaptureObjectDelegate as is.Contexts are used across most of the
+ *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
+ *   context is entirely optional and at your discretion.
+ *
+ * @warning
+ * When successful, the new array will be added to the JRPinapL1PluralElement#pinapL2Plural property,
+ * replacing the existing NSArray. The new array will contain new, but equivalent JRPinapL2PluralElement
+ * objects. That is to say, the elements will be the same, but they will have new pointers. You should not hold onto
+ * any references to the JRPinapL1PluralElement#pinapL2Plural or JRPinapL2PluralElement objects
+ * when you are replacing this array on Capture, as the pointers will become invalid.
+ * 
+ * @note
+ * After the array have been replaced on Capture, you can now call JRPinapL2PluralElement#updateOnCaptureForDelegate:context:()
+ * on the array's elements. You can check the JRPinapL2PluralElement#canBeUpdatedOnCapture property to determine
+ * if an element can be updated or not. If the JRPinapL2PluralElement#canBeUpdatedOnCapture property is equal
+ * to \c NO you should replace the JRPinapL1PluralElement#pinapL2Plural array on Capture. Replacing the array will also
+ * update any local changes to the properties of a JRPinapL2PluralElement, including sub-arrays and sub-objects.
+ *
+ * @par
+ * If you haven't added, removed, or reordered any of the elements of the JRPinapL1PluralElement#pinapL2Plural array, but
+ * you have locally updated the properties of a JRPinapL2PluralElement, you can just call
+ * JRPinapL2PluralElement#updateOnCaptureForDelegate:context:() to update the local changes on the Capture server.
+ * The JRPinapL2PluralElement#canBeUpdatedOnCapture property will let you know if you can do this.
  **/
 - (void)replacePinapL2PluralArrayOnCaptureForDelegate:(id<JRCaptureObjectDelegate>)delegate context:(NSObject *)context;
 

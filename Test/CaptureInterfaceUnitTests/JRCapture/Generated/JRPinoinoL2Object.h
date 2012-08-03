@@ -69,7 +69,48 @@
  **/
 /*@{*/
 /**
- * TODO: DOXYGEN DOCS
+ * Use this method to replace the JRPinoinoL2Object#pinoinoL3Plural array on Capture after adding, removing,
+ * or reordering elements. You should call this method immediately after you perform any of these actions.
+ * This method will replace the entire array on Capture, including all of its elements and their sub-arrays and
+ * sub-objects. When successful, the new array will be added to the JRPinoinoL2Object#pinoinoL3Plural property,
+ * replacing the existing NSArray.
+ *
+ * If the array is replaced successfully, the method JRCaptureObjectDelegate#replaceArrayDidSucceedForObject:newArray:named:context:
+ * will be called on your delegate. This method will return a pointer to the new array, which is also the same pointer
+ * stored in the JRPinoinoL2Object#pinoinoL3Plural property, and the name of the replaced array: \c "pinoinoL3Plural".
+ *
+ * If unsuccessful, the method JRCaptureObjectDelegate#replaceArrayDidFailForObject:arrayNamed:withError:context:
+ * will be called on your delegate.
+ *
+ * @param delegate
+ *   The JRCaptureObjectDelegate that implements the optional delegate methods JRCaptureObjectDelegate#replaceArrayDidSucceedForObject:newArray:named:context:
+ *   and JRCaptureObjectDelegate#replaceArrayDidFailForObject:arrayNamed:withError:context:.
+ *
+ * @param context
+ *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
+ *   This object will be passed back to your JRCaptureObjectDelegate as is.Contexts are used across most of the
+ *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
+ *   context is entirely optional and at your discretion.
+ *
+ * @warning
+ * When successful, the new array will be added to the JRPinoinoL2Object#pinoinoL3Plural property,
+ * replacing the existing NSArray. The new array will contain new, but equivalent JRPinoinoL3PluralElement
+ * objects. That is to say, the elements will be the same, but they will have new pointers. You should not hold onto
+ * any references to the JRPinoinoL2Object#pinoinoL3Plural or JRPinoinoL3PluralElement objects
+ * when you are replacing this array on Capture, as the pointers will become invalid.
+ * 
+ * @note
+ * After the array have been replaced on Capture, you can now call JRPinoinoL3PluralElement#updateOnCaptureForDelegate:context:()
+ * on the array's elements. You can check the JRPinoinoL3PluralElement#canBeUpdatedOnCapture property to determine
+ * if an element can be updated or not. If the JRPinoinoL3PluralElement#canBeUpdatedOnCapture property is equal
+ * to \c NO you should replace the JRPinoinoL2Object#pinoinoL3Plural array on Capture. Replacing the array will also
+ * update any local changes to the properties of a JRPinoinoL3PluralElement, including sub-arrays and sub-objects.
+ *
+ * @par
+ * If you haven't added, removed, or reordered any of the elements of the JRPinoinoL2Object#pinoinoL3Plural array, but
+ * you have locally updated the properties of a JRPinoinoL3PluralElement, you can just call
+ * JRPinoinoL3PluralElement#updateOnCaptureForDelegate:context:() to update the local changes on the Capture server.
+ * The JRPinoinoL3PluralElement#canBeUpdatedOnCapture property will let you know if you can do this.
  **/
 - (void)replacePinoinoL3PluralArrayOnCaptureForDelegate:(id<JRCaptureObjectDelegate>)delegate context:(NSObject *)context;
 
