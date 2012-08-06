@@ -34,7 +34,8 @@
 
 /**
  * @brief
- * Protocol adopted by an object that wishes to update local a JRCaptureObject or array on the Capture server
+ * Protocol adopted by an object that wishes to to receive notifications when updating a local JRCaptureObject or
+ * replacing an array on the Capture server
  **/
 @protocol JRCaptureObjectDelegate <NSObject>
 @optional

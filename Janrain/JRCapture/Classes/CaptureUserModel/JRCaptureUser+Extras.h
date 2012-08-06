@@ -36,8 +36,8 @@
 
 /**
  * @brief
- * Protocol adopted by an object that wishes to update a local JRCaptureUser on the Capture server or fetch the remote
- * JRCaptureUser from the Capture server
+ * Protocol adopted by an object that wishes wishes to to receive notifications when creating a JRCaptureUser on the
+ * Capture server or fetching the remote JRCaptureUser from the Capture server
  **/
 @protocol JRCaptureUserDelegate <JRCaptureObjectDelegate>
 @optional

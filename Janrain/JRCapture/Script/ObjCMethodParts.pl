@@ -1090,7 +1090,7 @@ sub createArrayReplaceMethodDeclaration {
        " *\n" . 
        " * \@param context\n" . 
        " *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \\c nil.\n" .
-       " *   This object will be passed back to your JRCaptureObjectDelegate as is.Contexts are used across most of the\n" .
+       " *   This object will be passed back to your JRCaptureObjectDelegate as is. Contexts are used across most of the\n" .
        " *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the\n" .
        " *   context is entirely optional and at your discretion.\n" .
        " *\n" . 
@@ -1102,7 +1102,7 @@ sub createArrayReplaceMethodDeclaration {
        " * when you are replacing this array on Capture, as the pointers will become invalid.\n" .
        " * \n" . 
        " * \@note\n" . 
-       " * After the array have been replaced on Capture, you can now call JR" . ucfirst($propertyName) . "Element#updateOnCaptureForDelegate:context:()\n" .  
+       " * After the array has been replaced on Capture, you can now call JR" . ucfirst($propertyName) . "Element#updateOnCaptureForDelegate:context:()\n" .  
        " * on the array's elements. You can check the JR" . ucfirst($propertyName) . "Element#canBeUpdatedOnCapture property to determine\n" .  
        " * if an element can be updated or not. If the JR" . ucfirst($propertyName) . "Element#canBeUpdatedOnCapture property is equal\n" . 
        " * to \\c NO you should replace the " . $className . "#" . $propertyName . " array on Capture. Replacing the array will also\n" . 

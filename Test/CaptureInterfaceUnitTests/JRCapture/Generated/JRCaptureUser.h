@@ -150,7 +150,7 @@
  *
  * @param context
  *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
- *   This object will be passed back to your JRCaptureObjectDelegate as is.Contexts are used across most of the
+ *   This object will be passed back to your JRCaptureObjectDelegate as is. Contexts are used across most of the
  *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
  *   context is entirely optional and at your discretion.
  *
@@ -162,7 +162,7 @@
  * when you are replacing this array on Capture, as the pointers will become invalid.
  * 
  * @note
- * After the array have been replaced on Capture, you can now call JRBasicPluralElement#updateOnCaptureForDelegate:context:()
+ * After the array has been replaced on Capture, you can now call JRBasicPluralElement#updateOnCaptureForDelegate:context:()
  * on the array's elements. You can check the JRBasicPluralElement#canBeUpdatedOnCapture property to determine
  * if an element can be updated or not. If the JRBasicPluralElement#canBeUpdatedOnCapture property is equal
  * to \c NO you should replace the JRCaptureUser#basicPlural array on Capture. Replacing the array will also
@@ -196,7 +196,7 @@
  *
  * @param context
  *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
- *   This object will be passed back to your JRCaptureObjectDelegate as is.Contexts are used across most of the
+ *   This object will be passed back to your JRCaptureObjectDelegate as is. Contexts are used across most of the
  *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
  *   context is entirely optional and at your discretion.
  *
@@ -208,7 +208,7 @@
  * when you are replacing this array on Capture, as the pointers will become invalid.
  * 
  * @note
- * After the array have been replaced on Capture, you can now call JRPluralTestUniqueElement#updateOnCaptureForDelegate:context:()
+ * After the array has been replaced on Capture, you can now call JRPluralTestUniqueElement#updateOnCaptureForDelegate:context:()
  * on the array's elements. You can check the JRPluralTestUniqueElement#canBeUpdatedOnCapture property to determine
  * if an element can be updated or not. If the JRPluralTestUniqueElement#canBeUpdatedOnCapture property is equal
  * to \c NO you should replace the JRCaptureUser#pluralTestUnique array on Capture. Replacing the array will also
@@ -242,7 +242,7 @@
  *
  * @param context
  *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
- *   This object will be passed back to your JRCaptureObjectDelegate as is.Contexts are used across most of the
+ *   This object will be passed back to your JRCaptureObjectDelegate as is. Contexts are used across most of the
  *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
  *   context is entirely optional and at your discretion.
  *
@@ -254,7 +254,7 @@
  * when you are replacing this array on Capture, as the pointers will become invalid.
  * 
  * @note
- * After the array have been replaced on Capture, you can now call JRPluralTestAlphabeticElement#updateOnCaptureForDelegate:context:()
+ * After the array has been replaced on Capture, you can now call JRPluralTestAlphabeticElement#updateOnCaptureForDelegate:context:()
  * on the array's elements. You can check the JRPluralTestAlphabeticElement#canBeUpdatedOnCapture property to determine
  * if an element can be updated or not. If the JRPluralTestAlphabeticElement#canBeUpdatedOnCapture property is equal
  * to \c NO you should replace the JRCaptureUser#pluralTestAlphabetic array on Capture. Replacing the array will also
@@ -288,7 +288,7 @@
  *
  * @param context
  *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
- *   This object will be passed back to your JRCaptureObjectDelegate as is.Contexts are used across most of the
+ *   This object will be passed back to your JRCaptureObjectDelegate as is. Contexts are used across most of the
  *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
  *   context is entirely optional and at your discretion.
  *
@@ -300,7 +300,7 @@
  * when you are replacing this array on Capture, as the pointers will become invalid.
  * 
  * @note
- * After the array have been replaced on Capture, you can now call JRSimpleStringPluralOneElement#updateOnCaptureForDelegate:context:()
+ * After the array has been replaced on Capture, you can now call JRSimpleStringPluralOneElement#updateOnCaptureForDelegate:context:()
  * on the array's elements. You can check the JRSimpleStringPluralOneElement#canBeUpdatedOnCapture property to determine
  * if an element can be updated or not. If the JRSimpleStringPluralOneElement#canBeUpdatedOnCapture property is equal
  * to \c NO you should replace the JRCaptureUser#simpleStringPluralOne array on Capture. Replacing the array will also
@@ -334,7 +334,7 @@
  *
  * @param context
  *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
- *   This object will be passed back to your JRCaptureObjectDelegate as is.Contexts are used across most of the
+ *   This object will be passed back to your JRCaptureObjectDelegate as is. Contexts are used across most of the
  *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
  *   context is entirely optional and at your discretion.
  *
@@ -346,7 +346,7 @@
  * when you are replacing this array on Capture, as the pointers will become invalid.
  * 
  * @note
- * After the array have been replaced on Capture, you can now call JRSimpleStringPluralTwoElement#updateOnCaptureForDelegate:context:()
+ * After the array has been replaced on Capture, you can now call JRSimpleStringPluralTwoElement#updateOnCaptureForDelegate:context:()
  * on the array's elements. You can check the JRSimpleStringPluralTwoElement#canBeUpdatedOnCapture property to determine
  * if an element can be updated or not. If the JRSimpleStringPluralTwoElement#canBeUpdatedOnCapture property is equal
  * to \c NO you should replace the JRCaptureUser#simpleStringPluralTwo array on Capture. Replacing the array will also
@@ -380,7 +380,7 @@
  *
  * @param context
  *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
- *   This object will be passed back to your JRCaptureObjectDelegate as is.Contexts are used across most of the
+ *   This object will be passed back to your JRCaptureObjectDelegate as is. Contexts are used across most of the
  *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
  *   context is entirely optional and at your discretion.
  *
@@ -392,7 +392,7 @@
  * when you are replacing this array on Capture, as the pointers will become invalid.
  * 
  * @note
- * After the array have been replaced on Capture, you can now call JRPinapL1PluralElement#updateOnCaptureForDelegate:context:()
+ * After the array has been replaced on Capture, you can now call JRPinapL1PluralElement#updateOnCaptureForDelegate:context:()
  * on the array's elements. You can check the JRPinapL1PluralElement#canBeUpdatedOnCapture property to determine
  * if an element can be updated or not. If the JRPinapL1PluralElement#canBeUpdatedOnCapture property is equal
  * to \c NO you should replace the JRCaptureUser#pinapL1Plural array on Capture. Replacing the array will also
@@ -426,7 +426,7 @@
  *
  * @param context
  *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
- *   This object will be passed back to your JRCaptureObjectDelegate as is.Contexts are used across most of the
+ *   This object will be passed back to your JRCaptureObjectDelegate as is. Contexts are used across most of the
  *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
  *   context is entirely optional and at your discretion.
  *
@@ -438,7 +438,7 @@
  * when you are replacing this array on Capture, as the pointers will become invalid.
  * 
  * @note
- * After the array have been replaced on Capture, you can now call JROnipL1PluralElement#updateOnCaptureForDelegate:context:()
+ * After the array has been replaced on Capture, you can now call JROnipL1PluralElement#updateOnCaptureForDelegate:context:()
  * on the array's elements. You can check the JROnipL1PluralElement#canBeUpdatedOnCapture property to determine
  * if an element can be updated or not. If the JROnipL1PluralElement#canBeUpdatedOnCapture property is equal
  * to \c NO you should replace the JRCaptureUser#onipL1Plural array on Capture. Replacing the array will also
@@ -472,7 +472,7 @@
  *
  * @param context
  *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
- *   This object will be passed back to your JRCaptureObjectDelegate as is.Contexts are used across most of the
+ *   This object will be passed back to your JRCaptureObjectDelegate as is. Contexts are used across most of the
  *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
  *   context is entirely optional and at your discretion.
  *
@@ -484,7 +484,7 @@
  * when you are replacing this array on Capture, as the pointers will become invalid.
  * 
  * @note
- * After the array have been replaced on Capture, you can now call JRPinapinapL1PluralElement#updateOnCaptureForDelegate:context:()
+ * After the array has been replaced on Capture, you can now call JRPinapinapL1PluralElement#updateOnCaptureForDelegate:context:()
  * on the array's elements. You can check the JRPinapinapL1PluralElement#canBeUpdatedOnCapture property to determine
  * if an element can be updated or not. If the JRPinapinapL1PluralElement#canBeUpdatedOnCapture property is equal
  * to \c NO you should replace the JRCaptureUser#pinapinapL1Plural array on Capture. Replacing the array will also
@@ -518,7 +518,7 @@
  *
  * @param context
  *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
- *   This object will be passed back to your JRCaptureObjectDelegate as is.Contexts are used across most of the
+ *   This object will be passed back to your JRCaptureObjectDelegate as is. Contexts are used across most of the
  *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
  *   context is entirely optional and at your discretion.
  *
@@ -530,7 +530,7 @@
  * when you are replacing this array on Capture, as the pointers will become invalid.
  * 
  * @note
- * After the array have been replaced on Capture, you can now call JRPinonipL1PluralElement#updateOnCaptureForDelegate:context:()
+ * After the array has been replaced on Capture, you can now call JRPinonipL1PluralElement#updateOnCaptureForDelegate:context:()
  * on the array's elements. You can check the JRPinonipL1PluralElement#canBeUpdatedOnCapture property to determine
  * if an element can be updated or not. If the JRPinonipL1PluralElement#canBeUpdatedOnCapture property is equal
  * to \c NO you should replace the JRCaptureUser#pinonipL1Plural array on Capture. Replacing the array will also
@@ -564,7 +564,7 @@
  *
  * @param context
  *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
- *   This object will be passed back to your JRCaptureObjectDelegate as is.Contexts are used across most of the
+ *   This object will be passed back to your JRCaptureObjectDelegate as is. Contexts are used across most of the
  *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
  *   context is entirely optional and at your discretion.
  *
@@ -576,7 +576,7 @@
  * when you are replacing this array on Capture, as the pointers will become invalid.
  * 
  * @note
- * After the array have been replaced on Capture, you can now call JROnipinapL1PluralElement#updateOnCaptureForDelegate:context:()
+ * After the array has been replaced on Capture, you can now call JROnipinapL1PluralElement#updateOnCaptureForDelegate:context:()
  * on the array's elements. You can check the JROnipinapL1PluralElement#canBeUpdatedOnCapture property to determine
  * if an element can be updated or not. If the JROnipinapL1PluralElement#canBeUpdatedOnCapture property is equal
  * to \c NO you should replace the JRCaptureUser#onipinapL1Plural array on Capture. Replacing the array will also
@@ -610,7 +610,7 @@
  *
  * @param context
  *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
- *   This object will be passed back to your JRCaptureObjectDelegate as is.Contexts are used across most of the
+ *   This object will be passed back to your JRCaptureObjectDelegate as is. Contexts are used across most of the
  *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
  *   context is entirely optional and at your discretion.
  *
@@ -622,7 +622,7 @@
  * when you are replacing this array on Capture, as the pointers will become invalid.
  * 
  * @note
- * After the array have been replaced on Capture, you can now call JROinonipL1PluralElement#updateOnCaptureForDelegate:context:()
+ * After the array has been replaced on Capture, you can now call JROinonipL1PluralElement#updateOnCaptureForDelegate:context:()
  * on the array's elements. You can check the JROinonipL1PluralElement#canBeUpdatedOnCapture property to determine
  * if an element can be updated or not. If the JROinonipL1PluralElement#canBeUpdatedOnCapture property is equal
  * to \c NO you should replace the JRCaptureUser#oinonipL1Plural array on Capture. Replacing the array will also

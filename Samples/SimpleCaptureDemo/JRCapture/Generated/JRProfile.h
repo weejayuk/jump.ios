@@ -176,7 +176,7 @@
  *
  * @param context
  *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
- *   This object will be passed back to your JRCaptureObjectDelegate as is.Contexts are used across most of the
+ *   This object will be passed back to your JRCaptureObjectDelegate as is. Contexts are used across most of the
  *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
  *   context is entirely optional and at your discretion.
  *
@@ -188,7 +188,7 @@
  * when you are replacing this array on Capture, as the pointers will become invalid.
  * 
  * @note
- * After the array have been replaced on Capture, you can now call JRAccountsElement#updateOnCaptureForDelegate:context:()
+ * After the array has been replaced on Capture, you can now call JRAccountsElement#updateOnCaptureForDelegate:context:()
  * on the array's elements. You can check the JRAccountsElement#canBeUpdatedOnCapture property to determine
  * if an element can be updated or not. If the JRAccountsElement#canBeUpdatedOnCapture property is equal
  * to \c NO you should replace the JRProfile#accounts array on Capture. Replacing the array will also
@@ -222,7 +222,7 @@
  *
  * @param context
  *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
- *   This object will be passed back to your JRCaptureObjectDelegate as is.Contexts are used across most of the
+ *   This object will be passed back to your JRCaptureObjectDelegate as is. Contexts are used across most of the
  *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
  *   context is entirely optional and at your discretion.
  *
@@ -234,7 +234,7 @@
  * when you are replacing this array on Capture, as the pointers will become invalid.
  * 
  * @note
- * After the array have been replaced on Capture, you can now call JRAddressesElement#updateOnCaptureForDelegate:context:()
+ * After the array has been replaced on Capture, you can now call JRAddressesElement#updateOnCaptureForDelegate:context:()
  * on the array's elements. You can check the JRAddressesElement#canBeUpdatedOnCapture property to determine
  * if an element can be updated or not. If the JRAddressesElement#canBeUpdatedOnCapture property is equal
  * to \c NO you should replace the JRProfile#addresses array on Capture. Replacing the array will also
@@ -268,7 +268,7 @@
  *
  * @param context
  *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
- *   This object will be passed back to your JRCaptureObjectDelegate as is.Contexts are used across most of the
+ *   This object will be passed back to your JRCaptureObjectDelegate as is. Contexts are used across most of the
  *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
  *   context is entirely optional and at your discretion.
  *
@@ -280,7 +280,7 @@
  * when you are replacing this array on Capture, as the pointers will become invalid.
  * 
  * @note
- * After the array have been replaced on Capture, you can now call JRBooksElement#updateOnCaptureForDelegate:context:()
+ * After the array has been replaced on Capture, you can now call JRBooksElement#updateOnCaptureForDelegate:context:()
  * on the array's elements. You can check the JRBooksElement#canBeUpdatedOnCapture property to determine
  * if an element can be updated or not. If the JRBooksElement#canBeUpdatedOnCapture property is equal
  * to \c NO you should replace the JRProfile#books array on Capture. Replacing the array will also
@@ -314,7 +314,7 @@
  *
  * @param context
  *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
- *   This object will be passed back to your JRCaptureObjectDelegate as is.Contexts are used across most of the
+ *   This object will be passed back to your JRCaptureObjectDelegate as is. Contexts are used across most of the
  *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
  *   context is entirely optional and at your discretion.
  *
@@ -326,7 +326,7 @@
  * when you are replacing this array on Capture, as the pointers will become invalid.
  * 
  * @note
- * After the array have been replaced on Capture, you can now call JRCarsElement#updateOnCaptureForDelegate:context:()
+ * After the array has been replaced on Capture, you can now call JRCarsElement#updateOnCaptureForDelegate:context:()
  * on the array's elements. You can check the JRCarsElement#canBeUpdatedOnCapture property to determine
  * if an element can be updated or not. If the JRCarsElement#canBeUpdatedOnCapture property is equal
  * to \c NO you should replace the JRProfile#cars array on Capture. Replacing the array will also
@@ -360,7 +360,7 @@
  *
  * @param context
  *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
- *   This object will be passed back to your JRCaptureObjectDelegate as is.Contexts are used across most of the
+ *   This object will be passed back to your JRCaptureObjectDelegate as is. Contexts are used across most of the
  *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
  *   context is entirely optional and at your discretion.
  *
@@ -372,7 +372,7 @@
  * when you are replacing this array on Capture, as the pointers will become invalid.
  * 
  * @note
- * After the array have been replaced on Capture, you can now call JRChildrenElement#updateOnCaptureForDelegate:context:()
+ * After the array has been replaced on Capture, you can now call JRChildrenElement#updateOnCaptureForDelegate:context:()
  * on the array's elements. You can check the JRChildrenElement#canBeUpdatedOnCapture property to determine
  * if an element can be updated or not. If the JRChildrenElement#canBeUpdatedOnCapture property is equal
  * to \c NO you should replace the JRProfile#children array on Capture. Replacing the array will also
@@ -406,7 +406,7 @@
  *
  * @param context
  *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
- *   This object will be passed back to your JRCaptureObjectDelegate as is.Contexts are used across most of the
+ *   This object will be passed back to your JRCaptureObjectDelegate as is. Contexts are used across most of the
  *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
  *   context is entirely optional and at your discretion.
  *
@@ -418,7 +418,7 @@
  * when you are replacing this array on Capture, as the pointers will become invalid.
  * 
  * @note
- * After the array have been replaced on Capture, you can now call JREmailsElement#updateOnCaptureForDelegate:context:()
+ * After the array has been replaced on Capture, you can now call JREmailsElement#updateOnCaptureForDelegate:context:()
  * on the array's elements. You can check the JREmailsElement#canBeUpdatedOnCapture property to determine
  * if an element can be updated or not. If the JREmailsElement#canBeUpdatedOnCapture property is equal
  * to \c NO you should replace the JRProfile#emails array on Capture. Replacing the array will also
@@ -452,7 +452,7 @@
  *
  * @param context
  *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
- *   This object will be passed back to your JRCaptureObjectDelegate as is.Contexts are used across most of the
+ *   This object will be passed back to your JRCaptureObjectDelegate as is. Contexts are used across most of the
  *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
  *   context is entirely optional and at your discretion.
  *
@@ -464,7 +464,7 @@
  * when you are replacing this array on Capture, as the pointers will become invalid.
  * 
  * @note
- * After the array have been replaced on Capture, you can now call JRFoodElement#updateOnCaptureForDelegate:context:()
+ * After the array has been replaced on Capture, you can now call JRFoodElement#updateOnCaptureForDelegate:context:()
  * on the array's elements. You can check the JRFoodElement#canBeUpdatedOnCapture property to determine
  * if an element can be updated or not. If the JRFoodElement#canBeUpdatedOnCapture property is equal
  * to \c NO you should replace the JRProfile#food array on Capture. Replacing the array will also
@@ -498,7 +498,7 @@
  *
  * @param context
  *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
- *   This object will be passed back to your JRCaptureObjectDelegate as is.Contexts are used across most of the
+ *   This object will be passed back to your JRCaptureObjectDelegate as is. Contexts are used across most of the
  *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
  *   context is entirely optional and at your discretion.
  *
@@ -510,7 +510,7 @@
  * when you are replacing this array on Capture, as the pointers will become invalid.
  * 
  * @note
- * After the array have been replaced on Capture, you can now call JRHeroesElement#updateOnCaptureForDelegate:context:()
+ * After the array has been replaced on Capture, you can now call JRHeroesElement#updateOnCaptureForDelegate:context:()
  * on the array's elements. You can check the JRHeroesElement#canBeUpdatedOnCapture property to determine
  * if an element can be updated or not. If the JRHeroesElement#canBeUpdatedOnCapture property is equal
  * to \c NO you should replace the JRProfile#heroes array on Capture. Replacing the array will also
@@ -544,7 +544,7 @@
  *
  * @param context
  *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
- *   This object will be passed back to your JRCaptureObjectDelegate as is.Contexts are used across most of the
+ *   This object will be passed back to your JRCaptureObjectDelegate as is. Contexts are used across most of the
  *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
  *   context is entirely optional and at your discretion.
  *
@@ -556,7 +556,7 @@
  * when you are replacing this array on Capture, as the pointers will become invalid.
  * 
  * @note
- * After the array have been replaced on Capture, you can now call JRImsElement#updateOnCaptureForDelegate:context:()
+ * After the array has been replaced on Capture, you can now call JRImsElement#updateOnCaptureForDelegate:context:()
  * on the array's elements. You can check the JRImsElement#canBeUpdatedOnCapture property to determine
  * if an element can be updated or not. If the JRImsElement#canBeUpdatedOnCapture property is equal
  * to \c NO you should replace the JRProfile#ims array on Capture. Replacing the array will also
@@ -590,7 +590,7 @@
  *
  * @param context
  *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
- *   This object will be passed back to your JRCaptureObjectDelegate as is.Contexts are used across most of the
+ *   This object will be passed back to your JRCaptureObjectDelegate as is. Contexts are used across most of the
  *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
  *   context is entirely optional and at your discretion.
  *
@@ -602,7 +602,7 @@
  * when you are replacing this array on Capture, as the pointers will become invalid.
  * 
  * @note
- * After the array have been replaced on Capture, you can now call JRInterestsElement#updateOnCaptureForDelegate:context:()
+ * After the array has been replaced on Capture, you can now call JRInterestsElement#updateOnCaptureForDelegate:context:()
  * on the array's elements. You can check the JRInterestsElement#canBeUpdatedOnCapture property to determine
  * if an element can be updated or not. If the JRInterestsElement#canBeUpdatedOnCapture property is equal
  * to \c NO you should replace the JRProfile#interests array on Capture. Replacing the array will also
@@ -636,7 +636,7 @@
  *
  * @param context
  *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
- *   This object will be passed back to your JRCaptureObjectDelegate as is.Contexts are used across most of the
+ *   This object will be passed back to your JRCaptureObjectDelegate as is. Contexts are used across most of the
  *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
  *   context is entirely optional and at your discretion.
  *
@@ -648,7 +648,7 @@
  * when you are replacing this array on Capture, as the pointers will become invalid.
  * 
  * @note
- * After the array have been replaced on Capture, you can now call JRJobInterestsElement#updateOnCaptureForDelegate:context:()
+ * After the array has been replaced on Capture, you can now call JRJobInterestsElement#updateOnCaptureForDelegate:context:()
  * on the array's elements. You can check the JRJobInterestsElement#canBeUpdatedOnCapture property to determine
  * if an element can be updated or not. If the JRJobInterestsElement#canBeUpdatedOnCapture property is equal
  * to \c NO you should replace the JRProfile#jobInterests array on Capture. Replacing the array will also
@@ -682,7 +682,7 @@
  *
  * @param context
  *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
- *   This object will be passed back to your JRCaptureObjectDelegate as is.Contexts are used across most of the
+ *   This object will be passed back to your JRCaptureObjectDelegate as is. Contexts are used across most of the
  *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
  *   context is entirely optional and at your discretion.
  *
@@ -694,7 +694,7 @@
  * when you are replacing this array on Capture, as the pointers will become invalid.
  * 
  * @note
- * After the array have been replaced on Capture, you can now call JRLanguagesElement#updateOnCaptureForDelegate:context:()
+ * After the array has been replaced on Capture, you can now call JRLanguagesElement#updateOnCaptureForDelegate:context:()
  * on the array's elements. You can check the JRLanguagesElement#canBeUpdatedOnCapture property to determine
  * if an element can be updated or not. If the JRLanguagesElement#canBeUpdatedOnCapture property is equal
  * to \c NO you should replace the JRProfile#languages array on Capture. Replacing the array will also
@@ -728,7 +728,7 @@
  *
  * @param context
  *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
- *   This object will be passed back to your JRCaptureObjectDelegate as is.Contexts are used across most of the
+ *   This object will be passed back to your JRCaptureObjectDelegate as is. Contexts are used across most of the
  *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
  *   context is entirely optional and at your discretion.
  *
@@ -740,7 +740,7 @@
  * when you are replacing this array on Capture, as the pointers will become invalid.
  * 
  * @note
- * After the array have been replaced on Capture, you can now call JRLanguagesSpokenElement#updateOnCaptureForDelegate:context:()
+ * After the array has been replaced on Capture, you can now call JRLanguagesSpokenElement#updateOnCaptureForDelegate:context:()
  * on the array's elements. You can check the JRLanguagesSpokenElement#canBeUpdatedOnCapture property to determine
  * if an element can be updated or not. If the JRLanguagesSpokenElement#canBeUpdatedOnCapture property is equal
  * to \c NO you should replace the JRProfile#languagesSpoken array on Capture. Replacing the array will also
@@ -774,7 +774,7 @@
  *
  * @param context
  *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
- *   This object will be passed back to your JRCaptureObjectDelegate as is.Contexts are used across most of the
+ *   This object will be passed back to your JRCaptureObjectDelegate as is. Contexts are used across most of the
  *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
  *   context is entirely optional and at your discretion.
  *
@@ -786,7 +786,7 @@
  * when you are replacing this array on Capture, as the pointers will become invalid.
  * 
  * @note
- * After the array have been replaced on Capture, you can now call JRLookingForElement#updateOnCaptureForDelegate:context:()
+ * After the array has been replaced on Capture, you can now call JRLookingForElement#updateOnCaptureForDelegate:context:()
  * on the array's elements. You can check the JRLookingForElement#canBeUpdatedOnCapture property to determine
  * if an element can be updated or not. If the JRLookingForElement#canBeUpdatedOnCapture property is equal
  * to \c NO you should replace the JRProfile#lookingFor array on Capture. Replacing the array will also
@@ -820,7 +820,7 @@
  *
  * @param context
  *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
- *   This object will be passed back to your JRCaptureObjectDelegate as is.Contexts are used across most of the
+ *   This object will be passed back to your JRCaptureObjectDelegate as is. Contexts are used across most of the
  *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
  *   context is entirely optional and at your discretion.
  *
@@ -832,7 +832,7 @@
  * when you are replacing this array on Capture, as the pointers will become invalid.
  * 
  * @note
- * After the array have been replaced on Capture, you can now call JRMoviesElement#updateOnCaptureForDelegate:context:()
+ * After the array has been replaced on Capture, you can now call JRMoviesElement#updateOnCaptureForDelegate:context:()
  * on the array's elements. You can check the JRMoviesElement#canBeUpdatedOnCapture property to determine
  * if an element can be updated or not. If the JRMoviesElement#canBeUpdatedOnCapture property is equal
  * to \c NO you should replace the JRProfile#movies array on Capture. Replacing the array will also
@@ -866,7 +866,7 @@
  *
  * @param context
  *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
- *   This object will be passed back to your JRCaptureObjectDelegate as is.Contexts are used across most of the
+ *   This object will be passed back to your JRCaptureObjectDelegate as is. Contexts are used across most of the
  *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
  *   context is entirely optional and at your discretion.
  *
@@ -878,7 +878,7 @@
  * when you are replacing this array on Capture, as the pointers will become invalid.
  * 
  * @note
- * After the array have been replaced on Capture, you can now call JRMusicElement#updateOnCaptureForDelegate:context:()
+ * After the array has been replaced on Capture, you can now call JRMusicElement#updateOnCaptureForDelegate:context:()
  * on the array's elements. You can check the JRMusicElement#canBeUpdatedOnCapture property to determine
  * if an element can be updated or not. If the JRMusicElement#canBeUpdatedOnCapture property is equal
  * to \c NO you should replace the JRProfile#music array on Capture. Replacing the array will also
@@ -912,7 +912,7 @@
  *
  * @param context
  *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
- *   This object will be passed back to your JRCaptureObjectDelegate as is.Contexts are used across most of the
+ *   This object will be passed back to your JRCaptureObjectDelegate as is. Contexts are used across most of the
  *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
  *   context is entirely optional and at your discretion.
  *
@@ -924,7 +924,7 @@
  * when you are replacing this array on Capture, as the pointers will become invalid.
  * 
  * @note
- * After the array have been replaced on Capture, you can now call JROrganizationsElement#updateOnCaptureForDelegate:context:()
+ * After the array has been replaced on Capture, you can now call JROrganizationsElement#updateOnCaptureForDelegate:context:()
  * on the array's elements. You can check the JROrganizationsElement#canBeUpdatedOnCapture property to determine
  * if an element can be updated or not. If the JROrganizationsElement#canBeUpdatedOnCapture property is equal
  * to \c NO you should replace the JRProfile#organizations array on Capture. Replacing the array will also
@@ -958,7 +958,7 @@
  *
  * @param context
  *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
- *   This object will be passed back to your JRCaptureObjectDelegate as is.Contexts are used across most of the
+ *   This object will be passed back to your JRCaptureObjectDelegate as is. Contexts are used across most of the
  *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
  *   context is entirely optional and at your discretion.
  *
@@ -970,7 +970,7 @@
  * when you are replacing this array on Capture, as the pointers will become invalid.
  * 
  * @note
- * After the array have been replaced on Capture, you can now call JRPetsElement#updateOnCaptureForDelegate:context:()
+ * After the array has been replaced on Capture, you can now call JRPetsElement#updateOnCaptureForDelegate:context:()
  * on the array's elements. You can check the JRPetsElement#canBeUpdatedOnCapture property to determine
  * if an element can be updated or not. If the JRPetsElement#canBeUpdatedOnCapture property is equal
  * to \c NO you should replace the JRProfile#pets array on Capture. Replacing the array will also
@@ -1004,7 +1004,7 @@
  *
  * @param context
  *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
- *   This object will be passed back to your JRCaptureObjectDelegate as is.Contexts are used across most of the
+ *   This object will be passed back to your JRCaptureObjectDelegate as is. Contexts are used across most of the
  *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
  *   context is entirely optional and at your discretion.
  *
@@ -1016,7 +1016,7 @@
  * when you are replacing this array on Capture, as the pointers will become invalid.
  * 
  * @note
- * After the array have been replaced on Capture, you can now call JRPhoneNumbersElement#updateOnCaptureForDelegate:context:()
+ * After the array has been replaced on Capture, you can now call JRPhoneNumbersElement#updateOnCaptureForDelegate:context:()
  * on the array's elements. You can check the JRPhoneNumbersElement#canBeUpdatedOnCapture property to determine
  * if an element can be updated or not. If the JRPhoneNumbersElement#canBeUpdatedOnCapture property is equal
  * to \c NO you should replace the JRProfile#phoneNumbers array on Capture. Replacing the array will also
@@ -1050,7 +1050,7 @@
  *
  * @param context
  *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
- *   This object will be passed back to your JRCaptureObjectDelegate as is.Contexts are used across most of the
+ *   This object will be passed back to your JRCaptureObjectDelegate as is. Contexts are used across most of the
  *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
  *   context is entirely optional and at your discretion.
  *
@@ -1062,7 +1062,7 @@
  * when you are replacing this array on Capture, as the pointers will become invalid.
  * 
  * @note
- * After the array have been replaced on Capture, you can now call JRProfilePhotosElement#updateOnCaptureForDelegate:context:()
+ * After the array has been replaced on Capture, you can now call JRProfilePhotosElement#updateOnCaptureForDelegate:context:()
  * on the array's elements. You can check the JRProfilePhotosElement#canBeUpdatedOnCapture property to determine
  * if an element can be updated or not. If the JRProfilePhotosElement#canBeUpdatedOnCapture property is equal
  * to \c NO you should replace the JRProfile#profilePhotos array on Capture. Replacing the array will also
@@ -1096,7 +1096,7 @@
  *
  * @param context
  *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
- *   This object will be passed back to your JRCaptureObjectDelegate as is.Contexts are used across most of the
+ *   This object will be passed back to your JRCaptureObjectDelegate as is. Contexts are used across most of the
  *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
  *   context is entirely optional and at your discretion.
  *
@@ -1108,7 +1108,7 @@
  * when you are replacing this array on Capture, as the pointers will become invalid.
  * 
  * @note
- * After the array have been replaced on Capture, you can now call JRQuotesElement#updateOnCaptureForDelegate:context:()
+ * After the array has been replaced on Capture, you can now call JRQuotesElement#updateOnCaptureForDelegate:context:()
  * on the array's elements. You can check the JRQuotesElement#canBeUpdatedOnCapture property to determine
  * if an element can be updated or not. If the JRQuotesElement#canBeUpdatedOnCapture property is equal
  * to \c NO you should replace the JRProfile#quotes array on Capture. Replacing the array will also
@@ -1142,7 +1142,7 @@
  *
  * @param context
  *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
- *   This object will be passed back to your JRCaptureObjectDelegate as is.Contexts are used across most of the
+ *   This object will be passed back to your JRCaptureObjectDelegate as is. Contexts are used across most of the
  *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
  *   context is entirely optional and at your discretion.
  *
@@ -1154,7 +1154,7 @@
  * when you are replacing this array on Capture, as the pointers will become invalid.
  * 
  * @note
- * After the array have been replaced on Capture, you can now call JRRelationshipsElement#updateOnCaptureForDelegate:context:()
+ * After the array has been replaced on Capture, you can now call JRRelationshipsElement#updateOnCaptureForDelegate:context:()
  * on the array's elements. You can check the JRRelationshipsElement#canBeUpdatedOnCapture property to determine
  * if an element can be updated or not. If the JRRelationshipsElement#canBeUpdatedOnCapture property is equal
  * to \c NO you should replace the JRProfile#relationships array on Capture. Replacing the array will also
@@ -1188,7 +1188,7 @@
  *
  * @param context
  *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
- *   This object will be passed back to your JRCaptureObjectDelegate as is.Contexts are used across most of the
+ *   This object will be passed back to your JRCaptureObjectDelegate as is. Contexts are used across most of the
  *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
  *   context is entirely optional and at your discretion.
  *
@@ -1200,7 +1200,7 @@
  * when you are replacing this array on Capture, as the pointers will become invalid.
  * 
  * @note
- * After the array have been replaced on Capture, you can now call JRSportsElement#updateOnCaptureForDelegate:context:()
+ * After the array has been replaced on Capture, you can now call JRSportsElement#updateOnCaptureForDelegate:context:()
  * on the array's elements. You can check the JRSportsElement#canBeUpdatedOnCapture property to determine
  * if an element can be updated or not. If the JRSportsElement#canBeUpdatedOnCapture property is equal
  * to \c NO you should replace the JRProfile#sports array on Capture. Replacing the array will also
@@ -1234,7 +1234,7 @@
  *
  * @param context
  *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
- *   This object will be passed back to your JRCaptureObjectDelegate as is.Contexts are used across most of the
+ *   This object will be passed back to your JRCaptureObjectDelegate as is. Contexts are used across most of the
  *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
  *   context is entirely optional and at your discretion.
  *
@@ -1246,7 +1246,7 @@
  * when you are replacing this array on Capture, as the pointers will become invalid.
  * 
  * @note
- * After the array have been replaced on Capture, you can now call JRTagsElement#updateOnCaptureForDelegate:context:()
+ * After the array has been replaced on Capture, you can now call JRTagsElement#updateOnCaptureForDelegate:context:()
  * on the array's elements. You can check the JRTagsElement#canBeUpdatedOnCapture property to determine
  * if an element can be updated or not. If the JRTagsElement#canBeUpdatedOnCapture property is equal
  * to \c NO you should replace the JRProfile#tags array on Capture. Replacing the array will also
@@ -1280,7 +1280,7 @@
  *
  * @param context
  *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
- *   This object will be passed back to your JRCaptureObjectDelegate as is.Contexts are used across most of the
+ *   This object will be passed back to your JRCaptureObjectDelegate as is. Contexts are used across most of the
  *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
  *   context is entirely optional and at your discretion.
  *
@@ -1292,7 +1292,7 @@
  * when you are replacing this array on Capture, as the pointers will become invalid.
  * 
  * @note
- * After the array have been replaced on Capture, you can now call JRTurnOffsElement#updateOnCaptureForDelegate:context:()
+ * After the array has been replaced on Capture, you can now call JRTurnOffsElement#updateOnCaptureForDelegate:context:()
  * on the array's elements. You can check the JRTurnOffsElement#canBeUpdatedOnCapture property to determine
  * if an element can be updated or not. If the JRTurnOffsElement#canBeUpdatedOnCapture property is equal
  * to \c NO you should replace the JRProfile#turnOffs array on Capture. Replacing the array will also
@@ -1326,7 +1326,7 @@
  *
  * @param context
  *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
- *   This object will be passed back to your JRCaptureObjectDelegate as is.Contexts are used across most of the
+ *   This object will be passed back to your JRCaptureObjectDelegate as is. Contexts are used across most of the
  *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
  *   context is entirely optional and at your discretion.
  *
@@ -1338,7 +1338,7 @@
  * when you are replacing this array on Capture, as the pointers will become invalid.
  * 
  * @note
- * After the array have been replaced on Capture, you can now call JRTurnOnsElement#updateOnCaptureForDelegate:context:()
+ * After the array has been replaced on Capture, you can now call JRTurnOnsElement#updateOnCaptureForDelegate:context:()
  * on the array's elements. You can check the JRTurnOnsElement#canBeUpdatedOnCapture property to determine
  * if an element can be updated or not. If the JRTurnOnsElement#canBeUpdatedOnCapture property is equal
  * to \c NO you should replace the JRProfile#turnOns array on Capture. Replacing the array will also
@@ -1372,7 +1372,7 @@
  *
  * @param context
  *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
- *   This object will be passed back to your JRCaptureObjectDelegate as is.Contexts are used across most of the
+ *   This object will be passed back to your JRCaptureObjectDelegate as is. Contexts are used across most of the
  *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
  *   context is entirely optional and at your discretion.
  *
@@ -1384,7 +1384,7 @@
  * when you are replacing this array on Capture, as the pointers will become invalid.
  * 
  * @note
- * After the array have been replaced on Capture, you can now call JRTvShowsElement#updateOnCaptureForDelegate:context:()
+ * After the array has been replaced on Capture, you can now call JRTvShowsElement#updateOnCaptureForDelegate:context:()
  * on the array's elements. You can check the JRTvShowsElement#canBeUpdatedOnCapture property to determine
  * if an element can be updated or not. If the JRTvShowsElement#canBeUpdatedOnCapture property is equal
  * to \c NO you should replace the JRProfile#tvShows array on Capture. Replacing the array will also
@@ -1418,7 +1418,7 @@
  *
  * @param context
  *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
- *   This object will be passed back to your JRCaptureObjectDelegate as is.Contexts are used across most of the
+ *   This object will be passed back to your JRCaptureObjectDelegate as is. Contexts are used across most of the
  *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
  *   context is entirely optional and at your discretion.
  *
@@ -1430,7 +1430,7 @@
  * when you are replacing this array on Capture, as the pointers will become invalid.
  * 
  * @note
- * After the array have been replaced on Capture, you can now call JRUrlsElement#updateOnCaptureForDelegate:context:()
+ * After the array has been replaced on Capture, you can now call JRUrlsElement#updateOnCaptureForDelegate:context:()
  * on the array's elements. You can check the JRUrlsElement#canBeUpdatedOnCapture property to determine
  * if an element can be updated or not. If the JRUrlsElement#canBeUpdatedOnCapture property is equal
  * to \c NO you should replace the JRProfile#urls array on Capture. Replacing the array will also
