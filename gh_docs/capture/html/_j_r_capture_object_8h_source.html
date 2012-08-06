@@ -94,28 +94,28 @@
 <a name="l00032"></a>00032 
 <a name="l00033"></a>00033 <span class="keyword">@class</span> <a class="code" href="interface_j_r_capture_object.html" title="Base class for all Capture objects and plural elements.">JRCaptureObject</a>;
 <a name="l00034"></a>00034 
-<a name="l00039"></a><a class="code" href="protocol_j_r_capture_object_delegate-p.html">00039</a> <span class="keyword">@protocol </span><a class="code" href="protocol_j_r_capture_object_delegate-p.html" title="Protocol adopted by an object that wishes to update local a JRCaptureObject or array on the Capture s...">JRCaptureObjectDelegate</a> &lt;NSObject&gt;
-<a name="l00040"></a>00040 <span class="keyword">@optional</span>
-<a name="l00041"></a>00041 
-<a name="l00056"></a>00056 - (void)updateDidSucceedForObject:(<a class="code" href="interface_j_r_capture_object.html" title="Base class for all Capture objects and plural elements.">JRCaptureObject</a> *)object context:(NSObject *)context;
-<a name="l00057"></a>00057 
-<a name="l00075"></a>00075 - (void)updateDidFailForObject:(<a class="code" href="interface_j_r_capture_object.html" title="Base class for all Capture objects and plural elements.">JRCaptureObject</a> *)object withError:(NSError *)error context:(NSObject *)context;
-<a name="l00076"></a>00076 
-<a name="l00107"></a>00107 - (void)replaceArrayDidSucceedForObject:(<a class="code" href="interface_j_r_capture_object.html" title="Base class for all Capture objects and plural elements.">JRCaptureObject</a> *)object newArray:(NSArray *)replacedArray
-<a name="l00108"></a>00108                                   named:(NSString *)arrayName context:(NSObject *)context;
-<a name="l00109"></a>00109 
-<a name="l00132"></a>00132 - (void)replaceArrayDidFailForObject:(<a class="code" href="interface_j_r_capture_object.html" title="Base class for all Capture objects and plural elements.">JRCaptureObject</a> *)object arrayNamed:(NSString *)arrayName
-<a name="l00133"></a>00133                            withError:(NSError *)error context:(NSObject *)context;
-<a name="l00134"></a>00134 <span class="keyword">@end</span>
-<a name="l00135"></a>00135 
-<a name="l00140"></a><a class="code" href="interface_j_r_capture_object.html">00140</a> <span class="keyword">@interface </span><a class="code" href="interface_j_r_capture_object.html" title="Base class for all Capture objects and plural elements.">JRCaptureObject</a> : NSObject
-<a name="l00160"></a><a class="code" href="interface_j_r_capture_object.html#aa352d02ec672a52c1c9e2ea0ac472cc3">00160</a> @property (readonly) BOOL <a class="code" href="interface_j_r_capture_object.html#aa352d02ec672a52c1c9e2ea0ac472cc3">canBeUpdatedOnCapture</a>;
-<a name="l00161"></a>00161 
-<a name="l00191"></a>00191 - (BOOL)<a class="code" href="interface_j_r_capture_object.html#af2cac3fbd2fd4944b7219004c6ce8be4">needsUpdate</a>;
-<a name="l00192"></a>00192 
-<a name="l00205"></a>00205 - (void)updateOnCaptureForDelegate:(<span class="keywordtype">id</span>&lt;<a class="code" href="protocol_j_r_capture_object_delegate-p.html" title="Protocol adopted by an object that wishes to update local a JRCaptureObject or array on the Capture s...">JRCaptureObjectDelegate</a>&gt;)delegate context:(NSObject *)context;
-<a name="l00206"></a>00206 <span class="keyword">@end</span>
-<a name="l00207"></a>00207 
+<a name="l00040"></a><a class="code" href="protocol_j_r_capture_object_delegate-p.html">00040</a> <span class="keyword">@protocol </span><a class="code" href="protocol_j_r_capture_object_delegate-p.html" title="Protocol adopted by an object that wishes to to receive notifications when updating a local JRCapture...">JRCaptureObjectDelegate</a> &lt;NSObject&gt;
+<a name="l00041"></a>00041 <span class="keyword">@optional</span>
+<a name="l00042"></a>00042 
+<a name="l00057"></a>00057 - (void)updateDidSucceedForObject:(<a class="code" href="interface_j_r_capture_object.html" title="Base class for all Capture objects and plural elements.">JRCaptureObject</a> *)object context:(NSObject *)context;
+<a name="l00058"></a>00058 
+<a name="l00076"></a>00076 - (void)updateDidFailForObject:(<a class="code" href="interface_j_r_capture_object.html" title="Base class for all Capture objects and plural elements.">JRCaptureObject</a> *)object withError:(NSError *)error context:(NSObject *)context;
+<a name="l00077"></a>00077 
+<a name="l00108"></a>00108 - (void)replaceArrayDidSucceedForObject:(<a class="code" href="interface_j_r_capture_object.html" title="Base class for all Capture objects and plural elements.">JRCaptureObject</a> *)object newArray:(NSArray *)replacedArray
+<a name="l00109"></a>00109                                   named:(NSString *)arrayName context:(NSObject *)context;
+<a name="l00110"></a>00110 
+<a name="l00133"></a>00133 - (void)replaceArrayDidFailForObject:(<a class="code" href="interface_j_r_capture_object.html" title="Base class for all Capture objects and plural elements.">JRCaptureObject</a> *)object arrayNamed:(NSString *)arrayName
+<a name="l00134"></a>00134                            withError:(NSError *)error context:(NSObject *)context;
+<a name="l00135"></a>00135 <span class="keyword">@end</span>
+<a name="l00136"></a>00136 
+<a name="l00141"></a><a class="code" href="interface_j_r_capture_object.html">00141</a> <span class="keyword">@interface </span><a class="code" href="interface_j_r_capture_object.html" title="Base class for all Capture objects and plural elements.">JRCaptureObject</a> : NSObject
+<a name="l00161"></a><a class="code" href="interface_j_r_capture_object.html#aa352d02ec672a52c1c9e2ea0ac472cc3">00161</a> @property (readonly) BOOL <a class="code" href="interface_j_r_capture_object.html#aa352d02ec672a52c1c9e2ea0ac472cc3">canBeUpdatedOnCapture</a>;
+<a name="l00162"></a>00162 
+<a name="l00192"></a>00192 - (BOOL)<a class="code" href="interface_j_r_capture_object.html#af2cac3fbd2fd4944b7219004c6ce8be4">needsUpdate</a>;
+<a name="l00193"></a>00193 
+<a name="l00206"></a>00206 - (void)updateOnCaptureForDelegate:(<span class="keywordtype">id</span>&lt;<a class="code" href="protocol_j_r_capture_object_delegate-p.html" title="Protocol adopted by an object that wishes to to receive notifications when updating a local JRCapture...">JRCaptureObjectDelegate</a>&gt;)delegate context:(NSObject *)context;
+<a name="l00207"></a>00207 <span class="keyword">@end</span>
+<a name="l00208"></a>00208 
 </pre></div></div>
 </div>
             </div>
