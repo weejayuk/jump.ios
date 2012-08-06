@@ -52,6 +52,7 @@
     <ul class="tablist">
       <li><a href="index.html"><span>Main&nbsp;Page</span></a></li>
       <li><a href="pages.html"><span>Related&nbsp;Pages</span></a></li>
+      <li><a href="modules.html"><span>Modules</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
     </ul>
   </div>
@@ -167,7 +168,7 @@ Public Member Functions</h2></td></tr>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>user</em>&nbsp;</td><td>The <a class="el" href="interface_j_r_capture_user.html" title="A JRCaptureUser object.">JRCaptureUser</a> on which the selector <a class="el" href="interface_j_r_capture_user.html#a1a53c4594e287fcf6c3ba54def913d05">createOnCaptureForDelegate:context: (JRCaptureUser)</a> was performed</td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>error</em>&nbsp;</td><td>The cause of the failure. Please see the list of <a class="el" href="_j_r_capture_error_8h.html#captureErrors">Capture Errors</a> for more information</td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>error</em>&nbsp;</td><td>The cause of the failure. Please see the list of <a class="el" href="group__capture_errors.html">Capture Errors</a> for more information</td></tr>
     <tr><td valign="top"></td><td valign="top"><em>context</em>&nbsp;</td><td>The same NSObject that was sent to the method <a class="el" href="interface_j_r_capture_user.html#a1a53c4594e287fcf6c3ba54def913d05">createOnCaptureForDelegate:context: (JRCaptureUser)</a>. The <em>context</em> argument is used if you would like to send some data through the asynchronous network call back to your delegate, or <code>nil</code>. This object will be passed back to your <a class="el" href="protocol_j_r_capture_user_delegate-p.html" title="Protocol adopted by an object that wishes wishes to to receive notifications when creating a JRCaptur...">JRCaptureUserDelegate</a> as is. Contexts are used across most of the asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the context is entirely optional and at your discretion. </td></tr>
   </table>
   </dd>
@@ -237,7 +238,7 @@ Public Member Functions</h2></td></tr>
 <p>Sent if a call to <a class="el" href="interface_j_r_capture_user.html#a971ccf698ce15655e662a55a64ab2208">fetchCaptureUserFromServerForDelegate:context: (JRCaptureUser)</a> failed</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>error</em>&nbsp;</td><td>The cause of the failure. Please see the list of <a class="el" href="_j_r_capture_error_8h.html#captureErrors">Capture Errors</a> for more information</td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>error</em>&nbsp;</td><td>The cause of the failure. Please see the list of <a class="el" href="group__capture_errors.html">Capture Errors</a> for more information</td></tr>
     <tr><td valign="top"></td><td valign="top"><em>context</em>&nbsp;</td><td>The same NSObject that was sent to the method <a class="el" href="interface_j_r_capture_user.html#a971ccf698ce15655e662a55a64ab2208">fetchCaptureUserFromServerForDelegate:context: (JRCaptureUser)</a>. The <em>context</em> argument is used if you would like to send some data through the asynchronous network call back to your delegate, or <code>nil</code>. This object will be passed back to your <a class="el" href="protocol_j_r_capture_user_delegate-p.html" title="Protocol adopted by an object that wishes wishes to to receive notifications when creating a JRCaptur...">JRCaptureUserDelegate</a> as is. Contexts are used across most of the asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the context is entirely optional and at your discretion. </td></tr>
   </table>
   </dd>

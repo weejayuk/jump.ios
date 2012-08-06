@@ -52,6 +52,7 @@
     <ul class="tablist">
       <li><a href="index.html"><span>Main&nbsp;Page</span></a></li>
       <li><a href="pages.html"><span>Related&nbsp;Pages</span></a></li>
+      <li><a href="modules.html"><span>Modules</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
     </ul>
   </div>
@@ -114,7 +115,7 @@ Public Member Functions</h2></td></tr>
 <p>Sent if the application tries to show the Engage for iOS dialog and the dialog failed to show. May occur if the <code>JREngage</code> library failed to configure, or if the dialog is already being displayed, etc.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>error</em>&nbsp;</td><td>The error that occurred during configuration. Please see the list of <a class="el" href="_j_r_capture_error_8h.html#captureErrors">Capture Errors</a> for more information // TODO: Update to link for Engage errors</td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>error</em>&nbsp;</td><td>The error that occurred during configuration. Please see the list of <a class="el" href="group__capture_errors.html">Capture Errors</a> for more information // TODO: Update to link to the page of Engage errors as well</td></tr>
   </table>
   </dd>
 </dl>
@@ -184,7 +185,7 @@ Public Member Functions</h2></td></tr>
    }
  }
 </pre></div></dd></dl>
-<dl class="see"><dt><b>See also:</b></dt><dd>For a full description of the dictionary and its fields, please see the <a href="http://documentation.janrain.com/engage/api/auth_info">auth_info response</a> section of the Janrain Engage API documentation.</dd></dl>
+<dl class="see"><dt><b>See also:</b></dt><dd>For a full description of the dictionary and its fields, please see the <a href="http://developers.janrain.com/documentation/api/auth_info/">auth_info response</a> section of the Janrain Engage API documentation.</dd></dl>
 <dl class="note"><dt><b>Note:</b></dt><dd>The information in the engageAuthInfo dictionary will be added to the Capture record once authentication reaches the Capture server. It is returned at this step for your information only. You do not need to do anything with this data accept perhaps update the UI while your user is waiting for authentication to complete.</dd>
 <dd>
 If your user signs in to your server directly (conventional signin), this message is not sent to your delegate. </dd></dl>
@@ -264,7 +265,7 @@ If your user signs in to your server directly (conventional signin), this messag
 <p>Sent when authentication failed and could not be recovered by the library.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>error</em>&nbsp;</td><td>The error that occurred during authentication. Please see the list of <a class="el" href="_j_r_capture_error_8h.html#captureErrors">Capture Errors</a> for more information // TODO: Update to link for Engage errors</td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>error</em>&nbsp;</td><td>The error that occurred during authentication. Please see the list of <a class="el" href="group__capture_errors.html">Capture Errors</a> for more information // TODO: Update to link for Engage errors</td></tr>
     <tr><td valign="top"></td><td valign="top"><em>provider</em>&nbsp;</td><td>The name of the provider on which the user tried to authenticate. For a list of possible strings, please see the <a class="el" href="_providers.html#basicProviders">List of Providers</a></td></tr>
   </table>
   </dd>
@@ -291,7 +292,7 @@ If your user signs in to your server directly (conventional signin), this messag
 <p>Sent when the call to the Capture server has failed.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>error</em>&nbsp;</td><td>The error that occurred during Capture authentication. Please see the list of <a class="el" href="_j_r_capture_error_8h.html#captureErrors">Capture Errors</a> for more information </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>error</em>&nbsp;</td><td>The error that occurred during Capture authentication. Please see the list of <a class="el" href="group__capture_errors.html">Capture Errors</a> for more information </td></tr>
   </table>
   </dd>
 </dl>
