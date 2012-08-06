@@ -30,6 +30,15 @@
 
 #import <Foundation/Foundation.h>
 
+/**
+ * @defgroup engageErrors Engage Errors
+ *
+ * Engage-related error codes and explanations that you may receive through the delegate methods of the
+ * JREngageSigninDelegate and JREngageSharingDelegate.
+ *
+ * @{
+ **/
+
 typedef enum
 {
     ConfigurationError = 1,
@@ -37,47 +46,60 @@ typedef enum
     SocialSharingError = 3,
 } JRErrorCategory;
 
+/**
+ * Errors received on the JREngageSigninDelegate and JREngageSharingDelegate protocols when configuration has failed.
+ **/
 typedef enum
 {
-    JRUrlError = 100,
-    JRDataParsingError,
-    JRJsonError,
-    JRConfigurationInformationError,
-    JRSessionDataFinishGetProvidersError,
-    JRDialogShowingError,
-    JRProviderNotConfiguredError,
-    JRMissingAppIdError,
-    JRGenericConfigurationError,
+    JRUrlError = 100,                     /**< Url error */
+    JRDataParsingError,                   /**< Data parsing error */
+    JRJsonError,                          /**< JSON error */
+    JRConfigurationInformationError,      /**< Configuration error */
+    JRSessionDataFinishGetProvidersError, /**< Configuration error */
+    JRDialogShowingError,                 /**< Error show the dialog */
+    JRProviderNotConfiguredError,         /**< Provider not configured error */
+    JRMissingAppIdError,                  /**< Missing App ID error */
+    JRGenericConfigurationError,          /**< Generic configuration error */
 } JREngageConfigurationError;
 
+/**
+ * Errors received on the JREngageSigninDelegate and JREngageSharingDelegate protocols when sign-in has failed.
+ **/
 typedef enum
 {
-    JRAuthenticationFailedError = 200,
-    JRAuthenticationTokenUrlFailedError,
-    JRAuthenticationCanceledError,
+    JRAuthenticationFailedError = 200,   /**< Authentication failed error */
+    JRAuthenticationTokenUrlFailedError, /**< Token URL failed error */
+    JRAuthenticationCanceledError,       /**< Authentication canceled */
     // TODO: Add the token url error where appropriate
 } JREngageAuthenticationError;
 
+/**
+ * Errors received on the JREngageSharingDelegate protocol when sharing has failed.
+ *
+ * Many of these errors correspond to the errors listed on the
+ * <a href="http://developers.janrain.com/documentation/engage/reference/error-responses/">
+ *     Engage Error Reponses Page</a>
+ **/
 typedef enum
 {
-    JRPublishFailedError = 300,
-    JRPublishErrorActivityNil,
-    JRPublishErrorBadActivityJson,
-    JRPublishCanceledError,
-    JRPublishErrorBadConnection,
-    JRPublishErrorMissingParameter,
+    JRPublishFailedError = 300,           /**< Sharing failed error */
+    JRPublishErrorActivityNil,            /**< Activity was \e nil error */
+    JRPublishErrorBadActivityJson,        /**< JSON error */
+    JRPublishCanceledError,               /**< Sharing was canceled */
+    JRPublishErrorBadConnection,          /**< Bad connection error */
+    JRPublishErrorMissingParameter,       /**< Missing parameters error */
     JRPublishErrorMissingApiKey,
-    JRPublishErrorCharacterLimitExceeded,
-    JRPublishErrorFacebookGeneric,
-    JRPublishErrorInvalidFacebookSession,
-    JRPublishErrorInvalidFacebookMedia,
+    JRPublishErrorCharacterLimitExceeded, /**< Character limit exceeded error */
+    JRPublishErrorFacebookGeneric,        /**< Generic Facebook error */
+    JRPublishErrorInvalidFacebookSession, /**< Invalid Facebook session error */
+    JRPublishErrorInvalidFacebookMedia,   /**< Invalid Facebook media error */
     //JRPublishErrorInvalidFacebookActionLinks/Properties,
-    JRPublishErrorTwitterGeneric,
-    JRPublishErrorDuplicateTwitter,
-    JRPublishErrorLinkedInGeneric,
-    JRPublishErrorMyspaceGeneric,
-    JRPublishErrorYahooGeneric,
-    JRPublishErrorFeedActionRequestLimit, // TODO: Add a test for this
+    JRPublishErrorTwitterGeneric,         /**< Generic Twitter error */
+    JRPublishErrorDuplicateTwitter,       /**< Twitter error, cannot send duplicate tweet */
+    JRPublishErrorLinkedInGeneric,        /**< Generic LinkedIn error */
+    JRPublishErrorMyspaceGeneric,         /**< Generic MySpace error */
+    JRPublishErrorYahooGeneric,           /**< Generic Yahoo! error */
+    JRPublishErrorFeedActionRequestLimit, /**< Request limit was reached for feed action */ // TODO: Add a test for this
     JRPublishErrorInvalidOauthKey, /* Will be deprecating */
     JRPublishErrorLinkedInCharacterExceeded, /* Will be deprecating */
 } JREngageSocialPublishingError;
@@ -86,3 +108,4 @@ extern NSString * JREngageErrorDomain;
 
 @interface JREngageError : NSObject
 @end
+/** @}*/

@@ -210,7 +210,7 @@ typedef enum
  *
  * @param error
  *   The error that occurred during configuration. Please see the list of \ref captureErrors "Capture Errors" for more
- *   information // TODO: Update to link for Engage errors
+ *   information // TODO: Update to link to the page of Engage errors as well
  *
  * @note
  * This message is only sent if your application tries to show a Engage for iOS dialog, and not necessarily
@@ -266,7 +266,7 @@ typedef enum
  *
  * @sa
  * For a full description of the dictionary and its fields, please see the
- * <a href="http://documentation.janrain.com/engage/api/auth_info">auth_info response</a>
+ * <a href="http://developers.janrain.com/documentation/api/auth_info/">auth_info response</a>
  * section of the Janrain Engage API documentation.
  *
  * @note
@@ -631,19 +631,19 @@ typedef enum
 @anchor basicProviders
 @htmlonly
 <!-- Redundant attributes to force scrolling to work across multiple browsers -->
-<iframe id="basic" src="../mobile_providers?list=basic&device=iphone" width="100%" height="100%"
+<iframe id="basic" src="https://rpxnow.com/docs/mobile_providers?list=basic&device=iphone" width="100%" height="100%"
     style="border:none; overflow:hidden;" frameborder="0" scrolling="no">
   Your browser does not support iFrames.
-  <a href="../mobile_providers?list=basic&device=iphone">List of Providers</a>
+  <a href="https://rpxnow.com/docs/mobile_providers?list=basic&device=iphone">List of Providers</a>
 </iframe></p>
 @endhtmlonly
 
 @anchor socialProviders
 @htmlonly
-<iframe id="social" src="../mobile_providers?list=social&device=iphone" width="100%" height="100%"
+<iframe id="social" src="https://rpxnow.com/docs/mobile_providers?list=social&device=iphone" width="100%" height="100%"
     style="border:none; overflow:hidden;" frameborder="0" scrolling="no">
   Your browser does not support iFrames.
-  <a href="../mobile_providers?list=social&device=iphone">List of Social Providers</a>
+  <a href="https://rpxnow.com/docs/mobile_providers?list=social&device=iphone">List of Social Providers</a>
 </iframe></p>
 @endhtmlonly
  *

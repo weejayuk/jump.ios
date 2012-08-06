@@ -33,10 +33,12 @@
 
 /**
  * @file
- * @anchor captureErrors
+ * @defgroup captureErrors Capture Errors
  *
  * Capture-related error codes and explanations that you may receive through the delegate methods of the
  * JRCaptureObjectDelegate, JRCaptureUserDelegate, and JRCaptureSigninDelegate protocols.
+ *
+ * @{
  **/
 
 
@@ -73,7 +75,7 @@ typedef enum
 
 /**
  * Errors received from the JRCaptureObjectDelegate, JRCaptureUserDelegate, and JRCaptureSigninDelegate protocols
- * when they fail on the Capture server. These errors correspond to the error listed on the
+ * when they fail on the Capture server. These errors correspond to the errors listed on the
  * <a href="http://developers.janrain.com/documentation/capture/api-use-and-error-codes/">
  *     Capture RESTful API Documentation Page</a>
  **/
@@ -135,3 +137,4 @@ typedef enum
 @interface JRCaptureError : NSObject
 + (NSError *)errorFromResult:(NSObject *)result;
 @end
+/** @}*/
