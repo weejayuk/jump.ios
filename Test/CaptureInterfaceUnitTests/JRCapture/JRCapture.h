@@ -84,8 +84,8 @@
  * Capture for iOS guide</a>.
  *
  * For more detailed documentation of the library's API, you can use
- * the <a href="http://TODO">
- *   JREngage API</a> or <a href="http://TODO">
+ * the <a href="http://janrain.github.com/jump.ios/gh_docs/engage/html/index.html">
+ *   JREngage API</a> or <a href="http://janrain.github.com/jump.ios/gh_docs/capture/html/index.html">
  *   JRCapture API</a> documentation.
  **/
 
@@ -209,8 +209,9 @@ typedef enum
  * occur if the \c JREngage library failed to configure, or if the dialog is already being displayed, etc.
  *
  * @param error
- *   The error that occurred during configuration. Please see the list of \ref captureErrors "Capture Errors" for more
- *   information // TODO: Update to link to the page of Engage errors as well
+ *   The error that occurred during configuration. Please see the list of \ref captureErrors "Capture Errors" and
+ *   <a href="http://janrain.github.com/jump.ios/gh_docs/engage/html/group__engage_errors.html">Engage Errors</a>
+ *   for more information
  *
  * @note
  * This message is only sent if your application tries to show a Engage for iOS dialog, and not necessarily
@@ -315,8 +316,9 @@ typedef enum
  * Sent when authentication failed and could not be recovered by the library.
  *
  * @param error
- *   The error that occurred during authentication. Please see the list of \ref captureErrors "Capture Errors" for more
- *   information // TODO: Update to link for Engage errors
+ *   The error that occurred during authentication. Please see the lists of \ref captureErrors "Capture Errors" and
+ *   <a href="http://janrain.github.com/jump.ios/gh_docs/engage/html/group__engage_errors.html">Engage Errors</a>
+ *   for more information
  *
  * @param provider
  *   The name of the provider on which the user tried to authenticate. For a list of possible strings,
@@ -358,8 +360,9 @@ typedef enum
  * occur if the \c JREngage library failed to configure, or if the dialog is already being displayed, etc.
  *
  * @param error
- *   The error that occurred during configuration. Please see the list of \ref captureErrors "Capture Errors" for more
- *   information // TODO: Update to link for Engage errors
+ *   The error that occurred during configuration. Please see the lists of \ref captureErrors "Capture Errors" and
+ *   <a href="http://janrain.github.com/jump.ios/gh_docs/engage/html/group__engage_errors.html">Engage Errors</a>
+ *   for more information
  *
  * @note
  * This message is only sent if your application tries to show a Engage for iOS dialog, and not necessarily
@@ -401,8 +404,9 @@ typedef enum
  *   The activity the user was trying to share
  *
  * @param error
- *   The error that occurred during sharing. Please see the list of \ref captureErrors "Capture Errors" for more
- *   information // TODO: Update to link for Engage errors
+ *   The error that occurred during sharing. Please see the lists of \ref captureErrors "Capture Errors" and
+ *   <a href="http://janrain.github.com/jump.ios/gh_docs/engage/html/group__engage_errors.html">Engage Errors</a>
+ *   for more information
  *
  * @param provider
  *   The name of the provider on which the user attempted to share the activity. For a list of possible strings,
