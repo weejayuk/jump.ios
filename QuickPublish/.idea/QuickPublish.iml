@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="CIDR_MODULE" version="4">
   <component name="NewModuleRootManager">
+    <content url="file://$USER_HOME$/Library/Caches/appCode10/DerivedData/QuickPublish-dd9726b9/Build/Products/Debug-iphonesimulator/Quick Publish.app">
+      <sourceFolder url="file://$USER_HOME$/Library/Caches/appCode10/DerivedData/QuickPublish-dd9726b9/Build/Products/Debug-iphonesimulator/Quick Publish.app" isTestSource="false" />
+    </content>
     <content url="file://$MODULE_DIR$/../Janrain/JRConnectionManager/JRConnectionManager.h">
       <sourceFolder url="file://$MODULE_DIR$/../Janrain/JRConnectionManager/JRConnectionManager.h" isTestSource="false" />
     </content>
@@ -107,9 +110,6 @@
       <sourceFolder url="file://$MODULE_DIR$/../Janrain/Security/SFHFKeychainUtils.m" isTestSource="false" />
     </content>
     <content url="file://$MODULE_DIR$" />
-    <content url="file://$USER_HOME$/Library/Caches/appCode10/DerivedData/QuickPublish-dd9726b9/Build/Products/Debug-iphonesimulator/Quick Publish.app">
-      <sourceFolder url="file://$USER_HOME$/Library/Caches/appCode10/DerivedData/QuickPublish-dd9726b9/Build/Products/Debug-iphonesimulator/Quick Publish.app" isTestSource="false" />
-    </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
