@@ -69,7 +69,9 @@
 @end
 
 @interface JRProvidersController ()
+- (void)createConventionalSigninLoadingView;
 @property (retain) NSMutableArray *providers;
+@property (retain) UIView *myConventionalSigninLoadingView;
 @end
 
 @implementation JRProvidersController
@@ -79,6 +81,7 @@
 @synthesize myTableView;
 @synthesize myLoadingLabel;
 @synthesize myActivitySpinner;
+@synthesize myConventionalSigninLoadingView;
 
 - (id)initWithNibName:(NSString*)nibNameOrNil bundle:(NSBundle*)nibBundleOrNil andCustomInterface:(NSDictionary*)theCustomInterface
 {
@@ -131,6 +134,15 @@
     self.navigationItem.titleView = titleView;
     myTableView.tableHeaderView   = [customInterface objectForKey:kJRProviderTableHeaderView];
     myTableView.tableFooterView   = [customInterface objectForKey:kJRProviderTableFooterView];
+
+    if ([customInterface objectForKey:kJRCaptureConventionalSigninViewController] &&
+        [[customInterface objectForKey:kJRCaptureConventionalSigninViewController] isKindOfClass:NSClassFromString(@"JRConventionalSigninViewController")])
+    {
+        [[customInterface objectForKey:kJRCaptureConventionalSigninViewController] performSelector:@selector(setDelegate:)
+                                                                                        withObject:self];
+
+        [self createConventionalSigninLoadingView];
+    }
 
     if (!hidesCancelButton)
     {
@@ -298,6 +310,97 @@ Please try again later."
     timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self
                                            selector:@selector(checkSessionDataAndProviders:)
                                            userInfo:nil repeats:NO];
+}
+
+#define LOADING_VIEW_TAG         555
+#define LOADING_VIEW_LABEL_TAG   666
+#define LOADING_VIEW_SPINNER_TAG 777
+
+- (void)authenticationDidComplete
+{
+    [sessionData triggerAuthenticationDidCancel];
+}
+
+- (void)authenticationDidCancel
+{
+
+}
+
+- (void)authenticationDidFail
+{
+
+}
+
+- (void)showLoading
+{
+    UIActivityIndicatorView *myConventionalSigninLoadingSpinner =
+                  (UIActivityIndicatorView *)[myConventionalSigninLoadingView viewWithTag:LOADING_VIEW_SPINNER_TAG];
+
+    [myConventionalSigninLoadingView setHidden:NO];
+    [myConventionalSigninLoadingSpinner startAnimating];
+
+    [UIView beginAnimations:@"fade" context:nil];
+    [UIView setAnimationDuration:0.2];
+    [UIView setAnimationDelay:0.0];
+    myConventionalSigninLoadingView.alpha = 0.8;
+    [UIView commitAnimations];
+}
+
+- (void)hideLoading
+{
+    UIActivityIndicatorView *myConventionalSigninLoadingSpinner =
+                  (UIActivityIndicatorView *)[myConventionalSigninLoadingView viewWithTag:LOADING_VIEW_SPINNER_TAG];
+
+    [UIView beginAnimations:@"fade" context:nil];
+    [UIView setAnimationDuration:0.2];
+    [UIView setAnimationDelay:0.0];
+    myConventionalSigninLoadingView.alpha = 0.0;
+    [UIView commitAnimations];
+
+    [myConventionalSigninLoadingView setHidden:YES];
+    [myConventionalSigninLoadingSpinner stopAnimating];
+}
+
+- (void)createConventionalSigninLoadingView
+{
+    self.myConventionalSigninLoadingView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)] autorelease];
+
+    [self.myConventionalSigninLoadingView setBackgroundColor:[UIColor blackColor]];
+
+    UILabel *loadingLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 180, 320, 30)] autorelease];
+
+    [loadingLabel setText:@"Completing Sign-In..."];
+    [loadingLabel setFont:[UIFont systemFontOfSize:20.0]];
+    [loadingLabel setTextAlignment:UITextAlignmentCenter];
+    [loadingLabel setTextColor:[UIColor whiteColor]];
+    [loadingLabel setBackgroundColor:[UIColor clearColor]];
+    [loadingLabel setAutoresizingMask:UIViewAutoresizingNone |
+                                      UIViewAutoresizingFlexibleTopMargin |
+                                      UIViewAutoresizingFlexibleBottomMargin |
+                                      UIViewAutoresizingFlexibleRightMargin |
+                                      UIViewAutoresizingFlexibleLeftMargin];
+
+    UIActivityIndicatorView *loadingSpinner =
+            [[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge] autorelease];
+
+    [loadingSpinner setFrame:CGRectMake(142, 220, 37, 37)];
+    [loadingLabel setAutoresizingMask:UIViewAutoresizingNone |
+                                          UIViewAutoresizingFlexibleTopMargin |
+                                          UIViewAutoresizingFlexibleBottomMargin |
+                                          UIViewAutoresizingFlexibleRightMargin |
+                                          UIViewAutoresizingFlexibleLeftMargin];
+
+    [loadingLabel setTag:LOADING_VIEW_LABEL_TAG];
+    [loadingSpinner setTag:LOADING_VIEW_SPINNER_TAG];
+
+    [myConventionalSigninLoadingView addSubview:loadingLabel];
+    [myConventionalSigninLoadingView addSubview:loadingSpinner];
+
+    [myConventionalSigninLoadingView setTag:LOADING_VIEW_TAG];
+    [myConventionalSigninLoadingView setHidden:YES];
+    [myConventionalSigninLoadingView setAlpha:0.0];
+
+    [self.view addSubview:myConventionalSigninLoadingView];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

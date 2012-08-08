@@ -42,7 +42,7 @@
 
 @interface JRProvidersController : UIViewController <UINavigationBarDelegate, UITableViewDelegate,
                                                         UITableViewDataSource, UIAlertViewDelegate,
-                                                        JRUserInterfaceDelegate>
+                                                        JRUserInterfaceDelegate, JRExternalDialogControllerDelegate>
 {
     JRSessionData   *sessionData;
     NSDictionary    *customInterface;
