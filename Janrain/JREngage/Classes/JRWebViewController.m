@@ -397,8 +397,8 @@
     //return;
     if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad) return;
 
-    if (!([sessionData.currentProvider.name isEqualToString:@"google"]) ||
-          [sessionData.currentProvider.name isEqualToString:@"yahoo"]) return;
+    if (!([sessionData.currentProvider.name isEqualToString:@"google"] ||
+          [sessionData.currentProvider.name isEqualToString:@"yahoo"])) return;
 
     /* This fixes the UIWebView's display of IDP sign-in pages to make them fit the iPhone sized dialog on the iPad.
      * It's broken up into separate JS injections in case one statement fails (e.g. there is no document element),

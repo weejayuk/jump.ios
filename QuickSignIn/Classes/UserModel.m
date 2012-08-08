@@ -499,7 +499,7 @@ static NSString *tokenUrl = @"<your_token_url>";
     else
         customInterface = [moreCustomizations retain];
 
- /* Launch the JRAuthenticate Library. */
+    /* Launch the JRAuthenticate Library. */
     [JREngage showAuthenticationDialogWithCustomInterfaceOverrides:customInterface];
 }
 
