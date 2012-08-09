@@ -250,24 +250,10 @@ static JRUserInterfaceMaestro* singleton = nil;
                                  [[infoPlist objectForKey:@"JREngage.CustomInterface"]
                                   objectForKey:@"DefaultValues"]];
 
-    NSArray *backgroundColorRGBa = [dict objectForKey:kJRAuthenticationBackgroundColorRGBa];
     UIColor *backgroundColor = JANRAIN_BLUE_20;
-
-    if ([backgroundColorRGBa respondsToSelector:@selector(count)])
-        if ([backgroundColorRGBa count] == 4)
-            backgroundColor =
-                [UIColor colorWithRed:[(NSNumber*)[backgroundColorRGBa objectAtIndex:0] floatValue]
-                                green:[(NSNumber*)[backgroundColorRGBa objectAtIndex:1] floatValue]
-                                 blue:[(NSNumber*)[backgroundColorRGBa objectAtIndex:2] floatValue]
-                                alpha:[(NSNumber*)[backgroundColorRGBa objectAtIndex:3] floatValue]];
 
     if (backgroundColor)
         [dict setObject:backgroundColor forKey:kJRAuthenticationBackgroundColor];
-    [dict removeObjectForKey:kJRAuthenticationBackgroundColorRGBa];
-
-///*** * * DEPRECATED * * ***/
-///**/[dict addEntriesFromDictionary:[[infoPlist objectForKey:@"JREngage.CustomInterface"] objectForKey:@"CustomValues"]];
-///*** * * DEPRECATED * * ***/
 
     return dict;
 }
