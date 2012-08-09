@@ -340,10 +340,13 @@ sub recursiveParse {
   my @booleanProperties;
   my @integerProperties;
 
-  ######################################################
-  # Keep track of how many properties are required
-  ######################################################
+  ######################################################################
+  # Keep track of how many properties are required, arrays, and objects
+  ######################################################################
   my $requiredProperties = 0;
+  my $subObjectCount     = 0;
+  my $subArrayCount      = 0;
+
 
   ######################################################################################################################
   # Dereference the list of properties from the array reference (pointer) passed into this function. Each object has a 
@@ -457,6 +460,7 @@ sub recursiveParse {
   my @updateFromDictSection      = getUpdateFromDictParts();
   my @replaceFromDictSection     = getReplaceFromDictParts();
   my @toUpdateDictSection        = getToUpdateDictParts();
+  my @updateRemotelySection      = getUpdateRemotelyParts();
   my @dirtyPropertySection       = getDirtyPropertySnapshotParts();
   my @toReplaceDictSection       = getToReplaceDictParts();
   my @needsUpdateSection         = getNeedsUpdateParts();
@@ -729,7 +733,29 @@ sub recursiveParse {
     # e.g.:
     #   self.captureObjectPath = [NSString stringWithFormat:@"%@/%@", capturePath, @"exampleElement"];
     $updateFromDictSection[6]  = "\@\"" . $pathAppend . "\"";  
-    $replaceFromDictSection[6] = "\@\"" . $pathAppend . "\"";      
+    $replaceFromDictSection[6] = "\@\"" . $pathAppend . "\"";     
+    
+    
+    $propertiesSection .= "/**\n" . 
+                          " * \\c YES if this object can be updated on Capture with the method " . $className . "#updateOnCaptureForDelegate:context:().\n" .
+                          " * \\c NO if it can't.\n" .
+                          " *\n" .
+                          " * Use this property to determine if the object or element can be updated on Capture or if this object's parent array\n" . 
+                          " * needs to be replaced first. As this object, or one of its ancestors, is an element of a plural, this object may or\n" .
+                          " * may not be updated on Capture. If an element of a plural was added locally (newly allocated on the client), then the\n" .
+                          " * array must be replaced before the element can use the method " . $className . "#updateOnCaptureForDelegate:context:().\n" .
+                          " * Even if " . $className . "#needsUpdate returns \\c YES, this object cannot be updated on Capture unless\n" . 
+                          " * " . $className . "#canBeUpdatedOnCapture also returns \\c YES.\n" . 
+                          " *\n" . 
+                          " * That is, if any elements of a plural have changed, (added, removed, or reordered) the array\n" . 
+                          " * must be replaced on Capture with the appropriate <code>replace&lt;<em>ArrayName</em>&gt;ArrayOnCaptureForDelegate:context:</code>\n" . 
+                          " * method, before updating the elements. As such, this should be done immediately.\n" .
+                          " *\n" . 
+                          " * \@note\n" . 
+                          " * Replacing the array will also update any local changes to the properties of a " . $className . ", including\n" . 
+                          " * sub-arrays and sub-objects.\n" .
+                          " **/\n" . 
+                          "\@property (readonly) BOOL canBeUpdatedOnCapture;\n\n";
   
   } else {
   ################################################################################
@@ -766,6 +792,14 @@ sub recursiveParse {
     #   self.canBeUpdatedOnCapture = YES;
     $objFromDictSection[9]  = "\n        " . $objectName . ".canBeUpdatedOnCapture = [(NSNumber *)[dictionary objectForKey:\@\"canBeUpdatedOnCapture\"] boolValue];";
     $objFromDictSection[18] = "\n        " . $objectName . ".canBeUpdatedOnCapture = YES;";
+
+    $needsUpdateDocSection[3]  = "\n *\n * \@warning\n" . 
+                                 " * This object, or one of its ancestors, is an element of a plural. If any elements of the plural have changed,\n" . 
+                                 " * (added or removed) the array must be replaced on Capture before the elements or their sub-objects can be\n" . 
+                                 " * updated. Please use the appropriate <code>replace&lt;<em>ArrayName</em>&gt;ArrayOnCaptureForDelegate:context:</code>\n" . 
+                                 " * method first. Even if JRCaptureObject#needsUpdate returns \\c YES, this object cannot be updated on Capture unless\n" . 
+                                 " * JRCaptureObject#canBeUpdatedOnCapture also returns \\c YES.";
+
 
   } else {
   ################################################################################
@@ -810,7 +844,7 @@ sub recursiveParse {
     $constructorSection[8]    .= "        self.canBeUpdatedOnCapture = YES;\n";
 
   }
-  
+    
   ################################################################################################
   # Each object has a list of properties defined in the schema as the object's 'attr_defs' array. 
   # Each element in the list contains a reference (pointer) to a hash describing that property.
@@ -851,8 +885,7 @@ sub recursiveParse {
     my $dictionaryKey   = $propertyName;  # Set the dictionary key as the property name, as it may be changed because of conflicts
     my $pathName        = $propertyName;  # Save the name of the property as it is needed as the pathAppend in the recursive call, and it may be changed because of conflicts
     my $propertyNotes   = "";             # Doxygen comment that provides more infomation if necessary for a property 
-
-
+    
     ##########################################################
     # Updates to the Capture server should not contain 'id', 
     # 'uuid', 'created', and 'lastUpdated'
@@ -911,7 +944,7 @@ sub recursiveParse {
 
       $isEqualMethod   = "isEqualToNumber:";
       
-      $propertyNotes  .= " \@note This is a property of type \\ref types \"boolean\", which is a typedef of \\e NSNumber. The accepted values can only be <code>[NSNumber numberWithBool:<em>myBool</em>]</code> or <code>nil</code>";
+      $propertyNotes  .= " \@note A ::JRBoolean property is a property of type \\ref typesTable \"boolean\" and a typedef of \\e NSNumber. The accepted values can only be <code>[NSNumber numberWithBool:<em>myBool</em>]</code> or <code>nil</code>";
       $isAlsoPrimitive = "b";
       
       push (@booleanProperties, $propertyName);
@@ -926,7 +959,7 @@ sub recursiveParse {
 
       $isEqualMethod   = "isEqualToNumber:";
 
-      $propertyNotes  .= " \@note This is a property of type \\ref types \"integer\", which is a typedef of \\e NSNumber. The accepted values can only be <code>[NSNumber numberWithInteger:<em>myInteger</em>]</code>, <code>[NSNumber numberWithInt:<em>myInt</em>]</code>, or <code>nil</code>";
+      $propertyNotes  .= " \@note A ::JRInteger property is a property of type \\ref typesTable \"integer\" and a typedef of \\e NSNumber. The accepted values can only be <code>[NSNumber numberWithInteger:<em>myInteger</em>]</code>, <code>[NSNumber numberWithInt:<em>myInt</em>]</code>, or <code>nil</code>";
       $isAlsoPrimitive = "i";
   
       push (@integerProperties, $propertyName);
@@ -936,7 +969,8 @@ sub recursiveParse {
 
       $objectiveType  = "JRDecimal *";
       $isEqualMethod  = "isEqualToNumber:";
- 
+      $propertyNotes .= " \@note A ::JRDecimal property is a property of type \\ref typesTable \"decimal\" and a typedef of \\e NSNumber. Accepted values can be, for example, <code>[NSNumber numberWithNumber:<em>myDecimal</em>]</code>, <code>nil</code>, etc.";
+      
     ######## DATE ########
     } elsif ($propertyType eq "date") {
 
@@ -947,7 +981,7 @@ sub recursiveParse {
 
       $isEqualMethod  = "isEqualToDate:";
 
-      $propertyNotes .= " \@note This is a property of type \\ref types \"date\", which is a typedef of \\e NSDate. The accepted format should be an ISO8601 date string (e.g., <code>yyyy-MM-dd</code>)";      
+      $propertyNotes .= " \@note A ::JRDate property is a property of type \\ref typesTable \"date\" and a typedef of \\e NSDate. The accepted format should be an ISO 8601 date string (e.g., <code>yyyy-MM-dd</code>)";      
 
     ######## DATETIME ########
     } elsif ($propertyType eq "dateTime") {
@@ -959,7 +993,7 @@ sub recursiveParse {
 
       $isEqualMethod  = "isEqualToDate:";
 
-      $propertyNotes .= " \@note This is a property of type \\ref types \"dateTime\", which is a typedef of \\e NSDate. The accepted format should be an ISO8601 dateTime string (e.g., <code>yyyy-MM-dd HH:mm:ss.SSSSSS ZZZ</code>)";
+      $propertyNotes .= " \@note A ::JRDateTime property is a property of type \\ref typesTable \"dateTime\" and a typedef of \\e NSDate. The accepted format should be an ISO 8601 dateTime string (e.g., <code>yyyy-MM-dd HH:mm:ss.SSSSSS ZZZ</code>)";
 
     ######## IPADDRESS ########
     } elsif ($propertyType eq "ipAddress") {
@@ -969,7 +1003,7 @@ sub recursiveParse {
       
       $objectiveType  = "JRIpAddress *";
       $isEqualMethod  = "isEqualToString:";
-      $propertyNotes .= " \@note This is a property of type \\ref types \"ipAddress\", which is a typedef of \\e NSString.";      
+      $propertyNotes .= " \@note A ::JRIpAddress property is a property of type \\ref typesTable \"ipAddress\" and a typedef of \\e NSString.";      
 
     ######## PASSWORD ########
     } elsif ($propertyType =~ m/^password/) { 
@@ -981,7 +1015,7 @@ sub recursiveParse {
       
       $objectiveType  = "JRPassword *";  
       $isEqualMethod  = "isEqual:";        
-      $propertyNotes .= " \@note This is a property of type \\ref types \"password\", which can be either an \\e NSString or \\e NSDictionary, and is therefore is a typedef of \\e NSObject";      
+      $propertyNotes .= " \@note A ::JRPassword property is a property of type \\ref typesTable \"password\", which can be either an \\e NSString or \\e NSDictionary, and is therefore is a typedef of \\e NSObject";      
 
     ######## JSON ########
     } elsif ($propertyType eq "json") {
@@ -992,7 +1026,7 @@ sub recursiveParse {
      
       $objectiveType  = "JRJsonObject *";  
       $isEqualMethod  = "isEqual:";        
-      $propertyNotes .= " \@note This is a property of type \\ref types \"json\", which can be an \\e NSDictionary, \\e NSArray, \\e NSString, etc., and is therefore is a typedef of \\e NSObject";
+      $propertyNotes .= " \@note A ::JRJsonObject property is a property of type \\ref typesTable \"json\", which can be an \\e NSDictionary, \\e NSArray, \\e NSString, etc., and is therefore is a typedef of \\e NSObject";
 
     ######## UUID ########
     } elsif ($propertyType eq "uuid") {
@@ -1002,7 +1036,7 @@ sub recursiveParse {
       
       $objectiveType  = "JRUuid *";
       $isEqualMethod  = "isEqualToString:";        
-      $propertyNotes .= " \@note This is a property of type \\ref types \"uuid\", which is a typedef of \\e NSString";      
+      $propertyNotes .= " \@note A ::JRUuid property is a property of type \\ref typesTable \"uuid\" and a typedef of \\e NSString";      
       
     ######## ID ########
     } elsif ($propertyType eq "id") {
@@ -1017,7 +1051,7 @@ sub recursiveParse {
 
       $isEqualMethod  = "isEqualToNumber:";        
 
-      $propertyNotes .= " \@note The \\e id of the object should not be set. // TODO: etc."
+      $propertyNotes .= " \@note The \\e id of the object should not be set."
 
     ######## PLURAL (ARRAY) ########
     } elsif ($propertyType eq "plural") {
@@ -1029,6 +1063,7 @@ sub recursiveParse {
     ####################################################################################################################
 
       $isArray = 1;
+      $subArrayCount = $subArrayCount + 1;
       
       my $propertyAttrDefsRef = $propertyHash{"attr_defs"};
       
@@ -1044,7 +1079,7 @@ sub recursiveParse {
 
         $isEqualMethod  = "isEqualToArray:";
        
-        $propertyNotes .= " \@note This is an array of \\c NSStrings representing a list of \\c " . $stringArrayType . " objects TODO: Add note about how setting the array requires a replace on capture and how you can set it with an array of stringPluralElements or just an array of strings";      
+        $propertyNotes .= " \@note  A ::JRStringArray property is a plural (array) that holds a list of \\e NSStrings. As it is an array, it is therefore a typedef of \\e NSArray. This array of \\c NSStrings represents a list of \\c " . $stringArrayType;
         
       } else {
 
@@ -1068,14 +1103,14 @@ sub recursiveParse {
 
         $isEqualMethod  = "isEqualTo" . ucfirst($propertyName) . "Array:";        
 
-        $propertyNotes .= " \@note This is an array of \\c JR" . ucfirst($propertyName) . "Element objects";
+        $propertyNotes .= " \@note This is an array of JR" . ucfirst($propertyName) . "Element objects";
         
         ######## AND RECURSE!! ########
         recursiveParse ($propertyName, $propertyAttrDefsRef, $objectPath, $pathName, $IS_PLURAL_ELEMENT, $HAS_PLURAL_PARENT, $propertyDesc);
        
       }
       
-      $replaceArrayIntfSection .= createArrayReplaceMethodDeclaration($propertyName);
+      $replaceArrayIntfSection .= createArrayReplaceMethodDeclaration($propertyName, $className);
       $replaceArrayImplSection .= createArrayReplaceMethodImplementation($propertyName, $isStringArray, $stringArrayType);  
       
     ######## OBJECT (DICTIONARY) ########
@@ -1085,6 +1120,7 @@ sub recursiveParse {
     ##################################################################################
 
       $isObject = 1;
+      $subObjectCount = $subObjectCount + 1;
       
       my $propertyAttrDefsRef = $propertyHash{"attr_defs"};
             
@@ -1157,6 +1193,19 @@ sub recursiveParse {
         #   return [[[JRExampleElement alloc] initWithFoo:foo ...
         $classConstructorSection[7] .= "With" . ucfirst($propertyName) . ":" . $propertyName;
         
+        $minConstructorDocSection[5]      = " *\n * \@note \n * Method creates a " . <objectClass> . "object without the required properties: \\e " . $propertyName;
+        $minConstructorDocSection[6]      = ".\n * These properties are required when updating the object on Capture. That is, you must set them before calling\n" . 
+                                            " * updateOnCaptureForDelegate:context:().\n";
+        $minClassConstructorDocSection[5] = " *\n * \@note \n * Method creates a " . <objectClass> . "object without the required properties: \\e " . $propertyName;
+        $minClassConstructorDocSection[6] = ".\n * These properties are required when updating the object on Capture. That is, you must set them before calling\n" . 
+                                            " * updateOnCaptureForDelegate:context:().\n";
+                                            
+        $constructorDocSection[3] = "\\c new" . ucfirst($propertyName);
+        $constructorDocSection[9] = "\\e new" . ucfirst($propertyName);
+
+        $classConstructorDocSection[3] = "\\c " . $propertyName;
+        $classConstructorDocSection[9] = "\\e " . $propertyName;
+                                               
       } else {
       ##########################################################################################################
       # If the property is *not* the first required property, we usually  precede it with 'And' in method names
@@ -1177,7 +1226,15 @@ sub recursiveParse {
         # e.g.:
         #   return [[[JRObj alloc] initWithFoo:foo andBar:bar ...
         $classConstructorSection[7] .= " and" . ucfirst($propertyName) . ":" . $propertyName;
+        
+        $minConstructorDocSection[5]      .= ", \\e " . $propertyName;
+        $minClassConstructorDocSection[5] .= ", \\e " . $propertyName;
 
+        $constructorDocSection[3] .= ", \\c new" . ucfirst($propertyName);
+        $constructorDocSection[9] .= ", \\e new" . ucfirst($propertyName);
+
+        $classConstructorDocSection[3] .= ", \\c " . $propertyName;
+        $classConstructorDocSection[9] .= ", \\e " . $propertyName;
       }        
       ##########################################################################
       # For *all* required properties...
@@ -1186,6 +1243,20 @@ sub recursiveParse {
       # e.g.:
       #   foo = [newFoo copy];
       $constructorSection[8] .= "\n        _" . $propertyName . " = [new" . ucfirst($propertyName) . " copy];";
+      
+      my $argDesc;
+      if ($propertyDesc) {                                      
+        $argDesc .= "  " . ucfirst(trim($propertyDesc));  
+      } else {
+        $argDesc .= "  The object's \\e " . $propertyName . " property";
+      }
+      
+      $constructorDocSection[5]      .= "\n * \@param new" . ucfirst($propertyName) . "\n" . 
+                                        " * " . $argDesc . "\n *";
+      $classConstructorDocSection[5] .= "\n * \@param " . $propertyName . "\n" . 
+                                        " * " . $argDesc . "\n *";
+
+      
       
     } else {
     ######################################################
@@ -1283,7 +1354,7 @@ sub recursiveParse {
       #   _foo = [[JRFoo alloc] init];
       $minConstructorSection[3] .= "\n        _" . $propertyName . " = [[JR" . ucfirst($propertyName) . " alloc] init];";
       $constructorSection[8]    .= "\n        _" . $propertyName . " = [[JR" . ucfirst($propertyName) . " alloc] init];";
-
+      
     } else {
   
       if (!$isArray) {
@@ -1371,7 +1442,6 @@ sub recursiveParse {
                                      "        [self." . $propertyName . " restoreDirtyPropertiesFromSnapshotDictionary:\n" . 
                                      "                    [snapshotDictionary objectForKey:\@\"" . $propertyName . "\"]];\n";
     
-
         ####################################################################################################
         # For objects, they are considered equal in the following cases:
         #   a. They are both null
@@ -1393,6 +1463,17 @@ sub recursiveParse {
               "    else if (!self." . $propertyName . " && [other" . ucfirst($objectName) . "." . $propertyName . " " . $isEqualMethod . "[JR" . ucfirst($propertyName) . " " . $propertyName . "]]) /* Keep going... */;\n" . 
               "    else if (!other" . ucfirst($objectName) . "." . $propertyName . " && [self." . $propertyName . " " . $isEqualMethod . "[JR" . ucfirst($propertyName) . " " . $propertyName . "]]) /* Keep going... */;\n" . 
               "    else if (![self." . $propertyName . " " . $isEqualMethod . "other" . ucfirst($objectName) . "." . $propertyName . "]) return NO;\n\n";
+
+        if ($subObjectCount == 1) {
+          $needsUpdateDocSection[1]  = "\n *\n * \@note\n" . 
+                                       " * This method recursively checks all of the sub-objects of " . $className . ":\n" . 
+                                       " *   - " . $className . "#" . $propertyName . "\n";
+          $needsUpdateDocSection[2]  = " * .\n * \@par\n" . 
+                                       " * If any of these objects are new, or if they need to be updated, this method returns \\c YES.";
+
+        } else {
+          $needsUpdateDocSection[1] .= " *   - " . $className . "#" . $propertyName . "\n";
+        }
 
       } elsif ($isArray) {
       ####################################################################################################################
@@ -1429,6 +1510,30 @@ sub recursiveParse {
               "    else if (!self." . $propertyName . " && ![other" . ucfirst($objectName) . "." . $propertyName . " count]) /* Keep going... */;\n" .
               "    else if (!other" . ucfirst($objectName) . "." . $propertyName . " && ![self." . $propertyName . " count]) /* Keep going... */;\n" .
               "    else if (![self." . $propertyName . " " . $isEqualMethod . "other" . ucfirst($objectName) . "." . $propertyName . "]) return NO;\n\n";
+    
+        if ($subArrayCount == 1) {
+          if (!$hasPluralParent)
+          {
+            $needsUpdateDocSection[3]  = "\n *\n * \@warning";
+          } else {
+            $needsUpdateDocSection[3] .= "\n *\n * \@par";
+          }
+
+          $needsUpdateDocSection[3]   .= "\n" . 
+                                         " * This method recursively checks all of the sub-objects of " . $className . "\n" . 
+                                         " * but does not check any of the arrays of the " . $className . " or the arrays' elements:\n" .
+                                         " *   - " . $className . "#" . $propertyName . ", JR" . ucfirst($propertyName) . "Element\n";
+          $needsUpdateDocSection[4]    = " * .\n * \@par\n" . 
+                                         " * If you have added or removed any elements from the arrays, you must call the following methods\n" . 
+                                         " * to update the array on Capture: replace" . ucfirst($propertyName) . "ArrayOnCaptureForDelegate:context:()";
+          $needsUpdateDocSection[5]    = "\n *\n * \@par\n".
+                                         " * Otherwise, if the array elements' JRCaptureObject#canBeUpdatedOnCapture and JRCaptureObject#needsUpdate returns \\c YES, you can update\n" . 
+                                         " * the elements by calling updateOnCaptureForDelegate:context:().";
+
+        } else {
+          $needsUpdateDocSection[3] .= " *   - " . $className . "#" . $propertyName . ", JR" . ucfirst($propertyName) . "Element\n";
+          $needsUpdateDocSection[4] .= ",\n *   replace" . ucfirst($propertyName) . "ArrayOnCaptureForDelegate:context:()";
+        }
     
       } else { ### Not an object or array ###
 
@@ -1512,10 +1617,10 @@ sub recursiveParse {
   $hFile .= "\@interface $className : JRCaptureObject\n";# <NSCopying, JRJsonifying>\n";
   $hFile .= $propertiesSection;
     
-  if ($requiredProperties) {
-    $minConstructorDocSection[5] = $minClassConstructorDocSection[5] = $objFromDictDocSection[5] = 
-        " * \n * \@note\n * Method creates a $className object without the required properties TODO: MAKE A LIST!\n * These properties are required when updating the object on Capture.\n"; 
-  }
+#  if ($requiredProperties) {
+#    $minConstructorDocSection[5] = $minClassConstructorDocSection[5] = $objFromDictDocSection[5] = 
+#        " * \n * \@note\n * Method creates a $className object without the required properties TODO: MAKE A LIST!\n * These properties are required when updating the object on Capture.\n"; 
+#  }
   
   $hFile .= "\n/**\n * \@name Constructors\n **/\n/*\@{*/\n";
   
@@ -1536,7 +1641,8 @@ sub recursiveParse {
   $hFile .= "/**\n * \@name Manage Remotely \n **/\n/*\@{*/";
   $hFile .= "$replaceArrayIntfSection\n";
   for (my $i = 0; $i < @needsUpdateDocSection; $i++) { $hFile .= $needsUpdateDocSection[$i]; }
-  $hFile .= "$needsUpdateSection[0];\n";
+  $hFile .= "$needsUpdateSection[0];\n\n";
+  for (my $i = 0; $i < @updateRemotelyDocSection; $i++) { $hFile .= $updateRemotelyDocSection[$i]; }
   $hFile .= "/*\@}*/\n\n";
   
   if (@booleanProperties || @integerProperties) {
@@ -1546,18 +1652,28 @@ sub recursiveParse {
     $hFile .= "/**\n * \@name Primitive Getters/Setters \n **/\n/*\@{*/\n";
 
     for (my $i = 0; $i < @booleanProperties; $i++) {
-      $hFile .= "/**\n * TODO\n **/\n";
+      $hFile .= "/**\n" .
+                " * Returns the primitive boolean value stored in the " . $booleanProperties[$i] . " property. Will return \\c NO if the\n" .
+                " * " . $booleanProperties[$i] . " is \e nil." . 
+                " **/\n";
       $hFile .= "- (BOOL)get" . ucfirst($booleanProperties[$i]) . "BoolValue;\n\n";
-      $hFile .= "/**\n * TODO\n **/\n";
+      $hFile .= "/**\n" .
+                " * Sets the " . $booleanProperties[$i] . " property to a the primitive boolean value.\n" .
+                " **/\n";
       $hFile .= "- (void)set" . ucfirst($booleanProperties[$i]) . "WithBool:(BOOL)boolVal;\n";
       
       if ($current != $total) { $hFile .= "\n"; } $current++;
     }
     
     for (my $i = 0; $i < @integerProperties; $i++) {
-      $hFile .= "/**\n * TODO\n **/\n";
+      $hFile .= "/**\n" .
+                " * Returns the primitive integer value stored in the " . $integerProperties[$i] . " property. Will return \\c 0 if the\n" .
+                " * " . $integerProperties[$i] . " is \e nil." . 
+                " **/\n";
       $hFile .= "- (NSInteger)get" . ucfirst($integerProperties[$i]) . "IntegerValue;\n\n";
-      $hFile .= "/**\n * TODO\n **/\n";
+      $hFile .= "/**\n" .
+                " * Sets the " . $integerProperties[$i] . " property to a the primitive integer value.\n" .
+                " **/\n";
       $hFile .= "- (void)set" . ucfirst($integerProperties[$i]) . "WithInteger:(NSInteger)integerVal;\n";
     
       if ($current != $total) { $hFile .= "\n"; } $current++;
@@ -1679,6 +1795,10 @@ sub recursiveParse {
   for (my $i = 0; $i < @toUpdateDictSection; $i++) {
     $mFile .= $toUpdateDictSection[$i];
   }
+  
+  for (my $i = 0; $i < @updateRemotelySection; $i++) {                                           
+    $mFile .= $updateRemotelySection[$i];                                           
+  }  
   
   for (my $i = 0; $i < @toReplaceDictSection; $i++) {
     $mFile .= $toReplaceDictSection[$i];

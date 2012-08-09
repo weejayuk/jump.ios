@@ -37,17 +37,17 @@
  * @brief The best hand your player has ever had in a tournament
  **/
 @interface JRBestHand : JRCaptureObject
-@property (nonatomic, copy)     JRDate *datePlayed; /**< The date on which the hand was played @note This is a property of type \ref types "date", which is a typedef of \e NSDate. The accepted format should be an ISO8601 date string (e.g., <code>yyyy-MM-dd</code>) */ 
+@property (nonatomic, copy)     JRDate *datePlayed; /**< The date on which the hand was played @note A ::JRDate property is a property of type \ref typesTable "date" and a typedef of \e NSDate. The accepted format should be an ISO 8601 date string (e.g., <code>yyyy-MM-dd</code>) */ 
 @property (nonatomic, copy)     NSString *hand; /**< The hand */ 
 @property (nonatomic, copy)     NSString *handBeat; /**< The hand that was beat */ 
-@property (nonatomic, copy)     JRDecimal *moneyWon; /**< The pot won on the hand */ 
+@property (nonatomic, copy)     JRDecimal *moneyWon; /**< The pot won on the hand @note A ::JRDecimal property is a property of type \ref typesTable "decimal" and a typedef of \e NSNumber. Accepted values can be, for example, <code>[NSNumber numberWithNumber:<em>myDecimal</em>]</code>, <code>nil</code>, etc. */ 
 
 /**
  * @name Constructors
  **/
 /*@{*/
 /**
- * Default constructor. Returns an empty JRBestHand object
+ * Default instance constructor. Returns an empty JRBestHand object
  *
  * @return
  *   A JRBestHand object
@@ -55,7 +55,7 @@
 - (id)init;
 
 /**
- * Returns an empty JRBestHand object
+ * Default class constructor. Returns an empty JRBestHand object
  *
  * @return
  *   A JRBestHand object
@@ -69,9 +69,22 @@
  **/
 /*@{*/
 /**
- * TODO: Doxygen doc
+ * Use this method to determine if the object or element needs to be updated remotely.
+ * That is, if there are local changes to any of the object/elements's properties or 
+ * sub-objects, then this object will need to be updated on Capture. You can update
+ * an object on Capture by using the method updateOnCaptureForDelegate:context:().
+ *
+ * @return
+ * \c YES if this object or any of it's sub-objects have any properties that have changed
+ * locally. This does not include properties that are arrays, if any, or the elements contained 
+ * within the arrays. \c NO if no non-array properties or sub-objects have changed locally.
  **/
 - (BOOL)needsUpdate;
+
+/**
+ * TODO: Doxygen doc
+ **/
+- (void)updateOnCaptureForDelegate:(id<JRCaptureObjectDelegate>)delegate context:(NSObject *)context;
 /*@}*/
 
 @end

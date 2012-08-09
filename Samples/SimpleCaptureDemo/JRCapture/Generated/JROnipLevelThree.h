@@ -37,6 +37,27 @@
  * @brief An example of objects nested in plurals, level 3, object
  **/
 @interface JROnipLevelThree : JRCaptureObject
+/**
+ * \c YES if this object can be updated on Capture with the method JROnipLevelThree#updateOnCaptureForDelegate:context:().
+ * \c NO if it can't.
+ *
+ * Use this property to determine if the object or element can be updated on Capture or if this object's parent array
+ * needs to be replaced first. As this object, or one of its ancestors, is an element of a plural, this object may or
+ * may not be updated on Capture. If an element of a plural was added locally (newly allocated on the client), then the
+ * array must be replaced before the element can use the method JROnipLevelThree#updateOnCaptureForDelegate:context:().
+ * Even if JROnipLevelThree#needsUpdate returns \c YES, this object cannot be updated on Capture unless
+ * JROnipLevelThree#canBeUpdatedOnCapture also returns \c YES.
+ *
+ * That is, if any elements of a plural have changed, (added, removed, or reordered) the array
+ * must be replaced on Capture with the appropriate <code>replace&lt;<em>ArrayName</em>&gt;ArrayOnCaptureForDelegate:context:</code>
+ * method, before updating the elements. As such, this should be done immediately.
+ *
+ * @note
+ * Replacing the array will also update any local changes to the properties of a JROnipLevelThree, including
+ * sub-arrays and sub-objects.
+ **/
+@property (readonly) BOOL canBeUpdatedOnCapture;
+
 @property (nonatomic, copy)     NSString *level; /**< The object's \e level property */ 
 @property (nonatomic, copy)     NSString *name; /**< The object's \e name property */ 
 
@@ -45,7 +66,7 @@
  **/
 /*@{*/
 /**
- * Default constructor. Returns an empty JROnipLevelThree object
+ * Default instance constructor. Returns an empty JROnipLevelThree object
  *
  * @return
  *   A JROnipLevelThree object
@@ -53,7 +74,7 @@
 - (id)init;
 
 /**
- * Returns an empty JROnipLevelThree object
+ * Default class constructor. Returns an empty JROnipLevelThree object
  *
  * @return
  *   A JROnipLevelThree object
@@ -67,9 +88,29 @@
  **/
 /*@{*/
 /**
- * TODO: Doxygen doc
+ * Use this method to determine if the object or element needs to be updated remotely.
+ * That is, if there are local changes to any of the object/elements's properties or 
+ * sub-objects, then this object will need to be updated on Capture. You can update
+ * an object on Capture by using the method updateOnCaptureForDelegate:context:().
+ *
+ * @return
+ * \c YES if this object or any of it's sub-objects have any properties that have changed
+ * locally. This does not include properties that are arrays, if any, or the elements contained 
+ * within the arrays. \c NO if no non-array properties or sub-objects have changed locally.
+ *
+ * @warning
+ * This object, or one of its ancestors, is an element of a plural. If any elements of the plural have changed,
+ * (added or removed) the array must be replaced on Capture before the elements or their sub-objects can be
+ * updated. Please use the appropriate <code>replace&lt;<em>ArrayName</em>&gt;ArrayOnCaptureForDelegate:context:</code>
+ * method first. Even if JRCaptureObject#needsUpdate returns \c YES, this object cannot be updated on Capture unless
+ * JRCaptureObject#canBeUpdatedOnCapture also returns \c YES.
  **/
 - (BOOL)needsUpdate;
+
+/**
+ * TODO: Doxygen doc
+ **/
+- (void)updateOnCaptureForDelegate:(id<JRCaptureObjectDelegate>)delegate context:(NSObject *)context;
 /*@}*/
 
 @end

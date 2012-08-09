@@ -38,7 +38,7 @@
  * @brief An example of objects nested in plurals, level 1, plural
  **/
 @interface JROnipLevelOneElement : JRCaptureObject
-@property (nonatomic, readonly) JRObjectId *onipLevelOneElementId; /**< Simple identifier for this sub-entity @note The \e id of the object should not be set. // TODO: etc. */ 
+@property (nonatomic, readonly) JRObjectId *onipLevelOneElementId; /**< Simple identifier for this sub-entity @note The \e id of the object should not be set. */ 
 @property (nonatomic, copy)     NSString *level; /**< The object's \e level property */ 
 @property (nonatomic, copy)     NSString *name; /**< The object's \e name property */ 
 @property (nonatomic, retain)   JROnipLevelTwo *onipLevelTwo; /**< An example of objects nested in plurals, level 2, object */ 
@@ -48,7 +48,7 @@
  **/
 /*@{*/
 /**
- * Default constructor. Returns an empty JROnipLevelOneElement object
+ * Default instance constructor. Returns an empty JROnipLevelOneElement object
  *
  * @return
  *   A JROnipLevelOneElement object
@@ -56,7 +56,7 @@
 - (id)init;
 
 /**
- * Returns an empty JROnipLevelOneElement object
+ * Default class constructor. Returns an empty JROnipLevelOneElement object
  *
  * @return
  *   A JROnipLevelOneElement object
@@ -70,9 +70,36 @@
  **/
 /*@{*/
 /**
- * TODO: Doxygen doc
+ * Use this method to determine if the object or element needs to be updated remotely.
+ * That is, if there are local changes to any of the object/elements's properties or 
+ * sub-objects, then this object will need to be updated on Capture. You can update
+ * an object on Capture by using the method updateOnCaptureForDelegate:context:().
+ *
+ * @return
+ * \c YES if this object or any of it's sub-objects have any properties that have changed
+ * locally. This does not include properties that are arrays, if any, or the elements contained 
+ * within the arrays. \c NO if no non-array properties or sub-objects have changed locally.
+ *
+ * @note
+ * This method recursively checks all of the sub-objects of JROnipLevelOneElement:
+ *   - JROnipLevelOneElement#onipLevelTwo
+ * .
+ * @par
+ * If any of these objects are new, or if they need to be updated, this method returns \c YES.
+ *
+ * @warning
+ * This object, or one of its ancestors, is an element of a plural. If any elements of the plural have changed,
+ * (added or removed) the array must be replaced on Capture before the elements or their sub-objects can be
+ * updated. Please use the appropriate <code>replace&lt;<em>ArrayName</em>&gt;ArrayOnCaptureForDelegate:context:</code>
+ * method first. Even if JRCaptureObject#needsUpdate returns \c YES, this object cannot be updated on Capture unless
+ * JRCaptureObject#canBeUpdatedOnCapture also returns \c YES.
  **/
 - (BOOL)needsUpdate;
+
+/**
+ * TODO: Doxygen doc
+ **/
+- (void)updateOnCaptureForDelegate:(id<JRCaptureObjectDelegate>)delegate context:(NSObject *)context;
 /*@}*/
 
 @end

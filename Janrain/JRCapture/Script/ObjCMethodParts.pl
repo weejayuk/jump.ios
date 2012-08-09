@@ -41,16 +41,16 @@
 ###################################################################
 # MINIMUM INSTANCE CONSTRUCTOR (W/O REQUIRED PROPERTIES)
 #
-#                                          (Section only here when there are required properties)     
-#                                                                        |
-# /**                                                                    |
-#  * Default constructor. Returns an empty <objectClass> object.         |
-#  *                                                                     |
-#  * @return                                                             |
-#  *   A <objectClass> object                                            |
-#  *                                                                     |
-#  * @note Method creates a <objectClass> object without the required    |
-#  * properties <requiredProperties>.  These properties are required  <--+
+#                                              (Section only here when there are required properties)     
+#                                                                          |
+# /**                                                                      |
+#  * Default instance constructor. Returns an empty <objectClass> object.  |
+#  *                                                                       |
+#  * @return                                                               |
+#  *   A <objectClass> object                                              |
+#  *                                                                       |
+#  * @note Method creates a <objectClass> object without the required      |
+#  * properties: <requiredProperties>.  These properties are required <----+
 #  * when updating the object on Capture.
 #  **/
 # - (id)init
@@ -71,11 +71,11 @@
 
 my @minConstructorDocParts = (
 "/**
- * Default constructor. Returns an empty ",""," object
+ * Default instance constructor. Returns an empty ",""," object
  *
  * \@return
  *   A ",""," object\n",
-"", 
+"","", 
 " **/\n");
 
 my @minConstructorParts = (
@@ -97,7 +97,7 @@ my @minConstructorParts = (
 # (Method only here when there are required properties)
 # 
 # /**
-#  * Returns a <objectClass> object initialized with the given <requiredProperties>
+#  * Returns a <objectClass> object initialized with the given required properties: <requiredProperties>
 #  *
 #  * @param <requiredProperty>
 #  *   <requiredPropertyDescription>
@@ -132,12 +132,12 @@ my @minConstructorParts = (
 
 my @constructorDocParts = (
 "/**
- * Returns a ",""," object initialized with the given","","
+ * Returns a ",""," object initialized with the given required properties: ","","
  *",
 "", 
-" *
+" 
  * \@return
- *   A ",""," object initialized with the given","","\n",
+ *   A ",""," object initialized with the given required properties: ","",".\n",
 " *   If the required arguments are \\e nil or \\e [NSNull null], returns \\e nil
  **/\n");
 
@@ -165,13 +165,14 @@ my @constructorParts = (
 #                      (Section only here when there are required properties)     
 #                                               |
 # /**                                           |
-#  * Returns an empty <objectClass> object      |
+#  * Default class constructor. Returns an      |
+#  * empty <objectClass> object                 |
 #  *                                            |
 #  * @return                                    |
 #  *   A <objectClass> object                   |
 #  *                                            V
 #  * @note Method creates a <objectClass> object without the required
-#  * properties <requiredProperties>.  These properties are required
+#  * properties: <requiredProperties>.  These properties are required
 #  * when updating the object on Capture.
 #  **/
 # + (id)<objectName>    
@@ -182,11 +183,11 @@ my @constructorParts = (
 
 my @minClassConstructorDocParts = (
 "/**
- * Returns an empty ",""," object
+ * Default class constructor. Returns an empty ",""," object
  *
  * \@return
  *   A ",""," object\n",
-"", 
+"","", 
 " **/\n");
 
 my @minClassConstructorParts = (
@@ -200,13 +201,13 @@ my @minClassConstructorParts = (
 # (Method only here when there are required properties)
 # 
 # /**
-#  * Returns a <objectClass> object initialized with the given <requiredProperties>
+#  * Returns a <objectClass> object initialized with the given required properties: <requiredProperties>
 #  *
 #  * @param <requiredProperty>
 #  *   <requiredPropertyDescription>
 #  *
 #  * @return
-#  *   A <objectClass> object initialized with the given <requiredProperties>
+#  *   A <objectClass> object initialized with the given required properties: <requiredProperties>
 #  *   If the required arguments are \e nil or \e [NSNull null], returns \e nil
 #  **/
 # + (id)<objectName><requiredProperties>        
@@ -217,13 +218,13 @@ my @minClassConstructorParts = (
 
 my @classConstructorDocParts = (
 "/**
- * Returns a ",""," object initialized with the given","","
+ * Returns a ",""," object initialized with the given required properties: ","","
  *",
 "", 
-" *
+" 
  * \@return
- *   A ",""," object initialized with the given","","\n",
-" *   If the required arguments are \\e nil or \\e [NSNull null], returns \\e nil,
+ *   A ",""," object initialized with the given required properties: ","",".\n",
+" *   If the required arguments are \\e nil or \\e [NSNull null], returns \\e nil
  **/\n");
 
 my @classConstructorParts = (
@@ -727,7 +728,8 @@ my @dirtyPropertySnapshotParts = (
 my @updateRemotelyDocParts = (
 "/**
  * TODO: Doxygen doc
- **/\n");
+ **/
+- (void)updateOnCaptureForDelegate:(id<JRCaptureObjectDelegate>)delegate context:(NSObject *)context;\n");
 
 my @toUpdateDictionaryParts = (
 "- (NSDictionary *)toUpdateDictionary",
@@ -740,22 +742,11 @@ my @toUpdateDictionaryParts = (
     return [NSDictionary dictionaryWithDictionary:dictionary];",
 "\n}\n\n");
 
-#my @updateRemotelyParts = (
-#"- (void)updateObjectOnCaptureForDelegate:(id<JRCaptureObjectDelegate>)delegate withContext:(NSObject *)context",
-#"\n{\n",
-#"    NSDictionary *newContext = [NSDictionary dictionaryWithObjectsAndKeys:
-#                                                     self, \@\"captureObject\",
-#                                                     self.captureObjectPath, \@\"capturePath\",
-#                                                     delegate, \@\"delegate\",
-#                                                     context, \@\"callerContext\", nil];
-#
-#    [JRCaptureInterface updateCaptureObject:[self toUpdateDictionary]
-#//                                     withId:
-#                                     atPath:self.captureObjectPath
-#                                  withToken:[JRCaptureData accessToken]
-#                                forDelegate:self
-#                                withContext:newContext];",
-#"\n}\n\n");
+my @updateRemotelyParts = (
+"- (void)updateOnCaptureForDelegate:(id<JRCaptureObjectDelegate>)delegate context:(NSObject *)context",
+"\n{\n",
+"    [super updateOnCaptureForDelegate:delegate context:context];",
+"\n}\n\n");
 
 
 ###################################################################
@@ -881,7 +872,17 @@ my @isEqualObjectParts = (
 
 my @needsUpdateDocParts = (
 "/**
- * TODO: Doxygen doc
+ * Use this method to determine if the object or element needs to be updated remotely.
+ * That is, if there are local changes to any of the object/elements's properties or 
+ * sub-objects, then this object will need to be updated on Capture. You can update
+ * an object on Capture by using the method updateOnCaptureForDelegate:context:().
+ *
+ * \@return
+ * \\c YES if this object or any of it's sub-objects have any properties that have changed
+ * locally. This does not include properties that are arrays, if any, or the elements contained 
+ * within the arrays. \\c NO if no non-array properties or sub-objects have changed locally.",
+ "","",
+ "","","","
  **/\n");
  
 my @needsUpdateParts = (
@@ -1065,11 +1066,52 @@ sub getArrayComparisonImplementation {
 
 sub createArrayReplaceMethodDeclaration { 
   my $propertyName = $_[0];
+  my $className    = $_[1];
 
   my $methodDeclaration = 
        "\n"  .
        "/**\n" . 
-       " * TODO: DOXYGEN DOCS\n" . 
+       " * Use this method to replace the " . $className . "#" . $propertyName . " array on Capture after adding, removing,\n" . 
+       " * or reordering elements. You should call this method immediately after you perform any of these actions.\n" .
+       " * This method will replace the entire array on Capture, including all of its elements and their sub-arrays and\n" .
+       " * sub-objects. When successful, the new array will be added to the " . $className . "#" . $propertyName . " property,\n" . 
+       " * replacing the existing NSArray.\n" .
+       " *\n" . 
+       " * If the array is replaced successfully, the method JRCaptureObjectDelegate#replaceArrayDidSucceedForObject:newArray:named:context:\n" . 
+       " * will be called on your delegate. This method will return a pointer to the new array, which is also the same pointer\n" .
+       " * stored in the " . $className . "#" . $propertyName . " property, and the name of the replaced array: \\c \"" . $propertyName . "\".\n" .
+       " *\n" .
+       " * If unsuccessful, the method JRCaptureObjectDelegate#replaceArrayDidFailForObject:arrayNamed:withError:context:\n" .
+       " * will be called on your delegate.\n" .
+       " *\n" . 
+       " * \@param delegate\n" . 
+       " *   The JRCaptureObjectDelegate that implements the optional delegate methods JRCaptureObjectDelegate#replaceArrayDidSucceedForObject:newArray:named:context:\n" .
+       " *   and JRCaptureObjectDelegate#replaceArrayDidFailForObject:arrayNamed:withError:context:.\n" .
+       " *\n" . 
+       " * \@param context\n" . 
+       " *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \\c nil.\n" .
+       " *   This object will be passed back to your JRCaptureObjectDelegate as is. Contexts are used across most of the\n" .
+       " *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the\n" .
+       " *   context is entirely optional and at your discretion.\n" .
+       " *\n" . 
+       " * \@warning\n" . 
+       " * When successful, the new array will be added to the " . $className . "#" . $propertyName . " property,\n" . 
+       " * replacing the existing NSArray. The new array will contain new, but equivalent JR" . ucfirst($propertyName) . "Element\n" . 
+       " * objects. That is to say, the elements will be the same, but they will have new pointers. You should not hold onto\n" . 
+       " * any references to the " . $className . "#" . $propertyName . " or JR" . ucfirst($propertyName) . "Element objects\n" . 
+       " * when you are replacing this array on Capture, as the pointers will become invalid.\n" .
+       " * \n" . 
+       " * \@note\n" . 
+       " * After the array has been replaced on Capture, you can now call JR" . ucfirst($propertyName) . "Element#updateOnCaptureForDelegate:context:()\n" .  
+       " * on the array's elements. You can check the JR" . ucfirst($propertyName) . "Element#canBeUpdatedOnCapture property to determine\n" .  
+       " * if an element can be updated or not. If the JR" . ucfirst($propertyName) . "Element#canBeUpdatedOnCapture property is equal\n" . 
+       " * to \\c NO you should replace the " . $className . "#" . $propertyName . " array on Capture. Replacing the array will also\n" . 
+       " * update any local changes to the properties of a JR" . ucfirst($propertyName) . "Element, including sub-arrays and sub-objects.\n" . 
+       " *\n * \@par\n" . 
+       " * If you haven't added, removed, or reordered any of the elements of the " . $className . "#" . $propertyName . " array, but\n" . 
+       " * you have locally updated the properties of a JR" . ucfirst($propertyName) . "Element, you can just call\n" . 
+       " * JR" . ucfirst($propertyName) . "Element#updateOnCaptureForDelegate:context:() to update the local changes on the Capture server.\n" . 
+       " * The JR" . ucfirst($propertyName) . "Element#canBeUpdatedOnCapture property will let you know if you can do this.\n" .
        " **/\n" . 
        "- (void)replace" . ucfirst($propertyName) . "ArrayOnCaptureForDelegate:(id<JRCaptureObjectDelegate>)delegate context:(NSObject *)context;\n";
 
@@ -1239,9 +1281,9 @@ sub getToUpdateDictParts {
   return @toUpdateDictionaryParts;
 }
 
-#sub getUpdateRemotelyParts {
-#  return @updateRemotelyParts;
-#}
+sub getUpdateRemotelyParts {
+  return @updateRemotelyParts;
+}
 
 sub getToReplaceDictParts {
   return @toReplaceDictionaryParts;

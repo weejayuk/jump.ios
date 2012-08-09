@@ -45,7 +45,7 @@
  **/
 /*@{*/
 /**
- * Default constructor. Returns an empty JRBasicObject object
+ * Default instance constructor. Returns an empty JRBasicObject object
  *
  * @return
  *   A JRBasicObject object
@@ -53,7 +53,7 @@
 - (id)init;
 
 /**
- * Returns an empty JRBasicObject object
+ * Default class constructor. Returns an empty JRBasicObject object
  *
  * @return
  *   A JRBasicObject object
@@ -67,9 +67,22 @@
  **/
 /*@{*/
 /**
- * TODO: Doxygen doc
+ * Use this method to determine if the object or element needs to be updated remotely.
+ * That is, if there are local changes to any of the object/elements's properties or 
+ * sub-objects, then this object will need to be updated on Capture. You can update
+ * an object on Capture by using the method updateOnCaptureForDelegate:context:().
+ *
+ * @return
+ * \c YES if this object or any of it's sub-objects have any properties that have changed
+ * locally. This does not include properties that are arrays, if any, or the elements contained 
+ * within the arrays. \c NO if no non-array properties or sub-objects have changed locally.
  **/
 - (BOOL)needsUpdate;
+
+/**
+ * TODO: Doxygen doc
+ **/
+- (void)updateOnCaptureForDelegate:(id<JRCaptureObjectDelegate>)delegate context:(NSObject *)context;
 /*@}*/
 
 @end

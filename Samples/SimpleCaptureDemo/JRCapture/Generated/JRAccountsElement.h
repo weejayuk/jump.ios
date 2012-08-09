@@ -37,9 +37,9 @@
  * @brief Describes an account held by this Contact, which MAY be on the Service Provider's service, or MAY be on a different service.
  **/
 @interface JRAccountsElement : JRCaptureObject
-@property (nonatomic, readonly) JRObjectId *accountsElementId; /**< Simple identifier for this sub-entity @note The \e id of the object should not be set. // TODO: etc. */ 
+@property (nonatomic, readonly) JRObjectId *accountsElementId; /**< Simple identifier for this sub-entity @note The \e id of the object should not be set. */ 
 @property (nonatomic, copy)     NSString *domain; /**< The top-most authoritative domain for this account. */ 
-@property (nonatomic, copy)     JRBoolean *primary; /**< The object's \e primary property @note This is a property of type \ref types "boolean", which is a typedef of \e NSNumber. The accepted values can only be <code>[NSNumber numberWithBool:<em>myBool</em>]</code> or <code>nil</code> */ 
+@property (nonatomic, copy)     JRBoolean *primary; /**< The object's \e primary property @note A ::JRBoolean property is a property of type \ref typesTable "boolean" and a typedef of \e NSNumber. The accepted values can only be <code>[NSNumber numberWithBool:<em>myBool</em>]</code> or <code>nil</code> */ 
 @property (nonatomic, copy)     NSString *userid; /**< A user ID number, usually chosen automatically, and usually numeric but sometimes alphanumeric. */ 
 @property (nonatomic, copy)     NSString *username; /**< An alphanumeric user name, usually chosen by the user. */ 
 
@@ -48,7 +48,7 @@
  **/
 /*@{*/
 /**
- * Default constructor. Returns an empty JRAccountsElement object
+ * Default instance constructor. Returns an empty JRAccountsElement object
  *
  * @return
  *   A JRAccountsElement object
@@ -56,7 +56,7 @@
 - (id)init;
 
 /**
- * Returns an empty JRAccountsElement object
+ * Default class constructor. Returns an empty JRAccountsElement object
  *
  * @return
  *   A JRAccountsElement object
@@ -70,9 +70,29 @@
  **/
 /*@{*/
 /**
- * TODO: Doxygen doc
+ * Use this method to determine if the object or element needs to be updated remotely.
+ * That is, if there are local changes to any of the object/elements's properties or 
+ * sub-objects, then this object will need to be updated on Capture. You can update
+ * an object on Capture by using the method updateOnCaptureForDelegate:context:().
+ *
+ * @return
+ * \c YES if this object or any of it's sub-objects have any properties that have changed
+ * locally. This does not include properties that are arrays, if any, or the elements contained 
+ * within the arrays. \c NO if no non-array properties or sub-objects have changed locally.
+ *
+ * @warning
+ * This object, or one of its ancestors, is an element of a plural. If any elements of the plural have changed,
+ * (added or removed) the array must be replaced on Capture before the elements or their sub-objects can be
+ * updated. Please use the appropriate <code>replace&lt;<em>ArrayName</em>&gt;ArrayOnCaptureForDelegate:context:</code>
+ * method first. Even if JRCaptureObject#needsUpdate returns \c YES, this object cannot be updated on Capture unless
+ * JRCaptureObject#canBeUpdatedOnCapture also returns \c YES.
  **/
 - (BOOL)needsUpdate;
+
+/**
+ * TODO: Doxygen doc
+ **/
+- (void)updateOnCaptureForDelegate:(id<JRCaptureObjectDelegate>)delegate context:(NSObject *)context;
 /*@}*/
 
 /**
@@ -80,12 +100,12 @@
  **/
 /*@{*/
 /**
- * TODO
- **/
+ * Returns the primitive boolean value stored in the primary property. Will return \c NO if the
+ * primary is  nil. **/
 - (BOOL)getPrimaryBoolValue;
 
 /**
- * TODO
+ * Sets the primary property to a the primitive boolean value.
  **/
 - (void)setPrimaryWithBool:(BOOL)boolVal;
 /*@}*/

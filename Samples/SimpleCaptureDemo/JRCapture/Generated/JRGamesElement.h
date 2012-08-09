@@ -37,18 +37,18 @@
  * @brief A JRGamesElement object
  **/
 @interface JRGamesElement : JRCaptureObject
-@property (nonatomic, readonly) JRObjectId *gamesElementId; /**< Simple identifier for this sub-entity @note The \e id of the object should not be set. // TODO: etc. */ 
-@property (nonatomic, copy)     JRBoolean *isFavorite; /**< If the game is a favorite @note This is a property of type \ref types "boolean", which is a typedef of \e NSNumber. The accepted values can only be <code>[NSNumber numberWithBool:<em>myBool</em>]</code> or <code>nil</code> */ 
+@property (nonatomic, readonly) JRObjectId *gamesElementId; /**< Simple identifier for this sub-entity @note The \e id of the object should not be set. */ 
+@property (nonatomic, copy)     JRBoolean *isFavorite; /**< If the game is a favorite @note A ::JRBoolean property is a property of type \ref typesTable "boolean" and a typedef of \e NSNumber. The accepted values can only be <code>[NSNumber numberWithBool:<em>myBool</em>]</code> or <code>nil</code> */ 
 @property (nonatomic, copy)     NSString *name; /**< The name of the game */ 
-@property (nonatomic, copy)     JRStringArray *opponents; /**< The object's \e opponents property @note This is an array of \c NSStrings representing a list of \c name objects TODO: Add note about how setting the array requires a replace on capture and how you can set it with an array of stringPluralElements or just an array of strings */ 
-@property (nonatomic, copy)     JRInteger *rating; /**< User's rating of the game @note This is a property of type \ref types "integer", which is a typedef of \e NSNumber. The accepted values can only be <code>[NSNumber numberWithInteger:<em>myInteger</em>]</code>, <code>[NSNumber numberWithInt:<em>myInt</em>]</code>, or <code>nil</code> */ 
+@property (nonatomic, copy)     JRStringArray *opponents; /**< The object's \e opponents property @note  A ::JRStringArray property is a plural (array) that holds a list of \e NSStrings. As it is an array, it is therefore a typedef of \e NSArray. This array of \c NSStrings represents a list of \c name */ 
+@property (nonatomic, copy)     JRInteger *rating; /**< User's rating of the game @note A ::JRInteger property is a property of type \ref typesTable "integer" and a typedef of \e NSNumber. The accepted values can only be <code>[NSNumber numberWithInteger:<em>myInteger</em>]</code>, <code>[NSNumber numberWithInt:<em>myInt</em>]</code>, or <code>nil</code> */ 
 
 /**
  * @name Constructors
  **/
 /*@{*/
 /**
- * Default constructor. Returns an empty JRGamesElement object
+ * Default instance constructor. Returns an empty JRGamesElement object
  *
  * @return
  *   A JRGamesElement object
@@ -56,7 +56,7 @@
 - (id)init;
 
 /**
- * Returns an empty JRGamesElement object
+ * Default class constructor. Returns an empty JRGamesElement object
  *
  * @return
  *   A JRGamesElement object
@@ -70,14 +70,88 @@
  **/
 /*@{*/
 /**
- * TODO: DOXYGEN DOCS
+ * Use this method to replace the JRGamesElement#opponents array on Capture after adding, removing,
+ * or reordering elements. You should call this method immediately after you perform any of these actions.
+ * This method will replace the entire array on Capture, including all of its elements and their sub-arrays and
+ * sub-objects. When successful, the new array will be added to the JRGamesElement#opponents property,
+ * replacing the existing NSArray.
+ *
+ * If the array is replaced successfully, the method JRCaptureObjectDelegate#replaceArrayDidSucceedForObject:newArray:named:context:
+ * will be called on your delegate. This method will return a pointer to the new array, which is also the same pointer
+ * stored in the JRGamesElement#opponents property, and the name of the replaced array: \c "opponents".
+ *
+ * If unsuccessful, the method JRCaptureObjectDelegate#replaceArrayDidFailForObject:arrayNamed:withError:context:
+ * will be called on your delegate.
+ *
+ * @param delegate
+ *   The JRCaptureObjectDelegate that implements the optional delegate methods JRCaptureObjectDelegate#replaceArrayDidSucceedForObject:newArray:named:context:
+ *   and JRCaptureObjectDelegate#replaceArrayDidFailForObject:arrayNamed:withError:context:.
+ *
+ * @param context
+ *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
+ *   This object will be passed back to your JRCaptureObjectDelegate as is. Contexts are used across most of the
+ *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
+ *   context is entirely optional and at your discretion.
+ *
+ * @warning
+ * When successful, the new array will be added to the JRGamesElement#opponents property,
+ * replacing the existing NSArray. The new array will contain new, but equivalent JROpponentsElement
+ * objects. That is to say, the elements will be the same, but they will have new pointers. You should not hold onto
+ * any references to the JRGamesElement#opponents or JROpponentsElement objects
+ * when you are replacing this array on Capture, as the pointers will become invalid.
+ * 
+ * @note
+ * After the array has been replaced on Capture, you can now call JROpponentsElement#updateOnCaptureForDelegate:context:()
+ * on the array's elements. You can check the JROpponentsElement#canBeUpdatedOnCapture property to determine
+ * if an element can be updated or not. If the JROpponentsElement#canBeUpdatedOnCapture property is equal
+ * to \c NO you should replace the JRGamesElement#opponents array on Capture. Replacing the array will also
+ * update any local changes to the properties of a JROpponentsElement, including sub-arrays and sub-objects.
+ *
+ * @par
+ * If you haven't added, removed, or reordered any of the elements of the JRGamesElement#opponents array, but
+ * you have locally updated the properties of a JROpponentsElement, you can just call
+ * JROpponentsElement#updateOnCaptureForDelegate:context:() to update the local changes on the Capture server.
+ * The JROpponentsElement#canBeUpdatedOnCapture property will let you know if you can do this.
  **/
 - (void)replaceOpponentsArrayOnCaptureForDelegate:(id<JRCaptureObjectDelegate>)delegate context:(NSObject *)context;
 
 /**
- * TODO: Doxygen doc
+ * Use this method to determine if the object or element needs to be updated remotely.
+ * That is, if there are local changes to any of the object/elements's properties or 
+ * sub-objects, then this object will need to be updated on Capture. You can update
+ * an object on Capture by using the method updateOnCaptureForDelegate:context:().
+ *
+ * @return
+ * \c YES if this object or any of it's sub-objects have any properties that have changed
+ * locally. This does not include properties that are arrays, if any, or the elements contained 
+ * within the arrays. \c NO if no non-array properties or sub-objects have changed locally.
+ *
+ * @warning
+ * This object, or one of its ancestors, is an element of a plural. If any elements of the plural have changed,
+ * (added or removed) the array must be replaced on Capture before the elements or their sub-objects can be
+ * updated. Please use the appropriate <code>replace&lt;<em>ArrayName</em>&gt;ArrayOnCaptureForDelegate:context:</code>
+ * method first. Even if JRCaptureObject#needsUpdate returns \c YES, this object cannot be updated on Capture unless
+ * JRCaptureObject#canBeUpdatedOnCapture also returns \c YES.
+ *
+ * @par
+ * This method recursively checks all of the sub-objects of JRGamesElement
+ * but does not check any of the arrays of the JRGamesElement or the arrays' elements:
+ *   - JRGamesElement#opponents, JROpponentsElement
+ * .
+ * @par
+ * If you have added or removed any elements from the arrays, you must call the following methods
+ * to update the array on Capture: replaceOpponentsArrayOnCaptureForDelegate:context:()
+ *
+ * @par
+ * Otherwise, if the array elements' JRCaptureObject#canBeUpdatedOnCapture and JRCaptureObject#needsUpdate returns \c YES, you can update
+ * the elements by calling updateOnCaptureForDelegate:context:().
  **/
 - (BOOL)needsUpdate;
+
+/**
+ * TODO: Doxygen doc
+ **/
+- (void)updateOnCaptureForDelegate:(id<JRCaptureObjectDelegate>)delegate context:(NSObject *)context;
 /*@}*/
 
 /**
@@ -85,22 +159,22 @@
  **/
 /*@{*/
 /**
- * TODO
- **/
+ * Returns the primitive boolean value stored in the isFavorite property. Will return \c NO if the
+ * isFavorite is  nil. **/
 - (BOOL)getIsFavoriteBoolValue;
 
 /**
- * TODO
+ * Sets the isFavorite property to a the primitive boolean value.
  **/
 - (void)setIsFavoriteWithBool:(BOOL)boolVal;
 
 /**
- * TODO
- **/
+ * Returns the primitive integer value stored in the rating property. Will return \c 0 if the
+ * rating is  nil. **/
 - (NSInteger)getRatingIntegerValue;
 
 /**
- * TODO
+ * Sets the rating property to a the primitive integer value.
  **/
 - (void)setRatingWithInteger:(NSInteger)integerVal;
 /*@}*/

@@ -1991,6 +1991,11 @@
     return [NSDictionary dictionaryWithDictionary:dictionary];
 }
 
+- (void)updateOnCaptureForDelegate:(id<JRCaptureObjectDelegate>)delegate context:(NSObject *)context
+{
+    [super updateOnCaptureForDelegate:delegate context:context];
+}
+
 - (NSDictionary *)toReplaceDictionary
 {
     NSMutableDictionary *dictionary =

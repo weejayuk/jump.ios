@@ -528,7 +528,6 @@ static NSArray* filteredArrayOfValidUrls (NSArray *urls)
 
 @implementation JRActivityObject
 @synthesize action                 = _action;
-//@synthesize url                  = _url;
 @synthesize userGeneratedContent   = _userGeneratedContent;
 @synthesize resourceTitle          = _resourceTitle;
 @synthesize resourceDescription    = _resourceDescription;
@@ -536,12 +535,13 @@ static NSArray* filteredArrayOfValidUrls (NSArray *urls)
 @synthesize email                  = _email;
 @synthesize sms                    = _sms;
 @dynamic url;
-@dynamic user_generated_content;
-@dynamic title;
-@dynamic description;
 @dynamic actionLinks;
-@dynamic action_links;
 @dynamic media;
+//@synthesize url                  = _url;
+//@dynamic user_generated_content;
+//@dynamic title;
+//@dynamic description;
+//@dynamic action_links;
 
 - (id)initWithAction:(NSString*)action andUrl:(NSString*)url
 {
@@ -664,17 +664,17 @@ static NSArray* filteredArrayOfValidUrls (NSArray *urls)
     return [[_actionLinks copy] autorelease];
 }
 
-/* Deprecated; calling new function instead. */
-- (void)setAction_links:(NSArray*)action_links
-{
-    [self setActionLinks:action_links];
-}
+///* Deprecated; calling new function instead. */
+//- (void)setAction_links:(NSArray*)action_links
+//{
+//    [self setActionLinks:action_links];
+//}
 
-/* Deprecated; calling new function instead. */
-- (NSArray*)action_links
-{
-    return [self actionLinks];
-}
+///* Deprecated; calling new function instead. */
+//- (NSArray*)action_links
+//{
+//    return [self actionLinks];
+//}
 
 /* Some pre-processing of the activity object, mostly the media array, to deal with
    anything icky before sending it to rpxnow's publish_activity api                 */
@@ -831,12 +831,12 @@ static NSArray* filteredArrayOfValidUrls (NSArray *urls)
     return activityObject;
 }
 
-- (void)setTitle:(NSString*)title                                   { self.resourceTitle = title;             }
-- (void)setDescription:(NSString*)description                       { self.resourceDescription = description; }
-- (void)setUser_generated_content:(NSString*)user_generated_content { self.userGeneratedContent = user_generated_content; }
-- (NSString*)title                  { return self.resourceTitle;        }
-- (NSString*)description            { return self.resourceDescription;  }
-- (NSString*)user_generated_content { return self.userGeneratedContent; }
+//- (void)setTitle:(NSString*)title                                   { self.resourceTitle = title;             }
+//- (void)setDescription:(NSString*)description                       { self.resourceDescription = description; }
+//- (void)setUser_generated_content:(NSString*)user_generated_content { self.userGeneratedContent = user_generated_content; }
+//- (NSString*)title                  { return self.resourceTitle;        }
+//- (NSString*)description            { return self.resourceDescription;  }
+//- (NSString*)user_generated_content { return self.userGeneratedContent; }
 
 - (void)dealloc
 {

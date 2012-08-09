@@ -38,13 +38,13 @@
  * @brief Describes a current or past organizational affiliation of this contact.
  **/
 @interface JROrganizationsElement : JRCaptureObject
-@property (nonatomic, readonly) JRObjectId *organizationsElementId; /**< Simple identifier for this sub-entity @note The \e id of the object should not be set. // TODO: etc. */ 
+@property (nonatomic, readonly) JRObjectId *organizationsElementId; /**< Simple identifier for this sub-entity @note The \e id of the object should not be set. */ 
 @property (nonatomic, copy)     NSString *department; /**< The department within this organization. */ 
 @property (nonatomic, copy)     NSString *description; /**< A textual description of the role this Contact played in this organization. */ 
 @property (nonatomic, copy)     NSString *endDate; /**< The date this Contact left this organization or the role specified by title within this organization. */ 
 @property (nonatomic, retain)   JRLocation *location; /**< The object's \e location property */ 
 @property (nonatomic, copy)     NSString *name; /**< The name of the organization. */ 
-@property (nonatomic, copy)     JRBoolean *primary; /**< The object's \e primary property @note This is a property of type \ref types "boolean", which is a typedef of \e NSNumber. The accepted values can only be <code>[NSNumber numberWithBool:<em>myBool</em>]</code> or <code>nil</code> */ 
+@property (nonatomic, copy)     JRBoolean *primary; /**< The object's \e primary property @note A ::JRBoolean property is a property of type \ref typesTable "boolean" and a typedef of \e NSNumber. The accepted values can only be <code>[NSNumber numberWithBool:<em>myBool</em>]</code> or <code>nil</code> */ 
 @property (nonatomic, copy)     NSString *startDate; /**< The date this Contact joined this organization. */ 
 @property (nonatomic, copy)     NSString *title; /**< The job title or role within this organization. */ 
 @property (nonatomic, copy)     NSString *type; /**< The type of organization, with Canonical Values 'job' and 'school'. */ 
@@ -54,7 +54,7 @@
  **/
 /*@{*/
 /**
- * Default constructor. Returns an empty JROrganizationsElement object
+ * Default instance constructor. Returns an empty JROrganizationsElement object
  *
  * @return
  *   A JROrganizationsElement object
@@ -62,7 +62,7 @@
 - (id)init;
 
 /**
- * Returns an empty JROrganizationsElement object
+ * Default class constructor. Returns an empty JROrganizationsElement object
  *
  * @return
  *   A JROrganizationsElement object
@@ -76,9 +76,36 @@
  **/
 /*@{*/
 /**
- * TODO: Doxygen doc
+ * Use this method to determine if the object or element needs to be updated remotely.
+ * That is, if there are local changes to any of the object/elements's properties or 
+ * sub-objects, then this object will need to be updated on Capture. You can update
+ * an object on Capture by using the method updateOnCaptureForDelegate:context:().
+ *
+ * @return
+ * \c YES if this object or any of it's sub-objects have any properties that have changed
+ * locally. This does not include properties that are arrays, if any, or the elements contained 
+ * within the arrays. \c NO if no non-array properties or sub-objects have changed locally.
+ *
+ * @note
+ * This method recursively checks all of the sub-objects of JROrganizationsElement:
+ *   - JROrganizationsElement#location
+ * .
+ * @par
+ * If any of these objects are new, or if they need to be updated, this method returns \c YES.
+ *
+ * @warning
+ * This object, or one of its ancestors, is an element of a plural. If any elements of the plural have changed,
+ * (added or removed) the array must be replaced on Capture before the elements or their sub-objects can be
+ * updated. Please use the appropriate <code>replace&lt;<em>ArrayName</em>&gt;ArrayOnCaptureForDelegate:context:</code>
+ * method first. Even if JRCaptureObject#needsUpdate returns \c YES, this object cannot be updated on Capture unless
+ * JRCaptureObject#canBeUpdatedOnCapture also returns \c YES.
  **/
 - (BOOL)needsUpdate;
+
+/**
+ * TODO: Doxygen doc
+ **/
+- (void)updateOnCaptureForDelegate:(id<JRCaptureObjectDelegate>)delegate context:(NSObject *)context;
 /*@}*/
 
 /**
@@ -86,12 +113,12 @@
  **/
 /*@{*/
 /**
- * TODO
- **/
+ * Returns the primitive boolean value stored in the primary property. Will return \c NO if the
+ * primary is  nil. **/
 - (BOOL)getPrimaryBoolValue;
 
 /**
- * TODO
+ * Sets the primary property to a the primitive boolean value.
  **/
 - (void)setPrimaryWithBool:(BOOL)boolVal;
 /*@}*/

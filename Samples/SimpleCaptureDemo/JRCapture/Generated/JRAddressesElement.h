@@ -37,16 +37,16 @@
  * @brief A physical mailing address for this Contact.
  **/
 @interface JRAddressesElement : JRCaptureObject
-@property (nonatomic, readonly) JRObjectId *addressesElementId; /**< Simple identifier for this sub-entity @note The \e id of the object should not be set. // TODO: etc. */ 
+@property (nonatomic, readonly) JRObjectId *addressesElementId; /**< Simple identifier for this sub-entity @note The \e id of the object should not be set. */ 
 @property (nonatomic, copy)     NSString *country; /**< The country name component. */ 
 @property (nonatomic, copy)     NSString *extendedAddress; /**< The object's \e extendedAddress property */ 
 @property (nonatomic, copy)     NSString *formatted; /**< The full mailing address, formatted for display or use with a mailing label. */ 
-@property (nonatomic, copy)     JRDecimal *latitude; /**< The object's \e latitude property */ 
+@property (nonatomic, copy)     JRDecimal *latitude; /**< The object's \e latitude property @note A ::JRDecimal property is a property of type \ref typesTable "decimal" and a typedef of \e NSNumber. Accepted values can be, for example, <code>[NSNumber numberWithNumber:<em>myDecimal</em>]</code>, <code>nil</code>, etc. */ 
 @property (nonatomic, copy)     NSString *locality; /**< The city or locality component. */ 
-@property (nonatomic, copy)     JRDecimal *longitude; /**< The object's \e longitude property */ 
+@property (nonatomic, copy)     JRDecimal *longitude; /**< The object's \e longitude property @note A ::JRDecimal property is a property of type \ref typesTable "decimal" and a typedef of \e NSNumber. Accepted values can be, for example, <code>[NSNumber numberWithNumber:<em>myDecimal</em>]</code>, <code>nil</code>, etc. */ 
 @property (nonatomic, copy)     NSString *poBox; /**< The object's \e poBox property */ 
 @property (nonatomic, copy)     NSString *postalCode; /**< The zipcode or postal code component. */ 
-@property (nonatomic, copy)     JRBoolean *primary; /**< The object's \e primary property @note This is a property of type \ref types "boolean", which is a typedef of \e NSNumber. The accepted values can only be <code>[NSNumber numberWithBool:<em>myBool</em>]</code> or <code>nil</code> */ 
+@property (nonatomic, copy)     JRBoolean *primary; /**< The object's \e primary property @note A ::JRBoolean property is a property of type \ref typesTable "boolean" and a typedef of \e NSNumber. The accepted values can only be <code>[NSNumber numberWithBool:<em>myBool</em>]</code> or <code>nil</code> */ 
 @property (nonatomic, copy)     NSString *region; /**< The state or region component. */ 
 @property (nonatomic, copy)     NSString *streetAddress; /**< The full street address component, which may include house number, street name, PO BOX, and multi-line extended street address information. */ 
 @property (nonatomic, copy)     NSString *type; /**< The object's \e type property */ 
@@ -56,7 +56,7 @@
  **/
 /*@{*/
 /**
- * Default constructor. Returns an empty JRAddressesElement object
+ * Default instance constructor. Returns an empty JRAddressesElement object
  *
  * @return
  *   A JRAddressesElement object
@@ -64,7 +64,7 @@
 - (id)init;
 
 /**
- * Returns an empty JRAddressesElement object
+ * Default class constructor. Returns an empty JRAddressesElement object
  *
  * @return
  *   A JRAddressesElement object
@@ -78,9 +78,29 @@
  **/
 /*@{*/
 /**
- * TODO: Doxygen doc
+ * Use this method to determine if the object or element needs to be updated remotely.
+ * That is, if there are local changes to any of the object/elements's properties or 
+ * sub-objects, then this object will need to be updated on Capture. You can update
+ * an object on Capture by using the method updateOnCaptureForDelegate:context:().
+ *
+ * @return
+ * \c YES if this object or any of it's sub-objects have any properties that have changed
+ * locally. This does not include properties that are arrays, if any, or the elements contained 
+ * within the arrays. \c NO if no non-array properties or sub-objects have changed locally.
+ *
+ * @warning
+ * This object, or one of its ancestors, is an element of a plural. If any elements of the plural have changed,
+ * (added or removed) the array must be replaced on Capture before the elements or their sub-objects can be
+ * updated. Please use the appropriate <code>replace&lt;<em>ArrayName</em>&gt;ArrayOnCaptureForDelegate:context:</code>
+ * method first. Even if JRCaptureObject#needsUpdate returns \c YES, this object cannot be updated on Capture unless
+ * JRCaptureObject#canBeUpdatedOnCapture also returns \c YES.
  **/
 - (BOOL)needsUpdate;
+
+/**
+ * TODO: Doxygen doc
+ **/
+- (void)updateOnCaptureForDelegate:(id<JRCaptureObjectDelegate>)delegate context:(NSObject *)context;
 /*@}*/
 
 /**
@@ -88,12 +108,12 @@
  **/
 /*@{*/
 /**
- * TODO
- **/
+ * Returns the primitive boolean value stored in the primary property. Will return \c NO if the
+ * primary is  nil. **/
 - (BOOL)getPrimaryBoolValue;
 
 /**
- * TODO
+ * Sets the primary property to a the primitive boolean value.
  **/
 - (void)setPrimaryWithBool:(BOOL)boolVal;
 /*@}*/

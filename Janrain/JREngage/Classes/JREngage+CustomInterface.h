@@ -55,8 +55,8 @@
  *
  * You can also override these default customizations by launching the authentication and social
  * sharing with a new dictionary of the \ref customInterfaceKeys "pre-defined set of keys" and
- * values with the JREngage#showAuthenticationDialogWithCustomInterface:
- * or JREngage#showSocialPublishingDialogWithActivity:andCustomInterface: methods. Any overlapping
+ * values with the JREngage#showAuthenticationDialogWithCustomInterfaceOverrides:
+ * or JREngage#showSharingDialogWithActivity:withCustomInterfaceOverrides: methods. Any overlapping
  * values passed into the \e show...Dialog methods will override the corresponding values passed
  * into the JREngage#setCustomInterfaceDefaults: method.
  *
@@ -98,7 +98,7 @@
  * Do not cancel social sharing or authentication by popping the navigation controller back to one
  * of your views, as this could potentially leave the library in an unexpected state. If you wish
  * to cancel sign in or social sharing, please use the JREngage#cancelAuthentication or
- * JREngage#cancelPublishing methods.
+ * JREngage#cancelSharing methods.
  **/
 #define kJRNavigationControllerHidesCancelButton @"NavigationController.HidesCancelButton"
 /*@}*/
@@ -175,8 +175,8 @@
  * Key for the \e NSString title to be set as the title of the Providers Table.
  *
  * @note
- * If a \e UIView* is set for the define #kJRProviderTableTitleView key,  this string will not
- * appear as the title on the navigation bar.  It will only be used as the text on the "Back" button.
+ * If a \e UIView* is set for the define #kJRProviderTableTitleView key, this string will not
+ * appear as the title on the navigation bar. It will only be used as the text on the "Back" button.
  **/
 #define kJRProviderTableTitleString   @"ProviderTable.Title.String"
 
@@ -185,7 +185,7 @@
  *
  * @note
  * If a \e UIView* is set for the define #kJRSocialSharingTitleView key, this string will not
- * appear as the title on the navigation bar.  It will only be used as the text on the "Back" button.
+ * appear as the title on the navigation bar. It will only be used as the text on the "Back" button.
  **/
 #define kJRSocialSharingTitleString   @"SocialSharing.Title.String"
 /*@}*/
@@ -298,7 +298,6 @@
  * Keys to customize the list of providers during sign-in
  **/
 /*@{*/
-
 /**
  * Key for an \e NSArray object containing a list of /e NSString provider names that you would like to exclude from table of
  * providers when you launch the sign-in dialog
@@ -333,160 +332,11 @@
  * you can use the keys define #kJRProviderTableSectionHeaderTitleString or define #kJRProviderTableSectionHeaderView
  **/
 #define kJRCaptureConventionalSigninTitleView      @"Capture.ConventionalSignin.Title.View"
+/*@}*/
 
 /**
  * @internal
  **/
 #define kJRCaptureConventionalSigninViewController @"Capture.ConventionalSignin.ViewController"
+/** @}*/
 
-
-/*@}*/
-
-
-/**
- * @name Deprecated
- * These keys have been deprecated in the current version of the JREngage library
- **/
-/*@{*/
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-///**
-// * @deprecated
-// * If you want to set the color of the navigation bar,
-// * you can push the library's dialogs onto your own navigation controller, using the
-// * JREngage#setCustomNavigationController: method, or create a navigation bar, set the tint,
-// * and pass it to the library with the define #kJRUseCustomModalNavigationController
-// **/
-//#define kJRNavigationBarTintColor  @"NavigationBar.TintColor"
-
-///**
-// * @deprecated
-// * If you want to set the color of the navigation bar,
-// * you can push the library's dialogs onto your own navigation controller, using the
-// * JREngage#setCustomNavigationController: method, or create a navigation bar, set the tint,
-// * and pass it to the library with the define #kJRUseCustomModalNavigationController
-// **/
-//#define kJRNavigationBarTintColorRGBa  @"NavigationBar.TintColor.RGBa"
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
-
-/**
- * @deprecated This value will not be used. define #kJRAuthenticationBackgroundColor will be used instead.
- **/
-#define kJRAuthenticationBackgroundColorRGBa  @"Authentication.Background.Color.RGBa"
-
-/**
- * @deprecated This value will not be used. define #kJRSharingBackgroundColor will be used instead.
- **/
-#define kJRSocialSharingBackgroundColorRGBa   @"SocialSharing.Background.Color.RGBa"
-
-//#ifndef DOXYGEN_SHOULD_SKIP_THIS
-///**
-// * @deprecated Please use define #kJRAuthenticationBackgroundImageView instead.
-// **/
-//#define kJRProviderTableBackgroundImageName   @"ProviderTable.Background.Image.Name"
-
-///**
-// * @deprecated Please use define #kJRAuthenticationBackgroundImageView instead.
-// **/
-//#define kJRUserLandingBackgroundImageName     @"UserLanding.Background.Image.Name"
-
-///**
-// * @deprecated Please use define #kJRSocialSharingBackgroundImageView instead.
-// **/
-//#define kJRSocialSharingBackgroundImageName   @"SocialSharing.Background.Image.Name"
-
-///**
-// * @deprecated This value will not be used. define #kJRProviderTableBackgroundImageName will be used instead.
-// **/
-//#define kJRProviderTableBackgroundImageName_iPad   @"ProviderTable.Background.Image.Name-iPad"
-
-///**
-// * @deprecated This value will not be used. define #kJRUserLandingBackgroundImageView will be used instead.
-// **/
-//#define kJRUserLandingBackgroundImageName_iPad     @"UserLanding.Background.Image.Name-iPad"
-
-///**
-// * @deprecated This value will not be used. define #kJRSocialSharingBackgroundImageView will be used instead.
-// **/
-//#define kJRSocialSharingBackgroundImageName_iPad   @"SocialSharing.Background.Image.Name-iPad"
-
-///**
-// * @deprecated This value will not be used. define #kJRProviderTableTitleView will be used instead.
-// **/
-//#define kJRProviderTableTitleView_iPad   @"ProviderTable.Title.View-iPad"
-
-///**
-// * @deprecated This value will not be used. define #kJRSocialSharingTitleView will be used instead.
-// **/
-//#define kJRSocialSharingTitleView_iPad   @"SocialSharing.Title.View-iPad"
-
-///**
-// * @deprecated This value will not be used. define #kJRProviderTableHeaderView will be used instead.
-// **/
-//#define kJRProviderTableHeaderView_iPad  @"ProviderTable.Table.Header.View-iPad"
-
-///**
-// * @deprecated This value will not be used. define #kJRProviderTableFooterView will be used instead.
-// **/
-//#define kJRProviderTableFooterView_iPad  @"ProviderTable.Table.Footer.View-iPad"
-
-///**
-// * @deprecated This value will not be used. define #kJRProviderTableSectionHeaderView will be used instead.
-// **/
-//#define kJRProviderTableSectionHeaderView_iPad  @"ProviderTable.Section.Header.View-iPad"
-
-///**
-// * @deprecated This value will not be used. define #kJRProviderTableSectionFooterView will be used instead.
-// **/
-//#define kJRProviderTableSectionFooterView_iPad  @"ProviderTable.Section.Footer.View-iPad"
-//#endif /* DOXYGEN_SHOULD_SKIP_THIS */
-/*@}*/
-
-//@interface JREngage (CustomInterface)
-//
-///**
-// * @name Configure the User Interface
-// * Methods used to customize the JREngage's user interface
-// **/
-///*@{*/
-//
-///**
-// * Use this function if you want to customize the look and feel of the user interface or add
-// * your own native login experience, by passing an \e NSMutableDictionary object indexed by the set of
-// * \link customInterface pre-defined custom interface keys\endlink.
-// *
-// * @param customInterfaceDefaults
-// *   A dictionary of objects and properties, indexed by the set of
-// *   \link customInterface pre-defined custom interface keys\endlink,
-// *   to be used by the library to customize the look and feel of the user
-// *   interface and/or add a native login experience
-// *
-// * @note
-// * Any values specified in the \e customizationInterfaceOverrides dictionary of the
-// * showAuthenticationDialogWithCustomInterfaceOverrides:(NSDictionary*) or
-// * showSocialPublishingDialogWithActivity:andCustomInterfaceOverrides:()
-// * methods, will override the corresponding values specified in the dictionary passed into
-// * the setCustomInterfaceDefaults:() method.
-// **/
-//+ (void)setCustomInterfaceDefaults:(NSMutableDictionary*)customInterfaceDefaults;
-//
-////#ifndef DOXYGEN_SHOULD_SKIP_THIS
-///////**
-////// * @deprecated Please use setCustomInterfaceDefaults() instead.
-////// **/
-////- (void)setCustomInterface:(NSDictionary*)customizations
-////            __attribute__ ((deprecated)) __attribute__ ((unavailable));
-////#endif /* DOXYGEN_SHOULD_SKIP_THIS */
-///*@}*/
-//
-///**
-// * @name Depricated
-// **/
-///*@{*/
-///**
-// * @deprecated Please use showAuthenticationDialogWithCustomInterfaceOverrides:() instead.
-// **/
-//- (void)setCustomInterfaceDefaults:(NSMutableDictionary*)customInterfaceDefaults
-//__attribute__ ((deprecated));// __attribute__ ((unavailable));
-///*@}*/
-//@end
