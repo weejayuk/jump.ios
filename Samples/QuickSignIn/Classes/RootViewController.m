@@ -249,10 +249,7 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {
-    if (iPad && !libraryDialogShowing)
-        return YES;
-
-    return NO;//(toInterfaceOrientation == UIInterfaceOrientationPortrait);
+    return YES;
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
