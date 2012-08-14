@@ -46,6 +46,7 @@
 #import "ObjectDrillDownViewController.h"
 
 @interface ViewController ()
+- (void)adjustUiState;
 @end
 
 @implementation ViewController
@@ -55,7 +56,7 @@
 @synthesize testerButton;
 @synthesize updateButton;
 @synthesize signinButton;
-
+@synthesize signoutButton;
 
 - (void)viewDidLoad
 {
@@ -69,6 +70,30 @@
     if ([SharedData currentProvider])
         currentUserProviderIcon.image = [UIImage imageNamed:
                      [NSString stringWithFormat:@"icon_%@_30x30@2x.png", [SharedData currentProvider]]];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self adjustUiState];
+}
+
+- (BOOL)isUserSignedIn
+{
+    return [SharedData captureUser] != nil;
+}
+
+- (void)adjustUiState
+{
+    if ([self isUserSignedIn])
+    {
+        signinButton.hidden = YES;
+        signoutButton.hidden = NO;
+    }
+    else
+    {
+        signinButton.hidden = NO;
+        signoutButton.hidden = YES;
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -86,16 +111,18 @@
     [browseButton setEnabled:enabled];
     [testerButton setEnabled:enabled];
     [updateButton setEnabled:enabled];
+    [signinButton setEnabled:enabled];
+    [signoutButton setEnabled:enabled];
 }
 
 - (IBAction)browseButtonPressed:(id)sender
 {
     ObjectDrillDownViewController *drillDown =
-                [[ObjectDrillDownViewController alloc] initWithNibName:@"ObjectDrillDownViewController"
-                                                                bundle:[NSBundle mainBundle]
-                                                             forObject:[SharedData captureUser]
-                                                   captureParentObject:nil
-                                                                andKey:@"CaptureUser"];
+        [[ObjectDrillDownViewController alloc] initWithNibName:@"ObjectDrillDownViewController"
+                                                        bundle:[NSBundle mainBundle]
+                                                     forObject:[SharedData captureUser]
+                                           captureParentObject:nil
+                                                        andKey:@"CaptureUser"];
 
     [[self navigationController] pushViewController:drillDown animated:YES];
 }
@@ -103,7 +130,7 @@
 - (IBAction)updateButtonPressed:(id)sender
 {
     CaptureNewUserViewController *viewController = [[CaptureNewUserViewController alloc]
-            initWithNibName:@"CaptureNewUserViewController" bundle:[NSBundle mainBundle]];
+        initWithNibName:@"CaptureNewUserViewController" bundle:[NSBundle mainBundle]];
 
     [self.navigationController pushViewController:viewController animated:YES];
 }
@@ -111,10 +138,7 @@
 - (IBAction)testerButtonPressed:(id)sender
 {
 //    DLog(@"");
-   JRCaptureUser *captureUser = [JRCaptureUser captureUser];
-
-
-
+//   JRCaptureUser *captureUser = [JRCaptureUser captureUser];
 //
 //    captureUser.displayName = @"mcspilli";
 //    captureUser.avatar      = @"sexy_brunette.jpg";
@@ -132,24 +156,30 @@
 //    JRBestHand *bestHand = [JRBestHand bestHand];
 //
 //    bestHand.
-
 }
 
 - (IBAction)signInButtonPressed:(id)sender
 {
     [self setButtonsEnabled:NO];
-    currentUserLabel.text         = @"No current user";
     currentUserProviderIcon.image = nil;
-
+    
     NSDictionary *customInterface = [NSDictionary dictionaryWithObject:self.navigationController
                                                                 forKey:kJRApplicationNavigationController];
-
+    
     [SharedData startAuthenticationWithCustomInterface:customInterface forDelegate:self];
+}
+
+- (IBAction)signOutButtonPressed:(id)sender
+{
+    currentUserLabel.text = @"No current user";
+    currentUserProviderIcon.image = nil;
+    [SharedData signoutCurrentUser];
+    [self adjustUiState];
 }
 
 - (void)engageSignInDidSucceed
 {
-    currentUserLabel.text         = @"Logging in...";
+    currentUserLabel.text         = @"Signing in...";
 //            [SharedData currentDisplayName] ?
 //            [NSString stringWithFormat:@"Current user: %@", [SharedData currentDisplayName]] :
 //            @"Capture User";
@@ -170,7 +200,7 @@
     if ([SharedData notYetCreated] || [SharedData isNew])
     {
         CaptureNewUserViewController *viewController = [[CaptureNewUserViewController alloc]
-                initWithNibName:@"CaptureNewUserViewController" bundle:[NSBundle mainBundle]];
+            initWithNibName:@"CaptureNewUserViewController" bundle:[NSBundle mainBundle]];
 
         [self.navigationController pushViewController:viewController animated:YES];
     }
@@ -209,4 +239,5 @@
 {
     return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
+
 @end

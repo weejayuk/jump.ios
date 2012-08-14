@@ -41,7 +41,6 @@
 
 #import "SharedData.h"
 
-#define cJRCurrentEmailAddr @"simpleCaptureDemo.currentEmailAddr"
 #define cJRCurrentProvider  @"simpleCaptureDemo.currentProvider"
 #define cJRCaptureUser      @"simpleCaptureDemo.captureUser"
 
@@ -50,7 +49,6 @@
 @property (strong) JRCaptureUser      *captureUser;
 @property          BOOL                isNew;
 @property          BOOL                notYetCreated;
-@property (strong) NSString           *currentEmailAddr;
 @property (strong) NSString           *currentProvider;
 @property (weak)   id<SignInDelegate>  signInDelegate;
 
@@ -79,7 +77,6 @@ static NSString *entityTypeName     = @"sample_user";
 
 @synthesize captureUser;
 @synthesize prefs;
-@synthesize currentEmailAddr;
 @synthesize currentProvider;
 @synthesize signInDelegate;
 @synthesize isNew;
@@ -96,7 +93,7 @@ static NSString *entityTypeName     = @"sample_user";
                 andEntityTypeName:entityTypeName];
 
         prefs = [NSUserDefaults standardUserDefaults];
-        currentEmailAddr = [prefs objectForKey:cJRCurrentEmailAddr];
+
         currentProvider  = [prefs objectForKey:cJRCurrentProvider];
 
         NSData *archivedCaptureUser = [prefs objectForKey:cJRCaptureUser];
@@ -146,7 +143,7 @@ static NSString *entityTypeName     = @"sample_user";
 
 + (NSString *)currentEmailAddr
 {
-    return [[SharedData singletonInstance] currentEmailAddr];
+    return [SharedData singletonInstance].captureUser.email;
 }
 
 + (NSString *)currentProvider
@@ -156,14 +153,12 @@ static NSString *entityTypeName     = @"sample_user";
 
 - (void)signoutCurrentUser
 {
-    self.currentEmailAddr = nil;
     self.currentProvider  = nil;
     self.captureUser      = nil;
 
     self.isNew         = NO;
     self.notYetCreated = NO;
 
-    [prefs setObject:nil forKey:cJRCurrentEmailAddr];
     [prefs setObject:nil forKey:cJRCurrentProvider];
     [prefs setObject:nil forKey:cJRCaptureUser];
 
@@ -175,14 +170,15 @@ static NSString *entityTypeName     = @"sample_user";
     [[SharedData singletonInstance] signoutCurrentUser];
 }
 
-+ (void)startAuthenticationWithCustomInterface:(NSDictionary *)customInterface forDelegate:(id<SignInDelegate>)delegate
++ (void)startAuthenticationWithCustomInterface:(NSDictionary *)customInterface
+                                   forDelegate:(id<SignInDelegate>)delegate
 {
     [SharedData signoutCurrentUser];
     [[SharedData singletonInstance] setSignInDelegate:delegate];
 
     [JRCapture startEngageSigninDialogWithConventionalSignin:JRConventionalSigninEmailPassword
-                             andCustomInterfaceOverrides:customInterface
-                                             forDelegate:[SharedData singletonInstance]];
+         andCustomInterfaceOverrides:customInterface
+                         forDelegate:[SharedData singletonInstance]];
 }
 
 //+ (NSString*)getDisplayNameFromProfile:(NSDictionary*)profile
@@ -217,9 +213,6 @@ static NSString *entityTypeName     = @"sample_user";
 
 - (void)resaveCaptureUser
 {
-    self.currentEmailAddr = captureUser.email;
-    [prefs setObject:currentEmailAddr forKey:cJRCurrentEmailAddr];
-
     [prefs setObject:[NSKeyedArchiver archivedDataWithRootObject:captureUser]
               forKey:cJRCaptureUser];
 }
@@ -253,7 +246,8 @@ static NSString *entityTypeName     = @"sample_user";
     [self postEngageErrorToDelegate:error];
 }
 
-- (void)engageAuthenticationDidFailWithError:(NSError *)error forProvider:(NSString *)provider
+- (void)engageAuthenticationDidFailWithError:(NSError *)error
+                                 forProvider:(NSString *)provider
 {
     [self postEngageErrorToDelegate:error];
 }
@@ -263,16 +257,8 @@ static NSString *entityTypeName     = @"sample_user";
     [self postCaptureErrorToDelegate:error];
 }
 
-//- (void)setEmailAddr:(NSString *)displayName andProvider:(NSString *)provider
-//{
-//    self.currentEmailAddr = displayName;
-//    self.currentProvider  = provider;
-//
-//    [prefs setObject:currentEmailAddr forKey:cJRCurrentEmailAddr];
-//    [prefs setObject:currentProvider forKey:cJRCurrentProvider];
-//}
-
-- (void)engageSigninDidSucceedForUser:(NSDictionary *)engageAuthInfo forProvider:(NSString *)provider
+- (void)engageSigninDidSucceedForUser:(NSDictionary *)engageAuthInfo
+                          forProvider:(NSString *)provider
 {
     self.currentProvider = provider;
     [prefs setObject:currentProvider forKey:cJRCurrentProvider];
@@ -283,7 +269,8 @@ static NSString *entityTypeName     = @"sample_user";
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 }
 
-- (void)captureAuthenticationDidSucceedForUser:(JRCaptureUser *)newCaptureUser status:(JRCaptureRecordStatus)captureRecordStatus
+- (void)captureAuthenticationDidSucceedForUser:(JRCaptureUser *)newCaptureUser
+                                        status:(JRCaptureRecordStatus)captureRecordStatus
 {
     DLog(@"");
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
@@ -291,9 +278,6 @@ static NSString *entityTypeName     = @"sample_user";
 //    if (engageSigninWasCanceled) /* Then we logged in directly with the Capture server */
 //        [self setEmailAddr:captureUser.email
 //               andProvider:nil];
-
-    self.currentEmailAddr = newCaptureUser.email;
-    [prefs setObject:currentEmailAddr forKey:cJRCurrentEmailAddr];
 
     if (captureRecordStatus == JRCaptureRecordNewlyCreated)
         self.isNew = YES;

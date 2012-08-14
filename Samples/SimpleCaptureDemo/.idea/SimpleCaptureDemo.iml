@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="CIDR_MODULE" version="4">
   <component name="NewModuleRootManager">
+    <content url="file://$USER_HOME$/Library/Caches/appCode10/DerivedData/SimpleCaptureDemo-616ab049/Build/Products/Debug-iphonesimulator/SimpleCaptureDemo.app">
+      <sourceFolder url="file://$USER_HOME$/Library/Caches/appCode10/DerivedData/SimpleCaptureDemo-616ab049/Build/Products/Debug-iphonesimulator/SimpleCaptureDemo.app" isTestSource="false" />
+    </content>
+    <content url="file://$USER_HOME$/Library/Caches/appCode10/DerivedData/SimpleCaptureDemo-f2863675/Build/Products/Debug-iphonesimulator/SimpleCaptureDemo.app">
+      <sourceFolder url="file://$USER_HOME$/Library/Caches/appCode10/DerivedData/SimpleCaptureDemo-f2863675/Build/Products/Debug-iphonesimulator/SimpleCaptureDemo.app" isTestSource="false" />
+    </content>
     <content url="file://$MODULE_DIR$/../../Janrain/JRConnectionManager/JRConnectionManager.h">
       <sourceFolder url="file://$MODULE_DIR$/../../Janrain/JRConnectionManager/JRConnectionManager.h" isTestSource="false" />
     </content>
@@ -299,12 +305,6 @@
       <sourceFolder url="file://$MODULE_DIR$/../Janrain/Security/SFHFKeychainUtils.m" isTestSource="false" />
     </content>
     <content url="file://$MODULE_DIR$" />
-    <content url="file://$USER_HOME$/Library/Caches/appCode10/DerivedData/SimpleCaptureDemo-136ee71b/Build/Products/Debug-iphonesimulator/SimpleCaptureDemo.app">
-      <sourceFolder url="file://$USER_HOME$/Library/Caches/appCode10/DerivedData/SimpleCaptureDemo-136ee71b/Build/Products/Debug-iphonesimulator/SimpleCaptureDemo.app" isTestSource="false" />
-    </content>
-    <content url="file://$USER_HOME$/Library/Caches/appCode10/DerivedData/SimpleCaptureDemo-616ab049/Build/Products/Debug-iphonesimulator/SimpleCaptureDemo.app">
-      <sourceFolder url="file://$USER_HOME$/Library/Caches/appCode10/DerivedData/SimpleCaptureDemo-616ab049/Build/Products/Debug-iphonesimulator/SimpleCaptureDemo.app" isTestSource="false" />
-    </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>

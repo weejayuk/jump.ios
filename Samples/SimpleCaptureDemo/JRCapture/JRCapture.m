@@ -54,12 +54,16 @@
     [JREngageWrapper configureEngageWithCaptureMobileEndpointUrlAndAppId:appId];
 }
 
-+ (void)setEngageAppId:(NSString *)appId captureApidDomain:(NSString *)captureApidDomain
-       captureUIDomain:(NSString *)captureUIDomain clientId:(NSString *)clientId
++ (void)setEngageAppId:(NSString *)appId
+     captureApidDomain:(NSString *)captureApidDomain
+       captureUIDomain:(NSString *)captureUIDomain
+              clientId:(NSString *)clientId
      andEntityTypeName:(NSString *)entityTypeName
 {
-    [JRCaptureData setCaptureApidDomain:captureApidDomain captureUIDomain:captureUIDomain
-                               clientId:clientId andEntityTypeName:entityTypeName];
+    [JRCaptureData setCaptureApidDomain:captureApidDomain
+                        captureUIDomain:captureUIDomain
+                               clientId:clientId
+                      andEntityTypeName:entityTypeName];
     [JREngageWrapper configureEngageWithCaptureMobileEndpointUrlAndAppId:appId];
 }
 

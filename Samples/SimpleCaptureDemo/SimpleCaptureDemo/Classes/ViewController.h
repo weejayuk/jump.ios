@@ -41,10 +41,12 @@
 - (IBAction)updateButtonPressed:(id)sender;
 - (IBAction)testerButtonPressed:(id)sender;
 - (IBAction)signInButtonPressed:(id)sender;
+- (IBAction)signOutButtonPressed:(id)sender;
 @property (weak) IBOutlet UILabel *currentUserLabel;
 @property (weak) IBOutlet UIImageView *currentUserProviderIcon;
 @property (weak) IBOutlet UIButton *browseButton;
 @property (weak) IBOutlet UIButton *updateButton;
 @property (weak) IBOutlet UIButton *testerButton;
 @property (weak) IBOutlet UIButton *signinButton;
+@property (weak) IBOutlet UIButton *signoutButton;
 @end
