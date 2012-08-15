@@ -35,27 +35,20 @@
 #import "JRCapture.h"
 #import "JRCaptureApidInterface.h"
 
-
-//@protocol JRConventionalSigninDelegate <NSObject>
-//@optional
-//- (void)authenticationDidComplete;
-//- (void)authenticationDidCancel;
-//- (void)authenticationDidFail;
-//- (void)showLoading;
-//- (void)hideLoading;
-//@end
-
 @class JREngageWrapper;
 @protocol JRExternalDialogControllerDelegate;
-@interface JRConventionalSigninViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, JRCaptureInterfaceDelegate>
+@interface JRConventionalSignInViewController : UIViewController <UITableViewDelegate, UITableViewDataSource,
+        UITextFieldDelegate, JRCaptureInterfaceDelegate>
 {
     UITableView *myTableView;
 }
 @property (nonatomic, retain) id<JRExternalDialogControllerDelegate> delegate;
 @property(nonatomic, strong) UITextField *firstResponder;
 
-- (id)initWithNativeSigninType:(JRConventionalSigninType)theSigninType titleString:(NSString *)titleString
-                     titleView:(UIView *)titleView engageWrapper:(JREngageWrapper *)theDelegate;
-+ (id)nativeSigninViewControllerWithNativeSigninType:(JRConventionalSigninType)theSigninType titleString:(NSString *)titleString
-                                           titleView:(UIView *)titleView engageWrapper:(JREngageWrapper *)theDelegate;
+- (id)initWithConventionalSignInType:(JRConventionalSigninType)theSignInType titleString:(NSString *)theTitleString
+                           titleView:(UIView *)theTitleView engageWrapper:(JREngageWrapper *)theWrapper;
+
++ (id)conventionalSignInViewController:(JRConventionalSigninType)theSignInType titleString:(NSString *)theTitleString
+                             titleView:(UIView *)theTitleView
+                         engageWrapper:(JREngageWrapper *)theWrapper;
 @end

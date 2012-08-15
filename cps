@@ -19,6 +19,6 @@ cp Samples/SimpleCaptureDemo/JRCapture/JRCaptureUser+Extras.*                Jan
 echo "copying JREngageWrapper.*"
 cp Samples/SimpleCaptureDemo/JRCapture/JREngageWrapper.*                     Janrain/JRCapture/Classes/EngageWrapper/
 echo "copying JRNativeSigninViewController.*"
-cp Samples/SimpleCaptureDemo/JRCapture/JRConventionalSigninViewController.* Janrain/JRCapture/Classes/EngageWrapper/
+cp Samples/SimpleCaptureDemo/JRCapture/JRConventionalSignInViewController.* Janrain/JRCapture/Classes/EngageWrapper/
 
 echo "copying complete"

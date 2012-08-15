@@ -30,7 +30,7 @@
 
 #import "JRCapture.h"
 #import "JREngage.h"
-#import "JRConventionalSigninViewController.h"
+#import "JRConventionalSignInViewController.h"
 
 @interface JREngageWrapper : NSObject <JREngageSigninDelegate>
 + (void)configureEngageWithCaptureMobileEndpointUrlAndAppId:(NSString *)appId;

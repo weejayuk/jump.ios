@@ -65,7 +65,7 @@ typedef enum
 
 
 @interface JREngageWrapper ()
-@property (retain) JRConventionalSigninViewController *nativeSigninViewController;
+@property (retain) JRConventionalSignInViewController *nativeSigninViewController;
 @property (retain) id<JRCaptureSigninDelegate> delegate;
 @property          JREngageDialogState dialogState;
 @end
@@ -135,31 +135,27 @@ static JREngageWrapper *singleton = nil;
     [[JREngageWrapper singletonInstance] setDialogState:JREngageDialogStateAuthentication];
 
     NSMutableDictionary *expandedCustomInterfaceOverrides =
-                                [NSMutableDictionary dictionaryWithDictionary:customInterfaceOverrides];
+            [NSMutableDictionary dictionaryWithDictionary:customInterfaceOverrides];
 
     if (nativeSigninType != JRConventionalSigninNone)
     {
-        //kJRCaptureNativeSigninTitleString
-        //kJRCaptureNativeSigninTitleView
-
-        NSString *nativeSigninTitleString =
-                         ([expandedCustomInterfaceOverrides objectForKey:kJRCaptureConventionalSigninTitleString] ?
-                                 [expandedCustomInterfaceOverrides objectForKey:kJRCaptureConventionalSigninTitleString] :
-                                 (nativeSigninType == JRConventionalSigninEmailPassword ?
-                                        @"Sign In With Your Email and Password" :
-                                        @"Sign In With Your Username and Password"));
+        NSString *nativeSignInTitleString =
+                ([expandedCustomInterfaceOverrides objectForKey:kJRCaptureConventionalSigninTitleString] ?
+                        [expandedCustomInterfaceOverrides objectForKey:kJRCaptureConventionalSigninTitleString] :
+                        (nativeSigninType == JRConventionalSigninEmailPassword ?
+                                @"Sign In With Your Email and Password" :
+                                @"Sign In With Your Username and Password"));
 
         if (![expandedCustomInterfaceOverrides objectForKey:kJRProviderTableSectionHeaderTitleString])
             [expandedCustomInterfaceOverrides setObject:@"Sign In With a Social Provider"
                                                  forKey:kJRProviderTableSectionHeaderTitleString];
 
+        UIView *const titleView = [expandedCustomInterfaceOverrides objectForKey:kJRCaptureConventionalSigninTitleView];
         [[JREngageWrapper singletonInstance] setNativeSigninViewController:
-                [JRConventionalSigninViewController
-                        nativeSigninViewControllerWithNativeSigninType:nativeSigninType
-                                                           titleString:nativeSigninTitleString
-                                                             titleView:[expandedCustomInterfaceOverrides
-                                                                               objectForKey:kJRCaptureConventionalSigninTitleView]
-                                                         engageWrapper:[JREngageWrapper singletonInstance]]];
+                 [JRConventionalSignInViewController conventionalSignInViewController:nativeSigninType
+                                                                          titleString:nativeSignInTitleString
+                                                                            titleView:titleView
+                                                                        engageWrapper:[JREngageWrapper singletonInstance]]];
 
         [expandedCustomInterfaceOverrides setObject:[[JREngageWrapper singletonInstance] nativeSigninViewController].view
                                              forKey:kJRProviderTableHeaderView];

@@ -40,6 +40,14 @@
 #endif
 
 #define ALog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
+static NSString *const cSignInUser = @"signinUser";
+static NSString *const cCreateUser = @"createUser";
+static NSString *const cGetUser = @"getUser";
+static NSString *const cGetObject = @"getObject";
+static NSString *const cUpdateObject = @"updateObject";
+static NSString *const cReplaceObject = @"replaceObject";
+static NSString *const cReplaceArray = @"replaceArray";
+static NSString *const cTagAction = @"action";
 
 #import "JRCaptureApidInterface.h"
 #import "JRCaptureData.h"
@@ -147,7 +155,7 @@ typedef enum CaptureInterfaceStatEnum
     [request setHTTPBody:body];
 
     NSDictionary *tag = [NSDictionary dictionaryWithObjectsAndKeys:
-                                        @"createUser", @"action",
+                                              cCreateUser, cTagAction,
                                         delegate, @"delegate",
                                         context, @"context", nil];
 
@@ -165,33 +173,31 @@ typedef enum CaptureInterfaceStatEnum
 
 }
 
-- (void)finishSigninCaptureUserWithStat:(CaptureInterfaceStat)stat andResult:(NSObject *)result
-                         forDelegate:(id <JRCaptureInterfaceDelegate>)delegate withContext:(NSObject *)context
+- (void)finishSignInFailureWithResult:(NSDictionary *)result forDelegate:(id <JRCaptureInterfaceDelegate>)delegate
+                          withContext:(NSObject *)context
 {
-    DLog(@"");
-
-    if (stat == StatOk)
-    {
-        if ([delegate respondsToSelector:@selector(signinCaptureUserDidSucceedWithResult:context:)])
-            [delegate signinCaptureUserDidSucceedWithResult:result context:context];
-    }
-    else
-    {
-        if ([delegate respondsToSelector:@selector(signinCaptureUserDidFailWithResult:context:)])
-            [delegate signinCaptureUserDidFailWithResult:result context:context];
-    }
+    if ([delegate respondsToSelector:@selector(signinCaptureUserDidFailWithResult:context:)])
+        [delegate signinCaptureUserDidFailWithResult:result context:context];
 }
 
-- (void)startSigninCaptureUserWithCredentials:(NSDictionary *)credentials ofType:(NSString *)signinType
+- (void)finishSignInSuccessWithResult:(NSString *)result forDelegate:(id <JRCaptureInterfaceDelegate>)delegate
+                          withContext:(NSObject *)context
+{
+    if ([delegate respondsToSelector:@selector(signinCaptureUserDidSucceedWithResult:context:)])
+        [delegate signinCaptureUserDidSucceedWithResult:result context:context];
+}
+
+
+- (void)startSigninCaptureUserWithCredentials:(NSDictionary *)credentials ofType:(NSString *)signInType
                              forDelegate:(id <JRCaptureInterfaceDelegate>)delegate withContext:(NSObject *)context
 {
     DLog(@"");
 
     NSMutableData *body = [NSMutableData data];
-    NSString *signinName = [credentials objectForKey:signinType];
+    NSString *signInName = [credentials objectForKey:signInType];
     NSString *password   = [credentials objectForKey:@"password"];
 
-    [body appendData:[[NSString stringWithFormat:@"%@=%@", signinType, signinName] dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[[NSString stringWithFormat:@"%@=%@", signInType, signInName] dataUsingEncoding:NSUTF8StringEncoding]];
     [body appendData:[[NSString stringWithFormat:@"&password=%@", password] dataUsingEncoding:NSUTF8StringEncoding]];
     [body appendData:[[NSString stringWithFormat:@"&type_name=%@", [JRCaptureData entityTypeName]] dataUsingEncoding:NSUTF8StringEncoding]];
     [body appendData:[[NSString stringWithFormat:@"&client_id=%@", [JRCaptureData clientId]] dataUsingEncoding:NSUTF8StringEncoding]];
@@ -202,23 +208,22 @@ typedef enum CaptureInterfaceStatEnum
         [body appendData:[appIdArg dataUsingEncoding:NSUTF8StringEncoding]];
 #endif
 
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:
-                                     [NSURL URLWithString:
-                                      [NSString stringWithFormat:@"%@/oauth/mobile_signin_username_password", [JRCaptureData captureUIBaseUrl]]]];
+    NSString *const signInEndpoint = [NSString stringWithFormat:@"%@/oauth/mobile_signin_username_password",
+                                               [JRCaptureData captureUIBaseUrl]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:signInEndpoint]];
 
     [request setHTTPMethod:@"POST"];
     [request setHTTPBody:body];
 
-    NSDictionary *newTag = [NSDictionary dictionaryWithObjectsAndKeys:
-                                        @"signinUser", @"action",
-                                        delegate, @"delegate",
-                                        context, @"context", nil];
+    NSDictionary *tag = [NSDictionary dictionaryWithObjectsAndKeys:
+                                                 cSignInUser, cTagAction,
+                                                 delegate, @"delegate",
+                                                 context, @"context", nil];
 
-    DLog(@"%@ %@=%@", [[request URL] absoluteString], signinType, signinName);
+    DLog(@"%@ %@=%@", [[request URL] absoluteString], signInType, signInName);
 
-    if (![JRConnectionManager createConnectionFromRequest:request forDelegate:self withTag:newTag])
-        [self finishSigninCaptureUserWithStat:StatFail
-                                    andResult:[NSDictionary dictionaryWithObjectsAndKeys:
+    if (![JRConnectionManager createConnectionFromRequest:request forDelegate:self withTag:tag])
+        [self finishSignInFailureWithResult:[NSDictionary dictionaryWithObjectsAndKeys:
                                                     @"error", @"stat",
                                                     @"url_connection", @"error",
                                                     [NSString stringWithFormat:@"Could not create a connection to %@", [[request URL] absoluteString]], @"error_description",
@@ -267,7 +272,7 @@ typedef enum CaptureInterfaceStatEnum
     [request setHTTPBody:body];
 
     NSDictionary *newTag = [NSDictionary dictionaryWithObjectsAndKeys:
-                                        @"getUser", @"action",
+                                                 cGetUser, cTagAction,
                                         delegate, @"delegate",
                                         context, @"context", nil];
 
@@ -326,7 +331,7 @@ typedef enum CaptureInterfaceStatEnum
     [request setHTTPBody:body];
 
     NSDictionary *tag = [NSDictionary dictionaryWithObjectsAndKeys:
-                                        @"getObject", @"action",
+                                              cGetObject, cTagAction,
                                         delegate, @"delegate",
                                         context, @"context", nil];
 
@@ -390,7 +395,7 @@ typedef enum CaptureInterfaceStatEnum
     [request setHTTPBody:body];
 
     NSDictionary *tag = [NSDictionary dictionaryWithObjectsAndKeys:
-                                        @"updateObject", @"action",
+                                              cUpdateObject, cTagAction,
                                         delegate, @"delegate",
                                         context, @"context", nil];
 
@@ -453,7 +458,7 @@ typedef enum CaptureInterfaceStatEnum
     [request setHTTPBody:body];
 
     NSDictionary *tag = [NSDictionary dictionaryWithObjectsAndKeys:
-                                        @"replaceObject", @"action",
+                                              cReplaceObject, cTagAction,
                                         delegate, @"delegate",
                                         context, @"context", nil];
 
@@ -516,7 +521,7 @@ typedef enum CaptureInterfaceStatEnum
     [request setHTTPBody:body];
 
     NSDictionary *tag = [NSDictionary dictionaryWithObjectsAndKeys:
-                                        @"replaceArray", @"action",
+                                              cReplaceArray, cTagAction,
                                         delegate, @"delegate",
                                         context, @"context", nil];
 
@@ -590,7 +595,7 @@ typedef enum CaptureInterfaceStatEnum
     DLog(@"%@", payload);
 
     NSDictionary *tag       = (NSDictionary*)userdata;
-    NSString     *action    = [tag objectForKey:@"action"];
+    NSString     *action    = [tag objectForKey:cTagAction];
     NSObject     *context   = [tag objectForKey:@"context"];
 
     NSDictionary *response    = [payload objectFromJSONString];
@@ -598,31 +603,34 @@ typedef enum CaptureInterfaceStatEnum
 
     id<JRCaptureInterfaceDelegate> delegate = [tag objectForKey:@"delegate"];
 
-    if ([action isEqualToString:@"createUser"])
+    if ([action isEqualToString:cCreateUser])
     {
         [self finishCreateCaptureUserWithStat:stat andResult:payload forDelegate:delegate withContext:context];
     }
-    else if ([action isEqualToString:@"signinUser"])
+    else if ([action isEqualToString:cSignInUser])
     {
-        [self finishSigninCaptureUserWithStat:stat andResult:payload forDelegate:delegate withContext:context];
+        if (stat == StatOk)
+            [self finishSignInSuccessWithResult:payload forDelegate:delegate withContext:context];
+        else
+            [self finishSignInFailureWithResult:response forDelegate:delegate withContext:context];
     }
-    else if ([action isEqualToString:@"getUser"])
+    else if ([action isEqualToString:cGetUser])
     {
         [self finishGetCaptureUserWithStat:stat andResult:payload forDelegate:delegate withContext:context];
     }
-    else if ([action isEqualToString:@"getObject"])
+    else if ([action isEqualToString:cGetObject])
     {
         [self finishGetObjectWithStat:stat andResult:payload forDelegate:delegate withContext:context];
     }
-    else if ([action isEqualToString:@"updateObject"])
+    else if ([action isEqualToString:cUpdateObject])
     {
         [self finishUpdateObjectWithStat:stat andResult:payload forDelegate:delegate withContext:context];
     }
-    else if ([action isEqualToString:@"replaceObject"])
+    else if ([action isEqualToString:cReplaceObject])
     {
         [self finishReplaceObjectWithStat:stat andResult:payload forDelegate:delegate withContext:context];
     }
-    else if ([action isEqualToString:@"replaceArray"])
+    else if ([action isEqualToString:cReplaceArray])
     {
         [self finishReplaceArrayWithStat:stat andResult:payload forDelegate:delegate withContext:context];
     }
@@ -630,12 +638,13 @@ typedef enum CaptureInterfaceStatEnum
 
 - (void)connectionDidFinishLoadingWithFullResponse:(NSURLResponse*)fullResponse unencodedPayload:(NSData*)payload
                                            request:(NSURLRequest*)request andTag:(id)userdata { }
+
 - (void)connectionDidFailWithError:(NSError*)error request:(NSURLRequest*)request andTag:(id)userdata
 {
     DLog(@"");
 
     NSDictionary *tag       = (NSDictionary*)userdata;
-    NSString     *action    = [tag objectForKey:@"action"];
+    NSString     *action    = [tag objectForKey:cTagAction];
     NSObject     *context   = [tag objectForKey:@"context"];
     id<JRCaptureInterfaceDelegate> delegate = [tag objectForKey:@"delegate"];
 
@@ -643,34 +652,34 @@ typedef enum CaptureInterfaceStatEnum
                                     @"error", @"stat",
                                     [error localizedDescription], @"error",
                                     [error localizedFailureReason], @"error_description",
-                                    [NSNumber numberWithInteger:JRCaptureLocalApidErrorConnectionDidFail], @"code", nil];
+                                    [NSNumber numberWithInteger:JRCaptureLocalApidErrorConnectionDidFail], @"code",
+                                    nil];
 
-
-    if ([action isEqualToString:@"createUser"])
+    if ([action isEqualToString:cCreateUser])
     {
         [self finishCreateCaptureUserWithStat:StatFail andResult:result forDelegate:delegate withContext:context];
     }
-    else if ([action isEqualToString:@"signinUser"])
+    else if ([action isEqualToString:cSignInUser])
     {
-        [self finishSigninCaptureUserWithStat:StatFail andResult:result forDelegate:delegate withContext:context];
+        [self finishSignInFailureWithResult:result forDelegate:delegate withContext:context];
     }
-    else if ([action isEqualToString:@"getUser"])
+    else if ([action isEqualToString:cGetUser])
     {
         [self finishGetCaptureUserWithStat:StatFail andResult:result forDelegate:delegate withContext:context];
     }
-    else if ([action isEqualToString:@"getObject"])
+    else if ([action isEqualToString:cGetObject])
     {
         [self finishGetObjectWithStat:StatFail andResult:result forDelegate:delegate withContext:context];
     }
-    else if ([action isEqualToString:@"updateObject"])
+    else if ([action isEqualToString:cUpdateObject])
     {
         [self finishUpdateObjectWithStat:StatFail andResult:result forDelegate:delegate withContext:context];
     }
-    else if ([action isEqualToString:@"replaceObject"])
+    else if ([action isEqualToString:cReplaceObject])
     {
         [self finishReplaceObjectWithStat:StatFail andResult:result forDelegate:delegate withContext:context];
     }
-    else if ([action isEqualToString:@"replaceArray"])
+    else if ([action isEqualToString:cReplaceArray])
     {
         [self finishReplaceArrayWithStat:StatFail andResult:result forDelegate:delegate withContext:context];
     }

@@ -40,7 +40,7 @@
 
 #define ALog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
 
-#import "JRConventionalSigninViewController.h"
+#import "JRConventionalSignInViewController.h"
 #import "JREngageWrapper.h"
 #import "JRUserInterfaceMaestro.h"
 
@@ -48,15 +48,15 @@
 - (void)authenticationDidReachTokenUrl:(NSString *)tokenUrl withResponse:(NSURLResponse *)response andPayload:(NSData *)tokenUrlPayload forProvider:(NSString *)provider;
 @end
 
-@interface JRConventionalSigninViewController ()
+@interface JRConventionalSignInViewController ()
 @property (retain) NSString *titleString;
 @property (retain) UIView   *titleView;
-@property JRConventionalSigninType signinType;
+@property JRConventionalSigninType signInType;
 @property (retain) JREngageWrapper *wrapper;
 @end
 
-@implementation JRConventionalSigninViewController
-@synthesize signinType;
+@implementation JRConventionalSignInViewController
+@synthesize signInType;
 @synthesize titleString;
 @synthesize titleView;
 @synthesize wrapper;
@@ -64,32 +64,33 @@
 @synthesize firstResponder;
 
 
-- (id)initWithNativeSigninType:(JRConventionalSigninType)theSigninType titleString:(NSString *)theTitleString
-                     titleView:(UIView *)theTitleView engageWrapper:(JREngageWrapper *)theWrapper
+- (id)initWithConventionalSignInType:(JRConventionalSigninType)theSignInType titleString:(NSString *)theTitleString
+                                                                               titleView:(UIView *)theTitleView
+                                                                           engageWrapper:(JREngageWrapper *)theWrapper
 {
     if ((self = [super init]))
     {
-        signinType  = theSigninType;
+        signInType = theSignInType;
         titleString = [theTitleString retain];
-        titleView   = [theTitleView retain];
-        wrapper     = [theWrapper retain];
+        titleView = [theTitleView retain];
+        wrapper = [theWrapper retain];
     }
 
     return self;
 }
 
-+ (id)nativeSigninViewControllerWithNativeSigninType:(JRConventionalSigninType)theSigninType titleString:(NSString *)theTitleString
-                                           titleView:(UIView *)theTitleView engageWrapper:(JREngageWrapper *)theWrapper
++ (id)conventionalSignInViewController:(JRConventionalSigninType)theSignInType titleString:(NSString *)theTitleString
+                             titleView:(UIView *)theTitleView engageWrapper:(JREngageWrapper *)theWrapper
 {
-    return [[[JRConventionalSigninViewController alloc]
-                    initWithNativeSigninType:theSigninType titleString:theTitleString
-                                   titleView:theTitleView engageWrapper:theWrapper] autorelease];
+    return [[[JRConventionalSignInViewController alloc]
+            initWithConventionalSignInType:theSignInType
+                               titleString:theTitleString
+                                 titleView:theTitleView engageWrapper:theWrapper] autorelease];
 }
 
 - (void)loadView
 {
-    myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, 170)
-                                               style:UITableViewStyleGrouped];
+    myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, 170) style:UITableViewStyleGrouped];
     myTableView.backgroundColor = [UIColor clearColor];
     myTableView.scrollEnabled   = NO;
 
@@ -132,7 +133,6 @@
 #pragma mark -
 #pragma mark Table view data source
 
-
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     return self.titleView;
@@ -174,10 +174,11 @@
     //static NSString *CellIdentifier = @"Cell";
     UITextField *textField;
 
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:indexPath.row == 0 ? @"cellForName" : @"cellForPwd"];
+    NSString *const cellId = indexPath.row == 0 ? @"cellForName" : @"cellForPwd";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
     if (cell == nil)
     {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indexPath.row == 0 ? @"cellForName" : @"cellForPwd"] autorelease];
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId] autorelease];
 
         textField = [[[UITextField alloc] initWithFrame:CGRectMake(10, 7, 280, 26)] autorelease];
 
@@ -192,24 +193,17 @@
 
         if (indexPath.row == 0)
         {
-            textField.placeholder =
-                    (self.signinType == JRConventionalSigninEmailPassword ?
-                            @"enter your email":
-                            @"enter your username");
-
-            // TODO: temp
-            //textField.text = @"mcspilli@gmail.com";
-
+            NSString *const placedHolder = self.signInType == JRConventionalSigninEmailPassword ?
+                    @"Enter your email" :
+                    @"Enter your username";
+            textField.placeholder = placedHolder;
             textField.delegate = self;
             textField.tag = NAME_TEXTFIELD_TAG;
         }
         else
         {
-            textField.placeholder = @"enter your password";
+            textField.placeholder = @"Enter your password";
             textField.secureTextEntry = YES;
-
-            // TODO: temp
-            //textField.text = @"password";
 
             textField.delegate = self;
             textField.tag = PWD_TEXTFIELD_TAG;
@@ -240,25 +234,14 @@
 
 - (void)signInButtonTouchUpInside:(UIButton*)button
 {
-//    UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:@"Button pressed"
-//                                                         message:@"yo"
-//                                                        delegate:nil
-//                                               cancelButtonTitle:@"Dismiss"
-//                                               otherButtonTitles:nil] autorelease];
-//    [alertView show];
-
     UITableViewCell *nameCell = [myTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
     UITableViewCell *pwdCell  = [myTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+    NSString *nameOrEmail = ((UITextField *) [nameCell viewWithTag:NAME_TEXTFIELD_TAG]).text;
+    NSString *password = ((UITextField *) [pwdCell viewWithTag:PWD_TEXTFIELD_TAG]).text;
+    if (!nameOrEmail) nameOrEmail = @"";
+    if (!password) password = @"";
 
-    UITextField *nameTextField = (UITextField *) [nameCell viewWithTag:NAME_TEXTFIELD_TAG];
-    UITextField *pwdTextField  = (UITextField *) [pwdCell viewWithTag:PWD_TEXTFIELD_TAG];
-
-    NSString *signinTypeString = (self.signinType == JRConventionalSigninEmailPassword) ? @"email" : @"username";
-
-//    if (self.signinType == JRConventionalSigninEmailPassword)
-//        ; // TODO: Check if valid email
-//
-//    NSMutableString *errorMessage = [NSMutableString stringWithString:@"Please enter your "];
+    //    NSMutableString *errorMessage = [NSMutableString stringWithString:@"Please enter your "];
 //
 //    if (!nameTextField.text || [nameTextField.text isEqualToString:@""])
 //        [errorMessage appendString:self.signinType == JRConventionalSigninEmailPassword ? @"email address " : "username"];
@@ -266,11 +249,11 @@
 //    if (!pwdTextField.text || [pwdTextField.text isEqualToString:@""])
 //        [errorMessage appendString:@"password"];
 
-
+    NSString *const signInTypeString = (self.signInType == JRConventionalSigninEmailPassword) ? @"email" : @"username";
     [JRCaptureApidInterface signinCaptureUserWithCredentials:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                                      nameTextField.text, signinTypeString,
-                                                                      pwdTextField.text, @"password", nil]
-                                                      ofType:signinTypeString
+                                                                                   nameOrEmail, signInTypeString,
+                                                                                   password, @"password", nil]
+                                                      ofType:signInTypeString
                                                  forDelegate:self
                                                  withContext:nil];
 
@@ -280,29 +263,27 @@
     [delegate showLoading];
 }
 
-- (void)signinCaptureUserDidSucceedWithResult:(NSObject *)result context:(NSObject *)context
+- (void)signinCaptureUserDidSucceedWithResult:(NSString *)result context:(NSObject *)context
 {
-//    UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:@"Success"
-//                                                         message:(NSString *) result
-//                                                        delegate:nil
-//                                               cancelButtonTitle:@"Dismiss"
-//                                               otherButtonTitles:nil] autorelease];
-//    [alertView show];
-
     [delegate hideLoading];
 
     [wrapper authenticationDidReachTokenUrl:@"/oath/mobile_signin_username_password"
                                withResponse:nil
-                                 andPayload:[((NSString *)result) dataUsingEncoding:NSUTF8StringEncoding]
+                                 andPayload:[result dataUsingEncoding:NSUTF8StringEncoding]
                                 forProvider:nil];
 
     [delegate authenticationDidComplete];
 }
 
-- (void)signinCaptureUserDidFailWithResult:(NSObject *)result context:(NSObject *)context
+- (void)signinCaptureUserDidFailWithResult:(NSDictionary *)result context:(NSObject *)context
 {
-    UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:@"Failure"
-                                                         message:(NSString *) result
+
+    DLog(@"result: %@", [result description]);
+    NSString const *type = self.signInType == JRConventionalSigninEmailPassword ? @"Email" : @"Username";
+    NSString *title = [NSString stringWithFormat:@"Incorrect %@ or Password", type];
+    NSString *const message = [result objectForKey:@"error"];
+    UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:title
+                                                         message:message
                                                         delegate:nil
                                                cancelButtonTitle:@"Dismiss"
                                                otherButtonTitles:nil] autorelease];

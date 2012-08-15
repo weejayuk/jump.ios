@@ -427,24 +427,6 @@ typedef enum
 @interface JRCapture : NSObject
 
 /**
-* salkdjfalskdjf
-*/
-typedef enum {
-    /**
-    * sadklfjasdlkfj
-*/
-    asldkfj,
-    /**
-    * sadklfjasdlkfj
-    */
-    aslkdfjas,
-    /**
-     * sadklfjasdlkfj
-    */
-    asdf
-} asldkjfalskdjf;
-
-/**
  * @name Configuration
  * Configure the library with your Capture and Engage applications
  **/

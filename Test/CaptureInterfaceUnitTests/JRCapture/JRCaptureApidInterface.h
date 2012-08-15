@@ -39,8 +39,8 @@
 @optional
 - (void)createCaptureUserDidSucceedWithResult:(NSObject *)result context:(NSObject *)context;
 - (void)createCaptureUserDidFailWithResult:(NSObject *)result context:(NSObject *)context;
-- (void)signinCaptureUserDidSucceedWithResult:(NSObject *)result context:(NSObject *)context;
-- (void)signinCaptureUserDidFailWithResult:(NSObject *)result context:(NSObject *)context;
+- (void)signinCaptureUserDidSucceedWithResult:(NSString *)result context:(NSObject *)context;
+- (void)signinCaptureUserDidFailWithResult:(NSDictionary *)result context:(NSObject *)context;
 - (void)getCaptureUserDidSucceedWithResult:(NSObject *)result context:(NSObject *)context;
 - (void)getCaptureUserDidFailWithResult:(NSObject *)result context:(NSObject *)context;
 - (void)getCaptureObjectDidSucceedWithResult:(NSObject *)result context:(NSObject *)context;

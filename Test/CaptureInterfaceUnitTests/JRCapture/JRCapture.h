@@ -105,7 +105,7 @@
  **/
 
 /**
- * You can add conventional login authentication. Blah blah blah
+ * You can add conventional sign-in authentication.
  * TODO
  **/
 typedef enum
