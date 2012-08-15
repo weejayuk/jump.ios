@@ -36,7 +36,7 @@
 #import "JRCaptureUser.h"
 #import "JRCapture.h"
 
-@protocol SignInDelegate <NSObject>
+@protocol DemoSignInDelegate <NSObject>
 @optional
 - (void)engageSignInDidSucceed;
 - (void)engageSignInDidFailWithError:(NSError *)error;
@@ -45,15 +45,15 @@
 @end
 
 @interface SharedData : NSObject <JRCaptureSigninDelegate>
-@property(nonatomic, assign) BOOL engageSigninWasCanceled;
+@property(nonatomic, assign) BOOL engageSignInWasCanceled;
 
 + (JRCaptureUser *)captureUser;
 + (BOOL)isNew;
-+ (BOOL)notYetCreated;
-+ (NSString *)currentEmailAddr;
++ (BOOL)isNotYetCreated;
++ (NSString *)currentEmail;
 + (NSString *)currentProvider;
-+ (void)startAuthenticationWithCustomInterface:(NSDictionary *)customInterface forDelegate:(id<SignInDelegate>)delegate;
++ (void)startAuthenticationWithCustomInterface:(NSDictionary *)customInterface forDelegate:(id<DemoSignInDelegate>)delegate;
 + (void)resaveCaptureUser;
-+ (void)signoutCurrentUser;
++ (void)signOutCurrentUser;
 @end
 

@@ -180,7 +180,7 @@
     else if (myGenderIdentitySegControl.selectedSegmentIndex == 1)
         captureUser.gender = @"male";
 
-    if ([SharedData notYetCreated])
+    if ([SharedData isNotYetCreated])
         [captureUser createOnCaptureForDelegate:self context:nil];
     else
         [captureUser updateOnCaptureForDelegate:self context:nil];

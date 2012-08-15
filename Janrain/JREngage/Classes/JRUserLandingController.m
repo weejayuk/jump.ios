@@ -418,8 +418,7 @@ enum
 {
     DLog(@"");
 
-    UITableViewCell *cell =
-        [tableView dequeueReusableCellWithIdentifier:@"cachedCell"];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cachedCell"];
 
     if (cell == nil)
     {

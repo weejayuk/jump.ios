@@ -105,7 +105,7 @@
  **/
 
 /**
- * You can add conventional login authentication. Blah blah blah
+ * You can add conventional sign-in authentication.
  * TODO
  **/
 typedef enum
@@ -425,6 +425,24 @@ typedef enum
  * applications, you can use the JRCapture class to achieve this.
  **/
 @interface JRCapture : NSObject
+
+/**
+* salkdjfalskdjf
+*/
+typedef enum {
+    /**
+    * sadklfjasdlkfj
+*/
+    asldkfj,
+    /**
+    * sadklfjasdlkfj
+    */
+    aslkdfjas,
+    /**
+     * sadklfjasdlkfj
+    */
+    asdf
+} asldkjfalskdjf;
 
 /**
  * @name Configuration

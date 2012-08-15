@@ -112,8 +112,8 @@
                         <outlet property="browseButton" destination="Sdc-xo-ZC1" id="3Sx-RY-vcP"/>
                         <outlet property="currentUserLabel" destination="Hq8-yJ-Rmg" id="hGr-bA-Zvn"/>
                         <outlet property="currentUserProviderIcon" destination="PZq-1X-zH2" id="vdO-gn-iv0"/>
-                        <outlet property="signinButton" destination="gAk-C3-t5t" id="xiB-Pk-aug"/>
-                        <outlet property="signoutButton" destination="GHJ-Vx-tee" id="irK-fI-240"/>
+                        <outlet property="signInButton" destination="gAk-C3-t5t" id="xiB-Pk-aug"/>
+                        <outlet property="signOutButton" destination="GHJ-Vx-tee" id="irK-fI-240"/>
                         <outlet property="testerButton" destination="9l8-Zj-RBh" id="ejt-0w-bUN"/>
                         <outlet property="updateButton" destination="3Ab-Cb-7AE" id="ewh-dj-wSs"/>
                     </connections>

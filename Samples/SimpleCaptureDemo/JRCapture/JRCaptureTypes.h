@@ -102,7 +102,7 @@ typedef NSNumber JRDecimal;
  * JRPhoneNumbersElement#getPrimaryBoolValue().
  *
  * @note
- *   In Capture there is a difference between an \e integer with the value \c 0 and an \g integer with the value
+ *   In Capture there is a difference between an \e integer with the value \c 0 and an \e integer with the value
  *   \c null.
  *
  * @warning

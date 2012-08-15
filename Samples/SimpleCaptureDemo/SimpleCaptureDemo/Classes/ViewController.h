@@ -36,7 +36,7 @@
 #import "SharedData.h"
 #import "JRCaptureObject.h"
 
-@interface ViewController : UIViewController <SignInDelegate, JRCaptureObjectDelegate>
+@interface ViewController : UIViewController <DemoSignInDelegate, JRCaptureObjectDelegate>
 - (IBAction)browseButtonPressed:(id)sender;
 - (IBAction)updateButtonPressed:(id)sender;
 - (IBAction)testerButtonPressed:(id)sender;
@@ -47,6 +47,6 @@
 @property (weak) IBOutlet UIButton *browseButton;
 @property (weak) IBOutlet UIButton *updateButton;
 @property (weak) IBOutlet UIButton *testerButton;
-@property (weak) IBOutlet UIButton *signinButton;
-@property (weak) IBOutlet UIButton *signoutButton;
+@property (weak) IBOutlet UIButton *signInButton;
+@property (weak) IBOutlet UIButton *signOutButton;
 @end

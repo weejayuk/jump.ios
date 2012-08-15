@@ -48,9 +48,9 @@
 @property (strong) NSUserDefaults     *prefs;
 @property (strong) JRCaptureUser      *captureUser;
 @property          BOOL                isNew;
-@property          BOOL                notYetCreated;
+@property          BOOL                isNotYetCreated;
 @property (strong) NSString           *currentProvider;
-@property (weak)   id<SignInDelegate>  signInDelegate;
+@property (weak)   id<DemoSignInDelegate> demoSigninDelegate;
 
 @end
 
@@ -78,10 +78,10 @@ static NSString *entityTypeName     = @"sample_user";
 @synthesize captureUser;
 @synthesize prefs;
 @synthesize currentProvider;
-@synthesize signInDelegate;
+@synthesize demoSigninDelegate;
 @synthesize isNew;
-@synthesize notYetCreated;
-@synthesize engageSigninWasCanceled;
+@synthesize isNotYetCreated;
+@synthesize engageSignInWasCanceled;
 
 
 - (id)init
@@ -136,12 +136,12 @@ static NSString *entityTypeName     = @"sample_user";
     return [[SharedData singletonInstance] isNew];
 }
 
-+ (BOOL)notYetCreated
++ (BOOL)isNotYetCreated
 {
-    return [[SharedData singletonInstance] notYetCreated];
+    return [[SharedData singletonInstance] isNotYetCreated];
 }
 
-+ (NSString *)currentEmailAddr
++ (NSString *)currentEmail
 {
     return [SharedData singletonInstance].captureUser.email;
 }
@@ -151,34 +151,34 @@ static NSString *entityTypeName     = @"sample_user";
     return [[SharedData singletonInstance] currentProvider];
 }
 
-- (void)signoutCurrentUser
+- (void)signOutCurrentUser
 {
     self.currentProvider  = nil;
     self.captureUser      = nil;
 
     self.isNew         = NO;
-    self.notYetCreated = NO;
+    self.isNotYetCreated = NO;
 
     [prefs setObject:nil forKey:cJRCurrentProvider];
     [prefs setObject:nil forKey:cJRCaptureUser];
 
-    self.engageSigninWasCanceled = NO;
+    self.engageSignInWasCanceled = NO;
 }
 
-+ (void)signoutCurrentUser
++ (void)signOutCurrentUser
 {
-    [[SharedData singletonInstance] signoutCurrentUser];
+    [[SharedData singletonInstance] signOutCurrentUser];
 }
 
 + (void)startAuthenticationWithCustomInterface:(NSDictionary *)customInterface
-                                   forDelegate:(id<SignInDelegate>)delegate
+                                   forDelegate:(id<DemoSignInDelegate>)delegate
 {
-    [SharedData signoutCurrentUser];
-    [[SharedData singletonInstance] setSignInDelegate:delegate];
+    [SharedData signOutCurrentUser];
+    [[SharedData singletonInstance] setDemoSigninDelegate:delegate];
 
     [JRCapture startEngageSigninDialogWithConventionalSignin:JRConventionalSigninEmailPassword
-         andCustomInterfaceOverrides:customInterface
-                         forDelegate:[SharedData singletonInstance]];
+                                 andCustomInterfaceOverrides:customInterface
+                                                 forDelegate:[SharedData singletonInstance]];
 }
 
 //+ (NSString*)getDisplayNameFromProfile:(NSDictionary*)profile
@@ -224,36 +224,42 @@ static NSString *entityTypeName     = @"sample_user";
 
 - (void)postEngageErrorToDelegate:(NSError *)error
 {
-    if ([signInDelegate respondsToSelector:@selector(engageSignInDidFailWithError:)])
-        [signInDelegate engageSignInDidFailWithError:error];
+    DLog(@"error: %@", [error description]);
+    if ([demoSigninDelegate respondsToSelector:@selector(engageSignInDidFailWithError:)])
+        [demoSigninDelegate engageSignInDidFailWithError:error];
 }
 
 - (void)postCaptureErrorToDelegate:(NSError *)error
 {
-    if ([signInDelegate respondsToSelector:@selector(captureSignInDidFailWithError:)])
-        [signInDelegate captureSignInDidFailWithError:error];
+    DLog(@"error: %@", [error description]);
+    if ([demoSigninDelegate respondsToSelector:@selector(captureSignInDidFailWithError:)])
+        [demoSigninDelegate captureSignInDidFailWithError:error];
 }
 
 - (void)engageSigninDidNotComplete
 {
-    self.engageSigninWasCanceled = YES;
+    DLog(@"");
+    self.engageSignInWasCanceled = YES;
 
     [self postEngageErrorToDelegate:nil];
 }
 
 - (void)engageSigninDialogDidFailToShowWithError:(NSError *)error
 {
+    DLog(@"error: %@", [error description]);
     [self postEngageErrorToDelegate:error];
 }
 
 - (void)engageAuthenticationDidFailWithError:(NSError *)error
                                  forProvider:(NSString *)provider
 {
+    DLog(@"error: %@", [error description]);
     [self postEngageErrorToDelegate:error];
 }
 
 - (void)captureAuthenticationDidFailWithError:(NSError *)error
 {
+    DLog(@"error: %@", [error description]);
     [self postCaptureErrorToDelegate:error];
 }
 
@@ -263,8 +269,8 @@ static NSString *entityTypeName     = @"sample_user";
     self.currentProvider = provider;
     [prefs setObject:currentProvider forKey:cJRCurrentProvider];
 
-    if ([signInDelegate respondsToSelector:@selector(engageSignInDidSucceed)])
-        [signInDelegate engageSignInDidSucceed];
+    if ([demoSigninDelegate respondsToSelector:@selector(engageSignInDidSucceed)])
+        [demoSigninDelegate engageSignInDidSucceed];
 
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 }
@@ -285,18 +291,18 @@ static NSString *entityTypeName     = @"sample_user";
         self.isNew = NO;
 
     if (captureRecordStatus == JRCaptureRecordMissingRequiredFields)
-        self.notYetCreated = YES;
+        self.isNotYetCreated = YES;
     else
-        self.notYetCreated = NO;
+        self.isNotYetCreated = NO;
 
     self.captureUser = newCaptureUser;
 
     [prefs setObject:[NSKeyedArchiver archivedDataWithRootObject:captureUser]
               forKey:cJRCaptureUser];
 
-    if ([signInDelegate respondsToSelector:@selector(captureSignInDidSucceed)])
-        [signInDelegate captureSignInDidSucceed];
+    if ([demoSigninDelegate respondsToSelector:@selector(captureSignInDidSucceed)])
+        [demoSigninDelegate captureSignInDidSucceed];
 
-    engageSigninWasCanceled = NO;
+    engageSignInWasCanceled = NO;
 }
 @end

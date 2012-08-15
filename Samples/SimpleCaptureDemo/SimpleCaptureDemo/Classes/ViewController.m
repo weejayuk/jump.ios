@@ -55,15 +55,15 @@
 @synthesize browseButton;
 @synthesize testerButton;
 @synthesize updateButton;
-@synthesize signinButton;
-@synthesize signoutButton;
+@synthesize signInButton;
+@synthesize signOutButton;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
-    if ([SharedData currentEmailAddr])
-        currentUserLabel.text = [NSString stringWithFormat:@"Current user: %@", [SharedData currentEmailAddr]];
+    if ([SharedData currentEmail])
+        currentUserLabel.text = [NSString stringWithFormat:@"Current user: %@", [SharedData currentEmail]];
     else
         currentUserLabel.text = @"No current user";
 
@@ -86,20 +86,20 @@
 {
     if ([self isUserSignedIn])
     {
-        signinButton.hidden = YES;
-        signoutButton.hidden = NO;
+        signInButton.hidden = YES;
+        signOutButton.hidden = NO;
     }
     else
     {
-        signinButton.hidden = NO;
-        signoutButton.hidden = YES;
+        signInButton.hidden = NO;
+        signOutButton.hidden = YES;
     }
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    if ([SharedData currentEmailAddr])
-        currentUserLabel.text = [NSString stringWithFormat:@"Current user: %@", [SharedData currentEmailAddr]];
+    if ([SharedData currentEmail])
+        currentUserLabel.text = [NSString stringWithFormat:@"Current user: %@", [SharedData currentEmail]];
 
     if ([SharedData currentProvider])
         currentUserProviderIcon.image = [UIImage imageNamed:
@@ -111,8 +111,8 @@
     [browseButton setEnabled:enabled];
     [testerButton setEnabled:enabled];
     [updateButton setEnabled:enabled];
-    [signinButton setEnabled:enabled];
-    [signoutButton setEnabled:enabled];
+    [signInButton setEnabled:enabled];
+    [signOutButton setEnabled:enabled];
 }
 
 - (IBAction)browseButtonPressed:(id)sender
@@ -173,16 +173,13 @@
 {
     currentUserLabel.text = @"No current user";
     currentUserProviderIcon.image = nil;
-    [SharedData signoutCurrentUser];
+    [SharedData signOutCurrentUser];
     [self adjustUiState];
 }
 
 - (void)engageSignInDidSucceed
 {
-    currentUserLabel.text         = @"Signing in...";
-//            [SharedData currentDisplayName] ?
-//            [NSString stringWithFormat:@"Current user: %@", [SharedData currentDisplayName]] :
-//            @"Capture User";
+    currentUserLabel.text = @"Signing in...";
     currentUserProviderIcon.image = [SharedData currentProvider] ?
             [UIImage imageNamed:[NSString stringWithFormat:@"icon_%@_30x30@2x.png", [SharedData currentProvider]]] :
             nil;
@@ -194,10 +191,10 @@
 
     //[self engageSignInDidSucceed]; /* In case this method wasn't called if the user signed in directly */
 
-    if ([SharedData currentEmailAddr])
-        currentUserLabel.text = [NSString stringWithFormat:@"Current user: %@", [SharedData currentEmailAddr]];
+    if ([SharedData currentEmail])
+        currentUserLabel.text = [NSString stringWithFormat:@"Current user: %@", [SharedData currentEmail]];
 
-    if ([SharedData notYetCreated] || [SharedData isNew])
+    if ([SharedData isNotYetCreated] || [SharedData isNew])
     {
         CaptureNewUserViewController *viewController = [[CaptureNewUserViewController alloc]
             initWithNibName:@"CaptureNewUserViewController" bundle:[NSBundle mainBundle]];
@@ -208,20 +205,18 @@
 
 - (void)engageSignInDidFailWithError:(NSError *)error
 {
-    if (error)
-    {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"//error ? @"Error" : @"Canceled"
-                                                            message:[error description]//error ? [error description] : @"Authentication was canceled"
-                                                           delegate:nil
-                                                  cancelButtonTitle:@"Dismiss"
-                                                  otherButtonTitles:nil];
-        [alertView show];
-    }
-
+    DLog(@"error: %@", [error description]);
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                        message:[error description]
+                                                       delegate:nil
+                                              cancelButtonTitle:@"Dismiss"
+                                              otherButtonTitles:nil];
+    [alertView show];
 }
 
 - (void)captureSignInDidFailWithError:(NSError *)error
 {
+    DLog(@"error: %@", [error description]);
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
                                                         message:[error description]
                                                        delegate:nil
