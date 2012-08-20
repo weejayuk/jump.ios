@@ -214,10 +214,10 @@ typedef NSObject JRPassword;
  * For more information on JSONKit and what it can serialize check the README in the project:
  * https://github.com/johnezang/JSONKit
  *
- * To ensure that your objects can correctly update themselves on Capture, we use an \e NSObject to hold \e json
- * properties. To make it perfectly clear that \e json properties can only be types that are accepted by JSONKit, we
- * typedeffed them \e JRJsonObject. Your IDE's auto-complete should suggest \e JRJsonObject when setting a \e json
- * property, but since underneath it is just an \e NSObject, you can set it to \c null as well.
+ * To ensure that your objects can correctly update themselves on Capture, we use an \e NSObject to hold \e JSON
+ * properties. To make it perfectly clear that \e JSON properties can only be types that are accepted by JSONKit, we
+ * typedeffed them \e JRJsonObject. Your IDE's auto-complete should suggest \e JRJsonObject when setting a \e JSON
+ * property, but since underneath it is just an \e NSObject, you can set it to \c nil as well.
  *
  * @note
  *   If the JSON returned by Capture is an object, this property will hold an \e NSDictionary. If
