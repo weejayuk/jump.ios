@@ -140,7 +140,7 @@
     return object;
 }
 
-- (void)updateObjectProperties:(id)object toFillerFodderIndex:(NSUInteger)index
+- (void)mutateObjectProperties:(id)object toFillerFodderIndex:(NSUInteger)index
 {
     ((JROinoL1Object*)object).string1 = [fillerFodder objectAtIndex:index];
     ((JROinoL1Object*)object).string2 = [fillerFodder objectAtIndex:index+3];
@@ -246,7 +246,7 @@
     GHAssertTrue(l2PluralElement.canBeUpdatedOnCapture, nil);
 
     /* Let's change the values for our second level object (remember, currentL2Object will still have the old values). */
-    [self updateObjectProperties:l2PluralElement toFillerFodderIndex:1];
+    [self mutateObjectProperties:l2PluralElement toFillerFodderIndex:1];
 
     /* Then do the update... */
     [l2PluralElement updateOnCaptureForDelegate:self context:_ftel(testSelectorString)];
@@ -273,7 +273,8 @@
 // pino
 - (void)pinoCreate
 {
-    captureUser.pinoL1Object = [self objectOfType:[JRPinoL1Object class] withConstructor:@selector(pinoL1Object) fillerFodderOffset:0];
+    captureUser.pinoL1Object = [self objectOfType:[JRPinoL1Object class] withConstructor:@selector(pinoL1Object)
+                                                                      fillerFodderOffset:0];
 
     captureUser.pinoL1Object.pinoL2Plural = [self arrayWithElementsOfType:[JRPinoL2PluralElement class]
                                                           withConstructor:@selector(pinoL2PluralElement)
@@ -340,14 +341,14 @@
 
 - (void)continue_b307_pinoUpdate_Level1_PostReplace_withArguments:(NSDictionary *)arguments andTestSelectorString:(NSString *)testSelectorString
 {
-    NSDictionary    *captureObjectDictionary = [arguments objectForKey:@"captureObjectDictionary"];
+    //NSDictionary    *captureObjectDictionary = [arguments objectForKey:@"captureObjectDictionary"];
     JRCaptureObject *captureObject           = [arguments objectForKey:@"captureObject"];
 
     GHAssertTrue([(JRPinoL1Object *)currentL1Object isEqualToPinoL1Object:(JRPinoL1Object*)captureObject], nil);
-    [self updateObjectProperties:self.currentL1Object toFillerFodderIndex:1];
+    [self mutateObjectProperties:currentL1Object toFillerFodderIndex:1];
 
     /* Then do the update... */
-    [((JRPinoinoL1Object *)self.currentL1Object) updateOnCaptureForDelegate:self context:_ftel(testSelectorString)];
+    [((JRPinoinoL1Object *)currentL1Object) updateOnCaptureForDelegate:self context:_ftel(testSelectorString)];
 }
 
 - (void)finish_b307_pinoUpdate_Level1_PostReplace_withArguments:(NSDictionary *)arguments andTestSelectorString:(NSString *)testSelectorString
@@ -411,7 +412,7 @@
 
     JROnipL2Object  *onipL2Object  = ((JROnipL1PluralElement *)[newArray objectAtIndex:0]).onipL2Object;
 
-    [self updateObjectProperties:onipL2Object toFillerFodderIndex:5];
+    [self mutateObjectProperties:onipL2Object toFillerFodderIndex:5];
     [onipL2Object updateOnCaptureForDelegate:self context:_ftel(testSelectorString)];
 }
 
@@ -421,9 +422,14 @@
     NSDictionary    *captureObjectDictionary = [arguments objectForKey:@"captureObjectDictionary"];
     JRCaptureObject *captureObject           = [arguments objectForKey:@"captureObject"];
 
-    JROnipL2Object  *onipL2Object = [JROnipL2Object onipL2ObjectObjectFromDictionary:captureObjectDictionary withPath:nil fromDecoder:NO];
+    // decode result
+    JROnipL2Object  *onipL2Object = [JROnipL2Object onipL2ObjectObjectFromDictionary:captureObjectDictionary
+                                                                            withPath:nil fromDecoder:NO];
 
+    // assert that the decoded result is equal to what was put in for update
     GHAssertTrue([onipL2Object isEqualToOnipL2Object:((JROnipL2Object *)captureObject)], nil);
+
+    // assert that the decoded result is not equal to
     GHAssertFalse([onipL2Object isEqualToOnipL2Object:((JROnipL2Object *)currentL2Object)], nil);
 }
 
@@ -474,7 +480,7 @@
 - (void)continue_b316a_oinoUpdate_Level1_NoChangeL2_withArguments:(NSDictionary *)arguments
                                             andTestSelectorString:(NSString *)testSelectorString
 {
-    [self updateObjectProperties:captureUser.oinoL1Object toFillerFodderIndex:2];
+    [self mutateObjectProperties:captureUser.oinoL1Object toFillerFodderIndex:2];
     [captureUser.oinoL1Object updateOnCaptureForDelegate:self context:_ftel(testSelectorString)];
 }
 
@@ -497,7 +503,7 @@
 - (void)continue_b316b_oinoUpdate_Level1_ChangeL2_withArguments:(NSDictionary *)arguments
                                           andTestSelectorString:(NSString *)testSelectorString
 {
-    [self updateObjectProperties:captureUser.oinoL1Object.oinoL2Object toFillerFodderIndex:2];
+    [self mutateObjectProperties:captureUser.oinoL1Object.oinoL2Object toFillerFodderIndex:2];
     [captureUser.oinoL1Object updateOnCaptureForDelegate:self context:_ftel(testSelectorString)];
 }
 
@@ -1307,7 +1313,7 @@ void (^contBlock)() = nil;
     DLog(@"");
 
     /* Now try and update our copy, which should be invalid. */
-    [self updateObjectProperties:currentL3Object toFillerFodderIndex:2];
+    [self mutateObjectProperties:currentL3Object toFillerFodderIndex:2];
     [currentL3Object updateOnCaptureForDelegate:self context:_ftel(testSelectorString)];
 }
 
@@ -1345,7 +1351,7 @@ void (^contBlock)() = nil;
 {
     DLog(@"");
     /* Now try and update our copy's subobject, which should be invalid. */
-    [self updateObjectProperties:((JROinonipL2Object *)currentL2Object).oinonipL3Object toFillerFodderIndex:2];
+    [self mutateObjectProperties:((JROinonipL2Object *)currentL2Object).oinonipL3Object toFillerFodderIndex:2];
     [((JROinonipL2Object *)currentL2Object).oinonipL3Object updateOnCaptureForDelegate:self context:_ftel(testSelectorString)];
 }
 
@@ -1383,7 +1389,7 @@ void (^contBlock)() = nil;
 {
     DLog(@"");
     /* Now try and update our copy, which should be invalid. */
-    [self updateObjectProperties:currentL2Object toFillerFodderIndex:2];
+    [self mutateObjectProperties:currentL2Object toFillerFodderIndex:2];
     [currentL2Object updateOnCaptureForDelegate:self context:_ftel(testSelectorString)];
 }
 

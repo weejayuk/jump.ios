@@ -199,7 +199,7 @@ typedef enum CaptureInterfaceStatEnum
 
     [body appendData:[[NSString stringWithFormat:@"%@=%@", signInType, signInName] dataUsingEncoding:NSUTF8StringEncoding]];
     [body appendData:[[NSString stringWithFormat:@"&password=%@", password] dataUsingEncoding:NSUTF8StringEncoding]];
-    [body appendData:[[NSString stringWithFormat:@"&type_name=%@", [JRCaptureData entityTypeName]] dataUsingEncoding:NSUTF8StringEncoding]];
+    //[body appendData:[[NSString stringWithFormat:@"&type_name=%@", [JRCaptureData entityTypeName]] dataUsingEncoding:NSUTF8StringEncoding]];
     [body appendData:[[NSString stringWithFormat:@"&client_id=%@", [JRCaptureData clientId]] dataUsingEncoding:NSUTF8StringEncoding]];
 
 
@@ -221,6 +221,7 @@ typedef enum CaptureInterfaceStatEnum
                                                  context, @"context", nil];
 
     DLog(@"%@ %@=%@", [[request URL] absoluteString], signInType, signInName);
+    //DLog(@"body: %@", [[[NSString alloc] initWithData:body encoding:NSUTF8StringEncoding] autorelease]);
 
     if (![JRConnectionManager createConnectionFromRequest:request forDelegate:self withTag:tag])
         [self finishSignInFailureWithResult:[NSDictionary dictionaryWithObjectsAndKeys:
@@ -367,7 +368,8 @@ typedef enum CaptureInterfaceStatEnum
 }
 
 - (void)startUpdateObject:(NSDictionary *)captureObject atPath:(NSString *)entityPath
-                withToken:(NSString *)token forDelegate:(id <JRCaptureInterfaceDelegate>)delegate withContext:(NSObject *)context
+                withToken:(NSString *)token forDelegate:(id <JRCaptureInterfaceDelegate>)delegate
+              withContext:(NSObject *)context
 {
     DLog(@"");
 
