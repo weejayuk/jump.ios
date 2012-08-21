@@ -1896,10 +1896,6 @@ unless (-d "$pathToOutputDir/$genDir") {
 
 if ($usingCustomOutputDir) {
   my $copyResult = `cp ../Classes/JR* $pathToOutputDir 2>&1`;
-  $copyResult   .= `cp ../Classes/CaptureRecordInterface/JR* $pathToOutputDir 2>&1`;
-  $copyResult   .= `cp ../Classes/CaptureUserModel/JR* $pathToOutputDir 2>&1`;
-  $copyResult   .= `cp ../Classes/EngageWrapper/JR* $pathToOutputDir 2>&1`;
-  $copyResult   .= `cp ../Classes/WebviewWrapper/JR* $pathToOutputDir 2>&1`;
   if ($copyResult) {
     die "[ERROR] Unable to copy necessary files to the '$pathToOutputDir': $copyResult\n\n";
   }
