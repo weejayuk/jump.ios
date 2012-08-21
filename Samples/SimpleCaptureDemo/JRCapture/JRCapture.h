@@ -468,6 +468,8 @@ typedef enum
 #endif // JRCAPTURE_ACCESS_TOKEN_CONTROL
 /*@}*/
 
++ (void)startJsWidget;
+
 /**
  * @name Signin with the Engage for iOS dialogs
  * Methods that initiate signin through the Engage for iOS dialogs

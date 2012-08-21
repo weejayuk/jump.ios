@@ -26,7 +26,7 @@
 		9F7B6A9615336480002BF452 /* ObjectDrillDownViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7B6A8C15336480002BF452 /* ObjectDrillDownViewController.m */; };
 		9F7B6A9715336480002BF452 /* SharedData.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7B6A8E15336480002BF452 /* SharedData.m */; };
 		9F7B6A9815336480002BF452 /* UserDrillDownViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7B6A9015336480002BF452 /* UserDrillDownViewController.m */; };
-		9F7B6A9915336480002BF452 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7B6A9215336480002BF452 /* ViewController.m */; };
+		9F7B6A9915336480002BF452 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7B6A9215336480002BF452 /* RootViewController.m */; };
 		9F7B6AAA1533648C002BF452 /* ArrayDrillDownViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F7B6A9B1533648C002BF452 /* ArrayDrillDownViewController.xib */; };
 		9F7B6AAB1533648C002BF452 /* CaptureNewUserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F7B6A9D1533648C002BF452 /* CaptureNewUserViewController.xib */; };
 		9F7B6AAC1533648C002BF452 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9F7B6A9F1533648C002BF452 /* InfoPlist.strings */; };
@@ -253,6 +253,9 @@
 		9FD2B6BF14F8387100053EA2 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FD2B6BE14F8387100053EA2 /* Security.framework */; };
 		9FD2B6C114F8387B00053EA2 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FD2B6C014F8387B00053EA2 /* MessageUI.framework */; };
 		9FD2B6C114F8387B00053EA4 /* StringArrayDrillDownViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FD2B6C114F8387B00053EA3 /* StringArrayDrillDownViewController.m */; };
+		C14240E5B0C6E24A5C7FDDDF /* JRWebviewWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = C142449DB7B06E72E689C97D /* JRWebviewWrapper.m */; };
+		C142442F155D791C05AD51E7 /* JRCaptureJsWidgetWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424F9477161ED720768DAE /* JRCaptureJsWidgetWrapper.m */; };
+		C14245C6445D108A0EA4E81F /* JRCaptureWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424431591AA9D7F1B47855 /* JRCaptureWebViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -296,8 +299,8 @@
 		9F7B6A8E15336480002BF452 /* SharedData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SharedData.m; path = Classes/SharedData.m; sourceTree = "<group>"; };
 		9F7B6A8F15336480002BF452 /* UserDrillDownViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserDrillDownViewController.h; path = Classes/UserDrillDownViewController.h; sourceTree = "<group>"; };
 		9F7B6A9015336480002BF452 /* UserDrillDownViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserDrillDownViewController.m; path = Classes/UserDrillDownViewController.m; sourceTree = "<group>"; };
-		9F7B6A9115336480002BF452 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ViewController.h; path = Classes/ViewController.h; sourceTree = "<group>"; };
-		9F7B6A9215336480002BF452 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ViewController.m; path = Classes/ViewController.m; sourceTree = "<group>"; };
+		9F7B6A9115336480002BF452 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RootViewController.h; path = Classes/RootViewController.h; sourceTree = "<group>"; };
+		9F7B6A9215336480002BF452 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RootViewController.m; path = Classes/RootViewController.m; sourceTree = "<group>"; };
 		9F7B6A9C1533648C002BF452 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = ArrayDrillDownViewController.xib; sourceTree = "<group>"; };
 		9F7B6A9E1533648C002BF452 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = CaptureNewUserViewController.xib; sourceTree = "<group>"; };
 		9F7B6AA01533648C002BF452 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = InfoPlist.strings; sourceTree = "<group>"; };
@@ -587,6 +590,12 @@
 		9FD2B6C014F8387B00053EA2 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		9FD2B6C114F8387B00053EA3 /* StringArrayDrillDownViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StringArrayDrillDownViewController.m; path = Classes/StringArrayDrillDownViewController.m; sourceTree = "<group>"; };
 		9FD2B6C114F8387B00053EA5 /* StringArrayDrillDownViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StringArrayDrillDownViewController.h; path = Classes/StringArrayDrillDownViewController.h; sourceTree = "<group>"; };
+		C142411E8CDE300BB1D94385 /* JRWebviewWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRWebviewWrapper.h; path = ../JRWebviewWrapper.h; sourceTree = "<group>"; };
+		C1424431591AA9D7F1B47855 /* JRCaptureWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRCaptureWebViewController.m; sourceTree = "<group>"; };
+		C142449DB7B06E72E689C97D /* JRWebviewWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JRWebviewWrapper.m; path = ../JRWebviewWrapper.m; sourceTree = "<group>"; };
+		C14244FAF7083C878421C4C6 /* JRCaptureWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCaptureWebViewController.h; sourceTree = "<group>"; };
+		C1424A3087B2051A4CC6307D /* JRCaptureJsWidgetWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCaptureJsWidgetWrapper.h; sourceTree = "<group>"; };
+		C1424F9477161ED720768DAE /* JRCaptureJsWidgetWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRCaptureJsWidgetWrapper.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -706,8 +715,8 @@
 				9F7B6A8E15336480002BF452 /* SharedData.m */,
 				9F7B6A8F15336480002BF452 /* UserDrillDownViewController.h */,
 				9F7B6A9015336480002BF452 /* UserDrillDownViewController.m */,
-				9F7B6A9115336480002BF452 /* ViewController.h */,
-				9F7B6A9215336480002BF452 /* ViewController.m */,
+				9F7B6A9115336480002BF452 /* RootViewController.h */,
+				9F7B6A9215336480002BF452 /* RootViewController.m */,
 				9F2C93B91551A7AE001A810E /* SimplePluralViewController.h */,
 				9F2C93BA1551A7AE001A810E /* SimplePluralViewController.m */,
 			);
@@ -1110,6 +1119,10 @@
 		9FB121B615C73FE90072BEE6 /* JRCapture */ = {
 			isa = PBXGroup;
 			children = (
+				C1424431591AA9D7F1B47855 /* JRCaptureWebViewController.m */,
+				C14244FAF7083C878421C4C6 /* JRCaptureWebViewController.h */,
+				C1424F9477161ED720768DAE /* JRCaptureJsWidgetWrapper.m */,
+				C1424A3087B2051A4CC6307D /* JRCaptureJsWidgetWrapper.h */,
 				9FB121B715C73FE90072BEE6 /* Generated */,
 				9FB121FA15C73FE90072BEE6 /* JRApidWrapper.h */,
 				9FB121FB15C73FE90072BEE6 /* JRApidWrapper.m */,
@@ -1140,6 +1153,8 @@
 		9FB121B715C73FE90072BEE6 /* Generated */ = {
 			isa = PBXGroup;
 			children = (
+				C142449DB7B06E72E689C97D /* JRWebviewWrapper.m */,
+				C142411E8CDE300BB1D94385 /* JRWebviewWrapper.h */,
 				9FB121B815C73FE90072BEE6 /* JRAccountsElement.h */,
 				9FB121B915C73FE90072BEE6 /* JRAccountsElement.m */,
 				9FB121BA15C73FE90072BEE6 /* JRAddressesElement.h */,
@@ -1487,7 +1502,7 @@
 				9F7B6A9615336480002BF452 /* ObjectDrillDownViewController.m in Sources */,
 				9F7B6A9715336480002BF452 /* SharedData.m in Sources */,
 				9F7B6A9815336480002BF452 /* UserDrillDownViewController.m in Sources */,
-				9F7B6A9915336480002BF452 /* ViewController.m in Sources */,
+				9F7B6A9915336480002BF452 /* RootViewController.m in Sources */,
 				9F2C93BC1551A7AE001A810E /* SimplePluralViewController.m in Sources */,
 				9FD2B6C114F8387B00053EA4 /* StringArrayDrillDownViewController.m in Sources */,
 				9FB1210815C73FD20072BEE6 /* JRConnectionManager.m in Sources */,
@@ -1550,6 +1565,9 @@
 				9FB1223815C73FE90072BEE6 /* JRConventionalSignInViewController.m in Sources */,
 				9FB1223915C73FE90072BEE6 /* JREngageWrapper.m in Sources */,
 				9FB1223A15C73FE90072BEE6 /* JRNSDate+ISO8601_CaptureDateTimeString.m in Sources */,
+				C14240E5B0C6E24A5C7FDDDF /* JRWebviewWrapper.m in Sources */,
+				C142442F155D791C05AD51E7 /* JRCaptureJsWidgetWrapper.m in Sources */,
+				C14245C6445D108A0EA4E81F /* JRCaptureWebViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

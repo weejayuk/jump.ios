@@ -40,20 +40,20 @@
 
 #define ALog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
 
-#import "ViewController.h"
+#import "RootViewController.h"
 #import "JREngage+CustomInterface.h"
 #import "CaptureNewUserViewController.h"
 #import "ObjectDrillDownViewController.h"
 
-@interface ViewController ()
+@interface RootViewController ()
 - (void)adjustUiState;
 @end
 
-@implementation ViewController
+@implementation RootViewController
 @synthesize currentUserLabel;
 @synthesize currentUserProviderIcon;
 @synthesize browseButton;
-@synthesize testerButton;
+@synthesize captureWidgetButton;
 @synthesize updateButton;
 @synthesize signInButton;
 @synthesize signOutButton;
@@ -109,7 +109,7 @@
 - (void)setButtonsEnabled:(BOOL)enabled
 {
     [browseButton setEnabled:enabled];
-    [testerButton setEnabled:enabled];
+    [captureWidgetButton setEnabled:enabled];
     [updateButton setEnabled:enabled];
     [signInButton setEnabled:enabled];
     [signOutButton setEnabled:enabled];
@@ -135,27 +135,10 @@
     [self.navigationController pushViewController:viewController animated:YES];
 }
 
-- (IBAction)testerButtonPressed:(id)sender
+- (IBAction)captureWidgetButtonPressed:(id)sender
 {
-//    DLog(@"");
-//   JRCaptureUser *captureUser = [JRCaptureUser captureUser];
-//
-//    captureUser.displayName = @"mcspilli";
-//    captureUser.avatar      = @"sexy_brunette.jpg";
-//      captureUser.bankroll    = [NSNumber numberWithDouble:1000.0];
-//
-//    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Welcome!"
-//                                                        message:@"You have just been awarded $1000 for joining!"
-//                                                       delegate:nil
-//                                              cancelButtonTitle:@"Dismiss"
-//                                              otherButtonTitles:nil];
-//    [alertView show];
-//
-//    [captureUser updateOnCaptureForDelegate:self context:nil];
-//
-//    JRBestHand *bestHand = [JRBestHand bestHand];
-//
-//    bestHand.
+    DLog(@"");
+    [JRCapture startJsWidget];
 }
 
 - (IBAction)signInButtonPressed:(id)sender
