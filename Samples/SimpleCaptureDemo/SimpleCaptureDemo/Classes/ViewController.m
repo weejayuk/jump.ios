@@ -222,13 +222,22 @@
 
 - (void)captureSignInDidFailWithError:(NSError *)error
 {
-    DLog(@"error: %@", [error description]);
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                        message:[error description]
-                                                       delegate:nil
-                                              cancelButtonTitle:@"Dismiss"
-                                              otherButtonTitles:nil];
-    [alertView show];
+    if ([error code] == JRCaptureErrorGenericBadPassword)
+    {
+        [[[UIAlertView alloc] initWithTitle:@"Access Denied" message:@"Invalid password for email@address.com"
+                                  delegate:nil cancelButtonTitle:@"Dismiss"
+                         otherButtonTitles:nil] show];
+    }
+    else
+    {
+        DLog(@"error: %@", [error description]);
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                            message:[error description]
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"Dismiss"
+                                                  otherButtonTitles:nil];
+        [alertView show];
+    }
 }
 
 - (void)viewDidUnload
