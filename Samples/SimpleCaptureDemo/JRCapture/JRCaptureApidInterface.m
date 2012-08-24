@@ -53,6 +53,9 @@ static NSString *const cTagAction = @"action";
 #import "JRCaptureData.h"
 #import "JSONKit.h"
 #import "JRCaptureError.h"
+#import "JRCaptureUser.h"
+#import "JRCaptureUser+Extras.h"
+#import "JRCapture.h"
 
 
 @implementation JRCaptureApidInterface
@@ -541,11 +544,12 @@ typedef enum CaptureInterfaceStatEnum
 
 }
 
-+ (void)signinCaptureUserWithCredentials:(NSDictionary *)credentials ofType:(NSString *)signinType
++ (void)signinCaptureUserWithCredentials:(NSDictionary *)credentials ofType:(NSString *)signInType
                              forDelegate:(id <JRCaptureInterfaceDelegate>)delegate withContext:(NSObject *)context
 {
     [[JRCaptureApidInterface captureInterfaceInstance]
-            startSigninCaptureUserWithCredentials:credentials ofType:signinType forDelegate:delegate withContext:context];
+            startSigninCaptureUserWithCredentials:credentials ofType:signInType forDelegate:delegate
+                                      withContext:context];
 
 }
 
@@ -592,11 +596,11 @@ typedef enum CaptureInterfaceStatEnum
             startReplaceArray:captureArray atPath:entityPath withToken:token forDelegate:delegate withContext:context];
 }
 
-- (void)connectionDidFinishLoadingWithPayload:(NSString*)payload request:(NSURLRequest*)request andTag:(id)userdata
+- (void)connectionDidFinishLoadingWithPayload:(NSString*)payload request:(NSURLRequest*)request andTag:(id)userData
 {
     DLog(@"%@", payload);
 
-    NSDictionary *tag       = (NSDictionary*)userdata;
+    NSDictionary *tag       = (NSDictionary *) userData;
     NSString     *action    = [tag objectForKey:cTagAction];
     NSObject     *context   = [tag objectForKey:@"context"];
 
@@ -611,10 +615,32 @@ typedef enum CaptureInterfaceStatEnum
     }
     else if ([action isEqualToString:cSignInUser])
     {
-        if (stat == StatOk)
-            [self finishSignInSuccessWithResult:payload forDelegate:delegate withContext:context];
-        else
-            [self finishSignInFailureWithResult:response forDelegate:delegate withContext:context];
+        if ([delegate conformsToProtocol:@protocol(JRCaptureInterfaceDelegate)])
+        {
+            if (stat == StatOk)
+                [self finishSignInSuccessWithResult:payload forDelegate:delegate withContext:context];
+            else
+                [self finishSignInFailureWithResult:response forDelegate:delegate withContext:context];
+        }
+        else if ([delegate conformsToProtocol:@protocol(JRCaptureSigninDelegate)])
+        {
+            id <JRCaptureSigninDelegate> d_ = (id) delegate;
+            FinishSignInError err = [JRCaptureApidInterface finishSignInWithPayload:response forDelegate:d_];
+            
+            if ((err == cJRInvalidResponse || err == cJRInvalidCaptureUser) &&
+                    [d_ respondsToSelector:@selector(captureAuthenticationDidFailWithError:)])
+            {
+                NSString *errorDesc = [NSString stringWithFormat:
+                        @"The Capture Mobile Endpoint URL did not have the expected data: %@", [payload description]];
+                NSNumber *code = [NSNumber numberWithInteger:JRCaptureWrappedEngageErrorInvalidEndpointPayload];
+                NSDictionary *errDict = [NSDictionary dictionaryWithObjectsAndKeys:
+                                                              @"error", @"stat",
+                                                              @"invalid_endpoint_response", @"error",
+                                                              errorDesc, @"error_description",
+                                                              code, @"code", nil];
+                [d_ captureAuthenticationDidFailWithError:[JRCaptureError errorFromResult:errDict]];
+            }
+        }
     }
     else if ([action isEqualToString:cGetUser])
     {
@@ -639,13 +665,13 @@ typedef enum CaptureInterfaceStatEnum
 }
 
 - (void)connectionDidFinishLoadingWithFullResponse:(NSURLResponse*)fullResponse unencodedPayload:(NSData*)payload
-                                           request:(NSURLRequest*)request andTag:(id)userdata { }
+                                           request:(NSURLRequest*)request andTag:(id)userData { }
 
-- (void)connectionDidFailWithError:(NSError*)error request:(NSURLRequest*)request andTag:(id)userdata
+- (void)connectionDidFailWithError:(NSError*)error request:(NSURLRequest*)request andTag:(id)userData
 {
     DLog(@"");
 
-    NSDictionary *tag       = (NSDictionary*)userdata;
+    NSDictionary *tag       = (NSDictionary*) userData;
     NSString     *action    = [tag objectForKey:cTagAction];
     NSObject     *context   = [tag objectForKey:@"context"];
     id<JRCaptureInterfaceDelegate> delegate = [tag objectForKey:@"delegate"];
@@ -687,5 +713,45 @@ typedef enum CaptureInterfaceStatEnum
     }
 }
 
-- (void)connectionWasStoppedWithTag:(id)userdata { }
++ (FinishSignInError)finishSignInWithPayload:(NSDictionary *)payloadDict
+                                 forDelegate:(id<JRCaptureSigninDelegate>)delegate
+{
+    NSString *accessToken   = [payloadDict objectForKey:@"access_token"];
+    NSString *creationToken = [payloadDict objectForKey:@"creation_token"];
+    BOOL      isNew         = [(NSNumber*)[payloadDict objectForKey:@"is_new"] boolValue];
+    BOOL      notYetCreated = creationToken ? YES: NO;
+
+    NSDictionary *captureProfile = [payloadDict objectForKey:@"capture_user"];
+
+    if (!captureProfile || !(accessToken || creationToken)) return cJRInvalidResponse;
+
+    JRCaptureUser *captureUser = [JRCaptureUser captureUserObjectFromDictionary:captureProfile];
+
+    if (!captureUser) return cJRInvalidCaptureUser;
+
+    NSString *uuid = [captureUser performSelector:NSSelectorFromString(@"uuid")];
+
+    if (accessToken)
+        [JRCaptureData setAccessToken:accessToken forUser:uuid];
+    else if (creationToken)
+        [JRCaptureData setCreationToken:creationToken];
+
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+
+    JRCaptureRecordStatus recordStatus;
+
+    if (notYetCreated)
+        recordStatus = JRCaptureRecordMissingRequiredFields;
+    else if (isNew)
+        recordStatus = JRCaptureRecordNewlyCreated;
+    else
+        recordStatus = JRCaptureRecordExists;
+
+    if ([delegate respondsToSelector:@selector(captureAuthenticationDidSucceedForUser:status:)])
+        [delegate captureAuthenticationDidSucceedForUser:captureUser status:recordStatus];
+
+    return cJRNoError;
+}
+
+- (void)connectionWasStoppedWithTag:(id)userData { }
 @end

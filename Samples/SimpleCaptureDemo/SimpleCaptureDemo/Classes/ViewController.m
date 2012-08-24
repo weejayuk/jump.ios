@@ -44,6 +44,7 @@
 #import "JREngage+CustomInterface.h"
 #import "CaptureNewUserViewController.h"
 #import "ObjectDrillDownViewController.h"
+#import "JRCaptureApidInterface.h"
 
 @interface ViewController ()
 - (void)adjustUiState;
@@ -137,6 +138,11 @@
 
 - (IBAction)testerButtonPressed:(id)sender
 {
+    [SharedData signOutCurrentUser];
+    [[SharedData sharedData] setDemoSigninDelegate:self];
+    [JRCapture startCaptureConventionalSigninForUser:@"lilli@janrain.com" withPassword:@"aaaaa"
+                                      withSigninType:JRConventionalSigninEmailPassword
+                                         forDelegate:[SharedData sharedData]];
 //    DLog(@"");
 //   JRCaptureUser *captureUser = [JRCaptureUser captureUser];
 //
