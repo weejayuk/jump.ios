@@ -44,6 +44,17 @@
 @property(retain) JRCaptureUser *captureUser;
 @end
 
+@interface TestContinuationContext : NSObject
+@property SEL forTest;
+@property SEL continuation;
+@property NSObject *resultForContinuation;
+@property SEL delegateCallback;
+@end;
+
+@implementation TestContinuationContext
+@synthesize forTest, continuation, resultForContinuation, delegateCallback;
+@end
+
 @implementation zz1_CaptureSignInTests
 @synthesize captureUser;
 
@@ -69,29 +80,79 @@
     self.captureUser = nil;
 }
 
-/* Set a boolean with an NSNumber boolean */
+// TODO should be reworked to use JRCapture + JRCaptureSigninDelegate instead of JRCaptureApidInterface
 - (void)test_zz101_SignInUser
 {
     NSDictionary *credentials = [NSDictionary dictionaryWithObjectsAndKeys:
                                                       @"lilli@janrain.com", @"email",
                                                       @"aaaaaa", @"password",
                                                       nil];
-    [JRCaptureApidInterface signinCaptureUserWithCredentials:credentials
-                                                      ofType:@"email"
-                                                 forDelegate:self
-                                                 withContext:NSStringFromSelector(_cmd)];
+
+    TestContinuationContext *c = [[[TestContinuationContext alloc] init] autorelease];
+    c.forTest = _cmd;
+
+    [JRCaptureApidInterface signinCaptureUserWithCredentials:credentials ofType:@"email" forDelegate:self
+                                                 withContext:c];
+
     [self prepare];
     [self waitForStatus:kGHUnitWaitStatusSuccess timeout:10.0];
 }
 
 - (void)signinCaptureUserDidSucceedWithResult:(NSString *)result context:(NSObject *)context
 {
-    [self notify:kGHUnitWaitStatusSuccess forSelector:NSSelectorFromString((NSString *) context)];
+    if ([context isKindOfClass:[TestContinuationContext class]])
+    {
+        ((TestContinuationContext *) context).resultForContinuation = result;
+        ((TestContinuationContext *) context).delegateCallback = _cmd;
+        if (((TestContinuationContext *) context).continuation)
+            [self performSelector:((TestContinuationContext *) context).continuation withObject:context];
+        else
+            [self notify:kGHUnitWaitStatusSuccess forSelector:((TestContinuationContext *) context).forTest];
+    }
+    else [self notify:kGHUnitWaitStatusFailure];
 }
 
 - (void)signinCaptureUserDidFailWithResult:(NSDictionary *)result context:(NSObject *)context
 {
-    [self notify:kGHUnitWaitStatusFailure forSelector:NSSelectorFromString((NSString *) context)];
+    if ([context isKindOfClass:[TestContinuationContext class]])
+    {
+        ((TestContinuationContext *) context).resultForContinuation = result;
+        ((TestContinuationContext *) context).delegateCallback = _cmd;
+        if (((TestContinuationContext *) context).continuation)
+            [self performSelector:((TestContinuationContext *) context).continuation withObject:context];
+        else
+            [self notify:kGHUnitWaitStatusFailure forSelector:((TestContinuationContext *) context).forTest];
+    }
+    else [self notify:kGHUnitWaitStatusFailure];
+}
+
+- (void)test_zz101_SignInUser_FailCase_ContinueWithContext:(TestContinuationContext *)context
+{
+    if (context.delegateCallback == @selector(signinCaptureUserDidFailWithResult:context:))
+    {
+        [self notify:kGHUnitWaitStatusSuccess forSelector:context.forTest];
+        return;
+    }
+
+    [self notify:kGHUnitWaitStatusFailure];
+}
+
+- (void)test_zz101_SignInUser_FailCase
+{
+    NSDictionary *credentials = [NSDictionary dictionaryWithObjectsAndKeys:
+                                                      @"lilli@janrain.com", @"email",
+                                                      @"aaaaa", @"password",
+                                                      nil];
+
+    TestContinuationContext *c = [[[TestContinuationContext alloc] init] autorelease];
+    c.forTest = _cmd;
+    c.continuation = @selector(test_zz101_SignInUser_FailCase_ContinueWithContext:);
+
+    [JRCaptureApidInterface signinCaptureUserWithCredentials:credentials ofType:@"email" forDelegate:self
+                                                 withContext:c];
+
+    [self prepare];
+    [self waitForStatus:kGHUnitWaitStatusSuccess timeout:10.0];
 }
 
 //- (void)test_zz101_CheckAccessToken
@@ -99,78 +160,6 @@
 //    [self prepare];
 //    [captureUser updateOnCaptureForDelegate:self context:NSStringFromSelector(_cmd)];
 //    [self waitForStatus:kGHUnitWaitStatusSuccess timeout:10.0];
-//}
-
-//- (void)updateCaptureObject:(JRCaptureObject *)object didSucceedWithResult:(NSString *)result context:(NSObject *)context
-//{
-//    NSDictionary *resultDictionary = [result objectFromJSONString];
-//    NSDictionary *captureProfile   = [resultDictionary objectForKey:@"result"];
-//
-//    JRCaptureUser *newUser = [JRCaptureUser captureUserObjectFromDictionary:captureProfile];
-//
-//    NSString *testSelectorString = (NSString *)context;
-//    @try
-//    {
-//        if ([testSelectorString isEqualToString:@"test_a101_booleanWithBoolTrue"])
-//        {
-//            GHAssertTrue([newUser.basicBoolean boolValue], nil);
-//        }
-//        else if ([testSelectorString isEqualToString:@"test_a102_booleanWithBoolFalse"])
-//        {
-//            GHAssertFalse([newUser.basicBoolean boolValue], nil);
-//        }
-//        else if ([testSelectorString isEqualToString:@"test_a103_booleanWithIntTrue"])
-//        {
-//            GHAssertTrue([newUser.basicBoolean boolValue], nil);
-//        }
-//        else if ([testSelectorString isEqualToString:@"test_a104_booleanWithIntFalse"])
-//        {
-//            GHAssertFalse([newUser.basicBoolean boolValue], nil);
-//        }
-//        else if ([testSelectorString isEqualToString:@"test_a105_booleanWithDoubleTrue"])
-//        {
-//            GHAssertTrue([newUser.basicBoolean boolValue], nil);
-//        }
-//        else if ([testSelectorString isEqualToString:@"test_a106_booleanWithDoubleFalse"])
-//        {
-//            GHAssertFalse([newUser.basicBoolean boolValue], nil);
-//        }
-//        else if ([testSelectorString isEqualToString:@"test_a107_booleanWithNil"])
-//        {
-//            GHAssertNil(newUser.basicBoolean, nil);
-//        }
-//        else if ([testSelectorString isEqualToString:@"test_a108_booleanWithNSNull"])
-//        {
-//            GHAssertNil(newUser.basicBoolean, nil);
-//        }
-//        else if ([testSelectorString isEqualToString:@"test_a109_primitiveSetterTrue"])
-//        {
-//            GHAssertTrue([newUser getBasicBooleanBoolValue], nil);
-//        }
-//        else if ([testSelectorString isEqualToString:@"test_a110_primitiveSetterFalse"])
-//        {
-//            GHAssertFalse([newUser getBasicBooleanBoolValue], nil);
-//        }
-//        else
-//        {
-//            GHAssertFalse(TRUE, @"Missing test result comparison for %@ in %@", testSelectorString, NSStringFromSelector(_cmd));
-//        }
-//    }
-//    @catch (NSException *exception)
-//    {
-//        GHTestLog([exception description]);
-//        [self notify:kGHUnitWaitStatusFailure forSelector:NSSelectorFromString(testSelectorString)];
-//
-//        return;
-//    }
-//
-//    [self notify:kGHUnitWaitStatusSuccess forSelector:NSSelectorFromString(testSelectorString)];
-//}
-
-//- (void)updateCaptureObject:(JRCaptureObject *)object didFailWithResult:(NSString *)result context:(NSObject *)context
-//{
-//    NSString *testSelectorString = (NSString *)context;
-//    [self notify:kGHUnitWaitStatusFailure forSelector:NSSelectorFromString(testSelectorString)];
 //}
 
 - (void)dealloc
