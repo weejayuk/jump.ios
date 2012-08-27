@@ -107,7 +107,7 @@ static NSString *entityTypeName     = @"sample_user";
 }
 
 /* Return the singleton instance of this class. */
-+ (SharedData *)singletonInstance
++ (SharedData *)sharedData
 {
     if (singleton == nil) {
         singleton = (SharedData *) [[super allocWithZone:NULL] init];
@@ -118,7 +118,7 @@ static NSString *entityTypeName     = @"sample_user";
 
 + (id)allocWithZone:(NSZone *)zone
 {
-    return [self singletonInstance];
+    return [self sharedData];
 }
 
 - (id)copyWithZone:(NSZone *)zone
@@ -128,27 +128,27 @@ static NSString *entityTypeName     = @"sample_user";
 
 + (JRCaptureUser *)captureUser
 {
-    return [[SharedData singletonInstance] captureUser];
+    return [[SharedData sharedData] captureUser];
 }
 
 + (BOOL)isNew
 {
-    return [[SharedData singletonInstance] isNew];
+    return [[SharedData sharedData] isNew];
 }
 
 + (BOOL)isNotYetCreated
 {
-    return [[SharedData singletonInstance] isNotYetCreated];
+    return [[SharedData sharedData] isNotYetCreated];
 }
 
 + (NSString *)currentEmail
 {
-    return [SharedData singletonInstance].captureUser.email;
+    return [SharedData sharedData].captureUser.email;
 }
 
 + (NSString *)currentProvider
 {
-    return [[SharedData singletonInstance] currentProvider];
+    return [[SharedData sharedData] currentProvider];
 }
 
 - (void)signOutCurrentUser
@@ -167,18 +167,18 @@ static NSString *entityTypeName     = @"sample_user";
 
 + (void)signOutCurrentUser
 {
-    [[SharedData singletonInstance] signOutCurrentUser];
+    [[SharedData sharedData] signOutCurrentUser];
 }
 
 + (void)startAuthenticationWithCustomInterface:(NSDictionary *)customInterface
                                    forDelegate:(id<DemoSignInDelegate>)delegate
 {
     [SharedData signOutCurrentUser];
-    [[SharedData singletonInstance] setDemoSigninDelegate:delegate];
+    [[SharedData sharedData] setDemoSigninDelegate:delegate];
 
     [JRCapture startEngageSigninDialogWithConventionalSignin:JRConventionalSigninEmailPassword
                                  andCustomInterfaceOverrides:customInterface
-                                                 forDelegate:[SharedData singletonInstance]];
+                                                 forDelegate:[SharedData sharedData]];
 }
 
 //+ (NSString*)getDisplayNameFromProfile:(NSDictionary*)profile
@@ -219,7 +219,7 @@ static NSString *entityTypeName     = @"sample_user";
 
 + (void)resaveCaptureUser
 {
-    [[SharedData singletonInstance] resaveCaptureUser];
+    [[SharedData sharedData] resaveCaptureUser];
 }
 
 - (void)postEngageErrorToDelegate:(NSError *)error

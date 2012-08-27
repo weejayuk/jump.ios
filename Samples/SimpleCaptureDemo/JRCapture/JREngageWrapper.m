@@ -221,9 +221,11 @@ static JREngageWrapper *singleton = nil;
     [self engageLibraryTearDown];
 }
 
-- (void)authenticationDidReachTokenUrl:(NSString *)tokenUrl withResponse:(NSURLResponse *)response andPayload:(NSData *)tokenUrlPayload forProvider:(NSString *)provider
+- (void)authenticationDidReachTokenUrl:(NSString *)tokenUrl withResponse:(NSURLResponse *)response
+                            andPayload:(NSData *)tokenUrlPayload forProvider:(NSString *)provider
 {
-    NSString     *payload     = [[[NSString alloc] initWithData:tokenUrlPayload encoding:NSUTF8StringEncoding] autorelease];
+    NSString     *payload     = [[[NSString alloc] initWithData:tokenUrlPayload encoding:NSUTF8StringEncoding]
+            autorelease];
     NSDictionary *payloadDict = [payload objectFromJSONString];
 
     DLog(@"%@", payload);
@@ -238,45 +240,17 @@ static JREngageWrapper *singleton = nil;
                                    didFailWithError:[JREngageWrapperErrorWriter invalidPayloadError:payload]
                                         forProvider:provider];
 
-    NSString *accessToken   = [payloadDict objectForKey:@"access_token"];
-    NSString *creationToken = [payloadDict objectForKey:@"creation_token"];
-    BOOL      isNew         = [(NSNumber*)[payloadDict objectForKey:@"is_new"] boolValue];
-    BOOL      notYetCreated = creationToken ? YES: NO;
+    FinishSignInError error = [JRCaptureApidInterface finishSignInWithPayload:payloadDict forDelegate:delegate];
 
-    NSDictionary *captureProfile = [payloadDict objectForKey:@"capture_user"];
+    if (error == cJRInvalidResponse)
+        [self authenticationCallToTokenUrl:tokenUrl
+                          didFailWithError:[JREngageWrapperErrorWriter invalidPayloadError:payload]
+                               forProvider:provider];
 
-    if (!captureProfile || !(accessToken || creationToken))
+    if (error == cJRInvalidCaptureUser)
         return [self authenticationCallToTokenUrl:tokenUrl
-                                   didFailWithError:[JREngageWrapperErrorWriter invalidPayloadError:payload]
-                                        forProvider:provider];
-
-    JRCaptureUser *captureUser = [JRCaptureUser captureUserObjectFromDictionary:captureProfile];
-
-    if (!captureUser)
-        return [self authenticationCallToTokenUrl:tokenUrl
-                                   didFailWithError:[JREngageWrapperErrorWriter invalidPayloadError:payload]
-                                        forProvider:provider];
-
-    NSString *uuid = [captureUser performSelector:NSSelectorFromString(@"uuid")];
-
-    if (accessToken)
-        [JRCaptureData setAccessToken:accessToken forUser:uuid];
-    else if (creationToken)
-        [JRCaptureData setCreationToken:creationToken];
-
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-
-    JRCaptureRecordStatus recordStatus;
-
-    if (notYetCreated)
-        recordStatus = JRCaptureRecordMissingRequiredFields;
-    else if (isNew)
-        recordStatus = JRCaptureRecordNewlyCreated;
-    else
-        recordStatus = JRCaptureRecordExists;
-
-    if ([delegate respondsToSelector:@selector(captureAuthenticationDidSucceedForUser:status:)])
-        [delegate captureAuthenticationDidSucceedForUser:captureUser status:recordStatus];
+                                 didFailWithError:[JREngageWrapperErrorWriter invalidPayloadError:payload]
+                                      forProvider:provider];
 
     [self engageLibraryTearDown];
 }
