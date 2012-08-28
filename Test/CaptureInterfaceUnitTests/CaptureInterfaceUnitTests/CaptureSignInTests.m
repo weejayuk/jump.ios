@@ -53,6 +53,7 @@
 
 @implementation TestContinuationContext
 @synthesize forTest, continuation, resultForContinuation, delegateCallback;
+// TODO does this class need dealloc for it's properties or does the default implementation handle it?
 @end
 
 @implementation zz1_CaptureSignInTests
