@@ -146,10 +146,13 @@ static JRCaptureData *singleton = nil;
 
 + (NSString *)captureMobileEndpointUrl
 {
+    NSString *autoCreate = @"false"; // TODO, parameterize into JRCaptureData
     JRCaptureData *captureDataInstance = [JRCaptureData captureDataInstance];
-    return [NSString stringWithFormat:@"%@/oauth/mobile_signin?client_id=%@&type_name=%@&redirect_uri=https://%@/cmeu",
+    return [NSString stringWithFormat:@"%@/oauth/mobile_signin?client_id=%@&type_name=%@&redirect_uri=https://%@/cmeu"
+                                              "&auto_create=%@",
                      captureDataInstance.captureUIBaseUrl, captureDataInstance.clientId,
-                     captureDataInstance.entityTypeName, captureDataInstance.captureUIBaseUrl];
+                     captureDataInstance.entityTypeName, captureDataInstance.captureUIBaseUrl,
+                     autoCreate];
 }
 
 + (void)setCaptureApidDomain:(NSString *)newCaptureApidDomain captureUIDomain:(NSString *)newCaptureUIDomain
