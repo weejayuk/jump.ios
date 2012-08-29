@@ -230,14 +230,10 @@
 		DDE0B9A67F00A1DC4B6DFBBA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDE0B9A67F00A1DC4B6DFBB9 /* CoreGraphics.framework */; };
 		DDE0B9A67F00A1DC4B6DFBC0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DDE0B9A67F00A1DC4B6DFBBF /* InfoPlist.strings */; };
 		DDE0B9A67F00A1DC4B6DFBC2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DDE0B9A67F00A1DC4B6DFBC1 /* main.m */; };
-		DDE0B9A67F00A1DC4B6DFBC7 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		DDE0B9A67F00A1DC4B6DFBCD /* (null) in Sources */ = {isa = PBXBuildFile; };
 		DDE0B9A67F00A1DC4B6DFBD0 /* ContraintsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DDE0B9A67F00A1DC4B6DFBCF /* ContraintsTests.m */; };
-		DDE0B9A67F00A1DC4B6DFBD3 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		DDE0B9A67F00A1DC4B6DFBD6 /* OtherAttributesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DDE0B9A67F00A1DC4B6DFBD5 /* OtherAttributesTests.m */; };
 		DDE0B9A67F00A1DC4B6DFBD9 /* SharedData.m in Sources */ = {isa = PBXBuildFile; fileRef = DDE0B9A67F00A1DC4B6DFBD8 /* SharedData.m */; };
 		DDE0B9A67F00A1DC4B6DFBDD /* GetCaptureUserAsyncTest.m in Sources */ = {isa = PBXBuildFile; fileRef = DDE0B9A67F00A1DC4B6DFBDC /* GetCaptureUserAsyncTest.m */; };
-		DDE0B9A67F00A1DC4B6DFBDF /* (null) in Sources */ = {isa = PBXBuildFile; };
 		DDE0B9A67F00A1DC4B6DFBE2 /* BooleanTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DDE0B9A67F00A1DC4B6DFBE1 /* BooleanTests.m */; };
 		DDE0B9A67F00A1DC4B6DFBE5 /* IntegerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DDE0B9A67F00A1DC4B6DFBE4 /* IntegerTests.m */; };
 		DDE0B9A67F00A1DC4B6DFBE8 /* DecimalTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DDE0B9A67F00A1DC4B6DFBE7 /* DecimalTests.m */; };
@@ -1367,14 +1363,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				DDE0B9A67F00A1DC4B6DFBC2 /* main.m in Sources */,
-				DDE0B9A67F00A1DC4B6DFBC7 /* (null) in Sources */,
-				DDE0B9A67F00A1DC4B6DFBCD /* (null) in Sources */,
 				DDE0B9A67F00A1DC4B6DFBD0 /* ContraintsTests.m in Sources */,
-				DDE0B9A67F00A1DC4B6DFBD3 /* (null) in Sources */,
 				DDE0B9A67F00A1DC4B6DFBD6 /* OtherAttributesTests.m in Sources */,
 				DDE0B9A67F00A1DC4B6DFBD9 /* SharedData.m in Sources */,
 				DDE0B9A67F00A1DC4B6DFBDD /* GetCaptureUserAsyncTest.m in Sources */,
-				DDE0B9A67F00A1DC4B6DFBDF /* (null) in Sources */,
 				DDE0B9A67F00A1DC4B6DFBE2 /* BooleanTests.m in Sources */,
 				DDE0B9A67F00A1DC4B6DFBE5 /* IntegerTests.m in Sources */,
 				DDE0B9A67F00A1DC4B6DFBE8 /* DecimalTests.m in Sources */,
