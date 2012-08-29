@@ -468,8 +468,6 @@ typedef enum
 #endif // JRCAPTURE_ACCESS_TOKEN_CONTROL
 /*@}*/
 
-+ (void)startJsWidget;
-
 /**
  * @name Signin with the Engage for iOS dialogs
  * Methods that initiate signin through the Engage for iOS dialogs
@@ -477,12 +475,17 @@ typedef enum
 /*@{*/
 
 /**
- * Use this function to begin authentication. The Engage for iOS portion of the library will
- * pop up a modal dialog and take the user through the sign-in process.
  *
- * @param delegate
- *   The JRCaptureSigninDelegate object that wishes to receive messages regarding user authentication
- **/
+ */
++ (void)startJsWidget;
+
+/**
+* Use this function to begin authentication. The Engage for iOS portion of the library will
+* pop up a modal dialog and take the user through the sign-in process.
+*
+* @param delegate
+*   The JRCaptureSigninDelegate object that wishes to receive messages regarding user authentication
+**/
 + (void)startEngageSigninDialogForDelegate:(id<JRCaptureSigninDelegate>)delegate;
 
 #ifdef JRCAPTURE_CONVENTIONAL_SIGNIN

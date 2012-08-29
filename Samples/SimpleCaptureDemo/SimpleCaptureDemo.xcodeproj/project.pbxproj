@@ -253,9 +253,9 @@
 		9FD2B6BF14F8387100053EA2 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FD2B6BE14F8387100053EA2 /* Security.framework */; };
 		9FD2B6C114F8387B00053EA2 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FD2B6C014F8387B00053EA2 /* MessageUI.framework */; };
 		9FD2B6C114F8387B00053EA4 /* StringArrayDrillDownViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FD2B6C114F8387B00053EA3 /* StringArrayDrillDownViewController.m */; };
-		C14240E5B0C6E24A5C7FDDDF /* JRWebviewWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = C142449DB7B06E72E689C97D /* JRWebviewWrapper.m */; };
-		C142442F155D791C05AD51E7 /* JRCaptureJsWidgetWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424F9477161ED720768DAE /* JRCaptureJsWidgetWrapper.m */; };
-		C14245C6445D108A0EA4E81F /* JRCaptureWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424431591AA9D7F1B47855 /* JRCaptureWebViewController.m */; };
+		C14240E5B0C6E24A5C7FDDDF /* JRWebviewWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = C142449DB7B06E72E689C97D /* JRWebviewWrapper.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		C142442F155D791C05AD51E7 /* JRCaptureJsWidgetWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424F9477161ED720768DAE /* JRCaptureJsWidgetWrapper.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		C14245C6445D108A0EA4E81F /* JRCaptureWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424431591AA9D7F1B47855 /* JRCaptureWebViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -592,6 +592,7 @@
 		9FD2B6C114F8387B00053EA5 /* StringArrayDrillDownViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StringArrayDrillDownViewController.h; path = Classes/StringArrayDrillDownViewController.h; sourceTree = "<group>"; };
 		C142411E8CDE300BB1D94385 /* JRWebviewWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRWebviewWrapper.h; path = ../JRWebviewWrapper.h; sourceTree = "<group>"; };
 		C1424431591AA9D7F1B47855 /* JRCaptureWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRCaptureWebViewController.m; sourceTree = "<group>"; };
+		C142445FC35BCE9B86EB832E /* debug_log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = debug_log.h; sourceTree = "<group>"; };
 		C142449DB7B06E72E689C97D /* JRWebviewWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JRWebviewWrapper.m; path = ../JRWebviewWrapper.m; sourceTree = "<group>"; };
 		C14244FAF7083C878421C4C6 /* JRCaptureWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCaptureWebViewController.h; sourceTree = "<group>"; };
 		C1424A3087B2051A4CC6307D /* JRCaptureJsWidgetWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCaptureJsWidgetWrapper.h; sourceTree = "<group>"; };
@@ -1119,6 +1120,7 @@
 		9FB121B615C73FE90072BEE6 /* JRCapture */ = {
 			isa = PBXGroup;
 			children = (
+				C142445FC35BCE9B86EB832E /* debug_log.h */,
 				C1424431591AA9D7F1B47855 /* JRCaptureWebViewController.m */,
 				C14244FAF7083C878421C4C6 /* JRCaptureWebViewController.h */,
 				C1424F9477161ED720768DAE /* JRCaptureJsWidgetWrapper.m */,

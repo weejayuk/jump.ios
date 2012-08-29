@@ -56,10 +56,10 @@
     {
         DLog(@"no back button");
         UIBarButtonItem *cancelButton =
-                [[UIBarButtonItem alloc]
+                [[[UIBarButtonItem alloc]
                         initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
                                              target:self
-                                             action:@selector(cancelButton)];
+                                             action:@selector(cancelButton)] autorelease];
 
         self.navigationItem.rightBarButtonItem         = cancelButton;
         self.navigationItem.rightBarButtonItem.enabled = YES;

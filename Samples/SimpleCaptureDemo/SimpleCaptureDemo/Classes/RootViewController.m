@@ -139,7 +139,9 @@
 - (IBAction)captureWidgetButtonPressed:(id)sender
 {
     DLog(@"");
-    [JRCapture startJsWidget];
+    //[JRCapture startJsWidget];
+    [JRCapture startEngageSigninDialogOnProvider:@"facebook" forDelegate:self];
+    //[JREngage ]
 }
 
 - (IBAction)signInButtonPressed:(id)sender
