@@ -140,7 +140,7 @@
 {
     DLog(@"");
     //[JRCapture startJsWidget];
-    [JRCapture startEngageSigninDialogOnProvider:@"facebook" forDelegate:self];
+    [JRCapture startEngageSigninDialogOnProvider:@"facebook" forDelegate:[SharedData sharedData]];
     //[JREngage ]
 }
 
