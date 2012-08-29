@@ -148,6 +148,18 @@
 }
 #endif // JRENGAGE_SHARING_WITH_CAPTURE
 
++ (void)startCaptureConventionalSigninForUser:(NSString *)user withPassword:(NSString *)password
+                               withSigninType:(JRConventionalSigninType)conventionalSignInType
+                                  forDelegate:(id <JRCaptureSigninDelegate>)delegate
+{
+    NSString *typeString = conventionalSignInType == JRConventionalSigninEmailPassword ? @"email" :
+            conventionalSignInType == JRConventionalSigninUsernamePassword ? @"username" : nil;
+    if (!typeString) return;
+
+    NSDictionary *d = [NSDictionary dictionaryWithObjectsAndKeys:user, typeString, password, @"password", nil];
+    [JRCaptureApidInterface signinCaptureUserWithCredentials:d ofType:typeString forDelegate:delegate withContext:nil];
+}
+
 - (void)dealloc
 {
     [super dealloc];

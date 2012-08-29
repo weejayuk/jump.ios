@@ -612,6 +612,13 @@ typedef enum
                 withCustomInterfaceOverrides:(NSDictionary*)customInterfaceOverrides
                                  forDelegate:(id<JRCaptureSharingDelegate>)delegate;
 #endif // JRENGAGE_SHARING_WITH_CAPTURE
+
+/**
+ *
+ */
++ (void)startCaptureConventionalSigninForUser:(NSString *)user withPassword:(NSString *)password
+                               withSigninType:(JRConventionalSigninType)conventionalSignInType
+                                  forDelegate:(id <JRCaptureSigninDelegate>)delegate;
 @end
 
 /**

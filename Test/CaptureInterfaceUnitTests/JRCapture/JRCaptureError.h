@@ -53,7 +53,8 @@
  **/
 typedef enum
 {
-    JRCaptureErrorGeneric = GENERIC_ERROR_RANGE, /**< Generic Capture error */
+    JRCaptureErrorGeneric            = GENERIC_ERROR_RANGE, /**< Generic Capture error */
+    JRCaptureErrorGenericBadPassword = JRCaptureErrorGeneric + 100
 } JRCaptureGenericError;
 
 /**

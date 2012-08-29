@@ -35,6 +35,18 @@
 #import <Foundation/Foundation.h>
 #import "JRConnectionManager.h"
 
+@protocol JRCaptureSigninDelegate;
+
+typedef enum
+{
+    cJRNoError,
+    cJRInvalidResponse,
+    cJRInvalidCaptureUser
+} FinishSignInError;
+
+/**
+ * @internal
+ */
 @protocol JRCaptureInterfaceDelegate <NSObject>
 @optional
 - (void)createCaptureUserDidSucceedWithResult:(NSObject *)result context:(NSObject *)context;
@@ -53,9 +65,12 @@
 - (void)replaceCaptureArrayDidFailWithResult:(NSObject *)result context:(NSObject *)context;
 @end
 
+/**
+ * @internal
+ */
 @interface JRCaptureApidInterface : NSObject <JRConnectionManagerDelegate>
 + (void)signinCaptureUserWithCredentials:(NSDictionary *)credentials
-                                  ofType:(NSString *)signinType
+                                  ofType:(NSString *)signInType
                              forDelegate:(id<JRCaptureInterfaceDelegate>)delegate
                              withContext:(NSObject *)context;
 
@@ -90,4 +105,6 @@
                   withToken:(NSString *)token
                  forDelegate:(id <JRCaptureInterfaceDelegate>)delegate
                  withContext:(NSObject *)context;
+
++ (FinishSignInError)finishSignInWithPayload:(NSDictionary *)payloadDict forDelegate:(id<JRCaptureSigninDelegate>)delegate;
 @end
