@@ -172,6 +172,8 @@ static JREngageWrapper *singleton = nil;
                withCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
                                 forDelegate:(id <JRCaptureSigninDelegate>)delegate
 {
+    [JREngage updateTokenUrl:[JRCaptureData captureMobileEndpointUrl]];
+
     [[JREngageWrapper singletonInstance] setDelegate:delegate];
     [[JREngageWrapper singletonInstance] setDialogState:JREngageDialogStateAuthentication];
 
