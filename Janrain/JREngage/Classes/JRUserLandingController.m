@@ -584,7 +584,7 @@ enum
         }
     }
 
-    [[self navigationController] pushViewController:[JRUserInterfaceMaestro jrUserInterfaceMaestro].myWebViewController
+    [[self navigationController] pushViewController:[JRUserInterfaceMaestro sharedMaestro].myWebViewController
                                            animated:YES];
 }
 

@@ -49,6 +49,10 @@
 #import "JRWebViewController.h"
 #import "JRPublishActivityController.h"
 
+#ifdef JRCAPTURE
+#import "JRCaptureWebViewController.h"
+#endif
+
 static void handleCustomInterfaceException(NSException* exception, NSString* kJRKeyString)
 {
     NSLog (@"*** Exception thrown. Problem is most likely with jrEngage custom interface object %@ : Caught %@ : %@",
@@ -208,14 +212,14 @@ static void handleCustomInterfaceException(NSException* exception, NSString* kJR
 
 static JRUserInterfaceMaestro* singleton = nil;
 
-+ (JRUserInterfaceMaestro*)jrUserInterfaceMaestro
++ (JRUserInterfaceMaestro*)sharedMaestro
 {
     return singleton;
 }
 
 + (id)allocWithZone:(NSZone *)zone
 {
-    return [[self jrUserInterfaceMaestro] retain];
+    return [[self sharedMaestro] retain];
 }
 
 - (id)copyWithZone:(NSZone *)zone
@@ -511,6 +515,7 @@ static JRUserInterfaceMaestro* singleton = nil;
         && !sessionData.alwaysForceReauth                                                       /* d */
         && ![sessionData getProviderNamed:sessionData.returningBasicProvider].forceReauth       /* e */
         && !sessionData.socialSharing                                                           /* f */
+        && !sessionData.captureWidget
         && [sessionData.basicProviders containsObject:sessionData.returningBasicProvider]       /* g */
         && ![((NSArray*)[customInterface objectForKey:kJRRemoveProvidersFromAuthentication])    /* h */
                     containsObject:sessionData.returningBasicProvider])
@@ -651,6 +656,27 @@ static JRUserInterfaceMaestro* singleton = nil;
     else
         [self loadModalNavigationControllerWithViewController:myPublishActivityController];
 }
+
+#ifdef JRCAPTURE
+- (void)showCaptureJsWidgetDialogWithCustomInterface:(NSDictionary *)customizations andUrl:(NSString *)url
+{
+    DLog(@"");
+    [self buildCustomInterface:customizations];
+    [self setUpDialogPresentation];
+
+    // don't need this except for UI Maestro delegates?
+    //[self setUpViewControllers];
+
+    sessionData.captureWidget = YES;
+
+    JRCaptureWebViewController *viewController = [[[JRCaptureWebViewController alloc] initWithUrl:url] autorelease];
+
+    if (usingAppNav)
+        [self loadApplicationNavigationControllerWithViewController:viewController];
+    else
+        [self loadModalNavigationControllerWithViewController:viewController];
+}
+#endif
 
 - (void)unloadModalNavigationControllerWithTransitionStyle:(UIModalTransitionStyle)style
 {

@@ -37,8 +37,10 @@
 #import "JRUserLandingController.h"
 #import "JRWebViewController.h"
 #import "JRInfoBar.h"
-#import "JRConventionalSignInViewController.h"
 
+#ifdef JRCAPTURE
+#import "JRConventionalSignInViewController.h"
+#endif
 
 #ifdef DEBUG
 #define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
@@ -136,6 +138,7 @@
     myTableView.tableHeaderView   = [customInterface objectForKey:kJRProviderTableHeaderView];
     myTableView.tableFooterView   = [customInterface objectForKey:kJRProviderTableFooterView];
 
+    #ifdef JRCAPTURE
     id const maybeCaptureSigninVc = [customInterface objectForKey:kJRCaptureConventionalSigninViewController];
     if ([maybeCaptureSigninVc isKindOfClass:[JRConventionalSignInViewController class]])
     {
@@ -143,6 +146,7 @@
 
         [self createConventionalSigninLoadingView];
     }
+    #endif
 
     if (!hidesCancelButton)
     {
@@ -522,13 +526,13 @@ Please try again later."
     if (provider.requiresInput ||
         ([sessionData authenticatedUserForProvider:provider] && !(provider.forceReauth || sessionData.alwaysForceReauth)))
     {
-        [[self navigationController] pushViewController:[JRUserInterfaceMaestro jrUserInterfaceMaestro].myUserLandingController
+        [[self navigationController] pushViewController:[JRUserInterfaceMaestro sharedMaestro].myUserLandingController
                                                animated:YES];
     }
  /* Otherwise, go straight to the web view. */
     else
     {
-        [[self navigationController] pushViewController:[JRUserInterfaceMaestro jrUserInterfaceMaestro].myWebViewController
+        [[self navigationController] pushViewController:[JRUserInterfaceMaestro sharedMaestro].myWebViewController
                                                animated:YES];
     }
 

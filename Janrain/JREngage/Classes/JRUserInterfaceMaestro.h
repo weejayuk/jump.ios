@@ -91,12 +91,13 @@ typedef enum
 }
 
 + (JRUserInterfaceMaestro*)jrUserInterfaceMaestroWithSessionData:(JRSessionData*)newSessionData;
-+ (JRUserInterfaceMaestro*)jrUserInterfaceMaestro;
++ (JRUserInterfaceMaestro*)sharedMaestro;
 
 //- (void)useApplicationNavigationController:(UINavigationController*)navigationController;
 
 - (void)showAuthenticationDialogWithCustomInterface:(NSDictionary*)customizations;
 - (void)showPublishingDialogForActivityWithCustomInterface:(NSDictionary*)customizations;
+- (void)showCaptureJsWidgetDialogWithCustomInterface:(NSDictionary *)customizations andUrl:(NSString *)url;
 
 - (void)authenticationRestarted;
 - (void)authenticationCompleted;
@@ -109,6 +110,8 @@ typedef enum
 
 // Question to self: Do I want to make customInterfaceDefaults nonatomic?
 @property (copy)     NSMutableDictionary         *customInterfaceDefaults;
+
+
 @property (readonly) JRProvidersController       *myProvidersController;
 @property (readonly) JRUserLandingController     *myUserLandingController;
 @property (readonly) JRWebViewController         *myWebViewController;

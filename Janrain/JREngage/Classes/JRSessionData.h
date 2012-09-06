@@ -214,6 +214,8 @@
 @property            BOOL canRotate;
 @property (retain, readonly) NSError *error;
 
+@property(nonatomic) BOOL captureWidget;
+
 + (id)jrSessionData;
 + (id)jrSessionDataWithAppId:(NSString*)newAppId tokenUrl:(NSString*)newTokenUrl andDelegate:(id<JRSessionDelegate>)newDelegate;
 

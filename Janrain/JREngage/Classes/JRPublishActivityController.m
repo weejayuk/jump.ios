@@ -1598,13 +1598,13 @@ Please try again later."
         the same provider as their last-used provider, go back to the user landing view. */
         if (selectedProvider.requiresInput)
         {
-            [[self navigationController] pushViewController:[JRUserInterfaceMaestro jrUserInterfaceMaestro].myUserLandingController
+            [[self navigationController] pushViewController:[JRUserInterfaceMaestro sharedMaestro].myUserLandingController
                                                    animated:YES];
         }
      /* Otherwise, go straight to the web view. */
         else
         {
-            [[self navigationController] pushViewController:[JRUserInterfaceMaestro jrUserInterfaceMaestro].myWebViewController
+            [[self navigationController] pushViewController:[JRUserInterfaceMaestro sharedMaestro].myWebViewController
                                                    animated:YES];
         }
     }
