@@ -125,9 +125,9 @@ static JREngageWrapper *singleton = nil;
     [JREngage setEngageAppId:appId tokenUrl:nil andDelegate:[JREngageWrapper singletonInstance]];
 }
 
-+ (void)startAuthenticationDialogWithNativeSignin:(JRConventionalSigninType)nativeSigninType
-                      andCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
-                                      forDelegate:(id <JRCaptureSigninDelegate>)delegate
++ (void)startAuthenticationDialogWithConventionalSignIn:(JRConventionalSigninType)nativeSigninType
+                            andCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
+                                            forDelegate:(id <JRCaptureSigninDelegate>)delegate
 {
     [JREngage updateTokenUrl:[JRCaptureData captureMobileEndpointUrl]];
 

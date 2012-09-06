@@ -37,9 +37,6 @@
 
 @class JRSessionData;
 @class JRInfoBar;
-static NSString *const WINDOWS_LIVE_LOAD = @"request";
-static NSString *const MEU_CONNECTION_TAG = @"rpx_result";
-
 
 @interface JRCaptureWebViewController : UIViewController <UINavigationBarDelegate, UIWebViewDelegate>
     //UIView    *titleView;
@@ -52,10 +49,9 @@ static NSString *const MEU_CONNECTION_TAG = @"rpx_result";
     //BOOL connectionDataAlreadyDownloadedThis;
 
 @property (nonatomic, retain) UIWebView *webView;
-@property (nonatomic, retain) NSURL *startUrl;
+@property (nonatomic, retain) NSURL *url;
 
-//- (void)webViewWithUrl:(NSURL*)url;
-
+- (id)initWithUrl:(NSString *)url;
 @end
 
 

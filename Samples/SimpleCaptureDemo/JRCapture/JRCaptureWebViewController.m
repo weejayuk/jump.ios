@@ -42,7 +42,19 @@
 //@end
 
 @synthesize webView;
-@synthesize startUrl;
+@synthesize url;
+
+- (id)initWithUrl:(NSString *)url
+{
+    if (self = [super init])
+    {
+        self.url = [NSURL URLWithString:url];
+        self.webView = [[[UIWebView alloc] initWithFrame:self.view.frame] autorelease];
+        [self.view addSubview:webView];
+    }
+
+    return self;
+}
 
 - (void)viewDidLoad
 {
@@ -92,7 +104,7 @@
     DLog(@"");
     [super viewDidAppear:animated];
 
-    [webView loadRequest:[NSURLRequest requestWithURL:startUrl]];
+    [webView loadRequest:[NSURLRequest requestWithURL:url]];
     [webView becomeFirstResponder];
 }
 
@@ -196,7 +208,7 @@
 - (void)dealloc {
     DLog(@"");
 
-    [startUrl release];
+    [url release];
     [webView release];
     [super dealloc];
 }
