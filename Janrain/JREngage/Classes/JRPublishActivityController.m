@@ -210,7 +210,8 @@ or opacity of our rounded rectangle. */
                   strokeColor:innerStrokeColor andFillColor:innerFillColor];
 }
 
-- (void)dealloc {
+- (void)dealloc
+{
     [outerStrokeColor release];
     [innerStrokeColor release];
     [outerFillColor release];
@@ -270,7 +271,6 @@ or opacity of our rounded rectangle. */
 
     [super viewDidLoad];
 
- /* There's a slight chance that their capacities could be 0, but that's OK; they're mutable. */
     alreadyShared     = [[NSMutableSet alloc] initWithCapacity:[[sessionData socialProviders] count]];
     cachedProfilePics = [[NSMutableDictionary alloc] initWithCapacity:[[sessionData socialProviders] count]];
 
