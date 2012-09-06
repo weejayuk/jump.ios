@@ -240,7 +240,6 @@
 		9FB1222E15C73FE90072BEE6 /* JRStatusesElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FB121F515C73FE90072BEE6 /* JRStatusesElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		9FB1222F15C73FE90072BEE6 /* JRTournamentsPlayedElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FB121F715C73FE90072BEE6 /* JRTournamentsPlayedElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		9FB1223015C73FE90072BEE6 /* JRUrlsElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FB121F915C73FE90072BEE6 /* JRUrlsElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		9FB1223115C73FE90072BEE6 /* JRApidWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FB121FB15C73FE90072BEE6 /* JRApidWrapper.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		9FB1223215C73FE90072BEE6 /* JRCapture.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FB121FD15C73FE90072BEE6 /* JRCapture.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		9FB1223315C73FE90072BEE6 /* JRCaptureApidInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FB121FF15C73FE90072BEE6 /* JRCaptureApidInterface.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		9FB1223415C73FE90072BEE6 /* JRCaptureData.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FB1220115C73FE90072BEE6 /* JRCaptureData.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -253,7 +252,6 @@
 		9FD2B6BF14F8387100053EA2 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FD2B6BE14F8387100053EA2 /* Security.framework */; };
 		9FD2B6C114F8387B00053EA2 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FD2B6C014F8387B00053EA2 /* MessageUI.framework */; };
 		9FD2B6C114F8387B00053EA4 /* StringArrayDrillDownViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FD2B6C114F8387B00053EA3 /* StringArrayDrillDownViewController.m */; };
-		C14240E5B0C6E24A5C7FDDDF /* JRWebviewWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = C142449DB7B06E72E689C97D /* JRWebviewWrapper.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C142442F155D791C05AD51E7 /* JRCaptureJsWidgetWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424F9477161ED720768DAE /* JRCaptureJsWidgetWrapper.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C14245C6445D108A0EA4E81F /* JRCaptureWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424431591AA9D7F1B47855 /* JRCaptureWebViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
@@ -276,7 +274,6 @@
 		90C36B6B7717AA0C893E08F1 /* SimpleCaptureDemo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = "SimpleCaptureDemo-Info.plist"; sourceTree = "<group>"; };
 		90C36B6B7717AA0C893E08F5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		90C36B6B7717AA0C893E08F7 /* SimpleCaptureDemo-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SimpleCaptureDemo-Prefix.pch"; sourceTree = "<group>"; };
-		90C36B6B7717AA0C893E0901 /* SimpleCaptureDemoTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleCaptureDemoTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		90C36B6B7717AA0C893E090A /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		90C36B6B7717AA0C893E0912 /* SimpleCaptureDemoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = "SimpleCaptureDemoTests-Info.plist"; sourceTree = "<group>"; };
 		90C36B6B7717AA0C893E0913 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -564,8 +561,6 @@
 		9FB121F715C73FE90072BEE6 /* JRTournamentsPlayedElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRTournamentsPlayedElement.m; sourceTree = "<group>"; };
 		9FB121F815C73FE90072BEE6 /* JRUrlsElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRUrlsElement.h; sourceTree = "<group>"; };
 		9FB121F915C73FE90072BEE6 /* JRUrlsElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRUrlsElement.m; sourceTree = "<group>"; };
-		9FB121FA15C73FE90072BEE6 /* JRApidWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRApidWrapper.h; sourceTree = "<group>"; };
-		9FB121FB15C73FE90072BEE6 /* JRApidWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRApidWrapper.m; sourceTree = "<group>"; };
 		9FB121FC15C73FE90072BEE6 /* JRCapture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCapture.h; sourceTree = "<group>"; };
 		9FB121FD15C73FE90072BEE6 /* JRCapture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRCapture.m; sourceTree = "<group>"; };
 		9FB121FE15C73FE90072BEE6 /* JRCaptureApidInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCaptureApidInterface.h; sourceTree = "<group>"; };
@@ -590,10 +585,8 @@
 		9FD2B6C014F8387B00053EA2 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		9FD2B6C114F8387B00053EA3 /* StringArrayDrillDownViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StringArrayDrillDownViewController.m; path = Classes/StringArrayDrillDownViewController.m; sourceTree = "<group>"; };
 		9FD2B6C114F8387B00053EA5 /* StringArrayDrillDownViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StringArrayDrillDownViewController.h; path = Classes/StringArrayDrillDownViewController.h; sourceTree = "<group>"; };
-		C142411E8CDE300BB1D94385 /* JRWebviewWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRWebviewWrapper.h; path = ../JRWebviewWrapper.h; sourceTree = "<group>"; };
 		C1424431591AA9D7F1B47855 /* JRCaptureWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRCaptureWebViewController.m; sourceTree = "<group>"; };
 		C142445FC35BCE9B86EB832E /* debug_log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = debug_log.h; sourceTree = "<group>"; };
-		C142449DB7B06E72E689C97D /* JRWebviewWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JRWebviewWrapper.m; path = ../JRWebviewWrapper.m; sourceTree = "<group>"; };
 		C14244FAF7083C878421C4C6 /* JRCaptureWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCaptureWebViewController.h; sourceTree = "<group>"; };
 		C1424A3087B2051A4CC6307D /* JRCaptureJsWidgetWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCaptureJsWidgetWrapper.h; sourceTree = "<group>"; };
 		C1424F9477161ED720768DAE /* JRCaptureJsWidgetWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRCaptureJsWidgetWrapper.m; sourceTree = "<group>"; };
@@ -642,7 +635,6 @@
 			isa = PBXGroup;
 			children = (
 				90C36B6B7717AA0C893E08E0 /* SimpleCaptureDemo.app */,
-				90C36B6B7717AA0C893E0901 /* SimpleCaptureDemoTests.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1126,8 +1118,6 @@
 				C1424F9477161ED720768DAE /* JRCaptureJsWidgetWrapper.m */,
 				C1424A3087B2051A4CC6307D /* JRCaptureJsWidgetWrapper.h */,
 				9FB121B715C73FE90072BEE6 /* Generated */,
-				9FB121FA15C73FE90072BEE6 /* JRApidWrapper.h */,
-				9FB121FB15C73FE90072BEE6 /* JRApidWrapper.m */,
 				9FB121FC15C73FE90072BEE6 /* JRCapture.h */,
 				9FB121FD15C73FE90072BEE6 /* JRCapture.m */,
 				9FB121FE15C73FE90072BEE6 /* JRCaptureApidInterface.h */,
@@ -1155,8 +1145,6 @@
 		9FB121B715C73FE90072BEE6 /* Generated */ = {
 			isa = PBXGroup;
 			children = (
-				C142449DB7B06E72E689C97D /* JRWebviewWrapper.m */,
-				C142411E8CDE300BB1D94385 /* JRWebviewWrapper.h */,
 				9FB121B815C73FE90072BEE6 /* JRAccountsElement.h */,
 				9FB121B915C73FE90072BEE6 /* JRAccountsElement.m */,
 				9FB121BA15C73FE90072BEE6 /* JRAddressesElement.h */,
@@ -1263,7 +1251,6 @@
 			);
 			name = SimpleCaptureDemoTests;
 			productName = SimpleCaptureDemoTests;
-			productReference = 90C36B6B7717AA0C893E0901 /* SimpleCaptureDemoTests.octest */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -1557,7 +1544,6 @@
 				9FB1222E15C73FE90072BEE6 /* JRStatusesElement.m in Sources */,
 				9FB1222F15C73FE90072BEE6 /* JRTournamentsPlayedElement.m in Sources */,
 				9FB1223015C73FE90072BEE6 /* JRUrlsElement.m in Sources */,
-				9FB1223115C73FE90072BEE6 /* JRApidWrapper.m in Sources */,
 				9FB1223215C73FE90072BEE6 /* JRCapture.m in Sources */,
 				9FB1223315C73FE90072BEE6 /* JRCaptureApidInterface.m in Sources */,
 				9FB1223415C73FE90072BEE6 /* JRCaptureData.m in Sources */,
@@ -1567,7 +1553,6 @@
 				9FB1223815C73FE90072BEE6 /* JRConventionalSignInViewController.m in Sources */,
 				9FB1223915C73FE90072BEE6 /* JREngageWrapper.m in Sources */,
 				9FB1223A15C73FE90072BEE6 /* JRNSDate+ISO8601_CaptureDateTimeString.m in Sources */,
-				C14240E5B0C6E24A5C7FDDDF /* JRWebviewWrapper.m in Sources */,
 				C142442F155D791C05AD51E7 /* JRCaptureJsWidgetWrapper.m in Sources */,
 				C14245C6445D108A0EA4E81F /* JRCaptureWebViewController.m in Sources */,
 			);
