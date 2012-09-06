@@ -38,10 +38,6 @@
 #import "JRWebViewController.h"
 #import "JRInfoBar.h"
 
-#ifdef JRCAPTURE
-#import "JRConventionalSignInViewController.h"
-#endif
-
 #ifdef DEBUG
 #define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
 #else
@@ -138,15 +134,13 @@
     myTableView.tableHeaderView   = [customInterface objectForKey:kJRProviderTableHeaderView];
     myTableView.tableFooterView   = [customInterface objectForKey:kJRProviderTableFooterView];
 
-    #ifdef JRCAPTURE
     id const maybeCaptureSigninVc = [customInterface objectForKey:kJRCaptureConventionalSigninViewController];
-    if ([maybeCaptureSigninVc isKindOfClass:[JRConventionalSignInViewController class]])
+    if ([maybeCaptureSigninVc isKindOfClass:NSClassFromString(@"JRConventionalSignInViewController")])
     {
-        ((JRConventionalSignInViewController *)maybeCaptureSigninVc).delegate = self;
+        [maybeCaptureSigninVc performSelector:NSSelectorFromString(@"setDelegate") withObject:self];
 
         [self createConventionalSigninLoadingView];
     }
-    #endif
 
     if (!hidesCancelButton)
     {

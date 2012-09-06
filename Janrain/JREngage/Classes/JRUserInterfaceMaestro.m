@@ -48,10 +48,7 @@
 #import "JRUserLandingController.h"
 #import "JRWebViewController.h"
 #import "JRPublishActivityController.h"
-
-#ifdef JRCAPTURE
-#import "JRCaptureWebViewController.h"
-#endif
+@class JRCaptureWebViewController;
 
 static void handleCustomInterfaceException(NSException* exception, NSString* kJRKeyString)
 {
@@ -657,7 +654,6 @@ static JRUserInterfaceMaestro* singleton = nil;
         [self loadModalNavigationControllerWithViewController:myPublishActivityController];
 }
 
-#ifdef JRCAPTURE
 - (void)showCaptureJsWidgetDialogWithCustomInterface:(NSDictionary *)customizations andUrl:(NSString *)url
 {
     DLog(@"");
@@ -669,6 +665,7 @@ static JRUserInterfaceMaestro* singleton = nil;
 
     sessionData.captureWidget = YES;
 
+    //JRCaptureWebViewController *viewController = [[[JRCaptureWebViewController alloc] initWithUrl:url] autorelease];
     JRCaptureWebViewController *viewController = [[[JRCaptureWebViewController alloc] initWithUrl:url] autorelease];
 
     if (usingAppNav)
@@ -676,7 +673,6 @@ static JRUserInterfaceMaestro* singleton = nil;
     else
         [self loadModalNavigationControllerWithViewController:viewController];
 }
-#endif
 
 - (void)unloadModalNavigationControllerWithTransitionStyle:(UIModalTransitionStyle)style
 {

@@ -111,19 +111,19 @@
 typedef enum
 {
 /**
- * No conventional login dialog added
+ * No conventional sign-in dialog added
  **/
  JRConventionalSigninNone = 0,
 
 /**
- * Conventional login dialog added prompting the user for their username and
+ * Conventional sign-in dialog added prompting the user for their username and
  * password combination. Use this if your Capture instance is set up to accept a \c username argument when signing in
  * directly to your server
  **/
  JRConventionalSigninUsernamePassword,
 
 /**
- * Conventional login dialog added prompting the user for their email and password
+ * Conventional sign-in dialog added prompting the user for their email and password
  * combination. Use this if your Capture instance is set up to accept a \c email argument when signing in
   * directly to your server
  **/
@@ -492,7 +492,7 @@ typedef enum
 /**
  * Use this method to begin authentication, adding the option for your users to log directly into Capture through
  * your conventional signin mechanism. By using this method to initiate signin, the library automatically adds
- * a direct login form, above the list of social providers, that allows your users to login with a username/password
+ * a direct sign-in form, above the list of social providers, that allows your users to sign in with a username/password
  * or email/password combination.
  *
  * @param conventionalSigninType
@@ -535,7 +535,7 @@ typedef enum
  * @param customInterfaceOverrides
  *   A dictionary of objects and properties, indexed by the set of
  *   \link customInterface pre-defined custom interface keys\endlink, to be used by the library to customize the
- *   look and feel of the user interface and/or add a native login experience
+ *   look and feel of the user interface and/or add a conventional sign-in experience
  **/
 + (void)startEngageSigninDialogWithCustomInterfaceOverrides:(NSDictionary*)customInterfaceOverrides
                                                 forDelegate:(id<JRCaptureSigninDelegate>)delegate;
@@ -544,7 +544,7 @@ typedef enum
 /**
  * Use this method to begin authentication, adding the option for your users to log directly into Capture through
  * your conventional signin mechanism. By using this method to initiate signin, the library automatically adds
- * a direct login form, above the list of social providers, that allows your users to login with a username/password
+ * a direct sign-in form, above the list of social providers, that allows your users to sign in with a username/password
  * or email/password combination.
  *
  * @param conventionalSigninType
@@ -555,7 +555,7 @@ typedef enum
  * @param customInterfaceOverrides
  *   A dictionary of objects and properties, indexed by the set of
  *   \link customInterface pre-defined custom interface keys\endlink, to be used by the library to customize the
- *   look and feel of the user interface and/or add a native login experience
+ *   look and feel of the user interface and/or add a native sign-in experience
  *
  * @note
  * Depending on how your Capture application is configured, you pass to this method a
@@ -579,7 +579,7 @@ typedef enum
  * @param customInterfaceOverrides
  *   A dictionary of objects and properties, indexed by the set of
  *   \link customInterface pre-defined custom interface keys\endlink, to be used by the library to customize the look
- *   and feel of the user interface and/or add a native login experience
+ *   and feel of the user interface and/or add a native sign-in experience
  **/
 + (void)startEngageSigninDialogOnProvider:(NSString*)provider
              withCustomInterfaceOverrides:(NSDictionary*)customInterfaceOverrides
@@ -607,7 +607,7 @@ typedef enum
  * @param customInterfaceOverrides
  *   A dictionary of objects and properties, indexed by the set of
  *   \link customInterface pre-defined custom interface keys\endlink, to be used by the library to customize the look
- *   and feel of the user interface and/or add a native login experience
+ *   and feel of the user interface and/or add a native sign-in experience
  *
  * @note
  * Any values specified in the \e customInterfaceOverrides dictionary will override the corresponding
