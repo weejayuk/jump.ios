@@ -272,7 +272,8 @@ a:active  { color:#7AC143; }";
 
     NSDictionary *custom = [NSDictionary dictionaryWithObjectsAndKeys:
                             self.navigationItem.rightBarButtonItem, kJRPopoverPresentationBarButtonItem,
-                            self.navigationController, kJRApplicationNavigationController, nil];
+                            self.navigationController, kJRApplicationNavigationController,
+                            nil];
 
     [JREngage showSharingDialogWithActivity:activity withCustomInterfaceOverrides:custom];
 }
