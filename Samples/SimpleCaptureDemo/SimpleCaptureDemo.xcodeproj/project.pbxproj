@@ -257,6 +257,7 @@
 		C1424AF0F353A0B9B2DEE7EC /* misc.xml in Resources */ = {isa = PBXBuildFile; fileRef = C14246BD4C97CE80C5DB9469 /* misc.xml */; };
 		C1424AF4C39E8781E9F76B36 /* JRCaptureData.m in Sources */ = {isa = PBXBuildFile; fileRef = C142493EFAADCF8814340443 /* JRCaptureData.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C1424B1C2EC54CFAB89CE313 /* Script.iml in Resources */ = {isa = PBXBuildFile; fileRef = C14241889D5447973BDC692E /* Script.iml */; };
+		C1424B34EDB1758070666204 /* JRCaptureBaseUser.m in Sources */ = {isa = PBXBuildFile; fileRef = C142468B32D056B46250AF4D /* JRCaptureBaseUser.m */; };
 		C1424B6783CE37E143759C40 /* JRBestHand.m in Sources */ = {isa = PBXBuildFile; fileRef = C14240893807E6A9F898F2BD /* JRBestHand.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C1424BE7AC47DAFB05A981AD /* JRCaptureError.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424F29DC29D6A0E972C6A1 /* JRCaptureError.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C1424BF2F4FCEFAC155997E1 /* JRObjectLevelThree.m in Sources */ = {isa = PBXBuildFile; fileRef = C14244C85C463C1FBC1A5D5E /* JRObjectLevelThree.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -563,6 +564,7 @@
 		C142463FDAE1EDC02CFA515C /* JRProfilePhotosElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRProfilePhotosElement.h; path = ../../Samples/SimpleCaptureDemo/JRCapture/Generated/JRProfilePhotosElement.h; sourceTree = "<group>"; };
 		C142464864E25DD6CCD2084C /* regen_demo.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = regen_demo.sh; sourceTree = "<group>"; };
 		C1424667234C9A9E13CD88BE /* JRNSDate+ISO8601_CaptureDateTimeString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JRNSDate+ISO8601_CaptureDateTimeString.h"; sourceTree = "<group>"; };
+		C142468B32D056B46250AF4D /* JRCaptureBaseUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRCaptureBaseUser.m; sourceTree = "<group>"; };
 		C14246A3B77E6676597547FF /* JRCapture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRCapture.m; sourceTree = "<group>"; };
 		C14246A4ABB1205CB2A6B5DE /* JRCaptureObject+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JRCaptureObject+Internal.h"; sourceTree = "<group>"; };
 		C14246B051319513F916B675 /* JRPhotosElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JRPhotosElement.m; path = ../../Samples/SimpleCaptureDemo/JRCapture/Generated/JRPhotosElement.m; sourceTree = "<group>"; };
@@ -607,6 +609,7 @@
 		C1424C019F312F4DEDC26FE4 /* JRCaptureObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCaptureObject.h; sourceTree = "<group>"; };
 		C1424C09CE79D631EA7A6742 /* JRLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRLocation.h; path = ../../Samples/SimpleCaptureDemo/JRCapture/Generated/JRLocation.h; sourceTree = "<group>"; };
 		C1424C540D1812C477BC1B51 /* JRCaptureUser+Extras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JRCaptureUser+Extras.m"; sourceTree = "<group>"; };
+		C1424C573835DE863B8A8D85 /* JRCaptureBaseUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCaptureBaseUser.h; sourceTree = "<group>"; };
 		C1424C866DB19DF7213610BE /* JRObjectLevelOne.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRObjectLevelOne.h; path = ../../Samples/SimpleCaptureDemo/JRCapture/Generated/JRObjectLevelOne.h; sourceTree = "<group>"; };
 		C1424C90ADF6CE89E8C56459 /* fox_user.json */ = {isa = PBXFileReference; lastKnownFileType = file.json; path = fox_user.json; sourceTree = "<group>"; };
 		C1424C9BD7168F8D91EED788 /* JRCaptureError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCaptureError.h; sourceTree = "<group>"; };
@@ -1184,6 +1187,8 @@
 		C14243E12B67C6D15E640EF6 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				C1424C573835DE863B8A8D85 /* JRCaptureBaseUser.h */,
+				C142468B32D056B46250AF4D /* JRCaptureBaseUser.m */,
 				C1424DD81EBEABB34C3454FD /* JRNSDate+ISO8601_CaptureDateTimeString.m */,
 				C1424667234C9A9E13CD88BE /* JRNSDate+ISO8601_CaptureDateTimeString.h */,
 				C1424CF8BA33AA6739850066 /* JREngageWrapper.m */,
@@ -1683,6 +1688,7 @@
 				C1424E83C3B59FE85B31A89E /* JRStatusesElement.m in Sources */,
 				C142450FC1469868540AE61A /* JRTournamentsPlayedElement.m in Sources */,
 				C14245B630799FF6081E911A /* JRUrlsElement.m in Sources */,
+				C1424B34EDB1758070666204 /* JRCaptureBaseUser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

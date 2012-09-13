@@ -16,6 +16,12 @@
     <content url="file://$MODULE_DIR$/../../Janrain/JRCapture/Classes/JRCaptureApidInterface.m">
       <sourceFolder url="file://$MODULE_DIR$/../../Janrain/JRCapture/Classes/JRCaptureApidInterface.m" isTestSource="false" />
     </content>
+    <content url="file://$MODULE_DIR$/../../Janrain/JRCapture/Classes/JRCaptureBaseUser.h">
+      <sourceFolder url="file://$MODULE_DIR$/../../Janrain/JRCapture/Classes/JRCaptureBaseUser.h" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Janrain/JRCapture/Classes/JRCaptureBaseUser.m">
+      <sourceFolder url="file://$MODULE_DIR$/../../Janrain/JRCapture/Classes/JRCaptureBaseUser.m" isTestSource="false" />
+    </content>
     <content url="file://$MODULE_DIR$/../../Janrain/JRCapture/Classes/JRCaptureData.h">
       <sourceFolder url="file://$MODULE_DIR$/../../Janrain/JRCapture/Classes/JRCaptureData.h" isTestSource="false" />
     </content>

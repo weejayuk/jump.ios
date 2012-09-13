@@ -38,7 +38,6 @@
 
 
 #import "JRCaptureObject+Internal.h"
-#import "JRCaptureUser.h"
 
 @interface JRBestHand (JRBestHand_InternalMethods)
 + (id)bestHandObjectFromDictionary:(NSDictionary*)dictionary withPath:(NSString *)capturePath fromDecoder:(BOOL)fromDecoder;
@@ -528,7 +527,7 @@
     NSArray *_statuses;
     NSArray *_tournamentsPlayed;
 }
-@synthesize canBeUpdatedOnCapture;
+//@synthesize canBeUpdatedOnCapture;
 
 - (JRObjectId *)captureUserId
 {

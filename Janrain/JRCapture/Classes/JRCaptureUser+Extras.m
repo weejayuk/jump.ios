@@ -29,7 +29,7 @@
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 #import "JRCaptureData.h"
 #import "JRCaptureApidInterface.h"
-#import "JRCaptureUser.h"
+#import "JRCaptureBaseUser.h"
 
 #import "JRCaptureUser+Extras.h"
 #import "JRCaptureObject+Internal.h"
@@ -251,12 +251,12 @@
 }
 @end
 
-@interface JRCaptureUser (JRCaptureUser_Internal)
+@interface JRCaptureBaseUser (JRCaptureUser_Internal)
 + (id)captureUserObjectFromDictionary:(NSDictionary*)dictionary withPath:(NSString *)capturePath;
 - (void)decodeFromDictionary:(NSDictionary *)dictionary;
 @end
 
-@implementation JRCaptureUser (JRCaptureUser_Extras)
+@implementation JRCaptureBaseUser (JRCaptureUser_Extras)
 
 #define cJREncodedCaptureUser @"jrcapture.encodedCaptureUser"
 

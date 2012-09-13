@@ -97,7 +97,7 @@ typedef enum
 
 - (void)showAuthenticationDialogWithCustomInterface:(NSDictionary*)customizations;
 - (void)showPublishingDialogForActivityWithCustomInterface:(NSDictionary*)customizations;
-- (void)showCaptureJsWidgetDialogWithCustomInterface:(NSDictionary *)customizations andUrl:(NSString *)url;
+//- (void)showCaptureJsWidgetDialogWithCustomInterface:(NSDictionary *)customizations andUrl:(NSString *)url;
 
 - (void)authenticationRestarted;
 - (void)authenticationCompleted;

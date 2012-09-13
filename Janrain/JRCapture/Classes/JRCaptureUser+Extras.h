@@ -29,10 +29,9 @@
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #import <Foundation/Foundation.h>
-#import "JRCaptureUser.h"
+#import "JRCaptureBaseUser.h"
 
 @class JRCaptureObject;
-@class JRCaptureUser;
 
 /**
  * @brief
@@ -148,7 +147,7 @@
  * @brief
  * The top-level class that holds the Capture user record
  **/
-@interface JRCaptureUser (JRCaptureUser_Extras) <NSCoding>
+@interface JRCaptureBaseUser (JRCaptureUser_Extras) <NSCoding>
 
 /**
  * Sent if ...

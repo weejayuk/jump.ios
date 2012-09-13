@@ -53,7 +53,7 @@ static NSString *const cTagAction = @"action";
 #import "JRCaptureData.h"
 #import "JSONKit.h"
 #import "JRCaptureError.h"
-#import "JRCaptureUser.h"
+#import "JRCaptureBaseUser.h"
 #import "JRCaptureUser+Extras.h"
 #import "JRCapture.h"
 
