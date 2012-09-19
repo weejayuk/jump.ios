@@ -33,16 +33,12 @@
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 
-#ifdef DEBUG
-#define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-#else
-#define DLog(...)
-#endif
-
-#define ALog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-
+#import "JRCaptureObject.h"
+#import "JRCaptureUser+Extras.h"
 #import "CaptureNewUserViewController.h"
 #import "SharedData.h"
+
+#include "debug_log.h"
 
 @interface CaptureNewUserViewController ()
 @property (nonatomic, retain) id             firstResponder;

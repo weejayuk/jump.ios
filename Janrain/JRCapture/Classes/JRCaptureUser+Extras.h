@@ -29,9 +29,11 @@
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #import <Foundation/Foundation.h>
-#import "JRCaptureBaseUser.h"
 
 @class JRCaptureObject;
+@protocol JRCaptureObjectDelegate;
+@protocol JRCaptureUserDelegate;
+@class JRCaptureUser;
 
 /**
  * @brief
@@ -143,58 +145,3 @@
 #endif // JRCAPTURE_FETCH_LAST_UPDATED
 @end
 
-/**
- * @brief
- * The top-level class that holds the Capture user record
- **/
-@interface JRCaptureBaseUser (JRCaptureUser_Extras) <NSCoding>
-
-/**
- * Sent if ...
- *
- * @param delegate
- *   delegate
- *
- * @param context
- *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
- *   This object will be passed back to your JRCaptureUserDelegate as is.Contexts are used across most of the
- *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
- *   context is entirely optional and at your discretion.
- **/
-- (void)createOnCaptureForDelegate:(id<JRCaptureUserDelegate>)delegate context:(NSObject *)context;
-
-/**
- * Sent if ...
- *
- * @param delegate
- *   delegate
- *
- * @param context
- *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
- *   This object will be passed back to your JRCaptureUserDelegate as is.Contexts are used across most of the
- *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
- *   context is entirely optional and at your discretion.
- **/
-+ (void)fetchCaptureUserFromServerForDelegate:(id<JRCaptureUserDelegate>)delegate context:(NSObject *)context;
-
-#ifdef JRCAPTURE_FETCH_LAST_UPDATED
-/**
- * Sent if ...
- *
- * @param delegate
- *   delegate
- *
- * @param context
- *   Any NSObject that you would like to send through the asynchronous network call back to your delegate, or \c nil.
- *   This object will be passed back to your JRCaptureUserDelegate as is.Contexts are used across most of the
- *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
- *   context is entirely optional and at your discretion.
- **/
-- (void)fetchLastUpdatedFromServerForDelegate:(id<JRCaptureUserDelegate>)delegate context:(NSObject *)context;
-#endif // JRCAPTURE_FETCH_LAST_UPDATED
-
-/**
- * @internal
- **/
-+ (id)captureUserObjectFromDictionary:(NSDictionary*)dictionary;
-@end

@@ -53,9 +53,8 @@ static NSString *const cTagAction = @"action";
 #import "JRCaptureData.h"
 #import "JSONKit.h"
 #import "JRCaptureError.h"
-#import "JRCaptureBaseUser.h"
-#import "JRCaptureUser+Extras.h"
 #import "JRCapture.h"
+#import "JRCaptureUser.h"
 
 
 @implementation JRCaptureApidInterface
@@ -192,19 +191,29 @@ typedef enum CaptureInterfaceStatEnum
 
 
 - (void)startSigninCaptureUserWithCredentials:(NSDictionary *)credentials ofType:(NSString *)signInType
-                             forDelegate:(id <JRCaptureInterfaceDelegate>)delegate withContext:(NSObject *)context
+                             forDelegate:(id)delegate withContext:(NSObject *)context
 {
     DLog(@"");
+
+    //if (!([delegate conformsToProtocol:@protocol(JRCaptureInterfaceDelegate)] ||
+    //        [delegate conformsToProtocol:@protocol(JRCaptureSigninDelegate)] ||
+    //        delegate == nil))
+    //{
+    //    DLog(@"Invalid delegate: %@", [delegate description]);
+    //}
 
     NSMutableData *body = [NSMutableData data];
     NSString *signInName = [credentials objectForKey:signInType];
     NSString *password   = [credentials objectForKey:@"password"];
 
-    [body appendData:[[NSString stringWithFormat:@"%@=%@", signInType, signInName] dataUsingEncoding:NSUTF8StringEncoding]];
-    [body appendData:[[NSString stringWithFormat:@"&password=%@", password] dataUsingEncoding:NSUTF8StringEncoding]];
-    //[body appendData:[[NSString stringWithFormat:@"&type_name=%@", [JRCaptureData entityTypeName]] dataUsingEncoding:NSUTF8StringEncoding]];
-    [body appendData:[[NSString stringWithFormat:@"&client_id=%@", [JRCaptureData clientId]] dataUsingEncoding:NSUTF8StringEncoding]];
-
+    [body appendData:[[NSString stringWithFormat:@"%@=%@", signInType, signInName]
+            dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[[NSString stringWithFormat:@"&password=%@", password]
+            dataUsingEncoding:NSUTF8StringEncoding]];
+    //[body appendData:[[NSString stringWithFormat:@"&type_name=%@", [JRCaptureData entityTypeName]]
+    //        dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[[NSString stringWithFormat:@"&client_id=%@", [JRCaptureData clientId]]
+            dataUsingEncoding:NSUTF8StringEncoding]];
 
 #ifdef TESTING_CARL_LOCAL
     if (appIdArg)
@@ -227,13 +236,17 @@ typedef enum CaptureInterfaceStatEnum
     //DLog(@"body: %@", [[[NSString alloc] initWithData:body encoding:NSUTF8StringEncoding] autorelease]);
 
     if (![JRConnectionManager createConnectionFromRequest:request forDelegate:self withTag:tag])
-        [self finishSignInFailureWithResult:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                    @"error", @"stat",
-                                                    @"url_connection", @"error",
-                                                    [NSString stringWithFormat:@"Could not create a connection to %@", [[request URL] absoluteString]], @"error_description",
-                                                    [NSNumber numberWithInteger:JRCaptureLocalApidErrorUrlConnection], @"code", nil]
-                                  forDelegate:delegate
-                                  withContext:context];
+    {
+        NSString *desc = [NSString stringWithFormat:@"Could not create a connection to %@", [[request URL] absoluteString]];
+        NSNumber *code = [NSNumber numberWithInteger:JRCaptureLocalApidErrorUrlConnection];
+        NSDictionary *errDict = [NSDictionary dictionaryWithObjectsAndKeys:
+                                                      @"error", @"stat",
+                                                      @"url_connection", @"error",
+                                                      desc, @"error_description",
+                                                      code, @"code",
+                                                      nil];
+        [self finishSignInFailureWithResult:errDict forDelegate:delegate withContext:context];
+    }
 }
 
 - (void)finishGetCaptureUserWithStat:(CaptureInterfaceStat)stat andResult:(NSObject *)result
@@ -545,7 +558,7 @@ typedef enum CaptureInterfaceStatEnum
 }
 
 + (void)signinCaptureUserWithCredentials:(NSDictionary *)credentials ofType:(NSString *)signInType
-                             forDelegate:(id <JRCaptureInterfaceDelegate>)delegate withContext:(NSObject *)context
+                             forDelegate:(id)delegate withContext:(NSObject *)context
 {
     [[JRCaptureApidInterface captureInterfaceInstance]
             startSigninCaptureUserWithCredentials:credentials ofType:signInType forDelegate:delegate

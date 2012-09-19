@@ -92,7 +92,7 @@
 
 #import <Foundation/Foundation.h>
 #import "JRCaptureObject.h"
-#import "JRCaptureBaseUser.h"
+#import "JRCaptureUser.h"
 #import "JRCaptureUser+Extras.h"
 #import "JRCaptureError.h"
 
