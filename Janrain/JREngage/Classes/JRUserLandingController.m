@@ -129,8 +129,7 @@
 - (NSString*)customTitle
 {
     DLog(@"");
-    if (!sessionData.currentProvider.requiresInput)
-        return [NSString stringWithString:@"Welcome Back!"];
+    if (!sessionData.currentProvider.requiresInput) return @"Welcome Back!";
 
     return sessionData.currentProvider.shortText;
 }

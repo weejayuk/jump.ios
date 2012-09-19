@@ -194,10 +194,9 @@ static Class getClassFromKey(NSString *key)
 
 - (void)saveLocalArrayToCaptureObject
 {
-    SEL setArraySelector =
-                NSSelectorFromString([NSString stringWithFormat:@"set%@:",
-                          [tableHeader stringByReplacingCharactersInRange:NSMakeRange(0,1)
-                                                               withString:[[tableHeader substringToIndex:1] capitalizedString]]]);
+    NSString *cappedHead = [[tableHeader substringToIndex:1] capitalizedString];
+    NSString *string = [tableHeader stringByReplacingCharactersInRange:NSMakeRange(0, 1) withString:cappedHead];
+    SEL setArraySelector = NSSelectorFromString([NSString stringWithFormat:@"set%@:", string]);
 
     [captureObject performSelector:setArraySelector withObject:[NSArray arrayWithArray:localCopyArray]];
 }

@@ -418,10 +418,9 @@ static Class getClassFromKey(NSString *key)
 - (void)setCellTextForObjectData:(StringElementData *)objectData atIndex:(NSUInteger)index
 {
     NSString *key   = [NSString stringWithFormat:@"%@[%d]", tableHeader, index];
-    NSString *value = [localCopyArray objectAtIndex:index];
+    id value = [localCopyArray objectAtIndex:index];
 
-    if (value == [NSNull null])
-        value = @"null element";
+    if (value == [NSNull null]) value = @"null element";
 
     objectData.titleLabel.text    = key;
     objectData.subtitleLabel.text = value;

@@ -28,12 +28,7 @@
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#ifdef DEBUG
-#define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-#else
-#define DLog(...)
-#endif
-#define ALog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
+#include "debug_log.h"
 
 #import "ObjectDrillDownViewController.h"
 #import "SharedData.h"
@@ -87,7 +82,7 @@ typedef enum propertyTypes
 
 - (void)printDescription
 {
-    DLog("propertyType=%d, propertyName=%@, propertySetSelector=%d, propertyGetSelector=%d, stringValue=%@",
+    DLog("propertyType=%d, propertyName=%@, propertySetSelector=%p, propertyGetSelector=%p, stringValue=%@",
             propertyType, propertyName, propertySetSelector, propertyGetSelector, stringValue);
 }
 @end

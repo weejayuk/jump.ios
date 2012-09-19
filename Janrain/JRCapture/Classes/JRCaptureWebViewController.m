@@ -44,11 +44,11 @@
 @synthesize webView;
 @synthesize url;
 
-- (id)initWithUrl:(NSString *)url
+- (id)initWithUrl:(NSString *)urlString
 {
     if (self = [super init])
     {
-        self.url = [NSURL URLWithString:url];
+        self.url = [NSURL URLWithString:urlString];
         self.webView = [[[UIWebView alloc] initWithFrame:self.view.frame] autorelease];
         [self.view addSubview:webView];
     }

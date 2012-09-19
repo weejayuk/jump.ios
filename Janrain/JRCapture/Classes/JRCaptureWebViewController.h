@@ -51,7 +51,7 @@
 @property (nonatomic, retain) UIWebView *webView;
 @property (nonatomic, retain) NSURL *url;
 
-- (id)initWithUrl:(NSString *)url;
+- (id)initWithUrl:(NSString *)urlString;
 @end
 
 
