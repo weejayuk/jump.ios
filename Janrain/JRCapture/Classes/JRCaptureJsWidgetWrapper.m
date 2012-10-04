@@ -8,6 +8,9 @@
 #import "JRCaptureJsWidgetWrapper.h"
 #import "JRUserInterfaceMaestro.h"
 
+@interface JRUserInterfaceMaestro (JRCaptureWidget_Extras)
+- (void)showCaptureJsWidgetDialogWithCustomInterface:(NSDictionary *)customUi andUrl:(NSString *)url;
+@end
 
 @implementation JRCaptureJsWidgetWrapper
 
