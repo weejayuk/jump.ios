@@ -236,38 +236,6 @@
 		9FD1638C129733740002BFEC /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FD1638B129733740002BFEC /* MessageUI.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		9FD184961492B9C3009409A3 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9FD184951492B9C3009409A3 /* Settings.bundle */; };
 		9FD54A111213726800E11512 /* FeedReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FD54A101213726800E11512 /* FeedReader.m */; };
-		D83845F215FFDE10005ACBC4 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = D83845BE15FFDE10005ACBC4 /* .gitignore */; };
-		D83845F315FFDE10005ACBC4 /* JRCapture.m in Sources */ = {isa = PBXBuildFile; fileRef = D83845C315FFDE10005ACBC4 /* JRCapture.m */; };
-		D83845F415FFDE10005ACBC4 /* JRCaptureApidInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = D83845C515FFDE10005ACBC4 /* JRCaptureApidInterface.m */; };
-		D83845F515FFDE10005ACBC4 /* JRCaptureBaseUser.m in Sources */ = {isa = PBXBuildFile; fileRef = D83845C715FFDE10005ACBC4 /* JRCaptureBaseUser.m */; };
-		D83845F615FFDE10005ACBC4 /* JRCaptureData.m in Sources */ = {isa = PBXBuildFile; fileRef = D83845C915FFDE10005ACBC4 /* JRCaptureData.m */; };
-		D83845F715FFDE10005ACBC4 /* JRCaptureError.m in Sources */ = {isa = PBXBuildFile; fileRef = D83845CB15FFDE10005ACBC4 /* JRCaptureError.m */; };
-		D83845F815FFDE10005ACBC4 /* JRCaptureJsWidgetWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = D83845CD15FFDE10005ACBC4 /* JRCaptureJsWidgetWrapper.m */; };
-		D83845F915FFDE10005ACBC4 /* JRCaptureObject.m in Sources */ = {isa = PBXBuildFile; fileRef = D83845D015FFDE10005ACBC4 /* JRCaptureObject.m */; };
-		D83845FA15FFDE10005ACBC4 /* JRCaptureUser+Extras.m in Sources */ = {isa = PBXBuildFile; fileRef = D83845D315FFDE10005ACBC4 /* JRCaptureUser+Extras.m */; };
-		D83845FB15FFDE10005ACBC4 /* JRCaptureWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D83845D515FFDE10005ACBC4 /* JRCaptureWebViewController.m */; };
-		D83845FC15FFDE10005ACBC4 /* JRConventionalSigninViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D83845D715FFDE10005ACBC4 /* JRConventionalSigninViewController.m */; };
-		D83845FD15FFDE10005ACBC4 /* JREngageWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = D83845D915FFDE10005ACBC4 /* JREngageWrapper.m */; };
-		D83845FE15FFDE10005ACBC4 /* JRNSDate+ISO8601_CaptureDateTimeString.m in Sources */ = {isa = PBXBuildFile; fileRef = D83845DB15FFDE10005ACBC4 /* JRNSDate+ISO8601_CaptureDateTimeString.m */; };
-		D83845FF15FFDE10005ACBC4 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = D83845DD15FFDE10005ACBC4 /* .gitignore */; };
-		D838460015FFDE10005ACBC4 /* .name in Resources */ = {isa = PBXBuildFile; fileRef = D83845DF15FFDE10005ACBC4 /* .name */; };
-		D838460115FFDE10005ACBC4 /* encodings.xml in Resources */ = {isa = PBXBuildFile; fileRef = D83845E015FFDE10005ACBC4 /* encodings.xml */; };
-		D838460215FFDE10005ACBC4 /* misc.xml in Resources */ = {isa = PBXBuildFile; fileRef = D83845E115FFDE10005ACBC4 /* misc.xml */; };
-		D838460315FFDE10005ACBC4 /* modules.xml in Resources */ = {isa = PBXBuildFile; fileRef = D83845E215FFDE10005ACBC4 /* modules.xml */; };
-		D838460415FFDE10005ACBC4 /* scope_settings.xml in Resources */ = {isa = PBXBuildFile; fileRef = D83845E415FFDE10005ACBC4 /* scope_settings.xml */; };
-		D838460515FFDE10005ACBC4 /* Script.iml in Resources */ = {isa = PBXBuildFile; fileRef = D83845E515FFDE10005ACBC4 /* Script.iml */; };
-		D838460615FFDE10005ACBC4 /* vcs.xml in Resources */ = {isa = PBXBuildFile; fileRef = D83845E615FFDE10005ACBC4 /* vcs.xml */; };
-		D838460715FFDE10005ACBC4 /* workspace.xml in Resources */ = {isa = PBXBuildFile; fileRef = D83845E715FFDE10005ACBC4 /* workspace.xml */; };
-		D838460815FFDE10005ACBC4 /* CaptureParserIO.pl in Resources */ = {isa = PBXBuildFile; fileRef = D83845E815FFDE10005ACBC4 /* CaptureParserIO.pl */; };
-		D838460915FFDE10005ACBC4 /* CaptureSchemaParser.pl in Resources */ = {isa = PBXBuildFile; fileRef = D83845E915FFDE10005ACBC4 /* CaptureSchemaParser.pl */; };
-		D838460A15FFDE10005ACBC4 /* default-schema.json in Resources */ = {isa = PBXBuildFile; fileRef = D83845EA15FFDE10005ACBC4 /* default-schema.json */; };
-		D838460B15FFDE10005ACBC4 /* fox_user.json in Resources */ = {isa = PBXBuildFile; fileRef = D83845EB15FFDE10005ACBC4 /* fox_user.json */; };
-		D838460C15FFDE10005ACBC4 /* ObjCMethodParts.pl in Resources */ = {isa = PBXBuildFile; fileRef = D83845EC15FFDE10005ACBC4 /* ObjCMethodParts.pl */; };
-		D838460D15FFDE10005ACBC4 /* regen_demo.sh in Resources */ = {isa = PBXBuildFile; fileRef = D83845ED15FFDE10005ACBC4 /* regen_demo.sh */; };
-		D838460E15FFDE10005ACBC4 /* regen_test.sh in Resources */ = {isa = PBXBuildFile; fileRef = D83845EE15FFDE10005ACBC4 /* regen_test.sh */; };
-		D838460F15FFDE10005ACBC4 /* typemap.txt in Resources */ = {isa = PBXBuildFile; fileRef = D83845EF15FFDE10005ACBC4 /* typemap.txt */; };
-		D838461015FFDE10005ACBC4 /* umg_schema.json in Resources */ = {isa = PBXBuildFile; fileRef = D83845F015FFDE10005ACBC4 /* umg_schema.json */; };
-		D838461115FFDE10005ACBC4 /* user_dev.json in Resources */ = {isa = PBXBuildFile; fileRef = D83845F115FFDE10005ACBC4 /* user_dev.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -531,53 +499,6 @@
 		9FD54A0F1213726800E11512 /* FeedReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedReader.h; sourceTree = "<group>"; };
 		9FD54A101213726800E11512 /* FeedReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedReader.m; sourceTree = "<group>"; };
 		C01FCF5008A954540054247C /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GTMDefines.h; path = MWaterfall/GTMDefines.h; sourceTree = "<group>"; };
-		D83845BE15FFDE10005ACBC4 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		D83845C115FFDE10005ACBC4 /* debug_log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = debug_log.h; sourceTree = "<group>"; };
-		D83845C215FFDE10005ACBC4 /* JRCapture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCapture.h; sourceTree = "<group>"; };
-		D83845C315FFDE10005ACBC4 /* JRCapture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRCapture.m; sourceTree = "<group>"; };
-		D83845C415FFDE10005ACBC4 /* JRCaptureApidInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCaptureApidInterface.h; sourceTree = "<group>"; };
-		D83845C515FFDE10005ACBC4 /* JRCaptureApidInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRCaptureApidInterface.m; sourceTree = "<group>"; };
-		D83845C615FFDE10005ACBC4 /* JRCaptureBaseUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCaptureBaseUser.h; sourceTree = "<group>"; };
-		D83845C715FFDE10005ACBC4 /* JRCaptureBaseUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRCaptureBaseUser.m; sourceTree = "<group>"; };
-		D83845C815FFDE10005ACBC4 /* JRCaptureData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCaptureData.h; sourceTree = "<group>"; };
-		D83845C915FFDE10005ACBC4 /* JRCaptureData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRCaptureData.m; sourceTree = "<group>"; };
-		D83845CA15FFDE10005ACBC4 /* JRCaptureError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCaptureError.h; sourceTree = "<group>"; };
-		D83845CB15FFDE10005ACBC4 /* JRCaptureError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRCaptureError.m; sourceTree = "<group>"; };
-		D83845CC15FFDE10005ACBC4 /* JRCaptureJsWidgetWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCaptureJsWidgetWrapper.h; sourceTree = "<group>"; };
-		D83845CD15FFDE10005ACBC4 /* JRCaptureJsWidgetWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRCaptureJsWidgetWrapper.m; sourceTree = "<group>"; };
-		D83845CE15FFDE10005ACBC4 /* JRCaptureObject+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JRCaptureObject+Internal.h"; sourceTree = "<group>"; };
-		D83845CF15FFDE10005ACBC4 /* JRCaptureObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCaptureObject.h; sourceTree = "<group>"; };
-		D83845D015FFDE10005ACBC4 /* JRCaptureObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRCaptureObject.m; sourceTree = "<group>"; };
-		D83845D115FFDE10005ACBC4 /* JRCaptureTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCaptureTypes.h; sourceTree = "<group>"; };
-		D83845D215FFDE10005ACBC4 /* JRCaptureUser+Extras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JRCaptureUser+Extras.h"; sourceTree = "<group>"; };
-		D83845D315FFDE10005ACBC4 /* JRCaptureUser+Extras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JRCaptureUser+Extras.m"; sourceTree = "<group>"; };
-		D83845D415FFDE10005ACBC4 /* JRCaptureWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCaptureWebViewController.h; sourceTree = "<group>"; };
-		D83845D515FFDE10005ACBC4 /* JRCaptureWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRCaptureWebViewController.m; sourceTree = "<group>"; };
-		D83845D615FFDE10005ACBC4 /* JRConventionalSigninViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRConventionalSigninViewController.h; sourceTree = "<group>"; };
-		D83845D715FFDE10005ACBC4 /* JRConventionalSigninViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRConventionalSigninViewController.m; sourceTree = "<group>"; };
-		D83845D815FFDE10005ACBC4 /* JREngageWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JREngageWrapper.h; sourceTree = "<group>"; };
-		D83845D915FFDE10005ACBC4 /* JREngageWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JREngageWrapper.m; sourceTree = "<group>"; };
-		D83845DA15FFDE10005ACBC4 /* JRNSDate+ISO8601_CaptureDateTimeString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JRNSDate+ISO8601_CaptureDateTimeString.h"; sourceTree = "<group>"; };
-		D83845DB15FFDE10005ACBC4 /* JRNSDate+ISO8601_CaptureDateTimeString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JRNSDate+ISO8601_CaptureDateTimeString.m"; sourceTree = "<group>"; };
-		D83845DD15FFDE10005ACBC4 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		D83845DF15FFDE10005ACBC4 /* .name */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .name; sourceTree = "<group>"; };
-		D83845E015FFDE10005ACBC4 /* encodings.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = encodings.xml; sourceTree = "<group>"; };
-		D83845E115FFDE10005ACBC4 /* misc.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = misc.xml; sourceTree = "<group>"; };
-		D83845E215FFDE10005ACBC4 /* modules.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = modules.xml; sourceTree = "<group>"; };
-		D83845E415FFDE10005ACBC4 /* scope_settings.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = scope_settings.xml; sourceTree = "<group>"; };
-		D83845E515FFDE10005ACBC4 /* Script.iml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Script.iml; sourceTree = "<group>"; };
-		D83845E615FFDE10005ACBC4 /* vcs.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = vcs.xml; sourceTree = "<group>"; };
-		D83845E715FFDE10005ACBC4 /* workspace.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = workspace.xml; sourceTree = "<group>"; };
-		D83845E815FFDE10005ACBC4 /* CaptureParserIO.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = CaptureParserIO.pl; sourceTree = "<group>"; };
-		D83845E915FFDE10005ACBC4 /* CaptureSchemaParser.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = CaptureSchemaParser.pl; sourceTree = "<group>"; };
-		D83845EA15FFDE10005ACBC4 /* default-schema.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "default-schema.json"; sourceTree = "<group>"; };
-		D83845EB15FFDE10005ACBC4 /* fox_user.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = fox_user.json; sourceTree = "<group>"; };
-		D83845EC15FFDE10005ACBC4 /* ObjCMethodParts.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = ObjCMethodParts.pl; sourceTree = "<group>"; };
-		D83845ED15FFDE10005ACBC4 /* regen_demo.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = regen_demo.sh; sourceTree = "<group>"; };
-		D83845EE15FFDE10005ACBC4 /* regen_test.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = regen_test.sh; sourceTree = "<group>"; };
-		D83845EF15FFDE10005ACBC4 /* typemap.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = typemap.txt; sourceTree = "<group>"; };
-		D83845F015FFDE10005ACBC4 /* umg_schema.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = umg_schema.json; sourceTree = "<group>"; };
-		D83845F115FFDE10005ACBC4 /* user_dev.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = user_dev.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -797,7 +718,6 @@
 		9FB125B015C741410072BEE6 /* Janrain */ = {
 			isa = PBXGroup;
 			children = (
-				D83845BC15FFDE10005ACBC4 /* JRCapture */,
 				9FB125D415C741410072BEE6 /* JRConnectionManager */,
 				9FB125D715C741410072BEE6 /* JREngage */,
 				9FB1269E15C741410072BEE6 /* JSONKit */,
@@ -1144,108 +1064,6 @@
 			path = Security;
 			sourceTree = "<group>";
 		};
-		D83845BC15FFDE10005ACBC4 /* JRCapture */ = {
-			isa = PBXGroup;
-			children = (
-				D83845BD15FFDE10005ACBC4 /* Classes */,
-				D83845DC15FFDE10005ACBC4 /* Script */,
-			);
-			path = JRCapture;
-			sourceTree = "<group>";
-		};
-		D83845BD15FFDE10005ACBC4 /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-				D83845BE15FFDE10005ACBC4 /* .gitignore */,
-				D83845BF15FFDE10005ACBC4 /* CaptureUserModel */,
-				D83845C115FFDE10005ACBC4 /* debug_log.h */,
-				D83845C215FFDE10005ACBC4 /* JRCapture.h */,
-				D83845C315FFDE10005ACBC4 /* JRCapture.m */,
-				D83845C415FFDE10005ACBC4 /* JRCaptureApidInterface.h */,
-				D83845C515FFDE10005ACBC4 /* JRCaptureApidInterface.m */,
-				D83845C615FFDE10005ACBC4 /* JRCaptureBaseUser.h */,
-				D83845C715FFDE10005ACBC4 /* JRCaptureBaseUser.m */,
-				D83845C815FFDE10005ACBC4 /* JRCaptureData.h */,
-				D83845C915FFDE10005ACBC4 /* JRCaptureData.m */,
-				D83845CA15FFDE10005ACBC4 /* JRCaptureError.h */,
-				D83845CB15FFDE10005ACBC4 /* JRCaptureError.m */,
-				D83845CC15FFDE10005ACBC4 /* JRCaptureJsWidgetWrapper.h */,
-				D83845CD15FFDE10005ACBC4 /* JRCaptureJsWidgetWrapper.m */,
-				D83845CE15FFDE10005ACBC4 /* JRCaptureObject+Internal.h */,
-				D83845CF15FFDE10005ACBC4 /* JRCaptureObject.h */,
-				D83845D015FFDE10005ACBC4 /* JRCaptureObject.m */,
-				D83845D115FFDE10005ACBC4 /* JRCaptureTypes.h */,
-				D83845D215FFDE10005ACBC4 /* JRCaptureUser+Extras.h */,
-				D83845D315FFDE10005ACBC4 /* JRCaptureUser+Extras.m */,
-				D83845D415FFDE10005ACBC4 /* JRCaptureWebViewController.h */,
-				D83845D515FFDE10005ACBC4 /* JRCaptureWebViewController.m */,
-				D83845D615FFDE10005ACBC4 /* JRConventionalSigninViewController.h */,
-				D83845D715FFDE10005ACBC4 /* JRConventionalSigninViewController.m */,
-				D83845D815FFDE10005ACBC4 /* JREngageWrapper.h */,
-				D83845D915FFDE10005ACBC4 /* JREngageWrapper.m */,
-				D83845DA15FFDE10005ACBC4 /* JRNSDate+ISO8601_CaptureDateTimeString.h */,
-				D83845DB15FFDE10005ACBC4 /* JRNSDate+ISO8601_CaptureDateTimeString.m */,
-			);
-			path = Classes;
-			sourceTree = "<group>";
-		};
-		D83845BF15FFDE10005ACBC4 /* CaptureUserModel */ = {
-			isa = PBXGroup;
-			children = (
-				D83845C015FFDE10005ACBC4 /* Generated */,
-			);
-			path = CaptureUserModel;
-			sourceTree = "<group>";
-		};
-		D83845C015FFDE10005ACBC4 /* Generated */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Generated;
-			sourceTree = "<group>";
-		};
-		D83845DC15FFDE10005ACBC4 /* Script */ = {
-			isa = PBXGroup;
-			children = (
-				D83845DD15FFDE10005ACBC4 /* .gitignore */,
-				D83845DE15FFDE10005ACBC4 /* .idea */,
-				D83845E815FFDE10005ACBC4 /* CaptureParserIO.pl */,
-				D83845E915FFDE10005ACBC4 /* CaptureSchemaParser.pl */,
-				D83845EA15FFDE10005ACBC4 /* default-schema.json */,
-				D83845EB15FFDE10005ACBC4 /* fox_user.json */,
-				D83845EC15FFDE10005ACBC4 /* ObjCMethodParts.pl */,
-				D83845ED15FFDE10005ACBC4 /* regen_demo.sh */,
-				D83845EE15FFDE10005ACBC4 /* regen_test.sh */,
-				D83845EF15FFDE10005ACBC4 /* typemap.txt */,
-				D83845F015FFDE10005ACBC4 /* umg_schema.json */,
-				D83845F115FFDE10005ACBC4 /* user_dev.json */,
-			);
-			path = Script;
-			sourceTree = "<group>";
-		};
-		D83845DE15FFDE10005ACBC4 /* .idea */ = {
-			isa = PBXGroup;
-			children = (
-				D83845DF15FFDE10005ACBC4 /* .name */,
-				D83845E015FFDE10005ACBC4 /* encodings.xml */,
-				D83845E115FFDE10005ACBC4 /* misc.xml */,
-				D83845E215FFDE10005ACBC4 /* modules.xml */,
-				D83845E315FFDE10005ACBC4 /* scopes */,
-				D83845E515FFDE10005ACBC4 /* Script.iml */,
-				D83845E615FFDE10005ACBC4 /* vcs.xml */,
-				D83845E715FFDE10005ACBC4 /* workspace.xml */,
-			);
-			path = .idea;
-			sourceTree = "<group>";
-		};
-		D83845E315FFDE10005ACBC4 /* scopes */ = {
-			isa = PBXGroup;
-			children = (
-				D83845E415FFDE10005ACBC4 /* scope_settings.xml */,
-			);
-			path = scopes;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1492,26 +1310,6 @@
 				9FB1275C15C741410072BEE6 /* JRPublishActivityController.xib in Resources */,
 				9FB1275D15C741410072BEE6 /* JRUserLandingController.xib in Resources */,
 				9FB1275E15C741410072BEE6 /* JRWebViewController.xib in Resources */,
-				D83845F215FFDE10005ACBC4 /* .gitignore in Resources */,
-				D83845FF15FFDE10005ACBC4 /* .gitignore in Resources */,
-				D838460015FFDE10005ACBC4 /* .name in Resources */,
-				D838460115FFDE10005ACBC4 /* encodings.xml in Resources */,
-				D838460215FFDE10005ACBC4 /* misc.xml in Resources */,
-				D838460315FFDE10005ACBC4 /* modules.xml in Resources */,
-				D838460415FFDE10005ACBC4 /* scope_settings.xml in Resources */,
-				D838460515FFDE10005ACBC4 /* Script.iml in Resources */,
-				D838460615FFDE10005ACBC4 /* vcs.xml in Resources */,
-				D838460715FFDE10005ACBC4 /* workspace.xml in Resources */,
-				D838460815FFDE10005ACBC4 /* CaptureParserIO.pl in Resources */,
-				D838460915FFDE10005ACBC4 /* CaptureSchemaParser.pl in Resources */,
-				D838460A15FFDE10005ACBC4 /* default-schema.json in Resources */,
-				D838460B15FFDE10005ACBC4 /* fox_user.json in Resources */,
-				D838460C15FFDE10005ACBC4 /* ObjCMethodParts.pl in Resources */,
-				D838460D15FFDE10005ACBC4 /* regen_demo.sh in Resources */,
-				D838460E15FFDE10005ACBC4 /* regen_test.sh in Resources */,
-				D838460F15FFDE10005ACBC4 /* typemap.txt in Resources */,
-				D838461015FFDE10005ACBC4 /* umg_schema.json in Resources */,
-				D838461115FFDE10005ACBC4 /* user_dev.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1567,18 +1365,6 @@
 				9FB126C415C741410072BEE6 /* JREngagePlugin.js in Sources */,
 				9FB1275F15C741410072BEE6 /* JSONKit.m in Sources */,
 				9FB1276015C741410072BEE6 /* SFHFKeychainUtils.m in Sources */,
-				D83845F315FFDE10005ACBC4 /* JRCapture.m in Sources */,
-				D83845F415FFDE10005ACBC4 /* JRCaptureApidInterface.m in Sources */,
-				D83845F515FFDE10005ACBC4 /* JRCaptureBaseUser.m in Sources */,
-				D83845F615FFDE10005ACBC4 /* JRCaptureData.m in Sources */,
-				D83845F715FFDE10005ACBC4 /* JRCaptureError.m in Sources */,
-				D83845F815FFDE10005ACBC4 /* JRCaptureJsWidgetWrapper.m in Sources */,
-				D83845F915FFDE10005ACBC4 /* JRCaptureObject.m in Sources */,
-				D83845FA15FFDE10005ACBC4 /* JRCaptureUser+Extras.m in Sources */,
-				D83845FB15FFDE10005ACBC4 /* JRCaptureWebViewController.m in Sources */,
-				D83845FC15FFDE10005ACBC4 /* JRConventionalSigninViewController.m in Sources */,
-				D83845FD15FFDE10005ACBC4 /* JREngageWrapper.m in Sources */,
-				D83845FE15FFDE10005ACBC4 /* JRNSDate+ISO8601_CaptureDateTimeString.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
