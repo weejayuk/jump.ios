@@ -254,6 +254,8 @@
 		C1424E83C3B59FE85B31A89E /* JRStatusesElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424B3E3B9AFC75E78EC3B4 /* JRStatusesElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C1424EC7161AFFA7A6243A1B /* JRCaptureUser+Extras.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424C540D1812C477BC1B51 /* JRCaptureUser+Extras.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C1424F799427748E3A81CF34 /* JRName.m in Sources */ = {isa = PBXBuildFile; fileRef = C142417454E04ED1EC3DC485 /* JRName.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D83F86E2162373D4007B7163 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D83F86E1162373D4007B7163 /* Default-568h@2x.png */; };
+		D83F86E5162373E2007B7163 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = D83F86E4162373E2007B7163 /* Default.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -590,6 +592,8 @@
 		C1424F7FEA08CD46EA02A7AB /* JRUrlsElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRUrlsElement.h; path = ../../Samples/SimpleCaptureDemo/JRCapture/Generated/JRUrlsElement.h; sourceTree = "<group>"; };
 		C1424F8B4CE0D4A038BAC996 /* JRProfilesElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRProfilesElement.h; path = ../../Samples/SimpleCaptureDemo/JRCapture/Generated/JRProfilesElement.h; sourceTree = "<group>"; };
 		C1424FB71FA3DC737E43F496 /* JRPluralLevelTwoElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRPluralLevelTwoElement.h; path = ../../Samples/SimpleCaptureDemo/JRCapture/Generated/JRPluralLevelTwoElement.h; sourceTree = "<group>"; };
+		D83F86E1162373D4007B7163 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		D83F86E4162373E2007B7163 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -621,6 +625,8 @@
 		90C36B6B7717AA0C893E08DC = {
 			isa = PBXGroup;
 			children = (
+				D83F86E4162373E2007B7163 /* Default.png */,
+				D83F86E1162373D4007B7163 /* Default-568h@2x.png */,
 				9FB1200415C73FD10072BEE6 /* Janrain */,
 				9FD2B6C014F8387B00053EA2 /* MessageUI.framework */,
 				9FD2B6BE14F8387100053EA2 /* Security.framework */,
@@ -1475,6 +1481,8 @@
 				9FB121B115C73FD20072BEE6 /* JRUserLandingController.xib in Resources */,
 				9FB121B215C73FD20072BEE6 /* JRWebViewController.xib in Resources */,
 				C142442AE87CF331CC8171A3 /* .gitignore in Resources */,
+				D83F86E2162373D4007B7163 /* Default-568h@2x.png in Resources */,
+				D83F86E5162373E2007B7163 /* Default.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
