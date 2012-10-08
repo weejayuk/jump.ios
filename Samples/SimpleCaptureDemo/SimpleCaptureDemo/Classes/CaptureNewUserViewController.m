@@ -73,9 +73,6 @@
 {
     [super viewDidLoad];
 
-    [myPickerView setFrame:CGRectMake(0, 416, 320, 260)];
-    [self.view addSubview:myPickerView];
-
     [myAboutMeTextView setInputAccessoryView:myKeyboardToolbar];
     [myEmailTextField setInputAccessoryView:myKeyboardToolbar];
 
@@ -96,16 +93,52 @@
 
 - (void)slidePickerUp
 {
-    [UIView beginAnimations:@"slidePickerUp" context:nil];
-    [myPickerView setFrame:CGRectMake(0, 156, 320, 260)];
-    [UIView commitAnimations];
+    if (myPickerView.superview == nil)
+   	{
+   		[self.view.window addSubview: myPickerView];
+
+   		CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
+   		CGSize pickerSize = [myPickerView sizeThatFits:CGSizeZero];
+   		CGRect startRect = CGRectMake(0.0,
+   									  screenRect.origin.y + screenRect.size.height,
+   									  pickerSize.width, pickerSize.height);
+   		myPickerView.frame = startRect;
+
+   		// compute the end frame
+   		CGRect pickerRect = CGRectMake(0.0,
+   									   screenRect.origin.y + screenRect.size.height - pickerSize.height,
+   									   pickerSize.width,
+   									   pickerSize.height);
+
+   		// start the slide up animation
+        [UIView beginAnimations:@"slidePickerUp" context:nil];
+   			[UIView setAnimationDuration:0.3];
+   			myPickerView.frame = pickerRect;
+   		[UIView commitAnimations];
+   	}
+}
+
+- (void)slideDownDidStop
+{
+	[myPickerView removeFromSuperview];
 }
 
 - (void)slidePickerDown
 {
+    CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
+   	CGRect endFrame = myPickerView.frame;
+   	endFrame.origin.y = screenRect.origin.y + screenRect.size.height;
+
+   	// start the slide down animation
     [UIView beginAnimations:@"slidePickerDown" context:nil];
-    [myPickerView setFrame:CGRectMake(0, 416, 320, 260)];
-    [UIView commitAnimations];
+   		[UIView setAnimationDuration:0.3];
+
+   		// we need to perform some post operations after the animation is complete
+   		[UIView setAnimationDelegate:self];
+   		[UIView setAnimationDidStopSelector:@selector(slideDownDidStop)];
+
+   		myPickerView.frame = endFrame;
+   	[UIView commitAnimations];
 }
 
 - (void)scrollUpBy:(NSInteger)scrollOffset

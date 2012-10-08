@@ -95,8 +95,15 @@ typedef enum
 
 //- (void)useApplicationNavigationController:(UINavigationController*)navigationController;
 
+- (void)loadModalNavigationControllerWithViewController:(UIViewController *)rootViewController;
+
+- (void)loadApplicationNavigationControllerWithViewController:(UIViewController *)rootViewController;
+
 - (void)showAuthenticationDialogWithCustomInterface:(NSDictionary*)customizations;
 - (void)showPublishingDialogForActivityWithCustomInterface:(NSDictionary*)customizations;
+
+- (void)unloadUserInterfaceWithTransitionStyle:(UIModalTransitionStyle)style;
+
 //- (void)showCaptureJsWidgetDialogWithCustomInterface:(NSDictionary *)customizations andUrl:(NSString *)url;
 
 - (void)authenticationRestarted;
@@ -117,4 +124,10 @@ typedef enum
 @property (readonly) JRWebViewController         *myWebViewController;
 @property (readonly) JRPublishActivityController *myPublishActivityController;
 @property (copy)     NSString                    *directProvider;
+
+- (void)buildCustomInterface:(NSDictionary *)customizations;
+
+- (void)setUpDialogPresentation;
+
+
 @end

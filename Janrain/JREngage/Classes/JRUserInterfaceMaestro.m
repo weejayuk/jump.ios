@@ -653,26 +653,6 @@ static JRUserInterfaceMaestro* singleton = nil;
         [self loadModalNavigationControllerWithViewController:myPublishActivityController];
 }
 
-- (void)showCaptureJsWidgetDialogWithCustomInterface:(NSDictionary *)customizations andUrl:(NSString *)url
-{
-    // Need to do this with reflection instead, JRCapture won't always be linked in :(
-    //DLog(@"");
-    //[self buildCustomInterface:customizations];
-    //[self setUpDialogPresentation];
-    //
-    //// don't need this except for UI Maestro delegates?
-    ////[self setUpViewControllers];
-    //
-    //sessionData.captureWidget = YES;
-    //
-    //JRCaptureWebViewController *viewController = [[[JRCaptureWebViewController alloc] initWithUrl:url] autorelease];
-    //
-    //if (usingAppNav)
-    //    [self loadApplicationNavigationControllerWithViewController:viewController];
-    //else
-    //    [self loadModalNavigationControllerWithViewController:viewController];
-}
-
 - (void)unloadModalNavigationControllerWithTransitionStyle:(UIModalTransitionStyle)style
 {
     DLog(@"");

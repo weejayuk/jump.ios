@@ -34,6 +34,7 @@
 
 #import "JRCaptureWebViewController.h"
 #import "debug_log.h"
+#import "JRUserInterfaceMaestro.h"
 
 @implementation JRCaptureWebViewController
 
@@ -85,7 +86,7 @@
 
 - (void)cancelButton
 {
-    DLog(@"CANCEL");
+    [[JRUserInterfaceMaestro sharedMaestro] unloadUserInterfaceWithTransitionStyle:UIModalTransitionStyleCoverVertical];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -93,8 +94,6 @@
     DLog(@"");
 
     [super viewWillAppear:animated];
-
-    self.contentSizeForViewInPopover = CGSizeMake(320, 416);
 
     self.title = [NSString stringWithFormat:@"%@", @"fixme"];
 }
