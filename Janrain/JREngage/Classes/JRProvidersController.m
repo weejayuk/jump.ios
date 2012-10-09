@@ -32,6 +32,7 @@
  Date:   Tuesday, June 1, 2010
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+#import <objc/runtime.h>
 #import "JRProvidersController.h"
 #import "JREngage+CustomInterface.h"
 #import "JRUserLandingController.h"
@@ -137,7 +138,7 @@
     id const maybeCaptureSigninVc = [customInterface objectForKey:kJRCaptureConventionalSigninViewController];
     if ([maybeCaptureSigninVc isKindOfClass:NSClassFromString(@"JRConventionalSignInViewController")])
     {
-        [maybeCaptureSigninVc performSelector:NSSelectorFromString(@"setDelegate") withObject:self];
+        [maybeCaptureSigninVc performSelector:NSSelectorFromString(@"setDelegate:") withObject:self];
 
         [self createConventionalSigninLoadingView];
     }
