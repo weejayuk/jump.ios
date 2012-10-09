@@ -524,7 +524,7 @@ static JRUserInterfaceMaestro* singleton = nil;
 {
     DLog(@"");
 
-    self.jrModalNavController = [[[JRModalNavigationController alloc] init] autorelease];
+    self.jrModalNavController = [[[JRModalNavigationController alloc] initWithNibName:nil bundle:nil] autorelease];
 
     if (usingCustomNav)
         jrModalNavController.myNavigationController = customModalNavigationController;

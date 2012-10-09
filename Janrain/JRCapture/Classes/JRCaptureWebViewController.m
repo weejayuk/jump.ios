@@ -47,7 +47,7 @@
 
 - (id)initWithUrl:(NSString *)urlString
 {
-    if (self = [super init])
+    if (self = [super initWithNibName:nil bundle:nil])
     {
         self.url = [NSURL URLWithString:urlString];
     }
