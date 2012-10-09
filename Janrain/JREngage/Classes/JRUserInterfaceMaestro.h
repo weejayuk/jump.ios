@@ -94,17 +94,11 @@ typedef enum
 + (JRUserInterfaceMaestro*)sharedMaestro;
 
 //- (void)useApplicationNavigationController:(UINavigationController*)navigationController;
-
 - (void)loadModalNavigationControllerWithViewController:(UIViewController *)rootViewController;
-
 - (void)loadApplicationNavigationControllerWithViewController:(UIViewController *)rootViewController;
-
 - (void)showAuthenticationDialogWithCustomInterface:(NSDictionary*)customizations;
 - (void)showPublishingDialogForActivityWithCustomInterface:(NSDictionary*)customizations;
-
 - (void)unloadUserInterfaceWithTransitionStyle:(UIModalTransitionStyle)style;
-
-//- (void)showCaptureJsWidgetDialogWithCustomInterface:(NSDictionary *)customizations andUrl:(NSString *)url;
 
 - (void)authenticationRestarted;
 - (void)authenticationCompleted;
