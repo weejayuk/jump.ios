@@ -50,8 +50,6 @@
     if (self = [super init])
     {
         self.url = [NSURL URLWithString:urlString];
-        self.webView = [[[UIWebView alloc] initWithFrame:self.view.frame] autorelease];
-        [self.view addSubview:webView];
     }
 
     return self;
@@ -61,9 +59,6 @@
 {
     DLog(@"");
     [super viewDidLoad];
-
-    //self.navigationItem.backBarButtonItem.target = sessionData;
-    //self.navigationItem.backBarButtonItem.action = @selector(triggerAuthenticationDidStartOver:);
 
     if (!self.navigationController.navigationBar.backItem)
     {
@@ -96,6 +91,9 @@
     [super viewWillAppear:animated];
 
     self.title = [NSString stringWithFormat:@"%@", @"fixme"];
+
+    self.webView = [[[UIWebView alloc] initWithFrame:self.view.frame] autorelease];
+    [self.view addSubview:webView];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -125,15 +123,8 @@
 {
     DLog(@"request: %@", [[request URL] absoluteString]);
 
-    //NSString *mobileEndpointUrl = [NSString stringWithFormat:@"%@/signin/device", [sessionData baseUrl]];
-
-    //if ([[[request URL] absoluteString] hasPrefix:mobileEndpointUrl])
+    //if ([[[request URL] absoluteString] hasPrefix:])
     //{
-    //    DLog(@"request url has prefix: %@", [sessionData baseUrl]);
-    //
-    //    [JRConnectionManager createConnectionFromRequest:request forDelegate:self withTag:MEU_CONNECTION_TAG];
-    //
-    //    keepProgress = YES;
     //    return NO;
     //}
 
@@ -160,10 +151,6 @@
     if (error.code != NSURLErrorCancelled) /* Error code -999 */
     {
         [self stopProgress];
-
-        //NSError *newError = [JREngageError setError:[NSString stringWithFormat:@"Authentication failed: %@",
-        //                                                      [error localizedDescription]]
-        //                                   withCode:JRAuthenticationFailedError];
     }
 }
 
@@ -172,18 +159,12 @@
     return YES;
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-}
-
 - (void)viewWillDisappear:(BOOL)animated
 {
     DLog(@"");
 
     [webView stopLoading];
 
-    //[JRConnectionManager stopConnectionsForDelegate:self];
     [self stopProgress];
 
     [super viewWillDisappear:animated];
@@ -196,12 +177,6 @@
     [webView loadHTMLString:@"" baseURL:[NSURL URLWithString:@"/"]];
 
     [super viewDidDisappear:animated];
-}
-
-- (void)viewDidUnload
-{
-    DLog(@"");
-    [super viewDidUnload];
 }
 
 - (void)dealloc {
