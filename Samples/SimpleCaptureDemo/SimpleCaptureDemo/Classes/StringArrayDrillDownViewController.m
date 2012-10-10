@@ -216,19 +216,16 @@
 #define LEFT_LABEL_OFFSET   3000
 #define DATE_PICKER_OFFSET  4000
 
-- (void)calibrateIndices
+- (void)textFieldDidEndEditing:(UITextField *)textField
 {
-    for (NSUInteger i = 0; i < [cellData count]; i++)
-    {
-        CellDatum *objectData = [cellData objectAtIndex:i];
-        NSInteger oldIndex = objectData.editingView.tag - EDITING_VIEW_OFFSET;
+    NSUInteger i = (NSUInteger) (textField.tag - EDITING_VIEW_OFFSET);
+    CellDatum *cellDatum = [cellData objectAtIndex:i];
 
-        [objectData.editingView setTag:EDITING_VIEW_OFFSET + i];
-        [[objectData.editingView viewWithTag:LEFT_BUTTON_OFFSET + oldIndex] setTag:LEFT_BUTTON_OFFSET + i];
-        [[objectData.editingView viewWithTag:RIGHT_BUTTON_OFFSET + oldIndex] setTag:RIGHT_BUTTON_OFFSET + i];
-
-        [self setCellTextForCellDatum:objectData atIndex:i];
-    }
+    cellDatum.stringValue = textField.text;
+    [stringArray replaceObjectAtIndex:i withObject:textField.text];
+    [self saveLocalArrayToParentObject];
+    [self setCellTextForCellDatum:cellDatum atIndex:i];
+    [myTableView reloadData];
 }
 
 - (void)deleteObjectButtonPressed:(UIButton *)sender
@@ -244,7 +241,17 @@
     [myTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:itemIndex inSection:0]]
                        withRowAnimation:UITableViewRowAnimationLeft];
 
-    [self calibrateIndices];
+    for (NSUInteger i = 0; i < [cellData count]; i++)
+    {
+        CellDatum *objectData = [cellData objectAtIndex:i];
+        NSInteger oldIndex = objectData.editingView.tag - EDITING_VIEW_OFFSET;
+
+        [objectData.editingView setTag:EDITING_VIEW_OFFSET + i];
+        [[objectData.editingView viewWithTag:LEFT_BUTTON_OFFSET + oldIndex] setTag:LEFT_BUTTON_OFFSET + i];
+        [[objectData.editingView viewWithTag:RIGHT_BUTTON_OFFSET + oldIndex] setTag:RIGHT_BUTTON_OFFSET + i];
+
+        [self setCellTextForCellDatum:objectData atIndex:i];
+    }
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
