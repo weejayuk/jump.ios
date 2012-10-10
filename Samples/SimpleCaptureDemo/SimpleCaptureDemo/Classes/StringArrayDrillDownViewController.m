@@ -33,19 +33,6 @@
 #import "ObjectDrillDownViewController.h"
 #import "JSONKit.h"
 
-typedef enum propertyTypes
-{
-    PTCaptureObject,
-    PTArray,
-    PTString,
-    PTNumber,
-    PTDate,
-    PTBool,
-    PTInteger,
-    PTJsonObject,
-    PTUnknown,
-} PropertyType;
-
 @interface StringElementData : NSObject
 @property (strong) NSString *stringValue;
 @property (strong) UILabel  *titleLabel;
@@ -465,19 +452,19 @@ typedef enum propertyTypes
     UITableViewCell *cell =
         [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
 
-    if (cell == nil)
-        cell = [[UITableViewCell alloc] initWithStyle:style reuseIdentifier:reuseIdentifier];
+    if (cell == nil) cell = [[UITableViewCell alloc] initWithStyle:style reuseIdentifier:reuseIdentifier];
 
     if (indexPath.row == [localCopyArray count])
     {
+        cell.selectionStyle = UITableViewCellSelectionStyleBlue;
         cell.textLabel.text = [NSString stringWithFormat:@"Add another %@ object", tableHeader];
     }
     else
     {
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         StringElementData *objectData = [objectDataArray objectAtIndex:(NSUInteger)indexPath.row];
 
-        for (UIView *view in [cell.contentView subviews])
-            [view removeFromSuperview];
+        for (UIView *view in [cell.contentView subviews]) [view removeFromSuperview];
 
         UILabel *titleLabel    = objectData.titleLabel;
         UILabel *subtitleLabel = objectData.subtitleLabel;
@@ -486,9 +473,6 @@ typedef enum propertyTypes
         [cell.contentView addSubview:titleLabel];
         [cell.contentView addSubview:subtitleLabel];
         [cell.contentView addSubview:editingView];
-
-//        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-//        [cell setSelectionStyle: UITableViewCellSelectionStyleBlue];
 
         [editingView setHidden:!isEditing];
         [subtitleLabel setHidden:isEditing];

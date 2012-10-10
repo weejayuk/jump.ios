@@ -35,19 +35,6 @@
 #import "JSONKit.h"
 #import "Utils.h"
 
-typedef enum propertyTypes
-{
-    PTCaptureObject,
-    PTArray,
-    PTString,
-    PTNumber,
-    PTDate,
-    PTBool,
-    PTInteger,
-    PTJsonObject,
-    PTUnknown,
-} PropertyType;
-
 @interface ElementData : NSObject
 @property (strong) NSString *stringValue;
 @property (strong) UILabel  *titleLabel;

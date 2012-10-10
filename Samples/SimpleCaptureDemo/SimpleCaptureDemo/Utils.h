@@ -7,5 +7,24 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum propertyTypes
+{
+    PTString,
+    PTBoolean,
+    PTInteger,
+    PTNumber,
+    PTDate,
+    PTDateTime,
+    PTIpAddress,
+    PTPassword,
+    PTJsonObject,
+    PTArray,
+    PTStringArray,
+    PTCaptureObject,
+    PTUuid,
+    PTObjectId,
+    PTUnknown,
+} PropertyType;
+
 Class getPluralClassFromKey(NSString *key);
 Class getClassFromKey(NSString *key);

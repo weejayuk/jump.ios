@@ -38,25 +38,6 @@
 #import "JSONKit.h"
 #import "Utils.h"
 
-typedef enum propertyTypes
-{
-    PTString,
-    PTBoolean,
-    PTInteger,
-    PTNumber,
-    PTDate,
-    PTDateTime,
-    PTIpAddress,
-    PTPassword,
-    PTJsonObject,
-    PTArray,
-    PTStringArray,
-    PTCaptureObject,
-    PTUuid,
-    PTObjectId,
-    PTUnknown,
-} PropertyType;
-
 @interface PropertyData : NSObject
 @property          PropertyType propertyType;
 @property (strong) NSString    *propertyName;
