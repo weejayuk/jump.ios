@@ -50,10 +50,7 @@
 @synthesize myEmailTextField;
 @synthesize myGenderIdentitySegControl;
 @synthesize myBirthdayButton;
-@synthesize myBirthdayPicker;
-@synthesize myPickerToolbar;
 @synthesize myAboutMeTextView;
-@synthesize myPickerView;
 @synthesize myScrollView;
 @synthesize myKeyboardToolbar;
 @synthesize firstResponder;
@@ -88,69 +85,19 @@
         [[captureUser.gender lowercaseString] isEqualToString:[@"woman" lowercaseString]]) /* Blah, blah, loose test... */
         [myGenderIdentitySegControl setSelectedSegmentIndex:0];
     if (captureUser.birthday)
-        [myBirthdayPicker setDate:captureUser.birthday];
-}
-
-- (void)slidePickerUp
-{
-    if (myPickerView.superview == nil)
-   	{
-   		[self.view.window addSubview: myPickerView];
-
-   		CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
-   		CGSize pickerSize = [myPickerView sizeThatFits:CGSizeZero];
-   		CGRect startRect = CGRectMake(0.0,
-   									  screenRect.origin.y + screenRect.size.height,
-   									  pickerSize.width, pickerSize.height);
-   		myPickerView.frame = startRect;
-
-   		// compute the end frame
-   		CGRect pickerRect = CGRectMake(0.0,
-   									   screenRect.origin.y + screenRect.size.height - pickerSize.height,
-   									   pickerSize.width,
-   									   pickerSize.height);
-
-   		// start the slide up animation
-        [UIView beginAnimations:@"slidePickerUp" context:nil];
-   			[UIView setAnimationDuration:0.3];
-   			myPickerView.frame = pickerRect;
-   		[UIView commitAnimations];
-   	}
-}
-
-- (void)slideDownDidStop
-{
-	[myPickerView removeFromSuperview];
-}
-
-- (void)slidePickerDown
-{
-    CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
-   	CGRect endFrame = myPickerView.frame;
-   	endFrame.origin.y = screenRect.origin.y + screenRect.size.height;
-
-   	// start the slide down animation
-    [UIView beginAnimations:@"slidePickerDown" context:nil];
-   		[UIView setAnimationDuration:0.3];
-
-   		// we need to perform some post operations after the animation is complete
-   		[UIView setAnimationDelegate:self];
-   		[UIView setAnimationDidStopSelector:@selector(slideDownDidStop)];
-
-   		myPickerView.frame = endFrame;
-   	[UIView commitAnimations];
+        [myPickerView setDate:captureUser.birthday];
 }
 
 - (void)scrollUpBy:(NSInteger)scrollOffset
 {
     [myScrollView setContentOffset:CGPointMake(0, scrollOffset)];
-    [myScrollView setContentSize:CGSizeMake(320, 416 + scrollOffset)];
+    [myScrollView setContentSize:CGSizeMake(320, self.view.frame.size.height + scrollOffset)];
 }
 
 - (void)scrollBack
 {
     [myScrollView setContentOffset:CGPointZero];
-    [myScrollView setContentSize:CGSizeMake(320, 416)];
+    [myScrollView setContentSize:CGSizeMake(320, self.view.frame.size.height)];
 }
 
 - (IBAction)emailTextFieldClicked:(id)sender
@@ -164,13 +111,13 @@
     [self scrollUpBy:40];
 }
 
-- (IBAction)hidePickerButtonPressed:(id)sender
+- (void)pickerDone
 {
     [self slidePickerDown];
     [self scrollBack];
 }
 
-- (IBAction)birthdayPickerChanged:(id)sender
+- (void)pickerChanged
 {
     DLog(@"");
     [myBirthdayButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -184,7 +131,7 @@
         [dateFormatter setDateFormat:@"MM/dd/yyyy"];
     }
 
-    NSDate   *pickerDate = myBirthdayPicker.date;
+    NSDate   *pickerDate = myPickerView.date;
     NSString *dateString = [dateFormatter stringFromDate:pickerDate];
 
     [myBirthdayButton setTitle:dateString forState:UIControlStateNormal];
