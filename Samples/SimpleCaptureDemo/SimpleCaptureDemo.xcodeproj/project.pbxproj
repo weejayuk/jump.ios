@@ -231,7 +231,7 @@
 		C14247AC291E6D0575E70994 /* JRPluralLevelTwoElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C14246CA5A92A53050003679 /* JRPluralLevelTwoElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C14247C3036089BA4C74F82F /* JRCaptureApidInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = C142485240F937D2813863E8 /* JRCaptureApidInterface.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C14247EC8FB8C70947EAA9FA /* JROnipLevelThree.m in Sources */ = {isa = PBXBuildFile; fileRef = C14248075E4DC59457336415 /* JROnipLevelThree.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		C142484A42B9AFC6D5D601D1 /* JRPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424F585B481C5D49BD59CE /* JRPickerViewController.m */; };
+		C142484A42B9AFC6D5D601D1 /* PickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424F585B481C5D49BD59CE /* PickerViewController.m */; };
 		C14248700EADB15F0BEEB474 /* JRCaptureWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C14248E9FD71C0C57C80258E /* JRCaptureWebViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C14248C31F4E3A3B50DABBCC /* JROnipLevelOneElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424F5DEBE50BBDDC907D3E /* JROnipLevelOneElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C14248DEA3EDC77CA58DB638 /* JRConventionalSigninViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C14246C46B433B5C72877680 /* JRConventionalSigninViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -582,14 +582,14 @@
 		C1424DD81EBEABB34C3454FD /* JRNSDate+ISO8601_CaptureDateTimeString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JRNSDate+ISO8601_CaptureDateTimeString.m"; sourceTree = "<group>"; };
 		C1424DF6CBD3162D856276DA /* JRCaptureUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JRCaptureUser.m; path = ../../Samples/SimpleCaptureDemo/JRCapture/Generated/JRCaptureUser.m; sourceTree = "<group>"; };
 		C1424E4616102B7954153862 /* JRName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRName.h; path = ../../Samples/SimpleCaptureDemo/JRCapture/Generated/JRName.h; sourceTree = "<group>"; };
-		C1424E75D6BC0B600C577C8F /* JRPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRPickerViewController.h; sourceTree = "<group>"; };
+		C1424E75D6BC0B600C577C8F /* PickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickerViewController.h; sourceTree = "<group>"; };
 		C1424E7C084AFF20B37FA70A /* JRObjectLevelOne.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JRObjectLevelOne.m; path = ../../Samples/SimpleCaptureDemo/JRCapture/Generated/JRObjectLevelOne.m; sourceTree = "<group>"; };
 		C1424E90E40288F8A983A04B /* JRProfilesElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JRProfilesElement.m; path = ../../Samples/SimpleCaptureDemo/JRCapture/Generated/JRProfilesElement.m; sourceTree = "<group>"; };
 		C1424EAE8FDC03B2E30EA647 /* JRCaptureObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRCaptureObject.m; sourceTree = "<group>"; };
 		C1424F138D11E87A9C1EE730 /* JRCaptureData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCaptureData.h; sourceTree = "<group>"; };
 		C1424F29DC29D6A0E972C6A1 /* JRCaptureError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRCaptureError.m; sourceTree = "<group>"; };
 		C1424F4BE42D72CB2897E320 /* JRProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRProfile.h; path = ../../Samples/SimpleCaptureDemo/JRCapture/Generated/JRProfile.h; sourceTree = "<group>"; };
-		C1424F585B481C5D49BD59CE /* JRPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRPickerViewController.m; sourceTree = "<group>"; };
+		C1424F585B481C5D49BD59CE /* PickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickerViewController.m; sourceTree = "<group>"; };
 		C1424F5DEBE50BBDDC907D3E /* JROnipLevelOneElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JROnipLevelOneElement.m; path = ../../Samples/SimpleCaptureDemo/JRCapture/Generated/JROnipLevelOneElement.m; sourceTree = "<group>"; };
 		C1424F6688A0BDFE18A8B83B /* JRCaptureTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCaptureTypes.h; sourceTree = "<group>"; };
 		C1424F7FEA08CD46EA02A7AB /* JRUrlsElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRUrlsElement.h; path = ../../Samples/SimpleCaptureDemo/JRCapture/Generated/JRUrlsElement.h; sourceTree = "<group>"; };
@@ -721,8 +721,8 @@
 				9F7B6A9215336480002BF452 /* RootViewController.m */,
 				9F2C93B91551A7AE001A810E /* SimplePluralViewController.h */,
 				9F2C93BA1551A7AE001A810E /* SimplePluralViewController.m */,
-				C1424F585B481C5D49BD59CE /* JRPickerViewController.m */,
-				C1424E75D6BC0B600C577C8F /* JRPickerViewController.h */,
+				C1424F585B481C5D49BD59CE /* PickerViewController.m */,
+				C1424E75D6BC0B600C577C8F /* PickerViewController.h */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -1592,7 +1592,7 @@
 				C1424E83C3B59FE85B31A89E /* JRStatusesElement.m in Sources */,
 				C142450FC1469868540AE61A /* JRTournamentsPlayedElement.m in Sources */,
 				C14245B630799FF6081E911A /* JRUrlsElement.m in Sources */,
-				C142484A42B9AFC6D5D601D1 /* JRPickerViewController.m in Sources */,
+				C142484A42B9AFC6D5D601D1 /* PickerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -29,7 +29,7 @@
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #include "debug_log.h"
-
+#import "PickerViewController.h"
 #import "ObjectDrillDownViewController.h"
 #import "SharedData.h"
 #import "ArrayDrillDownViewController.h"
@@ -130,8 +130,6 @@ static Class getClassFromKey(NSString *key)
 @synthesize myTableView;
 @synthesize myUpdateButton;
 @synthesize myKeyboardToolbar;
-@synthesize myPickerView;
-@synthesize myDatePicker;
 
 
 - (void)printPArrayDescription
@@ -243,9 +241,6 @@ static Class getClassFromKey(NSString *key)
     self.navigationItem.rightBarButtonItem.enabled = YES;
 
     self.navigationItem.rightBarButtonItem.style   = UIBarButtonItemStyleBordered;
-
-    [myPickerView setFrame:CGRectMake(0, 416, 320, 260)];
-    [self.view addSubview:myPickerView];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -366,40 +361,15 @@ typedef enum
     [[self navigationController] pushViewController:drillDown animated:YES];
 }
 
-- (void)slidePickerUp
-{
-    [myTableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 260)]];
-    [myTableView setScrollEnabled:NO];
-
-    [UIView beginAnimations:@"slidePickerUp" context:nil];
-    [myPickerView setFrame:CGRectMake(0, 156, 320, 260)];
-    [UIView commitAnimations];
-}
-
-- (void)slidePickerDown
-{
-    [myTableView setTableFooterView:nil];
-    [myTableView setScrollEnabled:YES];
-
-    [UIView beginAnimations:@"slidePickerDown" context:nil];
-    [myPickerView setFrame:CGRectMake(0, 416, 320, 260)];
-    [UIView commitAnimations];
-}
-
-- (void)scrollTableViewToRect:(CGRect)rect
-{
-    [myTableView scrollRectToVisible:rect animated:YES];
-}
-
-- (IBAction)hidePickerButtonPressed:(id)sender
+- (void)pickerDone
 {
     [self slidePickerDown];
 }
 
-- (IBAction)datePickerChanged:(UIDatePicker *)sender
+- (void)pickerChanged
 {
     DLog(@"");
-    NSUInteger itemIndex = (NSUInteger) (sender.tag - DATE_PICKER_OFFSET);
+    NSUInteger itemIndex = (NSUInteger) (myDatePicker.tag - DATE_PICKER_OFFSET);
     PropertyData *currentPropertyData = [propertyDataArray objectAtIndex:itemIndex];
     UILabel *label = (UILabel *) [currentPropertyData.editingView viewWithTag:(itemIndex + LEFT_LABEL_OFFSET)];
 
@@ -437,9 +407,11 @@ typedef enum
 
     myDatePicker.tag = itemIndex + DATE_PICKER_OFFSET;
 
-    [self scrollTableViewToRect:CGRectMake(0, sender.superview.superview.frame.origin.y - 45,
-            (UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) ? 320 : 480,
-            (UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) ? 416 : 256)];
+    // Broken
+    //CGRect rect = CGRectMake(0, sender.superview.superview.frame.origin.y - 45,
+    //        (UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) ? 320 : 480,
+    //        (UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) ? 416 : 256);
+    //[myTableView scrollRectToVisible:rect animated:YES];
 
     [self slidePickerUp];
 }
@@ -454,7 +426,8 @@ typedef enum
     [firstResponder resignFirstResponder];
 }
 
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range
+replacementString:(NSString *)string
 {
     return YES;
 }
@@ -463,9 +436,11 @@ typedef enum
 {
     if (!firstResponder)
     {
-        [self scrollTableViewToRect:CGRectMake(0, textField.superview.frame.origin.y - 45,
-                (UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) ? 320 : 480,
-                (UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) ? 416 : 256)];
+        // Broken
+        //CGRect rect = CGRectMake(0, textField.superview.frame.origin.y - 45,
+        //        (UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) ? 320 : 480,
+        //        (UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) ? 416 : 256);
+        //[myTableView scrollRectToVisible:rect animated:YES];
     }
 
     firstResponder = textField;
@@ -1201,8 +1176,5 @@ typedef enum
     [super viewDidUnload];
 }
 
-- (void)dealloc
-{
-}
 @end
 

@@ -85,7 +85,7 @@
         [[captureUser.gender lowercaseString] isEqualToString:[@"woman" lowercaseString]]) /* Blah, blah, loose test... */
         [myGenderIdentitySegControl setSelectedSegmentIndex:0];
     if (captureUser.birthday)
-        [myPickerView setDate:captureUser.birthday];
+        [myDatePicker setDate:captureUser.birthday];
 }
 
 - (void)scrollUpBy:(NSInteger)scrollOffset
@@ -131,7 +131,7 @@
         [dateFormatter setDateFormat:@"MM/dd/yyyy"];
     }
 
-    NSDate   *pickerDate = myPickerView.date;
+    NSDate   *pickerDate = myDatePicker.date;
     NSString *dateString = [dateFormatter stringFromDate:pickerDate];
 
     [myBirthdayButton setTitle:dateString forState:UIControlStateNormal];

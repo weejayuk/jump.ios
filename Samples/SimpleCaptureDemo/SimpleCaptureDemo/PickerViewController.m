@@ -5,10 +5,10 @@
 //
 
 
-#import "JRPickerViewController.h"
+#import "PickerViewController.h"
 
 
-@implementation JRPickerViewController
+@implementation PickerViewController
 {
     UIView *myPickerViewGroup;
     UIToolbar *pickerToolbar;
@@ -38,11 +38,11 @@
     [pickerToolbar setItems:items animated:NO];
     [pickerToolbar sizeToFit];
 
-    myPickerView = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, pickerToolbar.frame.size.height, 0, 0)];
-    myPickerView.datePickerMode = UIDatePickerModeDate;
-    [myPickerView addTarget:self action:@selector(pickerChanged) forControlEvents:UIControlEventValueChanged];
+    myDatePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, pickerToolbar.frame.size.height, 0, 0)];
+    myDatePicker.datePickerMode = UIDatePickerModeDate;
+    [myDatePicker addTarget:self action:@selector(pickerChanged) forControlEvents:UIControlEventValueChanged];
 
-    [myPickerViewGroup addSubview:myPickerView];
+    [myPickerViewGroup addSubview:myDatePicker];
     [myPickerViewGroup addSubview:pickerToolbar];
 }
 
@@ -51,7 +51,7 @@
     [super viewWillAppear:animated];
 
     myPickerViewGroup.frame = CGRectMake(0, self.view.window.frame.size.height, pickerToolbar.frame.size.width,
-            myPickerView.frame.size.height + pickerToolbar.frame.size.height);
+            myDatePicker.frame.size.height + pickerToolbar.frame.size.height);
 }
 
 - (void)slidePickerUp

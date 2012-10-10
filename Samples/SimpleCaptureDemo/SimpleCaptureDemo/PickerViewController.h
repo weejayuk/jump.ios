@@ -8,9 +8,9 @@
 #import <Foundation/Foundation.h>
 
 
-@interface JRPickerViewController : UIViewController
+@interface PickerViewController : UIViewController
 {
-    UIDatePicker *myPickerView;
+    UIDatePicker *myDatePicker;
 }
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil;
 - (void)slidePickerUp;

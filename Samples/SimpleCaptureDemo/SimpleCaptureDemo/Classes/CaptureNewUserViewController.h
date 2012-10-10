@@ -34,9 +34,9 @@
 
 #import <UIKit/UIKit.h>
 #import "JRCaptureUser+Extras.h"
-#import "JRPickerViewController.h"
+#import "PickerViewController.h"
 
-@interface CaptureNewUserViewController : JRPickerViewController <UITextViewDelegate, UIAlertViewDelegate,
+@interface CaptureNewUserViewController : PickerViewController <UITextViewDelegate, UIAlertViewDelegate,
                                                             JRCaptureUserDelegate, UITextFieldDelegate>
 {
     UIScrollView *myScrollView;
