@@ -28,3 +28,4 @@ typedef enum propertyTypes
 
 Class getPluralClassFromKey(NSString *key);
 Class getClassFromKey(NSString *key);
+NSString *upcaseFirst(NSString *string);

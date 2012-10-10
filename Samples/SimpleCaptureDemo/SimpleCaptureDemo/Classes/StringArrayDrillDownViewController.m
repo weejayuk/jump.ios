@@ -30,8 +30,8 @@
 
 #import "debug_log.h"
 #import "StringArrayDrillDownViewController.h"
-#import "ObjectDrillDownViewController.h"
 #import "JSONKit.h"
+#import "Utils.h"
 
 @interface StringElementData : NSObject
 @property (strong) NSString *stringValue;
@@ -121,11 +121,6 @@
     [myTableView reloadData];
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-}
-
 - (IBAction)doneEditingTextButtonPressed:(id)sender
 {
     [firstResponder resignFirstResponder];
@@ -170,10 +165,7 @@
 
 - (void)saveLocalArrayToCaptureObject
 {
-    SEL setArraySelector =
-                NSSelectorFromString([NSString stringWithFormat:@"set%@:",
-                          [tableHeader stringByReplacingCharactersInRange:NSMakeRange(0,1)
-                                                               withString:[[tableHeader substringToIndex:1] capitalizedString]]]);
+    SEL setArraySelector = NSSelectorFromString([NSString stringWithFormat:@"set%@:", upcaseFirst(tableHeader)]);
 
     [captureObject performSelector:setArraySelector withObject:[NSArray arrayWithArray:localCopyArray]];
 }
@@ -220,24 +212,6 @@
 #define RIGHT_BUTTON_OFFSET 2000
 #define LEFT_LABEL_OFFSET   3000
 #define DATE_PICKER_OFFSET  4000
-
-- (void)editObjectButtonPressed:(UIButton *)sender
-{
-    DLog(@"");
-    NSUInteger itemIndex = (NSUInteger) (sender.tag - RIGHT_BUTTON_OFFSET);
-
-    JRCaptureObject *captureSubObject = [tableData objectAtIndex:itemIndex];
-    JRCaptureObject *parentObject     = captureObject;
-
-    ObjectDrillDownViewController *drillDown =
-                [[ObjectDrillDownViewController alloc] initWithNibName:@"ObjectDrillDownViewController"
-                                                                bundle:[NSBundle mainBundle]
-                                                             forObject:captureSubObject
-                                                   captureParentObject:parentObject
-                                                                andKey:tableHeader];
-
-    [[self navigationController] pushViewController:drillDown animated:YES];
-}
 
 - (void)calibrateIndices
 {
@@ -325,67 +299,6 @@
     return textField;
 }
 
-
-- (UIButton *)getLeftButtonWithTitle:(NSString *)title tag:(NSInteger)tag andSelector:(SEL)selector
-{
-    CGRect frame = CGRectMake(0, 0, (UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) ? 125 : 205, 22);
-
-    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    leftButton.frame  = frame;
-
-    [leftButton setTitle:title forState:UIControlStateNormal];
-    [leftButton setTitleColor:[UIColor blackColor]
-                     forState:UIControlStateNormal];
-    [leftButton setTitleShadowColor:[UIColor grayColor]
-                           forState:UIControlStateNormal];
-    [leftButton.titleLabel setFont:[UIFont boldSystemFontOfSize:14.0]];
-    [leftButton setHidden:NO];
-    [leftButton setTag:tag + LEFT_BUTTON_OFFSET];
-
-    [leftButton addTarget:self
-                   action:selector
-         forControlEvents:UIControlEventTouchUpInside];
-
-    [leftButton setAutoresizingMask:UIViewAutoresizingNone | UIViewAutoresizingFlexibleWidth];
-
-    return leftButton;
-}
-
-- (UIView *)getRightButtonWithTitle:(NSString *)title tag:(NSInteger)tag andSelector:(SEL)selector
-{
-    CGRect frame = CGRectMake((UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) ? 135 : 215, 0,
-                              (UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) ? 125 : 205, 22);
-
-    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    rightButton.frame  = frame;
-
-    [rightButton setTitle:title forState:UIControlStateNormal];
-    [rightButton setTitleColor:[UIColor blackColor]
-                      forState:UIControlStateNormal];
-    [rightButton setTitleShadowColor:[UIColor grayColor]
-                            forState:UIControlStateNormal];
-    [rightButton.titleLabel setFont:[UIFont boldSystemFontOfSize:14.0]];
-    [rightButton setHidden:NO];
-    [rightButton setTag:tag + RIGHT_BUTTON_OFFSET];
-
-    [rightButton addTarget:self
-                    action:selector
-          forControlEvents:UIControlEventTouchUpInside];
-
-    [rightButton setAutoresizingMask:UIViewAutoresizingNone | UIViewAutoresizingFlexibleWidth];
-
-    return rightButton;
-}
-
-- (UIView *)getButtonBox
-{
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(20, 23, (UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) ? 270 : 430, 22)];
-
-    view.backgroundColor = [UIColor clearColor];
-
-    return view;
-}
-
 - (void)setCellTextForObjectData:(StringElementData *)objectData atIndex:(NSUInteger)index
 {
     NSString *key   = [NSString stringWithFormat:@"%@[%d]", tableHeader, index];
@@ -425,14 +338,6 @@
     valueLabel.autoresizingMask = UIViewAutoresizingNone | UIViewAutoresizingFlexibleWidth;
 
     [objectData setSubtitleLabel:valueLabel];
-
-//    UIView *editingView = [self getButtonBox];
-//    [editingView addSubview:[self getLeftButtonWithTitle:@"Delete"
-//                                                     tag:index
-//                                             andSelector:@selector(deleteObjectButtonPressed:)]];
-//    [editingView addSubview:[self getRightButtonWithTitle:@"Edit"
-//                                                      tag:index
-//                                              andSelector:@selector(editObjectButtonPressed:)]];
 
     UIView *editingView = [self getTextFieldWithKeyboardType:UIKeyboardTypeDefault];
 
@@ -490,28 +395,10 @@
     {
         [self addObjectButtonPressed:nil];
     }
-//    else
-//    {
-//        NSString *newHeader = [NSString stringWithFormat:@"%@[%d]", tableHeader, indexPath.row];
-//        NSObject *newObject = [localCopyArray objectAtIndex:(NSUInteger) indexPath.row];
-//
-//        UIViewController *drillDown =
-//                [[ObjectDrillDownViewController alloc] initWithNibName:@"ObjectDrillDownViewController"
-//                                                                bundle:[NSBundle mainBundle]
-//                                                             forObject:(JRCaptureObject *) newObject
-//                                                   captureParentObject:captureObject
-//                                                                andKey:newHeader];
-//
-//        [[self navigationController] pushViewController:drillDown animated:YES];
-//    }
 }
 
-- (void)replaceArrayNamed:(NSString *)arrayName onCaptureObject:(JRCaptureObject *)object didFailWithResult:(NSString *)result
-                  context:(NSObject *)context
-{
-}
-
-- (void)replaceArrayDidFailForObject:(JRCaptureObject *)object arrayNamed:(NSString *)arrayName withError:(NSError *)error context:(NSObject *)context
+- (void)replaceArrayDidFailForObject:(JRCaptureObject *)object arrayNamed:(NSString *)arrayName 
+                           withError:(NSError *)error context:(NSObject *)context
 {
     DLog(@"");
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
@@ -522,7 +409,8 @@
     [alertView show];
 }
 
-- (void)replaceArrayDidSucceedForObject:(JRCaptureObject *)object newArray:(NSArray *)replacedArray named:(NSString *)arrayName context:(NSObject *)context
+- (void)replaceArrayDidSucceedForObject:(JRCaptureObject *)object newArray:(NSArray *)replacedArray 
+                                  named:(NSString *)arrayName context:(NSObject *)context
 {
     DLog(@"");
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Success"
@@ -543,28 +431,5 @@
     return (toInterfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-}
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-}
-
-- (void)dealloc
-{
-}
 @end
 
