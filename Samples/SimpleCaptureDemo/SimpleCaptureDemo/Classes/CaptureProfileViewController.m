@@ -35,18 +35,18 @@
 
 #import "JRCaptureObject.h"
 #import "JRCaptureUser+Extras.h"
-#import "CaptureNewUserViewController.h"
+#import "CaptureProfileViewController.h"
 #import "SharedData.h"
 
 #include "debug_log.h"
 
-@interface CaptureNewUserViewController ()
+@interface CaptureProfileViewController ()
 @property (nonatomic, retain) id             firstResponder;
 @property (nonatomic, retain) NSDate        *myBirthdate;
 @property (nonatomic, strong) JRCaptureUser *captureUser;
 @end
 
-@implementation CaptureNewUserViewController
+@implementation CaptureProfileViewController
 @synthesize myEmailTextField;
 @synthesize myGenderIdentitySegControl;
 @synthesize myBirthdayButton;

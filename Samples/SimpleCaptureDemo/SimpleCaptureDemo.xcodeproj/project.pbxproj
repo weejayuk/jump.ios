@@ -16,16 +16,14 @@
 		90C36B6B7717AA0C893E090D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90C36B6B7717AA0C893E08EB /* Foundation.framework */; };
 		90C36B6B7717AA0C893E0915 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 90C36B6B7717AA0C893E0914 /* InfoPlist.strings */; };
 		90C36B6B7717AA0C893E0918 /* SimpleCaptureDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 90C36B6B7717AA0C893E0917 /* SimpleCaptureDemoTests.m */; };
-		9F2C93BC1551A7AE001A810E /* SimplePluralViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C93BA1551A7AE001A810E /* SimplePluralViewController.m */; };
 		9F2C93C11551A7EC001A810E /* SimplePluralViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F2C93BF1551A7EC001A810E /* SimplePluralViewController.xib */; };
 		9F5792AC1595141500478D15 /* StringArrayDrillDownViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F5792AA1595141500478D15 /* StringArrayDrillDownViewController.xib */; };
 		9F7B6A8415336470002BF452 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9F7B6A8215336470002BF452 /* InfoPlist.strings */; };
 		9F7B6A9315336480002BF452 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7B6A8615336480002BF452 /* AppDelegate.m */; };
 		9F7B6A9415336480002BF452 /* ArrayDrillDownViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7B6A8815336480002BF452 /* ArrayDrillDownViewController.m */; };
-		9F7B6A9515336480002BF452 /* CaptureNewUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7B6A8A15336480002BF452 /* CaptureNewUserViewController.m */; };
+		9F7B6A9515336480002BF452 /* CaptureProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7B6A8A15336480002BF452 /* CaptureProfileViewController.m */; };
 		9F7B6A9615336480002BF452 /* ObjectDrillDownViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7B6A8C15336480002BF452 /* ObjectDrillDownViewController.m */; };
 		9F7B6A9715336480002BF452 /* SharedData.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7B6A8E15336480002BF452 /* SharedData.m */; };
-		9F7B6A9815336480002BF452 /* UserDrillDownViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7B6A9015336480002BF452 /* UserDrillDownViewController.m */; };
 		9F7B6A9915336480002BF452 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7B6A9215336480002BF452 /* RootViewController.m */; };
 		9F7B6AAA1533648C002BF452 /* ArrayDrillDownViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F7B6A9B1533648C002BF452 /* ArrayDrillDownViewController.xib */; };
 		9F7B6AAB1533648C002BF452 /* CaptureNewUserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F7B6A9D1533648C002BF452 /* CaptureNewUserViewController.xib */; };
@@ -231,6 +229,7 @@
 		C14247AC291E6D0575E70994 /* JRPluralLevelTwoElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C14246CA5A92A53050003679 /* JRPluralLevelTwoElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C14247C3036089BA4C74F82F /* JRCaptureApidInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = C142485240F937D2813863E8 /* JRCaptureApidInterface.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C14247EC8FB8C70947EAA9FA /* JROnipLevelThree.m in Sources */ = {isa = PBXBuildFile; fileRef = C14248075E4DC59457336415 /* JROnipLevelThree.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		C1424836341750C8BE7AC8AA /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = C14243136AB00031127FB128 /* Utils.m */; };
 		C142484A42B9AFC6D5D601D1 /* PickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424F585B481C5D49BD59CE /* PickerViewController.m */; };
 		C14248700EADB15F0BEEB474 /* JRCaptureWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C14248E9FD71C0C57C80258E /* JRCaptureWebViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C14248C31F4E3A3B50DABBCC /* JROnipLevelOneElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424F5DEBE50BBDDC907D3E /* JROnipLevelOneElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -282,8 +281,6 @@
 		90C36B6B7717AA0C893E0913 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		90C36B6B7717AA0C893E0916 /* SimpleCaptureDemoTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SimpleCaptureDemoTests.h; sourceTree = "<group>"; };
 		90C36B6B7717AA0C893E0917 /* SimpleCaptureDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SimpleCaptureDemoTests.m; sourceTree = "<group>"; };
-		9F2C93B91551A7AE001A810E /* SimplePluralViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimplePluralViewController.h; path = Classes/SimplePluralViewController.h; sourceTree = "<group>"; };
-		9F2C93BA1551A7AE001A810E /* SimplePluralViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SimplePluralViewController.m; path = Classes/SimplePluralViewController.m; sourceTree = "<group>"; };
 		9F2C93C01551A7EC001A810E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = SimplePluralViewController.xib; sourceTree = "<group>"; };
 		9F5792AB1595141500478D15 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = StringArrayDrillDownViewController.xib; sourceTree = "<group>"; };
 		9F7B6A8315336470002BF452 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Resources/en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -291,14 +288,12 @@
 		9F7B6A8615336480002BF452 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Classes/AppDelegate.m; sourceTree = "<group>"; };
 		9F7B6A8715336480002BF452 /* ArrayDrillDownViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ArrayDrillDownViewController.h; path = Classes/ArrayDrillDownViewController.h; sourceTree = "<group>"; };
 		9F7B6A8815336480002BF452 /* ArrayDrillDownViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ArrayDrillDownViewController.m; path = Classes/ArrayDrillDownViewController.m; sourceTree = "<group>"; };
-		9F7B6A8915336480002BF452 /* CaptureNewUserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CaptureNewUserViewController.h; path = Classes/CaptureNewUserViewController.h; sourceTree = "<group>"; };
-		9F7B6A8A15336480002BF452 /* CaptureNewUserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CaptureNewUserViewController.m; path = Classes/CaptureNewUserViewController.m; sourceTree = "<group>"; };
+		9F7B6A8915336480002BF452 /* CaptureProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CaptureProfileViewController.h; path = Classes/CaptureProfileViewController.h; sourceTree = "<group>"; };
+		9F7B6A8A15336480002BF452 /* CaptureProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CaptureProfileViewController.m; path = Classes/CaptureProfileViewController.m; sourceTree = "<group>"; };
 		9F7B6A8B15336480002BF452 /* ObjectDrillDownViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectDrillDownViewController.h; path = Classes/ObjectDrillDownViewController.h; sourceTree = "<group>"; };
 		9F7B6A8C15336480002BF452 /* ObjectDrillDownViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ObjectDrillDownViewController.m; path = Classes/ObjectDrillDownViewController.m; sourceTree = "<group>"; };
 		9F7B6A8D15336480002BF452 /* SharedData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SharedData.h; path = Classes/SharedData.h; sourceTree = "<group>"; };
 		9F7B6A8E15336480002BF452 /* SharedData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SharedData.m; path = Classes/SharedData.m; sourceTree = "<group>"; };
-		9F7B6A8F15336480002BF452 /* UserDrillDownViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserDrillDownViewController.h; path = Classes/UserDrillDownViewController.h; sourceTree = "<group>"; };
-		9F7B6A9015336480002BF452 /* UserDrillDownViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserDrillDownViewController.m; path = Classes/UserDrillDownViewController.m; sourceTree = "<group>"; };
 		9F7B6A9115336480002BF452 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RootViewController.h; path = Classes/RootViewController.h; sourceTree = "<group>"; };
 		9F7B6A9215336480002BF452 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RootViewController.m; path = Classes/RootViewController.m; sourceTree = "<group>"; };
 		9F7B6A9C1533648C002BF452 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = ArrayDrillDownViewController.xib; sourceTree = "<group>"; };
@@ -513,6 +508,7 @@
 		C14242CCB40E92C620946D47 /* JRPluralLevelThreeElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRPluralLevelThreeElement.h; path = ../../Samples/SimpleCaptureDemo/JRCapture/Generated/JRPluralLevelThreeElement.h; sourceTree = "<group>"; };
 		C14242E6C657DAEE96656022 /* JRCaptureJsWidgetWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCaptureJsWidgetWrapper.h; sourceTree = "<group>"; };
 		C14242F3C9176109F08353C8 /* JROrganizationsElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JROrganizationsElement.m; path = ../../Samples/SimpleCaptureDemo/JRCapture/Generated/JROrganizationsElement.m; sourceTree = "<group>"; };
+		C14243136AB00031127FB128 /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utils.m; sourceTree = "<group>"; };
 		C1424349666C71280616059A /* JRObjectLevelThree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRObjectLevelThree.h; path = ../../Samples/SimpleCaptureDemo/JRCapture/Generated/JRObjectLevelThree.h; sourceTree = "<group>"; };
 		C142434E6D1913694B76008B /* JRCaptureJsWidgetWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRCaptureJsWidgetWrapper.m; sourceTree = "<group>"; };
 		C14243504C817FB1CAF0AAE2 /* JRProfilePhotosElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JRProfilePhotosElement.m; path = ../../Samples/SimpleCaptureDemo/JRCapture/Generated/JRProfilePhotosElement.m; sourceTree = "<group>"; };
@@ -567,6 +563,7 @@
 		C1424B3C656D942DD3D90DB8 /* JRPluralLevelOneElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JRPluralLevelOneElement.m; path = ../../Samples/SimpleCaptureDemo/JRCapture/Generated/JRPluralLevelOneElement.m; sourceTree = "<group>"; };
 		C1424B3E3B9AFC75E78EC3B4 /* JRStatusesElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JRStatusesElement.m; path = ../../Samples/SimpleCaptureDemo/JRCapture/Generated/JRStatusesElement.m; sourceTree = "<group>"; };
 		C1424B534989E359F6D5B8A0 /* JRStatusesElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRStatusesElement.h; path = ../../Samples/SimpleCaptureDemo/JRCapture/Generated/JRStatusesElement.h; sourceTree = "<group>"; };
+		C1424B87BAEE593965503D2C /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 		C1424BACFD128616CDE202CF /* JRPhotosElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRPhotosElement.h; path = ../../Samples/SimpleCaptureDemo/JRCapture/Generated/JRPhotosElement.h; sourceTree = "<group>"; };
 		C1424C0199A922C760974E22 /* JRAddressesElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JRAddressesElement.m; path = ../../Samples/SimpleCaptureDemo/JRCapture/Generated/JRAddressesElement.m; sourceTree = "<group>"; };
 		C1424C019F312F4DEDC26FE4 /* JRCaptureObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCaptureObject.h; sourceTree = "<group>"; };
@@ -709,20 +706,18 @@
 				9F7B6A8615336480002BF452 /* AppDelegate.m */,
 				9F7B6A8715336480002BF452 /* ArrayDrillDownViewController.h */,
 				9F7B6A8815336480002BF452 /* ArrayDrillDownViewController.m */,
-				9F7B6A8915336480002BF452 /* CaptureNewUserViewController.h */,
-				9F7B6A8A15336480002BF452 /* CaptureNewUserViewController.m */,
+				9F7B6A8915336480002BF452 /* CaptureProfileViewController.h */,
+				9F7B6A8A15336480002BF452 /* CaptureProfileViewController.m */,
 				9F7B6A8B15336480002BF452 /* ObjectDrillDownViewController.h */,
 				9F7B6A8C15336480002BF452 /* ObjectDrillDownViewController.m */,
 				9F7B6A8D15336480002BF452 /* SharedData.h */,
 				9F7B6A8E15336480002BF452 /* SharedData.m */,
-				9F7B6A8F15336480002BF452 /* UserDrillDownViewController.h */,
-				9F7B6A9015336480002BF452 /* UserDrillDownViewController.m */,
 				9F7B6A9115336480002BF452 /* RootViewController.h */,
 				9F7B6A9215336480002BF452 /* RootViewController.m */,
-				9F2C93B91551A7AE001A810E /* SimplePluralViewController.h */,
-				9F2C93BA1551A7AE001A810E /* SimplePluralViewController.m */,
 				C1424F585B481C5D49BD59CE /* PickerViewController.m */,
 				C1424E75D6BC0B600C577C8F /* PickerViewController.h */,
+				C14243136AB00031127FB128 /* Utils.m */,
+				C1424B87BAEE593965503D2C /* Utils.h */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -1119,13 +1114,6 @@
 			path = Security;
 			sourceTree = "<group>";
 		};
-		C142416578128A5587F61E7F /* Generated */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Generated;
-			sourceTree = "<group>";
-		};
 		C14241C83A26A72C6F9EFB04 /* JRCapture */ = {
 			isa = PBXGroup;
 			children = (
@@ -1164,7 +1152,6 @@
 				C1424D6CCD509B7891630415 /* JRCapture.h */,
 				C1424DCED9EF7D828CA945ED /* debug_log.h */,
 				C1424582FA1F1BC60D10772C /* .gitignore */,
-				C1424FECD78FA2AEF3BA7798 /* CaptureUserModel */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1240,14 +1227,6 @@
 				C142476136D2B24B6A1E7C3C /* JRAccountsElement.h */,
 			);
 			name = Generated;
-			sourceTree = "<group>";
-		};
-		C1424FECD78FA2AEF3BA7798 /* CaptureUserModel */ = {
-			isa = PBXGroup;
-			children = (
-				C142416578128A5587F61E7F /* Generated */,
-			);
-			path = CaptureUserModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1525,12 +1504,10 @@
 				90C36B6B7717AA0C893E08F6 /* main.m in Sources */,
 				9F7B6A9315336480002BF452 /* AppDelegate.m in Sources */,
 				9F7B6A9415336480002BF452 /* ArrayDrillDownViewController.m in Sources */,
-				9F7B6A9515336480002BF452 /* CaptureNewUserViewController.m in Sources */,
+				9F7B6A9515336480002BF452 /* CaptureProfileViewController.m in Sources */,
 				9F7B6A9615336480002BF452 /* ObjectDrillDownViewController.m in Sources */,
 				9F7B6A9715336480002BF452 /* SharedData.m in Sources */,
-				9F7B6A9815336480002BF452 /* UserDrillDownViewController.m in Sources */,
 				9F7B6A9915336480002BF452 /* RootViewController.m in Sources */,
-				9F2C93BC1551A7AE001A810E /* SimplePluralViewController.m in Sources */,
 				9FD2B6C114F8387B00053EA4 /* StringArrayDrillDownViewController.m in Sources */,
 				9FB1210815C73FD20072BEE6 /* JRConnectionManager.m in Sources */,
 				9FB1210A15C73FD20072BEE6 /* JRActivityObject.m in Sources */,
@@ -1593,6 +1570,7 @@
 				C142450FC1469868540AE61A /* JRTournamentsPlayedElement.m in Sources */,
 				C14245B630799FF6081E911A /* JRUrlsElement.m in Sources */,
 				C142484A42B9AFC6D5D601D1 /* PickerViewController.m in Sources */,
+				C1424836341750C8BE7AC8AA /* Utils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

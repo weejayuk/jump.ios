@@ -42,7 +42,7 @@
 
 #import "RootViewController.h"
 #import "JREngage+CustomInterface.h"
-#import "CaptureNewUserViewController.h"
+#import "CaptureProfileViewController.h"
 #import "ObjectDrillDownViewController.h"
 #import "JRCaptureApidInterface.h"
 
@@ -130,7 +130,7 @@
 
 - (IBAction)updateButtonPressed:(id)sender
 {
-    CaptureNewUserViewController *viewController = [[CaptureNewUserViewController alloc]
+    CaptureProfileViewController *viewController = [[CaptureProfileViewController alloc]
         initWithNibName:@"CaptureNewUserViewController" bundle:[NSBundle mainBundle]];
 
     [self.navigationController pushViewController:viewController animated:YES];
@@ -180,7 +180,7 @@
 
     if ([SharedData isNotYetCreated] || [SharedData isNew])
     {
-        CaptureNewUserViewController *viewController = [[CaptureNewUserViewController alloc]
+        CaptureProfileViewController *viewController = [[CaptureProfileViewController alloc]
             initWithNibName:@"CaptureNewUserViewController" bundle:[NSBundle mainBundle]];
 
         [self.navigationController pushViewController:viewController animated:YES];

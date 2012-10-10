@@ -36,6 +36,7 @@
 #import "StringArrayDrillDownViewController.h"
 #import "JRCaptureObject+Internal.h"
 #import "JSONKit.h"
+#import "Utils.h"
 
 typedef enum propertyTypes
 {
@@ -103,16 +104,6 @@ static SEL getGetSelectorFromKey(NSString *key)
         return nil;
 
     return NSSelectorFromString(key);
-}
-
-static Class getClassFromKey(NSString *key)
-{
-    if (!key || [key length] < 1)
-        return nil;
-
-    return NSClassFromString([NSString stringWithFormat:@"JR%@",
-                  [key stringByReplacingCharactersInRange:NSMakeRange(0,1)
-                                               withString:[[key substringToIndex:1] capitalizedString]]]);
 }
 
 @interface ObjectDrillDownViewController ()
@@ -255,7 +246,6 @@ static Class getClassFromKey(NSString *key)
 }
 
 #define EDITING_VIEW_OFFSET 100
-#define LEFT_BUTTON_OFFSET  1000
 #define RIGHT_BUTTON_OFFSET 2000
 #define LEFT_LABEL_OFFSET   3000
 #define DATE_PICKER_OFFSET  4000
@@ -263,13 +253,12 @@ static Class getClassFromKey(NSString *key)
 typedef enum
 {
     EBSAddObject,
-    EBSEditDeleteObject,
+    EBSDeleteObject,
 } EditingButtonState;
 
 - (void)setEditingButtonsToState:(EditingButtonState)state withinEditingView:(UIView *)editingView
 {
     NSInteger tag = (editingView.tag - EDITING_VIEW_OFFSET);
-    UIButton *lButton = (UIButton *) [editingView viewWithTag:(tag + LEFT_BUTTON_OFFSET)];
     UIButton *rButton = (UIButton *) [editingView viewWithTag:(tag + RIGHT_BUTTON_OFFSET)];
 
     switch (state)
@@ -280,15 +269,13 @@ typedef enum
             [rButton addTarget:self
                         action:@selector(addObjectButtonPressed:)
               forControlEvents:UIControlEventTouchUpInside];
-            [lButton setHidden:YES];
             break;
-        case EBSEditDeleteObject:
-            [rButton setTitle:@"Edit"
+        case EBSDeleteObject:
+            [rButton setTitle:@"Delete"
                      forState:UIControlStateNormal];
             [rButton addTarget:self
-                       action:@selector(editObjectButtonPressed:)
+                       action:@selector(deleteObjectButtonPressed:)
              forControlEvents:UIControlEventTouchUpInside];
-            [lButton setHidden:NO];
             break;
     }
 }
@@ -301,15 +288,14 @@ typedef enum
 
     JRCaptureObject *newCaptureObject = [[getClassFromKey(currentPropertyData.propertyName) alloc] init];
 
-    [captureObject performSelector:currentPropertyData.propertySetSelector
-                        withObject:newCaptureObject];
+    [captureObject performSelector:currentPropertyData.propertySetSelector withObject:newCaptureObject];
 
-    [self setEditingButtonsToState:EBSEditDeleteObject withinEditingView:sender.superview];
+    [self setEditingButtonsToState:EBSDeleteObject withinEditingView:sender.superview];
 }
 
 - (void)deleteObjectButtonPressed:(UIButton *)sender
 {
-    NSUInteger itemIndex = (NSUInteger) (sender.tag - LEFT_BUTTON_OFFSET);
+    NSUInteger itemIndex = (NSUInteger) (sender.tag - RIGHT_BUTTON_OFFSET);
     PropertyData *currentPropertyData = [propertyDataArray objectAtIndex:itemIndex];
 
     if ([captureObject respondsToSelector:currentPropertyData.propertySetSelector])
@@ -536,15 +522,13 @@ replacementString:(NSString *)string
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (tableHeader)
-        return 30.0;
+    if (tableHeader) return 30.0;
     return 0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    if (isEditing)
-        return 260;
+    if (isEditing) return 260;
     return 0;
 }
 
@@ -602,31 +586,6 @@ replacementString:(NSString *)string
 #define NORMAL_SUBTITLE 21
 #define UP_A_LITTLE_HIGHER(r) CGRectMake(r.frame.origin.x, HIGHER_SUBTITLE, r.frame.size.width, r.frame.size.height)
 #define WHERE_IT_SHOULD_BE(r) CGRectMake(r.frame.origin.x, NORMAL_SUBTITLE, r.frame.size.width, r.frame.size.height)
-
-- (UIButton *)getLeftButtonWithTitle:(NSString *)title tag:(NSInteger)tag andSelector:(SEL)selector
-{
-    CGRect frame = CGRectMake(140, 0, 60, 22);
-
-    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    leftButton.frame  = frame;
-
-    [leftButton setTitle:title forState:UIControlStateNormal];
-    [leftButton setTitleColor:[UIColor blackColor]
-                     forState:UIControlStateNormal];
-    [leftButton setTitleShadowColor:[UIColor grayColor]
-                           forState:UIControlStateNormal];
-    [leftButton.titleLabel setFont:[UIFont boldSystemFontOfSize:14.0]];
-    [leftButton setHidden:NO];
-    [leftButton setTag:tag + LEFT_BUTTON_OFFSET];
-
-    [leftButton addTarget:self
-                   action:selector
-         forControlEvents:UIControlEventTouchUpInside];
-
-    [leftButton setAutoresizingMask:UIViewAutoresizingNone | UIViewAutoresizingFlexibleLeftMargin];
-
-    return leftButton;
-}
 
 - (UIView *)getRightButtonWithTitle:(NSString *)title tag:(NSInteger)tag andSelector:(SEL)selector
 {
@@ -781,19 +740,16 @@ replacementString:(NSString *)string
                 break;
             case PTArray:
             case PTStringArray:
-                editingView = [self getButtonBox];
-                [editingView addSubview:[self getRightButtonWithTitle:@"Edit"
-                                                                  tag:indexPath.row
-                                                          andSelector:@selector(editObjectButtonPressed:)]];
+                //editingView = [self getButtonBox];
+                //[editingView addSubview:[self getRightButtonWithTitle:@"Edit"
+                //                                                  tag:indexPath.row
+                //                                          andSelector:@selector(editObjectButtonPressed:)]];
                 break;
             case PTCaptureObject:
                 editingView = [self getButtonBox];
-                [editingView addSubview:[self getLeftButtonWithTitle:@"Delete"
+                [editingView addSubview:[self getRightButtonWithTitle:@"Delete"
                                                                  tag:indexPath.row
                                                          andSelector:@selector(deleteObjectButtonPressed:)]];
-                [editingView addSubview:[self getRightButtonWithTitle:@"Edit"
-                                                                  tag:indexPath.row
-                                                          andSelector:@selector(editObjectButtonPressed:)]];
                 break;
         }
 
@@ -971,32 +927,17 @@ replacementString:(NSString *)string
 
  /* If our item is an array... */
     else if (propertyData.propertyType == PTArray || propertyData.propertyType == PTStringArray)
-    {/* If our object is null, */
-        if (!value || [value isKindOfClass:[NSNull class]])
-        {/* indicate that in the subtitle, */
-            subtitle = [NSString stringWithFormat:@"Empty array of %@", cellTitle];
-        }
-        else
-        {/* If our array has 1 or more items, add the accessory view and set the subtitle, */
-            if ([((NSArray*)value) count])
-            {
-                if (!isEditing)
-                {
-                    [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-                    [cell setSelectionStyle:UITableViewCellSelectionStyleBlue];
-                }
+    {
+        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+        [cell setSelectionStyle:UITableViewCellSelectionStyleBlue];
 
-             /* (Lets not say, "1 items". That's just silly.) */
-                if ([((NSArray*)value) count] == 1)
-                    subtitle = @"1 item";
-                else
-                    subtitle = [NSString stringWithFormat:@"%d %@ items", [((NSArray*)value) count], cellTitle];
-            }
-            else
-            {/* and, if it's empty, let's indicate that as well. */
-               subtitle = [NSString stringWithFormat:@"Empty array of %@", cellTitle];
-            }
-        }
+        /* (Lets not say, "1 items". That's just silly.) */
+        if ([((NSArray*)value) count] == 0)
+            subtitle = [NSString stringWithFormat:@"Empty array of %@", cellTitle];
+        else if ([((NSArray*)value) count] == 1)
+            subtitle = @"1 item";
+        else
+            subtitle = [NSString stringWithFormat:@"%d %@ items", [((NSArray*)value) count], cellTitle];
     }
 
  /* If our item is a dictionary... */
@@ -1020,7 +961,7 @@ replacementString:(NSString *)string
                [cell setSelectionStyle: UITableViewCellSelectionStyleBlue];
            }
 
-           [self setEditingButtonsToState:EBSEditDeleteObject withinEditingView:editingView];
+           [self setEditingButtonsToState:EBSDeleteObject withinEditingView:editingView];
        }
     }
 
@@ -1053,18 +994,8 @@ replacementString:(NSString *)string
         [subtitleLabel setHidden:isEditing];
     }
 
-// TODO: Is this needed for editing and stuff?
-//    if (textField.text && ![textField.text isEqualToString:@""])
-//        subtitleLabel.text = textField.text;
-//    else
-        subtitleLabel.text = subtitle;
-
+    subtitleLabel.text = subtitle;
     titleLabel.text    = cellTitle;
-
-//    if (!cellTitle)
-//        subtitleLabel.frame = UP_A_LITTLE_HIGHER(subtitleLabel);
-//    else
-//        subtitleLabel.frame = WHERE_IT_SHOULD_BE(subtitleLabel);
 
     return cell;
 }
@@ -1072,12 +1003,18 @@ replacementString:(NSString *)string
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     DLog(@"");
+
+    if (isEditing)
+    {
+        DLog(@"editing");
+        return;
+    }
+
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
 
     PropertyData *propertyData = [propertyDataArray objectAtIndex:(NSUInteger) indexPath.row];
 
-    if (!propertyData.canDrillDown)
-        return;
+    if (!propertyData.canDrillDown) return;
 
     NSString *key    = propertyData.propertyName;
     NSObject *value  = [tableData objectForKey:key];
@@ -1090,36 +1027,27 @@ replacementString:(NSString *)string
 
     if (propertyData.propertyType == PTStringArray)
     {
-      /* If our value is an *empty* array, don't drill down. */
-         if (![(NSArray *)value count])
-             return;
-
-         drillDown = [[StringArrayDrillDownViewController alloc] initWithNibName:@"StringArrayDrillDownViewController"
-                                                                    bundle:[NSBundle mainBundle]
-                                                                  forArray:(NSArray *) subObj
-                                                       captureParentObject:captureObject
-                                                                    andKey:key];
+        drillDown = [[StringArrayDrillDownViewController alloc] initWithNibName:@"StringArrayDrillDownViewController"
+                                                                         bundle:[NSBundle mainBundle]
+                                                                       forArray:(NSArray *) subObj
+                                                            captureParentObject:captureObject
+                                                                         andKey:key];
     }
     else if (propertyData.propertyType == PTArray)
     {
-      /* If our value is an *empty* array, don't drill down. */
-         if (![(NSArray *)value count])
-             return;
-
-         drillDown = [[ArrayDrillDownViewController alloc] initWithNibName:@"ArrayDrillDownViewController"
-                                                                    bundle:[NSBundle mainBundle]
-                                                                  forArray:(NSArray *) subObj
-                                                       captureParentObject:captureObject
-                                                                    andKey:key];
+        drillDown = [[ArrayDrillDownViewController alloc] initWithNibName:@"ArrayDrillDownViewController"
+                                                                   bundle:[NSBundle mainBundle]
+                                                                 forArray:(NSArray *) subObj
+                                                      captureParentObject:captureObject
+                                                                   andKey:key];
     }
     else /* if (propertyData.propertyType == PTCaptureObject) */
     {
-         drillDown = [[ObjectDrillDownViewController alloc] initWithNibName:@"ObjectDrillDownViewController"
-                                                                     bundle:[NSBundle mainBundle]
-                                                                  forObject:(JRCaptureObject *) subObj
-                                                        captureParentObject:captureObject
-                                                                     andKey:key];
-
+        drillDown = [[ObjectDrillDownViewController alloc] initWithNibName:@"ObjectDrillDownViewController"
+                                                                    bundle:[NSBundle mainBundle]
+                                                                 forObject:(JRCaptureObject *) subObj
+                                                       captureParentObject:captureObject
+                                                                    andKey:key];
     }
 
     [[self navigationController] pushViewController:drillDown animated:YES];

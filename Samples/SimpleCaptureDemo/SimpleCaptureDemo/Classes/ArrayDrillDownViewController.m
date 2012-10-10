@@ -28,17 +28,12 @@
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#ifdef DEBUG
-#define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-#else
-#define DLog(...)
-#endif
-#define ALog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-
+#import "debug_log.h"
 #import "ArrayDrillDownViewController.h"
 #import "ObjectDrillDownViewController.h"
 #import "JRCaptureObject+Internal.h"
 #import "JSONKit.h"
+#import "Utils.h"
 
 typedef enum propertyTypes
 {
@@ -66,16 +61,6 @@ typedef enum propertyTypes
 @synthesize subtitleLabel;
 @synthesize editingView;
 @end
-
-static Class getClassFromKey(NSString *key)
-{
-    if (!key || [key length] < 1)
-        return nil;
-
-    return NSClassFromString([NSString stringWithFormat:@"JR%@",
-                  [key stringByReplacingCharactersInRange:NSMakeRange(0,1)
-                                               withString:[[key substringToIndex:1] capitalizedString]]]);
-}
 
 @interface ArrayDrillDownViewController ()
 @property (strong) JRCaptureObject *captureObject;
@@ -220,7 +205,7 @@ static Class getClassFromKey(NSString *key)
 {
     DLog(@"");
 
-    NSObject *newCaptureElement = [[getClassFromKey(tableHeader) alloc] init];
+    NSObject *newCaptureElement = [[getPluralClassFromKey(tableHeader) alloc] init];
 
     [localCopyArray addObject:newCaptureElement];
 

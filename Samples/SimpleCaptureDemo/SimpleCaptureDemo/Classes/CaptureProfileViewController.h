@@ -1,5 +1,5 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- Copyright (c) 2010, Janrain, Inc.
+ Copyright (c) 2012, Janrain, Inc.
 
  All rights reserved.
 
@@ -27,35 +27,34 @@
  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
- Author: ${USER}
- Date:   ${DATE}
+ File:   CaptureNewUserViewController.h
+ Author: Lilli Szafranski - lilli@janrain.com, lillialexis@gmail.com
+ Date:   Thursday, January 26, 2012
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-////
-//
-//#import <Foundation/Foundation.h>
-//#import <UIKit/UIKit.h>
-//#import "SharedData.h"
-//#import "JRCapture.h"
-//
-//@interface SimplePluralViewController : UIViewController <UINavigationBarDelegate, UITableViewDelegate,
-//                                                    UITableViewDataSource, UITextFieldDelegate, JRCaptureObjectDelegate>
-//{
-//    UITableView *myTableView;
-//    NSArray     *propertyDataArray;
-//
-//    CGFloat tableWidth;
-//    CGFloat tableHeight;
-//
-//    BOOL isEditing;
-//    UITextField *firstResponder;
-//}
-//@property (nonatomic, strong) IBOutlet UITableView     *myTableView;
-//@property (nonatomic, strong) IBOutlet UIBarButtonItem *myUpdateButton;
-//@property (nonatomic, retain) IBOutlet UIToolbar       *myKeyboardToolbar;
-//
-//- (IBAction)updateButtonPressed:(id)sender;
-//- (IBAction)doneEditingTextButtonPressed:(id)sender;
-//- (id)initWithNibName:(NSString*)nibNameOrNil bundle:(NSBundle*)nibBundleOrNil forObject:(JRStringPluralElement*)object
-//  captureParentObject:(JRCaptureObject*)parentObject andKey:(NSString*)key;
-//@end
+#import <UIKit/UIKit.h>
+#import "JRCaptureUser+Extras.h"
+#import "PickerViewController.h"
+
+@interface CaptureProfileViewController : PickerViewController <UITextViewDelegate, UIAlertViewDelegate,
+                                                            JRCaptureUserDelegate, UITextFieldDelegate>
+{
+    UIScrollView *myScrollView;
+
+    NSDate       *myBirthdate;
+    UIButton     *myBirthdayButton;
+}
+@property (nonatomic, retain) IBOutlet UITextField        *myEmailTextField;
+@property (nonatomic, retain) IBOutlet UISegmentedControl *myGenderIdentitySegControl;
+@property (nonatomic, retain) IBOutlet UIButton           *myBirthdayButton;
+@property (nonatomic, retain) IBOutlet UIDatePicker       *myBirthdayPicker;
+@property (nonatomic, retain) IBOutlet UIToolbar          *myPickerToolbar;
+@property (nonatomic, retain) IBOutlet UITextView         *myAboutMeTextView;
+@property (nonatomic, retain) IBOutlet UIView             *myPickerView;
+@property (nonatomic, retain) IBOutlet UIScrollView       *myScrollView;
+@property (nonatomic, retain) IBOutlet UIToolbar          *myKeyboardToolbar;
+- (IBAction)emailTextFieldClicked:(id)sender;
+- (IBAction)birthdayButtonClicked:(id)sender;
+- (IBAction)doneButtonPressed:(id)sender;
+- (IBAction)doneEditingButtonPressed:(id)sender;
+@end

@@ -28,13 +28,7 @@
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#ifdef DEBUG
-#define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-#else
-#define DLog(...)
-#endif
-#define ALog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-
+#import "debug_log.h"
 #import "StringArrayDrillDownViewController.h"
 #import "ObjectDrillDownViewController.h"
 #import "JSONKit.h"
@@ -65,16 +59,6 @@ typedef enum propertyTypes
 @synthesize subtitleLabel;
 @synthesize editingView;
 @end
-
-static Class getClassFromKey(NSString *key)
-{
-    if (!key || [key length] < 1)
-        return nil;
-
-    return NSClassFromString([NSString stringWithFormat:@"JR%@",
-                  [key stringByReplacingCharactersInRange:NSMakeRange(0,1)
-                                               withString:[[key substringToIndex:1] capitalizedString]]]);
-}
 
 @interface StringArrayDrillDownViewController ()
 @property (strong) JRCaptureObject *captureObject;
