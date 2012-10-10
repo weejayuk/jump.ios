@@ -16,7 +16,6 @@
 		90C36B6B7717AA0C893E090D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90C36B6B7717AA0C893E08EB /* Foundation.framework */; };
 		90C36B6B7717AA0C893E0915 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 90C36B6B7717AA0C893E0914 /* InfoPlist.strings */; };
 		90C36B6B7717AA0C893E0918 /* SimpleCaptureDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 90C36B6B7717AA0C893E0917 /* SimpleCaptureDemoTests.m */; };
-		9F2C93C11551A7EC001A810E /* SimplePluralViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F2C93BF1551A7EC001A810E /* SimplePluralViewController.xib */; };
 		9F5792AC1595141500478D15 /* StringArrayDrillDownViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F5792AA1595141500478D15 /* StringArrayDrillDownViewController.xib */; };
 		9F7B6A8415336470002BF452 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9F7B6A8215336470002BF452 /* InfoPlist.strings */; };
 		9F7B6A9315336480002BF452 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7B6A8615336480002BF452 /* AppDelegate.m */; };
@@ -26,11 +25,10 @@
 		9F7B6A9715336480002BF452 /* SharedData.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7B6A8E15336480002BF452 /* SharedData.m */; };
 		9F7B6A9915336480002BF452 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7B6A9215336480002BF452 /* RootViewController.m */; };
 		9F7B6AAA1533648C002BF452 /* ArrayDrillDownViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F7B6A9B1533648C002BF452 /* ArrayDrillDownViewController.xib */; };
-		9F7B6AAB1533648C002BF452 /* CaptureNewUserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F7B6A9D1533648C002BF452 /* CaptureNewUserViewController.xib */; };
+		9F7B6AAB1533648C002BF452 /* CaptureProfileViewController in Resources */ = {isa = PBXBuildFile; fileRef = 9F7B6A9D1533648C002BF452 /* CaptureProfileViewController */; };
 		9F7B6AAC1533648C002BF452 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9F7B6A9F1533648C002BF452 /* InfoPlist.strings */; };
 		9F7B6AAD1533648C002BF452 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F7B6AA11533648C002BF452 /* MainStoryboard.storyboard */; };
 		9F7B6AAE1533648C002BF452 /* ObjectDrillDownViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F7B6AA31533648C002BF452 /* ObjectDrillDownViewController.xib */; };
-		9F7B6AAF1533648C002BF452 /* UserDrillDownViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F7B6AA51533648C002BF452 /* UserDrillDownViewController.xib */; };
 		9F7B6AB01533648C002BF452 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F7B6AA81533648C002BF452 /* background.png */; };
 		9FB1210815C73FD20072BEE6 /* JRConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FB1202A15C73FD10072BEE6 /* JRConnectionManager.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		9FB1210915C73FD20072BEE6 /* ATTRIBUTION in Resources */ = {isa = PBXBuildFile; fileRef = 9FB1202C15C73FD10072BEE6 /* ATTRIBUTION */; };
@@ -281,7 +279,6 @@
 		90C36B6B7717AA0C893E0913 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		90C36B6B7717AA0C893E0916 /* SimpleCaptureDemoTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SimpleCaptureDemoTests.h; sourceTree = "<group>"; };
 		90C36B6B7717AA0C893E0917 /* SimpleCaptureDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SimpleCaptureDemoTests.m; sourceTree = "<group>"; };
-		9F2C93C01551A7EC001A810E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = SimplePluralViewController.xib; sourceTree = "<group>"; };
 		9F5792AB1595141500478D15 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = StringArrayDrillDownViewController.xib; sourceTree = "<group>"; };
 		9F7B6A8315336470002BF452 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Resources/en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		9F7B6A8515336480002BF452 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Classes/AppDelegate.h; sourceTree = "<group>"; };
@@ -297,11 +294,10 @@
 		9F7B6A9115336480002BF452 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RootViewController.h; path = Classes/RootViewController.h; sourceTree = "<group>"; };
 		9F7B6A9215336480002BF452 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RootViewController.m; path = Classes/RootViewController.m; sourceTree = "<group>"; };
 		9F7B6A9C1533648C002BF452 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = ArrayDrillDownViewController.xib; sourceTree = "<group>"; };
-		9F7B6A9E1533648C002BF452 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = CaptureNewUserViewController.xib; sourceTree = "<group>"; };
+		9F7B6A9E1533648C002BF452 /* CaptureProfileViewController */ = {isa = PBXFileReference; lastKnownFileType = text; name = CaptureProfileViewController; path = CaptureProfileViewController; sourceTree = "<group>"; };
 		9F7B6AA01533648C002BF452 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = InfoPlist.strings; sourceTree = "<group>"; };
 		9F7B6AA21533648C002BF452 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
 		9F7B6AA41533648C002BF452 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = ObjectDrillDownViewController.xib; sourceTree = "<group>"; };
-		9F7B6AA61533648C002BF452 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = UserDrillDownViewController.xib; sourceTree = "<group>"; };
 		9F7B6AA81533648C002BF452 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
 		9F9506FE14FEA79000335A12 /* SimpleCaptureDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = SimpleCaptureDemo.entitlements; sourceTree = "<group>"; };
 		9FB1202915C73FD10072BEE6 /* JRConnectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRConnectionManager.h; sourceTree = "<group>"; };
@@ -736,13 +732,11 @@
 			isa = PBXGroup;
 			children = (
 				9F5792AA1595141500478D15 /* StringArrayDrillDownViewController.xib */,
-				9F2C93BF1551A7EC001A810E /* SimplePluralViewController.xib */,
 				9F7B6A9B1533648C002BF452 /* ArrayDrillDownViewController.xib */,
-				9F7B6A9D1533648C002BF452 /* CaptureNewUserViewController.xib */,
+				9F7B6A9D1533648C002BF452 /* CaptureProfileViewController */,
 				9F7B6A9F1533648C002BF452 /* InfoPlist.strings */,
 				9F7B6AA11533648C002BF452 /* MainStoryboard.storyboard */,
 				9F7B6AA31533648C002BF452 /* ObjectDrillDownViewController.xib */,
-				9F7B6AA51533648C002BF452 /* UserDrillDownViewController.xib */,
 			);
 			name = en.lproj;
 			path = Resources/en.lproj;
@@ -1300,13 +1294,11 @@
 			files = (
 				9F7B6A8415336470002BF452 /* InfoPlist.strings in Resources */,
 				9F7B6AAA1533648C002BF452 /* ArrayDrillDownViewController.xib in Resources */,
-				9F7B6AAB1533648C002BF452 /* CaptureNewUserViewController.xib in Resources */,
+				9F7B6AAB1533648C002BF452 /* CaptureProfileViewController in Resources */,
 				9F7B6AAC1533648C002BF452 /* InfoPlist.strings in Resources */,
 				9F7B6AAD1533648C002BF452 /* MainStoryboard.storyboard in Resources */,
 				9F7B6AAE1533648C002BF452 /* ObjectDrillDownViewController.xib in Resources */,
-				9F7B6AAF1533648C002BF452 /* UserDrillDownViewController.xib in Resources */,
 				9F7B6AB01533648C002BF452 /* background.png in Resources */,
-				9F2C93C11551A7EC001A810E /* SimplePluralViewController.xib in Resources */,
 				9F5792AC1595141500478D15 /* StringArrayDrillDownViewController.xib in Resources */,
 				9FB1210915C73FD20072BEE6 /* ATTRIBUTION in Resources */,
 				9FB1211715C73FD20072BEE6 /* JREngage-Info.plist in Resources */,
@@ -1601,14 +1593,6 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		9F2C93BF1551A7EC001A810E /* SimplePluralViewController.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				9F2C93C01551A7EC001A810E /* en */,
-			);
-			name = SimplePluralViewController.xib;
-			sourceTree = "<group>";
-		};
 		9F5792AA1595141500478D15 /* StringArrayDrillDownViewController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1633,12 +1617,13 @@
 			name = ArrayDrillDownViewController.xib;
 			sourceTree = "<group>";
 		};
-		9F7B6A9D1533648C002BF452 /* CaptureNewUserViewController.xib */ = {
+		9F7B6A9D1533648C002BF452 /* CaptureProfileViewController */ = {
 			isa = PBXVariantGroup;
 			children = (
-				9F7B6A9E1533648C002BF452 /* en */,
+				9F7B6A9E1533648C002BF452 /* CaptureProfileViewController */,
 			);
-			name = CaptureNewUserViewController.xib;
+			lastKnownFileType = text;
+			name = CaptureProfileViewController;
 			sourceTree = "<group>";
 		};
 		9F7B6A9F1533648C002BF452 /* InfoPlist.strings */ = {
@@ -1663,14 +1648,6 @@
 				9F7B6AA41533648C002BF452 /* en */,
 			);
 			name = ObjectDrillDownViewController.xib;
-			sourceTree = "<group>";
-		};
-		9F7B6AA51533648C002BF452 /* UserDrillDownViewController.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				9F7B6AA61533648C002BF452 /* en */,
-			);
-			name = UserDrillDownViewController.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

@@ -39,21 +39,14 @@
 
 
 @interface StringArrayDrillDownViewController : UIViewController <UINavigationBarDelegate, UITableViewDelegate,
-                                                      UITableViewDataSource, UITextFieldDelegate, JRCaptureObjectDelegate>
-{
-    UITableView    *myTableView;
-    NSMutableArray *objectDataArray;
-
-    NSMutableArray *localCopyArray;
-
-    BOOL isEditing;
-    UITextField *firstResponder;
-}
+        UITableViewDataSource, UITextFieldDelegate, JRCaptureObjectDelegate>
 @property (nonatomic, strong) IBOutlet UITableView     *myTableView;
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *myUpdateButton;
 @property (nonatomic, retain) IBOutlet UIToolbar       *myKeyboardToolbar;
+
 - (IBAction)replaceButtonPressed:(id)sender;
 - (IBAction)doneEditingTextButtonPressed:(id)sender;
 - (id)initWithNibName:(NSString*)nibNameOrNil bundle:(NSBundle*)nibBundleOrNil forArray:(NSArray*)array
-  captureParentObject:(JRCaptureObject*)parentObject andKey:(NSString*)key;
+  captureParentObject:(JRCaptureObject*)parentObject_ andKey:(NSString*)key;
+
 @end
