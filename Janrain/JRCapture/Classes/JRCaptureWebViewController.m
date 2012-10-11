@@ -36,11 +36,43 @@
 #import "debug_log.h"
 #import "JRUserInterfaceMaestro.h"
 
-@implementation JRCaptureWebViewController
+#ifdef DEBUG
 
-//@interface JREngageError (JREngageError_setError)
-//+ (NSError*)setError:(NSString*)message withCode:(NSInteger)code;
-//@end
+@interface DebugWebDelegate : NSObject
+@end
+
+@class WebView;
+@class WebScriptCallFrame;
+@class WebFrame;
+
+@implementation DebugWebDelegate
+- (void)webView:(WebView *)webView exceptionWasRaised:(WebScriptCallFrame *)frame
+       sourceId:(int)sid
+           line:(int)lineno
+    forWebFrame:(WebFrame *)webFrame
+{
+    NSLog(@"NSDD: exception: sid=%d line=%d function=%@, caller=%@, exception=%@",
+          sid, lineno, [frame functionName], [[frame caller] description], [[frame exception] description]);
+}
+@end
+
+@interface DebugWebView : UIWebView
+{
+    id windowScriptObject;
+    id privateWebView;
+}
+@end
+
+@implementation DebugWebView
+- (void)webView:(id)sender didClearWindowObject:(id)windowObject forFrame:(WebFrame*)frame
+{
+    [sender setScriptDebugDelegate:[[DebugWebDelegate alloc] init]];
+}
+@end
+
+#endif
+
+@implementation JRCaptureWebViewController
 
 @synthesize webView;
 @synthesize url;
@@ -92,8 +124,14 @@
 
     self.title = [NSString stringWithFormat:@"%@", @"fixme"];
 
-    self.webView = [[[UIWebView alloc] initWithFrame:self.view.frame] autorelease];
+
+    #ifdef DEBUG
+        self.webView = [[[DebugWebView alloc] initWithFrame:self.view.frame] autorelease];
+    #else
+        self.webView = [[[UIWebView alloc] initWithFrame:self.view.frame] autorelease];
+    #endif
     [self.view addSubview:webView];
+    webView.delegate = self;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -121,19 +159,40 @@
 - (BOOL)webView:(UIWebView *)webView_ shouldStartLoadWithRequest:(NSURLRequest *)request
                                                  navigationType:(UIWebViewNavigationType)navigationType
 {
-    DLog(@"request: %@", [[request URL] absoluteString]);
-
     //if ([[[request URL] absoluteString] hasPrefix:])
     //{
     //    return NO;
     //}
 
+    NSString *requestString = [[[request URL] absoluteString]
+            stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+
+    if ([requestString hasPrefix:@"ios-log:"])
+    {
+        NSString* logString = [[requestString componentsSeparatedByString:@":#iOS#"] objectAtIndex:1];
+        DLog(@"UIWebView console: %@", logString);
+        return NO;
+    }
+
+    DLog(@"request: %@", [[request URL] absoluteString]);
     return YES;
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
-    DLog(@"");
+    NSString *consoleDotLog = @"console = new Object();\n"
+            "console.log = function(log) {\n"
+            "  var iframe = document.createElement(\"IFRAME\");\n"
+            "  iframe.setAttribute(\"src\", \"ios-log:#iOS#\" + log);\n"
+            "  document.documentElement.appendChild(iframe);\n"
+            "  iframe.parentNode.removeChild(iframe);\n"
+            "  iframe = null;\n"
+            "}\n"
+            "console.debug = console.log;\n"
+            "console.info = console.log;\n"
+            "console.warn = console.log;\n"
+            "console.error = console.log;";
+    DLog(@"Loaded console.log: \"%@\"", [webView stringByEvaluatingJavaScriptFromString:consoleDotLog]);
     [self startProgress];
 }
 
