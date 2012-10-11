@@ -45,6 +45,9 @@
 #import "CaptureProfileViewController.h"
 #import "ObjectDrillDownViewController.h"
 #import "JRCaptureApidInterface.h"
+#import "JRCaptureJsWidgetWrapper.h"
+#import "JRCaptureWebViewController.h"
+#import "JRUserInterfaceMaestro.h"
 
 @interface RootViewController ()
 - (void)adjustUiState;
@@ -58,6 +61,7 @@
 @synthesize updateButton;
 @synthesize signInButton;
 @synthesize signOutButton;
+@synthesize shareWidgetButton;
 
 - (void)viewDidLoad
 {
@@ -95,6 +99,8 @@
         signInButton.hidden = NO;
         signOutButton.hidden = YES;
     }
+
+    //shareWidgetButton.hidden = NO;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -131,7 +137,7 @@
 - (IBAction)updateButtonPressed:(id)sender
 {
     CaptureProfileViewController *viewController = [[CaptureProfileViewController alloc]
-        initWithNibName:@"CaptureNewUserViewController" bundle:[NSBundle mainBundle]];
+        initWithNibName:@"CaptureProfileViewController" bundle:[NSBundle mainBundle]];
 
     [self.navigationController pushViewController:viewController animated:YES];
 }
@@ -139,7 +145,15 @@
 - (IBAction)captureWidgetButtonPressed:(id)sender
 {
     DLog(@"");
-    [JRCapture startJsWidget];
+    [JRCapture startJsWidgetWithUrl:nil];
+}
+
+- (IBAction)shareButtonPressed:(id)sender
+{
+    DLog(@"");
+
+    NSString *embeddedShareUrl = @"http://nathan.janrain.com/~nathan/share_widget_webview/embedded_share.html";
+    [JRCapture startJsWidgetWithUrl:embeddedShareUrl];
 }
 
 - (IBAction)signInButtonPressed:(id)sender
@@ -181,7 +195,7 @@
     if ([SharedData isNotYetCreated] || [SharedData isNew])
     {
         CaptureProfileViewController *viewController = [[CaptureProfileViewController alloc]
-            initWithNibName:@"CaptureNewUserViewController" bundle:[NSBundle mainBundle]];
+            initWithNibName:@"CaptureProfileViewController" bundle:[NSBundle mainBundle]];
 
         [self.navigationController pushViewController:viewController animated:YES];
     }
@@ -220,6 +234,7 @@
 
 - (void)viewDidUnload
 {
+    [self setShareWidgetButton:nil];
     [super viewDidUnload];
 }
 

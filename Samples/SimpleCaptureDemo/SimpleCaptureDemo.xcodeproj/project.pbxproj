@@ -25,7 +25,7 @@
 		9F7B6A9715336480002BF452 /* SharedData.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7B6A8E15336480002BF452 /* SharedData.m */; };
 		9F7B6A9915336480002BF452 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7B6A9215336480002BF452 /* RootViewController.m */; };
 		9F7B6AAA1533648C002BF452 /* ArrayDrillDownViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F7B6A9B1533648C002BF452 /* ArrayDrillDownViewController.xib */; };
-		9F7B6AAB1533648C002BF452 /* CaptureProfileViewController in Resources */ = {isa = PBXBuildFile; fileRef = 9F7B6A9D1533648C002BF452 /* CaptureProfileViewController */; };
+		9F7B6AAB1533648C002BF452 /* CaptureProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F7B6A9D1533648C002BF452 /* CaptureProfileViewController.xib */; };
 		9F7B6AAC1533648C002BF452 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9F7B6A9F1533648C002BF452 /* InfoPlist.strings */; };
 		9F7B6AAD1533648C002BF452 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F7B6AA11533648C002BF452 /* MainStoryboard.storyboard */; };
 		9F7B6AAE1533648C002BF452 /* ObjectDrillDownViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F7B6AA31533648C002BF452 /* ObjectDrillDownViewController.xib */; };
@@ -294,7 +294,7 @@
 		9F7B6A9115336480002BF452 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RootViewController.h; path = Classes/RootViewController.h; sourceTree = "<group>"; };
 		9F7B6A9215336480002BF452 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RootViewController.m; path = Classes/RootViewController.m; sourceTree = "<group>"; };
 		9F7B6A9C1533648C002BF452 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = ArrayDrillDownViewController.xib; sourceTree = "<group>"; };
-		9F7B6A9E1533648C002BF452 /* CaptureProfileViewController */ = {isa = PBXFileReference; lastKnownFileType = text; name = CaptureProfileViewController; path = CaptureProfileViewController; sourceTree = "<group>"; };
+		9F7B6A9E1533648C002BF452 /* CaptureProfileViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CaptureProfileViewController.xib; path = CaptureProfileViewController.xib; sourceTree = "<group>"; };
 		9F7B6AA01533648C002BF452 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = InfoPlist.strings; sourceTree = "<group>"; };
 		9F7B6AA21533648C002BF452 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
 		9F7B6AA41533648C002BF452 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = ObjectDrillDownViewController.xib; sourceTree = "<group>"; };
@@ -733,7 +733,7 @@
 			children = (
 				9F5792AA1595141500478D15 /* StringArrayDrillDownViewController.xib */,
 				9F7B6A9B1533648C002BF452 /* ArrayDrillDownViewController.xib */,
-				9F7B6A9D1533648C002BF452 /* CaptureProfileViewController */,
+				9F7B6A9D1533648C002BF452 /* CaptureProfileViewController.xib */,
 				9F7B6A9F1533648C002BF452 /* InfoPlist.strings */,
 				9F7B6AA11533648C002BF452 /* MainStoryboard.storyboard */,
 				9F7B6AA31533648C002BF452 /* ObjectDrillDownViewController.xib */,
@@ -1294,7 +1294,7 @@
 			files = (
 				9F7B6A8415336470002BF452 /* InfoPlist.strings in Resources */,
 				9F7B6AAA1533648C002BF452 /* ArrayDrillDownViewController.xib in Resources */,
-				9F7B6AAB1533648C002BF452 /* CaptureProfileViewController in Resources */,
+				9F7B6AAB1533648C002BF452 /* CaptureProfileViewController.xib in Resources */,
 				9F7B6AAC1533648C002BF452 /* InfoPlist.strings in Resources */,
 				9F7B6AAD1533648C002BF452 /* MainStoryboard.storyboard in Resources */,
 				9F7B6AAE1533648C002BF452 /* ObjectDrillDownViewController.xib in Resources */,
@@ -1617,13 +1617,13 @@
 			name = ArrayDrillDownViewController.xib;
 			sourceTree = "<group>";
 		};
-		9F7B6A9D1533648C002BF452 /* CaptureProfileViewController */ = {
+		9F7B6A9D1533648C002BF452 /* CaptureProfileViewController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				9F7B6A9E1533648C002BF452 /* CaptureProfileViewController */,
+				9F7B6A9E1533648C002BF452 /* CaptureProfileViewController.xib */,
 			);
-			lastKnownFileType = text;
-			name = CaptureProfileViewController;
+			lastKnownFileType = file.xib;
+			name = CaptureProfileViewController.xib;
 			sourceTree = "<group>";
 		};
 		9F7B6A9F1533648C002BF452 /* InfoPlist.strings */ = {

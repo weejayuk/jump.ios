@@ -34,9 +34,10 @@
 @end
 
 @implementation JRCaptureJsWidgetWrapper
-+ (void)startJsWidget
++ (void)startJsWidgetWithUrl:(NSString *)url
 {
-    NSString *url = @"http://nathan.janrain.com/capture_widget/index_embedded_mobile.php";
+    if (!url) url = @"https://mobile.dev.janraincapture.com/oauth/signin?redirect_uri=http://a"
+            "&client_id=zc7tx83fqy68mper69mxbt5dfvd7c2jh&response_type=token";
     [[JRUserInterfaceMaestro sharedMaestro] showCaptureJsWidgetDialogWithCustomInterface:nil andUrl:url];
 }
 @end

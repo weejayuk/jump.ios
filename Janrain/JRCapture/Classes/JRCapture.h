@@ -474,10 +474,7 @@ typedef enum
  **/
 /*@{*/
 
-/**
- *
- */
-+ (void)startJsWidget;
++ (void)startJsWidgetWithUrl:(NSString *)url;
 
 /**
 * Use this function to begin authentication. The Engage for iOS portion of the library will

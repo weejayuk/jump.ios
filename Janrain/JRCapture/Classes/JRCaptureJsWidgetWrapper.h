@@ -31,5 +31,5 @@
 #import "JRCapture.h"
 
 @interface JRCaptureJsWidgetWrapper : NSObject
-+ (void)startJsWidget;
++ (void)startJsWidgetWithUrl:(NSString *)url;
 @end

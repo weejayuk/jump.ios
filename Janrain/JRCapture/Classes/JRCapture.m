@@ -82,9 +82,9 @@
     [JRCaptureData setCreationToken:newCreationToken];
 }
 
-+ (void)startJsWidget
++ (void)startJsWidgetWithUrl:(NSString *)url
 {
-    [JRCaptureJsWidgetWrapper startJsWidget];
+    [JRCaptureJsWidgetWrapper startJsWidgetWithUrl:url];
 }
 
 + (void)startEngageSigninDialogForDelegate:(id <JRCaptureSigninDelegate>)delegate
