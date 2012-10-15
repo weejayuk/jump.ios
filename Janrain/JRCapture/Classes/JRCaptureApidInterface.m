@@ -664,11 +664,11 @@ typedef enum CaptureInterfaceStatEnum
     }
     else if ([delegate conformsToProtocol:@protocol(JRCaptureSigninDelegate)])
     {
-        id <JRCaptureSigninDelegate> d_ = (id) delegate;
-        BOOL respondsToFail = [d_ respondsToSelector:@selector(captureAuthenticationDidFailWithError:)];
+        id <JRCaptureSigninDelegate> delegate_ = (id) delegate;
+        BOOL respondsToFail = [delegate_ respondsToSelector:@selector(captureAuthenticationDidFailWithError:)];
         if (stat == StatOk)
         {
-            FinishSignInError err = [JRCaptureApidInterface finishSignInWithPayload:response forDelegate:d_];
+            FinishSignInError err = [JRCaptureApidInterface finishSignInWithPayload:response forDelegate:delegate_];
 
             if ((err == cJRInvalidResponse || err == cJRInvalidCaptureUser) &&
                     respondsToFail)
@@ -681,7 +681,7 @@ typedef enum CaptureInterfaceStatEnum
                                                               @"invalid_endpoint_response", @"error",
                                                               errorDesc, @"error_description",
                                                               code, @"code", nil];
-                [d_ captureAuthenticationDidFailWithError:[JRCaptureError errorFromResult:errDict]];
+                [delegate_ captureAuthenticationDidFailWithError:[JRCaptureError errorFromResult:errDict]];
             }
         }
         else if (respondsToFail)
@@ -699,7 +699,7 @@ typedef enum CaptureInterfaceStatEnum
                                                           message, @"error_description",
                                                           code, @"code", nil];
 
-            [d_ captureAuthenticationDidFailWithError:[JRCaptureError errorFromResult:errDict]];
+            [delegate_ captureAuthenticationDidFailWithError:[JRCaptureError errorFromResult:errDict]];
         }
     }
 }

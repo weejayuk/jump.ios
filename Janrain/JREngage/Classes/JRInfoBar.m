@@ -70,7 +70,7 @@
         poweredByLabel.backgroundColor = [UIColor clearColor];
         poweredByLabel.font = [UIFont italicSystemFontOfSize:(iPad) ? 30.0 : 13.0];
         poweredByLabel.textColor = [UIColor whiteColor];
-        poweredByLabel.textAlignment = UITextAlignmentRight;
+        poweredByLabel.textAlignment = NSTextAlignmentRight;
         poweredByLabel.autoresizingMask = UIViewAutoresizingNone | UIViewAutoresizingFlexibleLeftMargin;
 
         poweredByLabel.text = (hidesPoweredBy) ? @"" : @"Powered by Janrain";

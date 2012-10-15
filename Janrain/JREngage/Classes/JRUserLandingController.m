@@ -139,12 +139,6 @@
     DLog(@"");
     [super viewWillAppear:animated];
 
-///*** * * * * * * DEPRECATED * * * * * * ***/
-///**/if ([customInterface objectForKey:kJRUserLandingBackgroundImageName])
-///**/    [myBackgroundView addSubview:[[[UIImageView alloc] initWithImage:
-///**/                                   [UIImage imageNamed:[customInterface objectForKey:kJRUserLandingBackgroundImageName]]] autorelease]];
-///*** * * * * * * DEPRECATED * * * * * * ***/
-
  /* Load the custom background view, if there is one. */
     if ([customInterface objectForKey:kJRAuthenticationBackgroundImageView])
         [myBackgroundView addSubview:[customInterface objectForKey:kJRAuthenticationBackgroundImageView]];
@@ -499,9 +493,10 @@ enum
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-#define TABLE_VIEW_FRAME_LANDSCAPE_SMALL    0,  0,  480,  120
-#define TABLE_VIEW_FRAME_LANDSCAPE_BIG      0,  0,  480,  268
-#define TABLE_VIEW_FRAME_PORTRAIT           0,  0,  320,  416
+#define TABLE_VIEW_FRAME_LANDSCAPE_SMALL    0,  0,  self.view.frame.size.width,  120
+#define TABLE_VIEW_FRAME_LANDSCAPE_BIG      0,  0,  self.view.frame.size.width,  268
+// TABLE_VIEW_FRAME_PORTRAIT seems OK on 4" iPhone despite screen specifc 416px spec
+#define TABLE_VIEW_FRAME_PORTRAIT           0,  0,  self.view.frame.size.width,  416
 
 - (void)shrinkTableViewLandscape
 {
