@@ -416,7 +416,7 @@ static JREngage* singleton = nil;
         return;
     }
 
-    [sessionData setActivity:activity];
+    sessionData.activity = activity;
     [interfaceMaestro showPublishingDialogForActivityWithCustomInterface:customInterfaceOverrides];
 }
 

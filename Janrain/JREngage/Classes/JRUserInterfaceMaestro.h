@@ -36,7 +36,7 @@
 #import <Foundation/Foundation.h>
 
 @class JRSessionData;
-@class JRModalNavigationController;
+@class JRModalViewController;
 @class JRProvidersController;
 @class JRUserLandingController;
 @class JRWebViewController;
@@ -63,11 +63,9 @@ typedef enum
 
 @interface JRUserInterfaceMaestro : NSObject <UIPopoverControllerDelegate>
 {
-    JRModalNavigationController *jrModalNavController;
+    JRModalViewController *jrModalViewController;
     JRSessionData   *sessionData;
     NSMutableArray  *delegates;
-
-    BOOL iPad;
 
     PadPopoverMode padPopoverMode;
     BOOL usingAppNav;

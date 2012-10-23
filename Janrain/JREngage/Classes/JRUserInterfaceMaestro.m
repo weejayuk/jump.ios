@@ -63,38 +63,58 @@ static void handleCustomInterfaceException(NSException* exception, NSString* kJR
 #endif
 }
 
-@interface JRModalNavigationController : UIViewController <UIPopoverControllerDelegate>
+@interface JRModalViewController : UIViewController <UIPopoverControllerDelegate>
 {
     UINavigationController *myNavigationController;
     UIPopoverController    *myPopoverController;
 
-    BOOL iPad;
     BOOL shouldUnloadSubviews;
 }
 @property (retain) UINavigationController *myNavigationController;
 @property (retain) UIPopoverController    *myPopoverController;
 @end
 
-@implementation JRModalNavigationController
-@synthesize myNavigationController;
+@implementation JRModalViewController
 @synthesize myPopoverController;
+
+#define IS_IPAD ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad))
+
+- (void)setMyNavigationController:(UINavigationController *)myNavigationController_
+{
+    //if (myNavigationController.view && ![self.view.subviews containsObject:myNavigationController.view])
+    //    [myNavigationController.view removeFromSuperview];
+    //
+    //if (myNavigationController_.view) [self.view addSubview:myNavigationController_.view];
+
+    [myNavigationController_ retain];
+    [myNavigationController release];
+    myNavigationController = myNavigationController_;
+}
+
+- (UINavigationController *)myNavigationController
+{
+   return myNavigationController;
+}
 
 - (void)loadView
 {
     DLog (@"");
     UIView *view = [[[UIView alloc] initWithFrame:[[UIApplication sharedApplication] keyWindow].frame] autorelease];
 
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-        iPad = YES;
-
-    [view setAutoresizingMask:UIViewAutoresizingNone | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+    [view setAutoresizingMask:
+            UIViewAutoresizingNone
+            | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight
+            | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleLeftMargin |
+            UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin
+    ];
 
     shouldUnloadSubviews = NO;
 
     [self setView:view];
 }
 
-- (void)presentPopoverNavigationControllerFromBarButton:(UIBarButtonItem*)barButtonItem inDirection:(UIPopoverArrowDirection)direction
+- (void)presentPopoverNavigationControllerFromBarButton:(UIBarButtonItem*)barButtonItem
+                                            inDirection:(UIPopoverArrowDirection)direction
 {
     DLog (@"");
     [myPopoverController presentPopoverFromBarButtonItem:barButtonItem
@@ -116,27 +136,47 @@ static void handleCustomInterfaceException(NSException* exception, NSString* kJR
 - (void)presentModalNavigationController
 {
     DLog (@"");
-    if (iPad)
+    void(^presentModal)(void) = ^ {
+        UIWindow* window = [UIApplication sharedApplication].keyWindow;
+        if (!window)
+            window = [[UIApplication sharedApplication].windows objectAtIndex:0];
+
+        if ([window respondsToSelector:@selector(rootViewController)] && window.rootViewController)
+        {
+            //[window.rootViewController presentModalViewController:myNavigationController animated:NO];
+            [window.rootViewController presentViewController:myNavigationController animated:NO completion:nil];
+        }
+        else
+        {
+            [window addSubview:self.view];
+            [self presentModalViewController:myNavigationController animated:YES];
+        }
+    };
+
+    if (IS_IPAD)
     {
         myNavigationController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
         myNavigationController.modalPresentationStyle = UIModalPresentationFormSheet;
 
-        [self presentModalViewController:myNavigationController animated:YES];
+        //[self presentModalViewController:myNavigationController animated:YES];
+
+        presentModal();
 
         myNavigationController.view.superview.frame = CGRectMake(0, 0, 320, 460);
 
-        CGPoint viewCenter;
-        if (UIInterfaceOrientationIsPortrait(self.interfaceOrientation))
-            viewCenter = self.view.center;
-        else
-            viewCenter = CGPointMake(self.view.center.y, self.view.center.x);
-
-        myNavigationController.view.superview.center = viewCenter;//self.view.center;
+        //CGPoint viewCenter;
+        //if (UIInterfaceOrientationIsPortrait(self.interfaceOrientation))
+        //    viewCenter = self.view.center;
+        //else
+        //    viewCenter = CGPointMake(self.view.center.y, self.view.center.x);
+        //
+        //myNavigationController.view.superview.center = viewCenter;//self.view.center;
     }
     else
     {
         myNavigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-        [self presentModalViewController:myNavigationController animated:YES];
+        //[self presentModalViewController:myNavigationController animated:YES];
+        presentModal();
     }
 }
 
@@ -144,8 +184,8 @@ static void handleCustomInterfaceException(NSException* exception, NSString* kJR
 {
     DLog (@"");
 
-    if (shouldUnloadSubviews)
-        [self.view removeFromSuperview];
+    //if (shouldUnloadSubviews)
+    //    [self.view removeFromSuperview];
 
     [super viewDidAppear:animated];
 }
@@ -186,7 +226,7 @@ static void handleCustomInterfaceException(NSException* exception, NSString* kJR
 @end
 
 @interface JRUserInterfaceMaestro ()
-@property (retain) JRModalNavigationController  *jrModalNavController;
+@property (retain) JRModalViewController *jrModalViewController;
 @property (retain) UINavigationController       *customModalNavigationController;
 @property (retain) UINavigationController       *applicationNavigationController;
 @property (retain) UINavigationController       *savedNavigationController;
@@ -198,7 +238,7 @@ static void handleCustomInterfaceException(NSException* exception, NSString* kJR
 @synthesize myUserLandingController;
 @synthesize myWebViewController;
 @synthesize myPublishActivityController;
-@synthesize jrModalNavController;
+@synthesize jrModalViewController;
 @synthesize customModalNavigationController;
 @synthesize applicationNavigationController;
 @synthesize savedNavigationController;
@@ -265,9 +305,6 @@ static JRUserInterfaceMaestro* singleton = nil;
         singleton = self;
         sessionData = newSessionData;
         janrainInterfaceDefaults = [[self loadJanrainInterfaceDefaults] retain];
-
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-            iPad = YES;
     }
 
     return self;
@@ -320,7 +357,7 @@ static JRUserInterfaceMaestro* singleton = nil;
         self.customModalNavigationController = [customInterface objectForKey:kJRCustomModalNavigationController];
 
     usingAppNav = NO, usingCustomNav = NO;
-    if (iPad)
+    if (IS_IPAD)
     {
         if ([customInterface objectForKey:kJRPopoverPresentationBarButtonItem])
             padPopoverMode = PadPopoverFromBar;
@@ -352,7 +389,7 @@ static JRUserInterfaceMaestro* singleton = nil;
         { handleCustomInterfaceException(exception, @"kJRUseApplicationNavigationController"); }
     }
 
-    if (usingAppNav || iPad) sessionData.canRotate = YES;
+    if (usingAppNav || IS_IPAD) sessionData.canRotate = YES;
 }
 
 - (void)tearDownDialogPresentation
@@ -398,7 +435,7 @@ static JRUserInterfaceMaestro* singleton = nil;
         myProvidersController.title = @"Providers";
     }
 
-    if (/*usingAppNav || */(iPad && padPopoverMode != PadPopoverModeNone) ||
+    if (/*usingAppNav || */(IS_IPAD && padPopoverMode != PadPopoverModeNone) ||
         [[customInterface objectForKey:kJRNavigationControllerHidesCancelButton] boolValue])
     {
         myProvidersController.hidesCancelButton = YES;
@@ -425,7 +462,7 @@ static JRUserInterfaceMaestro* singleton = nil;
     [myWebViewController release],          myWebViewController = nil;
     [myPublishActivityController release],  myPublishActivityController = nil;
 
-    [jrModalNavController release], jrModalNavController = nil;
+    [jrModalViewController release], jrModalViewController = nil;
     [customModalNavigationController release], customModalNavigationController = nil;
 
     [customInterface release], customInterface = nil;
@@ -456,9 +493,15 @@ static JRUserInterfaceMaestro* singleton = nil;
 
 - (UINavigationController*)createDefaultNavigationController
 {
-    UINavigationController *navigationController = [[[UINavigationController alloc] init] autorelease];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:nil];
+    [navigationController autorelease];
     navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
     navigationController.navigationBar.clipsToBounds = YES;
+
+    navigationController.view.autoresizingMask =
+            UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin
+            | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+    navigationController.view.frame = CGRectMake(0, 0, 320, 460);
 
     return navigationController;
 }
@@ -524,22 +567,22 @@ static JRUserInterfaceMaestro* singleton = nil;
 {
     DLog(@"");
 
-    self.jrModalNavController = [[[JRModalNavigationController alloc] initWithNibName:nil bundle:nil] autorelease];
+    self.jrModalViewController = [[[JRModalViewController alloc] initWithNibName:nil bundle:nil] autorelease];
 
     if (usingCustomNav)
-        jrModalNavController.myNavigationController = customModalNavigationController;
+        jrModalViewController.myNavigationController = customModalNavigationController;
     else
-        jrModalNavController.myNavigationController = [self createDefaultNavigationController];
+        jrModalViewController.myNavigationController = [self createDefaultNavigationController];
 
     if (padPopoverMode)
-        jrModalNavController.myPopoverController =
-            [self createPopoverControllerWithNavigationController:jrModalNavController.myNavigationController];
+        jrModalViewController.myPopoverController =
+            [self createPopoverControllerWithNavigationController:jrModalViewController.myNavigationController];
 
     /* If the code is used by a universal application and is compiled for versions of iOS that don't
        support popovercontrollers (i.e., iOS < v3.2), this will return nil;  If it does, fall back
        to modal dialog presentation. This might never happen, because the above code wouldn't be called
        on the iPhone anyway... */
-    if (!jrModalNavController.myPopoverController)
+    if (!jrModalViewController.myPopoverController)
         padPopoverMode = PadPopoverModeNone;
 
     UIPopoverArrowDirection arrowDirection = UIPopoverArrowDirectionAny;
@@ -547,30 +590,29 @@ static JRUserInterfaceMaestro* singleton = nil;
         arrowDirection = (UIPopoverArrowDirection)
                 [[customInterface objectForKey:kJRPopoverPresentationArrowDirection] intValue];
 
-    [jrModalNavController.myNavigationController pushViewController:rootViewController animated:NO];
+    [jrModalViewController.myNavigationController pushViewController:rootViewController animated:NO];
 
     if ([self shouldOpenToUserLandingPage])
     {
         [sessionData setCurrentProvider:[sessionData getProviderNamed:sessionData.returningBasicProvider]];
-        [jrModalNavController.myNavigationController pushViewController:myUserLandingController animated:NO];
+        [jrModalViewController.myNavigationController pushViewController:myUserLandingController animated:NO];
     }
 
-    UIWindow* window = [UIApplication sharedApplication].keyWindow;
-    if (!window)
-        window = [[UIApplication sharedApplication].windows objectAtIndex:0];
-
-    [window addSubview:jrModalNavController.view];
+    //UIWindow* window = [UIApplication sharedApplication].keyWindow;
+    //if (!window)
+    //    window = [[UIApplication sharedApplication].windows objectAtIndex:0];
+    //[window addSubview:jrModalViewController.view];
 
     if (padPopoverMode == PadPopoverFromBar)
-        [jrModalNavController
+        [jrModalViewController
             presentPopoverNavigationControllerFromBarButton:[customInterface objectForKey:kJRPopoverPresentationBarButtonItem]
                                                 inDirection:arrowDirection];
     else if (padPopoverMode == PadPopoverFromFrame)
-        [jrModalNavController
+        [jrModalViewController
             presentPopoverNavigationControllerFromCGRect:[[customInterface objectForKey:kJRPopoverPresentationFrameValue] CGRectValue]
                                              inDirection:arrowDirection];
     else
-        [jrModalNavController presentModalNavigationController];
+        [jrModalViewController presentModalNavigationController];
 }
 
 - (void)loadApplicationNavigationControllerWithViewController:(UIViewController*)rootViewController
@@ -656,7 +698,7 @@ static JRUserInterfaceMaestro* singleton = nil;
 - (void)unloadModalNavigationControllerWithTransitionStyle:(UIModalTransitionStyle)style
 {
     DLog(@"");
-    [jrModalNavController dismissModalNavigationController:style];
+    [jrModalViewController dismissModalNavigationController:style];
 }
 
 - (void)unloadApplicationNavigationController
@@ -702,7 +744,7 @@ static JRUserInterfaceMaestro* singleton = nil;
     if (usingAppNav && applicationNavigationController && [applicationNavigationController isViewLoaded])
         [applicationNavigationController popToViewController:originalRootViewController animated:YES];
     else
-        [jrModalNavController.myNavigationController popToRootViewControllerAnimated:YES];
+        [jrModalViewController.myNavigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
