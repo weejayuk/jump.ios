@@ -108,7 +108,7 @@ static JRCaptureData *singleton = nil;
     return self;
 }
 
-+ (id)captureDataInstance
++ (JRCaptureData *)captureDataInstance
 {
     if (singleton == nil) {
         singleton = [((JRCaptureData*)[super allocWithZone:NULL]) init];
@@ -227,7 +227,6 @@ static JRCaptureData *singleton = nil;
 {
     NSString *oldUuid = [[JRCaptureData captureDataInstance] uuid];
 
-    // TODO: Don't delete the tokens if they aren't already there
     [JRCaptureData deleteTokenFromKeychainOfType:JRTokenTypeAccess forUser:oldUuid];
     [JRCaptureData deleteTokenFromKeychainOfType:JRTokenTypeCreation forUser:oldUuid];
 
@@ -236,15 +235,15 @@ static JRCaptureData *singleton = nil;
 
     if (tokenType == JRTokenTypeAccess)
     {
-        [[JRCaptureData captureDataInstance] setAccessToken:token];
-        [[JRCaptureData captureDataInstance] setCreationToken:nil];
+        [JRCaptureData captureDataInstance].accessToken = token;
+        [JRCaptureData captureDataInstance].creationToken = nil;
 
         [JRCaptureData storeTokenInKeychain:token ofType:JRTokenTypeAccess forUser:newUuid];
     }
     else
     {
-        [[JRCaptureData captureDataInstance] setCreationToken:token];
-        [[JRCaptureData captureDataInstance] setAccessToken:nil];
+        [JRCaptureData captureDataInstance].creationToken = token;
+        [JRCaptureData captureDataInstance].accessToken = nil;
 
         [JRCaptureData storeTokenInKeychain:token ofType:JRTokenTypeCreation forUser:newUuid];
     }
@@ -256,6 +255,11 @@ static JRCaptureData *singleton = nil;
         newUuid = cJRMissingUuidDummyString;
 
     [JRCaptureData saveNewToken:newAccessToken ofType:JRTokenTypeAccess andUuid:newUuid];
+}
+
++ (NSString *)getAccessToken
+{
+    return [JRCaptureData captureDataInstance].accessToken;
 }
 
 + (void)setCreationToken:(NSString *)newCreationToken// forUser:(NSString *)newUuid

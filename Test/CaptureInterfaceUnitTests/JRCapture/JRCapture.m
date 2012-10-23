@@ -77,6 +77,11 @@
     [JRCaptureData setAccessToken:newAccessToken forUser:nil];
 }
 
++ (NSString *)getAccessToken
+{
+    return [JRCaptureData getAccessToken];
+}
+
 + (void)setCreationToken:(NSString *)newCreationToken
 {
     [JRCaptureData setCreationToken:newCreationToken];
