@@ -105,8 +105,7 @@
  **/
 
 /**
- * You can add conventional sign-in authentication.
- * TODO
+ * Indicates the kind of conventional sign-in to be used.
  **/
 typedef enum
 {
@@ -125,13 +124,14 @@ typedef enum
 /**
  * Conventional login dialog added prompting the user for their email and password
  * combination. Use this if your Capture instance is set up to accept a \c email argument when signing in
-  * directly to your server
+ * directly to your server
  **/
  JRConventionalSigninEmailPassword,
 } JRConventionalSigninType;
 
 /**
- * Sent as an argument to the JRCaptureSigninDelegate#captureAuthenticationDidSucceedForUser:status: delegate method.
+ * Indicates the type of the user record as an argument to your
+ * JRCaptureSigninDelegate#captureAuthenticationDidSucceedForUser:status: delegate method.
  *
  * There are three possible values for \c captureRecordStatus, indicating the creation state of the record.
  *
@@ -191,8 +191,7 @@ typedef enum
 
 /**
  * @brief
- * Protocol adopted by an object that wishes to receive notifications when and information about a
- * user that authenticates with your application.
+ * Protocol adopted to receive notifications when, and information about, a user that signs in to your application.
  *
  * This protocol will notify the delegate when authentications succeed or fail; it will provide the delegate
  * with the authenticated user's profile data as returned from the Engage and Capture servers.
@@ -460,13 +459,16 @@ typedef enum
        captureUIDomain:(NSString *)captureUIDomain clientId:(NSString *)clientId
      andEntityTypeName:(NSString *)entityTypeName;
 
-#ifdef JRCAPTURE_ACCESS_TOKEN_CONTROL
 /**
- * Method to allow you to set the access token for an authenticated user directly
+ * Set the Capture access token for an authenticated user
  **/
 + (void)setAccessToken:(NSString *)newAccessToken;
-#endif // JRCAPTURE_ACCESS_TOKEN_CONTROL
 /*@}*/
+
+/**
+ * Get the Capture access token
+ */
++ (NSString *)getAccessToken;
 
 /**
  * @name Signin with the Engage for iOS dialogs
@@ -482,31 +484,6 @@ typedef enum
  *   The JRCaptureSigninDelegate object that wishes to receive messages regarding user authentication
  **/
 + (void)startEngageSigninDialogForDelegate:(id<JRCaptureSigninDelegate>)delegate;
-
-#ifdef JRCAPTURE_CONVENTIONAL_SIGNIN
-/**
- * Use this method to begin authentication, adding the option for your users to log directly into Capture through
- * your conventional signin mechanism. By using this method to initiate signin, the library automatically adds
- * a direct login form, above the list of social providers, that allows your users to login with a username/password
- * or email/password combination.
- *
- * @param conventionalSigninType
- *   A JRConventionalSigninType that tells the library to either prompt the user for their username/password
- *   combination or their email/password combination. This value must match what is configured for your Capture UI
- *   application. If you are unsure which one to use, try one, and if signin fails, try the other. If you pass in
- *   JRConventionalSigninNone, this method will do exactly what the startEngageSigninDialogForDelegate:() method does
- *
- * @param delegate
- *   The JRCaptureSigninDelegate object that wishes to receive messages regarding user authentication
- *
- * @note
- * Depending on how your Capture application is configured, you pass to this method a
- * JRConventionalSigninType of either JRConventionalSigninUsernamePassword or JRConventionalSigninEmailPassword.
- * Based on this argument, the dialog will prompt your user to either enter their username or email.
- **/
-+ (void)startEngageSigninDialogWithConventionalSignin:(JRConventionalSigninType)conventionalSigninType
-                                          forDelegate:(id<JRCaptureSigninDelegate>)delegate;
-#endif // JRCAPTURE_CONVENTIONAL_SIGNIN
 
 /**
  * Use this method to begin authentication for one specific provider. The library will
@@ -535,7 +512,47 @@ typedef enum
 + (void)startEngageSigninDialogWithCustomInterfaceOverrides:(NSDictionary*)customInterfaceOverrides
                                                 forDelegate:(id<JRCaptureSigninDelegate>)delegate;
 
-#ifdef JRCAPTURE_CONVENTIONAL_SIGNIN
+
+/**
+ * Use this method to begin authentication for one specific provider. The library will
+ * pop up a modal dialog, skipping the list of providers, and take the user straight to the sign-in
+ * flow of the passed provider. The user will not be able to return to the list of providers.
+ *
+ * @param provider
+ *   The name of the provider on which the user will authenticate. For a list of possible strings,
+ *   please see the \ref basicProviders "List of Providers"
+ *
+ * @param customInterfaceOverrides
+ *   A dictionary of objects and properties, indexed by the set of
+ *   \link customInterface pre-defined custom interface keys\endlink, to be used by the library to customize the look
+ *   and feel of the user interface and/or add a native login experience
+ **/
++ (void)startEngageSigninDialogOnProvider:(NSString*)provider
+             withCustomInterfaceOverrides:(NSDictionary*)customInterfaceOverrides
+                              forDelegate:(id<JRCaptureSigninDelegate>)delegate;
+
+/**
+ * Use this method to begin authentication, adding the option for your users to log directly into Capture through
+ * your conventional signin mechanism. By using this method to initiate signin, the library automatically adds
+ * a direct login form, above the list of social providers, that allows your users to login with a username/password
+ * or email/password combination.
+ *
+ * @param conventionalSigninType
+ *   A JRConventionalSigninType that tells the library to either prompt the user for their username/password
+ *   combination or their email/password combination. This value must match what is configured for your Capture UI
+ *   application. If you are unsure which one to use, try one, and if signin fails, try the other. If you pass in
+ *   JRConventionalSigninNone, this method will do exactly what the startEngageSigninDialogForDelegate:() method does
+ *
+ * @param delegate
+ *   The JRCaptureSigninDelegate object that wishes to receive messages regarding user authentication
+ *
+ * @note
+ * Depending on how your Capture application is configured, you pass to this method a
+ * JRConventionalSigninType of either JRConventionalSigninUsernamePassword or JRConventionalSigninEmailPassword.
+ * Based on this argument, the dialog will prompt your user to either enter their username or email.
+ **/
++ (void)startEngageSigninDialogWithConventionalSignin:(JRConventionalSigninType)conventionalSigninType
+                                          forDelegate:(id<JRCaptureSigninDelegate>)delegate;
 /**
  * Use this method to begin authentication, adding the option for your users to log directly into Capture through
  * your conventional signin mechanism. By using this method to initiate signin, the library automatically adds
@@ -557,29 +574,25 @@ typedef enum
  * JRConventionalSigninType of either JRConventionalSigninUsernamePassword or JRConventionalSigninEmailPassword.
  * Based on this argument, the dialog will prompt your user to either enter their username or email.
  **/
-+ (void)startEngageSigninDialogWithConventionalSignin:(JRConventionalSigninType)conventionalSigninState
++ (void)startEngageSigninDialogWithConventionalSignin:(JRConventionalSigninType)conventionalSigninType
                           andCustomInterfaceOverrides:(NSDictionary*)customInterfaceOverrides
                                           forDelegate:(id<JRCaptureSigninDelegate>)delegate;
-#endif // JRCAPTURE_CONVENTIONAL_SIGNIN
 
 /**
- * Use this method to begin authentication for one specific provider. The library will
- * pop up a modal dialog, skipping the list of providers, and take the user straight to the sign-in
- * flow of the passed provider. The user will not be able to return to the list of providers.
+ * Signs a user in via conventional (username/email and password) authentication on Capture.
  *
- * @param provider
- *   The name of the provider on which the user will authenticate. For a list of possible strings,
- *   please see the \ref basicProviders "List of Providers"
- *
- * @param customInterfaceOverrides
- *   A dictionary of objects and properties, indexed by the set of
- *   \link customInterface pre-defined custom interface keys\endlink, to be used by the library to customize the look
- *   and feel of the user interface and/or add a native login experience
- **/
-+ (void)startEngageSigninDialogOnProvider:(NSString*)provider
-             withCustomInterfaceOverrides:(NSDictionary*)customInterfaceOverrides
-                              forDelegate:(id<JRCaptureSigninDelegate>)delegate;
-
+ * @param user
+ *  The username or the email address
+ * @param password
+ *  The password
+ * @param conventionalSignInType
+ *  A JRConventionalSigninType value used to indicate whether the user paramater is a username or an email address
+ * @param delegate
+ *  Your JRCaptureSigninDelegate
+ */
++ (void)startCaptureConventionalSigninForUser:(NSString *)user withPassword:(NSString *)password
+                               withSigninType:(JRConventionalSigninType)conventionalSignInType
+                                  forDelegate:(id <JRCaptureSigninDelegate>)delegate;
 
 #ifdef JRENGAGE_SHARING_WITH_CAPTURE
 /**
@@ -612,13 +625,6 @@ typedef enum
                 withCustomInterfaceOverrides:(NSDictionary*)customInterfaceOverrides
                                  forDelegate:(id<JRCaptureSharingDelegate>)delegate;
 #endif // JRENGAGE_SHARING_WITH_CAPTURE
-
-/**
- *
- */
-+ (void)startCaptureConventionalSigninForUser:(NSString *)user withPassword:(NSString *)password
-                               withSigninType:(JRConventionalSigninType)conventionalSignInType
-                                  forDelegate:(id <JRCaptureSigninDelegate>)delegate;
 @end
 
 /**

@@ -49,4 +49,6 @@
                     clientId:(NSString *)newClientId
            andEntityTypeName:(NSString *)newEntityTypeName;
 + (NSString *)captureMobileEndpointUrl;
+
++ (NSString *)getAccessToken;
 @end
