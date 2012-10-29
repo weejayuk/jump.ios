@@ -32,6 +32,8 @@
 #import "JRCaptureObject.h"
 #import "JRCaptureUser+Extras.h"
 
+#define cJREncodedCaptureUser @"jrcapture.encodedCaptureUser"
+
 @interface NSArray (JRArray_StringArray)
 - (NSArray *)arrayOfStringsFromStringPluralDictionariesWithType:(NSString *)type;
 @end
@@ -59,9 +61,10 @@
 @end
 
 
-@interface JRCaptureObject ()
+@interface JRCaptureObject () <NSCoding>
 @property (retain)   NSString     *captureObjectPath;
 @property (readonly) NSMutableSet *dirtyPropertySet;
+@property BOOL canBeUpdatedOnCapture;
 - (NSDictionary *)toDictionaryForEncoder:(BOOL)forEncoder;
 - (NSDictionary *)toUpdateDictionary;
 - (NSDictionary *)toReplaceDictionary;

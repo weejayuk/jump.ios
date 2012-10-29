@@ -255,32 +255,7 @@
 }
 @end
 
-@interface JRCaptureUser (JRCaptureUser_Internal)
-+ (id)captureUserObjectFromDictionary:(NSDictionary*)dictionary withPath:(NSString *)capturePath;
-- (void)decodeFromDictionary:(NSDictionary *)dictionary;
-@end
-
 @implementation JRCaptureUser (JRCaptureUser_Extras)
-
-#define cJREncodedCaptureUser @"jrcapture.encodedCaptureUser"
-
-- (void)encodeWithCoder:(NSCoder *)coder
-{
-    NSDictionary *dictionary = [self toDictionaryForEncoder:YES];
-    [coder encodeObject:dictionary forKey:cJREncodedCaptureUser];
-}
-
-- (id)initWithCoder:(NSCoder *)coder
-{
-    if (self != nil)
-    {
-        [self init];
-        NSDictionary *dictionary = [coder decodeObjectForKey:cJREncodedCaptureUser];
-        [self decodeFromDictionary:dictionary];
-    }
-
-    return self;
-}
 
 - (void)createOnCaptureForDelegate:(id <JRCaptureUserDelegate>)delegate context:(NSObject *)context
 {

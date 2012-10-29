@@ -31,6 +31,11 @@
 #import <Foundation/Foundation.h>
 #import "JRCaptureUser.h"
 
+@interface JRCaptureUser (JRCaptureUser_Internal)
++ (id)captureUserObjectFromDictionary:(NSDictionary*)dictionary withPath:(NSString *)capturePath;
+- (void)decodeFromDictionary:(NSDictionary *)dictionary;
+@end
+
 /**
  * @brief
  * Protocol adopted by an object that wishes wishes to to receive notifications when creating a JRCaptureUser on the
@@ -145,7 +150,7 @@
  * @brief
  * The top-level class that holds the Capture user record
  **/
-@interface JRCaptureUser (JRCaptureUser_Extras) <NSCoding>
+@interface JRCaptureUser (JRCaptureUser_Extras)
 
 /**
  * Sent if ...

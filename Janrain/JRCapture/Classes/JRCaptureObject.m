@@ -345,6 +345,25 @@
     return objectCopy;
 }
 
+- (void)encodeWithCoder:(NSCoder *)coder
+{
+    NSDictionary *dictionary = [self toDictionaryForEncoder:YES];
+    [coder encodeObject:dictionary forKey:cJREncodedCaptureUser];
+}
+
+- (id)initWithCoder:(NSCoder *)coder
+{
+    if (self = [self init])
+    {
+        [dirtyPropertySet removeAllObjects];
+        NSDictionary *dictionary = [coder decodeObjectForKey:cJREncodedCaptureUser];
+        if ([self isKindOfClass:[JRCaptureUser class]])
+            [((JRCaptureUser *) self) decodeFromDictionary:dictionary];
+    }
+
+    return self;
+}
+
 - (NSDictionary *)toDictionaryForEncoder:(BOOL)forEncoder
 {
     [NSException raise:NSInternalInconsistencyException

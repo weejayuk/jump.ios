@@ -57,10 +57,11 @@
 @implementation SharedData
 static SharedData *singleton = nil;
 
-static NSString *appId              = @"appcfamhnpkagijaeinl";
+static NSString *engageAppId = @"appcfamhnpkagijaeinl";
 static NSString *captureApidDomain  = @"mobile.dev.janraincapture.com";
 static NSString *captureUIDomain    = @"mobile.dev.janraincapture.com";
-static NSString *clientId           = @"zc7tx83fqy68mper69mxbt5dfvd7c2jh";
+//static NSString *clientId           = @"zc7tx83fqy68mper69mxbt5dfvd7c2jh"; // full access clientId
+static NSString *clientId           = @"233ke5wadxhdcrqwgtm4wjsqm299yj6g"; // two step clientId
 static NSString *entityTypeName     = @"sample_user";
 
 ///* Carl's local instance */
@@ -88,7 +89,7 @@ static NSString *entityTypeName     = @"sample_user";
 {
     if ((self = [super init]))
     {
-        [JRCapture setEngageAppId:appId captureApidDomain:captureApidDomain
+        [JRCapture setEngageAppId:engageAppId captureApidDomain:captureApidDomain
                   captureUIDomain:captureUIDomain clientId:clientId
                 andEntityTypeName:entityTypeName];
 
