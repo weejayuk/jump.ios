@@ -136,19 +136,18 @@ static void handleCustomInterfaceException(NSException* exception, NSString* kJR
 - (void)presentModalNavigationController
 {
     DLog (@"");
-    void(^presentModal)(void) = ^ {
-        UIWindow* window = [UIApplication sharedApplication].keyWindow;
-        if (!window)
-            window = [[UIApplication sharedApplication].windows objectAtIndex:0];
+    UIWindow* window = [UIApplication sharedApplication].keyWindow;
+    if (!window) window = [[UIApplication sharedApplication].windows objectAtIndex:0];
 
+    void(^presentModal)(void) = ^{
         if ([window respondsToSelector:@selector(rootViewController)] && window.rootViewController)
         {
-            //[window.rootViewController presentModalViewController:myNavigationController animated:NO];
+            DLog("presented from RVC");
             [window.rootViewController presentViewController:myNavigationController animated:NO completion:nil];
         }
         else
         {
-            [window addSubview:self.view];
+            DLog("presented from window");
             [self presentModalViewController:myNavigationController animated:YES];
         }
     };
@@ -158,24 +157,19 @@ static void handleCustomInterfaceException(NSException* exception, NSString* kJR
         myNavigationController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
         myNavigationController.modalPresentationStyle = UIModalPresentationFormSheet;
 
-        //[self presentModalViewController:myNavigationController animated:YES];
-
         presentModal();
 
-        myNavigationController.view.superview.frame = CGRectMake(0, 0, 320, 460);
+        // myNavigationController.view.superview is some kind of platform dropshadow view that's automatically
+        // created and inserted into the view hierarchy above the modal VC when you use presentModalViewController
+        // it's resized as per this SO q:
+        // http://stackoverflow.com/questions/2457947/how-to-resize-a-uipresentationformsheet/4271364#4271364
 
-        //CGPoint viewCenter;
-        //if (UIInterfaceOrientationIsPortrait(self.interfaceOrientation))
-        //    viewCenter = self.view.center;
-        //else
-        //    viewCenter = CGPointMake(self.view.center.y, self.view.center.x);
-        //
-        //myNavigationController.view.superview.center = viewCenter;//self.view.center;
+        myNavigationController.view.superview.bounds = CGRectMake(0, 0, 320, 460);
+        myNavigationController.view.superview.center = window.center;
     }
     else
     {
         myNavigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-        //[self presentModalViewController:myNavigationController animated:YES];
         presentModal();
     }
 }
@@ -184,8 +178,8 @@ static void handleCustomInterfaceException(NSException* exception, NSString* kJR
 {
     DLog (@"");
 
-    //if (shouldUnloadSubviews)
-    //    [self.view removeFromSuperview];
+    if (shouldUnloadSubviews)
+        [self.view removeFromSuperview];
 
     [super viewDidAppear:animated];
 }
@@ -491,9 +485,9 @@ static JRUserInterfaceMaestro* singleton = nil;
         [sessionData removeDelegate:myPublishActivityController];
 }
 
-- (UINavigationController*)createDefaultNavigationController
+- (UINavigationController*)createDefaultNavigationControllerWithRootViewController:(UIViewController *)root
 {
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:nil];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:root];
     [navigationController autorelease];
     navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
     navigationController.navigationBar.clipsToBounds = YES;
@@ -501,7 +495,7 @@ static JRUserInterfaceMaestro* singleton = nil;
     navigationController.view.autoresizingMask =
             UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin
             | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
-    navigationController.view.frame = CGRectMake(0, 0, 320, 460);
+    navigationController.view.bounds = CGRectMake(0, 0, 320, 460);
 
     return navigationController;
 }
@@ -570,9 +564,15 @@ static JRUserInterfaceMaestro* singleton = nil;
     self.jrModalViewController = [[[JRModalViewController alloc] initWithNibName:nil bundle:nil] autorelease];
 
     if (usingCustomNav)
+    {
         jrModalViewController.myNavigationController = customModalNavigationController;
+        [jrModalViewController.myNavigationController pushViewController:rootViewController animated:NO];
+    }
     else
-        jrModalViewController.myNavigationController = [self createDefaultNavigationController];
+    {
+        jrModalViewController.myNavigationController =
+                [self createDefaultNavigationControllerWithRootViewController:rootViewController];
+    }
 
     if (padPopoverMode)
         jrModalViewController.myPopoverController =
@@ -587,10 +587,10 @@ static JRUserInterfaceMaestro* singleton = nil;
 
     UIPopoverArrowDirection arrowDirection = UIPopoverArrowDirectionAny;
     if ([customInterface objectForKey:kJRPopoverPresentationArrowDirection])
+    {
         arrowDirection = (UIPopoverArrowDirection)
                 [[customInterface objectForKey:kJRPopoverPresentationArrowDirection] intValue];
-
-    [jrModalViewController.myNavigationController pushViewController:rootViewController animated:NO];
+    }
 
     if ([self shouldOpenToUserLandingPage])
     {
@@ -598,10 +598,10 @@ static JRUserInterfaceMaestro* singleton = nil;
         [jrModalViewController.myNavigationController pushViewController:myUserLandingController animated:NO];
     }
 
-    //UIWindow* window = [UIApplication sharedApplication].keyWindow;
-    //if (!window)
-    //    window = [[UIApplication sharedApplication].windows objectAtIndex:0];
-    //[window addSubview:jrModalViewController.view];
+    UIWindow* window = [UIApplication sharedApplication].keyWindow;
+    if (!window)
+        window = [[UIApplication sharedApplication].windows objectAtIndex:0];
+    [window addSubview:jrModalViewController.view];
 
     if (padPopoverMode == PadPopoverFromBar)
         [jrModalViewController
