@@ -331,6 +331,7 @@ static JRCaptureData *singleton = nil;
 
 + (void)clearSignInState
 {
+    DLog(@"");
     NSString* currentUuid = [JRCaptureData captureDataInstance].uuid;
     [JRCaptureData deleteTokenFromKeychainOfType:JRTokenTypeAccess forUser:currentUuid];
     [JRCaptureData deleteTokenFromKeychainOfType:JRTokenTypeCreation forUser:currentUuid];

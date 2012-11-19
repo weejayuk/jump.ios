@@ -44,6 +44,10 @@
 #define cJRCurrentProvider  @"simpleCaptureDemo.currentProvider"
 #define cJRCaptureUser      @"simpleCaptureDemo.captureUser"
 
+@interface JRCapture (private_methods)
++(void)clearSignInState;
+@end
+
 @interface SharedData ()
 @property (strong) NSUserDefaults     *prefs;
 @property (strong) JRCaptureUser      *captureUser;
@@ -163,6 +167,8 @@ static NSString *entityTypeName     = @"sample_user";
     [prefs setObject:nil forKey:cJRCaptureUser];
 
     self.engageSignInWasCanceled = NO;
+
+    [JRCapture clearSignInState];
 }
 
 + (void)signOutCurrentUser

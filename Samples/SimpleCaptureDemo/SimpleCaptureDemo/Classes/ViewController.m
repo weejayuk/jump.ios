@@ -138,30 +138,6 @@
 
 - (IBAction)testerButtonPressed:(id)sender
 {
-    [SharedData signOutCurrentUser];
-    [[SharedData sharedData] setDemoSigninDelegate:self];
-    [JRCapture startCaptureConventionalSigninForUser:@"lilli@janrain.com" withPassword:@"aaaaa"
-                                      withSigninType:JRConventionalSigninEmailPassword
-                                         forDelegate:[SharedData sharedData]];
-//    DLog(@"");
-//   JRCaptureUser *captureUser = [JRCaptureUser captureUser];
-//
-//    captureUser.displayName = @"mcspilli";
-//    captureUser.avatar      = @"sexy_brunette.jpg";
-//      captureUser.bankroll    = [NSNumber numberWithDouble:1000.0];
-//
-//    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Welcome!"
-//                                                        message:@"You have just been awarded $1000 for joining!"
-//                                                       delegate:nil
-//                                              cancelButtonTitle:@"Dismiss"
-//                                              otherButtonTitles:nil];
-//    [alertView show];
-//
-//    [captureUser updateOnCaptureForDelegate:self context:nil];
-//
-//    JRBestHand *bestHand = [JRBestHand bestHand];
-//
-//    bestHand.
 }
 
 - (IBAction)signInButtonPressed:(id)sender
