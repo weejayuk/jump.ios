@@ -76,6 +76,7 @@ typedef enum
 + (NSString *)loadUuidForLastLoggedInUser;
 + (void)saveUuidForLastLoggedInUser:(NSString *)uuid;
 + (NSString *)retrieveTokenFromKeychainOfType:(JRTokenType)tokenType forUser:(NSString *)uuid;
+
 @property (nonatomic, copy) NSString *captureApidBaseUrl;
 @property (nonatomic, copy) NSString *captureUIBaseUrl;
 @property (nonatomic, copy) NSString *clientId;
@@ -326,5 +327,17 @@ static JRCaptureData *singleton = nil;
     [uuid release];
 
     [super dealloc];
+}
+
++ (void)clearSignInState
+{
+    DLog(@"");
+    NSString* currentUuid = [JRCaptureData captureDataInstance].uuid;
+    [JRCaptureData deleteTokenFromKeychainOfType:JRTokenTypeAccess forUser:currentUuid];
+    [JRCaptureData deleteTokenFromKeychainOfType:JRTokenTypeCreation forUser:currentUuid];
+    [JRCaptureData saveUuidForLastLoggedInUser:nil];
+    [JRCaptureData captureDataInstance].accessToken = nil;
+    [JRCaptureData captureDataInstance].creationToken = nil;
+    [JRCaptureData captureDataInstance].uuid = nil;
 }
 @end

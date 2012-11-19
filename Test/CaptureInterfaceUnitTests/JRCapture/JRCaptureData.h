@@ -51,4 +51,6 @@
 + (NSString *)captureMobileEndpointUrl;
 
 + (NSString *)getAccessToken;
+
++ (void)clearSignInState;
 @end

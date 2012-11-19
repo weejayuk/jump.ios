@@ -72,6 +72,23 @@
     return [JRCaptureData captureMobileEndpointUrl];
 }
 
+/**
+ * Clears user sign-in state from the Capture Library
+ * This includes:
+ *  - access token
+ *  - creation token
+ *  - uuid
+ * These are cleared from memory as well as from disk.
+ *
+ * This does not include:
+ *  - user model
+ * (User models are managed by the host application, not by the Capture library.)
+ */
++ (void)clearSignInState
+{
+    [JRCaptureData clearSignInState];
+}
+
 + (void)setAccessToken:(NSString *)newAccessToken
 {
     [JRCaptureData setAccessToken:newAccessToken forUser:nil];
