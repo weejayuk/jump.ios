@@ -49,6 +49,10 @@
     [window makeKeyAndVisible];
 }
 
+- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window1
+{
+    return UIInterfaceOrientationMaskAllButUpsideDown;
+}
 
 - (void)dealloc {
     [viewController release];

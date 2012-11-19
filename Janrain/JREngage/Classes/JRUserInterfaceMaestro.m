@@ -78,6 +78,10 @@ static void handleCustomInterfaceException(NSException* exception, NSString* kJR
 @synthesize myPopoverController;
 
 #define IS_IPAD ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad))
+#define IOS6 [[[UIDevice currentDevice] systemVersion] compare:@"6.0" options:NSNumericSearch] >= NSOrderedSame
+#define IS_PORTRAIT (UIDeviceOrientationIsPortrait([UIDevice currentDevice].orientation))
+#define IS_LANDSCAPE (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
+
 
 - (void)setMyNavigationController:(UINavigationController *)myNavigationController_
 {
@@ -138,9 +142,10 @@ static void handleCustomInterfaceException(NSException* exception, NSString* kJR
     DLog (@"");
     UIWindow* window = [UIApplication sharedApplication].keyWindow;
     if (!window) window = [[UIApplication sharedApplication].windows objectAtIndex:0];
+    BOOL hasRvc = [window respondsToSelector:@selector(rootViewController)] && window.rootViewController;
 
     void(^presentModal)(void) = ^{
-        if ([window respondsToSelector:@selector(rootViewController)] && window.rootViewController)
+        if (hasRvc)
         {
             DLog("presented from RVC");
             [window.rootViewController presentViewController:myNavigationController animated:NO completion:nil];
@@ -165,7 +170,17 @@ static void handleCustomInterfaceException(NSException* exception, NSString* kJR
         // http://stackoverflow.com/questions/2457947/how-to-resize-a-uipresentationformsheet/4271364#4271364
 
         myNavigationController.view.superview.bounds = CGRectMake(0, 0, 320, 460);
-        myNavigationController.view.superview.center = window.center;
+
+        //DLog("orientation: %i", [UIDevice currentDevice].orientation);
+        //[[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+        //DLog("orientation: %i", [UIDevice currentDevice].orientation);
+        //BOOL ios6 = IOS6;
+        //if (ios6 && hasRvc || ((!ios6) && UIDeviceOrientationIsPortrait(self.interfaceOrientation)))
+        //if (hasRvc || true)
+        //    myNavigationController.view.superview.center = myNavigationController.view.superview.superview.center;
+        //    myNavigationController.view.superview.center = window.center;
+        //else
+        //    myNavigationController.view.superview.center = CGPointMake(window.center.y, window.center.x);
     }
     else
     {

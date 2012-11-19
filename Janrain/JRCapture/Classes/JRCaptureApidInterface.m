@@ -210,8 +210,6 @@ typedef enum CaptureInterfaceStatEnum
             dataUsingEncoding:NSUTF8StringEncoding]];
     [body appendData:[[NSString stringWithFormat:@"&password=%@", password]
             dataUsingEncoding:NSUTF8StringEncoding]];
-    //[body appendData:[[NSString stringWithFormat:@"&type_name=%@", [JRCaptureData entityTypeName]]
-    //        dataUsingEncoding:NSUTF8StringEncoding]];
     [body appendData:[[NSString stringWithFormat:@"&client_id=%@", [JRCaptureData clientId]]
             dataUsingEncoding:NSUTF8StringEncoding]];
 
