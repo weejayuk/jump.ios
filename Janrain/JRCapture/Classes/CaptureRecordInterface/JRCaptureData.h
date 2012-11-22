@@ -35,6 +35,8 @@
  * Intended for internal use. Please see JRCapture.h
  */
 @interface JRCaptureData : NSObject
+@property(nonatomic, retain) id bpChannelUrl;
+
 + (void)setAccessToken:(NSString *)newAccessToken forUser:(NSString *)userId;
 + (void)setCreationToken:(NSString *)newCreationToken;
 + (NSString *)accessTokenForUser:(NSString *)userId;
@@ -53,4 +55,6 @@
 + (NSString *)getAccessToken;
 
 + (void)clearSignInState;
+
++ (void)setBackplaneChannelUrl:(NSString *)bpChannelUrl;
 @end
