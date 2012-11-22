@@ -46,6 +46,10 @@
 
 @interface SharedData : NSObject <JRCaptureSigninDelegate>
 @property(nonatomic, assign) BOOL engageSignInWasCanceled;
+@property(nonatomic, copy) NSString *bpChannelUrl;
+
+@property(nonatomic) NSString *lfToken;
+
 + (SharedData *)sharedData;
 + (JRCaptureUser *)captureUser;
 + (BOOL)isNew;

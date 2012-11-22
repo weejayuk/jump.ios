@@ -40,6 +40,8 @@
 #define ALog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
 
 #import "SharedData.h"
+#import "JSONKit.h"
+#import "JRConnectionManager.h"
 
 #define cJRCurrentProvider  @"simpleCaptureDemo.currentProvider"
 #define cJRCaptureUser      @"simpleCaptureDemo.captureUser"
@@ -61,23 +63,23 @@
 @implementation SharedData
 static SharedData *singleton = nil;
 
-static NSString *appId              = @"appcfamhnpkagijaeinl";
-static NSString *captureApidDomain  = @"mobile.dev.janraincapture.com";
-static NSString *captureUIDomain    = @"mobile.dev.janraincapture.com";
-static NSString *clientId           = @"zc7tx83fqy68mper69mxbt5dfvd7c2jh";
-static NSString *entityTypeName     = @"sample_user";
+// mobile-dev
+//static NSString *appId              = @"appcfamhnpkagijaeinl";
+//static NSString *captureApidDomain  = @"mobile.dev.janraincapture.com";
+//static NSString *captureUIDomain    = @"mobile.dev.janraincapture.com";
+//static NSString *clientId           = @"zc7tx83fqy68mper69mxbt5dfvd7c2jh";
+//static NSString *entityTypeName     = @"sample_user";
 
-///* Carl's local instance */
-//static NSString *appId             = @"pgfjodcppiaifejikhmh";
-//static NSString *captureApidDomain = @"http://10.0.10.47:8000";
-//static NSString *captureUIDomain   = @"http://10.0.10.47:5000";
-//static NSString *clientId          = @"puh6d29gb94mn9ek4v3w8f7w9hp58g2z";
-//static NSString *entityTypeName    = @"user2";
-
-//static NSString *appId          = @"mlfeingbenjalleljkpo";
-//static NSString *captureDomain  = @"https://demo.staging.janraincapture.com/";
-//static NSString *clientId       = @"svaf3gxsmcvyfpx5vcrdwyv2axvy9zqg";
-//static NSString *entityTypeName = @"demo_user";
+// fox-dev
+//static NSString *appId              =
+//static NSString *captureApidDomain  =
+//static NSString *captureUIDomain    =
+//static NSString *clientId           =
+//static NSString *entityTypeName     =
+//static NSString *bpBusUrlString     =
+//static NSString *liveFyreNetwork    =
+//static NSString *liveFyreSiteId     =
+//static NSString *liveFyreArticleId  =
 
 @synthesize captureUser;
 @synthesize prefs;
@@ -86,6 +88,8 @@ static NSString *entityTypeName     = @"sample_user";
 @synthesize isNew;
 @synthesize isNotYetCreated;
 @synthesize engageSignInWasCanceled;
+@synthesize bpChannelUrl = _bpChannelUrl;
+@synthesize lfToken = _lfToken;
 
 
 - (id)init
@@ -95,6 +99,7 @@ static NSString *entityTypeName     = @"sample_user";
         [JRCapture setEngageAppId:appId captureApidDomain:captureApidDomain
                   captureUIDomain:captureUIDomain clientId:clientId
                 andEntityTypeName:entityTypeName];
+        [self asyncFetchNewBackplaneChannel];
 
         prefs = [NSUserDefaults standardUserDefaults];
 
@@ -108,6 +113,71 @@ static NSString *entityTypeName     = @"sample_user";
     }
 
     return self;
+}
+
+- (void)asyncFetchNewBackplaneChannel
+{
+    NSURL *bpNewChanUrl = [NSURL URLWithString:[bpBusUrlString stringByAppendingString:@"/channel/new"]];
+    NSURLRequest *req = [NSURLRequest requestWithURL:bpNewChanUrl
+                                         cachePolicy:NSURLRequestReloadRevalidatingCacheData
+                                     timeoutInterval:5];
+    [NSURLConnection sendAsynchronousRequest:req
+                                       queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *r, NSData *d, NSError *e)
+                           {
+                               NSInteger code = [((NSHTTPURLResponse *) r) statusCode];
+                               if (e || code != 200)
+                               {
+                                   ALog(@"Err fetching new BP channel: %@, code: %i", e, code);
+                               }
+                               else
+                               {
+                                   NSString *body = [[NSString alloc] initWithData:d encoding:NSUTF8StringEncoding];
+                                   NSCharacterSet *quoteSet = [NSCharacterSet characterSetWithCharactersInString:@"\""];
+                                   NSString *bpChannel = [body stringByTrimmingCharactersInSet:quoteSet];
+                                   NSString *bpChannelUrl = [bpBusUrlString stringByAppendingFormat:@"/channel/%@",
+                                                                            bpChannel];
+                                   DLog(@"New BP channel: %@", bpChannelUrl);
+                                   self.bpChannelUrl = bpChannelUrl;
+                                   [JRCapture setBackplaneChannelUrl:bpChannelUrl];
+                               }
+                           }];
+}
+
+- (void)asyncFetchNewLiveFyreUserToken
+{
+    NSString *lfAuthUrl = [NSString stringWithFormat:@"http://admin.%@/api/v3.0/auth?bp_channel=%@&siteId=%@"
+                                                             "&articleId=%@",
+                                                     liveFyreNetwork,
+                                                     [self.bpChannelUrl stringByAddingUrlPercentEscapes],
+                                                     liveFyreSiteId, liveFyreArticleId];
+    NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:lfAuthUrl]
+                                         cachePolicy:NSURLRequestReloadRevalidatingCacheData
+                                     timeoutInterval:5];
+    [NSURLConnection sendAsynchronousRequest:req
+                                       queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *r, NSData *d, NSError *e)
+                           {
+                               NSInteger code = [((NSHTTPURLResponse *) r) statusCode];
+                               if (e || code != 200)
+                               {
+                                   ALog(@"Err fetching LF token: %@, code: %i", e, code);
+                               }
+                               else
+                               {
+                                   NSString *body = [[NSString alloc] initWithData:d encoding:NSUTF8StringEncoding];
+                                   NSDictionary *lfResponse = [body objectFromJSONString];
+                                   if (!lfResponse)
+                                   {
+                                       ALog(@"Error (%@)parsing LF response: %@", body);
+                                       return;
+                                   }
+                                   NSString *lfToken = [[lfResponse objectForKey:@"data"] objectForKey:@"token"];
+                                   DLog(@"New LF token: %@", lfToken);
+                                   self.lfToken = lfToken;
+                               }
+                           }];
+
 }
 
 /* Return the singleton instance of this class. */
