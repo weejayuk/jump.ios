@@ -138,6 +138,7 @@
 
 - (IBAction)testerButtonPressed:(id)sender
 {
+    [[SharedData sharedData] asyncFetchNewLiveFyreUserToken];
 }
 
 - (IBAction)signInButtonPressed:(id)sender

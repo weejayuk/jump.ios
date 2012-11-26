@@ -96,7 +96,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="testerButtonPressed:" destination="4" eventType="touchUpInside" id="d0S-ef-RKf"/>
+                                    <action selector="testerButtonPressed:" destination="2" eventType="touchUpInside" id="Hhe-0B-cT2"/>
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="PZq-1X-zH2">

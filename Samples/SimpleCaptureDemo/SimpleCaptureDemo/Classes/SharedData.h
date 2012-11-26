@@ -50,6 +50,8 @@
 
 @property(nonatomic) NSString *lfToken;
 
+- (void)asyncFetchNewLiveFyreUserToken;
+
 + (SharedData *)sharedData;
 + (JRCaptureUser *)captureUser;
 + (BOOL)isNew;

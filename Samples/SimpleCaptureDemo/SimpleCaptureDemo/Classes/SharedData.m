@@ -71,15 +71,15 @@ static SharedData *singleton = nil;
 //static NSString *entityTypeName     = @"sample_user";
 
 // fox-dev
-//static NSString *appId              =
-//static NSString *captureApidDomain  =
-//static NSString *captureUIDomain    =
-//static NSString *clientId           =
-//static NSString *entityTypeName     =
-//static NSString *bpBusUrlString     =
-//static NSString *liveFyreNetwork    =
-//static NSString *liveFyreSiteId     =
-//static NSString *liveFyreArticleId  =
+static NSString *appId              =
+static NSString *captureApidDomain  =
+static NSString *captureUIDomain    =
+static NSString *clientId           =
+static NSString *entityTypeName     =
+static NSString *bpBusUrlString     =
+static NSString *liveFyreNetwork    =
+static NSString *liveFyreSiteId     =
+static NSString *liveFyreArticleId  = 
 
 @synthesize captureUser;
 @synthesize prefs;
