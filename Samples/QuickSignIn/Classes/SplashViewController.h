@@ -38,7 +38,7 @@
 #import "UserModel.h"
 
 
-@interface RootViewController : UIViewController <UserModelDelegate, LibraryDialogDelegate>
+@interface SplashViewController : UIViewController <UserModelDelegate, LibraryDialogDelegate>
 {
     BOOL iPad;
     BOOL libraryDialogShowing;

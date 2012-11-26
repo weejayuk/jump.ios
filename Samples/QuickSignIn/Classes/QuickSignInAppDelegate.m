@@ -34,7 +34,7 @@
 
 
 #import "QuickSignInAppDelegate.h"
-#import "RootViewController.h"
+#import "SplashViewController.h"
 
 @implementation QuickSignInAppDelegate
 

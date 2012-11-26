@@ -33,9 +33,9 @@
  Date:   Tuesday, June 1, 2010
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#import "RootViewController.h"
+#import "SplashViewController.h"
 
-@implementation RootViewController
+@implementation SplashViewController
 
 /*
 // The designated initializer. Override to perform setup that is required before the view is loaded.

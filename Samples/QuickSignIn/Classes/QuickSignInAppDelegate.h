@@ -33,7 +33,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class RootViewController;
+@class SplashViewController;
 
 @interface QuickSignInAppDelegate : NSObject <UIApplicationDelegate> {
     UIWindow *window;
