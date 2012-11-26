@@ -150,7 +150,9 @@ static NSString *liveFyreArticleId  =
                                                              "&articleId=%@",
                                                      liveFyreNetwork,
                                                      [self.bpChannelUrl stringByAddingUrlPercentEscapes],
-                                                     liveFyreSiteId, liveFyreArticleId];
+                                                     liveFyreSiteId,
+                                                     [liveFyreArticleId stringByAddingUrlPercentEscapes]];
+    DLog(@"Fetching LF token from %@", lfAuthUrl);
     NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:lfAuthUrl]
                                          cachePolicy:NSURLRequestReloadRevalidatingCacheData
                                      timeoutInterval:5];
@@ -158,21 +160,26 @@ static NSString *liveFyreArticleId  =
                                        queue:[NSOperationQueue mainQueue]
                            completionHandler:^(NSURLResponse *r, NSData *d, NSError *e)
                            {
+                               NSString *body = d ? [[NSString alloc] initWithData:d encoding:NSUTF8StringEncoding]
+                                       : nil;
                                NSInteger code = [((NSHTTPURLResponse *) r) statusCode];
                                if (e || code != 200)
                                {
-                                   ALog(@"Err fetching LF token: %@, code: %i", e, code);
+                                   ALog(@"Err fetching LF token: %@, code: %i, body: %@", e, code, body);
                                }
                                else
                                {
-                                   NSString *body = [[NSString alloc] initWithData:d encoding:NSUTF8StringEncoding];
                                    NSDictionary *lfResponse = [body objectFromJSONString];
                                    if (!lfResponse)
                                    {
-                                       ALog(@"Error (%@)parsing LF response: %@", body);
+                                       ALog(@"Error parsing LF response: %@", body);
                                        return;
                                    }
                                    NSString *lfToken = [[lfResponse objectForKey:@"data"] objectForKey:@"token"];
+                                   if (!lfToken) {
+                                       ALog(@"Error retrieving token from LF response: %@", body);
+                                       return;
+                                   }
                                    DLog(@"New LF token: %@", lfToken);
                                    self.lfToken = lfToken;
                                }
