@@ -79,7 +79,7 @@ static NSString *entityTypeName     =
 static NSString *bpBusUrlString     =
 static NSString *liveFyreNetwork    =
 static NSString *liveFyreSiteId     =
-static NSString *liveFyreArticleId  = 
+static NSString *liveFyreArticleId  =
 
 @synthesize captureUser;
 @synthesize prefs;
@@ -90,7 +90,6 @@ static NSString *liveFyreArticleId  =
 @synthesize engageSignInWasCanceled;
 @synthesize bpChannelUrl = _bpChannelUrl;
 @synthesize lfToken = _lfToken;
-
 
 - (id)init
 {
