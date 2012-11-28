@@ -35,6 +35,7 @@
 
 #import "QuickSignInAppDelegate.h"
 #import "SplashViewController.h"
+#import "NewViewController.h"
 
 @implementation QuickSignInAppDelegate
 
@@ -45,7 +46,11 @@
 - (void)applicationDidFinishLaunching:(UIApplication *)application
 {
     // Override point for customization after app launch
-    [window addSubview:viewController.view];
+    NewViewController *nvc = [[NewViewController alloc] initWithNibName:nil bundle:nil];
+    [nvc autorelease];
+    [window addSubview:nvc.view];
+    [nvc addChildViewController:viewController];
+    [nvc.view addSubview:viewController.view];
     [window makeKeyAndVisible];
 }
 
@@ -60,5 +65,24 @@
     [super dealloc];
 }
 
+
+@end
+
+@implementation UINavigationController (iOS6OrientationFix)
+
+-(NSUInteger) supportedInterfaceOrientations
+{
+    return [self.topViewController supportedInterfaceOrientations];
+}
+
+- (BOOL)shouldAutorotate
+{
+    return [self.topViewController shouldAutorotate];
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    return [self.topViewController shouldAutorotateToInterfaceOrientation:toInterfaceOrientation];
+}
 
 @end

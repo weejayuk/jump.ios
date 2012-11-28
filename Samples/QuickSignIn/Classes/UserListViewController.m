@@ -218,11 +218,11 @@ Copyright (c) 2010, Janrain, Inc.
         iPad = YES;
 
     if (iPad)
-        userDetailsViewController = [[UserDetailsViewController alloc] initWithNibName:@"UserDetailViewController-iPad"
-                                                                      bundle:[NSBundle mainBundle]];
+        userDetailsViewController = [[UserDetailsViewController alloc] initWithNibName:nil
+                                                                                bundle:[NSBundle mainBundle]];
     else
-        userDetailsViewController = [[UserDetailsViewController alloc] initWithNibName:@"UserDetailsViewController"
-                                                                      bundle:[NSBundle mainBundle]];
+        userDetailsViewController = [[UserDetailsViewController alloc] initWithNibName:nil
+                                                                                bundle:[NSBundle mainBundle]];
 
     if (iPad)
         [self setUpNavigationBarForPad];

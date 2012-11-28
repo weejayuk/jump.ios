@@ -28,7 +28,6 @@
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
- File:   RootViewController.m
  Author: Lilli Szafranski - lilli@janrain.com, lillialexis@gmail.com
  Date:   Tuesday, June 1, 2010
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -36,16 +35,6 @@
 #import "SplashViewController.h"
 
 @implementation SplashViewController
-
-/*
-// The designated initializer. Override to perform setup that is required before the view is loaded.
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
-        // Custom initialization
-    }
-    return self;
-}
-*/
 
 - (void)viewDidLoad
 {
@@ -78,11 +67,9 @@
 //#endif
 
     if (iPad)
-        userListViewController = [[UserListViewController alloc] initWithNibName:@"UserListViewController-iPad"
-                                                                      bundle:[NSBundle mainBundle]];
+        userListViewController = [[UserListViewController alloc] initWithNibName:nil bundle:[NSBundle mainBundle]];
     else
-        userListViewController = [[UserListViewController alloc] initWithNibName:@"UserListViewController"
-                                                                      bundle:[NSBundle mainBundle]];
+        userListViewController = [[UserListViewController alloc] initWithNibName:nil bundle:[NSBundle mainBundle]];
 
     [[UserModel getUserModel] setNavigationController:[self navigationController]];
 

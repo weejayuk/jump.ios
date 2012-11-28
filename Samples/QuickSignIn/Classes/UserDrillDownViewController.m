@@ -317,8 +317,7 @@
         return;                    /* to the 'count' selector, we just cast as an array to avoid IDE complaints */
 
     UserDrillDownViewController *drillDown =
-            [[[UserDrillDownViewController alloc] initWithNibName:@"UserDrillDownViewController"
-                                                           bundle:[NSBundle mainBundle]
+            [[[UserDrillDownViewController alloc] initWithNibName:nil bundle:[NSBundle mainBundle]
                                                     andDataObject:value
                                                            forKey:key] autorelease];
 
