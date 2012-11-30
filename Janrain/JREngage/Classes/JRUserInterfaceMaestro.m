@@ -63,6 +63,45 @@ static void handleCustomInterfaceException(NSException* exception, NSString* kJR
 #endif
 }
 
+UIWindow *getWindow()
+{
+    UIWindow* window = [UIApplication sharedApplication].keyWindow;
+    if (!window) window = [[UIApplication sharedApplication].windows objectAtIndex:0];
+    return window;
+}
+
+@interface CustomNav : UINavigationController
+@end
+
+@implementation CustomNav
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+//    self.view.superview.bounds = CGRectMake(0, 0, 320, 480);
+//    self.view.superview.center = CGPointMake([[UIScreen mainScreen] bounds].size.width/2, [[UIScreen mainScreen] bounds].size.height/2);
+//    self.view.superview.center = getWindow().center;
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    UIResponder *responder = [self nextResponder];
+    
+    while (responder) {
+        DLog("%@", responder.class);
+        responder = [responder nextResponder];
+    }
+    
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+//    self.view.superview.center = CGPointMake([[UIScreen mainScreen] bounds].size.width/2, [[UIScreen mainScreen] bounds].size.height/2);
+//    self.view.superview.center = getWindow().center;
+}
+@end
+
 @interface JRModalViewController : UIViewController <UIPopoverControllerDelegate>
 {
     UINavigationController *myNavigationController;
@@ -75,35 +114,16 @@ static void handleCustomInterfaceException(NSException* exception, NSString* kJR
 @end
 
 @implementation JRModalViewController
-@synthesize myPopoverController;
+@synthesize myPopoverController, myNavigationController;
 
 #define IS_IPAD ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad))
 #define IOS6 [[[UIDevice currentDevice] systemVersion] compare:@"6.0" options:NSNumericSearch] >= NSOrderedSame
 #define IS_PORTRAIT (UIDeviceOrientationIsPortrait([UIDevice currentDevice].orientation))
 #define IS_LANDSCAPE (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
-
-
-- (void)setMyNavigationController:(UINavigationController *)myNavigationController_
-{
-    //if (myNavigationController.view && ![self.view.subviews containsObject:myNavigationController.view])
-    //    [myNavigationController.view removeFromSuperview];
-    //
-    //if (myNavigationController_.view) [self.view addSubview:myNavigationController_.view];
-
-    [myNavigationController_ retain];
-    [myNavigationController release];
-    myNavigationController = myNavigationController_;
-}
-
-- (UINavigationController *)myNavigationController
-{
-   return myNavigationController;
-}
-
 - (void)loadView
 {
     DLog (@"");
-    UIView *view = [[[UIView alloc] initWithFrame:[[UIApplication sharedApplication] keyWindow].frame] autorelease];
+    UIView *view = [[[UIView alloc] initWithFrame:getWindow().frame] autorelease];
 
     [view setAutoresizingMask:
             UIViewAutoresizingNone
@@ -140,8 +160,7 @@ static void handleCustomInterfaceException(NSException* exception, NSString* kJR
 - (void)presentModalNavigationController
 {
     DLog (@"");
-    UIWindow* window = [UIApplication sharedApplication].keyWindow;
-    if (!window) window = [[UIApplication sharedApplication].windows objectAtIndex:0];
+    UIWindow* window = getWindow();
     BOOL hasRvc = [window respondsToSelector:@selector(rootViewController)] && window.rootViewController;
 
     void(^presentModal)(void) = ^{
@@ -152,7 +171,7 @@ static void handleCustomInterfaceException(NSException* exception, NSString* kJR
         }
         else
         {
-            DLog("presented from window");
+            DLog("presented from view added to window");
             [self presentModalViewController:myNavigationController animated:YES];
         }
     };
@@ -170,6 +189,8 @@ static void handleCustomInterfaceException(NSException* exception, NSString* kJR
         // http://stackoverflow.com/questions/2457947/how-to-resize-a-uipresentationformsheet/4271364#4271364
 
         myNavigationController.view.superview.bounds = CGRectMake(0, 0, 320, 460);
+        myNavigationController.view.superview.center = self.view.center;
+//        myNavigationController.view.superview.center = CGPointMake([[UIScreen mainScreen] bounds].size.width/2, [[UIScreen mainScreen] bounds].size.height/2);
 
         //DLog("orientation: %i", [UIDevice currentDevice].orientation);
         //[[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
@@ -216,6 +237,16 @@ static void handleCustomInterfaceException(NSException* exception, NSString* kJR
     shouldUnloadSubviews = YES;
 
     [self.view removeFromSuperview];
+}
+
+- (NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskAll;
+}
+
+-(BOOL)shouldAutorotate
+{
+    return YES;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -502,7 +533,7 @@ static JRUserInterfaceMaestro* singleton = nil;
 
 - (UINavigationController*)createDefaultNavigationControllerWithRootViewController:(UIViewController *)root
 {
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:root];
+    UINavigationController *navigationController = [[CustomNav alloc] initWithRootViewController:root];
     [navigationController autorelease];
     navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
     navigationController.navigationBar.clipsToBounds = YES;
@@ -613,10 +644,7 @@ static JRUserInterfaceMaestro* singleton = nil;
         [jrModalViewController.myNavigationController pushViewController:myUserLandingController animated:NO];
     }
 
-    UIWindow* window = [UIApplication sharedApplication].keyWindow;
-    if (!window)
-        window = [[UIApplication sharedApplication].windows objectAtIndex:0];
-    [window addSubview:jrModalViewController.view];
+    [getWindow() addSubview:jrModalViewController.view];
 
     if (padPopoverMode == PadPopoverFromBar)
         [jrModalViewController

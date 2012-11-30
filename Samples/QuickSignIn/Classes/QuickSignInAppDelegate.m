@@ -35,7 +35,7 @@
 
 #import "QuickSignInAppDelegate.h"
 #import "SplashViewController.h"
-#import "NewViewController.h"
+#import "RootViewController.h"
 
 @implementation QuickSignInAppDelegate
 
@@ -46,12 +46,14 @@
 - (void)applicationDidFinishLaunching:(UIApplication *)application
 {
     // Override point for customization after app launch
-    NewViewController *nvc = [[NewViewController alloc] initWithNibName:nil bundle:nil];
-    [nvc autorelease];
-    [window addSubview:nvc.view];
-    [nvc addChildViewController:viewController];
-    [nvc.view addSubview:viewController.view];
+    RootViewController *rvc = [[RootViewController alloc] initWithNibName:nil bundle:nil];
+//    [rvc autorelease]; // prematurely releasing this prevents it from receiving
+                         // rotation events (maybe unregisters it from the responder
+                         // chain?)
+    [window addSubview:rvc.view];
     [window makeKeyAndVisible];
+    [rvc addChildViewController:viewController];
+    [rvc.view addSubview:viewController.view];
 }
 
 - (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window1
@@ -72,17 +74,19 @@
 
 -(NSUInteger) supportedInterfaceOrientations
 {
-    return [self.topViewController supportedInterfaceOrientations];
+    return UIInterfaceOrientationMaskAll;
+//    return [self.topViewController supportedInterfaceOrientations];
 }
 
 - (BOOL)shouldAutorotate
 {
-    return [self.topViewController shouldAutorotate];
+    return YES;
+//    return [self.topViewController shouldAutorotate];
 }
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
-{
-    return [self.topViewController shouldAutorotateToInterfaceOrientation:toInterfaceOrientation];
-}
+//
+//- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+//{
+//    return [self.topViewController shouldAutorotateToInterfaceOrientation:toInterfaceOrientation];
+//}
 
 @end

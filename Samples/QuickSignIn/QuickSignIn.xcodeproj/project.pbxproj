@@ -222,7 +222,7 @@
 		C01FCF5008A95454005424D6 /* UserDetailViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = C01FCF5008A95454005424D5 /* UserDetailViewController~ipad.xib */; };
 		C01FCF5008A95454005424D8 /* UserDrillDownViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = C01FCF5008A95454005424D7 /* UserDrillDownViewController~ipad.xib */; };
 		C01FCF5008A95454005424DA /* UserListViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = C01FCF5008A95454005424D9 /* UserListViewController~ipad.xib */; };
-		D866318616694ED200C59B03 /* NewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D866318516694ED200C59B03 /* NewViewController.m */; };
+		D866318616694ED200C59B03 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D866318516694ED200C59B03 /* RootViewController.m */; };
 		D89BEA951666E87500396BCD /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = D89BEA941666E87500396BCD /* MainWindow.xib */; };
 /* End PBXBuildFile section */
 
@@ -467,8 +467,8 @@
 		C01FCF5008A95454005424D5 /* UserDetailViewController~ipad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "UserDetailViewController~ipad.xib"; sourceTree = "<group>"; };
 		C01FCF5008A95454005424D7 /* UserDrillDownViewController~ipad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "UserDrillDownViewController~ipad.xib"; sourceTree = "<group>"; };
 		C01FCF5008A95454005424D9 /* UserListViewController~ipad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "UserListViewController~ipad.xib"; sourceTree = "<group>"; };
-		D866318416694ED200C59B03 /* NewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewViewController.h; sourceTree = "<group>"; };
-		D866318516694ED200C59B03 /* NewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewViewController.m; sourceTree = "<group>"; };
+		D866318416694ED200C59B03 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		D866318516694ED200C59B03 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		D89BEA941666E87500396BCD /* MainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -505,8 +505,8 @@
 				9FB40A2F12414DC500FDDA7B /* UserDetailsViewController.m */,
 				9F30A8E212BC0C4B00A30ADF /* EmbeddedNativeSignInViewController.h */,
 				9F30A8E312BC0C4B00A30ADF /* EmbeddedNativeSignInViewController.m */,
-				D866318416694ED200C59B03 /* NewViewController.h */,
-				D866318516694ED200C59B03 /* NewViewController.m */,
+				D866318416694ED200C59B03 /* RootViewController.h */,
+				D866318516694ED200C59B03 /* RootViewController.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1245,7 +1245,7 @@
 				9FB1287A15C7416C0072BEE6 /* JREngagePlugin.js in Sources */,
 				9FB1291515C7416C0072BEE6 /* JSONKit.m in Sources */,
 				9FB1291615C7416C0072BEE6 /* SFHFKeychainUtils.m in Sources */,
-				D866318616694ED200C59B03 /* NewViewController.m in Sources */,
+				D866318616694ED200C59B03 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

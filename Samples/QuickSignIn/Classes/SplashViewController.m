@@ -33,6 +33,11 @@
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #import "SplashViewController.h"
+#ifdef DEBUG
+#define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
+#else
+#define DLog(...)
+#endif
 
 @implementation SplashViewController
 
@@ -234,6 +239,11 @@
     [alert show];
 }
 
+- (BOOL)shouldAutorotate
+{
+    return YES;
+}
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {
     return YES;
@@ -247,6 +257,13 @@
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
+    UIResponder *responder = [self nextResponder];
+    
+    while (responder) {
+        DLog("%@", responder.class);
+        responder = [responder nextResponder];
+    }
+
     if (iPad)
         return;
 

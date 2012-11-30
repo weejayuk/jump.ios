@@ -6,13 +6,13 @@
 //
 //
 
-#import "NewViewController.h"
+#import "RootViewController.h"
 
-@interface NewViewController ()
+@interface RootViewController ()
 
 @end
 
-@implementation NewViewController
+@implementation RootViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -60,6 +60,15 @@
 {
     return YES;
 //    return [[[self childViewControllers]objectAtIndex:0] shouldAutorotateToInterfaceOrientation:toInterfaceOrientation];
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+//    for (UIViewController* cvc in self.childViewControllers)
+//    {
+//        [cvc willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+//    }
 }
 
 - (void)didReceiveMemoryWarning
