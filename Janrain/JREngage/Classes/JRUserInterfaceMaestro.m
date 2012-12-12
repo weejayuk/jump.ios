@@ -63,6 +63,11 @@ static void handleCustomInterfaceException(NSException* exception, NSString* kJR
 #endif
 }
 
+#define IS_IPAD ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad))
+#define IOS6 ([[[UIDevice currentDevice] systemVersion] compare:@"6.0" options:NSNumericSearch] >= NSOrderedSame)
+#define IS_PORTRAIT (UIDeviceOrientationIsPortrait([UIDevice currentDevice].orientation))
+#define IS_LANDSCAPE (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
+
 UIWindow *getWindow()
 {
     UIWindow* window = [UIApplication sharedApplication].keyWindow;
@@ -70,33 +75,21 @@ UIWindow *getWindow()
     return window;
 }
 
-@interface CustomNav : UINavigationController
+// This is an empty subclass of UINavigationController available for hooks into the view cycle if neccessary
+@interface CustomNavController : UINavigationController
 @end
 
-@implementation CustomNav
+@implementation CustomNavController
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
 //    self.view.superview.bounds = CGRectMake(0, 0, 320, 480);
-//    self.view.superview.center = CGPointMake([[UIScreen mainScreen] bounds].size.width/2, [[UIScreen mainScreen] bounds].size.height/2);
-//    self.view.superview.center = getWindow().center;
-}
-
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-    UIResponder *responder = [self nextResponder];
-    
-    while (responder) {
-        DLog("%@", responder.class);
-        responder = [responder nextResponder];
-    }
-    
-    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:animated];
 //    self.view.superview.center = CGPointMake([[UIScreen mainScreen] bounds].size.width/2, [[UIScreen mainScreen] bounds].size.height/2);
 //    self.view.superview.center = getWindow().center;
 }
@@ -116,10 +109,6 @@ UIWindow *getWindow()
 @implementation JRModalViewController
 @synthesize myPopoverController, myNavigationController;
 
-#define IS_IPAD ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad))
-#define IOS6 [[[UIDevice currentDevice] systemVersion] compare:@"6.0" options:NSNumericSearch] >= NSOrderedSame
-#define IS_PORTRAIT (UIDeviceOrientationIsPortrait([UIDevice currentDevice].orientation))
-#define IS_LANDSCAPE (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
 - (void)loadView
 {
     DLog (@"");
@@ -149,7 +138,7 @@ UIWindow *getWindow()
 - (void)presentPopoverNavigationControllerFromCGRect:(CGRect)rect inDirection:(UIPopoverArrowDirection)direction
 {
     DLog (@"");
-    CGRect popoverPresentationFrame = [self.view convertRect:rect toView:[[UIApplication sharedApplication] keyWindow]];
+    CGRect popoverPresentationFrame = [self.view convertRect:rect toView:getWindow()];
 
     [myPopoverController presentPopoverFromRect:popoverPresentationFrame
                                          inView:self.view
@@ -166,11 +155,13 @@ UIWindow *getWindow()
     void(^presentModal)(void) = ^{
         if (hasRvc)
         {
+            // If we can do it the right way
             DLog("presented from RVC");
-            [window.rootViewController presentViewController:myNavigationController animated:NO completion:nil];
+            [window.rootViewController presentViewController:myNavigationController animated:YES completion:nil];
         }
         else
         {
+            // Yarr, a pirate's life for me
             DLog("presented from view added to window");
             [self presentModalViewController:myNavigationController animated:YES];
         }
@@ -183,9 +174,9 @@ UIWindow *getWindow()
 
         presentModal();
 
-        // myNavigationController.view.superview is some kind of platform dropshadow view that's automatically
-        // created and inserted into the view hierarchy above the modal VC when you use presentModalViewController
-        // it's resized as per this SO q:
+        // myNavigationController.view.superview is a platform provided dropshadow view that's created and inserted
+        // into the view hierarchy above the modally presented VC when you use presentModalViewController it's resized
+        // as per this SO q:
         // http://stackoverflow.com/questions/2457947/how-to-resize-a-uipresentationformsheet/4271364#4271364
 
         myNavigationController.view.superview.bounds = CGRectMake(0, 0, 320, 460);
@@ -231,7 +222,10 @@ UIWindow *getWindow()
     else
     {
         myNavigationController.modalTransitionStyle = style;
-        [self dismissModalViewControllerAnimated:YES];
+        if (myNavigationController.presentingViewController)
+            [myNavigationController.presentingViewController dismissModalViewControllerAnimated:YES];
+        else
+            [self dismissModalViewControllerAnimated:YES];
     }
 
     shouldUnloadSubviews = YES;
@@ -239,16 +233,19 @@ UIWindow *getWindow()
     [self.view removeFromSuperview];
 }
 
+// For iOS >= 6
 - (NSUInteger)supportedInterfaceOrientations
 {
     return UIInterfaceOrientationMaskAll;
 }
 
+// iOS >= 6
 -(BOOL)shouldAutorotate
 {
     return YES;
 }
 
+// iOS <= 5
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     DLog(@"");
@@ -359,11 +356,6 @@ static JRUserInterfaceMaestro* singleton = nil;
         return nil;
 
     return [[((JRUserInterfaceMaestro*)[super allocWithZone:nil]) initWithSessionData:newSessionData] autorelease];
-}
-
-- (void)useApplicationNavigationController:(UINavigationController*)navigationController
-{
-    self.savedNavigationController = navigationController;
 }
 
 - (void)buildCustomInterface:(NSDictionary*)customizations
@@ -533,7 +525,7 @@ static JRUserInterfaceMaestro* singleton = nil;
 
 - (UINavigationController*)createDefaultNavigationControllerWithRootViewController:(UIViewController *)root
 {
-    UINavigationController *navigationController = [[CustomNav alloc] initWithRootViewController:root];
+    UINavigationController *navigationController = [[CustomNavController alloc] initWithRootViewController:root];
     [navigationController autorelease];
     navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
     navigationController.navigationBar.clipsToBounds = YES;
@@ -676,16 +668,6 @@ static JRUserInterfaceMaestro* singleton = nil;
     }
 }
 
-//- (void)showAuthenticationDialogWithForcedReauth
-//{
-//    [self setUpViewControllers];
-//
-//    if (customNavigationController && [customNavigationController isViewLoaded])
-//        [self loadCustomNavigationControllerWithViewController:myProvidersController];
-//    else
-//        [self loadModalNavigationControllerWithViewController:myProvidersController];
-//}
-
 
 // TODO: Document this function
 - (JRProvider*)weAreOnlyAuthenticatingOnThisProvider
@@ -712,16 +694,16 @@ static JRUserInterfaceMaestro* singleton = nil;
     [self setUpDialogPresentation];
     [self setUpViewControllers];
 
-    UIViewController *rootViewController;
+    UIViewController *dialogVcToPresent;
     if ((sessionData.currentProvider = [self weAreOnlyAuthenticatingOnThisProvider]))
-        rootViewController = (sessionData.currentProvider.requiresInput) ? (UIViewController*)myUserLandingController : (UIViewController*)myWebViewController;
+        dialogVcToPresent = sessionData.currentProvider.requiresInput ? myUserLandingController : myWebViewController;
     else
-        rootViewController = myProvidersController;
+        dialogVcToPresent = myProvidersController;
 
     if (usingAppNav)
-        [self loadApplicationNavigationControllerWithViewController:rootViewController];
+        [self loadApplicationNavigationControllerWithViewController:dialogVcToPresent];
     else
-        [self loadModalNavigationControllerWithViewController:rootViewController];
+        [self loadModalNavigationControllerWithViewController:dialogVcToPresent];
 }
 
 - (void)showPublishingDialogForActivityWithCustomInterface:(NSDictionary*)customizations

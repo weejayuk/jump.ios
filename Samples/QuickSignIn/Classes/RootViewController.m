@@ -1,11 +1,3 @@
-//
-//  NewViewController.m
-//  QuickSignIn
-//
-//  Created by Nathan on 11/30/12.
-//
-//
-
 #import "RootViewController.h"
 
 @interface RootViewController ()
@@ -27,13 +19,14 @@
 {
     self.wantsFullScreenLayout = YES;
     self.view = [[[UIView alloc] init] autorelease];
-    self.view.autoresizingMask = 0-1;
+    self.view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+
+    // Needed? Not sure.
     [self.view setNeedsLayout];
     [self.view sizeToFit];
 }
@@ -46,29 +39,22 @@
 
 -(NSUInteger) supportedInterfaceOrientations
 {
-    return UIInterfaceOrientationMaskAll;
-//    return [[[self childViewControllers]objectAtIndex:0] supportedInterfaceOrientations];
+    return UIInterfaceOrientationMaskAllButUpsideDown;
 }
 
 - (BOOL)shouldAutorotate
 {
     return YES;
-//    return [[[self childViewControllers]objectAtIndex:0] shouldAutorotate];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {
     return YES;
-//    return [[[self childViewControllers]objectAtIndex:0] shouldAutorotateToInterfaceOrientation:toInterfaceOrientation];
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-//    for (UIViewController* cvc in self.childViewControllers)
-//    {
-//        [cvc willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-//    }
 }
 
 - (void)didReceiveMemoryWarning

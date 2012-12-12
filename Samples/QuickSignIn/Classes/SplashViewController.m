@@ -183,13 +183,6 @@
 
 - (IBAction)viewHistoryButtonPressed:(id)sender
 {
-    // TODO: Temporarily here for testing
-//    CaptureNewUserViewController *viewController= [[[CaptureNewUserViewController alloc] initWithNibName:@"CaptureNewUserViewController"
-//                                                                  bundle:[NSBundle mainBundle]] autorelease];
-//
-//    [self.navigationController pushViewController:viewController animated:YES];
-    // TODO: Remove when done
-
     [[self navigationController] pushViewController:userListViewController animated:YES];
 }
 
@@ -257,13 +250,6 @@
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-    UIResponder *responder = [self nextResponder];
-    
-    while (responder) {
-        DLog("%@", responder.class);
-        responder = [responder nextResponder];
-    }
-
     if (iPad)
         return;
 
@@ -282,10 +268,6 @@
         default:
             break;
     }
-}
-
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
-{
 }
 
 - (void)didReceiveMemoryWarning

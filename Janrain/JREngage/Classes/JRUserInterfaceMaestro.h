@@ -63,21 +63,28 @@ typedef enum
 
 @interface JRUserInterfaceMaestro : NSObject <UIPopoverControllerDelegate>
 {
+    // This is an invisible container VC used to present the modal and popover dialogs
     JRModalViewController *jrModalViewController;
     JRSessionData   *sessionData;
     NSMutableArray  *delegates;
 
     PadPopoverMode padPopoverMode;
+    // Pushing JUMP dialog VCs onto the host application's UINavigationController
     BOOL usingAppNav;
+    // Presenting custom UINavigationController and pushing JUMP dialog VCs onto it
     BOOL usingCustomNav;
 
+    // The provider to direct-auth on
     NSString *directProvider;
 
+    // An app supplied UINavigationController to present, and then push dialogs onto, passed via custom interface dict
     UINavigationController  *customModalNavigationController;
+    // The host app's UINavigationController, optionally passed via custom interface dict
     UINavigationController  *applicationNavigationController;
     UINavigationController  *savedNavigationController;
     UIViewController        *viewControllerToPopTo;
 
+    // The JUMP VCs
     JRProvidersController       *myProvidersController;
     JRUserLandingController     *myUserLandingController;
     JRWebViewController         *myWebViewController;

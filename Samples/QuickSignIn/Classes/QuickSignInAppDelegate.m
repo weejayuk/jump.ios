@@ -47,13 +47,17 @@
 {
     // Override point for customization after app launch
     RootViewController *rvc = [[RootViewController alloc] initWithNibName:nil bundle:nil];
-//    [rvc autorelease]; // prematurely releasing this prevents it from receiving
-                         // rotation events (maybe unregisters it from the responder
-                         // chain?)
-    [window addSubview:rvc.view];
-    [window makeKeyAndVisible];
+    //[rvc autorelease]; // bad! see bullet near the bottom of:
+                         // http://developer.apple.com/library/ios/#qa/qa1688/_index.html
+
+    //requires iOS 5, breaking deployment down to 3, but that's fine until an app store update
     [rvc addChildViewController:viewController];
     [rvc.view addSubview:viewController.view];
+
+    [window addSubview:rvc.view];
+    [window makeKeyAndVisible];
+    //requires iOS 4, breaking deployment down to 3, but that's fine until an app store update
+    window.rootViewController = rvc;
 }
 
 - (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window1
@@ -70,23 +74,22 @@
 
 @end
 
-@implementation UINavigationController (iOS6OrientationFix)
-
--(NSUInteger) supportedInterfaceOrientations
-{
-    return UIInterfaceOrientationMaskAll;
-//    return [self.topViewController supportedInterfaceOrientations];
-}
-
-- (BOOL)shouldAutorotate
-{
-    return YES;
-//    return [self.topViewController shouldAutorotate];
-}
+//I think this is not needed
+//@implementation UINavigationController (iOS6OrientationFix)
+//
+//-(NSUInteger) supportedInterfaceOrientations
+//{
+//    return UIInterfaceOrientationMaskAllButUpsideDown;
+//}
+//
+//- (BOOL)shouldAutorotate
+//{
+//    return YES;
+//}
 //
 //- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 //{
 //    return [self.topViewController shouldAutorotateToInterfaceOrientation:toInterfaceOrientation];
 //}
-
-@end
+//
+//@end
