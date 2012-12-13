@@ -103,9 +103,12 @@ void centerViewChain(UIView *view)
 // Provides a hand-made cover-vertical mimic animation to accomodate for iOS6 breaking the animation of the FormSheet
 // size hacks
 @interface CustomAnimationController : UIViewController
+@property (retain) UIViewController *jrPresentingViewController;
 @end
 
 @implementation CustomAnimationController
+@synthesize jrPresentingViewController;
+
 - (void)loadView
 {
     [self setView:[[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)] autorelease]];
@@ -205,6 +208,7 @@ void centerViewChain(UIView *view)
 {
     DLog (@"");
     BOOL hasRvc = [getWindow() respondsToSelector:@selector(rootViewController)] && getWindow().rootViewController;
+    UIViewController *rvc = hasRvc ? getWindow().rootViewController : nil;
 
     myNavigationController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     myNavigationController.modalPresentationStyle = UIModalPresentationFormSheet;
@@ -213,14 +217,16 @@ void centerViewChain(UIView *view)
     animationController.modalTransitionStyle = myNavigationController.modalTransitionStyle;
     animationController.modalPresentationStyle = myNavigationController.modalPresentationStyle;
 
-    if (hasRvc)
+    if (rvc)
     {
         // If we can do it the right way, and do the animation by hand
-        [getWindow().rootViewController presentModalViewController:animationController animated:NO];
+        animationController.jrPresentingViewController = rvc;
+        [rvc presentModalViewController:animationController animated:NO];
     }
     else
     {
         // Yarr, it be a pirate's life for me
+        animationController.jrPresentingViewController = self;
         [self presentModalViewController:animationController animated:NO];
     }
 }
@@ -246,10 +252,7 @@ void centerViewChain(UIView *view)
     else
     {
         animationController.modalTransitionStyle = myNavigationController.modalTransitionStyle = style;
-        if (animationController.presentingViewController)
-            [animationController.presentingViewController dismissModalViewControllerAnimated:YES];
-        else
-            [self dismissModalViewControllerAnimated:YES];
+        [animationController.jrPresentingViewController dismissModalViewControllerAnimated:YES];
     }
 
     shouldUnloadSubviews = YES;
