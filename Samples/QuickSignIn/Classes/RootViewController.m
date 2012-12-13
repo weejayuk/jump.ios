@@ -18,8 +18,8 @@
 - (void)loadView
 {
     self.wantsFullScreenLayout = YES;
-    self.view = [[[UIView alloc] init] autorelease];
-    self.view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    [super setView:[[[UIView alloc] init] autorelease]];
+    [super view].autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
 }
 
 - (void)viewWillAppear:(BOOL)animated

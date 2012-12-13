@@ -68,6 +68,7 @@ static void handleCustomInterfaceException(NSException* exception, NSString* kJR
 #define IS_PORTRAIT (UIDeviceOrientationIsPortrait([UIDevice currentDevice].orientation))
 #define IS_LANDSCAPE (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
 
+// get the app window with some fallbacks for legacy bad behavior?
 UIWindow *getWindow()
 {
     UIWindow* window = [UIApplication sharedApplication].keyWindow;
@@ -75,39 +76,91 @@ UIWindow *getWindow()
     return window;
 }
 
-// This is an empty subclass of UINavigationController available for hooks into the view cycle if neccessary
-@interface CustomNavController : UINavigationController
+// return the center of a view in it's own coordinate system
+CGPoint centerOfView(UIView *v)
+{
+    return CGPointMake(v.bounds.origin.x + v.bounds.size.width / 2, v.bounds.origin.y + v.bounds.size.height / 2);
+}
+
+// for each view in a chain of views from a view to a root view (:= a view with no superview),
+// center the view in it's superview
+void centerViewChain(UIView *view)
+{
+    NSMutableArray *views = [NSMutableArray array];
+    UIView *v = view;
+    while (v && ![v isKindOfClass:[UIWindow class]])
+    {
+        [views insertObject:v atIndex:0];
+        v = v.superview;
+    }
+    for (NSUInteger i = 0; i < [views count]; i++)
+    {
+        v = [views objectAtIndex:i];
+        v.center = centerOfView(v.superview);
+    }
+}
+
+// Provides a hand-made cover-vertical mimic animation to accomodate for iOS6 breaking the animation of the FormSheet
+// size hacks
+@interface CustomAnimationController : UIViewController
 @end
 
-@implementation CustomNavController
-
-- (void)viewWillAppear:(BOOL)animated
+@implementation CustomAnimationController
+- (void)loadView
 {
-    [super viewWillAppear:animated];
-//    self.view.superview.bounds = CGRectMake(0, 0, 320, 480);
+    [self setView:[[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)] autorelease]];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-//    self.view.superview.center = CGPointMake([[UIScreen mainScreen] bounds].size.width/2, [[UIScreen mainScreen] bounds].size.height/2);
-//    self.view.superview.center = getWindow().center;
+    if (animated) return;
+
+    // hack to resize platform provided dropshadow view that's inserted
+    // into the view hierarchy above the modally presented VC when you use presentModalViewController
+    // related to this SO q:
+    // http://stackoverflow.com/questions/2457947/how-to-resize-a-uipresentationformsheet/4271364#4271364
+
+    UIView *v = self.view.superview;
+    while (v)
+    {
+        //DLog("View chain: %@", [v description]);
+        if ([v isKindOfClass:NSClassFromString(@"UIDropShadowView")])
+            v.bounds = CGRectMake(0, 0, 320, 460);
+        v = v.superview;
+    }
+
+    centerViewChain(self.view);
+
+    CGPoint center = self.view.superview.center;
+
+    // move parent view offscreen. coordinate space transform fuckery to account for orientations.
+    CGPoint c = [self.view.superview convertPoint:self.view.superview.center fromView:self.view.superview.superview];
+    CGFloat y = c.y;
+    CGPoint c_ = CGPointMake(c.x, y * 2 + 240);
+    self.view.superview.center = [self.view.superview convertPoint:c_ toView:self.view.superview.superview];
+
+    // animate parent view back onscreen
+    [UIView animateWithDuration:0.5
+                          delay:0
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^ { self.view.superview.center = center; }
+                     completion:nil];
 }
 @end
 
+// Terrible, terrible hacks.
 @interface JRModalViewController : UIViewController <UIPopoverControllerDelegate>
 {
-    UINavigationController *myNavigationController;
-    UIPopoverController    *myPopoverController;
-
     BOOL shouldUnloadSubviews;
 }
+@property (retain) CustomAnimationController *animationController;
 @property (retain) UINavigationController *myNavigationController;
-@property (retain) UIPopoverController    *myPopoverController;
+@property (retain) UIPopoverController *myPopoverController;
 @end
 
 @implementation JRModalViewController
-@synthesize myPopoverController, myNavigationController;
+@synthesize myPopoverController, myNavigationController, animationController;
 
 - (void)loadView
 {
@@ -122,6 +175,8 @@ UIWindow *getWindow()
     ];
 
     shouldUnloadSubviews = NO;
+
+    self.animationController = [[[CustomAnimationController alloc] initWithNibName:nil bundle:nil] autorelease];
 
     [self setView:view];
 }
@@ -149,55 +204,24 @@ UIWindow *getWindow()
 - (void)presentModalNavigationController
 {
     DLog (@"");
-    UIWindow* window = getWindow();
-    BOOL hasRvc = [window respondsToSelector:@selector(rootViewController)] && window.rootViewController;
+    BOOL hasRvc = [getWindow() respondsToSelector:@selector(rootViewController)] && getWindow().rootViewController;
 
-    void(^presentModal)(void) = ^{
-        if (hasRvc)
-        {
-            // If we can do it the right way
-            DLog("presented from RVC");
-            [window.rootViewController presentViewController:myNavigationController animated:YES completion:nil];
-        }
-        else
-        {
-            // Yarr, a pirate's life for me
-            DLog("presented from view added to window");
-            [self presentModalViewController:myNavigationController animated:YES];
-        }
-    };
+    myNavigationController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    myNavigationController.modalPresentationStyle = UIModalPresentationFormSheet;
+    [animationController addChildViewController:myNavigationController];
+    [animationController.view addSubview:myNavigationController.view];
+    animationController.modalTransitionStyle = myNavigationController.modalTransitionStyle;
+    animationController.modalPresentationStyle = myNavigationController.modalPresentationStyle;
 
-    if (IS_IPAD)
+    if (hasRvc)
     {
-        myNavigationController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-        myNavigationController.modalPresentationStyle = UIModalPresentationFormSheet;
-
-        presentModal();
-
-        // myNavigationController.view.superview is a platform provided dropshadow view that's created and inserted
-        // into the view hierarchy above the modally presented VC when you use presentModalViewController it's resized
-        // as per this SO q:
-        // http://stackoverflow.com/questions/2457947/how-to-resize-a-uipresentationformsheet/4271364#4271364
-
-        myNavigationController.view.superview.bounds = CGRectMake(0, 0, 320, 460);
-        myNavigationController.view.superview.center = self.view.center;
-//        myNavigationController.view.superview.center = CGPointMake([[UIScreen mainScreen] bounds].size.width/2, [[UIScreen mainScreen] bounds].size.height/2);
-
-        //DLog("orientation: %i", [UIDevice currentDevice].orientation);
-        //[[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
-        //DLog("orientation: %i", [UIDevice currentDevice].orientation);
-        //BOOL ios6 = IOS6;
-        //if (ios6 && hasRvc || ((!ios6) && UIDeviceOrientationIsPortrait(self.interfaceOrientation)))
-        //if (hasRvc || true)
-        //    myNavigationController.view.superview.center = myNavigationController.view.superview.superview.center;
-        //    myNavigationController.view.superview.center = window.center;
-        //else
-        //    myNavigationController.view.superview.center = CGPointMake(window.center.y, window.center.x);
+        // If we can do it the right way, and do the animation by hand
+        [getWindow().rootViewController presentModalViewController:animationController animated:NO];
     }
     else
     {
-        myNavigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-        presentModal();
+        // Yarr, it be a pirate's life for me
+        [self presentModalViewController:animationController animated:NO];
     }
 }
 
@@ -221,9 +245,9 @@ UIWindow *getWindow()
     }
     else
     {
-        myNavigationController.modalTransitionStyle = style;
-        if (myNavigationController.presentingViewController)
-            [myNavigationController.presentingViewController dismissModalViewControllerAnimated:YES];
+        animationController.modalTransitionStyle = myNavigationController.modalTransitionStyle = style;
+        if (animationController.presentingViewController)
+            [animationController.presentingViewController dismissModalViewControllerAnimated:YES];
         else
             [self dismissModalViewControllerAnimated:YES];
     }
@@ -525,7 +549,7 @@ static JRUserInterfaceMaestro* singleton = nil;
 
 - (UINavigationController*)createDefaultNavigationControllerWithRootViewController:(UIViewController *)root
 {
-    UINavigationController *navigationController = [[CustomNavController alloc] initWithRootViewController:root];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:root];
     [navigationController autorelease];
     navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
     navigationController.navigationBar.clipsToBounds = YES;
@@ -681,7 +705,6 @@ static JRUserInterfaceMaestro* singleton = nil;
 //    [providers removeObjectsInArray:[customInterface objectForKey:kJRRemoveProvidersFromAuthentication]];
 //    if ([providers count] == 1)
 //        return [sessionData getProviderNamed:[providers objectAtIndex:0]];
-
 
     sessionData.authenticatingDirectlyOnThisProvider = NO;
     return nil;
