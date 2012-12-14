@@ -104,6 +104,7 @@
 {
     DLog(@"");
     [super viewDidLoad];
+    myTableView.backgroundColor = [UIColor clearColor];
 
  /* If there is a UIColor object set for the background color, use this */
     if ([customInterface objectForKey:kJRAuthenticationBackgroundColor])

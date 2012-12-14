@@ -104,19 +104,21 @@ void centerViewChain(UIView *view)
 // size hacks
 @interface CustomAnimationController : UIViewController
 @property (retain) UIViewController *jrPresentingViewController;
+@property (retain) UIViewController *jrChildViewController;
 @end
 
 @implementation CustomAnimationController
-@synthesize jrPresentingViewController;
-
+@synthesize jrPresentingViewController, jrChildViewController;
 - (void)loadView
 {
     [self setView:[[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)] autorelease]];
+    self.view.backgroundColor = jrChildViewController.view.backgroundColor;
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    [jrChildViewController viewDidAppear:animated];
     if (animated) return;
 
     // hack to resize platform provided dropshadow view that's inserted
@@ -150,6 +152,65 @@ void centerViewChain(UIView *view)
                      animations:^ { self.view.superview.center = center; }
                      completion:nil];
 }
+
+- (BOOL)shouldAutomaticallyForwardRotationMethods
+{
+    return NO;
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    return [jrChildViewController shouldAutorotateToInterfaceOrientation:toInterfaceOrientation];
+}
+
+- (BOOL)shouldAutorotate
+{
+    return [jrChildViewController shouldAutorotate];
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+                                duration:(NSTimeInterval)duration
+{
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    [jrChildViewController willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+}
+
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+                                         duration:(NSTimeInterval)duration
+{
+    [super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    [jrChildViewController willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+    [jrChildViewController didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+}
+
+- (BOOL)shouldAutomaticallyForwardAppearanceMethods
+{
+    return NO;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [jrChildViewController viewWillAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [jrChildViewController viewWillDisappear:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [jrChildViewController viewDidDisappear:animated];
+}
+
 @end
 
 // Terrible, terrible hacks.
@@ -212,7 +273,7 @@ void centerViewChain(UIView *view)
 
     myNavigationController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     myNavigationController.modalPresentationStyle = UIModalPresentationFormSheet;
-    [animationController addChildViewController:myNavigationController];
+    animationController.jrChildViewController = myNavigationController;
     [animationController.view addSubview:myNavigationController.view];
     animationController.modalTransitionStyle = myNavigationController.modalTransitionStyle;
     animationController.modalPresentationStyle = myNavigationController.modalPresentationStyle;

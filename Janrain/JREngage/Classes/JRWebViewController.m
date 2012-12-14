@@ -91,6 +91,8 @@
     DLog(@"");
     [super viewDidLoad];
 
+    myWebView.backgroundColor = [UIColor clearColor];
+
     self.navigationItem.backBarButtonItem.target = sessionData;
     self.navigationItem.backBarButtonItem.action = @selector(triggerAuthenticationDidStartOver:);
 
