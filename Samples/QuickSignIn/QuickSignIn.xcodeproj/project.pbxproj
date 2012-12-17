@@ -601,12 +601,12 @@
 		9F521EA312B062940073ABAE /* xibs */ = {
 			isa = PBXGroup;
 			children = (
-				C01FCF5008A95454005424D1 /* UserDrillDownViewController.xib */,
-				C01FCF5008A95454005424CF /* SplashViewController.xib */,
-				C01FCF5008A95454005424CD /* InfoViewController.xib */,
-				9F521EA612B062940073ABAE /* UserListViewController.xib */,
-				9F521EA712B062940073ABAE /* UserDetailsViewController.xib */,
 				D89BEA941666E87500396BCD /* MainWindow.xib */,
+				C01FCF5008A95454005424CF /* SplashViewController.xib */,
+				9F521EA612B062940073ABAE /* UserListViewController.xib */,
+				C01FCF5008A95454005424D1 /* UserDrillDownViewController.xib */,
+				C01FCF5008A95454005424CD /* InfoViewController.xib */,
+				9F521EA712B062940073ABAE /* UserDetailsViewController.xib */,
 			);
 			path = xibs;
 			sourceTree = "<group>";

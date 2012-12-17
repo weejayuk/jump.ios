@@ -278,17 +278,19 @@ void centerViewChain(UIView *view)
     animationController.modalTransitionStyle = myNavigationController.modalTransitionStyle;
     animationController.modalPresentationStyle = myNavigationController.modalPresentationStyle;
 
+    UIViewController *vcToPresent = IS_IPAD ? animationController : myNavigationController;
     if (rvc)
     {
         // If we can do it the right way, and do the animation by hand
         animationController.jrPresentingViewController = rvc;
-        [rvc presentModalViewController:animationController animated:NO];
+        [rvc presentModalViewController:vcToPresent animated:NO];
     }
     else
     {
         // Yarr, it be a pirate's life for me
+        [getWindow() addSubview:self.view];
         animationController.jrPresentingViewController = self;
-        [self presentModalViewController:animationController animated:NO];
+        [self presentModalViewController:vcToPresent animated:NO];
     }
 }
 
@@ -723,8 +725,6 @@ static JRUserInterfaceMaestro* singleton = nil;
         [sessionData setCurrentProvider:[sessionData getProviderNamed:sessionData.returningBasicProvider]];
         [jrModalViewController.myNavigationController pushViewController:myUserLandingController animated:NO];
     }
-
-    [getWindow() addSubview:jrModalViewController.view];
 
     if (padPopoverMode == PadPopoverFromBar)
         [jrModalViewController
