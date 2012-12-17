@@ -73,6 +73,8 @@
 {
     [super viewDidLoad];
 
+    myTableView.backgroundColor = [UIColor clearColor];
+
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
         iPad = YES;
 

@@ -81,6 +81,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    myTableView.backgroundColor = [UIColor clearColor];
 
 //    self.view.autoresizingMask = UIViewAutoresizingNone |
 //                                 UIViewAutoresizingFlexibleWidth |

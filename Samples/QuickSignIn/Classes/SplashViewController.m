@@ -71,11 +71,7 @@
     self.navigationItem.rightBarButtonItem.enabled = YES;
 //#endif
 
-    if (iPad)
-        userListViewController = [[UserListViewController alloc] initWithNibName:nil bundle:[NSBundle mainBundle]];
-    else
-        userListViewController = [[UserListViewController alloc] initWithNibName:nil bundle:[NSBundle mainBundle]];
-
+    userListViewController = [[UserListViewController alloc] initWithNibName:nil bundle:[NSBundle mainBundle]];
     [[UserModel getUserModel] setNavigationController:[self navigationController]];
 
     /* Check to see if a user is already logged in, and, if so, wait half a second then drill down a level. */

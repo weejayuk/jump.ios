@@ -102,6 +102,7 @@ void centerViewChain(UIView *view)
 
 // Provides a hand-made cover-vertical mimic animation to accomodate for iOS6 breaking the animation of the FormSheet
 // size hacks
+// Also forwards appearance and rotation events for iOS 4 iPads
 @interface CustomAnimationController : UIViewController
 @property (retain) UIViewController *jrPresentingViewController;
 @property (retain) UIViewController *jrChildViewController;
@@ -225,6 +226,16 @@ void centerViewChain(UIView *view)
 
 @implementation JRModalViewController
 @synthesize myPopoverController, myNavigationController, animationController;
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self)
+    {
+        self.animationController = [[[CustomAnimationController alloc] initWithNibName:nil bundle:nil] autorelease];
+    }
+
+    return self;
+}
 
 - (void)loadView
 {
@@ -239,8 +250,6 @@ void centerViewChain(UIView *view)
     ];
 
     shouldUnloadSubviews = NO;
-
-    self.animationController = [[[CustomAnimationController alloc] initWithNibName:nil bundle:nil] autorelease];
 
     [self setView:view];
 }

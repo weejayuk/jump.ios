@@ -94,6 +94,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    myTableView.backgroundColor = [UIColor clearColor];
     [myTableView reloadData];
 }
 
