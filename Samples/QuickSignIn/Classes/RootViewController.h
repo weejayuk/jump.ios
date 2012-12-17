@@ -2,6 +2,6 @@
 
 @interface RootViewController : UIViewController
 
-@property(retain) UIViewController *jrChildViewController;
+@property(retain) UINavigationController *jrChildNavController;
 
 @end

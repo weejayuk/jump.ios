@@ -166,7 +166,9 @@ void centerViewChain(UIView *view)
 
 - (BOOL)shouldAutorotate
 {
-    return [jrChildViewController shouldAutorotate];
+    if ([jrChildViewController respondsToSelector:@selector(shouldAutorotate)])
+        return [jrChildViewController shouldAutorotate];
+    return YES;
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
@@ -282,24 +284,36 @@ void centerViewChain(UIView *view)
 
     myNavigationController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     myNavigationController.modalPresentationStyle = UIModalPresentationFormSheet;
-    animationController.jrChildViewController = myNavigationController;
-    [animationController.view addSubview:myNavigationController.view];
-    animationController.modalTransitionStyle = myNavigationController.modalTransitionStyle;
     animationController.modalPresentationStyle = myNavigationController.modalPresentationStyle;
 
-    UIViewController *vcToPresent = IS_IPAD ? animationController : myNavigationController;
+    // Figure out what to present
+    UIViewController *vcToPresent;
+    if (IS_IPAD)
+    {
+        vcToPresent = animationController ;
+        [animationController.view addSubview:myNavigationController.view];
+        animationController.jrChildViewController = myNavigationController;
+    }
+    else
+    {
+        vcToPresent = myNavigationController;
+    }
+
+    // Figure out how to present it and present it
     if (rvc)
     {
         // If we can do it the right way, and do the animation by hand
-        animationController.jrPresentingViewController = rvc;
-        [rvc presentModalViewController:vcToPresent animated:NO];
+        animationController.jrPresentingViewController = rvc; // just using this property as scratch space to hang on
+                                                              // to the presenting VC for dismissing the dialog
+        [rvc presentModalViewController:vcToPresent animated:!IS_IPAD];
     }
     else
     {
         // Yarr, it be a pirate's life for me
         [getWindow() addSubview:self.view];
-        animationController.jrPresentingViewController = self;
-        [self presentModalViewController:vcToPresent animated:NO];
+        animationController.jrPresentingViewController = self; // just using this property as scratch space to hang on
+                                                               // to the presenting VC for dismissing the dialog
+        [self presentModalViewController:vcToPresent animated:!IS_IPAD];
     }
 }
 

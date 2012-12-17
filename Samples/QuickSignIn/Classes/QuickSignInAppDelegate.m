@@ -51,7 +51,7 @@
                          // http://developer.apple.com/library/ios/#qa/qa1688/_index.html
 
     //requires iOS 5, breaking deployment down to 3, but that's fine until an app store update
-    rvc.jrChildViewController = viewController;
+    rvc.jrChildNavController = viewController;
     [rvc.view addSubview:viewController.view];
 
     [window addSubview:rvc.view];

@@ -5,7 +5,7 @@
 @end
 
 @implementation RootViewController
-@synthesize jrChildViewController;
+@synthesize jrChildNavController;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -28,18 +28,6 @@
     return UIInterfaceOrientationMaskAllButUpsideDown;
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (void)dealloc
-{
-    [jrChildViewController release];
-    [super dealloc];
-}
-
 - (BOOL)shouldAutomaticallyForwardRotationMethods
 {
     return NO;
@@ -47,32 +35,34 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {
-    return [jrChildViewController shouldAutorotateToInterfaceOrientation:toInterfaceOrientation];
+    return [jrChildNavController shouldAutorotateToInterfaceOrientation:toInterfaceOrientation];
 }
 
 - (BOOL)shouldAutorotate
 {
-    return [jrChildViewController shouldAutorotate];
+    if ([jrChildNavController respondsToSelector:@selector(shouldAutorotate)])
+        return [jrChildNavController shouldAutorotate];
+    return YES;
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
                                 duration:(NSTimeInterval)duration
 {
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-    [jrChildViewController willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    [jrChildNavController willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
                                          duration:(NSTimeInterval)duration
 {
     [super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
-    [jrChildViewController willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    [jrChildNavController willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-    [jrChildViewController didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+    [jrChildNavController didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 
 - (BOOL)shouldAutomaticallyForwardAppearanceMethods
@@ -85,19 +75,25 @@
     [super viewWillAppear:animated];
     [self.view sizeToFit];
     [self.view setNeedsLayout];
-    [jrChildViewController viewWillAppear:animated];
+    [jrChildNavController viewWillAppear:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [jrChildViewController viewWillDisappear:animated];
+    [jrChildNavController viewWillDisappear:animated];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    [jrChildViewController viewDidDisappear:animated];
+    [jrChildNavController viewDidDisappear:animated];
+}
+
+- (void)dealloc
+{
+    [jrChildNavController release];
+    [super dealloc];
 }
 
 @end

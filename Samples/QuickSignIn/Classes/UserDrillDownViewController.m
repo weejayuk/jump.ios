@@ -327,7 +327,7 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {
-    return (toInterfaceOrientation == UIInterfaceOrientationPortrait);
+    return (toInterfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
 
 - (void)didReceiveMemoryWarning

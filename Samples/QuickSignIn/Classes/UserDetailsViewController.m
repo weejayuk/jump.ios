@@ -54,6 +54,7 @@
 }
 @end
 
+// ~unused demo drilldown table view controller for Capture records
 @interface UserDetailsViewController ()
 @end
 
@@ -506,7 +507,7 @@
     if (iPad)
         return YES;
 
-    return (toInterfaceOrientation == UIInterfaceOrientationPortrait);
+    return (toInterfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
 
 - (void)didReceiveMemoryWarning

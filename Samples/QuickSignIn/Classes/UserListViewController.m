@@ -336,7 +336,7 @@ Copyright (c) 2010, Janrain, Inc.
     if (iPad)
         return YES;
 
-    return (toInterfaceOrientation == UIInterfaceOrientationPortrait);
+    return (toInterfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
