@@ -100,6 +100,17 @@ void centerViewChain(UIView *view)
     }
 }
 
+@interface UIWindow (JRUtils)
+-(BOOL)hasRvc;
+@end
+
+@implementation UIWindow (JRUtils)
+-(BOOL)hasRvc
+{
+    return [self respondsToSelector:@selector(rootViewController)] && self.rootViewController;
+}
+@end
+
 // Provides a hand-made cover-vertical mimic animation to accomodate for iOS6 breaking the animation of the FormSheet
 // size hacks
 // Also forwards appearance and rotation events for iOS 4 iPads
@@ -224,10 +235,13 @@ void centerViewChain(UIView *view)
 @property (retain) CustomAnimationController *animationController;
 @property (retain) UINavigationController *myNavigationController;
 @property (retain) UIPopoverController *myPopoverController;
+@property (retain) UIViewController *vcToPresent;
 @end
 
 @implementation JRModalViewController
 @synthesize myPopoverController, myNavigationController, animationController;
+@synthesize vcToPresent;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -279,24 +293,22 @@ void centerViewChain(UIView *view)
 - (void)presentModalNavigationController
 {
     DLog (@"");
-    BOOL hasRvc = [getWindow() respondsToSelector:@selector(rootViewController)] && getWindow().rootViewController;
-    UIViewController *rvc = hasRvc ? getWindow().rootViewController : nil;
+    UIViewController *rvc = [getWindow() hasRvc] ? getWindow().rootViewController : nil;
 
     myNavigationController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     myNavigationController.modalPresentationStyle = UIModalPresentationFormSheet;
     animationController.modalPresentationStyle = myNavigationController.modalPresentationStyle;
 
     // Figure out what to present
-    UIViewController *vcToPresent;
     if (IS_IPAD)
     {
-        vcToPresent = animationController ;
+        self.vcToPresent = animationController ;
         [animationController.view addSubview:myNavigationController.view];
         animationController.jrChildViewController = myNavigationController;
     }
     else
     {
-        vcToPresent = myNavigationController;
+        self.vcToPresent = myNavigationController;
     }
 
     // Figure out how to present it and present it
@@ -346,10 +358,10 @@ void centerViewChain(UIView *view)
     [self.view removeFromSuperview];
 }
 
-// For iOS >= 6
+// iOS >= 6
 - (NSUInteger)supportedInterfaceOrientations
 {
-    return UIInterfaceOrientationMaskAll;
+    return UIInterfaceOrientationMaskAllButUpsideDown;
 }
 
 // iOS >= 6
@@ -370,7 +382,6 @@ void centerViewChain(UIView *view)
     DLog (@"");
     [myNavigationController release];
     [myPopoverController release];
-
     [super dealloc];
 }
 @end
@@ -408,7 +419,7 @@ static JRUserInterfaceMaestro* singleton = nil;
     return [[self sharedMaestro] retain];
 }
 
-- (id)copyWithZone:(NSZone *)zone
+- (id)copyWithZone:(__unused NSZone *)zone
 {
     return self;
 }
@@ -533,8 +544,6 @@ static JRUserInterfaceMaestro* singleton = nil;
         @catch (NSException *exception)
         { handleCustomInterfaceException(exception, @"kJRUseApplicationNavigationController"); }
     }
-
-    if (usingAppNav || IS_IPAD) sessionData.canRotate = YES;
 }
 
 - (void)tearDownDialogPresentation
@@ -828,6 +837,7 @@ static JRUserInterfaceMaestro* singleton = nil;
         [self loadApplicationNavigationControllerWithViewController:myPublishActivityController];
     else
         [self loadModalNavigationControllerWithViewController:myPublishActivityController];
+    if (usingAppNav || IS_IPAD || [getWindow() hasRvc]) sessionData.canRotate = YES;
 }
 
 - (void)unloadModalNavigationControllerWithTransitionStyle:(UIModalTransitionStyle)style

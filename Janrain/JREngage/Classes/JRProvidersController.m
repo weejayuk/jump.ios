@@ -411,9 +411,9 @@ Please try again later."
 {
     DLog(@"");
     if (sessionData.canRotate)
-        return YES;
+        return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return interfaceOrientation == UIInterfaceOrientationPortrait;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section

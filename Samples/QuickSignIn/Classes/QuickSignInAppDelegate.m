@@ -42,7 +42,6 @@
 @synthesize window;
 @synthesize viewController;
 
-
 - (void)applicationDidFinishLaunching:(UIApplication *)application
 {
     // Override point for customization after app launch
@@ -72,25 +71,4 @@
     [super dealloc];
 }
 
-
 @end
-
-//I think this is not needed
-//@implementation UINavigationController (iOS6OrientationFix)
-//
-//-(NSUInteger) supportedInterfaceOrientations
-//{
-//    return UIInterfaceOrientationMaskAllButUpsideDown;
-//}
-//
-//- (BOOL)shouldAutorotate
-//{
-//    return YES;
-//}
-//
-//- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
-//{
-//    return [self.topViewController shouldAutorotateToInterfaceOrientation:toInterfaceOrientation];
-//}
-//
-//@end

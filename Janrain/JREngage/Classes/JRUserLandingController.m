@@ -490,9 +490,9 @@ enum
 {
     DLog(@"");
     if (sessionData.canRotate)
-        return YES;
+        return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return interfaceOrientation == UIInterfaceOrientationPortrait;
 }
 
 #define TABLE_VIEW_FRAME_LANDSCAPE_SMALL    0,  0,  self.view.frame.size.width,  120
