@@ -1,4 +1,5 @@
 #import "RootViewController.h"
+#import "debug_log.h"
 
 @interface RootViewController ()
 
@@ -23,7 +24,7 @@
     [super view].autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
 }
 
--(NSUInteger) supportedInterfaceOrientations
+-(NSUInteger)supportedInterfaceOrientations
 {
     return UIInterfaceOrientationMaskAllButUpsideDown;
 }
@@ -35,7 +36,10 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {
-    return [jrChildNavController shouldAutorotateToInterfaceOrientation:toInterfaceOrientation];
+    //return NO;
+    BOOL b = [jrChildNavController shouldAutorotateToInterfaceOrientation:toInterfaceOrientation];
+    DLog("%d", b);
+    return b;
 }
 
 - (BOOL)shouldAutorotate

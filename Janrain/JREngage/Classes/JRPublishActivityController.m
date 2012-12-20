@@ -1929,11 +1929,13 @@ Please try again later."
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    DLog(@"");
+    BOOL b;
     if (sessionData.canRotate)
-        return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
-
-    return interfaceOrientation == UIInterfaceOrientationPortrait;
+        b = interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
+    else
+        b = interfaceOrientation == UIInterfaceOrientationPortrait;
+    DLog(@"%d", b);
+    return b;
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

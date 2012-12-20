@@ -282,6 +282,7 @@ void centerViewChain(UIView *view)
 - (void)presentPopoverNavigationControllerFromCGRect:(CGRect)rect inDirection:(UIPopoverArrowDirection)direction
 {
     DLog (@"");
+    if (![self.view superview]) [getWindow() addSubview:self.view];
     CGRect popoverPresentationFrame = [self.view convertRect:rect toView:getWindow()];
 
     [myPopoverController presentPopoverFromRect:popoverPresentationFrame
@@ -505,7 +506,7 @@ static JRUserInterfaceMaestro* singleton = nil;
     if ([customInterface objectForKey:kJRApplicationNavigationController])
         self.applicationNavigationController = [customInterface objectForKey:kJRApplicationNavigationController];
 
- /* Added for backwards compatibility */
+    /* Added for backwards compatibility */
     if (savedNavigationController)
         self.applicationNavigationController = savedNavigationController;
 
@@ -524,7 +525,7 @@ static JRUserInterfaceMaestro* singleton = nil;
 
         @try
         {
-            if (customModalNavigationController)// && ![customModalNavigationController isViewLoaded])
+            if (customModalNavigationController)
                 usingCustomNav = YES;
             else
                 usingCustomNav = NO;
@@ -544,6 +545,8 @@ static JRUserInterfaceMaestro* singleton = nil;
         @catch (NSException *exception)
         { handleCustomInterfaceException(exception, @"kJRUseApplicationNavigationController"); }
     }
+
+    sessionData.canRotate = usingAppNav || IS_IPAD || [getWindow() hasRvc];
 }
 
 - (void)tearDownDialogPresentation
@@ -623,7 +626,6 @@ static JRUserInterfaceMaestro* singleton = nil;
     [directProvider release], directProvider = nil;
 
     sessionData.dialogIsShowing = NO;
-//    sessionData.skipReturningUserLandingPage = NO;
 }
 
 - (void)setUpSocialPublishing
@@ -837,7 +839,6 @@ static JRUserInterfaceMaestro* singleton = nil;
         [self loadApplicationNavigationControllerWithViewController:myPublishActivityController];
     else
         [self loadModalNavigationControllerWithViewController:myPublishActivityController];
-    if (usingAppNav || IS_IPAD || [getWindow() hasRvc]) sessionData.canRotate = YES;
 }
 
 - (void)unloadModalNavigationControllerWithTransitionStyle:(UIModalTransitionStyle)style

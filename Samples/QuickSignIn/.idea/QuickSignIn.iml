@@ -91,6 +91,9 @@
     <content url="file://$MODULE_DIR$/../../Janrain/JREngage/Classes/JRWebViewController.m">
       <sourceFolder url="file://$MODULE_DIR$/../../Janrain/JREngage/Classes/JRWebViewController.m" isTestSource="false" />
     </content>
+    <content url="file://$MODULE_DIR$/../../Janrain/JREngage/Classes/debug_log.h">
+      <sourceFolder url="file://$MODULE_DIR$/../../Janrain/JREngage/Classes/debug_log.h" isTestSource="false" />
+    </content>
     <content url="file://$MODULE_DIR$/../../Janrain/JREngage/JREngage-Info.plist">
       <sourceFolder url="file://$MODULE_DIR$/../../Janrain/JREngage/JREngage-Info.plist" isTestSource="false" />
     </content>

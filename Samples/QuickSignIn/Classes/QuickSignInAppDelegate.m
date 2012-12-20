@@ -60,12 +60,15 @@
         window.rootViewController = rvc;
 }
 
+// iOS 6
 - (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window1
 {
+    //return UIInterfaceOrientationMaskPortrait;
     return UIInterfaceOrientationMaskAllButUpsideDown;
 }
 
-- (void)dealloc {
+- (void)dealloc
+{
     [viewController release];
     [window release];
     [super dealloc];

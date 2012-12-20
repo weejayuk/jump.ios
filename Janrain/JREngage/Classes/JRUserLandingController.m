@@ -488,11 +488,13 @@ enum
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    DLog(@"");
+    BOOL b;
     if (sessionData.canRotate)
-        return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
-
-    return interfaceOrientation == UIInterfaceOrientationPortrait;
+        b = interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
+    else
+        b = interfaceOrientation == UIInterfaceOrientationPortrait;
+    DLog(@"%d", b);
+    return b;
 }
 
 #define TABLE_VIEW_FRAME_LANDSCAPE_SMALL    0,  0,  self.view.frame.size.width,  120

@@ -467,6 +467,8 @@
 		C01FCF5008A95454005424D5 /* UserDetailViewController~ipad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "UserDetailViewController~ipad.xib"; sourceTree = "<group>"; };
 		C01FCF5008A95454005424D7 /* UserDrillDownViewController~ipad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "UserDrillDownViewController~ipad.xib"; sourceTree = "<group>"; };
 		C01FCF5008A95454005424D9 /* UserListViewController~ipad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "UserListViewController~ipad.xib"; sourceTree = "<group>"; };
+		C142426FDC699796354557B8 /* debug_log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = debug_log.h; sourceTree = "<group>"; };
+		C142443523127DCA3EDD0CFE /* debug_log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = debug_log.h; sourceTree = "<group>"; };
 		D866318416694ED200C59B03 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		D866318516694ED200C59B03 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		D89BEA941666E87500396BCD /* MainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
@@ -507,6 +509,7 @@
 				9F30A8E312BC0C4B00A30ADF /* EmbeddedNativeSignInViewController.m */,
 				D866318416694ED200C59B03 /* RootViewController.h */,
 				D866318516694ED200C59B03 /* RootViewController.m */,
+				C142443523127DCA3EDD0CFE /* debug_log.h */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -684,6 +687,7 @@
 				9FB127A715C7416C0072BEE6 /* JRUserLandingController.m */,
 				9FB127A815C7416C0072BEE6 /* JRWebViewController.h */,
 				9FB127A915C7416C0072BEE6 /* JRWebViewController.m */,
+				C142426FDC699796354557B8 /* debug_log.h */,
 			);
 			path = Classes;
 			sourceTree = "<group>";

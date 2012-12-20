@@ -277,7 +277,6 @@
 
     if ([[UserModel getUserModel] pendingCallToTokenUrl])
         [[UserModel getUserModel] setTokenUrlDelegate:nil];
-
 }
 
 - (void)viewDidUnload { }
