@@ -39,7 +39,6 @@
 @property (retain) NSString *tableViewHeader;
 @property (nonatomic, retain) IBOutlet UITableView *myTableView;
 
-//- (id)initWithObject:(NSObject*)object forKey:(NSString*)key;
 - (id)initWithNibName:(NSString*)nibNameOrNil bundle:(NSBundle*)nibBundleOrNil
         andDataObject:(NSObject*)object forKey:(NSString*)key;
 @end

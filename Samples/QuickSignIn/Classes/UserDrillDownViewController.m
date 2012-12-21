@@ -67,17 +67,6 @@
     return self;
 }
 
-//- (id)initWithObject:(NSObject*)object forKey:(NSString*)key
-//{
-//    if ((self = [super init]))
-//    {
-//        self.tableViewData   = object;
-//        self.tableViewHeader = key;
-//    }
-//
-//    return self;
-//}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];

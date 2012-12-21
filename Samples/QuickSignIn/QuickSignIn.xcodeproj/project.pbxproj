@@ -219,7 +219,7 @@
 		C01FCF5008A95454005424D0 /* SplashViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C01FCF5008A95454005424CF /* SplashViewController.xib */; };
 		C01FCF5008A95454005424D2 /* UserDrillDownViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C01FCF5008A95454005424D1 /* UserDrillDownViewController.xib */; };
 		C01FCF5008A95454005424D4 /* SplashViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = C01FCF5008A95454005424D3 /* SplashViewController~ipad.xib */; };
-		C01FCF5008A95454005424D6 /* UserDetailViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = C01FCF5008A95454005424D5 /* UserDetailViewController~ipad.xib */; };
+		C01FCF5008A95454005424D6 /* UserDetailsViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = C01FCF5008A95454005424D5 /* UserDetailsViewController~ipad.xib */; };
 		C01FCF5008A95454005424D8 /* UserDrillDownViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = C01FCF5008A95454005424D7 /* UserDrillDownViewController~ipad.xib */; };
 		C01FCF5008A95454005424DA /* UserListViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = C01FCF5008A95454005424D9 /* UserListViewController~ipad.xib */; };
 		D866318616694ED200C59B03 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D866318516694ED200C59B03 /* RootViewController.m */; };
@@ -464,7 +464,7 @@
 		C01FCF5008A95454005424CF /* SplashViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SplashViewController.xib; sourceTree = "<group>"; };
 		C01FCF5008A95454005424D1 /* UserDrillDownViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserDrillDownViewController.xib; sourceTree = "<group>"; };
 		C01FCF5008A95454005424D3 /* SplashViewController~ipad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "SplashViewController~ipad.xib"; sourceTree = "<group>"; };
-		C01FCF5008A95454005424D5 /* UserDetailViewController~ipad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "UserDetailViewController~ipad.xib"; sourceTree = "<group>"; };
+		C01FCF5008A95454005424D5 /* UserDetailsViewController~ipad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "UserDetailsViewController~ipad.xib"; sourceTree = "<group>"; };
 		C01FCF5008A95454005424D7 /* UserDrillDownViewController~ipad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "UserDrillDownViewController~ipad.xib"; sourceTree = "<group>"; };
 		C01FCF5008A95454005424D9 /* UserListViewController~ipad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "UserListViewController~ipad.xib"; sourceTree = "<group>"; };
 		C142426FDC699796354557B8 /* debug_log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = debug_log.h; sourceTree = "<group>"; };
@@ -619,7 +619,7 @@
 			children = (
 				C01FCF5008A95454005424D9 /* UserListViewController~ipad.xib */,
 				C01FCF5008A95454005424D7 /* UserDrillDownViewController~ipad.xib */,
-				C01FCF5008A95454005424D5 /* UserDetailViewController~ipad.xib */,
+				C01FCF5008A95454005424D5 /* UserDetailsViewController~ipad.xib */,
 				C01FCF5008A95454005424D3 /* SplashViewController~ipad.xib */,
 			);
 			path = "xibs-ipad";
@@ -1053,7 +1053,7 @@
 				C01FCF5008A95454005424D0 /* SplashViewController.xib in Resources */,
 				C01FCF5008A95454005424D2 /* UserDrillDownViewController.xib in Resources */,
 				C01FCF5008A95454005424D4 /* SplashViewController~ipad.xib in Resources */,
-				C01FCF5008A95454005424D6 /* UserDetailViewController~ipad.xib in Resources */,
+				C01FCF5008A95454005424D6 /* UserDetailsViewController~ipad.xib in Resources */,
 				C01FCF5008A95454005424D8 /* UserDrillDownViewController~ipad.xib in Resources */,
 				C01FCF5008A95454005424DA /* UserListViewController~ipad.xib in Resources */,
 				9FB1286B15C7416C0072BEE6 /* ATTRIBUTION in Resources */,

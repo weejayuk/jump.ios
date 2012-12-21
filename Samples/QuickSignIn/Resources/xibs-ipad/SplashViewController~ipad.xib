@@ -778,11 +778,9 @@
 							<string>signInButtonOffEvent:</string>
 							<string>signInButtonOnEvent:</string>
 							<string>signInButtonPressed:</string>
-							<string>viewHistoryButtonPressed:</string>
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -797,7 +795,6 @@
 							<string>signInButtonOffEvent:</string>
 							<string>signInButtonOnEvent:</string>
 							<string>signInButtonPressed:</string>
-							<string>viewHistoryButtonPressed:</string>
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -815,10 +812,6 @@
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">signInButtonPressed:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">viewHistoryButtonPressed:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 						</object>

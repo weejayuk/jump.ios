@@ -96,16 +96,6 @@ Copyright (c) 2010, Janrain, Inc.
 
 @implementation UserListViewController
 
-/*
- // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
-        // Custom initialization
-    }
-    return self;
-}
-*/
-
 - (void)setUpNavigationBarForPad
 {
     [myRightView addSubview:userDetailsViewController.view];
@@ -219,12 +209,7 @@ Copyright (c) 2010, Janrain, Inc.
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
         iPad = YES;
 
-    if (iPad)
-        userDetailsViewController = [[UserDetailsViewController alloc] initWithNibName:nil
-                                                                                bundle:[NSBundle mainBundle]];
-    else
-        userDetailsViewController = [[UserDetailsViewController alloc] initWithNibName:nil
-                                                                                bundle:[NSBundle mainBundle]];
+    userDetailsViewController = [[UserDetailsViewController alloc] initWithNibName:nil bundle:[NSBundle mainBundle]];
 
     if (iPad)
         [self setUpNavigationBarForPad];
@@ -470,7 +455,6 @@ Copyright (c) 2010, Janrain, Inc.
 
     myNotSignedInLabel.text = @"Completing Sign In...";
 
-//#ifdef LILLI
     [self clearSelectedProfile];
     [myTableView deselectRowAtIndexPath:[myTableView indexPathForSelectedRow] animated:YES];
 
@@ -494,31 +478,10 @@ Copyright (c) 2010, Janrain, Inc.
         [[UserModel getUserModel] setLibraryDialogDelegate:self];
         self.navigationItem.rightBarButtonItem.enabled = NO;
     }
-
-//#else
-//  [[UserModel getUserModel] startSignUserOut:self];
-//  [NSTimer scheduledTimerWithTimeInterval:0.4 target:self selector:@selector(delaySignIn:) userInfo:nil repeats:NO];
-//#endif
 }
 
 - (IBAction)signOutButtonPressed:(id)sender
 {
-
-    // TODO: Temporarily here for testing
-//    CaptureNewUserViewController *viewController= [[[CaptureNewUserViewController alloc] initWithNibName:@"CaptureNewUserViewController"
-//                                                                  bundle:[NSBundle mainBundle]] autorelease];
-//
-//    [self.navigationController pushViewController:viewController animated:YES];
-//
-////    [JRCaptureInterface getCaptureEntityNamed:@"profiles"
-////                                 withEntityId:174721
-////                               andAccessToken:[[UserModel getUserModel] latestAccessToken]
-////                                  forDelegate:self];
-////
-////    [JRCaptureInterface getCaptureUserWithAccessToken:[[UserModel getUserModel] latestAccessToken]
-////                                          forDelegate:self];
-    // TODO: Remove when done
-
     [self clearSelectedProfile];
 
     if ([[UserModel getUserModel] currentUser])
