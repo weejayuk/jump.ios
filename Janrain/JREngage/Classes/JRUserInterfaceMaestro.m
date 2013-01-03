@@ -182,24 +182,24 @@ CATransform3D computeTransformMatrix(CGFloat X, CGFloat Y, CGFloat W, CGFloat H,
             - x2a * y4a + x3a * y4a));
 
     CATransform3D r;
-    //r.m11 = a; r.m21 = b; r.m31 = 0; r.m41 = c;
-    //r.m12 = d; r.m22 = e; r.m32 = 0; r.m42 = f;
-    //r.m13 = 0; r.m23 = 0; r.m33 = 1; r.m43 = 0;
-    //r.m14 = g; r.m24 = h; r.m34 = 0; r.m44 = i;
-    r.m11 = a; r.m12 = b; r.m13 = 0; r.m14 = c;
-    r.m21 = d; r.m22 = e; r.m23 = 0; r.m24 = f;
+    r.m11 = a; r.m12 = d; r.m13 = 0; r.m14 = g;
+    r.m21 = b; r.m22 = e; r.m23 = 0; r.m24 = h;
     r.m31 = 0; r.m32 = 0; r.m33 = 1; r.m34 = 0;
-    r.m41 = g; r.m42 = h; r.m43 = 0; r.m44 = i;
+    r.m41 = c; r.m42 = f; r.m43 = 0; r.m44 = i;
+
+    //r.m11 = a; r.m12 = b; r.m13 = 0; r.m14 = c;
+    //r.m21 = d; r.m22 = e; r.m23 = 0; r.m24 = f;
+    //r.m31 = 0; r.m32 = 0; r.m33 = 1; r.m34 = 0;
+    //r.m41 = g; r.m42 = h; r.m43 = 0; r.m44 = i;
     return r;
 }
 
-CATransform3D rectToQuad(CGRect rect, CGFloat  x1a, CGFloat y1a, CGFloat  x2a, CGFloat y2a, CGFloat  x3a, CGFloat y3a, CGFloat  x4a, CGFloat y4a)
+CATransform3D rectToQuad(CGFloat X, CGFloat Y, CGFloat W, CGFloat H,
+        CGFloat x1a, CGFloat y1a,
+        CGFloat x2a, CGFloat y2a,
+        CGFloat x3a, CGFloat y3a,
+        CGFloat x4a, CGFloat y4a)
 {
-    CGFloat X = rect.origin.x;
-    CGFloat Y = rect.origin.y;
-    CGFloat W = rect.size.width;
-    CGFloat H = rect.size.height;
-
     CGFloat y21 = y2a - y1a;
     CGFloat y32 = y3a - y2a;
     CGFloat y43 = y4a - y3a;
@@ -207,20 +207,23 @@ CATransform3D rectToQuad(CGRect rect, CGFloat  x1a, CGFloat y1a, CGFloat  x2a, C
     CGFloat y31 = y3a - y1a;
     CGFloat y42 = y4a - y2a;
 
-    CGFloat a = -H*(x2a*x3a*y14 + x2a*x4a*y31 - x1a*x4a*y32 + x1a*x3a*y42);
-    CGFloat b = W*(x2a*x3a*y14 + x3a*x4a*y21 + x1a*x4a*y32 + x1a*x2a*y43);
-    CGFloat c = H*X*(x2a*x3a*y14 + x2a*x4a*y31 - x1a*x4a*y32 + x1a*x3a*y42) - H*W*x1a*(x4a*y32 - x3a*y42 + x2a*y43)
-            - W*Y*(x2a*x3a*y14 + x3a*x4a*y21 + x1a*x4a*y32 + x1a*x2a*y43);
+    CGFloat a = -H * (x2a * x3a * y14 + x2a * x4a * y31 - x1a * x4a * y32 + x1a * x3a * y42);
+    CGFloat b = W * (x2a * x3a * y14 + x3a * x4a * y21 + x1a * x4a * y32 + x1a * x2a * y43);
+    CGFloat c = H * X * (x2a * x3a * y14 + x2a * x4a * y31 - x1a * x4a * y32 + x1a * x3a * y42)
+            - H * W * x1a * (x4a * y32 - x3a * y42 + x2a * y43)
+            - W * Y * (x2a * x3a * y14 + x3a * x4a * y21 + x1a * x4a * y32 + x1a * x2a * y43);
 
-    CGFloat d = H*(-x4a*y21*y3a + x2a*y1a*y43 - x1a*y2a*y43 - x3a*y1a*y4a + x3a*y2a*y4a);
-    CGFloat e = W*(x4a*y2a*y31 - x3a*y1a*y42 - x2a*y31*y4a + x1a*y3a*y42);
-    CGFloat f = -(W*(x4a*(Y*y2a*y31 + H*y1a*y32) - x3a*(H + Y)*y1a*y42 + H*x2a*y1a*y43 + x2a*Y*(y1a - y3a)*y4a
-            + x1a*Y*y3a*(-y2a + y4a)) - H*X*(x4a*y21*y3a - x2a*y1a*y43 + x3a*(y1a - y2a)*y4a + x1a*y2a*(-y3a + y4a)));
+    CGFloat d = H * (-x4a * y21 * y3a + x2a * y1a * y43 - x1a * y2a * y43 - x3a * y1a * y4a + x3a * y2a * y4a);
+    CGFloat e = W * (x4a * y2a * y31 - x3a * y1a * y42 - x2a * y31 * y4a + x1a * y3a * y42);
+    CGFloat f = -(W * (x4a * (Y * y2a * y31 + H * y1a * y32) - x3a * (H + Y) * y1a * y42 + H * x2a * y1a * y43
+            + x2a * Y * (y1a - y3a) * y4a + x1a * Y * y3a * (-y2a + y4a))
+            - H * X * (x4a * y21 * y3a - x2a * y1a * y43 + x3a * (y1a - y2a) * y4a + x1a * y2a * (-y3a + y4a)));
 
-    CGFloat g = H*(x3a*y21 - x4a*y21 + (-x1a + x2a)*y43);
-    CGFloat h = W*(-x2a*y31 + x4a*y31 + (x1a - x3a)*y42);
-    CGFloat i = W*Y*(x2a*y31 - x4a*y31 - x1a*y42 + x3a*y42) + H*(X*(-(x3a*y21) + x4a*y21 + x1a*y43 - x2a*y43)
-            + W*(-(x3a*y2a) + x4a*y2a + x2a*y3a - x4a*y3a - x2a*y4a + x3a*y4a));
+    CGFloat g = H * (x3a * y21 - x4a * y21 + (-x1a + x2a) * y43);
+    CGFloat h = W * (-x2a * y31 + x4a * y31 + (x1a - x3a) * y42);
+    CGFloat i = W * Y * (x2a * y31 - x4a * y31 - x1a * y42 + x3a * y42) + H * (X * (-(x3a * y21)
+            + x4a * y21 + x1a * y43 - x2a * y43) + W * (-(x3a * y2a) + x4a * y2a + x2a * y3a - x4a * y3a
+            - x2a * y4a + x3a * y4a));
 
     if (fabs(i) < 0.00001)
     {
@@ -229,25 +232,10 @@ CATransform3D rectToQuad(CGRect rect, CGFloat  x1a, CGFloat y1a, CGFloat  x2a, C
 
     CATransform3D t;
 
-    t.m11 = a / i;
-    t.m12 = d / i;
-    t.m13 = 0;
-    t.m14 = g / i;
-
-    t.m21 = b / i;
-    t.m22 = e / i;
-    t.m23 = 0;
-    t.m24 = h / i;
-
-    t.m31 = 0;
-    t.m32 = 0;
-    t.m33 = 1;
-    t.m34 = 0;
-
-    t.m41 = c / i;
-    t.m42 = f / i;
-    t.m43 = 0;
-    t.m44 = i / i;
+    t.m11 = a / i; t.m12 = d / i; t.m13 = 0; t.m14 = g / i;
+    t.m21 = b / i; t.m22 = e / i; t.m23 = 0; t.m24 = h / i;
+    t.m31 = 0;     t.m32 = 0;     t.m33 = 1; t.m34 = 0;
+    t.m41 = c / i; t.m42 = f / i; t.m43 = 0; t.m44 = i / i;
 
     return t;
 }
@@ -255,42 +243,51 @@ CATransform3D rectToQuad(CGRect rect, CGFloat  x1a, CGFloat y1a, CGFloat  x2a, C
 - (void)mimicFlipHorizontal
 {
     UIView *dropShadow = self.view.superview;
-    //CATransform3D t = computeTransformMatrix(0, 0, dropShadow.bounds.size.width, dropShadow.bounds.size.height,
-    //        0, 0, dropShadow.bounds.size.width, 0, 0.2 * dropShadow.bounds.size.width, 0.01, 0.8 * dropShadow.bounds.size.width, 0.01);
-    //CATransform3D t = computeTransformMatrix(0, 0, 1, 1,
-    //        0, 0.49, 1, 0.49, 0.2, 0.51, 0.8, 0.51);
+    CATransform3D originalTransform = dropShadow.layer.transform;
+
+    dropShadow.layer.anchorPoint = CGPointMake(0, 0);
+
+    CATransform3D t = rectToQuad(0, 0, dropShadow.bounds.size.width, dropShadow.bounds.size.height,
+            0, 0, dropShadow.bounds.size.width -1, 0,
+            0.2 * dropShadow.bounds.size.width, 0.01, 0.8 * dropShadow.bounds.size.width -1, 0.01);
     //UIView *window = dropShadow.superview;
     //[dropShadow removeFromSuperview];
     //UIView *emptyView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)] autorelease];
     //[window addSubview:emptyView];
 
-    //CATransform3D t = rectToQuad(dropShadow.bounds,
-    //        0, 0,
-    //        dropShadow.bounds.size.width, 0,
-    //        0.2 * dropShadow.bounds.size.width, 0.01,
-    //        0.8 * dropShadow.bounds.size.width, 0.01);
-    //dropShadow.layer.anchorPoint = CGPointMake(0, 0);
     //[dropShadow.layer ]
-    dropShadow.layer.anchorPoint = CGPointMake(0.5, 0);
-    dropShadow.layer.bounds = CGRectMake(dropShadow.layer.bounds.origin.x,// + dropShadow.layer.bounds.size.width / 2,
-            dropShadow.layer.bounds.origin.y + dropShadow.layer.bounds.size.height / 2,
-            dropShadow.layer.bounds.size.width, dropShadow.layer.bounds.size.height);
-    CATransform3D t = {
-            1.0,0.0,  0,    0,
-              0,  1,  0,0.005,
-              0,  0,  1,    0,
-            0.0,0.0,0.0,  1.0
-    };
-    //CATransform3D t = {
-    //            0.0,0.0,  0,  1,
-    //              0,  0,  1,  0,
-    //              0,  1,  0,  0,
-    //            1.0,0.0,0.0,  0
-    //    };
-    CATransform3D t_ = dropShadow.layer.transform;
+    //dropShadow.layer.anchorPoint = CGPointMake(0.5, 0);
+    //dropShadow.layer.bounds = CGRectMake(dropShadow.layer.bounds.origin.x,// + dropShadow.layer.bounds.size.width / 2,
+    //        dropShadow.layer.bounds.origin.y + dropShadow.layer.bounds.size.height / 2,
+    //        dropShadow.layer.bounds.size.width, dropShadow.layer.bounds.size.height);
+
+        //CATransform3D t = computeTransformMatrix(0, 0, 1, 1, 0, 0.49, 1, 0.49, 0.2, 0.51, 0.8, 0.51);
+
+    //CATransform3D t = rectToQuad(CGRectMake(0, 0, 1, 1), 0, 0.49, 1, 0.49, 0.2, 0.51, 0.8, 0.51);
+
+        //CATransform3D flipHorizontal = {
+        //        1.0,0.0,  0,    0,
+        //          0,  1,  0,0.003,
+        //          0,  0,  1,    0,
+        //        0.0,0.0,0.0,  1.0
+        //};
+        //
+        //CATransform3D moveDown = CATransform3DMakeTranslation(0, dropShadow.frame.size.height / 2, 0);
+        //CATransform3D moveUp = CATransform3DMakeTranslation(0, - dropShadow.frame.size.height / 2, 0);
+        //
+        //CATransform3D flipHorizontalMimic =
+        //        CATransform3DConcat(CATransform3DConcat(CATransform3DConcat(originalTransform, moveDown), flipHorizontal), moveUp);
+        //
+        //dropShadow.layer.transform = flipHorizontalMimic;
+
+    //dropShadow.layer.transform = CATransform3DRotate(dropShadow.layer.transform, M_PI, 1, 0, 0);
+
     dropShadow.layer.transform = t;
-    [UIView animateWithDuration:5 delay:0
-                        options:UIViewAnimationOptionCurveEaseInOut animations: ^{ dropShadow.layer.transform = t_; }
+    [UIView animateWithDuration:25 delay:0
+                        options:UIViewAnimationOptionCurveEaseInOut animations:^
+    {
+        dropShadow.layer.transform = originalTransform;
+    }
                      completion:nil];
 
     //[UIView animateWithDuration:5 delay:0

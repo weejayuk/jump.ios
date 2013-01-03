@@ -223,6 +223,7 @@
 		C01FCF5008A95454005424D8 /* UserDrillDownViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = C01FCF5008A95454005424D7 /* UserDrillDownViewController~ipad.xib */; };
 		C01FCF5008A95454005424DA /* UserListViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = C01FCF5008A95454005424D9 /* UserListViewController~ipad.xib */; };
 		D866318616694ED200C59B03 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D866318516694ED200C59B03 /* RootViewController.m */; };
+		D88D9D57169616910067E5AA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D88D9D56169616910067E5AA /* QuartzCore.framework */; };
 		D89BEA951666E87500396BCD /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = D89BEA941666E87500396BCD /* MainWindow.xib */; };
 /* End PBXBuildFile section */
 
@@ -471,6 +472,7 @@
 		C142443523127DCA3EDD0CFE /* debug_log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = debug_log.h; sourceTree = "<group>"; };
 		D866318416694ED200C59B03 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		D866318516694ED200C59B03 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
+		D88D9D56169616910067E5AA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		D89BEA941666E87500396BCD /* MainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -479,6 +481,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D88D9D57169616910067E5AA /* QuartzCore.framework in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
@@ -525,6 +528,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				D88D9D56169616910067E5AA /* QuartzCore.framework */,
 				9FB1276615C7416C0072BEE6 /* Janrain */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
