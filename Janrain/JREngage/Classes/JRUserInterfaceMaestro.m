@@ -291,10 +291,7 @@ static JRUserInterfaceMaestro* singleton = nil;
 
 - (void)buildCustomInterface:(NSDictionary*)customizations
 {
-    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:
-                                 ([customizations count] +
-                                  [janrainInterfaceDefaults count] +
-                                  [customInterfaceDefaults count])];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
 
     [dict addEntriesFromDictionary:janrainInterfaceDefaults];
     [dict addEntriesFromDictionary:customInterfaceDefaults];
