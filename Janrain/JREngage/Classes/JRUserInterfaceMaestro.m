@@ -105,6 +105,26 @@ void centerViewChain(UIView *view)
     }
 }
 
+UIView *findUIDimmingView(UIView *v)
+{
+    while (v && ![v isKindOfClass:[UIWindow class]]) v = v.superview;
+    if (![v isKindOfClass:[UIWindow class]]) return nil;
+    UIWindow *window = (UIWindow *) v;
+    for (UIView *subview in window.subviews)
+    {
+        if ([subview isKindOfClass:NSClassFromString(@"UIDimmingView")]) return subview;
+    }
+
+    return nil;
+}
+
+UIView *findUIDropShadowView(UIView *v)
+{
+    while (v && ![v isKindOfClass:NSClassFromString(@"UIDropShadowView")]) v = v.superview;
+    if ([v isKindOfClass:NSClassFromString(@"UIDropShadowView")]) return v;
+    return nil;
+}
+
 CATransform3D computeTransformMatrix(CGFloat X, CGFloat Y, CGFloat W, CGFloat H,
         CGFloat x1, CGFloat y1, CGFloat x2, CGFloat y2, CGFloat x3, CGFloat y3, CGFloat x4, CGFloat y4)
 {
@@ -181,10 +201,13 @@ NSString *describeCATransform3D(CATransform3D *t)
 @interface CustomAnimationController : UIViewController
 @property (retain) UIViewController *jrPresentingViewController;
 @property (retain) UIViewController *jrChildViewController;
+@property (retain) UIView *dropShadow;
+@property (retain) UIView *windowDimmingView;
 @end
 
 @implementation CustomAnimationController
 @synthesize jrPresentingViewController, jrChildViewController;
+
 - (void)loadView
 {
     [self setView:[[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)] autorelease]];
@@ -198,40 +221,61 @@ NSString *describeCATransform3D(CATransform3D *t)
     [jrChildViewController viewDidAppear:animated];
     if (animated) return;
 
+    self.dropShadow = findUIDropShadowView(self.view);
+    self.windowDimmingView = findUIDimmingView(self.view);
+
     // hack to resize platform provided dropshadow view that's inserted
     // into the view hierarchy above the modally presented VC when you use presentModalViewController
     // related to this SO q:
     // http://stackoverflow.com/questions/2457947/how-to-resize-a-uipresentationformsheet/4271364#4271364
 
-    UIView *v = self.view.superview;
-    while (v)
-    {
-        //DLog("View chain: %@", [v description]);
-        if ([v isKindOfClass:NSClassFromString(@"UIDropShadowView")])
-            v.bounds = CGRectMake(0, 0, 320, 460);
-        v = v.superview;
-    }
+    self.dropShadow.bounds = CGRectMake(0, 0, 320, 460);
 
     centerViewChain(self.view);
-    [self mimicFlipHorizontal];
+
+    // only do an animation if we found the Apple private views that we're going to tickle.
+    if (self.dropShadow && self.windowDimmingView)
+        [self mimicFlipHorizontal];
 }
 
 - (void)mimicFlipHorizontal
 {
-    UIView *dropShadow = self.view.superview;
-    CATransform3D originalTransform = dropShadow.layer.transform;
+    // calculate a smush transform that's like FlipHorizontal
+    CATransform3D originalTransform = self.dropShadow.layer.transform;
     CATransform3D smushed = computeTransformMatrix(-160, -230, 320, 460, -160, -50, 160, -50, -140, 50, 140, 50);
+    // for some reason animating back to the identity transform does some unwanted flips and rotations, so we make
+    // this matrix, which allows the animation to interpolate correctly.
     CATransform3D unsmushed = computeTransformMatrix(-160, -230, 320, 460, -160, -230, 160, -230, -160, 230, 160, 230);
     unsmushed = normalizedCATransform3D(unsmushed);
     smushed = normalizedCATransform3D(smushed);
-    dropShadow.layer.transform = smushed;
-    self.view.alpha = 0.3;
-    self.view.backgroundColor = [UIColor blackColor];
 
-    [UIView animateWithDuration:10 delay:0
+    // smush our parent view
+    self.dropShadow.layer.transform = smushed;
+
+    // undim the background
+    UIColor *originalDimmingViewColor = self.windowDimmingView.backgroundColor;
+    self.windowDimmingView.backgroundColor = [UIColor clearColor];
+
+    // dim the modal
+    UIView *modalDimmingView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)] autorelease];
+    modalDimmingView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    modalDimmingView.backgroundColor = originalDimmingViewColor;
+    [self.dropShadow addSubview:modalDimmingView];
+
+    [UIView animateWithDuration:0.5 delay:0
                         options:UIViewAnimationOptionCurveEaseInOut
-                     animations:^ { dropShadow.layer.transform = unsmushed; self.view.alpha = 1; }
-                     completion:^(BOOL finished) { dropShadow.layer.transform = originalTransform; }];
+                     animations:^ {
+                         // animate back
+                         self.dropShadow.layer.transform = unsmushed;
+                         self.view.alpha = 1;
+                         self.windowDimmingView.backgroundColor = originalDimmingViewColor;
+                         modalDimmingView.backgroundColor = [UIColor clearColor];
+                     }
+                     completion:^(BOOL finished) {
+                         // restore some stuff we touched for good measure
+                         self.dropShadow.layer.transform = originalTransform;
+                         [modalDimmingView removeFromSuperview];
+                     }];
 }
 
 - (void)mimicCoverVertical
