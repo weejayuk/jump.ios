@@ -37,8 +37,6 @@
 #import "JRUserLandingController.h"
 #import "JRWebViewController.h"
 #import "JRInfoBar.h"
-#import "JRConventionalSignInViewController.h"
-
 
 #ifdef DEBUG
 #define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
@@ -137,9 +135,9 @@
     myTableView.tableFooterView   = [customInterface objectForKey:kJRProviderTableFooterView];
 
     id const maybeCaptureSigninVc = [customInterface objectForKey:kJRCaptureConventionalSigninViewController];
-    if ([maybeCaptureSigninVc isKindOfClass:[JRConventionalSignInViewController class]])
+    if ([maybeCaptureSigninVc isKindOfClass:NSClassFromString(@"JRConventionalSignInViewController")])
     {
-        ((JRConventionalSignInViewController *)maybeCaptureSigninVc).delegate = self;
+        [maybeCaptureSigninVc performSelector:NSSelectorFromString(@"setDelegate:") withObject:self];
 
         [self createConventionalSigninLoadingView];
     }
