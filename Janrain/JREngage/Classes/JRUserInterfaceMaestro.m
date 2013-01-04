@@ -40,7 +40,6 @@
 
 #define ALog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
 
-#import <objc/runtime.h>
 #import "QuartzCore/QuartzCore.h"
 
 #import "JRUserInterfaceMaestro.h"
@@ -246,7 +245,8 @@ NSString *describeCATransform3D(CATransform3D *t)
     centerViewChain(self.view);
 
     // only do an animation if we found the Apple private views that we're going to tickle.
-    if (self.dropShadow && self.windowDimmingView)
+    if (self.dropShadow && self.windowDimmingView
+            && [UIView respondsToSelector:@selector(animateWithDuration:delay:options:animations:completion:)])
         [self mimicFlipHorizontal];
 }
 
@@ -271,7 +271,7 @@ NSString *describeCATransform3D(CATransform3D *t)
     unsmushed = CATransform3DConcat(normalizedCATransform3D(unsmushed), originalTransform);
     smushed = CATransform3DConcat(normalizedCATransform3D(smushed), originalTransform);
 
-    // smush our parent view
+    // smush
     self.dropShadow.layer.transform = smushed;
 
     // undim the background
@@ -289,7 +289,6 @@ NSString *describeCATransform3D(CATransform3D *t)
                      animations:^ {
                          // animate back
                          self.dropShadow.layer.transform = unsmushed;
-                         self.view.alpha = 1;
                          self.windowDimmingView.backgroundColor = originalDimmingViewColor;
                          modalDimmingView.backgroundColor = [UIColor clearColor];
                      }
