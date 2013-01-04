@@ -125,9 +125,21 @@ UIView *findUIDropShadowView(UIView *v)
     return nil;
 }
 
-CATransform3D computeTransformMatrix(CGFloat X, CGFloat Y, CGFloat W, CGFloat H,
-        CGFloat x1, CGFloat y1, CGFloat x2, CGFloat y2, CGFloat x3, CGFloat y3, CGFloat x4, CGFloat y4)
+CATransform3D computeTransformMatrix(CGRect rect, CGPoint p1, CGPoint p2, CGPoint p3, CGPoint p4)
 {
+    CGFloat X = rect.origin.x;
+    CGFloat Y = rect.origin.y;
+    CGFloat W = rect.size.width;
+    CGFloat H = rect.size.height;
+    CGFloat x1 = p1.x;
+    CGFloat y1 = p1.y;
+    CGFloat x2 = p2.x;
+    CGFloat y2 = p2.y;
+    CGFloat x3 = p3.x;
+    CGFloat y3 = p3.y;
+    CGFloat x4 = p4.x;
+    CGFloat y4 = p4.y;
+
     CGFloat y21 = y2 - y1;
     CGFloat y32 = y3 - y2;
     CGFloat y43 = y4 - y3;
@@ -240,14 +252,24 @@ NSString *describeCATransform3D(CATransform3D *t)
 
 - (void)mimicFlipHorizontal
 {
-    // calculate a smush transform that's like FlipHorizontal
     CATransform3D originalTransform = self.dropShadow.layer.transform;
-    CATransform3D smushed = computeTransformMatrix(-160, -230, 320, 460, -160, -50, 160, -50, -140, 50, 140, 50);
-    // for some reason animating back to the identity transform does some unwanted flips and rotations, so we make
+
+    CGRect origRect = CGRectMake(-160, -230, 320, 460);
+    CGPoint smushedP1 = CGPointMake(-160, -50);
+    CGPoint smushedP2 = CGPointMake(160, -50);
+    CGPoint smushedP3 = CGPointMake(-140, 50);
+    CGPoint smushedP4 = CGPointMake(140, 50);
+    CGPoint unsmushedP1 = CGPointMake(-160, -230);
+    CGPoint unsmushedP2 = CGPointMake(160, -230);
+    CGPoint unsmushedP3 = CGPointMake(-160, 230);
+    CGPoint unsmushedP4 = CGPointMake(160, 230);
+    // calculate a smush transform that's like oglFlip
+    CATransform3D smushed = computeTransformMatrix(origRect, smushedP1, smushedP2, smushedP3, smushedP4);
+    // for some reason animating back to the original transform does some unwanted flips and rotations, so we make
     // this matrix, which allows the animation to interpolate correctly.
-    CATransform3D unsmushed = computeTransformMatrix(-160, -230, 320, 460, -160, -230, 160, -230, -160, 230, 160, 230);
-    unsmushed = normalizedCATransform3D(unsmushed);
-    smushed = normalizedCATransform3D(smushed);
+    CATransform3D unsmushed = computeTransformMatrix(origRect, unsmushedP1, unsmushedP2, unsmushedP3, unsmushedP4);
+    unsmushed = CATransform3DConcat(normalizedCATransform3D(unsmushed), originalTransform);
+    smushed = CATransform3DConcat(normalizedCATransform3D(smushed), originalTransform);
 
     // smush our parent view
     self.dropShadow.layer.transform = smushed;
@@ -280,19 +302,18 @@ NSString *describeCATransform3D(CATransform3D *t)
 
 - (void)mimicCoverVertical
 {
-    CGPoint center = self.view.superview.center;
+    CGPoint originalCenter = self.dropShadow.center;
 
-    // move parent view offscreen. coordinate space transform fuckery to account for orientations.
-    CGPoint c = [self.view.superview convertPoint:self.view.superview.center fromView:self.view.superview.superview];
-    CGFloat y = c.y;
-    CGPoint c_ = CGPointMake(c.x, y * 2 + 240);
-    self.view.superview.center = [self.view.superview convertPoint:c_ toView:self.view.superview.superview];
+    // move dropShadow offscreen. coordinate space transform fuckery to account for orientations.
+    CGPoint c = [self.dropShadow convertPoint:self.dropShadow.center fromView:self.dropShadow.superview];
+    self.dropShadow.center = [self.dropShadow convertPoint:CGPointMake(c.x, c.y * 2 + 240)
+                                                    toView:self.dropShadow.superview];
 
     // animate parent view back onscreen
     [UIView animateWithDuration:0.5
                           delay:0
                         options:UIViewAnimationOptionCurveEaseInOut
-                     animations:^ { self.view.superview.center = center; }
+                     animations:^ { self.dropShadow.center = originalCenter; }
                      completion:nil];
 }
 
