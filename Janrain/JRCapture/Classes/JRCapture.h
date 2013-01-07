@@ -495,9 +495,6 @@ typedef enum
  * @param provider
  *   The name of the provider on which the user will authenticate. For a list of possible strings,
  *   please see the \ref basicProviders "List of Providers"
- *
- * @param delegate
- *   The JRCaptureSigninDelegate object that wishes to receive messages regarding user authentication
  **/
 + (void)startEngageSigninDialogOnProvider:(NSString*)provider
                               forDelegate:(id<JRCaptureSigninDelegate>)delegate;
@@ -545,9 +542,6 @@ typedef enum
  *   application. If you are unsure which one to use, try one, and if signin fails, try the other. If you pass in
  *   JRConventionalSigninNone, this method will do exactly what the startEngageSigninDialogForDelegate:() method does
  *
- * @param delegate
- *   The JRCaptureSigninDelegate object that wishes to receive messages regarding user authentication
- *
  * @note
  * Depending on how your Capture application is configured, you pass to this method a
  * JRConventionalSigninType of either JRConventionalSigninUsernamePassword or JRConventionalSigninEmailPassword.
@@ -589,8 +583,6 @@ typedef enum
  *  The password
  * @param conventionalSignInType
  *  A JRConventionalSigninType value used to indicate whether the user paramater is a username or an email address
- * @param delegate
- *  Your JRCaptureSigninDelegate
  */
 + (void)startCaptureConventionalSigninForUser:(NSString *)user withPassword:(NSString *)password
                                withSigninType:(JRConventionalSigninType)conventionalSignInType
