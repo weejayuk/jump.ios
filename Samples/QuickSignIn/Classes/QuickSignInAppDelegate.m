@@ -34,6 +34,7 @@
 
 
 #import "QuickSignInAppDelegate.h"
+#import "SplashViewController.h"
 #import "RootViewController.h"
 
 @implementation QuickSignInAppDelegate
@@ -41,20 +42,36 @@
 @synthesize window;
 @synthesize viewController;
 
-
 - (void)applicationDidFinishLaunching:(UIApplication *)application
 {
     // Override point for customization after app launch
-    [window addSubview:viewController.view];
+    RootViewController *rvc = [[RootViewController alloc] initWithNibName:nil bundle:nil];
+    //[rvc autorelease]; // bad! see bullet near the bottom of:
+                         // http://developer.apple.com/library/ios/#qa/qa1688/_index.html
+
+    //requires iOS 5, breaking deployment down to 3, but that's fine until an app store update
+    rvc.jrChildNavController = viewController;
+    [rvc.view addSubview:viewController.view];
+
+    [window addSubview:rvc.view];
     [window makeKeyAndVisible];
+    //requires iOS 4, breaking deployment down to 3, but that's fine until an app store update
+    if ([window respondsToSelector:@selector(setRootViewController:)])
+        window.rootViewController = rvc;
 }
 
+// iOS 6
+- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window1
+{
+    //return UIInterfaceOrientationMaskPortrait;
+    return UIInterfaceOrientationMaskAllButUpsideDown;
+}
 
-- (void)dealloc {
+- (void)dealloc
+{
     [viewController release];
     [window release];
     [super dealloc];
 }
-
 
 @end

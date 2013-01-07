@@ -67,20 +67,10 @@
     return self;
 }
 
-//- (id)initWithObject:(NSObject*)object forKey:(NSString*)key
-//{
-//    if ((self = [super init]))
-//    {
-//        self.tableViewData   = object;
-//        self.tableViewHeader = key;
-//    }
-//
-//    return self;
-//}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    myTableView.backgroundColor = [UIColor clearColor];
 
 //    self.view.autoresizingMask = UIViewAutoresizingNone |
 //                                 UIViewAutoresizingFlexibleWidth |
@@ -317,8 +307,7 @@
         return;                    /* to the 'count' selector, we just cast as an array to avoid IDE complaints */
 
     UserDrillDownViewController *drillDown =
-            [[[UserDrillDownViewController alloc] initWithNibName:@"UserDrillDownViewController"
-                                                           bundle:[NSBundle mainBundle]
+            [[[UserDrillDownViewController alloc] initWithNibName:nil bundle:[NSBundle mainBundle]
                                                     andDataObject:value
                                                            forKey:key] autorelease];
 
@@ -327,7 +316,7 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {
-    return (toInterfaceOrientation == UIInterfaceOrientationPortrait);
+    return (toInterfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
 
 - (void)didReceiveMemoryWarning

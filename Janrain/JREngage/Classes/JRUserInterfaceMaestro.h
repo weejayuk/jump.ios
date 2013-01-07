@@ -36,7 +36,7 @@
 #import <Foundation/Foundation.h>
 
 @class JRSessionData;
-@class JRModalNavigationController;
+@class JRModalViewController;
 @class JRProvidersController;
 @class JRUserLandingController;
 @class JRWebViewController;
@@ -63,23 +63,28 @@ typedef enum
 
 @interface JRUserInterfaceMaestro : NSObject <UIPopoverControllerDelegate>
 {
-    JRModalNavigationController *jrModalNavController;
+    // This is an invisible container VC used to present the modal and popover dialogs
+    JRModalViewController *jrModalViewController;
     JRSessionData   *sessionData;
     NSMutableArray  *delegates;
 
-    BOOL iPad;
-
     PadPopoverMode padPopoverMode;
+    // Pushing JUMP dialog VCs onto the host application's UINavigationController
     BOOL usingAppNav;
+    // Presenting custom UINavigationController and pushing JUMP dialog VCs onto it
     BOOL usingCustomNav;
 
+    // The provider to direct-auth on
     NSString *directProvider;
 
+    // An app supplied UINavigationController to present, and then push dialogs onto, passed via custom interface dict
     UINavigationController  *customModalNavigationController;
+    // The host app's UINavigationController, optionally passed via custom interface dict
     UINavigationController  *applicationNavigationController;
     UINavigationController  *savedNavigationController;
     UIViewController        *viewControllerToPopTo;
 
+    // The JUMP VCs
     JRProvidersController       *myProvidersController;
     JRUserLandingController     *myUserLandingController;
     JRWebViewController         *myWebViewController;
@@ -91,12 +96,14 @@ typedef enum
 }
 
 + (JRUserInterfaceMaestro*)jrUserInterfaceMaestroWithSessionData:(JRSessionData*)newSessionData;
-+ (JRUserInterfaceMaestro*)jrUserInterfaceMaestro;
++ (JRUserInterfaceMaestro*)sharedMaestro;
 
 //- (void)useApplicationNavigationController:(UINavigationController*)navigationController;
-
+- (void)loadModalNavigationControllerWithViewController:(UIViewController *)rootViewController;
+- (void)loadApplicationNavigationControllerWithViewController:(UIViewController *)rootViewController;
 - (void)showAuthenticationDialogWithCustomInterface:(NSDictionary*)customizations;
 - (void)showPublishingDialogForActivityWithCustomInterface:(NSDictionary*)customizations;
+- (void)unloadUserInterfaceWithTransitionStyle:(UIModalTransitionStyle)style;
 
 - (void)authenticationRestarted;
 - (void)authenticationCompleted;
@@ -109,9 +116,17 @@ typedef enum
 
 // Question to self: Do I want to make customInterfaceDefaults nonatomic?
 @property (copy)     NSMutableDictionary         *customInterfaceDefaults;
+
+
 @property (readonly) JRProvidersController       *myProvidersController;
 @property (readonly) JRUserLandingController     *myUserLandingController;
 @property (readonly) JRWebViewController         *myWebViewController;
 @property (readonly) JRPublishActivityController *myPublishActivityController;
 @property (copy)     NSString                    *directProvider;
+
+- (void)buildCustomInterface:(NSDictionary *)customizations;
+
+- (void)setUpDialogPresentation;
+
+
 @end

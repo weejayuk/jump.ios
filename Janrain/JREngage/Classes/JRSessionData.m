@@ -472,6 +472,8 @@ static NSString* applicationBundleDisplayName()
 @synthesize gitCommit;
 @synthesize savedConfigurationBlock;
 @synthesize canRotate;
+@synthesize captureWidget = _captureWidget;
+
 
 #pragma mark singleton_methods
 static JRSessionData* singleton = nil;

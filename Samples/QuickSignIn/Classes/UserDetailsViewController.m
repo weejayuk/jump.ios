@@ -54,24 +54,17 @@
 }
 @end
 
+// ~unused demo drilldown table view controller for Capture records
 @interface UserDetailsViewController ()
 @end
 
 @implementation UserDetailsViewController
 
-/*
-// The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
-    // Custom initialization
-    }
-    return self;
-}
-*/
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    myTableView.backgroundColor = [UIColor clearColor];
 
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
         iPad = YES;
@@ -462,8 +455,7 @@
         return;                    /* to the 'count' selector, we just cast as an array to avoid IDE complaints */
 
     UserDrillDownViewController *drillDown =
-            [[[UserDrillDownViewController alloc] initWithNibName:@"UserDrillDownViewController"
-                                                           bundle:[NSBundle mainBundle]
+            [[[UserDrillDownViewController alloc] initWithNibName:nil bundle:[NSBundle mainBundle]
                                                     andDataObject:value
                                                            forKey:key] autorelease];
 
@@ -505,7 +497,7 @@
     if (iPad)
         return YES;
 
-    return (toInterfaceOrientation == UIInterfaceOrientationPortrait);
+    return (toInterfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
 
 - (void)didReceiveMemoryWarning

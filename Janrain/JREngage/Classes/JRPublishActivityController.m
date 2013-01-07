@@ -210,7 +210,8 @@ or opacity of our rounded rectangle. */
                   strokeColor:innerStrokeColor andFillColor:innerFillColor];
 }
 
-- (void)dealloc {
+- (void)dealloc
+{
     [outerStrokeColor release];
     [innerStrokeColor release];
     [outerFillColor release];
@@ -270,7 +271,6 @@ or opacity of our rounded rectangle. */
 
     [super viewDidLoad];
 
- /* There's a slight chance that their capacities could be 0, but that's OK; they're mutable. */
     alreadyShared     = [[NSMutableSet alloc] initWithCapacity:[[sessionData socialProviders] count]];
     cachedProfilePics = [[NSMutableDictionary alloc] initWithCapacity:[[sessionData socialProviders] count]];
 
@@ -342,7 +342,7 @@ or opacity of our rounded rectangle. */
     [myRichDataContainer setNeedsDisplay];
     [myUserCommentBoundingBox setNeedsDisplay];
 
-    [myScrollView setContentSize:CGSizeMake(320, 264)];
+    //[myScrollView setContentSize:CGSizeMake(320, 264)];
 
     [self determineIfWeCanShareViaEmailAndOrSMS];
     [self loadActivityToViewForFirstTime];
@@ -402,7 +402,8 @@ or opacity of our rounded rectangle. */
         if ([customInterface objectForKey:kJRSocialSharingTitleString])
             titleLabel.text = NSLocalizedString([customInterface objectForKey:kJRSocialSharingTitleString], @"");
         else if (selectedProvider)
-            titleLabel.text = [NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"Share on", @""), selectedProvider.friendlyName];
+            titleLabel.text = [NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"Share on", @""),
+                                        selectedProvider.friendlyName];
         else
             titleLabel.text = NSLocalizedString(@"Share", @"");
 
@@ -740,17 +741,17 @@ Please try again later."
 
 #define EDITING_HEIGHT_OFFSET                     24
 #define USER_CONTENT_TEXT_VIEW_DEFAULT_HEIGHT     72
-#define USER_CONTENT_BOUNDING_BOX_DEFAULT_HEIGHT  78
-#define CHARACTER_COUNT_DEFAULT_Y_ORIGIN          90
-#define PREVIEW_BOX_DEFAULT_Y_ORIGIN              97
 #define USER_CONTENT_TEXT_VIEW_EDITING_HEIGHT    (USER_CONTENT_TEXT_VIEW_DEFAULT_HEIGHT    + EDITING_HEIGHT_OFFSET)
-#define USER_CONTENT_BOUNDING_BOX_EDITING_HEIGHT (USER_CONTENT_BOUNDING_BOX_DEFAULT_HEIGHT + EDITING_HEIGHT_OFFSET)
-#define CHARACTER_COUNT_EDITING_Y_ORIGIN         (CHARACTER_COUNT_DEFAULT_Y_ORIGIN         + EDITING_HEIGHT_OFFSET)
+#define PREVIEW_BOX_DEFAULT_Y_ORIGIN              97
 #define PREVIEW_BOX_EDITING_Y_ORIGIN             (PREVIEW_BOX_DEFAULT_Y_ORIGIN             + EDITING_HEIGHT_OFFSET)
-#define SCROLL_VIEW_DEFAULT_HEIGHT_PORTRAIT       264
-#define SCROLL_VIEW_DEFAULT_HEIGHT_LANDSCAPE      116
-#define SCROLL_VIEW_EDITING_HEIGHT_PORTRAIT       200
-#define SCROLL_VIEW_EDITING_HEIGHT_LANDSCAPE      106
+#define USER_CONTENT_BOUNDING_BOX_DEFAULT_HEIGHT  78
+#define USER_CONTENT_BOUNDING_BOX_EDITING_HEIGHT (USER_CONTENT_BOUNDING_BOX_DEFAULT_HEIGHT + EDITING_HEIGHT_OFFSET)
+#define CHARACTER_COUNT_DEFAULT_Y_ORIGIN          90
+#define CHARACTER_COUNT_EDITING_Y_ORIGIN         (CHARACTER_COUNT_DEFAULT_Y_ORIGIN         + EDITING_HEIGHT_OFFSET)
+//#define SCROLL_VIEW_DEFAULT_HEIGHT_PORTRAIT       264
+//#define SCROLL_VIEW_DEFAULT_HEIGHT_LANDSCAPE      116
+//#define SCROLL_VIEW_EDITING_HEIGHT_PORTRAIT       200
+//#define SCROLL_VIEW_EDITING_HEIGHT_LANDSCAPE      106
 
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
 {
@@ -953,14 +954,14 @@ Please try again later."
 
     if (!iPad)
     {
-        if (UIInterfaceOrientationIsPortrait(self.interfaceOrientation))
-            [myScrollView setFrame:
-                CGRectMake(myScrollView.frame.origin.x, myScrollView.frame.origin.y,
-                           myScrollView.frame.size.width, SCROLL_VIEW_EDITING_HEIGHT_PORTRAIT)];
-        else
-            [myScrollView setFrame:
-                CGRectMake(myScrollView.frame.origin.x, myScrollView.frame.origin.y,
-                           myScrollView.frame.size.width, SCROLL_VIEW_EDITING_HEIGHT_LANDSCAPE)];
+        //if (UIInterfaceOrientationIsPortrait(self.interfaceOrientation))
+        //    [myScrollView setFrame:
+        //        CGRectMake(myScrollView.frame.origin.x, myScrollView.frame.origin.y,
+        //                   myScrollView.frame.size.width, SCROLL_VIEW_EDITING_HEIGHT_PORTRAIT)];
+        //else
+        //    [myScrollView setFrame:
+        //        CGRectMake(myScrollView.frame.origin.x, myScrollView.frame.origin.y,
+        //                   myScrollView.frame.size.width, SCROLL_VIEW_EDITING_HEIGHT_LANDSCAPE)];
 
         [UIView commitAnimations];
     }
@@ -1001,8 +1002,7 @@ Please try again later."
         myUserCommentTextView.text = currentActivity.action;
     }
 
-    CGFloat remainingCharacterOffset =
-                ([self shouldHideRemainingCharacterCount] ? 0 : 10);
+    CGFloat remainingCharacterOffset = ([self shouldHideRemainingCharacterCount] ? 0 : 10);
 
     [UIView beginAnimations:@"editing" context:nil];
     [myUserCommentTextView setFrame:
@@ -1047,14 +1047,14 @@ Please try again later."
 
     if (!iPad)
     {
-        if (UIInterfaceOrientationIsPortrait(self.interfaceOrientation))
-            [myScrollView setFrame:
-                CGRectMake(myScrollView.frame.origin.x, myScrollView.frame.origin.y,
-                           myScrollView.frame.size.width, SCROLL_VIEW_DEFAULT_HEIGHT_PORTRAIT)];
-        else
-            [myScrollView setFrame:
-                CGRectMake(myScrollView.frame.origin.x, myScrollView.frame.origin.y,
-                           myScrollView.frame.size.width, SCROLL_VIEW_DEFAULT_HEIGHT_LANDSCAPE)];
+        //if (UIInterfaceOrientationIsPortrait(self.interfaceOrientation))
+        //    [myScrollView setFrame:
+        //        CGRectMake(myScrollView.frame.origin.x, myScrollView.frame.origin.y,
+        //                   myScrollView.frame.size.width, SCROLL_VIEW_DEFAULT_HEIGHT_PORTRAIT)];
+        //else
+        //    [myScrollView setFrame:
+        //        CGRectMake(myScrollView.frame.origin.x, myScrollView.frame.origin.y,
+        //                   myScrollView.frame.size.width, SCROLL_VIEW_DEFAULT_HEIGHT_LANDSCAPE)];
 
         [UIView commitAnimations];
     }
@@ -1196,7 +1196,8 @@ Please try again later."
     userIsAttemptingToSignOut = NO;
 }
 
-- (void)setButtonImage:(UIButton*)button toData:(NSData*)data andSetLoading:(UIActivityIndicatorView*)actIndicator toLoading:(BOOL)loading
+- (void)setButtonImage:(UIButton*)button toData:(NSData*)data andSetLoading:(UIActivityIndicatorView*)actIndicator
+             toLoading:(BOOL)loading
 {
     DLog (@"");
 
@@ -1249,7 +1250,8 @@ Please try again later."
     if ([media isKindOfClass:[JRImageMediaObject class]])
     {
         DLog (@"Downloading image thumbnail: %@", ((JRImageMediaObject*)media).src);
-        [self setButtonImage:myMediaThumbnailView toData:nil andSetLoading:myMediaThumbnailActivityIndicator toLoading:YES];
+        [self setButtonImage:myMediaThumbnailView toData:nil andSetLoading:myMediaThumbnailActivityIndicator
+                   toLoading:YES];
 
         NSURL        *url     = [NSURL URLWithString:((JRImageMediaObject *) media).src];
         NSURLRequest *request = [[[NSURLRequest alloc] initWithURL:url] autorelease];
@@ -1598,13 +1600,13 @@ Please try again later."
         the same provider as their last-used provider, go back to the user landing view. */
         if (selectedProvider.requiresInput)
         {
-            [[self navigationController] pushViewController:[JRUserInterfaceMaestro jrUserInterfaceMaestro].myUserLandingController
+            [[self navigationController] pushViewController:[JRUserInterfaceMaestro sharedMaestro].myUserLandingController
                                                    animated:YES];
         }
      /* Otherwise, go straight to the web view. */
         else
         {
-            [[self navigationController] pushViewController:[JRUserInterfaceMaestro jrUserInterfaceMaestro].myWebViewController
+            [[self navigationController] pushViewController:[JRUserInterfaceMaestro sharedMaestro].myWebViewController
                                                    animated:YES];
         }
     }
@@ -1927,11 +1929,13 @@ Please try again later."
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    DLog(@"");
+    BOOL b;
     if (sessionData.canRotate)
-        return YES;
-
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+        b = interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
+    else
+        b = interfaceOrientation == UIInterfaceOrientationPortrait;
+    DLog(@"%d", b);
+    return b;
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

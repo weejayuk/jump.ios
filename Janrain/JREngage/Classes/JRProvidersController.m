@@ -82,7 +82,8 @@
 @synthesize myActivitySpinner;
 @synthesize myConventionalSigninLoadingView;
 
-- (id)initWithNibName:(NSString*)nibNameOrNil bundle:(NSBundle*)nibBundleOrNil andCustomInterface:(NSDictionary*)theCustomInterface
+- (id)initWithNibName:(NSString*)nibNameOrNil bundle:(NSBundle*)nibBundleOrNil
+   andCustomInterface:(NSDictionary*)theCustomInterface
 {
     if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]))
     {
@@ -102,6 +103,7 @@
 {
     DLog(@"");
     [super viewDidLoad];
+    myTableView.backgroundColor = [UIColor clearColor];
 
  /* If there is a UIColor object set for the background color, use this */
     if ([customInterface objectForKey:kJRAuthenticationBackgroundColor])
@@ -157,8 +159,8 @@
 
     if (!infoBar)
     {
-        infoBar = [[JRInfoBar alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 30, self.view.frame.size.width, 30)
-                                          andStyle:(JRInfoBarStyle)[sessionData hidePoweredBy]];
+        CGRect frame = CGRectMake(0, self.view.frame.size.height - 30, self.view.frame.size.width, 30);
+        infoBar = [[JRInfoBar alloc] initWithFrame:frame andStyle:(JRInfoBarStyle) [sessionData hidePoweredBy]];
 
         [self.view addSubview:infoBar];
     }
@@ -232,7 +234,9 @@
         [myActivitySpinner startAnimating];
 
      /* Now poll every few milliseconds, for about 16 seconds, until the provider list is loaded or we time out. */
-        timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(checkSessionDataAndProviders:) userInfo:nil repeats:NO];
+        timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self
+                                               selector:@selector(checkSessionDataAndProviders:)
+                                               userInfo:nil repeats:NO];
     }
 }
 
@@ -361,7 +365,7 @@ Please try again later."
 
 - (void)createConventionalSigninLoadingView
 {
-    self.myConventionalSigninLoadingView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)] autorelease];
+    self.myConventionalSigninLoadingView = [[[UIView alloc] initWithFrame:self.view.frame] autorelease];
 
     [self.myConventionalSigninLoadingView setBackgroundColor:[UIColor blackColor]];
 
@@ -379,9 +383,10 @@ Please try again later."
                                       UIViewAutoresizingFlexibleLeftMargin];
 
     UIActivityIndicatorView *loadingSpinner =
-            [[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge] autorelease];
+            [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    [loadingSpinner autorelease];
 
-    [loadingSpinner setFrame:CGRectMake(142, 220, 37, 37)];
+    [loadingSpinner setFrame:CGRectMake(142, self.view.frame.size.height/2 - 16, 37, 37)];
     [loadingLabel setAutoresizingMask:UIViewAutoresizingNone |
                                           UIViewAutoresizingFlexibleTopMargin |
                                           UIViewAutoresizingFlexibleBottomMargin |
@@ -403,11 +408,13 @@ Please try again later."
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    DLog(@"");
+    BOOL b;
     if (sessionData.canRotate)
-        return YES;
-
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+        b = interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
+    else
+        b = interfaceOrientation == UIInterfaceOrientationPortrait;
+    DLog(@"%d", b);
+    return b;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
@@ -520,13 +527,13 @@ Please try again later."
     if (provider.requiresInput ||
         ([sessionData authenticatedUserForProvider:provider] && !(provider.forceReauth || sessionData.alwaysForceReauth)))
     {
-        [[self navigationController] pushViewController:[JRUserInterfaceMaestro jrUserInterfaceMaestro].myUserLandingController
+        [[self navigationController] pushViewController:[JRUserInterfaceMaestro sharedMaestro].myUserLandingController
                                                animated:YES];
     }
  /* Otherwise, go straight to the web view. */
     else
     {
-        [[self navigationController] pushViewController:[JRUserInterfaceMaestro jrUserInterfaceMaestro].myWebViewController
+        [[self navigationController] pushViewController:[JRUserInterfaceMaestro sharedMaestro].myWebViewController
                                                animated:YES];
     }
 

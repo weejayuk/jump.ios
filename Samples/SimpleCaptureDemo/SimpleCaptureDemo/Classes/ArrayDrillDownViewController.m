@@ -28,30 +28,12 @@
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#ifdef DEBUG
-#define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-#else
-#define DLog(...)
-#endif
-#define ALog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-
+#import "debug_log.h"
 #import "ArrayDrillDownViewController.h"
 #import "ObjectDrillDownViewController.h"
 #import "JRCaptureObject+Internal.h"
 #import "JSONKit.h"
-
-typedef enum propertyTypes
-{
-    PTCaptureObject,
-    PTArray,
-    PTString,
-    PTNumber,
-    PTDate,
-    PTBool,
-    PTInteger,
-    PTJsonObject,
-    PTUnknown,
-} PropertyType;
+#import "Utils.h"
 
 @interface ElementData : NSObject
 @property (strong) NSString *stringValue;
@@ -66,16 +48,6 @@ typedef enum propertyTypes
 @synthesize subtitleLabel;
 @synthesize editingView;
 @end
-
-static Class getClassFromKey(NSString *key)
-{
-    if (!key || [key length] < 1)
-        return nil;
-
-    return NSClassFromString([NSString stringWithFormat:@"JR%@",
-                  [key stringByReplacingCharactersInRange:NSMakeRange(0,1)
-                                               withString:[[key substringToIndex:1] capitalizedString]]]);
-}
 
 @interface ArrayDrillDownViewController ()
 @property (strong) JRCaptureObject *captureObject;
@@ -194,10 +166,9 @@ static Class getClassFromKey(NSString *key)
 
 - (void)saveLocalArrayToCaptureObject
 {
-    SEL setArraySelector =
-                NSSelectorFromString([NSString stringWithFormat:@"set%@:",
-                          [tableHeader stringByReplacingCharactersInRange:NSMakeRange(0,1)
-                                                               withString:[[tableHeader substringToIndex:1] capitalizedString]]]);
+    NSString *cappedHead = [[tableHeader substringToIndex:1] capitalizedString];
+    NSString *string = [tableHeader stringByReplacingCharactersInRange:NSMakeRange(0, 1) withString:cappedHead];
+    SEL setArraySelector = NSSelectorFromString([NSString stringWithFormat:@"set%@:", string]);
 
     [captureObject performSelector:setArraySelector withObject:[NSArray arrayWithArray:localCopyArray]];
 }
@@ -221,7 +192,7 @@ static Class getClassFromKey(NSString *key)
 {
     DLog(@"");
 
-    NSObject *newCaptureElement = [[getClassFromKey(tableHeader) alloc] init];
+    NSObject *newCaptureElement = [[getPluralClassFromKey(tableHeader) alloc] init];
 
     [localCopyArray addObject:newCaptureElement];
 

@@ -27,10 +27,8 @@
 		9F521EB312B062940073ABAE /* janrain_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F521E9F12B062940073ABAE /* janrain_logo.png */; };
 		9F521EB412B062940073ABAE /* background-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F521EA112B062940073ABAE /* background-ipad.png */; };
 		9F521EB512B062940073ABAE /* Default-Portrait.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F521EA212B062940073ABAE /* Default-Portrait.png */; };
-		9F521EB612B062940073ABAE /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F521EA412B062940073ABAE /* MainWindow.xib */; };
 		9F521EB812B062940073ABAE /* UserListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F521EA612B062940073ABAE /* UserListViewController.xib */; };
 		9F521EB912B062940073ABAE /* UserDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F521EA712B062940073ABAE /* UserDetailsViewController.xib */; };
-		9F521EBA12B062940073ABAE /* MainWindow-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F521EA912B062940073ABAE /* MainWindow-iPad.xib */; };
 		9F96D44B12E8B458002D06B4 /* janrain_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F96D44A12E8B458002D06B4 /* janrain_logo@2x.png */; };
 		9F96D44D12E8B462002D06B4 /* janrain_logo-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F96D44C12E8B462002D06B4 /* janrain_logo-ipad.png */; };
 		9F96D80412EA5236002D06B4 /* done.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F96D80212EA5236002D06B4 /* done.png */; };
@@ -214,16 +212,19 @@
 		9FB40A3612414DC500FDDA7B /* QuickSignInAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FB40A3112414DC500FDDA7B /* QuickSignInAppDelegate.m */; };
 		9FBE274412A713F600E1F93E /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FBE274312A713F600E1F93E /* Security.framework */; };
 		C01FCF5008A954540054247D /* UserListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C01FCF5008A954540054247C /* UserListViewController.m */; };
-		C01FCF5008A95454005424C8 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C01FCF5008A95454005424C7 /* RootViewController.m */; };
+		C01FCF5008A95454005424C8 /* SplashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C01FCF5008A95454005424C7 /* SplashViewController.m */; };
 		C01FCF5008A95454005424CA /* UserDrillDownViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C01FCF5008A95454005424C9 /* UserDrillDownViewController.m */; };
 		C01FCF5008A95454005424CC /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C01FCF5008A95454005424CB /* UserModel.m */; };
 		C01FCF5008A95454005424CE /* InfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C01FCF5008A95454005424CD /* InfoViewController.xib */; };
-		C01FCF5008A95454005424D0 /* RootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C01FCF5008A95454005424CF /* RootViewController.xib */; };
+		C01FCF5008A95454005424D0 /* SplashViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C01FCF5008A95454005424CF /* SplashViewController.xib */; };
 		C01FCF5008A95454005424D2 /* UserDrillDownViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C01FCF5008A95454005424D1 /* UserDrillDownViewController.xib */; };
-		C01FCF5008A95454005424D4 /* RootViewController-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = C01FCF5008A95454005424D3 /* RootViewController-iPad.xib */; };
-		C01FCF5008A95454005424D6 /* UserDetailViewController-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = C01FCF5008A95454005424D5 /* UserDetailViewController-iPad.xib */; };
-		C01FCF5008A95454005424D8 /* UserDrillDownViewController-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = C01FCF5008A95454005424D7 /* UserDrillDownViewController-iPad.xib */; };
-		C01FCF5008A95454005424DA /* UserListViewController-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = C01FCF5008A95454005424D9 /* UserListViewController-iPad.xib */; };
+		C01FCF5008A95454005424D4 /* SplashViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = C01FCF5008A95454005424D3 /* SplashViewController~ipad.xib */; };
+		C01FCF5008A95454005424D6 /* UserDetailsViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = C01FCF5008A95454005424D5 /* UserDetailsViewController~ipad.xib */; };
+		C01FCF5008A95454005424D8 /* UserDrillDownViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = C01FCF5008A95454005424D7 /* UserDrillDownViewController~ipad.xib */; };
+		C01FCF5008A95454005424DA /* UserListViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = C01FCF5008A95454005424D9 /* UserListViewController~ipad.xib */; };
+		D866318616694ED200C59B03 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D866318516694ED200C59B03 /* RootViewController.m */; };
+		D88D9D57169616910067E5AA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D88D9D56169616910067E5AA /* QuartzCore.framework */; };
+		D89BEA951666E87500396BCD /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = D89BEA941666E87500396BCD /* MainWindow.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -249,10 +250,8 @@
 		9F521E9F12B062940073ABAE /* janrain_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = janrain_logo.png; sourceTree = "<group>"; };
 		9F521EA112B062940073ABAE /* background-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background-ipad.png"; sourceTree = "<group>"; };
 		9F521EA212B062940073ABAE /* Default-Portrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait.png"; sourceTree = "<group>"; };
-		9F521EA412B062940073ABAE /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
 		9F521EA612B062940073ABAE /* UserListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserListViewController.xib; sourceTree = "<group>"; };
 		9F521EA712B062940073ABAE /* UserDetailsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserDetailsViewController.xib; sourceTree = "<group>"; };
-		9F521EA912B062940073ABAE /* MainWindow-iPad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "MainWindow-iPad.xib"; sourceTree = "<group>"; };
 		9F96D44A12E8B458002D06B4 /* janrain_logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "janrain_logo@2x.png"; sourceTree = "<group>"; };
 		9F96D44C12E8B462002D06B4 /* janrain_logo-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "janrain_logo-ipad.png"; sourceTree = "<group>"; };
 		9F96D80212EA5236002D06B4 /* done.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = done.png; sourceTree = "<group>"; };
@@ -456,19 +455,25 @@
 		9FB40A3712414DD200FDDA7B /* Quick_Sign_In_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Quick_Sign_In_Prefix.pch; sourceTree = "<group>"; };
 		9FBE274312A713F600E1F93E /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		C01FCF5008A954540054247C /* UserListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserListViewController.m; sourceTree = "<group>"; };
-		C01FCF5008A95454005424C4 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		C01FCF5008A95454005424C4 /* SplashViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SplashViewController.h; sourceTree = "<group>"; };
 		C01FCF5008A95454005424C5 /* UserDrillDownViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDrillDownViewController.h; sourceTree = "<group>"; };
 		C01FCF5008A95454005424C6 /* UserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserModel.h; sourceTree = "<group>"; };
-		C01FCF5008A95454005424C7 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
+		C01FCF5008A95454005424C7 /* SplashViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SplashViewController.m; sourceTree = "<group>"; };
 		C01FCF5008A95454005424C9 /* UserDrillDownViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserDrillDownViewController.m; sourceTree = "<group>"; };
 		C01FCF5008A95454005424CB /* UserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserModel.m; sourceTree = "<group>"; };
 		C01FCF5008A95454005424CD /* InfoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InfoViewController.xib; sourceTree = "<group>"; };
-		C01FCF5008A95454005424CF /* RootViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RootViewController.xib; sourceTree = "<group>"; };
+		C01FCF5008A95454005424CF /* SplashViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SplashViewController.xib; sourceTree = "<group>"; };
 		C01FCF5008A95454005424D1 /* UserDrillDownViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserDrillDownViewController.xib; sourceTree = "<group>"; };
-		C01FCF5008A95454005424D3 /* RootViewController-iPad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "RootViewController-iPad.xib"; sourceTree = "<group>"; };
-		C01FCF5008A95454005424D5 /* UserDetailViewController-iPad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "UserDetailViewController-iPad.xib"; sourceTree = "<group>"; };
-		C01FCF5008A95454005424D7 /* UserDrillDownViewController-iPad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "UserDrillDownViewController-iPad.xib"; sourceTree = "<group>"; };
-		C01FCF5008A95454005424D9 /* UserListViewController-iPad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "UserListViewController-iPad.xib"; sourceTree = "<group>"; };
+		C01FCF5008A95454005424D3 /* SplashViewController~ipad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "SplashViewController~ipad.xib"; sourceTree = "<group>"; };
+		C01FCF5008A95454005424D5 /* UserDetailsViewController~ipad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "UserDetailsViewController~ipad.xib"; sourceTree = "<group>"; };
+		C01FCF5008A95454005424D7 /* UserDrillDownViewController~ipad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "UserDrillDownViewController~ipad.xib"; sourceTree = "<group>"; };
+		C01FCF5008A95454005424D9 /* UserListViewController~ipad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "UserListViewController~ipad.xib"; sourceTree = "<group>"; };
+		C142426FDC699796354557B8 /* debug_log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = debug_log.h; sourceTree = "<group>"; };
+		C142443523127DCA3EDD0CFE /* debug_log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = debug_log.h; sourceTree = "<group>"; };
+		D866318416694ED200C59B03 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		D866318516694ED200C59B03 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
+		D88D9D56169616910067E5AA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		D89BEA941666E87500396BCD /* MainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -476,6 +481,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D88D9D57169616910067E5AA /* QuartzCore.framework in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
@@ -492,10 +498,10 @@
 			children = (
 				C01FCF5008A95454005424CB /* UserModel.m */,
 				C01FCF5008A95454005424C9 /* UserDrillDownViewController.m */,
-				C01FCF5008A95454005424C7 /* RootViewController.m */,
+				C01FCF5008A95454005424C7 /* SplashViewController.m */,
+				C01FCF5008A95454005424C4 /* SplashViewController.h */,
 				C01FCF5008A95454005424C6 /* UserModel.h */,
 				C01FCF5008A95454005424C5 /* UserDrillDownViewController.h */,
-				C01FCF5008A95454005424C4 /* RootViewController.h */,
 				C01FCF5008A954540054247C /* UserListViewController.m */,
 				9FB40A3012414DC500FDDA7B /* QuickSignInAppDelegate.h */,
 				9FB40A3112414DC500FDDA7B /* QuickSignInAppDelegate.m */,
@@ -504,6 +510,9 @@
 				9FB40A2F12414DC500FDDA7B /* UserDetailsViewController.m */,
 				9F30A8E212BC0C4B00A30ADF /* EmbeddedNativeSignInViewController.h */,
 				9F30A8E312BC0C4B00A30ADF /* EmbeddedNativeSignInViewController.m */,
+				D866318416694ED200C59B03 /* RootViewController.h */,
+				D866318516694ED200C59B03 /* RootViewController.m */,
+				C142443523127DCA3EDD0CFE /* debug_log.h */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -519,6 +528,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				D88D9D56169616910067E5AA /* QuartzCore.framework */,
 				9FB1276615C7416C0072BEE6 /* Janrain */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
@@ -598,11 +608,11 @@
 		9F521EA312B062940073ABAE /* xibs */ = {
 			isa = PBXGroup;
 			children = (
-				C01FCF5008A95454005424D1 /* UserDrillDownViewController.xib */,
-				C01FCF5008A95454005424CF /* RootViewController.xib */,
-				C01FCF5008A95454005424CD /* InfoViewController.xib */,
-				9F521EA412B062940073ABAE /* MainWindow.xib */,
+				D89BEA941666E87500396BCD /* MainWindow.xib */,
+				C01FCF5008A95454005424CF /* SplashViewController.xib */,
 				9F521EA612B062940073ABAE /* UserListViewController.xib */,
+				C01FCF5008A95454005424D1 /* UserDrillDownViewController.xib */,
+				C01FCF5008A95454005424CD /* InfoViewController.xib */,
 				9F521EA712B062940073ABAE /* UserDetailsViewController.xib */,
 			);
 			path = xibs;
@@ -611,11 +621,10 @@
 		9F521EA812B062940073ABAE /* xibs-ipad */ = {
 			isa = PBXGroup;
 			children = (
-				C01FCF5008A95454005424D9 /* UserListViewController-iPad.xib */,
-				C01FCF5008A95454005424D7 /* UserDrillDownViewController-iPad.xib */,
-				C01FCF5008A95454005424D5 /* UserDetailViewController-iPad.xib */,
-				C01FCF5008A95454005424D3 /* RootViewController-iPad.xib */,
-				9F521EA912B062940073ABAE /* MainWindow-iPad.xib */,
+				C01FCF5008A95454005424D9 /* UserListViewController~ipad.xib */,
+				C01FCF5008A95454005424D7 /* UserDrillDownViewController~ipad.xib */,
+				C01FCF5008A95454005424D5 /* UserDetailsViewController~ipad.xib */,
+				C01FCF5008A95454005424D3 /* SplashViewController~ipad.xib */,
 			);
 			path = "xibs-ipad";
 			sourceTree = "<group>";
@@ -682,6 +691,7 @@
 				9FB127A715C7416C0072BEE6 /* JRUserLandingController.m */,
 				9FB127A815C7416C0072BEE6 /* JRWebViewController.h */,
 				9FB127A915C7416C0072BEE6 /* JRWebViewController.m */,
+				C142426FDC699796354557B8 /* debug_log.h */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1030,10 +1040,8 @@
 				9F521EB312B062940073ABAE /* janrain_logo.png in Resources */,
 				9F521EB412B062940073ABAE /* background-ipad.png in Resources */,
 				9F521EB512B062940073ABAE /* Default-Portrait.png in Resources */,
-				9F521EB612B062940073ABAE /* MainWindow.xib in Resources */,
 				9F521EB812B062940073ABAE /* UserListViewController.xib in Resources */,
 				9F521EB912B062940073ABAE /* UserDetailsViewController.xib in Resources */,
-				9F521EBA12B062940073ABAE /* MainWindow-iPad.xib in Resources */,
 				9F96D44B12E8B458002D06B4 /* janrain_logo@2x.png in Resources */,
 				9F96D44D12E8B462002D06B4 /* janrain_logo-ipad.png in Resources */,
 				9F96D80412EA5236002D06B4 /* done.png in Resources */,
@@ -1046,12 +1054,12 @@
 				9F23062E12F24B5A00147C95 /* split_portrait.png in Resources */,
 				9F0C6BB51492CF77001D6AB1 /* Settings.bundle in Resources */,
 				C01FCF5008A95454005424CE /* InfoViewController.xib in Resources */,
-				C01FCF5008A95454005424D0 /* RootViewController.xib in Resources */,
+				C01FCF5008A95454005424D0 /* SplashViewController.xib in Resources */,
 				C01FCF5008A95454005424D2 /* UserDrillDownViewController.xib in Resources */,
-				C01FCF5008A95454005424D4 /* RootViewController-iPad.xib in Resources */,
-				C01FCF5008A95454005424D6 /* UserDetailViewController-iPad.xib in Resources */,
-				C01FCF5008A95454005424D8 /* UserDrillDownViewController-iPad.xib in Resources */,
-				C01FCF5008A95454005424DA /* UserListViewController-iPad.xib in Resources */,
+				C01FCF5008A95454005424D4 /* SplashViewController~ipad.xib in Resources */,
+				C01FCF5008A95454005424D6 /* UserDetailsViewController~ipad.xib in Resources */,
+				C01FCF5008A95454005424D8 /* UserDrillDownViewController~ipad.xib in Resources */,
+				C01FCF5008A95454005424DA /* UserListViewController~ipad.xib in Resources */,
 				9FB1286B15C7416C0072BEE6 /* ATTRIBUTION in Resources */,
 				9FB1287915C7416C0072BEE6 /* JREngage-Info.plist in Resources */,
 				9FB1287B15C7416C0072BEE6 /* button_black_135x40.png in Resources */,
@@ -1208,6 +1216,7 @@
 				9FB1291215C7416C0072BEE6 /* JRPublishActivityController.xib in Resources */,
 				9FB1291315C7416C0072BEE6 /* JRUserLandingController.xib in Resources */,
 				9FB1291415C7416C0072BEE6 /* JRWebViewController.xib in Resources */,
+				D89BEA951666E87500396BCD /* MainWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1224,7 +1233,7 @@
 				9FB40A3612414DC500FDDA7B /* QuickSignInAppDelegate.m in Sources */,
 				9F30A8E412BC0C4B00A30ADF /* EmbeddedNativeSignInViewController.m in Sources */,
 				C01FCF5008A954540054247D /* UserListViewController.m in Sources */,
-				C01FCF5008A95454005424C8 /* RootViewController.m in Sources */,
+				C01FCF5008A95454005424C8 /* SplashViewController.m in Sources */,
 				C01FCF5008A95454005424CA /* UserDrillDownViewController.m in Sources */,
 				C01FCF5008A95454005424CC /* UserModel.m in Sources */,
 				9FB1286A15C7416C0072BEE6 /* JRConnectionManager.m in Sources */,
@@ -1244,6 +1253,7 @@
 				9FB1287A15C7416C0072BEE6 /* JREngagePlugin.js in Sources */,
 				9FB1291515C7416C0072BEE6 /* JSONKit.m in Sources */,
 				9FB1291615C7416C0072BEE6 /* SFHFKeychainUtils.m in Sources */,
+				D866318616694ED200C59B03 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

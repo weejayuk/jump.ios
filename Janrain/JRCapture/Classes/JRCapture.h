@@ -140,21 +140,12 @@ typedef enum
  * using the rich data available from the social identity provider.  One of three results will occur:
  *     - Returning User — The user’s record already exists on the Capture server. The record is retrieved from the
  *       Capture server and passed back to your application.
- *     - New User, Record Created — The user’s record does not already exist on the Capture server, but it is
- *       automatically created and passed back to your application.  Your application may wish to collect additional
- *       information about the user and push that information back to the Capture server.
- *     - New User, Record Not Created* — The user’s record was not automatically created because required information
- *       that was not available in the data returned by the social identity provider. (For example, your Capture
- *       instance may require an email address, but Twitter does not provide an email address, so the record cannot
- *       be automatically created on Capture when the user signs in with Twitter.)  An incomplete user record is
- *       passed back to your application, where it is your application’s responsibility to collect the missing
- *       required data and invoke the user record creation on Capture.
- *           - Your application should present UI to collect the missing information and any additional information
- *             you wish to collect
- *           - Your application should store this information in the user record object returned by Capture
- *           - Once the information is collected, your application needs to invoke record creation on Capture
- *
- *  * If your Capture instance does not require information such as an email address, this scenario should not occur.
+ *     - New User, Record Automatically Created — The user’s record does not already exist on the Capture server, but
+ *       it is automatically created and passed back to your application.  Your application may wish to collect
+ *       additional information about the user and push that information back to the Capture server.
+ *     - New User, Record Not Automatically Created* — The user’s record was not automatically created, either because
+ *       required information was not available in the data returned by the social identity provider, or because auto-
+ *       creation was disabled.
  **/
 typedef enum
 {
@@ -171,20 +162,29 @@ typedef enum
  **/
  JRCaptureRecordExists,                /* already created, not new */
 
-
 /**
- * Indicates that this is a new user but there was not enough information
- * from the social sign-in provider to fill the required user record fields. (For example, your Capture instance
- * may require an email address, but Twitter does not provide an email address, so the record cannot be created on
- * Capture when the user signs in with Twitter.)  The partially complete user record is passed back to your application,
- * where it is your application’s responsibility to collect the missing required data and create the user
- * record on Capture:
- *     - Your application should present a dialog to collect the missing information and any additional information you
- *       wish to collect
- *     - Your application should store this information in the JRCaptureUser instance returned by Capture
+ * Indicates that this is a new user but that a record was not automatically created on Capture, either because there
+ * was not enough information from the social sign-in provider to fill the required attributes, or because record
+ * auto-creation was explicitly disabled.
+ *
+ * Record auto-creation can fail when your Capture schema requires an email address, but Twitter does not provide an
+ * email address, so the record cannot be created on Capture when the user signs in with Twitter.)
+ *
+ *
+ * The partially complete user record is passed back to your application, where it is your application’s responsibility
+ * to collect required data and create the user record on Capture:
+ *     - Your application should present a registration dialog to collect missing information
+ *     - Your application should store this information in the JRCaptureUser instance passed to
+ *       CaptureSigninDelegate#captureAuthenticationDidSucceedForUser:status:
  *     - Once the information is collected, your application needs to create the record on Capture
  **/
- JRCaptureRecordMissingRequiredFields, /* not created, does not exist */
+ JRCaptureRecordRequiresCreation, /* not created, does not exist */
+
+/**
+ * @deprecated subsumed by JRCaptureRecordRequiresCreation.
+ */
+ JRCaptureRecordMissingRequiredFields = JRCaptureRecordRequiresCreation, /* not created, does not exist */
+
 } JRCaptureRecordStatus;
 
 @class JRActivityObject;
@@ -476,13 +476,15 @@ typedef enum
  **/
 /*@{*/
 
++ (void)startJsWidgetWithUrl:(NSString *)url;
+
 /**
- * Use this function to begin authentication. The Engage for iOS portion of the library will
- * pop up a modal dialog and take the user through the sign-in process.
- *
- * @param delegate
- *   The JRCaptureSigninDelegate object that wishes to receive messages regarding user authentication
- **/
+* Use this function to begin authentication. The Engage for iOS portion of the library will
+* pop up a modal dialog and take the user through the sign-in process.
+*
+* @param delegate
+*   The JRCaptureSigninDelegate object that wishes to receive messages regarding user authentication
+**/
 + (void)startEngageSigninDialogForDelegate:(id<JRCaptureSigninDelegate>)delegate;
 
 /**
@@ -574,7 +576,7 @@ typedef enum
  * JRConventionalSigninType of either JRConventionalSigninUsernamePassword or JRConventionalSigninEmailPassword.
  * Based on this argument, the dialog will prompt your user to either enter their username or email.
  **/
-+ (void)startEngageSigninDialogWithConventionalSignin:(JRConventionalSigninType)conventionalSigninType
++ (void)startEngageSigninDialogWithConventionalSignin:(JRConventionalSigninType)conventionalSignInType
                           andCustomInterfaceOverrides:(NSDictionary*)customInterfaceOverrides
                                           forDelegate:(id<JRCaptureSigninDelegate>)delegate;
 

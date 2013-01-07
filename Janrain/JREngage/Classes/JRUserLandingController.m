@@ -92,6 +92,8 @@
     DLog(@"");
     [super viewDidLoad];
 
+    myTableView.backgroundColor = [UIColor clearColor];
+
  /* If there is a UIColor object set for the background color, use this */
     if ([customInterface objectForKey:kJRAuthenticationBackgroundColor])
         myBackgroundView.backgroundColor = [customInterface objectForKey:kJRAuthenticationBackgroundColor];
@@ -129,8 +131,7 @@
 - (NSString*)customTitle
 {
     DLog(@"");
-    if (!sessionData.currentProvider.requiresInput)
-        return [NSString stringWithString:@"Welcome Back!"];
+    if (!sessionData.currentProvider.requiresInput) return @"Welcome Back!";
 
     return sessionData.currentProvider.shortText;
 }
@@ -139,12 +140,6 @@
 {
     DLog(@"");
     [super viewWillAppear:animated];
-
-///*** * * * * * * DEPRECATED * * * * * * ***/
-///**/if ([customInterface objectForKey:kJRUserLandingBackgroundImageName])
-///**/    [myBackgroundView addSubview:[[[UIImageView alloc] initWithImage:
-///**/                                   [UIImage imageNamed:[customInterface objectForKey:kJRUserLandingBackgroundImageName]]] autorelease]];
-///*** * * * * * * DEPRECATED * * * * * * ***/
 
  /* Load the custom background view, if there is one. */
     if ([customInterface objectForKey:kJRAuthenticationBackgroundImageView])
@@ -493,16 +488,19 @@ enum
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    DLog(@"");
+    BOOL b;
     if (sessionData.canRotate)
-        return YES;
-
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+        b = interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
+    else
+        b = interfaceOrientation == UIInterfaceOrientationPortrait;
+    DLog(@"%d", b);
+    return b;
 }
 
-#define TABLE_VIEW_FRAME_LANDSCAPE_SMALL    0,  0,  480,  120
-#define TABLE_VIEW_FRAME_LANDSCAPE_BIG      0,  0,  480,  268
-#define TABLE_VIEW_FRAME_PORTRAIT           0,  0,  320,  416
+#define TABLE_VIEW_FRAME_LANDSCAPE_SMALL    0,  0,  self.view.frame.size.width,  120
+#define TABLE_VIEW_FRAME_LANDSCAPE_BIG      0,  0,  self.view.frame.size.width,  268
+// TABLE_VIEW_FRAME_PORTRAIT seems OK on 4" iPhone despite screen specifc 416px spec
+#define TABLE_VIEW_FRAME_PORTRAIT           0,  0,  self.view.frame.size.width,  416
 
 - (void)shrinkTableViewLandscape
 {
@@ -584,7 +582,7 @@ enum
         }
     }
 
-    [[self navigationController] pushViewController:[JRUserInterfaceMaestro jrUserInterfaceMaestro].myWebViewController
+    [[self navigationController] pushViewController:[JRUserInterfaceMaestro sharedMaestro].myWebViewController
                                            animated:YES];
 }
 

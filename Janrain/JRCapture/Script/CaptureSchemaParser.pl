@@ -1894,17 +1894,6 @@ unless (-d "$pathToOutputDir/$genDir") {
     mkdir "$pathToOutputDir/$genDir" or die "[ERROR] Unable to make the directory '$pathToOutputDir/$genDir'\n\n";
 }
 
-if ($usingCustomOutputDir) {
-  my $copyResult = `cp ../Classes/JR* $pathToOutputDir 2>&1`;
-  $copyResult   .= `cp ../Classes/CaptureRecordInterface/JR* $pathToOutputDir 2>&1`;
-  $copyResult   .= `cp ../Classes/CaptureUserModel/JR* $pathToOutputDir 2>&1`;
-  $copyResult   .= `cp ../Classes/EngageWrapper/JR* $pathToOutputDir 2>&1`;
-  $copyResult   .= `cp ../Classes/WebviewWrapper/JR* $pathToOutputDir 2>&1`;
-  if ($copyResult) {
-    die "[ERROR] Unable to copy necessary files to the '$pathToOutputDir': $copyResult\n\n";
-  }
-}
-
 foreach my $fileName (@hFileNames) {
   open (FILE, ">$pathToOutputDir/$genDir/$fileName") or die "[ERROR] Unable to open '$pathToOutputDir/$genDir/$fileName' for writing\n\n";
   print "Writing $fileName... ";

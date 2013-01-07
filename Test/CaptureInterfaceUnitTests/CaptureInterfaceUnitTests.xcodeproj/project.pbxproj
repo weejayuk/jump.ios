@@ -179,52 +179,80 @@
 		9F578C0D1593E3CB00478D15 /* JRWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F578B311593E3CB00478D15 /* JRWebViewController.xib */; };
 		9F578C0E1593E3CB00478D15 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F578B341593E3CB00478D15 /* JSONKit.m */; };
 		9F578C0F1593E3CB00478D15 /* SFHFKeychainUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F578B371593E3CB00478D15 /* SFHFKeychainUtils.m */; };
-		9F578C6A1593E3EE00478D15 /* JRBasicObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F578C131593E3EE00478D15 /* JRBasicObject.m */; };
-		9F578C6B1593E3EE00478D15 /* JRBasicPluralElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F578C151593E3EE00478D15 /* JRBasicPluralElement.m */; };
-		9F578C6C1593E3EE00478D15 /* JRCaptureUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F578C171593E3EE00478D15 /* JRCaptureUser.m */; };
-		9F578C6D1593E3EE00478D15 /* JRObjectTestRequired.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F578C191593E3EE00478D15 /* JRObjectTestRequired.m */; };
-		9F578C6E1593E3EE00478D15 /* JRObjectTestRequiredUnique.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F578C1B1593E3EE00478D15 /* JRObjectTestRequiredUnique.m */; };
-		9F578C6F1593E3EE00478D15 /* JROinoinoL1Object.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F578C1D1593E3EE00478D15 /* JROinoinoL1Object.m */; };
-		9F578C701593E3EE00478D15 /* JROinoinoL2Object.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F578C1F1593E3EE00478D15 /* JROinoinoL2Object.m */; };
-		9F578C711593E3EE00478D15 /* JROinoinoL3Object.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F578C211593E3EE00478D15 /* JROinoinoL3Object.m */; };
-		9F578C721593E3EE00478D15 /* JROinoL1Object.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F578C231593E3EE00478D15 /* JROinoL1Object.m */; };
-		9F578C731593E3EE00478D15 /* JROinoL2Object.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F578C251593E3EE00478D15 /* JROinoL2Object.m */; };
-		9F578C741593E3EE00478D15 /* JROinonipL1PluralElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F578C271593E3EE00478D15 /* JROinonipL1PluralElement.m */; };
-		9F578C751593E3EE00478D15 /* JROinonipL2Object.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F578C291593E3EE00478D15 /* JROinonipL2Object.m */; };
-		9F578C761593E3EE00478D15 /* JROinonipL3Object.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F578C2B1593E3EE00478D15 /* JROinonipL3Object.m */; };
-		9F578C771593E3EE00478D15 /* JROnipinapL1PluralElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F578C2D1593E3EE00478D15 /* JROnipinapL1PluralElement.m */; };
-		9F578C781593E3EE00478D15 /* JROnipinapL2PluralElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F578C2F1593E3EE00478D15 /* JROnipinapL2PluralElement.m */; };
-		9F578C791593E3EE00478D15 /* JROnipinapL3Object.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F578C311593E3EE00478D15 /* JROnipinapL3Object.m */; };
-		9F578C7A1593E3EE00478D15 /* JROnipinoL1Object.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F578C331593E3EE00478D15 /* JROnipinoL1Object.m */; };
-		9F578C7B1593E3EE00478D15 /* JROnipinoL2PluralElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F578C351593E3EE00478D15 /* JROnipinoL2PluralElement.m */; };
-		9F578C7C1593E3EE00478D15 /* JROnipinoL3Object.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F578C371593E3EE00478D15 /* JROnipinoL3Object.m */; };
-		9F578C7D1593E3EE00478D15 /* JROnipL1PluralElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F578C391593E3EE00478D15 /* JROnipL1PluralElement.m */; };
-		9F578C7E1593E3EE00478D15 /* JROnipL2Object.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F578C3B1593E3EE00478D15 /* JROnipL2Object.m */; };
-		9F578C7F1593E3EE00478D15 /* JRPinapinapL1PluralElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F578C3D1593E3EE00478D15 /* JRPinapinapL1PluralElement.m */; };
-		9F578C801593E3EE00478D15 /* JRPinapinapL2PluralElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F578C3F1593E3EE00478D15 /* JRPinapinapL2PluralElement.m */; };
-		9F578C811593E3EE00478D15 /* JRPinapinapL3PluralElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F578C411593E3EE00478D15 /* JRPinapinapL3PluralElement.m */; };
-		9F578C821593E3EE00478D15 /* JRPinapinoL1Object.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F578C431593E3EE00478D15 /* JRPinapinoL1Object.m */; };
-		9F578C831593E3EE00478D15 /* JRPinapinoL2PluralElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F578C451593E3EE00478D15 /* JRPinapinoL2PluralElement.m */; };
-		9F578C841593E3EE00478D15 /* JRPinapinoL3PluralElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F578C471593E3EE00478D15 /* JRPinapinoL3PluralElement.m */; };
-		9F578C851593E3EE00478D15 /* JRPinapL1PluralElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F578C491593E3EE00478D15 /* JRPinapL1PluralElement.m */; };
-		9F578C861593E3EE00478D15 /* JRPinapL2PluralElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F578C4B1593E3EE00478D15 /* JRPinapL2PluralElement.m */; };
-		9F578C871593E3EE00478D15 /* JRPinoinoL1Object.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F578C4D1593E3EE00478D15 /* JRPinoinoL1Object.m */; };
-		9F578C881593E3EE00478D15 /* JRPinoinoL2Object.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F578C4F1593E3EE00478D15 /* JRPinoinoL2Object.m */; };
-		9F578C891593E3EE00478D15 /* JRPinoinoL3PluralElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F578C511593E3EE00478D15 /* JRPinoinoL3PluralElement.m */; };
-		9F578C8A1593E3EE00478D15 /* JRPinoL1Object.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F578C531593E3EE00478D15 /* JRPinoL1Object.m */; };
-		9F578C8B1593E3EE00478D15 /* JRPinoL2PluralElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F578C551593E3EE00478D15 /* JRPinoL2PluralElement.m */; };
-		9F578C8C1593E3EE00478D15 /* JRPinonipL1PluralElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F578C571593E3EE00478D15 /* JRPinonipL1PluralElement.m */; };
-		9F578C8D1593E3EE00478D15 /* JRPinonipL2Object.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F578C591593E3EE00478D15 /* JRPinonipL2Object.m */; };
-		9F578C8E1593E3EE00478D15 /* JRPinonipL3PluralElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F578C5B1593E3EE00478D15 /* JRPinonipL3PluralElement.m */; };
-		9F578C8F1593E3EE00478D15 /* JRPluralTestAlphabeticElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F578C5D1593E3EE00478D15 /* JRPluralTestAlphabeticElement.m */; };
-		9F578C901593E3EE00478D15 /* JRPluralTestUniqueElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F578C5F1593E3EE00478D15 /* JRPluralTestUniqueElement.m */; };
-		9F578C911593E3EE00478D15 /* JRCapture.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F578C611593E3EE00478D15 /* JRCapture.m */; };
-		9F578C921593E3EE00478D15 /* JRCaptureApidInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F578C631593E3EE00478D15 /* JRCaptureApidInterface.m */; };
-		9F578C941593E3EE00478D15 /* JRCaptureObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F578C671593E3EE00478D15 /* JRCaptureObject.m */; };
-		9F578C951593E3EE00478D15 /* JRCaptureUser+Extras.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F578C691593E3EE00478D15 /* JRCaptureUser+Extras.m */; };
 		9FDBD404158127B500DCB32C /* GHUnitIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FDBD403158127B500DCB32C /* GHUnitIOS.framework */; };
 		9FEB3888158130E1007706DC /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FEB3886158130E1007706DC /* MessageUI.framework */; };
 		9FEB3889158130E1007706DC /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FEB3887158130E1007706DC /* Security.framework */; };
+		C142402146FE48F7D6FCD083 /* JREngageWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = C142428D92D6318E21DB2F75 /* JREngageWrapper.m */; };
+		C1424053838993E9654239E1 /* JRPinoinoL1Object.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424AABC14D0880AC33CD18 /* JRPinoinoL1Object.m */; };
+		C14240629D01D7F009066BBF /* JRPinapL1PluralElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C14240FDEFA9F49D12CD1498 /* JRPinapL1PluralElement.m */; };
+		C14240740364F6002248AE8D /* JRPinonipL1PluralElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424745FBD4BC71E6AC3E70 /* JRPinonipL1PluralElement.m */; };
+		C1424082B865A19102FE6765 /* JROnipinapL1PluralElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C14240E3C9F468145675D984 /* JROnipinapL1PluralElement.m */; };
+		C14240AAAB4732DC2092F8AE /* JROinoL2Object.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424D5F1818CDB3738A6F5C /* JROinoL2Object.m */; };
+		C14240C3AADB9C8C420F7F26 /* .name in Resources */ = {isa = PBXBuildFile; fileRef = C1424320F72B068345086858 /* .name */; };
+		C14240E758FF5FECDC05C71F /* JRCaptureApidInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424F59CD506F81BC971738 /* JRCaptureApidInterface.m */; };
+		C14241395B63E11157E7AD85 /* JROnipL2Object.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424F4A02C6F9460302E793 /* JROnipL2Object.m */; };
+		C1424173EAAAD800799D65EE /* JROinoinoL2Object.m in Sources */ = {isa = PBXBuildFile; fileRef = C14248DB11BF2D48CEB42D97 /* JROinoinoL2Object.m */; };
+		C142419D431B8E1146B27AF9 /* JRPinapinapL1PluralElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424C0C54AA070C380FCBE6 /* JRPinapinapL1PluralElement.m */; };
+		C14241B6FFB7974D1CFE81B9 /* JRCaptureUser.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424CAB4470D210D42781E2 /* JRCaptureUser.m */; };
+		C14241C71EF4C50CBAAA16E1 /* JRCapture.m in Sources */ = {isa = PBXBuildFile; fileRef = C14248F0B54AD64B66B59949 /* JRCapture.m */; };
+		C1424259E1022B30DCBC16E9 /* JRCaptureUser+Extras.m in Sources */ = {isa = PBXBuildFile; fileRef = C14248FF6ACAE2D88E042F12 /* JRCaptureUser+Extras.m */; };
+		C14242AF7FEA5C7214C61CAA /* misc.xml in Resources */ = {isa = PBXBuildFile; fileRef = C1424BC282CACA73A3D239AA /* misc.xml */; };
+		C14242C007F83BB4E693E6FA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C142496846000070E975C56D /* QuartzCore.framework */; };
+		C14242C067F3CDEBF815C8A3 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = C1424B71CAF6FAFF32CD61B1 /* .gitignore */; };
+		C1424338061CFB9487A26360 /* JRPinapinoL2PluralElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424EC9A44423C6C85A5849 /* JRPinapinoL2PluralElement.m */; };
+		C142433E4CA5332855C04403 /* JRCaptureJsWidgetWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424C944C58A939560BE5DA /* JRCaptureJsWidgetWrapper.m */; };
+		C142434CC7BD0D1F070997C3 /* JRObjectTestRequired.m in Sources */ = {isa = PBXBuildFile; fileRef = C142491987196A7F51EEB7D5 /* JRObjectTestRequired.m */; };
+		C1424355912F478353D78C1E /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = C142480B929AB56C1842A95E /* .gitignore */; };
+		C142435BE97A72CBD32095BA /* JROinoL1Object.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424BD50BCFA0CA0606F212 /* JROinoL1Object.m */; };
+		C14243E744F017FE35DF459F /* JRPinoinoL3PluralElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C142404B1BF73BC30751767B /* JRPinoinoL3PluralElement.m */; };
+		C14244200E446C20C1A87785 /* JROnipinapL3Object.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424B34E9B0ABEEFD779068 /* JROnipinapL3Object.m */; };
+		C1424467A29963F25AB22F74 /* JROinonipL2Object.m in Sources */ = {isa = PBXBuildFile; fileRef = C142463F619EB2A302F2D19D /* JROinonipL2Object.m */; };
+		C142449E9ADBEA4905C5B033 /* regen_test.sh in Resources */ = {isa = PBXBuildFile; fileRef = C1424D576EFF7FF040577D2A /* regen_test.sh */; };
+		C14244A61B39A45098975699 /* typemap.txt in Resources */ = {isa = PBXBuildFile; fileRef = C1424364534F43EE29F99AFA /* typemap.txt */; };
+		C1424589E4038A9D209C4337 /* JRCaptureObject.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424C6F49F0B58FFC1349D0 /* JRCaptureObject.m */; };
+		C142462D58E7D73924751112 /* JRObjectTestRequiredUnique.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424140A5733A4A68A5FC1A /* JRObjectTestRequiredUnique.m */; };
+		C142465BFCF18FD226827167 /* JRPinonipL2Object.m in Sources */ = {isa = PBXBuildFile; fileRef = C14240169149DC6405ECAD19 /* JRPinonipL2Object.m */; };
+		C14246AFD7941E007D4FB9F5 /* JRPinapinoL1Object.m in Sources */ = {isa = PBXBuildFile; fileRef = C14243B5B6C4545659CB4538 /* JRPinapinoL1Object.m */; };
+		C14246F3D63ACA4BB7C15E6D /* JRCaptureError.m in Sources */ = {isa = PBXBuildFile; fileRef = C14240BADB8BCB7B75864109 /* JRCaptureError.m */; };
+		C142474797B18DB114A445B2 /* JROinonipL3Object.m in Sources */ = {isa = PBXBuildFile; fileRef = C142469326FFAD6D848CB357 /* JROinonipL3Object.m */; };
+		C14247714D02C6BD6D650FE1 /* JROnipL1PluralElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424B4875E65D8B2CBEAC8F /* JROnipL1PluralElement.m */; };
+		C142486F25A6B76F1B7130B6 /* regen_demo.sh in Resources */ = {isa = PBXBuildFile; fileRef = C14244FA3CBF27567F089C00 /* regen_demo.sh */; };
+		C14248BC0886BF84B50810CC /* JRPinonipL3PluralElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C14240375A8FDC100B6AF546 /* JRPinonipL3PluralElement.m */; };
+		C142490C6BDB9841191C0CE3 /* JRNSDate+ISO8601_CaptureDateTimeString.m in Sources */ = {isa = PBXBuildFile; fileRef = C142420C709E28ACBE25E6F5 /* JRNSDate+ISO8601_CaptureDateTimeString.m */; };
+		C1424955305D241E758AE86A /* JRPluralTestUniqueElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C14246FF84BDA40796F9AB10 /* JRPluralTestUniqueElement.m */; };
+		C1424959920BB2744A21BFFA /* JROinoinoL3Object.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424EDF3F18D32B14EE0216 /* JROinoinoL3Object.m */; };
+		C1424993477868D1BC9B5248 /* default-schema.json in Resources */ = {isa = PBXBuildFile; fileRef = C142472FE0894213E21799F6 /* default-schema.json */; };
+		C14249C0FAB1928C663CADE5 /* JRCaptureWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C14245B3A8F9B664E1AA02AA /* JRCaptureWebViewController.m */; };
+		C14249F83F2EDB0A33B2195F /* JRPinapinoL3PluralElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424D2E52F1F065BDA9C2ED /* JRPinapinoL3PluralElement.m */; };
+		C1424A357C74D7D9768A4DC3 /* JRPinoL2PluralElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C14240FF236C0F1E4EE75BBA /* JRPinoL2PluralElement.m */; };
+		C1424A4256601524FE983073 /* JRCaptureData.m in Sources */ = {isa = PBXBuildFile; fileRef = C14248D01FFCABB76ACCC5AD /* JRCaptureData.m */; };
+		C1424A539751D253C3B37EF1 /* encodings.xml in Resources */ = {isa = PBXBuildFile; fileRef = C14245DC7C5074A17981AC11 /* encodings.xml */; };
+		C1424C29E01C89FBD0718B11 /* JROinoinoL1Object.m in Sources */ = {isa = PBXBuildFile; fileRef = C14240EA952658298908CD24 /* JROinoinoL1Object.m */; };
+		C1424C6CA90484BFFF486DA9 /* workspace.xml in Resources */ = {isa = PBXBuildFile; fileRef = C14240BA882E21173110D8C8 /* workspace.xml */; };
+		C1424C87A28F44788F27E176 /* vcs.xml in Resources */ = {isa = PBXBuildFile; fileRef = C142473B08A1F06C8CBEF8C0 /* vcs.xml */; };
+		C1424CABF88F1CB1BBBF74F8 /* umg_schema.json in Resources */ = {isa = PBXBuildFile; fileRef = C142488F05AD4E7C0F0DDB24 /* umg_schema.json */; };
+		C1424CB13539BB45B3B72F77 /* JRPinapinapL2PluralElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C14249A9451D7202E0E89EA8 /* JRPinapinapL2PluralElement.m */; };
+		C1424CC6A9EDCB996DA3B2EB /* scope_settings.xml in Resources */ = {isa = PBXBuildFile; fileRef = C14246BD9686E3BF3AF8657F /* scope_settings.xml */; };
+		C1424CC835D4F1AD01B6856B /* JRBasicPluralElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C14247D4AFF6499595E2590D /* JRBasicPluralElement.m */; };
+		C1424CD9C9302E22403F82DB /* CaptureParserIO.pl in Resources */ = {isa = PBXBuildFile; fileRef = C142400566C2B4041CA7F133 /* CaptureParserIO.pl */; };
+		C1424D120D436CF1234ED2C4 /* JRPinapL2PluralElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C14248CC6B414EB29842BAA6 /* JRPinapL2PluralElement.m */; };
+		C1424D3FF3BCD43BD45051B3 /* JRPinoL1Object.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424E1B2B0FAB260EFEE713 /* JRPinoL1Object.m */; };
+		C1424D5808D96BE5EE26E6DF /* Script.iml in Resources */ = {isa = PBXBuildFile; fileRef = C1424099BBCAA0B9C037E6A7 /* Script.iml */; };
+		C1424D7ACEFAF4A98993F648 /* JRPinoinoL2Object.m in Sources */ = {isa = PBXBuildFile; fileRef = C142409E083FEECD2446F4B7 /* JRPinoinoL2Object.m */; };
+		C1424DAAA19806A2142DAFAA /* JRConventionalSigninViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424B6BBA0A5A10CD13ACD9 /* JRConventionalSigninViewController.m */; };
+		C1424DE6295313706289B275 /* modules.xml in Resources */ = {isa = PBXBuildFile; fileRef = C142463E07DA4352AE385E4B /* modules.xml */; };
+		C1424E4DCF94097ADCD65D54 /* JRPluralTestAlphabeticElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C142483DCBA4EBDBB33CD275 /* JRPluralTestAlphabeticElement.m */; };
+		C1424E9113E5CA5D8C1C4809 /* JROnipinoL2PluralElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424A21A36F94906D53B1F2 /* JROnipinoL2PluralElement.m */; };
+		C1424EA5AEAA09312851696D /* CaptureSchemaParser.pl in Resources */ = {isa = PBXBuildFile; fileRef = C1424CD87AEF4E2E37E0FAFE /* CaptureSchemaParser.pl */; };
+		C1424EC181839727814E94F8 /* JROnipinoL1Object.m in Sources */ = {isa = PBXBuildFile; fileRef = C14247D0137ED4D37A13B285 /* JROnipinoL1Object.m */; };
+		C1424EC89266EFC6DD61FEE6 /* JRBasicObject.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424BF90E733455F019C818 /* JRBasicObject.m */; };
+		C1424ECAA500404F520F2A0D /* JROnipinapL2PluralElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C14249D63AA30158B6B0C0A8 /* JROnipinapL2PluralElement.m */; };
+		C1424EDED1DEB17AE88CD29F /* JRPinapinapL3PluralElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424839A56E3940E5A010A9 /* JRPinapinapL3PluralElement.m */; };
+		C1424EE17A5E67F0CC942783 /* user_dev.json in Resources */ = {isa = PBXBuildFile; fileRef = C142480E8518ADDACA324BC5 /* user_dev.json */; };
+		C1424F38D5DDBEE99737B217 /* JROnipinoL3Object.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424C11C996A0763FEE349C /* JROnipinoL3Object.m */; };
+		C1424F509EB5585EDD2996A3 /* JROinonipL1PluralElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424EE987C58569A6F77FF4 /* JROinonipL1PluralElement.m */; };
+		C1424FEBC7DAE9CEE26D5A6E /* ObjCMethodParts.pl in Resources */ = {isa = PBXBuildFile; fileRef = C14240A88D0ECF76FE351F5B /* ObjCMethodParts.pl */; };
+		C1424FFD94AAF69725E40321 /* fox_user.json in Resources */ = {isa = PBXBuildFile; fileRef = C142406404D351F0B0934183 /* fox_user.json */; };
 		DDE0B9A67F00A1DC4B6DFBB6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDE0B9A67F00A1DC4B6DFBB5 /* UIKit.framework */; };
 		DDE0B9A67F00A1DC4B6DFBB8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDE0B9A67F00A1DC4B6DFBB7 /* Foundation.framework */; };
 		DDE0B9A67F00A1DC4B6DFBBA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDE0B9A67F00A1DC4B6DFBB9 /* CoreGraphics.framework */; };
@@ -246,18 +274,11 @@
 		DDE0B9A67F00A1DC4B6DFC00 /* SimpleObjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DDE0B9A67F00A1DC4B6DFBFF /* SimpleObjectTests.m */; };
 		DDE0B9A67F00A1DC4B6DFC03 /* NestedPluralObjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DDE0B9A67F00A1DC4B6DFC02 /* NestedPluralObjectTests.m */; };
 		DDE0B9A67F00A1DC4B6DFC06 /* ReservedWordsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DDE0B9A67F00A1DC4B6DFC05 /* ReservedWordsTests.m */; };
-		DDE0B9A67F00A1DC4B6DFC08 /* JRApidWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = DDE0B9A67F00A1DC4B6DFC07 /* JRApidWrapper.m */; };
-		DDE0B9A67F00A1DC4B6DFC0A /* JRCaptureData.m in Sources */ = {isa = PBXBuildFile; fileRef = DDE0B9A67F00A1DC4B6DFC09 /* JRCaptureData.m */; };
-		DDE0B9A67F00A1DC4B6DFC0C /* JRCaptureError.m in Sources */ = {isa = PBXBuildFile; fileRef = DDE0B9A67F00A1DC4B6DFC0B /* JRCaptureError.m */; };
-		DDE0B9A67F00A1DC4B6DFC12 /* JREngageWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = DDE0B9A67F00A1DC4B6DFC11 /* JREngageWrapper.m */; };
-		DDE0B9A67F00A1DC4B6DFC16 /* JRWebviewWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = DDE0B9A67F00A1DC4B6DFC15 /* JRWebviewWrapper.m */; };
-		DDE0B9A67F00A1DC4B6DFC22 /* JRNSDate+ISO8601_CaptureDateTimeString.m in Sources */ = {isa = PBXBuildFile; fileRef = DDE0B9A67F00A1DC4B6DFC21 /* JRNSDate+ISO8601_CaptureDateTimeString.m */; };
 		DDE0B9A67F00A1DC4B6DFC25 /* ErrorHandlerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DDE0B9A67F00A1DC4B6DFC24 /* ErrorHandlerTests.m */; };
 		DDE0B9A67F00A1DC4B6DFC28 /* CaptureUserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DDE0B9A67F00A1DC4B6DFC27 /* CaptureUserTests.m */; };
 		DDE0B9A67F00A1DC4B6DFC2B /* ApidHandlerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DDE0B9A67F00A1DC4B6DFC2A /* ApidHandlerTests.m */; };
 		DDE0B9A67F00A1DC4B6DFC31 /* PluralTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DDE0B9A67F00A1DC4B6DFC30 /* PluralTests.m */; };
 		DDE0B9A67F00A1DC4B6DFC33 /* JREngageError.m in Sources */ = {isa = PBXBuildFile; fileRef = DDE0B9A67F00A1DC4B6DFC32 /* JREngageError.m */; };
-		DDE0B9A67F00A1DC4B6DFC36 /* JRConventionalSigninViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DDE0B9A67F00A1DC4B6DFC35 /* JRConventionalSigninViewController.m */; };
 		DDE0B9A67F00A1DC4B6DFC38 /* CaptureSignInTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DDE0B9A67F00A1DC4B6DFC37 /* CaptureSignInTests.m */; };
 /* End PBXBuildFile section */
 
@@ -449,95 +470,133 @@
 		9F578B341593E3CB00478D15 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		9F578B361593E3CB00478D15 /* SFHFKeychainUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFHFKeychainUtils.h; sourceTree = "<group>"; };
 		9F578B371593E3CB00478D15 /* SFHFKeychainUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFHFKeychainUtils.m; sourceTree = "<group>"; };
-		9F578C121593E3EE00478D15 /* JRBasicObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRBasicObject.h; sourceTree = "<group>"; };
-		9F578C131593E3EE00478D15 /* JRBasicObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRBasicObject.m; sourceTree = "<group>"; };
-		9F578C141593E3EE00478D15 /* JRBasicPluralElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRBasicPluralElement.h; sourceTree = "<group>"; };
-		9F578C151593E3EE00478D15 /* JRBasicPluralElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRBasicPluralElement.m; sourceTree = "<group>"; };
-		9F578C161593E3EE00478D15 /* JRCaptureUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCaptureUser.h; sourceTree = "<group>"; };
-		9F578C171593E3EE00478D15 /* JRCaptureUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRCaptureUser.m; sourceTree = "<group>"; };
-		9F578C181593E3EE00478D15 /* JRObjectTestRequired.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRObjectTestRequired.h; sourceTree = "<group>"; };
-		9F578C191593E3EE00478D15 /* JRObjectTestRequired.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRObjectTestRequired.m; sourceTree = "<group>"; };
-		9F578C1A1593E3EE00478D15 /* JRObjectTestRequiredUnique.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRObjectTestRequiredUnique.h; sourceTree = "<group>"; };
-		9F578C1B1593E3EE00478D15 /* JRObjectTestRequiredUnique.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRObjectTestRequiredUnique.m; sourceTree = "<group>"; };
-		9F578C1C1593E3EE00478D15 /* JROinoinoL1Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JROinoinoL1Object.h; sourceTree = "<group>"; };
-		9F578C1D1593E3EE00478D15 /* JROinoinoL1Object.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JROinoinoL1Object.m; sourceTree = "<group>"; };
-		9F578C1E1593E3EE00478D15 /* JROinoinoL2Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JROinoinoL2Object.h; sourceTree = "<group>"; };
-		9F578C1F1593E3EE00478D15 /* JROinoinoL2Object.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JROinoinoL2Object.m; sourceTree = "<group>"; };
-		9F578C201593E3EE00478D15 /* JROinoinoL3Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JROinoinoL3Object.h; sourceTree = "<group>"; };
-		9F578C211593E3EE00478D15 /* JROinoinoL3Object.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JROinoinoL3Object.m; sourceTree = "<group>"; };
-		9F578C221593E3EE00478D15 /* JROinoL1Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JROinoL1Object.h; sourceTree = "<group>"; };
-		9F578C231593E3EE00478D15 /* JROinoL1Object.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JROinoL1Object.m; sourceTree = "<group>"; };
-		9F578C241593E3EE00478D15 /* JROinoL2Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JROinoL2Object.h; sourceTree = "<group>"; };
-		9F578C251593E3EE00478D15 /* JROinoL2Object.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JROinoL2Object.m; sourceTree = "<group>"; };
-		9F578C261593E3EE00478D15 /* JROinonipL1PluralElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JROinonipL1PluralElement.h; sourceTree = "<group>"; };
-		9F578C271593E3EE00478D15 /* JROinonipL1PluralElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JROinonipL1PluralElement.m; sourceTree = "<group>"; };
-		9F578C281593E3EE00478D15 /* JROinonipL2Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JROinonipL2Object.h; sourceTree = "<group>"; };
-		9F578C291593E3EE00478D15 /* JROinonipL2Object.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JROinonipL2Object.m; sourceTree = "<group>"; };
-		9F578C2A1593E3EE00478D15 /* JROinonipL3Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JROinonipL3Object.h; sourceTree = "<group>"; };
-		9F578C2B1593E3EE00478D15 /* JROinonipL3Object.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JROinonipL3Object.m; sourceTree = "<group>"; };
-		9F578C2C1593E3EE00478D15 /* JROnipinapL1PluralElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JROnipinapL1PluralElement.h; sourceTree = "<group>"; };
-		9F578C2D1593E3EE00478D15 /* JROnipinapL1PluralElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JROnipinapL1PluralElement.m; sourceTree = "<group>"; };
-		9F578C2E1593E3EE00478D15 /* JROnipinapL2PluralElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JROnipinapL2PluralElement.h; sourceTree = "<group>"; };
-		9F578C2F1593E3EE00478D15 /* JROnipinapL2PluralElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JROnipinapL2PluralElement.m; sourceTree = "<group>"; };
-		9F578C301593E3EE00478D15 /* JROnipinapL3Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JROnipinapL3Object.h; sourceTree = "<group>"; };
-		9F578C311593E3EE00478D15 /* JROnipinapL3Object.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JROnipinapL3Object.m; sourceTree = "<group>"; };
-		9F578C321593E3EE00478D15 /* JROnipinoL1Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JROnipinoL1Object.h; sourceTree = "<group>"; };
-		9F578C331593E3EE00478D15 /* JROnipinoL1Object.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JROnipinoL1Object.m; sourceTree = "<group>"; };
-		9F578C341593E3EE00478D15 /* JROnipinoL2PluralElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JROnipinoL2PluralElement.h; sourceTree = "<group>"; };
-		9F578C351593E3EE00478D15 /* JROnipinoL2PluralElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JROnipinoL2PluralElement.m; sourceTree = "<group>"; };
-		9F578C361593E3EE00478D15 /* JROnipinoL3Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JROnipinoL3Object.h; sourceTree = "<group>"; };
-		9F578C371593E3EE00478D15 /* JROnipinoL3Object.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JROnipinoL3Object.m; sourceTree = "<group>"; };
-		9F578C381593E3EE00478D15 /* JROnipL1PluralElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JROnipL1PluralElement.h; sourceTree = "<group>"; };
-		9F578C391593E3EE00478D15 /* JROnipL1PluralElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JROnipL1PluralElement.m; sourceTree = "<group>"; };
-		9F578C3A1593E3EE00478D15 /* JROnipL2Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JROnipL2Object.h; sourceTree = "<group>"; };
-		9F578C3B1593E3EE00478D15 /* JROnipL2Object.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JROnipL2Object.m; sourceTree = "<group>"; };
-		9F578C3C1593E3EE00478D15 /* JRPinapinapL1PluralElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRPinapinapL1PluralElement.h; sourceTree = "<group>"; };
-		9F578C3D1593E3EE00478D15 /* JRPinapinapL1PluralElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRPinapinapL1PluralElement.m; sourceTree = "<group>"; };
-		9F578C3E1593E3EE00478D15 /* JRPinapinapL2PluralElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRPinapinapL2PluralElement.h; sourceTree = "<group>"; };
-		9F578C3F1593E3EE00478D15 /* JRPinapinapL2PluralElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRPinapinapL2PluralElement.m; sourceTree = "<group>"; };
-		9F578C401593E3EE00478D15 /* JRPinapinapL3PluralElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRPinapinapL3PluralElement.h; sourceTree = "<group>"; };
-		9F578C411593E3EE00478D15 /* JRPinapinapL3PluralElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRPinapinapL3PluralElement.m; sourceTree = "<group>"; };
-		9F578C421593E3EE00478D15 /* JRPinapinoL1Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRPinapinoL1Object.h; sourceTree = "<group>"; };
-		9F578C431593E3EE00478D15 /* JRPinapinoL1Object.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRPinapinoL1Object.m; sourceTree = "<group>"; };
-		9F578C441593E3EE00478D15 /* JRPinapinoL2PluralElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRPinapinoL2PluralElement.h; sourceTree = "<group>"; };
-		9F578C451593E3EE00478D15 /* JRPinapinoL2PluralElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRPinapinoL2PluralElement.m; sourceTree = "<group>"; };
-		9F578C461593E3EE00478D15 /* JRPinapinoL3PluralElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRPinapinoL3PluralElement.h; sourceTree = "<group>"; };
-		9F578C471593E3EE00478D15 /* JRPinapinoL3PluralElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRPinapinoL3PluralElement.m; sourceTree = "<group>"; };
-		9F578C481593E3EE00478D15 /* JRPinapL1PluralElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRPinapL1PluralElement.h; sourceTree = "<group>"; };
-		9F578C491593E3EE00478D15 /* JRPinapL1PluralElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRPinapL1PluralElement.m; sourceTree = "<group>"; };
-		9F578C4A1593E3EE00478D15 /* JRPinapL2PluralElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRPinapL2PluralElement.h; sourceTree = "<group>"; };
-		9F578C4B1593E3EE00478D15 /* JRPinapL2PluralElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRPinapL2PluralElement.m; sourceTree = "<group>"; };
-		9F578C4C1593E3EE00478D15 /* JRPinoinoL1Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRPinoinoL1Object.h; sourceTree = "<group>"; };
-		9F578C4D1593E3EE00478D15 /* JRPinoinoL1Object.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRPinoinoL1Object.m; sourceTree = "<group>"; };
-		9F578C4E1593E3EE00478D15 /* JRPinoinoL2Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRPinoinoL2Object.h; sourceTree = "<group>"; };
-		9F578C4F1593E3EE00478D15 /* JRPinoinoL2Object.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRPinoinoL2Object.m; sourceTree = "<group>"; };
-		9F578C501593E3EE00478D15 /* JRPinoinoL3PluralElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRPinoinoL3PluralElement.h; sourceTree = "<group>"; };
-		9F578C511593E3EE00478D15 /* JRPinoinoL3PluralElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRPinoinoL3PluralElement.m; sourceTree = "<group>"; };
-		9F578C521593E3EE00478D15 /* JRPinoL1Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRPinoL1Object.h; sourceTree = "<group>"; };
-		9F578C531593E3EE00478D15 /* JRPinoL1Object.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRPinoL1Object.m; sourceTree = "<group>"; };
-		9F578C541593E3EE00478D15 /* JRPinoL2PluralElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRPinoL2PluralElement.h; sourceTree = "<group>"; };
-		9F578C551593E3EE00478D15 /* JRPinoL2PluralElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRPinoL2PluralElement.m; sourceTree = "<group>"; };
-		9F578C561593E3EE00478D15 /* JRPinonipL1PluralElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRPinonipL1PluralElement.h; sourceTree = "<group>"; };
-		9F578C571593E3EE00478D15 /* JRPinonipL1PluralElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRPinonipL1PluralElement.m; sourceTree = "<group>"; };
-		9F578C581593E3EE00478D15 /* JRPinonipL2Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRPinonipL2Object.h; sourceTree = "<group>"; };
-		9F578C591593E3EE00478D15 /* JRPinonipL2Object.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRPinonipL2Object.m; sourceTree = "<group>"; };
-		9F578C5A1593E3EE00478D15 /* JRPinonipL3PluralElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRPinonipL3PluralElement.h; sourceTree = "<group>"; };
-		9F578C5B1593E3EE00478D15 /* JRPinonipL3PluralElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRPinonipL3PluralElement.m; sourceTree = "<group>"; };
-		9F578C5C1593E3EE00478D15 /* JRPluralTestAlphabeticElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRPluralTestAlphabeticElement.h; sourceTree = "<group>"; };
-		9F578C5D1593E3EE00478D15 /* JRPluralTestAlphabeticElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRPluralTestAlphabeticElement.m; sourceTree = "<group>"; };
-		9F578C5E1593E3EE00478D15 /* JRPluralTestUniqueElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRPluralTestUniqueElement.h; sourceTree = "<group>"; };
-		9F578C5F1593E3EE00478D15 /* JRPluralTestUniqueElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRPluralTestUniqueElement.m; sourceTree = "<group>"; };
-		9F578C601593E3EE00478D15 /* JRCapture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCapture.h; sourceTree = "<group>"; };
-		9F578C611593E3EE00478D15 /* JRCapture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRCapture.m; sourceTree = "<group>"; };
-		9F578C621593E3EE00478D15 /* JRCaptureApidInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCaptureApidInterface.h; sourceTree = "<group>"; };
-		9F578C631593E3EE00478D15 /* JRCaptureApidInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRCaptureApidInterface.m; sourceTree = "<group>"; };
-		9F578C661593E3EE00478D15 /* JRCaptureObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCaptureObject.h; sourceTree = "<group>"; };
-		9F578C671593E3EE00478D15 /* JRCaptureObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRCaptureObject.m; sourceTree = "<group>"; };
-		9F578C681593E3EE00478D15 /* JRCaptureUser+Extras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JRCaptureUser+Extras.h"; sourceTree = "<group>"; };
-		9F578C691593E3EE00478D15 /* JRCaptureUser+Extras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JRCaptureUser+Extras.m"; sourceTree = "<group>"; };
 		9FDBD403158127B500DCB32C /* GHUnitIOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GHUnitIOS.framework; sourceTree = "<group>"; };
 		9FEB3886158130E1007706DC /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		9FEB3887158130E1007706DC /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		C142400566C2B4041CA7F133 /* CaptureParserIO.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = CaptureParserIO.pl; sourceTree = "<group>"; };
+		C14240169149DC6405ECAD19 /* JRPinonipL2Object.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JRPinonipL2Object.m; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JRPinonipL2Object.m; sourceTree = "<group>"; };
+		C14240375A8FDC100B6AF546 /* JRPinonipL3PluralElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JRPinonipL3PluralElement.m; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JRPinonipL3PluralElement.m; sourceTree = "<group>"; };
+		C142404B1BF73BC30751767B /* JRPinoinoL3PluralElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JRPinoinoL3PluralElement.m; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JRPinoinoL3PluralElement.m; sourceTree = "<group>"; };
+		C1424063306EAF251103644F /* JREngageWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JREngageWrapper.h; sourceTree = "<group>"; };
+		C142406404D351F0B0934183 /* fox_user.json */ = {isa = PBXFileReference; lastKnownFileType = file.json; path = fox_user.json; sourceTree = "<group>"; };
+		C1424099BBCAA0B9C037E6A7 /* Script.iml */ = {isa = PBXFileReference; lastKnownFileType = file.iml; path = Script.iml; sourceTree = "<group>"; };
+		C142409E083FEECD2446F4B7 /* JRPinoinoL2Object.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JRPinoinoL2Object.m; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JRPinoinoL2Object.m; sourceTree = "<group>"; };
+		C14240A88D0ECF76FE351F5B /* ObjCMethodParts.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = ObjCMethodParts.pl; sourceTree = "<group>"; };
+		C14240B6741587BE31573E09 /* JRNSDate+ISO8601_CaptureDateTimeString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JRNSDate+ISO8601_CaptureDateTimeString.h"; sourceTree = "<group>"; };
+		C14240BA882E21173110D8C8 /* workspace.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = workspace.xml; sourceTree = "<group>"; };
+		C14240BADB8BCB7B75864109 /* JRCaptureError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRCaptureError.m; sourceTree = "<group>"; };
+		C14240E107A4C557DEF43384 /* JRPinapinoL1Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRPinapinoL1Object.h; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JRPinapinoL1Object.h; sourceTree = "<group>"; };
+		C14240E3C9F468145675D984 /* JROnipinapL1PluralElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JROnipinapL1PluralElement.m; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JROnipinapL1PluralElement.m; sourceTree = "<group>"; };
+		C14240EA952658298908CD24 /* JROinoinoL1Object.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JROinoinoL1Object.m; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JROinoinoL1Object.m; sourceTree = "<group>"; };
+		C14240FDEFA9F49D12CD1498 /* JRPinapL1PluralElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JRPinapL1PluralElement.m; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JRPinapL1PluralElement.m; sourceTree = "<group>"; };
+		C14240FF236C0F1E4EE75BBA /* JRPinoL2PluralElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JRPinoL2PluralElement.m; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JRPinoL2PluralElement.m; sourceTree = "<group>"; };
+		C142410CBFA2D02BC9420ED5 /* JRCaptureObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCaptureObject.h; sourceTree = "<group>"; };
+		C1424140A5733A4A68A5FC1A /* JRObjectTestRequiredUnique.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JRObjectTestRequiredUnique.m; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JRObjectTestRequiredUnique.m; sourceTree = "<group>"; };
+		C142417599DDC1B9EC654967 /* JRPinapinapL3PluralElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRPinapinapL3PluralElement.h; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JRPinapinapL3PluralElement.h; sourceTree = "<group>"; };
+		C14241E102F3988F9C7DCAB0 /* JRObjectTestRequired.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRObjectTestRequired.h; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JRObjectTestRequired.h; sourceTree = "<group>"; };
+		C14241EA57DB6720BD8E66AC /* JRPinonipL3PluralElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRPinonipL3PluralElement.h; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JRPinonipL3PluralElement.h; sourceTree = "<group>"; };
+		C142420C709E28ACBE25E6F5 /* JRNSDate+ISO8601_CaptureDateTimeString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JRNSDate+ISO8601_CaptureDateTimeString.m"; sourceTree = "<group>"; };
+		C142428D92D6318E21DB2F75 /* JREngageWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JREngageWrapper.m; sourceTree = "<group>"; };
+		C14242D1566573E59A3373D9 /* JRCaptureUser+Extras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JRCaptureUser+Extras.h"; sourceTree = "<group>"; };
+		C1424320F72B068345086858 /* .name */ = {isa = PBXFileReference; lastKnownFileType = file.name; path = .name; sourceTree = "<group>"; };
+		C1424364534F43EE29F99AFA /* typemap.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = typemap.txt; sourceTree = "<group>"; };
+		C14243809E73E0EC4301832B /* JRPinoinoL3PluralElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRPinoinoL3PluralElement.h; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JRPinoinoL3PluralElement.h; sourceTree = "<group>"; };
+		C14243B5B6C4545659CB4538 /* JRPinapinoL1Object.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JRPinapinoL1Object.m; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JRPinapinoL1Object.m; sourceTree = "<group>"; };
+		C142449E682841248C85E7F1 /* JROnipL1PluralElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JROnipL1PluralElement.h; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JROnipL1PluralElement.h; sourceTree = "<group>"; };
+		C14244FA3CBF27567F089C00 /* regen_demo.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = regen_demo.sh; sourceTree = "<group>"; };
+		C14244FE6FA8CBCA335AEEE4 /* JROinoinoL2Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JROinoinoL2Object.h; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JROinoinoL2Object.h; sourceTree = "<group>"; };
+		C14245A0CDE8B0C54F43173A /* JRCaptureWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCaptureWebViewController.h; sourceTree = "<group>"; };
+		C14245B3A8F9B664E1AA02AA /* JRCaptureWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRCaptureWebViewController.m; sourceTree = "<group>"; };
+		C14245DC7C5074A17981AC11 /* encodings.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = encodings.xml; sourceTree = "<group>"; };
+		C14246145674C54927A9C5B1 /* JROnipinapL2PluralElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JROnipinapL2PluralElement.h; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JROnipinapL2PluralElement.h; sourceTree = "<group>"; };
+		C142463E07DA4352AE385E4B /* modules.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = modules.xml; sourceTree = "<group>"; };
+		C142463F619EB2A302F2D19D /* JROinonipL2Object.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JROinonipL2Object.m; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JROinonipL2Object.m; sourceTree = "<group>"; };
+		C142465724A4F69D64162B2F /* JROnipinapL1PluralElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JROnipinapL1PluralElement.h; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JROnipinapL1PluralElement.h; sourceTree = "<group>"; };
+		C142467DBA341C07A2A1A651 /* JROinoL2Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JROinoL2Object.h; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JROinoL2Object.h; sourceTree = "<group>"; };
+		C142469326FFAD6D848CB357 /* JROinonipL3Object.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JROinonipL3Object.m; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JROinonipL3Object.m; sourceTree = "<group>"; };
+		C14246990DDCF4BB4DE6CB20 /* JRCaptureError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCaptureError.h; sourceTree = "<group>"; };
+		C14246A62425A39DAF1FDF82 /* JROinoL1Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JROinoL1Object.h; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JROinoL1Object.h; sourceTree = "<group>"; };
+		C14246BD9686E3BF3AF8657F /* scope_settings.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = scope_settings.xml; sourceTree = "<group>"; };
+		C14246D277F3393D8522799D /* JRPinapinapL2PluralElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRPinapinapL2PluralElement.h; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JRPinapinapL2PluralElement.h; sourceTree = "<group>"; };
+		C14246FF84BDA40796F9AB10 /* JRPluralTestUniqueElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JRPluralTestUniqueElement.m; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JRPluralTestUniqueElement.m; sourceTree = "<group>"; };
+		C14247137CF3C6590E24AD25 /* JRCaptureUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRCaptureUser.h; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JRCaptureUser.h; sourceTree = "<group>"; };
+		C142471CCDA5A105C91B2C63 /* JRPinapinapL1PluralElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRPinapinapL1PluralElement.h; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JRPinapinapL1PluralElement.h; sourceTree = "<group>"; };
+		C142471EE97EB02E72DB3D8C /* JROinoinoL3Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JROinoinoL3Object.h; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JROinoinoL3Object.h; sourceTree = "<group>"; };
+		C142472A4F1181FBD61BFD2F /* JRPinonipL2Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRPinonipL2Object.h; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JRPinonipL2Object.h; sourceTree = "<group>"; };
+		C142472FE0894213E21799F6 /* default-schema.json */ = {isa = PBXFileReference; lastKnownFileType = file.json; path = "default-schema.json"; sourceTree = "<group>"; };
+		C142473B08A1F06C8CBEF8C0 /* vcs.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = vcs.xml; sourceTree = "<group>"; };
+		C1424745FBD4BC71E6AC3E70 /* JRPinonipL1PluralElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JRPinonipL1PluralElement.m; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JRPinonipL1PluralElement.m; sourceTree = "<group>"; };
+		C14247CFF9752FCD54B6CEE0 /* JRBasicPluralElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRBasicPluralElement.h; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JRBasicPluralElement.h; sourceTree = "<group>"; };
+		C14247D0137ED4D37A13B285 /* JROnipinoL1Object.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JROnipinoL1Object.m; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JROnipinoL1Object.m; sourceTree = "<group>"; };
+		C14247D4AFF6499595E2590D /* JRBasicPluralElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JRBasicPluralElement.m; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JRBasicPluralElement.m; sourceTree = "<group>"; };
+		C142480B929AB56C1842A95E /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = file.gitignore; path = .gitignore; sourceTree = "<group>"; };
+		C142480E8518ADDACA324BC5 /* user_dev.json */ = {isa = PBXFileReference; lastKnownFileType = file.json; path = user_dev.json; sourceTree = "<group>"; };
+		C1424839A56E3940E5A010A9 /* JRPinapinapL3PluralElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JRPinapinapL3PluralElement.m; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JRPinapinapL3PluralElement.m; sourceTree = "<group>"; };
+		C142483DCBA4EBDBB33CD275 /* JRPluralTestAlphabeticElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JRPluralTestAlphabeticElement.m; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JRPluralTestAlphabeticElement.m; sourceTree = "<group>"; };
+		C142488F05AD4E7C0F0DDB24 /* umg_schema.json */ = {isa = PBXFileReference; lastKnownFileType = file.json; path = umg_schema.json; sourceTree = "<group>"; };
+		C14248CC6B414EB29842BAA6 /* JRPinapL2PluralElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JRPinapL2PluralElement.m; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JRPinapL2PluralElement.m; sourceTree = "<group>"; };
+		C14248D01FFCABB76ACCC5AD /* JRCaptureData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRCaptureData.m; sourceTree = "<group>"; };
+		C14248DB11BF2D48CEB42D97 /* JROinoinoL2Object.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JROinoinoL2Object.m; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JROinoinoL2Object.m; sourceTree = "<group>"; };
+		C14248F0B54AD64B66B59949 /* JRCapture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRCapture.m; sourceTree = "<group>"; };
+		C14248F5649A3CCE3B092F45 /* JRPluralTestUniqueElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRPluralTestUniqueElement.h; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JRPluralTestUniqueElement.h; sourceTree = "<group>"; };
+		C14248FF6ACAE2D88E042F12 /* JRCaptureUser+Extras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JRCaptureUser+Extras.m"; sourceTree = "<group>"; };
+		C142491987196A7F51EEB7D5 /* JRObjectTestRequired.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JRObjectTestRequired.m; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JRObjectTestRequired.m; sourceTree = "<group>"; };
+		C142496846000070E975C56D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		C14249A9451D7202E0E89EA8 /* JRPinapinapL2PluralElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JRPinapinapL2PluralElement.m; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JRPinapinapL2PluralElement.m; sourceTree = "<group>"; };
+		C14249D63AA30158B6B0C0A8 /* JROnipinapL2PluralElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JROnipinapL2PluralElement.m; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JROnipinapL2PluralElement.m; sourceTree = "<group>"; };
+		C1424A0BDC780A7FD3BEFC31 /* JROnipinoL1Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JROnipinoL1Object.h; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JROnipinoL1Object.h; sourceTree = "<group>"; };
+		C1424A21A36F94906D53B1F2 /* JROnipinoL2PluralElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JROnipinoL2PluralElement.m; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JROnipinoL2PluralElement.m; sourceTree = "<group>"; };
+		C1424A29E229A6FB61F45FBD /* JRPinonipL1PluralElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRPinonipL1PluralElement.h; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JRPinonipL1PluralElement.h; sourceTree = "<group>"; };
+		C1424A3C033ABC873AC0D3DC /* JROinonipL2Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JROinonipL2Object.h; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JROinonipL2Object.h; sourceTree = "<group>"; };
+		C1424A67EF670329B76CFFB5 /* debug_log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = debug_log.h; sourceTree = "<group>"; };
+		C1424A82523D210BA2A9D2A2 /* JRPinapinoL3PluralElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRPinapinoL3PluralElement.h; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JRPinapinoL3PluralElement.h; sourceTree = "<group>"; };
+		C1424A9157B9354A1A80FF6D /* JRPinapL2PluralElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRPinapL2PluralElement.h; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JRPinapL2PluralElement.h; sourceTree = "<group>"; };
+		C1424AABC14D0880AC33CD18 /* JRPinoinoL1Object.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JRPinoinoL1Object.m; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JRPinoinoL1Object.m; sourceTree = "<group>"; };
+		C1424AAD67CF08E2A378B2B1 /* JRPinoinoL2Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRPinoinoL2Object.h; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JRPinoinoL2Object.h; sourceTree = "<group>"; };
+		C1424AB2A457BD962742043B /* JROnipL2Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JROnipL2Object.h; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JROnipL2Object.h; sourceTree = "<group>"; };
+		C1424AC391F22AC1C4050AE4 /* JRConventionalSigninViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRConventionalSigninViewController.h; sourceTree = "<group>"; };
+		C1424B34E9B0ABEEFD779068 /* JROnipinapL3Object.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JROnipinapL3Object.m; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JROnipinapL3Object.m; sourceTree = "<group>"; };
+		C1424B45A1B7518ACA8EF901 /* JRBasicObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRBasicObject.h; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JRBasicObject.h; sourceTree = "<group>"; };
+		C1424B4875E65D8B2CBEAC8F /* JROnipL1PluralElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JROnipL1PluralElement.m; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JROnipL1PluralElement.m; sourceTree = "<group>"; };
+		C1424B4A5EB12079613E3B4E /* JRCaptureData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCaptureData.h; sourceTree = "<group>"; };
+		C1424B6BBA0A5A10CD13ACD9 /* JRConventionalSigninViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRConventionalSigninViewController.m; sourceTree = "<group>"; };
+		C1424B71CAF6FAFF32CD61B1 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = file.gitignore; path = .gitignore; sourceTree = "<group>"; };
+		C1424BC282CACA73A3D239AA /* misc.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = misc.xml; sourceTree = "<group>"; };
+		C1424BD50BCFA0CA0606F212 /* JROinoL1Object.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JROinoL1Object.m; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JROinoL1Object.m; sourceTree = "<group>"; };
+		C1424BF90E733455F019C818 /* JRBasicObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JRBasicObject.m; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JRBasicObject.m; sourceTree = "<group>"; };
+		C1424C0C54AA070C380FCBE6 /* JRPinapinapL1PluralElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JRPinapinapL1PluralElement.m; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JRPinapinapL1PluralElement.m; sourceTree = "<group>"; };
+		C1424C11C996A0763FEE349C /* JROnipinoL3Object.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JROnipinoL3Object.m; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JROnipinoL3Object.m; sourceTree = "<group>"; };
+		C1424C15A250DAA8D3067757 /* JRPinoL1Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRPinoL1Object.h; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JRPinoL1Object.h; sourceTree = "<group>"; };
+		C1424C6F49F0B58FFC1349D0 /* JRCaptureObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRCaptureObject.m; sourceTree = "<group>"; };
+		C1424C7391FD58A5DD0AE52A /* JROnipinoL3Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JROnipinoL3Object.h; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JROnipinoL3Object.h; sourceTree = "<group>"; };
+		C1424C944C58A939560BE5DA /* JRCaptureJsWidgetWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRCaptureJsWidgetWrapper.m; sourceTree = "<group>"; };
+		C1424CAB4470D210D42781E2 /* JRCaptureUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JRCaptureUser.m; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JRCaptureUser.m; sourceTree = "<group>"; };
+		C1424CAC905F406BC34F6820 /* JRPluralTestAlphabeticElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRPluralTestAlphabeticElement.h; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JRPluralTestAlphabeticElement.h; sourceTree = "<group>"; };
+		C1424CBB966E10105E68027D /* JROnipinoL2PluralElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JROnipinoL2PluralElement.h; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JROnipinoL2PluralElement.h; sourceTree = "<group>"; };
+		C1424CD87AEF4E2E37E0FAFE /* CaptureSchemaParser.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = CaptureSchemaParser.pl; sourceTree = "<group>"; };
+		C1424CF71E5634209DDE46E8 /* JRCaptureTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCaptureTypes.h; sourceTree = "<group>"; };
+		C1424D2E52F1F065BDA9C2ED /* JRPinapinoL3PluralElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JRPinapinoL3PluralElement.m; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JRPinapinoL3PluralElement.m; sourceTree = "<group>"; };
+		C1424D576EFF7FF040577D2A /* regen_test.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = regen_test.sh; sourceTree = "<group>"; };
+		C1424D5F1818CDB3738A6F5C /* JROinoL2Object.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JROinoL2Object.m; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JROinoL2Object.m; sourceTree = "<group>"; };
+		C1424D797F92D497AD5B8E9C /* JROnipinapL3Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JROnipinapL3Object.h; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JROnipinapL3Object.h; sourceTree = "<group>"; };
+		C1424D8CB1F09A715DAA95D4 /* JRCaptureApidInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCaptureApidInterface.h; sourceTree = "<group>"; };
+		C1424D932C5E8074ACAEC11E /* JRObjectTestRequiredUnique.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRObjectTestRequiredUnique.h; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JRObjectTestRequiredUnique.h; sourceTree = "<group>"; };
+		C1424D9BF38E647AF70EB33A /* JRCapture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCapture.h; sourceTree = "<group>"; };
+		C1424DFE2F683213E3252B28 /* JRCaptureObject+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JRCaptureObject+Internal.h"; sourceTree = "<group>"; };
+		C1424E1B2B0FAB260EFEE713 /* JRPinoL1Object.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JRPinoL1Object.m; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JRPinoL1Object.m; sourceTree = "<group>"; };
+		C1424E766A4A1AD33200609A /* JROinonipL1PluralElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JROinonipL1PluralElement.h; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JROinonipL1PluralElement.h; sourceTree = "<group>"; };
+		C1424E838F5D28FEAB286E9F /* JRCaptureJsWidgetWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCaptureJsWidgetWrapper.h; sourceTree = "<group>"; };
+		C1424E8B64AA908766DF80AD /* JROinonipL3Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JROinonipL3Object.h; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JROinonipL3Object.h; sourceTree = "<group>"; };
+		C1424EC2AD8E89DA55812C9E /* JRPinoinoL1Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRPinoinoL1Object.h; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JRPinoinoL1Object.h; sourceTree = "<group>"; };
+		C1424EC9A44423C6C85A5849 /* JRPinapinoL2PluralElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JRPinapinoL2PluralElement.m; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JRPinapinoL2PluralElement.m; sourceTree = "<group>"; };
+		C1424ECD1C5B46EDFA4EBA5A /* JRPinapL1PluralElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRPinapL1PluralElement.h; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JRPinapL1PluralElement.h; sourceTree = "<group>"; };
+		C1424EDF3F18D32B14EE0216 /* JROinoinoL3Object.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JROinoinoL3Object.m; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JROinoinoL3Object.m; sourceTree = "<group>"; };
+		C1424EE987C58569A6F77FF4 /* JROinonipL1PluralElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JROinonipL1PluralElement.m; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JROinonipL1PluralElement.m; sourceTree = "<group>"; };
+		C1424F274CB972628B7FF594 /* JRPinoL2PluralElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRPinoL2PluralElement.h; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JRPinoL2PluralElement.h; sourceTree = "<group>"; };
+		C1424F43E5598FE2DDE45F3C /* JRPinapinoL2PluralElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRPinapinoL2PluralElement.h; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JRPinapinoL2PluralElement.h; sourceTree = "<group>"; };
+		C1424F4A02C6F9460302E793 /* JROnipL2Object.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JROnipL2Object.m; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JROnipL2Object.m; sourceTree = "<group>"; };
+		C1424F59CD506F81BC971738 /* JRCaptureApidInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRCaptureApidInterface.m; sourceTree = "<group>"; };
+		C1424F94FE7EAC2A25C6FDB0 /* JROinoinoL1Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JROinoinoL1Object.h; path = ../../Test/CaptureInterfaceUnitTests/JRCapture/Generated/JROinoinoL1Object.h; sourceTree = "<group>"; };
 		DDE0B9A67F00A1DC4B6DFBAC /* CaptureInterfaceUnitTests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CaptureInterfaceUnitTests.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDE0B9A67F00A1DC4B6DFBB5 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		DDE0B9A67F00A1DC4B6DFBB7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -563,21 +622,7 @@
 		DDE0B9A67F00A1DC4B6DFBFF /* SimpleObjectTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleObjectTests.m; sourceTree = "<group>"; };
 		DDE0B9A67F00A1DC4B6DFC02 /* NestedPluralObjectTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NestedPluralObjectTests.m; sourceTree = "<group>"; };
 		DDE0B9A67F00A1DC4B6DFC05 /* ReservedWordsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReservedWordsTests.m; sourceTree = "<group>"; };
-		DDE0B9A67F00A1DC4B6DFC07 /* JRApidWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRApidWrapper.m; sourceTree = "<group>"; };
-		DDE0B9A67F00A1DC4B6DFC09 /* JRCaptureData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRCaptureData.m; sourceTree = "<group>"; };
-		DDE0B9A67F00A1DC4B6DFC0B /* JRCaptureError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRCaptureError.m; sourceTree = "<group>"; };
-		DDE0B9A67F00A1DC4B6DFC11 /* JREngageWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JREngageWrapper.m; sourceTree = "<group>"; };
-		DDE0B9A67F00A1DC4B6DFC15 /* JRWebviewWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRWebviewWrapper.m; sourceTree = "<group>"; };
-		DDE0B9A67F00A1DC4B6DFC17 /* JRApidWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRApidWrapper.h; sourceTree = "<group>"; };
-		DDE0B9A67F00A1DC4B6DFC18 /* JRCaptureData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCaptureData.h; sourceTree = "<group>"; };
-		DDE0B9A67F00A1DC4B6DFC19 /* JRCaptureError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCaptureError.h; sourceTree = "<group>"; };
-		DDE0B9A67F00A1DC4B6DFC1A /* JRCaptureObject+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JRCaptureObject+Internal.h"; sourceTree = "<group>"; };
-		DDE0B9A67F00A1DC4B6DFC1C /* JRCaptureTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCaptureTypes.h; sourceTree = "<group>"; };
-		DDE0B9A67F00A1DC4B6DFC1D /* JREngageWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JREngageWrapper.h; sourceTree = "<group>"; };
-		DDE0B9A67F00A1DC4B6DFC1F /* JRWebviewWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRWebviewWrapper.h; sourceTree = "<group>"; };
 		DDE0B9A67F00A1DC4B6DFC20 /* ClassCategories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassCategories.h; sourceTree = "<group>"; };
-		DDE0B9A67F00A1DC4B6DFC21 /* JRNSDate+ISO8601_CaptureDateTimeString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JRNSDate+ISO8601_CaptureDateTimeString.m"; sourceTree = "<group>"; };
-		DDE0B9A67F00A1DC4B6DFC23 /* JRNSDate+ISO8601_CaptureDateTimeString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JRNSDate+ISO8601_CaptureDateTimeString.h"; sourceTree = "<group>"; };
 		DDE0B9A67F00A1DC4B6DFC24 /* ErrorHandlerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ErrorHandlerTests.m; sourceTree = "<group>"; };
 		DDE0B9A67F00A1DC4B6DFC27 /* CaptureUserTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CaptureUserTests.m; sourceTree = "<group>"; };
 		DDE0B9A67F00A1DC4B6DFC2A /* ApidHandlerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApidHandlerTests.m; sourceTree = "<group>"; };
@@ -585,8 +630,6 @@
 		DDE0B9A67F00A1DC4B6DFC2F /* debug_log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = debug_log.h; sourceTree = "<group>"; };
 		DDE0B9A67F00A1DC4B6DFC30 /* PluralTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PluralTests.m; sourceTree = "<group>"; };
 		DDE0B9A67F00A1DC4B6DFC32 /* JREngageError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JREngageError.m; sourceTree = "<group>"; };
-		DDE0B9A67F00A1DC4B6DFC34 /* JRConventionalSigninViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRConventionalSigninViewController.h; sourceTree = "<group>"; };
-		DDE0B9A67F00A1DC4B6DFC35 /* JRConventionalSigninViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRConventionalSigninViewController.m; sourceTree = "<group>"; };
 		DDE0B9A67F00A1DC4B6DFC37 /* CaptureSignInTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CaptureSignInTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -601,6 +644,7 @@
 				DDE0B9A67F00A1DC4B6DFBB6 /* UIKit.framework in Frameworks */,
 				DDE0B9A67F00A1DC4B6DFBB8 /* Foundation.framework in Frameworks */,
 				DDE0B9A67F00A1DC4B6DFBBA /* CoreGraphics.framework in Frameworks */,
+				C14242C007F83BB4E693E6FA /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -610,11 +654,11 @@
 		9F578A101593E3CB00478D15 /* Janrain */ = {
 			isa = PBXGroup;
 			children = (
-				9F578C101593E3EE00478D15 /* JRCapture */,
 				9F578A6A1593E3CB00478D15 /* JRConnectionManager */,
 				9F578A6D1593E3CB00478D15 /* JREngage */,
 				9F578B321593E3CB00478D15 /* JSONKit */,
 				9F578B351593E3CB00478D15 /* Security */,
+				C142434EBE59B0AB9AA12907 /* JRCapture */,
 			);
 			name = Janrain;
 			path = ../../Janrain;
@@ -957,121 +1001,198 @@
 			path = Security;
 			sourceTree = "<group>";
 		};
-		9F578C101593E3EE00478D15 /* JRCapture */ = {
+		C1424103757E1DBE13E31FBA /* scopes */ = {
 			isa = PBXGroup;
 			children = (
-				DDE0B9A67F00A1DC4B6DFC35 /* JRConventionalSigninViewController.m */,
-				DDE0B9A67F00A1DC4B6DFC34 /* JRConventionalSigninViewController.h */,
-				9F578C111593E3EE00478D15 /* Generated */,
-				DDE0B9A67F00A1DC4B6DFC23 /* JRNSDate+ISO8601_CaptureDateTimeString.h */,
-				DDE0B9A67F00A1DC4B6DFC21 /* JRNSDate+ISO8601_CaptureDateTimeString.m */,
-				DDE0B9A67F00A1DC4B6DFC1F /* JRWebviewWrapper.h */,
-				DDE0B9A67F00A1DC4B6DFC1D /* JREngageWrapper.h */,
-				DDE0B9A67F00A1DC4B6DFC1C /* JRCaptureTypes.h */,
-				DDE0B9A67F00A1DC4B6DFC1A /* JRCaptureObject+Internal.h */,
-				DDE0B9A67F00A1DC4B6DFC19 /* JRCaptureError.h */,
-				DDE0B9A67F00A1DC4B6DFC18 /* JRCaptureData.h */,
-				DDE0B9A67F00A1DC4B6DFC17 /* JRApidWrapper.h */,
-				DDE0B9A67F00A1DC4B6DFC15 /* JRWebviewWrapper.m */,
-				DDE0B9A67F00A1DC4B6DFC11 /* JREngageWrapper.m */,
-				DDE0B9A67F00A1DC4B6DFC0B /* JRCaptureError.m */,
-				DDE0B9A67F00A1DC4B6DFC09 /* JRCaptureData.m */,
-				DDE0B9A67F00A1DC4B6DFC07 /* JRApidWrapper.m */,
-				9F578C601593E3EE00478D15 /* JRCapture.h */,
-				9F578C611593E3EE00478D15 /* JRCapture.m */,
-				9F578C621593E3EE00478D15 /* JRCaptureApidInterface.h */,
-				9F578C631593E3EE00478D15 /* JRCaptureApidInterface.m */,
-				9F578C661593E3EE00478D15 /* JRCaptureObject.h */,
-				9F578C671593E3EE00478D15 /* JRCaptureObject.m */,
-				9F578C681593E3EE00478D15 /* JRCaptureUser+Extras.h */,
-				9F578C691593E3EE00478D15 /* JRCaptureUser+Extras.m */,
+				C14246BD9686E3BF3AF8657F /* scope_settings.xml */,
+			);
+			path = scopes;
+			sourceTree = "<group>";
+		};
+		C142434EBE59B0AB9AA12907 /* JRCapture */ = {
+			isa = PBXGroup;
+			children = (
+				C1424592DA6B3D0A950CA30C /* Classes */,
+				C142484CC082C6C23B4B864C /* Script */,
+				C1424455776BA016AFF44889 /* Generated */,
 			);
 			path = JRCapture;
-			sourceTree = SOURCE_ROOT;
+			sourceTree = "<group>";
 		};
-		9F578C111593E3EE00478D15 /* Generated */ = {
+		C1424380F4D2D1C26863822F /* CaptureUserModel */ = {
 			isa = PBXGroup;
 			children = (
-				9F578C121593E3EE00478D15 /* JRBasicObject.h */,
-				9F578C131593E3EE00478D15 /* JRBasicObject.m */,
-				9F578C141593E3EE00478D15 /* JRBasicPluralElement.h */,
-				9F578C151593E3EE00478D15 /* JRBasicPluralElement.m */,
-				9F578C161593E3EE00478D15 /* JRCaptureUser.h */,
-				9F578C171593E3EE00478D15 /* JRCaptureUser.m */,
-				9F578C181593E3EE00478D15 /* JRObjectTestRequired.h */,
-				9F578C191593E3EE00478D15 /* JRObjectTestRequired.m */,
-				9F578C1A1593E3EE00478D15 /* JRObjectTestRequiredUnique.h */,
-				9F578C1B1593E3EE00478D15 /* JRObjectTestRequiredUnique.m */,
-				9F578C1C1593E3EE00478D15 /* JROinoinoL1Object.h */,
-				9F578C1D1593E3EE00478D15 /* JROinoinoL1Object.m */,
-				9F578C1E1593E3EE00478D15 /* JROinoinoL2Object.h */,
-				9F578C1F1593E3EE00478D15 /* JROinoinoL2Object.m */,
-				9F578C201593E3EE00478D15 /* JROinoinoL3Object.h */,
-				9F578C211593E3EE00478D15 /* JROinoinoL3Object.m */,
-				9F578C221593E3EE00478D15 /* JROinoL1Object.h */,
-				9F578C231593E3EE00478D15 /* JROinoL1Object.m */,
-				9F578C241593E3EE00478D15 /* JROinoL2Object.h */,
-				9F578C251593E3EE00478D15 /* JROinoL2Object.m */,
-				9F578C261593E3EE00478D15 /* JROinonipL1PluralElement.h */,
-				9F578C271593E3EE00478D15 /* JROinonipL1PluralElement.m */,
-				9F578C281593E3EE00478D15 /* JROinonipL2Object.h */,
-				9F578C291593E3EE00478D15 /* JROinonipL2Object.m */,
-				9F578C2A1593E3EE00478D15 /* JROinonipL3Object.h */,
-				9F578C2B1593E3EE00478D15 /* JROinonipL3Object.m */,
-				9F578C2C1593E3EE00478D15 /* JROnipinapL1PluralElement.h */,
-				9F578C2D1593E3EE00478D15 /* JROnipinapL1PluralElement.m */,
-				9F578C2E1593E3EE00478D15 /* JROnipinapL2PluralElement.h */,
-				9F578C2F1593E3EE00478D15 /* JROnipinapL2PluralElement.m */,
-				9F578C301593E3EE00478D15 /* JROnipinapL3Object.h */,
-				9F578C311593E3EE00478D15 /* JROnipinapL3Object.m */,
-				9F578C321593E3EE00478D15 /* JROnipinoL1Object.h */,
-				9F578C331593E3EE00478D15 /* JROnipinoL1Object.m */,
-				9F578C341593E3EE00478D15 /* JROnipinoL2PluralElement.h */,
-				9F578C351593E3EE00478D15 /* JROnipinoL2PluralElement.m */,
-				9F578C361593E3EE00478D15 /* JROnipinoL3Object.h */,
-				9F578C371593E3EE00478D15 /* JROnipinoL3Object.m */,
-				9F578C381593E3EE00478D15 /* JROnipL1PluralElement.h */,
-				9F578C391593E3EE00478D15 /* JROnipL1PluralElement.m */,
-				9F578C3A1593E3EE00478D15 /* JROnipL2Object.h */,
-				9F578C3B1593E3EE00478D15 /* JROnipL2Object.m */,
-				9F578C3C1593E3EE00478D15 /* JRPinapinapL1PluralElement.h */,
-				9F578C3D1593E3EE00478D15 /* JRPinapinapL1PluralElement.m */,
-				9F578C3E1593E3EE00478D15 /* JRPinapinapL2PluralElement.h */,
-				9F578C3F1593E3EE00478D15 /* JRPinapinapL2PluralElement.m */,
-				9F578C401593E3EE00478D15 /* JRPinapinapL3PluralElement.h */,
-				9F578C411593E3EE00478D15 /* JRPinapinapL3PluralElement.m */,
-				9F578C421593E3EE00478D15 /* JRPinapinoL1Object.h */,
-				9F578C431593E3EE00478D15 /* JRPinapinoL1Object.m */,
-				9F578C441593E3EE00478D15 /* JRPinapinoL2PluralElement.h */,
-				9F578C451593E3EE00478D15 /* JRPinapinoL2PluralElement.m */,
-				9F578C461593E3EE00478D15 /* JRPinapinoL3PluralElement.h */,
-				9F578C471593E3EE00478D15 /* JRPinapinoL3PluralElement.m */,
-				9F578C481593E3EE00478D15 /* JRPinapL1PluralElement.h */,
-				9F578C491593E3EE00478D15 /* JRPinapL1PluralElement.m */,
-				9F578C4A1593E3EE00478D15 /* JRPinapL2PluralElement.h */,
-				9F578C4B1593E3EE00478D15 /* JRPinapL2PluralElement.m */,
-				9F578C4C1593E3EE00478D15 /* JRPinoinoL1Object.h */,
-				9F578C4D1593E3EE00478D15 /* JRPinoinoL1Object.m */,
-				9F578C4E1593E3EE00478D15 /* JRPinoinoL2Object.h */,
-				9F578C4F1593E3EE00478D15 /* JRPinoinoL2Object.m */,
-				9F578C501593E3EE00478D15 /* JRPinoinoL3PluralElement.h */,
-				9F578C511593E3EE00478D15 /* JRPinoinoL3PluralElement.m */,
-				9F578C521593E3EE00478D15 /* JRPinoL1Object.h */,
-				9F578C531593E3EE00478D15 /* JRPinoL1Object.m */,
-				9F578C541593E3EE00478D15 /* JRPinoL2PluralElement.h */,
-				9F578C551593E3EE00478D15 /* JRPinoL2PluralElement.m */,
-				9F578C561593E3EE00478D15 /* JRPinonipL1PluralElement.h */,
-				9F578C571593E3EE00478D15 /* JRPinonipL1PluralElement.m */,
-				9F578C581593E3EE00478D15 /* JRPinonipL2Object.h */,
-				9F578C591593E3EE00478D15 /* JRPinonipL2Object.m */,
-				9F578C5A1593E3EE00478D15 /* JRPinonipL3PluralElement.h */,
-				9F578C5B1593E3EE00478D15 /* JRPinonipL3PluralElement.m */,
-				9F578C5C1593E3EE00478D15 /* JRPluralTestAlphabeticElement.h */,
-				9F578C5D1593E3EE00478D15 /* JRPluralTestAlphabeticElement.m */,
-				9F578C5E1593E3EE00478D15 /* JRPluralTestUniqueElement.h */,
-				9F578C5F1593E3EE00478D15 /* JRPluralTestUniqueElement.m */,
+				C142465CFCF02780854B4F08 /* Generated */,
+			);
+			path = CaptureUserModel;
+			sourceTree = "<group>";
+		};
+		C1424455776BA016AFF44889 /* Generated */ = {
+			isa = PBXGroup;
+			children = (
+				C14246FF84BDA40796F9AB10 /* JRPluralTestUniqueElement.m */,
+				C14248F5649A3CCE3B092F45 /* JRPluralTestUniqueElement.h */,
+				C142483DCBA4EBDBB33CD275 /* JRPluralTestAlphabeticElement.m */,
+				C1424CAC905F406BC34F6820 /* JRPluralTestAlphabeticElement.h */,
+				C14240375A8FDC100B6AF546 /* JRPinonipL3PluralElement.m */,
+				C14241EA57DB6720BD8E66AC /* JRPinonipL3PluralElement.h */,
+				C14240169149DC6405ECAD19 /* JRPinonipL2Object.m */,
+				C142472A4F1181FBD61BFD2F /* JRPinonipL2Object.h */,
+				C1424745FBD4BC71E6AC3E70 /* JRPinonipL1PluralElement.m */,
+				C1424A29E229A6FB61F45FBD /* JRPinonipL1PluralElement.h */,
+				C14240FF236C0F1E4EE75BBA /* JRPinoL2PluralElement.m */,
+				C1424F274CB972628B7FF594 /* JRPinoL2PluralElement.h */,
+				C1424E1B2B0FAB260EFEE713 /* JRPinoL1Object.m */,
+				C1424C15A250DAA8D3067757 /* JRPinoL1Object.h */,
+				C142404B1BF73BC30751767B /* JRPinoinoL3PluralElement.m */,
+				C14243809E73E0EC4301832B /* JRPinoinoL3PluralElement.h */,
+				C142409E083FEECD2446F4B7 /* JRPinoinoL2Object.m */,
+				C1424AAD67CF08E2A378B2B1 /* JRPinoinoL2Object.h */,
+				C1424AABC14D0880AC33CD18 /* JRPinoinoL1Object.m */,
+				C1424EC2AD8E89DA55812C9E /* JRPinoinoL1Object.h */,
+				C14248CC6B414EB29842BAA6 /* JRPinapL2PluralElement.m */,
+				C1424A9157B9354A1A80FF6D /* JRPinapL2PluralElement.h */,
+				C14240FDEFA9F49D12CD1498 /* JRPinapL1PluralElement.m */,
+				C1424ECD1C5B46EDFA4EBA5A /* JRPinapL1PluralElement.h */,
+				C1424D2E52F1F065BDA9C2ED /* JRPinapinoL3PluralElement.m */,
+				C1424A82523D210BA2A9D2A2 /* JRPinapinoL3PluralElement.h */,
+				C1424EC9A44423C6C85A5849 /* JRPinapinoL2PluralElement.m */,
+				C1424F43E5598FE2DDE45F3C /* JRPinapinoL2PluralElement.h */,
+				C14243B5B6C4545659CB4538 /* JRPinapinoL1Object.m */,
+				C14240E107A4C557DEF43384 /* JRPinapinoL1Object.h */,
+				C1424839A56E3940E5A010A9 /* JRPinapinapL3PluralElement.m */,
+				C142417599DDC1B9EC654967 /* JRPinapinapL3PluralElement.h */,
+				C14249A9451D7202E0E89EA8 /* JRPinapinapL2PluralElement.m */,
+				C14246D277F3393D8522799D /* JRPinapinapL2PluralElement.h */,
+				C1424C0C54AA070C380FCBE6 /* JRPinapinapL1PluralElement.m */,
+				C142471CCDA5A105C91B2C63 /* JRPinapinapL1PluralElement.h */,
+				C1424F4A02C6F9460302E793 /* JROnipL2Object.m */,
+				C1424AB2A457BD962742043B /* JROnipL2Object.h */,
+				C1424B4875E65D8B2CBEAC8F /* JROnipL1PluralElement.m */,
+				C142449E682841248C85E7F1 /* JROnipL1PluralElement.h */,
+				C1424C11C996A0763FEE349C /* JROnipinoL3Object.m */,
+				C1424C7391FD58A5DD0AE52A /* JROnipinoL3Object.h */,
+				C1424A21A36F94906D53B1F2 /* JROnipinoL2PluralElement.m */,
+				C1424CBB966E10105E68027D /* JROnipinoL2PluralElement.h */,
+				C14247D0137ED4D37A13B285 /* JROnipinoL1Object.m */,
+				C1424A0BDC780A7FD3BEFC31 /* JROnipinoL1Object.h */,
+				C1424B34E9B0ABEEFD779068 /* JROnipinapL3Object.m */,
+				C1424D797F92D497AD5B8E9C /* JROnipinapL3Object.h */,
+				C14249D63AA30158B6B0C0A8 /* JROnipinapL2PluralElement.m */,
+				C14246145674C54927A9C5B1 /* JROnipinapL2PluralElement.h */,
+				C14240E3C9F468145675D984 /* JROnipinapL1PluralElement.m */,
+				C142465724A4F69D64162B2F /* JROnipinapL1PluralElement.h */,
+				C142469326FFAD6D848CB357 /* JROinonipL3Object.m */,
+				C1424E8B64AA908766DF80AD /* JROinonipL3Object.h */,
+				C142463F619EB2A302F2D19D /* JROinonipL2Object.m */,
+				C1424A3C033ABC873AC0D3DC /* JROinonipL2Object.h */,
+				C1424EE987C58569A6F77FF4 /* JROinonipL1PluralElement.m */,
+				C1424E766A4A1AD33200609A /* JROinonipL1PluralElement.h */,
+				C1424D5F1818CDB3738A6F5C /* JROinoL2Object.m */,
+				C142467DBA341C07A2A1A651 /* JROinoL2Object.h */,
+				C1424BD50BCFA0CA0606F212 /* JROinoL1Object.m */,
+				C14246A62425A39DAF1FDF82 /* JROinoL1Object.h */,
+				C1424EDF3F18D32B14EE0216 /* JROinoinoL3Object.m */,
+				C142471EE97EB02E72DB3D8C /* JROinoinoL3Object.h */,
+				C14248DB11BF2D48CEB42D97 /* JROinoinoL2Object.m */,
+				C14244FE6FA8CBCA335AEEE4 /* JROinoinoL2Object.h */,
+				C14240EA952658298908CD24 /* JROinoinoL1Object.m */,
+				C1424F94FE7EAC2A25C6FDB0 /* JROinoinoL1Object.h */,
+				C1424140A5733A4A68A5FC1A /* JRObjectTestRequiredUnique.m */,
+				C1424D932C5E8074ACAEC11E /* JRObjectTestRequiredUnique.h */,
+				C142491987196A7F51EEB7D5 /* JRObjectTestRequired.m */,
+				C14241E102F3988F9C7DCAB0 /* JRObjectTestRequired.h */,
+				C1424CAB4470D210D42781E2 /* JRCaptureUser.m */,
+				C14247137CF3C6590E24AD25 /* JRCaptureUser.h */,
+				C14247D4AFF6499595E2590D /* JRBasicPluralElement.m */,
+				C14247CFF9752FCD54B6CEE0 /* JRBasicPluralElement.h */,
+				C1424BF90E733455F019C818 /* JRBasicObject.m */,
+				C1424B45A1B7518ACA8EF901 /* JRBasicObject.h */,
+			);
+			name = Generated;
+			sourceTree = "<group>";
+		};
+		C1424592DA6B3D0A950CA30C /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				C142420C709E28ACBE25E6F5 /* JRNSDate+ISO8601_CaptureDateTimeString.m */,
+				C14240B6741587BE31573E09 /* JRNSDate+ISO8601_CaptureDateTimeString.h */,
+				C142428D92D6318E21DB2F75 /* JREngageWrapper.m */,
+				C1424063306EAF251103644F /* JREngageWrapper.h */,
+				C1424B6BBA0A5A10CD13ACD9 /* JRConventionalSigninViewController.m */,
+				C1424AC391F22AC1C4050AE4 /* JRConventionalSigninViewController.h */,
+				C14245B3A8F9B664E1AA02AA /* JRCaptureWebViewController.m */,
+				C14245A0CDE8B0C54F43173A /* JRCaptureWebViewController.h */,
+				C14248FF6ACAE2D88E042F12 /* JRCaptureUser+Extras.m */,
+				C14242D1566573E59A3373D9 /* JRCaptureUser+Extras.h */,
+				C1424CF71E5634209DDE46E8 /* JRCaptureTypes.h */,
+				C1424C6F49F0B58FFC1349D0 /* JRCaptureObject.m */,
+				C142410CBFA2D02BC9420ED5 /* JRCaptureObject.h */,
+				C1424DFE2F683213E3252B28 /* JRCaptureObject+Internal.h */,
+				C1424C944C58A939560BE5DA /* JRCaptureJsWidgetWrapper.m */,
+				C1424E838F5D28FEAB286E9F /* JRCaptureJsWidgetWrapper.h */,
+				C14240BADB8BCB7B75864109 /* JRCaptureError.m */,
+				C14246990DDCF4BB4DE6CB20 /* JRCaptureError.h */,
+				C14248D01FFCABB76ACCC5AD /* JRCaptureData.m */,
+				C1424B4A5EB12079613E3B4E /* JRCaptureData.h */,
+				C1424F59CD506F81BC971738 /* JRCaptureApidInterface.m */,
+				C1424D8CB1F09A715DAA95D4 /* JRCaptureApidInterface.h */,
+				C14248F0B54AD64B66B59949 /* JRCapture.m */,
+				C1424D9BF38E647AF70EB33A /* JRCapture.h */,
+				C1424A67EF670329B76CFFB5 /* debug_log.h */,
+				C142480B929AB56C1842A95E /* .gitignore */,
+				C1424380F4D2D1C26863822F /* CaptureUserModel */,
+				C14246A52245F89C34B0FE52 /* Generated */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		C142465CFCF02780854B4F08 /* Generated */ = {
+			isa = PBXGroup;
+			children = (
 			);
 			path = Generated;
+			sourceTree = "<group>";
+		};
+		C14246A52245F89C34B0FE52 /* Generated */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Generated;
+			sourceTree = "<group>";
+		};
+		C142484CC082C6C23B4B864C /* Script */ = {
+			isa = PBXGroup;
+			children = (
+				C142480E8518ADDACA324BC5 /* user_dev.json */,
+				C142488F05AD4E7C0F0DDB24 /* umg_schema.json */,
+				C1424364534F43EE29F99AFA /* typemap.txt */,
+				C1424D576EFF7FF040577D2A /* regen_test.sh */,
+				C14244FA3CBF27567F089C00 /* regen_demo.sh */,
+				C14240A88D0ECF76FE351F5B /* ObjCMethodParts.pl */,
+				C142406404D351F0B0934183 /* fox_user.json */,
+				C142472FE0894213E21799F6 /* default-schema.json */,
+				C1424CD87AEF4E2E37E0FAFE /* CaptureSchemaParser.pl */,
+				C142400566C2B4041CA7F133 /* CaptureParserIO.pl */,
+				C1424B71CAF6FAFF32CD61B1 /* .gitignore */,
+				C1424B6757DE85606D05F8E4 /* .idea */,
+			);
+			path = Script;
+			sourceTree = "<group>";
+		};
+		C1424B6757DE85606D05F8E4 /* .idea */ = {
+			isa = PBXGroup;
+			children = (
+				C14240BA882E21173110D8C8 /* workspace.xml */,
+				C142473B08A1F06C8CBEF8C0 /* vcs.xml */,
+				C1424099BBCAA0B9C037E6A7 /* Script.iml */,
+				C142463E07DA4352AE385E4B /* modules.xml */,
+				C1424BC282CACA73A3D239AA /* misc.xml */,
+				C14245DC7C5074A17981AC11 /* encodings.xml */,
+				C1424320F72B068345086858 /* .name */,
+				C1424103757E1DBE13E31FBA /* scopes */,
+			);
+			path = .idea;
 			sourceTree = "<group>";
 		};
 		DDE0B9A67F00A1DC4B6DFBA8 = {
@@ -1101,6 +1222,7 @@
 				DDE0B9A67F00A1DC4B6DFBB9 /* CoreGraphics.framework */,
 				DDE0B9A67F00A1DC4B6DFBB7 /* Foundation.framework */,
 				DDE0B9A67F00A1DC4B6DFBB5 /* UIKit.framework */,
+				C142496846000070E975C56D /* QuartzCore.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1352,6 +1474,26 @@
 				9F578C0B1593E3CB00478D15 /* JRPublishActivityController.xib in Resources */,
 				9F578C0C1593E3CB00478D15 /* JRUserLandingController.xib in Resources */,
 				9F578C0D1593E3CB00478D15 /* JRWebViewController.xib in Resources */,
+				C1424355912F478353D78C1E /* .gitignore in Resources */,
+				C14242C067F3CDEBF815C8A3 /* .gitignore in Resources */,
+				C14240C3AADB9C8C420F7F26 /* .name in Resources */,
+				C1424A539751D253C3B37EF1 /* encodings.xml in Resources */,
+				C14242AF7FEA5C7214C61CAA /* misc.xml in Resources */,
+				C1424DE6295313706289B275 /* modules.xml in Resources */,
+				C1424CC6A9EDCB996DA3B2EB /* scope_settings.xml in Resources */,
+				C1424D5808D96BE5EE26E6DF /* Script.iml in Resources */,
+				C1424C87A28F44788F27E176 /* vcs.xml in Resources */,
+				C1424C6CA90484BFFF486DA9 /* workspace.xml in Resources */,
+				C1424CD9C9302E22403F82DB /* CaptureParserIO.pl in Resources */,
+				C1424EA5AEAA09312851696D /* CaptureSchemaParser.pl in Resources */,
+				C1424993477868D1BC9B5248 /* default-schema.json in Resources */,
+				C1424FFD94AAF69725E40321 /* fox_user.json in Resources */,
+				C1424FEBC7DAE9CEE26D5A6E /* ObjCMethodParts.pl in Resources */,
+				C142486F25A6B76F1B7130B6 /* regen_demo.sh in Resources */,
+				C142449E9ADBEA4905C5B033 /* regen_test.sh in Resources */,
+				C14244A61B39A45098975699 /* typemap.txt in Resources */,
+				C1424CABF88F1CB1BBBF74F8 /* umg_schema.json in Resources */,
+				C1424EE17A5E67F0CC942783 /* user_dev.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1395,62 +1537,62 @@
 				9F578B731593E3CB00478D15 /* JREngagePlugin.js in Sources */,
 				9F578C0E1593E3CB00478D15 /* JSONKit.m in Sources */,
 				9F578C0F1593E3CB00478D15 /* SFHFKeychainUtils.m in Sources */,
-				9F578C6A1593E3EE00478D15 /* JRBasicObject.m in Sources */,
-				9F578C6B1593E3EE00478D15 /* JRBasicPluralElement.m in Sources */,
-				9F578C6C1593E3EE00478D15 /* JRCaptureUser.m in Sources */,
-				9F578C6D1593E3EE00478D15 /* JRObjectTestRequired.m in Sources */,
-				9F578C6E1593E3EE00478D15 /* JRObjectTestRequiredUnique.m in Sources */,
-				9F578C6F1593E3EE00478D15 /* JROinoinoL1Object.m in Sources */,
-				9F578C701593E3EE00478D15 /* JROinoinoL2Object.m in Sources */,
-				9F578C711593E3EE00478D15 /* JROinoinoL3Object.m in Sources */,
-				9F578C721593E3EE00478D15 /* JROinoL1Object.m in Sources */,
-				9F578C731593E3EE00478D15 /* JROinoL2Object.m in Sources */,
-				9F578C741593E3EE00478D15 /* JROinonipL1PluralElement.m in Sources */,
-				9F578C751593E3EE00478D15 /* JROinonipL2Object.m in Sources */,
-				9F578C761593E3EE00478D15 /* JROinonipL3Object.m in Sources */,
-				9F578C771593E3EE00478D15 /* JROnipinapL1PluralElement.m in Sources */,
-				9F578C781593E3EE00478D15 /* JROnipinapL2PluralElement.m in Sources */,
-				9F578C791593E3EE00478D15 /* JROnipinapL3Object.m in Sources */,
-				9F578C7A1593E3EE00478D15 /* JROnipinoL1Object.m in Sources */,
-				9F578C7B1593E3EE00478D15 /* JROnipinoL2PluralElement.m in Sources */,
-				9F578C7C1593E3EE00478D15 /* JROnipinoL3Object.m in Sources */,
-				9F578C7D1593E3EE00478D15 /* JROnipL1PluralElement.m in Sources */,
-				9F578C7E1593E3EE00478D15 /* JROnipL2Object.m in Sources */,
-				9F578C7F1593E3EE00478D15 /* JRPinapinapL1PluralElement.m in Sources */,
-				9F578C801593E3EE00478D15 /* JRPinapinapL2PluralElement.m in Sources */,
-				9F578C811593E3EE00478D15 /* JRPinapinapL3PluralElement.m in Sources */,
-				9F578C821593E3EE00478D15 /* JRPinapinoL1Object.m in Sources */,
-				9F578C831593E3EE00478D15 /* JRPinapinoL2PluralElement.m in Sources */,
-				9F578C841593E3EE00478D15 /* JRPinapinoL3PluralElement.m in Sources */,
-				9F578C851593E3EE00478D15 /* JRPinapL1PluralElement.m in Sources */,
-				9F578C861593E3EE00478D15 /* JRPinapL2PluralElement.m in Sources */,
-				9F578C871593E3EE00478D15 /* JRPinoinoL1Object.m in Sources */,
-				9F578C881593E3EE00478D15 /* JRPinoinoL2Object.m in Sources */,
-				9F578C891593E3EE00478D15 /* JRPinoinoL3PluralElement.m in Sources */,
-				9F578C8A1593E3EE00478D15 /* JRPinoL1Object.m in Sources */,
-				9F578C8B1593E3EE00478D15 /* JRPinoL2PluralElement.m in Sources */,
-				9F578C8C1593E3EE00478D15 /* JRPinonipL1PluralElement.m in Sources */,
-				9F578C8D1593E3EE00478D15 /* JRPinonipL2Object.m in Sources */,
-				9F578C8E1593E3EE00478D15 /* JRPinonipL3PluralElement.m in Sources */,
-				9F578C8F1593E3EE00478D15 /* JRPluralTestAlphabeticElement.m in Sources */,
-				9F578C901593E3EE00478D15 /* JRPluralTestUniqueElement.m in Sources */,
-				9F578C911593E3EE00478D15 /* JRCapture.m in Sources */,
-				9F578C921593E3EE00478D15 /* JRCaptureApidInterface.m in Sources */,
-				9F578C941593E3EE00478D15 /* JRCaptureObject.m in Sources */,
-				9F578C951593E3EE00478D15 /* JRCaptureUser+Extras.m in Sources */,
-				DDE0B9A67F00A1DC4B6DFC08 /* JRApidWrapper.m in Sources */,
-				DDE0B9A67F00A1DC4B6DFC0A /* JRCaptureData.m in Sources */,
-				DDE0B9A67F00A1DC4B6DFC0C /* JRCaptureError.m in Sources */,
-				DDE0B9A67F00A1DC4B6DFC12 /* JREngageWrapper.m in Sources */,
-				DDE0B9A67F00A1DC4B6DFC16 /* JRWebviewWrapper.m in Sources */,
-				DDE0B9A67F00A1DC4B6DFC22 /* JRNSDate+ISO8601_CaptureDateTimeString.m in Sources */,
 				DDE0B9A67F00A1DC4B6DFC25 /* ErrorHandlerTests.m in Sources */,
 				DDE0B9A67F00A1DC4B6DFC28 /* CaptureUserTests.m in Sources */,
 				DDE0B9A67F00A1DC4B6DFC2B /* ApidHandlerTests.m in Sources */,
 				DDE0B9A67F00A1DC4B6DFC31 /* PluralTests.m in Sources */,
 				DDE0B9A67F00A1DC4B6DFC33 /* JREngageError.m in Sources */,
-				DDE0B9A67F00A1DC4B6DFC36 /* JRConventionalSigninViewController.m in Sources */,
 				DDE0B9A67F00A1DC4B6DFC38 /* CaptureSignInTests.m in Sources */,
+				C14241C71EF4C50CBAAA16E1 /* JRCapture.m in Sources */,
+				C14240E758FF5FECDC05C71F /* JRCaptureApidInterface.m in Sources */,
+				C1424A4256601524FE983073 /* JRCaptureData.m in Sources */,
+				C14246F3D63ACA4BB7C15E6D /* JRCaptureError.m in Sources */,
+				C142433E4CA5332855C04403 /* JRCaptureJsWidgetWrapper.m in Sources */,
+				C1424589E4038A9D209C4337 /* JRCaptureObject.m in Sources */,
+				C1424259E1022B30DCBC16E9 /* JRCaptureUser+Extras.m in Sources */,
+				C14249C0FAB1928C663CADE5 /* JRCaptureWebViewController.m in Sources */,
+				C1424DAAA19806A2142DAFAA /* JRConventionalSigninViewController.m in Sources */,
+				C142402146FE48F7D6FCD083 /* JREngageWrapper.m in Sources */,
+				C142490C6BDB9841191C0CE3 /* JRNSDate+ISO8601_CaptureDateTimeString.m in Sources */,
+				C1424EC89266EFC6DD61FEE6 /* JRBasicObject.m in Sources */,
+				C1424CC835D4F1AD01B6856B /* JRBasicPluralElement.m in Sources */,
+				C14241B6FFB7974D1CFE81B9 /* JRCaptureUser.m in Sources */,
+				C142434CC7BD0D1F070997C3 /* JRObjectTestRequired.m in Sources */,
+				C142462D58E7D73924751112 /* JRObjectTestRequiredUnique.m in Sources */,
+				C1424C29E01C89FBD0718B11 /* JROinoinoL1Object.m in Sources */,
+				C1424173EAAAD800799D65EE /* JROinoinoL2Object.m in Sources */,
+				C1424959920BB2744A21BFFA /* JROinoinoL3Object.m in Sources */,
+				C142435BE97A72CBD32095BA /* JROinoL1Object.m in Sources */,
+				C14240AAAB4732DC2092F8AE /* JROinoL2Object.m in Sources */,
+				C1424F509EB5585EDD2996A3 /* JROinonipL1PluralElement.m in Sources */,
+				C1424467A29963F25AB22F74 /* JROinonipL2Object.m in Sources */,
+				C142474797B18DB114A445B2 /* JROinonipL3Object.m in Sources */,
+				C1424082B865A19102FE6765 /* JROnipinapL1PluralElement.m in Sources */,
+				C1424ECAA500404F520F2A0D /* JROnipinapL2PluralElement.m in Sources */,
+				C14244200E446C20C1A87785 /* JROnipinapL3Object.m in Sources */,
+				C1424EC181839727814E94F8 /* JROnipinoL1Object.m in Sources */,
+				C1424E9113E5CA5D8C1C4809 /* JROnipinoL2PluralElement.m in Sources */,
+				C1424F38D5DDBEE99737B217 /* JROnipinoL3Object.m in Sources */,
+				C14247714D02C6BD6D650FE1 /* JROnipL1PluralElement.m in Sources */,
+				C14241395B63E11157E7AD85 /* JROnipL2Object.m in Sources */,
+				C142419D431B8E1146B27AF9 /* JRPinapinapL1PluralElement.m in Sources */,
+				C1424CB13539BB45B3B72F77 /* JRPinapinapL2PluralElement.m in Sources */,
+				C1424EDED1DEB17AE88CD29F /* JRPinapinapL3PluralElement.m in Sources */,
+				C14246AFD7941E007D4FB9F5 /* JRPinapinoL1Object.m in Sources */,
+				C1424338061CFB9487A26360 /* JRPinapinoL2PluralElement.m in Sources */,
+				C14249F83F2EDB0A33B2195F /* JRPinapinoL3PluralElement.m in Sources */,
+				C14240629D01D7F009066BBF /* JRPinapL1PluralElement.m in Sources */,
+				C1424D120D436CF1234ED2C4 /* JRPinapL2PluralElement.m in Sources */,
+				C1424053838993E9654239E1 /* JRPinoinoL1Object.m in Sources */,
+				C1424D7ACEFAF4A98993F648 /* JRPinoinoL2Object.m in Sources */,
+				C14243E744F017FE35DF459F /* JRPinoinoL3PluralElement.m in Sources */,
+				C1424D3FF3BCD43BD45051B3 /* JRPinoL1Object.m in Sources */,
+				C1424A357C74D7D9768A4DC3 /* JRPinoL2PluralElement.m in Sources */,
+				C14240740364F6002248AE8D /* JRPinonipL1PluralElement.m in Sources */,
+				C142465BFCF18FD226827167 /* JRPinonipL2Object.m in Sources */,
+				C14248BC0886BF84B50810CC /* JRPinonipL3PluralElement.m in Sources */,
+				C1424E4DCF94097ADCD65D54 /* JRPluralTestAlphabeticElement.m in Sources */,
+				C1424955305D241E758AE86A /* JRPluralTestUniqueElement.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

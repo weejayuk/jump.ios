@@ -40,6 +40,8 @@
 
 #define ALog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
 
+#import "QuartzCore/QuartzCore.h"
+
 #import "JRUserInterfaceMaestro.h"
 #import "JREngage+CustomInterface.h"
 
@@ -63,38 +65,364 @@ static void handleCustomInterfaceException(NSException* exception, NSString* kJR
 #endif
 }
 
-@interface JRModalNavigationController : UIViewController <UIPopoverControllerDelegate>
-{
-    UINavigationController *myNavigationController;
-    UIPopoverController    *myPopoverController;
+#define IS_IPAD ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad))
+#define IOS6 ([[[UIDevice currentDevice] systemVersion] compare:@"6.0" options:NSNumericSearch] >= NSOrderedSame)
+#define IS_PORTRAIT (UIDeviceOrientationIsPortrait([UIDevice currentDevice].orientation))
+#define IS_LANDSCAPE (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
 
-    BOOL iPad;
-    BOOL shouldUnloadSubviews;
+CATransform3D normalizedCATransform3D(CATransform3D d);
+
+// get the app window with some fallbacks for legacy bad behavior?
+UIWindow *getWindow()
+{
+    UIWindow* window = [UIApplication sharedApplication].keyWindow;
+    if (!window) window = [[UIApplication sharedApplication].windows objectAtIndex:0];
+    return window;
 }
-@property (retain) UINavigationController *myNavigationController;
-@property (retain) UIPopoverController    *myPopoverController;
+
+// return the center of a view in it's own coordinate system
+CGPoint centerOfView(UIView *v)
+{
+    return CGPointMake(v.bounds.origin.x + v.bounds.size.width / 2, v.bounds.origin.y + v.bounds.size.height / 2);
+}
+
+// for each view in a chain of views from a view to a root view (:= a view with no superview),
+// center the view in it's superview
+void centerViewChain(UIView *view)
+{
+    NSMutableArray *views = [NSMutableArray array];
+    UIView *v = view;
+    while (v && ![v isKindOfClass:[UIWindow class]])
+    {
+        [views insertObject:v atIndex:0];
+        v = v.superview;
+    }
+    for (NSUInteger i = 0; i < [views count]; i++)
+    {
+        v = [views objectAtIndex:i];
+        v.center = centerOfView(v.superview);
+    }
+}
+
+UIView *findUIDimmingView(UIView *v)
+{
+    while (v && ![v isKindOfClass:[UIWindow class]]) v = v.superview;
+    if (![v isKindOfClass:[UIWindow class]]) return nil;
+    UIWindow *window = (UIWindow *) v;
+    for (UIView *subview in window.subviews)
+    {
+        if ([subview isKindOfClass:NSClassFromString(@"UIDimmingView")]) return subview;
+    }
+
+    return nil;
+}
+
+UIView *findUIDropShadowView(UIView *v)
+{
+    while (v && ![v isKindOfClass:NSClassFromString(@"UIDropShadowView")]) v = v.superview;
+    if ([v isKindOfClass:NSClassFromString(@"UIDropShadowView")]) return v;
+    return nil;
+}
+
+CATransform3D computeTransformMatrix(CGRect rect, CGPoint p1, CGPoint p2, CGPoint p3, CGPoint p4)
+{
+    CGFloat X = rect.origin.x;
+    CGFloat Y = rect.origin.y;
+    CGFloat W = rect.size.width;
+    CGFloat H = rect.size.height;
+    CGFloat x1 = p1.x;
+    CGFloat y1 = p1.y;
+    CGFloat x2 = p2.x;
+    CGFloat y2 = p2.y;
+    CGFloat x3 = p3.x;
+    CGFloat y3 = p3.y;
+    CGFloat x4 = p4.x;
+    CGFloat y4 = p4.y;
+
+    CGFloat y21 = y2 - y1;
+    CGFloat y32 = y3 - y2;
+    CGFloat y43 = y4 - y3;
+    CGFloat y14 = y1 - y4;
+    CGFloat y31 = y3 - y1;
+    CGFloat y42 = y4 - y2;
+
+    CGFloat a = -H * (x2 * x3 * y14 + x2 * x4 * y31 - x1 * x4 * y32 + x1 * x3 * y42);
+    CGFloat b = W * (x2 * x3 * y14 + x3 * x4 * y21 + x1 * x4 * y32 + x1 * x2 * y43);
+    CGFloat c = H * X * (x2 * x3 * y14 + x2 * x4 * y31 - x1 * x4 * y32 + x1 * x3 * y42)
+            - H * W * x1 * (x4 * y32 - x3 * y42 + x2 * y43)
+            - W * Y * (x2 * x3 * y14 + x3 * x4 * y21 + x1 * x4 * y32 + x1 * x2 * y43);
+
+    CGFloat d = H * (-x4 * y21 * y3 + x2 * y1 * y43 - x1 * y2 * y43 - x3 * y1 * y4 + x3 * y2 * y4);
+    CGFloat e = W * (x4 * y2 * y31 - x3 * y1 * y42 - x2 * y31 * y4 + x1 * y3 * y42);
+    CGFloat f = -(W * (x4 * (Y * y2 * y31 + H * y1 * y32) - x3 * (H + Y) * y1 * y42 + H * x2 * y1 * y43
+            + x2 * Y * (y1 - y3) * y4 + x1 * Y * y3 * (-y2 + y4))
+            - H * X * (x4 * y21 * y3 - x2 * y1 * y43 + x3 * (y1 - y2) * y4 + x1 * y2 * (-y3 + y4)));
+
+    CGFloat g = H * (x3 * y21 - x4 * y21 + (-x1 + x2) * y43);
+    CGFloat h = W * (-x2 * y31 + x4 * y31 + (x1 - x3) * y42);
+    CGFloat i = W * Y * (x2 * y31 - x4 * y31 - x1 * y42 + x3 * y42) + H * (X * (-(x3 * y21)
+            + x4 * y21 + x1 * y43 - x2 * y43) + W * (-(x3 * y2) + x4 * y2 + x2 * y3 - x4 * y3
+            - x2 * y4 + x3 * y4));
+
+    CATransform3D r;
+    r.m11 = a; r.m12 = d; r.m13 = 0; r.m14 = g;
+    r.m21 = b; r.m22 = e; r.m23 = 0; r.m24 = h;
+    r.m31 = 0; r.m32 = 0; r.m33 = 1; r.m34 = 0;
+    r.m41 = c; r.m42 = f; r.m43 = 0; r.m44 = i;
+
+    return r;
+}
+
+CATransform3D normalizedCATransform3D(CATransform3D d)
+{
+    CATransform3D r;
+    r = d;
+    CGFloat i = r.m44;
+    r.m11 = r.m11/i; r.m12 = r.m12/i; r.m13 = r.m13/i; r.m14 = r.m14/i;
+    r.m21 = r.m21/i; r.m22 = r.m22/i; r.m23 = r.m23/i; r.m24 = r.m24/i;
+    r.m31 = r.m31/i; r.m32 = r.m32/i; r.m33 = r.m33/i; r.m34 = r.m34/i;
+    r.m41 = r.m41/i; r.m42 = r.m42/i; r.m43 = r.m43/i; r.m44 = r.m44/i;
+    return r;
+}
+
+NSString *describeCATransform3D(CATransform3D *t)
+{
+    return [NSString stringWithFormat:@"[%f %f %f %f, %f %f %f %f, %f %f %f %f, %f %f %f %f]",
+            t->m11, t->m12, t->m13, t->m14,
+            t->m21, t->m22, t->m23, t->m24,
+            t->m31, t->m32, t->m33, t->m34,
+            t->m41, t->m42, t->m43, t->m44
+    ];
+}
+
+@interface UIWindow (JRUtils)
+-(BOOL)hasRvc;
 @end
 
-@implementation JRModalNavigationController
-@synthesize myNavigationController;
-@synthesize myPopoverController;
+@implementation UIWindow (JRUtils)
+-(BOOL)hasRvc
+{
+    return [self respondsToSelector:@selector(rootViewController)] && self.rootViewController;
+}
+@end
+
+// Provides a hand-made cover-vertical mimic animation to accomodate for iOS6 breaking the animation of the FormSheet
+// size hacks
+// Also forwards appearance and rotation events for iOS 4 iPads
+@interface CustomAnimationController : UIViewController
+@property (retain) UIViewController *jrPresentingViewController;
+@property (retain) UIViewController *jrChildViewController;
+@property (retain) UIView *dropShadow;
+@property (retain) UIView *windowDimmingView;
+@end
+
+@implementation CustomAnimationController
+@synthesize jrPresentingViewController, jrChildViewController;
+
+- (void)loadView
+{
+    [self setView:[[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)] autorelease]];
+    self.view.backgroundColor = jrChildViewController.view.backgroundColor;
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    DLog(@"");
+    [super viewDidAppear:animated];
+    [jrChildViewController viewDidAppear:animated];
+    if (animated) return;
+
+    self.dropShadow = findUIDropShadowView(self.view);
+    self.windowDimmingView = findUIDimmingView(self.view);
+
+    // hack to resize platform provided dropshadow view that's inserted
+    // into the view hierarchy above the modally presented VC when you use presentModalViewController
+    // related to this SO q:
+    // http://stackoverflow.com/questions/2457947/how-to-resize-a-uipresentationformsheet/4271364#4271364
+
+    self.dropShadow.bounds = CGRectMake(0, 0, 320, 460);
+
+    centerViewChain(self.view);
+
+    // only do an animation if we found the Apple private views that we're going to tickle.
+    if (self.dropShadow && self.windowDimmingView
+            && [UIView respondsToSelector:@selector(animateWithDuration:delay:options:animations:completion:)])
+        [self mimicFlipHorizontal];
+}
+
+- (void)mimicFlipHorizontal
+{
+    CATransform3D originalTransform = self.dropShadow.layer.transform;
+
+    CGRect origRect = CGRectMake(-160, -230, 320, 460);
+    CGPoint smushedP1 = CGPointMake(-160, -50);
+    CGPoint smushedP2 = CGPointMake(160, -50);
+    CGPoint smushedP3 = CGPointMake(-140, 50);
+    CGPoint smushedP4 = CGPointMake(140, 50);
+    CGPoint unsmushedP1 = CGPointMake(-160, -230);
+    CGPoint unsmushedP2 = CGPointMake(160, -230);
+    CGPoint unsmushedP3 = CGPointMake(-160, 230);
+    CGPoint unsmushedP4 = CGPointMake(160, 230);
+    // calculate a smush transform that's like oglFlip
+    CATransform3D smushed = computeTransformMatrix(origRect, smushedP1, smushedP2, smushedP3, smushedP4);
+    // for some reason animating back to the original transform does some unwanted flips and rotations, so we make
+    // this matrix, which allows the animation to interpolate correctly.
+    CATransform3D unsmushed = computeTransformMatrix(origRect, unsmushedP1, unsmushedP2, unsmushedP3, unsmushedP4);
+    unsmushed = CATransform3DConcat(normalizedCATransform3D(unsmushed), originalTransform);
+    smushed = CATransform3DConcat(normalizedCATransform3D(smushed), originalTransform);
+
+    // smush
+    self.dropShadow.layer.transform = smushed;
+
+    // undim the background
+    UIColor *originalDimmingViewColor = self.windowDimmingView.backgroundColor;
+    self.windowDimmingView.backgroundColor = [UIColor clearColor];
+
+    // dim the modal
+    UIView *modalDimmingView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)] autorelease];
+    modalDimmingView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    modalDimmingView.backgroundColor = originalDimmingViewColor;
+    [self.dropShadow addSubview:modalDimmingView];
+
+    [UIView animateWithDuration:0.5 delay:0
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^ {
+                         // animate back
+                         self.dropShadow.layer.transform = unsmushed;
+                         self.windowDimmingView.backgroundColor = originalDimmingViewColor;
+                         modalDimmingView.backgroundColor = [UIColor clearColor];
+                     }
+                     completion:^(BOOL finished) {
+                         // restore some stuff we touched for good measure
+                         self.dropShadow.layer.transform = originalTransform;
+                         [modalDimmingView removeFromSuperview];
+                     }];
+}
+
+- (void)mimicCoverVertical
+{
+    CGPoint originalCenter = self.dropShadow.center;
+
+    // move dropShadow offscreen. coordinate space transform fuckery to account for orientations.
+    CGPoint c = [self.dropShadow convertPoint:self.dropShadow.center fromView:self.dropShadow.superview];
+    self.dropShadow.center = [self.dropShadow convertPoint:CGPointMake(c.x, c.y * 2 + 240)
+                                                    toView:self.dropShadow.superview];
+
+    // animate parent view back onscreen
+    [UIView animateWithDuration:0.5
+                          delay:0
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^ { self.dropShadow.center = originalCenter; }
+                     completion:nil];
+}
+
+- (BOOL)shouldAutomaticallyForwardRotationMethods
+{
+    return NO;
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    return [jrChildViewController shouldAutorotateToInterfaceOrientation:toInterfaceOrientation];
+}
+
+- (BOOL)shouldAutorotate
+{
+    if ([jrChildViewController respondsToSelector:@selector(shouldAutorotate)])
+        return [jrChildViewController shouldAutorotate];
+    return YES;
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+                                duration:(NSTimeInterval)duration
+{
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    [jrChildViewController willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+}
+
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+                                         duration:(NSTimeInterval)duration
+{
+    [super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    [jrChildViewController willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+    [jrChildViewController didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+}
+
+- (BOOL)shouldAutomaticallyForwardAppearanceMethods
+{
+    return NO;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [jrChildViewController viewWillAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [jrChildViewController viewWillDisappear:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [jrChildViewController viewDidDisappear:animated];
+}
+
+@end
+
+// Terrible, terrible hacks.
+@interface JRModalViewController : UIViewController <UIPopoverControllerDelegate>
+{
+    BOOL shouldUnloadSubviews;
+}
+@property (retain) CustomAnimationController *animationController;
+@property (retain) UINavigationController *myNavigationController;
+@property (retain) UIPopoverController *myPopoverController;
+@property (retain) UIViewController *vcToPresent;
+@end
+
+@implementation JRModalViewController
+@synthesize myPopoverController, myNavigationController, animationController;
+@synthesize vcToPresent;
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self)
+    {
+        self.animationController = [[[CustomAnimationController alloc] initWithNibName:nil bundle:nil] autorelease];
+    }
+
+    return self;
+}
 
 - (void)loadView
 {
     DLog (@"");
-    UIView *view = [[[UIView alloc] initWithFrame:[[UIApplication sharedApplication] keyWindow].frame] autorelease];
+    UIView *view = [[[UIView alloc] initWithFrame:getWindow().frame] autorelease];
 
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-        iPad = YES;
-
-    [view setAutoresizingMask:UIViewAutoresizingNone | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+    [view setAutoresizingMask:
+            UIViewAutoresizingNone
+            | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight
+            | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleLeftMargin |
+            UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin
+    ];
 
     shouldUnloadSubviews = NO;
 
     [self setView:view];
 }
 
-- (void)presentPopoverNavigationControllerFromBarButton:(UIBarButtonItem*)barButtonItem inDirection:(UIPopoverArrowDirection)direction
+- (void)presentPopoverNavigationControllerFromBarButton:(UIBarButtonItem*)barButtonItem
+                                            inDirection:(UIPopoverArrowDirection)direction
 {
     DLog (@"");
     [myPopoverController presentPopoverFromBarButtonItem:barButtonItem
@@ -105,7 +433,8 @@ static void handleCustomInterfaceException(NSException* exception, NSString* kJR
 - (void)presentPopoverNavigationControllerFromCGRect:(CGRect)rect inDirection:(UIPopoverArrowDirection)direction
 {
     DLog (@"");
-    CGRect popoverPresentationFrame = [self.view convertRect:rect toView:[[UIApplication sharedApplication] keyWindow]];
+    if (![self.view superview]) [getWindow() addSubview:self.view];
+    CGRect popoverPresentationFrame = [self.view convertRect:rect toView:getWindow()];
 
     [myPopoverController presentPopoverFromRect:popoverPresentationFrame
                                          inView:self.view
@@ -116,27 +445,40 @@ static void handleCustomInterfaceException(NSException* exception, NSString* kJR
 - (void)presentModalNavigationController
 {
     DLog (@"");
-    if (iPad)
+    UIViewController *rvc = [getWindow() hasRvc] ? getWindow().rootViewController : nil;
+
+    myNavigationController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    myNavigationController.modalPresentationStyle = UIModalPresentationFormSheet;
+    animationController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    animationController.modalPresentationStyle = myNavigationController.modalPresentationStyle;
+
+    // Figure out what to present
+    if (IS_IPAD)
     {
-        myNavigationController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-        myNavigationController.modalPresentationStyle = UIModalPresentationFormSheet;
-
-        [self presentModalViewController:myNavigationController animated:YES];
-
-        myNavigationController.view.superview.frame = CGRectMake(0, 0, 320, 460);
-
-        CGPoint viewCenter;
-        if (UIInterfaceOrientationIsPortrait(self.interfaceOrientation))
-            viewCenter = self.view.center;
-        else
-            viewCenter = CGPointMake(self.view.center.y, self.view.center.x);
-
-        myNavigationController.view.superview.center = viewCenter;//self.view.center;
+        self.vcToPresent = animationController;
+        [animationController.view addSubview:myNavigationController.view];
+        animationController.jrChildViewController = myNavigationController;
     }
     else
     {
-        myNavigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-        [self presentModalViewController:myNavigationController animated:YES];
+        self.vcToPresent = myNavigationController;
+    }
+
+    // Figure out how to present it and present it
+    if (rvc)
+    {
+        // If we can do it the right way, and do the animation by hand
+        animationController.jrPresentingViewController = rvc; // just using this property as scratch space to hang on
+                                                              // to the presenting VC for dismissing the dialog
+        [rvc presentModalViewController:vcToPresent animated:!IS_IPAD];
+    }
+    else
+    {
+        // Yarr, it be a pirate's life for me
+        [getWindow() addSubview:self.view];
+        animationController.jrPresentingViewController = self; // just using this property as scratch space to hang on
+                                                               // to the presenting VC for dismissing the dialog
+        [self presentModalViewController:vcToPresent animated:!IS_IPAD];
     }
 }
 
@@ -160,8 +502,8 @@ static void handleCustomInterfaceException(NSException* exception, NSString* kJR
     }
     else
     {
-        myNavigationController.modalTransitionStyle = style;
-        [self dismissModalViewControllerAnimated:YES];
+        animationController.modalTransitionStyle = myNavigationController.modalTransitionStyle = style;
+        [animationController.jrPresentingViewController dismissModalViewControllerAnimated:YES];
     }
 
     shouldUnloadSubviews = YES;
@@ -169,6 +511,19 @@ static void handleCustomInterfaceException(NSException* exception, NSString* kJR
     [self.view removeFromSuperview];
 }
 
+// iOS >= 6
+- (NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskAllButUpsideDown;
+}
+
+// iOS >= 6
+-(BOOL)shouldAutorotate
+{
+    return YES;
+}
+
+// iOS <= 5
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     DLog(@"");
@@ -180,13 +535,12 @@ static void handleCustomInterfaceException(NSException* exception, NSString* kJR
     DLog (@"");
     [myNavigationController release];
     [myPopoverController release];
-
     [super dealloc];
 }
 @end
 
 @interface JRUserInterfaceMaestro ()
-@property (retain) JRModalNavigationController  *jrModalNavController;
+@property (retain) JRModalViewController *jrModalViewController;
 @property (retain) UINavigationController       *customModalNavigationController;
 @property (retain) UINavigationController       *applicationNavigationController;
 @property (retain) UINavigationController       *savedNavigationController;
@@ -198,7 +552,7 @@ static void handleCustomInterfaceException(NSException* exception, NSString* kJR
 @synthesize myUserLandingController;
 @synthesize myWebViewController;
 @synthesize myPublishActivityController;
-@synthesize jrModalNavController;
+@synthesize jrModalViewController;
 @synthesize customModalNavigationController;
 @synthesize applicationNavigationController;
 @synthesize savedNavigationController;
@@ -208,17 +562,17 @@ static void handleCustomInterfaceException(NSException* exception, NSString* kJR
 
 static JRUserInterfaceMaestro* singleton = nil;
 
-+ (JRUserInterfaceMaestro*)jrUserInterfaceMaestro
++ (JRUserInterfaceMaestro*)sharedMaestro
 {
     return singleton;
 }
 
 + (id)allocWithZone:(NSZone *)zone
 {
-    return [[self jrUserInterfaceMaestro] retain];
+    return [[self sharedMaestro] retain];
 }
 
-- (id)copyWithZone:(NSZone *)zone
+- (id)copyWithZone:(__unused NSZone *)zone
 {
     return self;
 }
@@ -265,9 +619,6 @@ static JRUserInterfaceMaestro* singleton = nil;
         singleton = self;
         sessionData = newSessionData;
         janrainInterfaceDefaults = [[self loadJanrainInterfaceDefaults] retain];
-
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-            iPad = YES;
     }
 
     return self;
@@ -282,11 +633,6 @@ static JRUserInterfaceMaestro* singleton = nil;
         return nil;
 
     return [[((JRUserInterfaceMaestro*)[super allocWithZone:nil]) initWithSessionData:newSessionData] autorelease];
-}
-
-- (void)useApplicationNavigationController:(UINavigationController*)navigationController
-{
-    self.savedNavigationController = navigationController;
 }
 
 - (void)buildCustomInterface:(NSDictionary*)customizations
@@ -309,7 +655,7 @@ static JRUserInterfaceMaestro* singleton = nil;
     if ([customInterface objectForKey:kJRApplicationNavigationController])
         self.applicationNavigationController = [customInterface objectForKey:kJRApplicationNavigationController];
 
- /* Added for backwards compatibility */
+    /* Added for backwards compatibility */
     if (savedNavigationController)
         self.applicationNavigationController = savedNavigationController;
 
@@ -317,7 +663,7 @@ static JRUserInterfaceMaestro* singleton = nil;
         self.customModalNavigationController = [customInterface objectForKey:kJRCustomModalNavigationController];
 
     usingAppNav = NO, usingCustomNav = NO;
-    if (iPad)
+    if (IS_IPAD)
     {
         if ([customInterface objectForKey:kJRPopoverPresentationBarButtonItem])
             padPopoverMode = PadPopoverFromBar;
@@ -328,7 +674,7 @@ static JRUserInterfaceMaestro* singleton = nil;
 
         @try
         {
-            if (customModalNavigationController)// && ![customModalNavigationController isViewLoaded])
+            if (customModalNavigationController)
                 usingCustomNav = YES;
             else
                 usingCustomNav = NO;
@@ -349,7 +695,7 @@ static JRUserInterfaceMaestro* singleton = nil;
         { handleCustomInterfaceException(exception, @"kJRUseApplicationNavigationController"); }
     }
 
-    if (usingAppNav || iPad) sessionData.canRotate = YES;
+    sessionData.canRotate = usingAppNav || IS_IPAD || [getWindow() hasRvc];
 }
 
 - (void)tearDownDialogPresentation
@@ -395,7 +741,7 @@ static JRUserInterfaceMaestro* singleton = nil;
         myProvidersController.title = @"Providers";
     }
 
-    if (/*usingAppNav || */(iPad && padPopoverMode != PadPopoverModeNone) ||
+    if (/*usingAppNav || */(IS_IPAD && padPopoverMode != PadPopoverModeNone) ||
         [[customInterface objectForKey:kJRNavigationControllerHidesCancelButton] boolValue])
     {
         myProvidersController.hidesCancelButton = YES;
@@ -422,14 +768,13 @@ static JRUserInterfaceMaestro* singleton = nil;
     [myWebViewController release],          myWebViewController = nil;
     [myPublishActivityController release],  myPublishActivityController = nil;
 
-    [jrModalNavController release], jrModalNavController = nil;
+    [jrModalViewController release], jrModalViewController = nil;
     [customModalNavigationController release], customModalNavigationController = nil;
 
     [customInterface release], customInterface = nil;
     [directProvider release], directProvider = nil;
 
     sessionData.dialogIsShowing = NO;
-//    sessionData.skipReturningUserLandingPage = NO;
 }
 
 - (void)setUpSocialPublishing
@@ -451,11 +796,17 @@ static JRUserInterfaceMaestro* singleton = nil;
         [sessionData removeDelegate:myPublishActivityController];
 }
 
-- (UINavigationController*)createDefaultNavigationController
+- (UINavigationController*)createDefaultNavigationControllerWithRootViewController:(UIViewController *)root
 {
-    UINavigationController *navigationController = [[[UINavigationController alloc] init] autorelease];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:root];
+    [navigationController autorelease];
     navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
     navigationController.navigationBar.clipsToBounds = YES;
+
+    navigationController.view.autoresizingMask =
+            UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin
+            | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+    navigationController.view.bounds = CGRectMake(0, 0, 320, 460);
 
     return navigationController;
 }
@@ -508,6 +859,7 @@ static JRUserInterfaceMaestro* singleton = nil;
         && !sessionData.alwaysForceReauth                                                       /* d */
         && ![sessionData getProviderNamed:sessionData.returningBasicProvider].forceReauth       /* e */
         && !sessionData.socialSharing                                                           /* f */
+        && !sessionData.captureWidget
         && [sessionData.basicProviders containsObject:sessionData.returningBasicProvider]       /* g */
         && ![((NSArray*)[customInterface objectForKey:kJRRemoveProvidersFromAuthentication])    /* h */
                     containsObject:sessionData.returningBasicProvider])
@@ -520,53 +872,53 @@ static JRUserInterfaceMaestro* singleton = nil;
 {
     DLog(@"");
 
-    self.jrModalNavController = [[[JRModalNavigationController alloc] init] autorelease];
+    self.jrModalViewController = [[[JRModalViewController alloc] initWithNibName:nil bundle:nil] autorelease];
 
     if (usingCustomNav)
-        jrModalNavController.myNavigationController = customModalNavigationController;
+    {
+        jrModalViewController.myNavigationController = customModalNavigationController;
+        [jrModalViewController.myNavigationController pushViewController:rootViewController animated:NO];
+    }
     else
-        jrModalNavController.myNavigationController = [self createDefaultNavigationController];
+    {
+        jrModalViewController.myNavigationController =
+                [self createDefaultNavigationControllerWithRootViewController:rootViewController];
+    }
 
     if (padPopoverMode)
-        jrModalNavController.myPopoverController =
-            [self createPopoverControllerWithNavigationController:jrModalNavController.myNavigationController];
+        jrModalViewController.myPopoverController =
+            [self createPopoverControllerWithNavigationController:jrModalViewController.myNavigationController];
 
     /* If the code is used by a universal application and is compiled for versions of iOS that don't
        support popovercontrollers (i.e., iOS < v3.2), this will return nil;  If it does, fall back
        to modal dialog presentation. This might never happen, because the above code wouldn't be called
        on the iPhone anyway... */
-    if (!jrModalNavController.myPopoverController)
+    if (!jrModalViewController.myPopoverController)
         padPopoverMode = PadPopoverModeNone;
 
     UIPopoverArrowDirection arrowDirection = UIPopoverArrowDirectionAny;
     if ([customInterface objectForKey:kJRPopoverPresentationArrowDirection])
+    {
         arrowDirection = (UIPopoverArrowDirection)
                 [[customInterface objectForKey:kJRPopoverPresentationArrowDirection] intValue];
-
-    [jrModalNavController.myNavigationController pushViewController:rootViewController animated:NO];
+    }
 
     if ([self shouldOpenToUserLandingPage])
     {
         [sessionData setCurrentProvider:[sessionData getProviderNamed:sessionData.returningBasicProvider]];
-        [jrModalNavController.myNavigationController pushViewController:myUserLandingController animated:NO];
+        [jrModalViewController.myNavigationController pushViewController:myUserLandingController animated:NO];
     }
 
-    UIWindow* window = [UIApplication sharedApplication].keyWindow;
-    if (!window)
-        window = [[UIApplication sharedApplication].windows objectAtIndex:0];
-
-    [window addSubview:jrModalNavController.view];
-
     if (padPopoverMode == PadPopoverFromBar)
-        [jrModalNavController
+        [jrModalViewController
             presentPopoverNavigationControllerFromBarButton:[customInterface objectForKey:kJRPopoverPresentationBarButtonItem]
                                                 inDirection:arrowDirection];
     else if (padPopoverMode == PadPopoverFromFrame)
-        [jrModalNavController
+        [jrModalViewController
             presentPopoverNavigationControllerFromCGRect:[[customInterface objectForKey:kJRPopoverPresentationFrameValue] CGRectValue]
                                              inDirection:arrowDirection];
     else
-        [jrModalNavController presentModalNavigationController];
+        [jrModalViewController presentModalNavigationController];
 }
 
 - (void)loadApplicationNavigationControllerWithViewController:(UIViewController*)rootViewController
@@ -587,16 +939,6 @@ static JRUserInterfaceMaestro* singleton = nil;
     }
 }
 
-//- (void)showAuthenticationDialogWithForcedReauth
-//{
-//    [self setUpViewControllers];
-//
-//    if (customNavigationController && [customNavigationController isViewLoaded])
-//        [self loadCustomNavigationControllerWithViewController:myProvidersController];
-//    else
-//        [self loadModalNavigationControllerWithViewController:myProvidersController];
-//}
-
 
 // TODO: Document this function
 - (JRProvider*)weAreOnlyAuthenticatingOnThisProvider
@@ -611,7 +953,6 @@ static JRUserInterfaceMaestro* singleton = nil;
 //    if ([providers count] == 1)
 //        return [sessionData getProviderNamed:[providers objectAtIndex:0]];
 
-
     sessionData.authenticatingDirectlyOnThisProvider = NO;
     return nil;
 }
@@ -623,16 +964,16 @@ static JRUserInterfaceMaestro* singleton = nil;
     [self setUpDialogPresentation];
     [self setUpViewControllers];
 
-    UIViewController *rootViewController;
+    UIViewController *dialogVcToPresent;
     if ((sessionData.currentProvider = [self weAreOnlyAuthenticatingOnThisProvider]))
-        rootViewController = (sessionData.currentProvider.requiresInput) ? (UIViewController*)myUserLandingController : (UIViewController*)myWebViewController;
+        dialogVcToPresent = sessionData.currentProvider.requiresInput ? myUserLandingController : myWebViewController;
     else
-        rootViewController = myProvidersController;
+        dialogVcToPresent = myProvidersController;
 
     if (usingAppNav)
-        [self loadApplicationNavigationControllerWithViewController:rootViewController];
+        [self loadApplicationNavigationControllerWithViewController:dialogVcToPresent];
     else
-        [self loadModalNavigationControllerWithViewController:rootViewController];
+        [self loadModalNavigationControllerWithViewController:dialogVcToPresent];
 }
 
 - (void)showPublishingDialogForActivityWithCustomInterface:(NSDictionary*)customizations
@@ -652,7 +993,7 @@ static JRUserInterfaceMaestro* singleton = nil;
 - (void)unloadModalNavigationControllerWithTransitionStyle:(UIModalTransitionStyle)style
 {
     DLog(@"");
-    [jrModalNavController dismissModalNavigationController:style];
+    [jrModalViewController dismissModalNavigationController:style];
 }
 
 - (void)unloadApplicationNavigationController
@@ -698,7 +1039,7 @@ static JRUserInterfaceMaestro* singleton = nil;
     if (usingAppNav && applicationNavigationController && [applicationNavigationController isViewLoaded])
         [applicationNavigationController popToViewController:originalRootViewController animated:YES];
     else
-        [jrModalNavController.myNavigationController popToRootViewControllerAnimated:YES];
+        [jrModalViewController.myNavigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController

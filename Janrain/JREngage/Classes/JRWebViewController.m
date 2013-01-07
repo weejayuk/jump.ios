@@ -91,6 +91,8 @@
     DLog(@"");
     [super viewDidLoad];
 
+    myWebView.backgroundColor = [UIColor clearColor];
+
     self.navigationItem.backBarButtonItem.target = sessionData;
     self.navigationItem.backBarButtonItem.action = @selector(triggerAuthenticationDidStartOver:);
 
@@ -403,31 +405,25 @@
     /* This fixes the UIWebView's display of IDP sign-in pages to make them fit the iPhone sized dialog on the iPad.
      * It's broken up into separate JS injections in case one statement fails (e.g. there is no document element),
      * so that the others execute. */
-    [myWebView stringByEvaluatingJavaScriptFromString:
-            @"window.innerHeight = 480; window.innerWidth = 320;"];
-//    [myWebView stringByEvaluatingJavaScriptFromString:
-//            @"window.screen.height = 480; window.screen.width = 320;"];
-    [myWebView stringByEvaluatingJavaScriptFromString:
-            @"document.documentElement.clientWidth = 320; document.documentElement.clientHeight = 480;"];
-    [myWebView stringByEvaluatingJavaScriptFromString:
-            @"document.body.style.minWidth = \"320px\";"];
-    [myWebView stringByEvaluatingJavaScriptFromString:
-            @"document.body.style.width = \"auto\";"];
-    [myWebView stringByEvaluatingJavaScriptFromString:
-            @"document.body.style.minHeight = \"0px\";"];
-    [myWebView stringByEvaluatingJavaScriptFromString:
-            @"document.body.style.height = \"auto\";"];
-    [myWebView stringByEvaluatingJavaScriptFromString:
-            @"document.body.children[0].style.minHeight = \"0px\";"];
+    [myWebView stringByEvaluatingJavaScriptFromString:@""
+            "window.innerHeight = 480; window.innerWidth = 320;"
+            //"window.screen.height = 480; window.screen.width = 320;"
+            "document.documentElement.clientWidth = 320; document.documentElement.clientHeight = 480;"
+            "document.body.style.minWidth = \"320px\";"
+            "document.body.style.width = \"auto\";"
+            "document.body.style.minHeight = \"0px\";"
+            "document.body.style.height = \"auto\";"
+            "document.body.children[0].style.minHeight = \"0px\";"];
 
-    [myWebView stringByEvaluatingJavaScriptFromString:@"m = document.querySelector('meta[name=viewport]');"];
-    [myWebView stringByEvaluatingJavaScriptFromString:@"if (m === null) { m = document.createElement('meta'); document.head.appendChild(m); }"];
-    [myWebView stringByEvaluatingJavaScriptFromString:@"m.name = 'viewport';"];
-
-    [myWebView stringByEvaluatingJavaScriptFromString:
-            [NSString stringWithFormat:@"m.content = 'width=%i, height=%i';",
-                    (int) myWebView.frame.size.width,
-                    (int) myWebView.frame.size.height]];
+    [myWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@""
+            "(function(){"
+              "var m = document.querySelector('meta[name=viewport]');"
+              "if (m === null) { m = document.createElement('meta'); document.head.appendChild(m); }"
+              "m.name = 'viewport';"
+              "m.content = 'width=%i, height=%i';"
+            "})()",
+            (int) myWebView.frame.size.width,
+            (int) myWebView.frame.size.height]];
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)webView
@@ -479,11 +475,13 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    DLog(@"");
+    BOOL b;
     if (sessionData.canRotate)
-        return YES;
-
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+        b = interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
+    else
+        b = interfaceOrientation == UIInterfaceOrientationPortrait;
+    DLog(@"%d", b);
+    return b;
 }
 
 - (void)didReceiveMemoryWarning

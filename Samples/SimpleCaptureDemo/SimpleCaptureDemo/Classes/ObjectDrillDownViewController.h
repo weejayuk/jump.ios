@@ -31,8 +31,9 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "JRCaptureObject.h"
+#import "PickerViewController.h"
 
-@interface ObjectDrillDownViewController : UIViewController <UINavigationBarDelegate, UITableViewDelegate,
+@interface ObjectDrillDownViewController : PickerViewController <UINavigationBarDelegate, UITableViewDelegate,
                                                     UITableViewDataSource, UITextFieldDelegate, JRCaptureObjectDelegate>
 {
     UITableView    *myTableView;
@@ -43,18 +44,11 @@
 
     BOOL isEditing;
     UITextField *firstResponder;
-
-    UIDatePicker *myDatePicker;
-    UIView       *myPickerView;
 }
 @property (nonatomic, strong) IBOutlet UITableView     *myTableView;
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *myUpdateButton;
-@property (nonatomic, retain) IBOutlet UIDatePicker    *myDatePicker;
-@property (nonatomic, retain) IBOutlet UIView          *myPickerView;
 @property (nonatomic, retain) IBOutlet UIToolbar       *myKeyboardToolbar;
 - (IBAction)updateButtonPressed:(id)sender;
-- (IBAction)datePickerChanged:(id)sender;
-- (IBAction)hidePickerButtonPressed:(id)sender;
 - (IBAction)doneEditingTextButtonPressed:(id)sender;
 - (id)initWithNibName:(NSString*)nibNameOrNil bundle:(NSBundle*)nibBundleOrNil forObject:(JRCaptureObject*)object
   captureParentObject:(JRCaptureObject*)parentObject andKey:(NSString*)key;

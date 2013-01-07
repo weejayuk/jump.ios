@@ -416,7 +416,7 @@ static JREngage* singleton = nil;
         return;
     }
 
-    [sessionData setActivity:activity];
+    sessionData.activity = activity;
     [interfaceMaestro showPublishingDialogForActivityWithCustomInterface:customInterfaceOverrides];
 }
 
@@ -626,7 +626,7 @@ static JREngage* singleton = nil;
 
 - (void)updateTokenUrl:(NSString*)newTokenUrl
 {
-    DLog(@"");
+    DLog(@"new token URL: %@", newTokenUrl);
     [sessionData setTokenUrl:newTokenUrl];
 }
 
