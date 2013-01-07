@@ -419,6 +419,18 @@
       <sourceFolder url="file://$MODULE_DIR$/../Janrain/Security/SFHFKeychainUtils.m" isTestSource="false" />
     </content>
     <content url="file://$MODULE_DIR$" />
+    <content url="file://$MODULE_DIR$/../../../facebook-ios-sdk/build/FacebookSDK.framework/Versions/A/Resources/FBUserSettingsViewResources.bundle/Contents/Resources/en.lproj/Localizable.strings">
+      <sourceFolder url="file://$MODULE_DIR$/../../../facebook-ios-sdk/build/FacebookSDK.framework/Versions/A/Resources/FBUserSettingsViewResources.bundle/Contents/Resources/en.lproj/Localizable.strings" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../../facebook-ios-sdk/build/FacebookSDK.framework/Versions/A/Resources/FBUserSettingsViewResources.bundle/Contents/Resources/he.lproj/Localizable.strings">
+      <sourceFolder url="file://$MODULE_DIR$/../../../facebook-ios-sdk/build/FacebookSDK.framework/Versions/A/Resources/FBUserSettingsViewResources.bundle/Contents/Resources/he.lproj/Localizable.strings" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../../facebook-ios-sdk/build/FacebookSDK.framework/Versions/A/Resources/FacebookSDKResources.bundle/Contents/Resources/en.lproj/Localizable.strings">
+      <sourceFolder url="file://$MODULE_DIR$/../../../facebook-ios-sdk/build/FacebookSDK.framework/Versions/A/Resources/FacebookSDKResources.bundle/Contents/Resources/en.lproj/Localizable.strings" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../../facebook-ios-sdk/build/FacebookSDK.framework/Versions/A/Resources/FacebookSDKResources.bundle/Contents/Resources/he.lproj/Localizable.strings">
+      <sourceFolder url="file://$MODULE_DIR$/../../../facebook-ios-sdk/build/FacebookSDK.framework/Versions/A/Resources/FacebookSDKResources.bundle/Contents/Resources/he.lproj/Localizable.strings" isTestSource="false" />
+    </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
