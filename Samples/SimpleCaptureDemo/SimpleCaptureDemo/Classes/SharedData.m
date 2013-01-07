@@ -61,12 +61,18 @@
 @implementation SharedData
 static SharedData *singleton = nil;
 
+// Testing
 static NSString *engageAppId = @"appcfamhnpkagijaeinl";
-static NSString *captureApidDomain  = @"mobile.dev.janraincapture.com";
-static NSString *captureUIDomain    = @"mobile.dev.janraincapture.com";
-//static NSString *clientId           = @"zc7tx83fqy68mper69mxbt5dfvd7c2jh"; // full access clientId
-static NSString *clientId           = @"233ke5wadxhdcrqwgtm4wjsqm299yj6g"; // two step clientId
-static NSString *entityTypeName     = @"sample_user";
+static NSString *captureApidDomain  = @"mobile-testing.janraincapture.com";
+static NSString *captureUIDomain    = @"mobile-testing.janraincapture.com";
+static NSString *clientId           = @"atasaz59p8cyecmbzmcwkbthsyq3wrxh";
+
+// old dev instance
+//static NSString *engageAppId = @"appcfamhnpkagijaeinl";
+//static NSString *captureApidDomain  = @"mobile.dev.janraincapture.com";
+//static NSString *captureUIDomain    = @"mobile.dev.janraincapture.com";
+////static NSString *clientId           = @"zc7tx83fqy68mper69mxbt5dfvd7c2jh"; // full access clientId
+//static NSString *clientId           = @"233ke5wadxhdcrqwgtm4wjsqm299yj6g"; // two step clientId
 
 ///* Carl's local instance */
 //static NSString *appId             = @"pgfjodcppiaifejikhmh";
@@ -95,7 +101,7 @@ static NSString *entityTypeName     = @"sample_user";
     {
         [JRCapture setEngageAppId:engageAppId captureApidDomain:captureApidDomain
                   captureUIDomain:captureUIDomain clientId:clientId
-                andEntityTypeName:entityTypeName];
+                andEntityTypeName:nil];
 
         prefs = [NSUserDefaults standardUserDefaults];
 
