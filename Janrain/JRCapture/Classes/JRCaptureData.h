@@ -38,8 +38,8 @@
 + (void)setAccessToken:(NSString *)newAccessToken forUser:(NSString *)userId;
 + (void)setCreationToken:(NSString *)newCreationToken;
 + (NSString *)accessTokenForUser:(NSString *)userId;
-+ (NSString *)accessToken;//ForUser:(NSString *)userId;
-+ (NSString *)creationToken;//ForUser:(NSString *)userId;
++ (NSString *)accessToken;
++ (NSString *)creationToken;
 + (NSURL *)captureApidBaseUrl;
 + (NSURL *)captureUIBaseUrl;
 + (NSString *)clientId;
