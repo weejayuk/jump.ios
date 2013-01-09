@@ -216,12 +216,14 @@ NSString *describeCATransform3D(CATransform3D *t)
 @property (retain) UIView *windowDimmingView;
 @property(nonatomic) BOOL animating;
 @property(nonatomic) BOOL delayedRotationWhileAnimating;
+@property(nonatomic) BOOL performingDelayedRotation;
 @end
 
 @implementation CustomAnimationController
 @synthesize jrPresentingViewController, jrChildViewController;
 @synthesize animating = _animating;
 @synthesize delayedRotationWhileAnimating = _delayedRotationWhileAnimating;
+@synthesize performingDelayedRotation = _performingDelayedRotation;
 
 
 - (void)loadView
@@ -248,6 +250,11 @@ NSString *describeCATransform3D(CATransform3D *t)
     self.dropShadow.bounds = CGRectMake(0, 0, 320, 460);
 
     centerViewChain(self.view);
+
+    if (self.performingDelayedRotation) {
+        self.performingDelayedRotation = NO;
+        return;
+    }
 
     // only do an animation if we found the Apple private views that we're going to tickle.
     if (self.dropShadow && self.windowDimmingView
@@ -325,6 +332,7 @@ NSString *describeCATransform3D(CATransform3D *t)
     }
     else
     {
+        self.performingDelayedRotation = YES;
         UIViewController *c = [[[UIViewController alloc] init] autorelease];
         [self presentModalViewController:c animated:NO];
         [self dismissModalViewControllerAnimated:NO];
@@ -422,6 +430,11 @@ NSString *describeCATransform3D(CATransform3D *t)
 @implementation JRModalViewController
 @synthesize myPopoverController, myNavigationController, animationController;
 @synthesize vcToPresent;
+
+- (CustomAnimationController *)getAnimationController
+{
+    return animationController;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -1131,5 +1144,10 @@ static JRUserInterfaceMaestro* singleton = nil;
     DLog(@"");
 //  [self popToOriginalRootViewController];
 //  [self unloadUserInterfaceWithTransitionStyle:UIModalTransitionStyleCoverVertical];
+}
+
+- (JRModalViewController *) getJrModalViewController
+{
+    return jrModalViewController;
 }
 @end

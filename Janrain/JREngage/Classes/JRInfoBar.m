@@ -35,6 +35,7 @@
 
 #import "JRInfoBar.h"
 #import "debug_log.h"
+#import "JRUserInterfaceMaestro.h"
 
 @implementation JRInfoBar
 
