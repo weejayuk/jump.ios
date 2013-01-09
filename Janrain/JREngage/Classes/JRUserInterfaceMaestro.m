@@ -214,10 +214,15 @@ NSString *describeCATransform3D(CATransform3D *t)
 @property (retain) UIViewController *jrChildViewController;
 @property (retain) UIView *dropShadow;
 @property (retain) UIView *windowDimmingView;
+@property(nonatomic) BOOL animating;
+@property(nonatomic) BOOL delayedRotationWhileAnimating;
 @end
 
 @implementation CustomAnimationController
 @synthesize jrPresentingViewController, jrChildViewController;
+@synthesize animating = _animating;
+@synthesize delayedRotationWhileAnimating = _delayedRotationWhileAnimating;
+
 
 - (void)loadView
 {
@@ -252,6 +257,8 @@ NSString *describeCATransform3D(CATransform3D *t)
 
 - (void)mimicFlipHorizontal
 {
+    DLog(@"");
+    self.animating = YES;
     CATransform3D originalTransform = self.dropShadow.layer.transform;
 
     CGRect origRect = CGRectMake(-160, -230, 320, 460);
@@ -296,24 +303,29 @@ NSString *describeCATransform3D(CATransform3D *t)
                          // restore some stuff we touched for good measure
                          self.dropShadow.layer.transform = originalTransform;
                          [modalDimmingView removeFromSuperview];
+                         self.animating = NO;
+                         if (self.delayedRotationWhileAnimating)
+                         {
+                             self.delayedRotationWhileAnimating = NO;
+                             [self attemptRotationAfterAnimation];
+                         }
                      }];
 }
 
-- (void)mimicCoverVertical
+- (void)attemptRotationAfterAnimation
 {
-    CGPoint originalCenter = self.dropShadow.center;
+    // http://stackoverflow.com/questions/8594111/forcing-orientation-change
 
-    // move dropShadow offscreen. coordinate space transform fuckery to account for orientations.
-    CGPoint c = [self.dropShadow convertPoint:self.dropShadow.center fromView:self.dropShadow.superview];
-    self.dropShadow.center = [self.dropShadow convertPoint:CGPointMake(c.x, c.y * 2 + 240)
-                                                    toView:self.dropShadow.superview];
-
-    // animate parent view back onscreen
-    [UIView animateWithDuration:0.5
-                          delay:0
-                        options:UIViewAnimationOptionCurveEaseInOut
-                     animations:^ { self.dropShadow.center = originalCenter; }
-                     completion:nil];
+    if ([UIViewController respondsToSelector:@selector(attemptRotationToDeviceOrientation)])
+    {
+        [UIViewController attemptRotationToDeviceOrientation];
+    }
+    else
+    {
+        UIViewController *c = [[[UIViewController alloc] init] autorelease];
+        [self presentModalViewController:c animated:NO];
+        [self dismissModalViewControllerAnimated:NO];
+    }
 }
 
 - (BOOL)shouldAutomaticallyForwardRotationMethods
@@ -323,14 +335,27 @@ NSString *describeCATransform3D(CATransform3D *t)
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {
-    return [jrChildViewController shouldAutorotateToInterfaceOrientation:toInterfaceOrientation];
+    BOOL b = [jrChildViewController shouldAutorotateToInterfaceOrientation:toInterfaceOrientation];
+    DLog(@"b:%i animating:%i orientation:%i", b, self.animating, toInterfaceOrientation);
+    if (self.animating)
+    {
+        self.delayedRotationWhileAnimating = b;
+        return NO;
+    }
+    return b;
 }
 
 - (BOOL)shouldAutorotate
 {
-    if ([jrChildViewController respondsToSelector:@selector(shouldAutorotate)])
-        return [jrChildViewController shouldAutorotate];
-    return YES;
+    BOOL b = [jrChildViewController respondsToSelector:@selector(shouldAutorotate)] ?
+         [jrChildViewController shouldAutorotate] : YES;
+    DLog(@"b: %i animating:%i", b, self.animating);
+    if (self.animating)
+    {
+        self.delayedRotationWhileAnimating = b;
+        return NO;
+    }
+    return b;
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
