@@ -300,6 +300,8 @@ NSString *describeCATransform3D(CATransform3D *t)
                          modalDimmingView.backgroundColor = [UIColor clearColor];
                      }
                      completion:^(BOOL finished) {
+                         DLog(@"finished: %i animating:%i delayedRot: %i", finished, self.animating,
+                             self.delayedRotationWhileAnimating);
                          // restore some stuff we touched for good measure
                          self.dropShadow.layer.transform = originalTransform;
                          [modalDimmingView removeFromSuperview];
@@ -314,6 +316,7 @@ NSString *describeCATransform3D(CATransform3D *t)
 
 - (void)attemptRotationAfterAnimation
 {
+    DLog(@"start");
     // http://stackoverflow.com/questions/8594111/forcing-orientation-change
 
     if ([UIViewController respondsToSelector:@selector(attemptRotationToDeviceOrientation)])
@@ -326,6 +329,7 @@ NSString *describeCATransform3D(CATransform3D *t)
         [self presentModalViewController:c animated:NO];
         [self dismissModalViewControllerAnimated:NO];
     }
+    DLog(@"end");
 }
 
 - (BOOL)shouldAutomaticallyForwardRotationMethods
@@ -339,6 +343,7 @@ NSString *describeCATransform3D(CATransform3D *t)
     DLog(@"b:%i animating:%i orientation:%i", b, self.animating, toInterfaceOrientation);
     if (self.animating)
     {
+        DLog(@"delayed");
         self.delayedRotationWhileAnimating = b;
         return NO;
     }
