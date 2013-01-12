@@ -216,14 +216,20 @@ NSString *describeCATransform3D(CATransform3D *t)
 @property (retain) UIView *windowDimmingView;
 @property(nonatomic) BOOL animating;
 @property(nonatomic) BOOL delayedRotationWhileAnimating;
-@property(nonatomic) BOOL performingDelayedRotation;
+@property(nonatomic) BOOL havePerformedFirstAnimation;
+@property(nonatomic, retain) UIView *modalDimmingView;
+@property(nonatomic) CATransform3D originalTransform;
+@property(nonatomic, retain) UIColor *originalDimmingViewColor;
 @end
 
 @implementation CustomAnimationController
 @synthesize jrPresentingViewController, jrChildViewController;
 @synthesize animating = _animating;
 @synthesize delayedRotationWhileAnimating = _delayedRotationWhileAnimating;
-@synthesize performingDelayedRotation = _performingDelayedRotation;
+@synthesize havePerformedFirstAnimation = _havePerformedFirstAnimation;
+@synthesize modalDimmingView = _modalDimmingView;
+@synthesize originalTransform = _originalTransform;
+@synthesize originalDimmingViewColor = _originalDimmingViewColor;
 
 
 - (void)loadView
@@ -248,13 +254,12 @@ NSString *describeCATransform3D(CATransform3D *t)
     // http://stackoverflow.com/questions/2457947/how-to-resize-a-uipresentationformsheet/4271364#4271364
 
     self.dropShadow.bounds = CGRectMake(0, 0, 320, 460);
+    self.dropShadow.layer.zPosition = 500;
 
     centerViewChain(self.view);
 
-    if (self.performingDelayedRotation) {
-        self.performingDelayedRotation = NO;
-        return;
-    }
+    if (self.havePerformedFirstAnimation) return;
+    self.havePerformedFirstAnimation = YES;
 
     // only do an animation if we found the Apple private views that we're going to tickle.
     if (self.dropShadow && self.windowDimmingView
@@ -266,7 +271,7 @@ NSString *describeCATransform3D(CATransform3D *t)
 {
     DLog(@"");
     self.animating = YES;
-    CATransform3D originalTransform = self.dropShadow.layer.transform;
+    self.originalTransform = self.dropShadow.layer.transform;
 
     CGRect origRect = CGRectMake(-160, -230, 320, 460);
     CGPoint smushedP1 = CGPointMake(-160, -50);
@@ -282,62 +287,52 @@ NSString *describeCATransform3D(CATransform3D *t)
     // for some reason animating back to the original transform does some unwanted flips and rotations, so we make
     // this matrix, which allows the animation to interpolate correctly.
     CATransform3D unsmushed = computeTransformMatrix(origRect, unsmushedP1, unsmushedP2, unsmushedP3, unsmushedP4);
-    unsmushed = CATransform3DConcat(normalizedCATransform3D(unsmushed), originalTransform);
-    smushed = CATransform3DConcat(normalizedCATransform3D(smushed), originalTransform);
+    unsmushed = CATransform3DConcat(normalizedCATransform3D(unsmushed), self.originalTransform);
+    smushed = CATransform3DConcat(normalizedCATransform3D(smushed), self.originalTransform);
 
     // smush
     self.dropShadow.layer.transform = smushed;
 
     // undim the background
-    UIColor *originalDimmingViewColor = self.windowDimmingView.backgroundColor;
+    self.originalDimmingViewColor = self.windowDimmingView.backgroundColor;
     self.windowDimmingView.backgroundColor = [UIColor clearColor];
 
     // dim the modal
-    UIView *modalDimmingView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)] autorelease];
-    modalDimmingView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    modalDimmingView.backgroundColor = originalDimmingViewColor;
-    [self.dropShadow addSubview:modalDimmingView];
+    self.modalDimmingView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)] autorelease];
+    self.modalDimmingView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    self.modalDimmingView.backgroundColor = self.originalDimmingViewColor;
+    [self.dropShadow addSubview:self.modalDimmingView];
 
     [UIView animateWithDuration:0.5 delay:0
                         options:UIViewAnimationOptionCurveEaseInOut
                      animations:^ {
                          // animate back
                          self.dropShadow.layer.transform = unsmushed;
-                         self.windowDimmingView.backgroundColor = originalDimmingViewColor;
-                         modalDimmingView.backgroundColor = [UIColor clearColor];
+                         self.windowDimmingView.backgroundColor = self.originalDimmingViewColor;
+                         self.modalDimmingView.backgroundColor = [UIColor clearColor];
                      }
                      completion:^(BOOL finished) {
                          DLog(@"finished: %i animating:%i delayedRot: %i", finished, self.animating,
                              self.delayedRotationWhileAnimating);
-                         // restore some stuff we touched for good measure
-                         self.dropShadow.layer.transform = originalTransform;
-                         [modalDimmingView removeFromSuperview];
+                         if (!finished || !self.animating) return;
                          self.animating = NO;
+                         // restore the transform because the computed matrix might not be equal to the original
+                         // because of matrix homogenization and ...? and parts of the rest of the UI framework may
+                         // rely on the original transforms numerical value
+                         self.dropShadow.layer.transform = self.originalTransform;
+                         [self.modalDimmingView removeFromSuperview];
                          if (self.delayedRotationWhileAnimating)
-                         {
-                             self.delayedRotationWhileAnimating = NO;
-                             [self attemptRotationAfterAnimation];
-                         }
+                             [self attemptRotationWithoutAnimation];
                      }];
+
+    //[self performSelector:@selector(cancelAnimation) withObject:nil afterDelay:2.5];
 }
 
-- (void)attemptRotationAfterAnimation
+- (void)attemptRotationWithoutAnimation
 {
-    DLog(@"start");
     // http://stackoverflow.com/questions/8594111/forcing-orientation-change
-
-    if ([UIViewController respondsToSelector:@selector(attemptRotationToDeviceOrientation)])
-    {
-        [UIViewController attemptRotationToDeviceOrientation];
-    }
-    else
-    {
-        self.performingDelayedRotation = YES;
-        UIViewController *c = [[[UIViewController alloc] init] autorelease];
-        [self presentModalViewController:c animated:NO];
-        [self dismissModalViewControllerAnimated:NO];
-    }
-    DLog(@"end");
+    [self.jrPresentingViewController dismissModalViewControllerAnimated:NO];
+    [self.jrPresentingViewController presentModalViewController:self animated:NO];
 }
 
 - (BOOL)shouldAutomaticallyForwardRotationMethods
@@ -347,33 +342,63 @@ NSString *describeCATransform3D(CATransform3D *t)
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {
+    //return YES;
     BOOL b = [jrChildViewController shouldAutorotateToInterfaceOrientation:toInterfaceOrientation];
-    DLog(@"b:%i animating:%i orientation:%i", b, self.animating, toInterfaceOrientation);
+    //DLog(@"b:%i animating:%i orientation:%i", b, self.animating, toInterfaceOrientation);
     if (self.animating)
     {
-        DLog(@"delayed");
+        //DLog(@"delayed");
         self.delayedRotationWhileAnimating = b;
         return NO;
     }
     return b;
+}
+
+- (NSUInteger)supportedInterfaceOrientations
+{
+    return [jrChildViewController supportedInterfaceOrientations];
 }
 
 - (BOOL)shouldAutorotate
 {
     BOOL b = [jrChildViewController respondsToSelector:@selector(shouldAutorotate)] ?
          [jrChildViewController shouldAutorotate] : YES;
-    DLog(@"b: %i animating:%i", b, self.animating);
+    //DLog(@"b: %i animating:%i", b, self.animating);
     if (self.animating)
     {
+        //DLog(@"delayed");
         self.delayedRotationWhileAnimating = b;
         return NO;
     }
     return b;
 }
 
+- (void)cancelAnimation
+{
+    DLog(@"canceling");
+    if (!_animating) return;
+    self.animating = NO;
+    CATransform3D zeros;
+    self.dropShadow.layer.transform = zeros;
+    self.windowDimmingView.backgroundColor = [UIColor whiteColor];
+    self.modalDimmingView.backgroundColor = [UIColor whiteColor];
+    [UIView animateWithDuration:0 delay:0
+                        options:UIViewAnimationOptionCurveLinear
+                     animations:^() {
+        self.dropShadow.layer.transform = self.originalTransform;
+        self.windowDimmingView.backgroundColor = self.originalDimmingViewColor;
+        self.modalDimmingView.backgroundColor = [UIColor clearColor];
+    }
+                     completion:^(BOOL finished){
+                         [self.modalDimmingView removeFromSuperview];
+                     }];
+}
+
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
                                 duration:(NSTimeInterval)duration
 {
+    DLog(@"animating: %i", self.animating);
+    [self cancelAnimation];
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
     [jrChildViewController willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
@@ -381,6 +406,7 @@ NSString *describeCATransform3D(CATransform3D *t)
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
                                          duration:(NSTimeInterval)duration
 {
+    DLog(@"animating: %i", self.animating);
     [super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
     [jrChildViewController willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
@@ -412,6 +438,13 @@ NSString *describeCATransform3D(CATransform3D *t)
 {
     [super viewDidDisappear:animated];
     [jrChildViewController viewDidDisappear:animated];
+}
+
+- (void)dealloc
+{
+    [_modalDimmingView release];
+    [_originalDimmingViewColor release];
+    [super dealloc];
 }
 
 @end
@@ -511,16 +544,14 @@ NSString *describeCATransform3D(CATransform3D *t)
     if (rvc)
     {
         // If we can do it the right way, and do the animation by hand
-        animationController.jrPresentingViewController = rvc; // just using this property as scratch space to hang on
-                                                              // to the presenting VC for dismissing the dialog
+        animationController.jrPresentingViewController = rvc;
         [rvc presentModalViewController:vcToPresent animated:!IS_IPAD];
     }
     else
     {
         // Yarr, it be a pirate's life for me
         [getWindow() addSubview:self.view];
-        animationController.jrPresentingViewController = self; // just using this property as scratch space to hang on
-                                                               // to the presenting VC for dismissing the dialog
+        animationController.jrPresentingViewController = self;
         [self presentModalViewController:vcToPresent animated:!IS_IPAD];
     }
 }
