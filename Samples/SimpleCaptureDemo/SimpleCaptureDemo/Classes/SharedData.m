@@ -49,6 +49,7 @@
 @end
 
 @interface SharedData ()
+@property          BOOL                engageSignInWasCanceled;
 @property (strong) NSUserDefaults     *prefs;
 @property (strong) JRCaptureUser      *captureUser;
 @property          BOOL                isNew;
@@ -71,15 +72,8 @@ static NSString *clientId           = @"atasaz59p8cyecmbzmcwkbthsyq3wrxh";
 //static NSString *engageAppId = @"appcfamhnpkagijaeinl";
 //static NSString *captureApidDomain  = @"mobile.dev.janraincapture.com";
 //static NSString *captureUIDomain    = @"mobile.dev.janraincapture.com";
-////static NSString *clientId           = @"zc7tx83fqy68mper69mxbt5dfvd7c2jh"; // full access clientId
+//static NSString *clientId           = @"zc7tx83fqy68mper69mxbt5dfvd7c2jh"; // full access clientId
 //static NSString *clientId           = @"233ke5wadxhdcrqwgtm4wjsqm299yj6g"; // two step clientId
-
-///* Carl's local instance */
-//static NSString *appId             = @"pgfjodcppiaifejikhmh";
-//static NSString *captureApidDomain = @"http://10.0.10.47:8000";
-//static NSString *captureUIDomain   = @"http://10.0.10.47:5000";
-//static NSString *clientId          = @"puh6d29gb94mn9ek4v3w8f7w9hp58g2z";
-//static NSString *entityTypeName    = @"user2";
 
 //static NSString *appId          = @"mlfeingbenjalleljkpo";
 //static NSString *captureDomain  = @"https://demo.staging.janraincapture.com/";
@@ -117,7 +111,6 @@ static NSString *clientId           = @"atasaz59p8cyecmbzmcwkbthsyq3wrxh";
     return self;
 }
 
-/* Return the singleton instance of this class. */
 + (SharedData *)sharedData
 {
     if (singleton == nil) {
@@ -135,31 +128,6 @@ static NSString *clientId           = @"atasaz59p8cyecmbzmcwkbthsyq3wrxh";
 - (id)copyWithZone:(NSZone *)zone
 {
     return self;
-}
-
-+ (JRCaptureUser *)captureUser
-{
-    return [[SharedData sharedData] captureUser];
-}
-
-+ (BOOL)isNew
-{
-    return [[SharedData sharedData] isNew];
-}
-
-+ (BOOL)isNotYetCreated
-{
-    return [[SharedData sharedData] isNotYetCreated];
-}
-
-+ (NSString *)currentEmail
-{
-    return [SharedData sharedData].captureUser.email;
-}
-
-+ (NSString *)currentProvider
-{
-    return [[SharedData sharedData] currentProvider];
 }
 
 - (void)signOutCurrentUser
@@ -194,45 +162,15 @@ static NSString *clientId           = @"atasaz59p8cyecmbzmcwkbthsyq3wrxh";
                                                  forDelegate:[SharedData sharedData]];
 }
 
-//+ (NSString*)getDisplayNameFromProfile:(NSDictionary*)profile
-//{
-//    NSString *name = nil;
-//
-//    if ([profile objectForKey:@"preferredUsername"])
-//        name = [NSString stringWithFormat:@"%@", [profile objectForKey:@"preferredUsername"]];
-//    else if ([[profile objectForKey:@"name"] objectForKey:@"formatted"])
-//        name = [NSString stringWithFormat:@"%@",
-//                [[profile objectForKey:@"name"] objectForKey:@"formatted"]];
-//    else
-//        name = [NSString stringWithFormat:@"%@%@%@%@%@",
-//                ([[profile objectForKey:@"name"] objectForKey:@"honorificPrefix"]) ?
-//                [NSString stringWithFormat:@"%@ ",
-//                 [[profile objectForKey:@"name"] objectForKey:@"honorificPrefix"]] : @"",
-//                ([[profile objectForKey:@"name"] objectForKey:@"givenName"]) ?
-//                [NSString stringWithFormat:@"%@ ",
-//                 [[profile objectForKey:@"name"] objectForKey:@"givenName"]] : @"",
-//                ([[profile objectForKey:@"name"] objectForKey:@"middleName"]) ?
-//                [NSString stringWithFormat:@"%@ ",
-//                 [[profile objectForKey:@"name"] objectForKey:@"middleName"]] : @"",
-//                ([[profile objectForKey:@"name"] objectForKey:@"familyName"]) ?
-//                [NSString stringWithFormat:@"%@ ",
-//                 [[profile objectForKey:@"name"] objectForKey:@"familyName"]] : @"",
-//                ([[profile objectForKey:@"name"] objectForKey:@"honorificSuffix"]) ?
-//                [NSString stringWithFormat:@"%@ ",
-//                 [[profile objectForKey:@"name"] objectForKey:@"honorificSuffix"]] : @""];
-//
-//    return name;
-//}
-
-- (void)resaveCaptureUser
+- (void)saveCaptureUser
 {
     [prefs setObject:[NSKeyedArchiver archivedDataWithRootObject:captureUser]
               forKey:cJRCaptureUser];
 }
 
-+ (void)resaveCaptureUser
++ (void)saveCaptureUser
 {
-    [[SharedData sharedData] resaveCaptureUser];
+    [[SharedData sharedData] saveCaptureUser];
 }
 
 - (void)postEngageErrorToDelegate:(NSError *)error
@@ -293,10 +231,6 @@ static NSString *clientId           = @"atasaz59p8cyecmbzmcwkbthsyq3wrxh";
 {
     DLog(@"");
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-
-//    if (engageSigninWasCanceled) /* Then we logged in directly with the Capture server */
-//        [self setEmailAddr:captureUser.email
-//               andProvider:nil];
 
     if (captureRecordStatus == JRCaptureRecordNewlyCreated)
         self.isNew = YES;

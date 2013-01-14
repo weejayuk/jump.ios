@@ -50,7 +50,7 @@
 #import "JRUserInterfaceMaestro.h"
 
 @interface RootViewController ()
-- (void)adjustUiState;
+- (void)configureButtons;
 @end
 
 @implementation RootViewController
@@ -67,27 +67,20 @@
 {
     [super viewDidLoad];
 
-    if ([SharedData currentEmail])
-        currentUserLabel.text = [NSString stringWithFormat:@"Current user: %@", [SharedData currentEmail]];
-    else
-        currentUserLabel.text = @"No current user";
-
-    if ([SharedData currentProvider])
-        currentUserProviderIcon.image = [UIImage imageNamed:
-                     [NSString stringWithFormat:@"icon_%@_30x30@2x.png", [SharedData currentProvider]]];
+    [self configureUserLabelAndIcon];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [self adjustUiState];
+    [self configureButtons];
 }
 
 - (BOOL)isUserSignedIn
 {
-    return [SharedData captureUser] != nil;
+    return [SharedData sharedData].captureUser != nil;
 }
 
-- (void)adjustUiState
+- (void)configureButtons
 {
     if ([self isUserSignedIn])
     {
@@ -99,18 +92,11 @@
         signInButton.hidden = NO;
         signOutButton.hidden = YES;
     }
-
-    //shareWidgetButton.hidden = NO;
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    if ([SharedData currentEmail])
-        currentUserLabel.text = [NSString stringWithFormat:@"Current user: %@", [SharedData currentEmail]];
-
-    if ([SharedData currentProvider])
-        currentUserProviderIcon.image = [UIImage imageNamed:
-                     [NSString stringWithFormat:@"icon_%@_30x30@2x.png", [SharedData currentProvider]]];
+    [self configureUserLabelAndIcon];
 }
 
 - (void)setButtonsEnabled:(BOOL)enabled
@@ -127,7 +113,7 @@
     ObjectDrillDownViewController *drillDown =
         [[ObjectDrillDownViewController alloc] initWithNibName:@"ObjectDrillDownViewController"
                                                         bundle:[NSBundle mainBundle]
-                                                     forObject:[SharedData captureUser]
+                                                     forObject:[SharedData sharedData].captureUser
                                            captureParentObject:nil
                                                         andKey:@"CaptureUser"];
 
@@ -172,27 +158,22 @@
     currentUserLabel.text = @"No current user";
     currentUserProviderIcon.image = nil;
     [SharedData signOutCurrentUser];
-    [self adjustUiState];
+    [self configureButtons];
 }
 
 - (void)engageSignInDidSucceed
 {
     currentUserLabel.text = @"Signing in...";
-    currentUserProviderIcon.image = [SharedData currentProvider] ?
-            [UIImage imageNamed:[NSString stringWithFormat:@"icon_%@_30x30@2x.png", [SharedData currentProvider]]] :
-            nil;
+    [self configureProviderIcon];
 }
 
 - (void)captureSignInDidSucceed
 {
     [self setButtonsEnabled:YES];
 
-    //[self engageSignInDidSucceed]; /* In case this method wasn't called if the user signed in directly */
+    [self configureUserLabelAndIcon];
 
-    if ([SharedData currentEmail])
-        currentUserLabel.text = [NSString stringWithFormat:@"Current user: %@", [SharedData currentEmail]];
-
-    if ([SharedData isNotYetCreated] || [SharedData isNew])
+    if ([SharedData sharedData].isNotYetCreated || [SharedData sharedData].isNew)
     {
         CaptureProfileViewController *viewController = [[CaptureProfileViewController alloc]
             initWithNibName:@"CaptureProfileViewController" bundle:[NSBundle mainBundle]];
@@ -201,6 +182,22 @@
     }
 }
 
+- (void)configureUserLabelAndIcon
+{
+    if ([SharedData sharedData].captureUser)
+        currentUserLabel.text = [NSString stringWithFormat:@"Email: %@", [SharedData sharedData].captureUser.email];
+    else
+        currentUserLabel.text = @"No current user";
+    [self configureProviderIcon];
+}
+
+- (void)configureProviderIcon
+{
+    NSString *icon = [NSString stringWithFormat:@"icon_%@_30x30@2x.png", [SharedData sharedData].currentProvider];
+    currentUserProviderIcon.image = [UIImage imageNamed:icon];
+}
+
+#pragma mark DemoSignInDelegate messages
 - (void)engageSignInDidFailWithError:(NSError *)error
 {
     DLog(@"error: %@", [error description]);
@@ -236,11 +233,6 @@
 {
     [self setShareWidgetButton:nil];
     [super viewDidUnload];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 @end

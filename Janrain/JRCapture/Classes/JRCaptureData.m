@@ -191,8 +191,8 @@ static JRCaptureData *singleton = nil;
                               andServiceName:[JRCaptureData serviceNameForTokenType:tokenType]
                                        error:&error];
 
-    if (error)
-        ALog (@"Error deleting device token from keychain: %@", [error localizedDescription]);
+    //if (error)
+    //    ALog (@"Error deleting device token from keychain: %@", [error localizedDescription]);
 }
 
 + (void)storeTokenInKeychain:(NSString *)token ofType:(JRTokenType)tokenType forUser:(NSString *)uuid

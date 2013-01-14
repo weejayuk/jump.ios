@@ -45,15 +45,19 @@
 @end
 
 @interface SharedData : NSObject <JRCaptureSigninDelegate>
-@property(nonatomic, assign) BOOL engageSignInWasCanceled;
+@property(readonly) BOOL engageSignInWasCanceled;
+@property(readonly) JRCaptureUser *captureUser;
+@property(readonly) BOOL isNew;
+@property(readonly) BOOL isNotYetCreated;
+@property(readonly) NSString *currentProvider;
+
 + (SharedData *)sharedData;
-+ (JRCaptureUser *)captureUser;
-+ (BOOL)isNew;
-+ (BOOL)isNotYetCreated;
-+ (NSString *)currentEmail;
-+ (NSString *)currentProvider;
-+ (void)startAuthenticationWithCustomInterface:(NSDictionary *)customInterface forDelegate:(id<DemoSignInDelegate>)delegate;
-+ (void)resaveCaptureUser;
+
++ (void)startAuthenticationWithCustomInterface:(NSDictionary *)customInterface
+                                   forDelegate:(id <DemoSignInDelegate>)delegate;
+
++ (void)saveCaptureUser;
+
 + (void)signOutCurrentUser;
 
 - (void)setDemoSigninDelegate:(id <DemoSignInDelegate>)demoSigninDelegate;
