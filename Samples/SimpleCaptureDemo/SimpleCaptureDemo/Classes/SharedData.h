@@ -50,6 +50,7 @@
 @property(readonly) BOOL isNew;
 @property(readonly) BOOL isNotYetCreated;
 @property(readonly) NSString *currentProvider;
+@property (weak)   id<DemoSignInDelegate> demoSignInDelegate;
 
 + (SharedData *)sharedData;
 
@@ -59,8 +60,6 @@
 + (void)saveCaptureUser;
 
 + (void)signOutCurrentUser;
-
-- (void)setDemoSigninDelegate:(id <DemoSignInDelegate>)demoSigninDelegate;
 
 @end
 

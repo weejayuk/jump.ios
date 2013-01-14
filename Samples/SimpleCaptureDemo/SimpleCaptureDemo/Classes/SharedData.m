@@ -50,12 +50,11 @@
 
 @interface SharedData ()
 @property          BOOL                engageSignInWasCanceled;
-@property (strong) NSUserDefaults     *prefs;
 @property (strong) JRCaptureUser      *captureUser;
 @property          BOOL                isNew;
 @property          BOOL                isNotYetCreated;
 @property (strong) NSString           *currentProvider;
-@property (weak)   id<DemoSignInDelegate> demoSigninDelegate;
+@property(nonatomic, strong) NSUserDefaults *userDefaults;
 
 @end
 
@@ -75,18 +74,13 @@ static NSString *clientId           = @"atasaz59p8cyecmbzmcwkbthsyq3wrxh";
 //static NSString *clientId           = @"zc7tx83fqy68mper69mxbt5dfvd7c2jh"; // full access clientId
 //static NSString *clientId           = @"233ke5wadxhdcrqwgtm4wjsqm299yj6g"; // two step clientId
 
-//static NSString *appId          = @"mlfeingbenjalleljkpo";
-//static NSString *captureDomain  = @"https://demo.staging.janraincapture.com/";
-//static NSString *clientId       = @"svaf3gxsmcvyfpx5vcrdwyv2axvy9zqg";
-//static NSString *entityTypeName = @"demo_user";
-
 @synthesize captureUser;
-@synthesize prefs;
 @synthesize currentProvider;
-@synthesize demoSigninDelegate;
+@synthesize demoSignInDelegate;
 @synthesize isNew;
 @synthesize isNotYetCreated;
 @synthesize engageSignInWasCanceled;
+@synthesize userDefaults;
 
 
 - (id)init
@@ -97,11 +91,11 @@ static NSString *clientId           = @"atasaz59p8cyecmbzmcwkbthsyq3wrxh";
                   captureUIDomain:captureUIDomain clientId:clientId
                 andEntityTypeName:nil];
 
-        prefs = [NSUserDefaults standardUserDefaults];
+        self.userDefaults = [NSUserDefaults standardUserDefaults];
 
-        currentProvider  = [prefs objectForKey:cJRCurrentProvider];
+        currentProvider  = [userDefaults objectForKey:cJRCurrentProvider];
 
-        NSData *archivedCaptureUser = [prefs objectForKey:cJRCaptureUser];
+        NSData *archivedCaptureUser = [userDefaults objectForKey:cJRCaptureUser];
         if (archivedCaptureUser)
         {
             captureUser = [NSKeyedUnarchiver unarchiveObjectWithData:archivedCaptureUser];
@@ -138,8 +132,8 @@ static NSString *clientId           = @"atasaz59p8cyecmbzmcwkbthsyq3wrxh";
     self.isNew         = NO;
     self.isNotYetCreated = NO;
 
-    [prefs setObject:nil forKey:cJRCurrentProvider];
-    [prefs setObject:nil forKey:cJRCaptureUser];
+    [userDefaults setObject:nil forKey:cJRCurrentProvider];
+    [userDefaults setObject:nil forKey:cJRCaptureUser];
 
     self.engageSignInWasCanceled = NO;
 
@@ -155,7 +149,7 @@ static NSString *clientId           = @"atasaz59p8cyecmbzmcwkbthsyq3wrxh";
                                    forDelegate:(id<DemoSignInDelegate>)delegate
 {
     [SharedData signOutCurrentUser];
-    [[SharedData sharedData] setDemoSigninDelegate:delegate];
+    [[SharedData sharedData] setDemoSignInDelegate:delegate];
 
     [JRCapture startEngageSigninDialogWithConventionalSignin:JRConventionalSigninEmailPassword
                                  andCustomInterfaceOverrides:customInterface
@@ -164,8 +158,8 @@ static NSString *clientId           = @"atasaz59p8cyecmbzmcwkbthsyq3wrxh";
 
 - (void)saveCaptureUser
 {
-    [prefs setObject:[NSKeyedArchiver archivedDataWithRootObject:captureUser]
-              forKey:cJRCaptureUser];
+    [userDefaults setObject:[NSKeyedArchiver archivedDataWithRootObject:captureUser]
+                     forKey:cJRCaptureUser];
 }
 
 + (void)saveCaptureUser
@@ -176,15 +170,15 @@ static NSString *clientId           = @"atasaz59p8cyecmbzmcwkbthsyq3wrxh";
 - (void)postEngageErrorToDelegate:(NSError *)error
 {
     DLog(@"error: %@", [error description]);
-    if ([demoSigninDelegate respondsToSelector:@selector(engageSignInDidFailWithError:)])
-        [demoSigninDelegate engageSignInDidFailWithError:error];
+    if ([demoSignInDelegate respondsToSelector:@selector(engageSignInDidFailWithError:)])
+        [demoSignInDelegate engageSignInDidFailWithError:error];
 }
 
 - (void)postCaptureErrorToDelegate:(NSError *)error
 {
     DLog(@"error: %@", [error description]);
-    if ([demoSigninDelegate respondsToSelector:@selector(captureSignInDidFailWithError:)])
-        [demoSigninDelegate captureSignInDidFailWithError:error];
+    if ([demoSignInDelegate respondsToSelector:@selector(captureSignInDidFailWithError:)])
+        [demoSignInDelegate captureSignInDidFailWithError:error];
 }
 
 - (void)engageSigninDidNotComplete
@@ -218,10 +212,10 @@ static NSString *clientId           = @"atasaz59p8cyecmbzmcwkbthsyq3wrxh";
                           forProvider:(NSString *)provider
 {
     self.currentProvider = provider;
-    [prefs setObject:currentProvider forKey:cJRCurrentProvider];
+    [userDefaults setObject:currentProvider forKey:cJRCurrentProvider];
 
-    if ([demoSigninDelegate respondsToSelector:@selector(engageSignInDidSucceed)])
-        [demoSigninDelegate engageSignInDidSucceed];
+    if ([demoSignInDelegate respondsToSelector:@selector(engageSignInDidSucceed)])
+        [demoSignInDelegate engageSignInDidSucceed];
 
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 }
@@ -244,11 +238,11 @@ static NSString *clientId           = @"atasaz59p8cyecmbzmcwkbthsyq3wrxh";
 
     self.captureUser = newCaptureUser;
 
-    [prefs setObject:[NSKeyedArchiver archivedDataWithRootObject:captureUser]
-              forKey:cJRCaptureUser];
+    [userDefaults setObject:[NSKeyedArchiver archivedDataWithRootObject:captureUser]
+                     forKey:cJRCaptureUser];
 
-    if ([demoSigninDelegate respondsToSelector:@selector(captureSignInDidSucceed)])
-        [demoSigninDelegate captureSignInDidSucceed];
+    if ([demoSignInDelegate respondsToSelector:@selector(captureSignInDidSucceed)])
+        [demoSignInDelegate captureSignInDidSucceed];
 
     engageSignInWasCanceled = NO;
 }
