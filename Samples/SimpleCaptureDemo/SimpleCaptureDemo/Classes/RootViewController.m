@@ -161,27 +161,6 @@
     [self configureButtons];
 }
 
-- (void)engageSignInDidSucceed
-{
-    currentUserLabel.text = @"Signing in...";
-    [self configureProviderIcon];
-}
-
-- (void)captureSignInDidSucceed
-{
-    [self setButtonsEnabled:YES];
-
-    [self configureUserLabelAndIcon];
-
-    if ([SharedData sharedData].isNotYetCreated || [SharedData sharedData].isNew)
-    {
-        CaptureProfileViewController *viewController = [[CaptureProfileViewController alloc]
-            initWithNibName:@"CaptureProfileViewController" bundle:[NSBundle mainBundle]];
-
-        [self.navigationController pushViewController:viewController animated:YES];
-    }
-}
-
 - (void)configureUserLabelAndIcon
 {
     if ([SharedData sharedData].captureUser)
@@ -198,6 +177,27 @@
 }
 
 #pragma mark DemoSignInDelegate messages
+- (void)engageSignInDidSucceed
+{
+    currentUserLabel.text = @"Signing in...";
+    [self configureProviderIcon];
+}
+
+- (void)captureSignInDidSucceed
+{
+    [self setButtonsEnabled:YES];
+    [self configureButtons];
+    [self configureUserLabelAndIcon];
+
+    if ([SharedData sharedData].isNotYetCreated || [SharedData sharedData].isNew)
+    {
+        CaptureProfileViewController *viewController = [[CaptureProfileViewController alloc]
+            initWithNibName:@"CaptureProfileViewController" bundle:[NSBundle mainBundle]];
+
+        [self.navigationController pushViewController:viewController animated:YES];
+    }
+}
+
 - (void)engageSignInDidFailWithError:(NSError *)error
 {
     DLog(@"error: %@", [error description]);
