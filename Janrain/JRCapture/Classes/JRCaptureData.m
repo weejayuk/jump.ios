@@ -96,7 +96,7 @@ static JRCaptureData *singleton = nil;
 @synthesize accessToken;
 @synthesize creationToken;
 @synthesize uuid;
-@synthesize bpChannelUrl = _bpChannelUrl;
+@synthesize bpChannelUrl;
 
 
 - (JRCaptureData *)init
@@ -327,8 +327,7 @@ static JRCaptureData *singleton = nil;
     [accessToken release];
     [creationToken release];
     [uuid release];
-
-    [_bpChannelUrl release];
+    [bpChannelUrl release];
     [super dealloc];
 }
 

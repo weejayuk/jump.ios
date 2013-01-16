@@ -31,23 +31,11 @@
  Date:   ${DATE}
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-
-#ifdef DEBUG
-#define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-#else
-#define DLog(...)
-#endif
-
-#define ALog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-
+#import "debug_log.h"
 #import "RootViewController.h"
 #import "JREngage+CustomInterface.h"
 #import "CaptureProfileViewController.h"
 #import "ObjectDrillDownViewController.h"
-#import "JRCaptureApidInterface.h"
-#import "JRCaptureJsWidgetWrapper.h"
-#import "JRCaptureWebViewController.h"
-#import "JRUserInterfaceMaestro.h"
 
 @interface RootViewController ()
 - (void)configureButtons;
@@ -128,18 +116,8 @@
     [self.navigationController pushViewController:viewController animated:YES];
 }
 
-- (IBAction)captureWidgetButtonPressed:(id)sender
+- (IBAction)thirdButtonPressed:(id)sender
 {
-    DLog(@"");
-    [JRCapture startJsWidgetWithUrl:nil];
-}
-
-- (IBAction)shareButtonPressed:(id)sender
-{
-    //DLog(@"");
-    //
-    //NSString *embeddedShareUrl = @"http://nathan.janrain.com/~nathan/share_widget_webview/embedded_share.html";
-    //[JRCapture startJsWidgetWithUrl:embeddedShareUrl];
     [[SharedData sharedData] asyncFetchNewLiveFyreUserToken];
 }
 

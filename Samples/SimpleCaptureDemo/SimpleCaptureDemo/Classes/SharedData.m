@@ -56,18 +56,17 @@
 @property BOOL isNew;
 @property BOOL isNotYetCreated;
 @property(strong) NSString *currentProvider;
-@property(weak) id <DemoSignInDelegate> demoSigninDelegate;
-@property(nonatomic) BOOL engageSignInWasCanceled;
+@property BOOL engageSignInWasCanceled;
 @property(nonatomic) NSString *lfToken;
-@property(nonatomic, retain) NSString *captureClientId;
-@property(nonatomic, retain) NSString *captureUIDomain;
-@property(nonatomic, retain) NSString *captureApidDomain;
-@property(nonatomic, retain) NSString *engageAppId;
-@property(nonatomic, retain) NSString *bpBusUrlString;
-@property(nonatomic, retain) NSString *bpChannelUrl;
-@property(nonatomic, retain) NSString *liveFyreNetwork;
-@property(nonatomic, retain) NSString *liveFyreSiteId;
-@property(nonatomic, retain) NSString *liveFyreArticleId;
+@property(nonatomic, strong) NSString *captureClientId;
+@property(nonatomic, strong) NSString *captureUIDomain;
+@property(nonatomic, strong) NSString *captureApidDomain;
+@property(nonatomic, strong) NSString *engageAppId;
+@property(nonatomic, strong) NSString *bpBusUrlString;
+@property(nonatomic, strong) NSString *bpChannelUrl;
+@property(nonatomic, strong) NSString *liveFyreNetwork;
+@property(nonatomic, strong) NSString *liveFyreSiteId;
+@property(nonatomic, strong) NSString *liveFyreArticleId;
 @end
 
 @implementation SharedData
@@ -102,12 +101,12 @@ static SharedData *singleton = nil;
 
         self.prefs = [NSUserDefaults standardUserDefaults];
 
-        currentProvider  = [prefs objectForKey:cJRCurrentProvider];
+        self.currentProvider  = [prefs objectForKey:cJRCurrentProvider];
 
         NSData *archivedCaptureUser = [prefs objectForKey:cJRCaptureUser];
         if (archivedCaptureUser)
         {
-            captureUser = [NSKeyedUnarchiver unarchiveObjectWithData:archivedCaptureUser];
+            self.captureUser = [NSKeyedUnarchiver unarchiveObjectWithData:archivedCaptureUser];
         }
     }
 
@@ -116,27 +115,27 @@ static SharedData *singleton = nil;
 
 - (void)loadConfigFromPlist
 {
-    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"janrain-config" ofType:@"plist"];
+    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"assets/janrain-config" ofType:@"plist"];
     NSDictionary *cfgPlist = [NSDictionary dictionaryWithContentsOfFile:plistPath];
     NSString *configKeyName = [cfgPlist objectForKey:@"default-config"];
     NSDictionary *cfg = [cfgPlist objectForKey:configKeyName];
 
-    captureClientId = [cfg objectForKey:@"captureClientId"];
-    captureUIDomain = [cfg objectForKey:@"captureUIDomain"];
-    captureApidDomain = [cfg objectForKey:@"captureApidDomain"];
-    engageAppId = [cfg objectForKey:@"engageAppId"];
-    bpBusUrlString = [cfg objectForKey:@"bpBusUrlString"];
-    bpChannelUrl = [cfg objectForKey:@"bpChannelUrl"];
-    liveFyreNetwork = [cfg objectForKey:@"liveFyreNetwork"];
-    liveFyreSiteId = [cfg objectForKey:@"liveFyreSiteId"];
-    liveFyreArticleId = [cfg objectForKey:@"liveFyreArticleId"];
+    self.captureClientId = [cfg objectForKey:@"captureClientId"];
+    self.captureUIDomain = [cfg objectForKey:@"captureUIDomain"];
+    self.captureApidDomain = [cfg objectForKey:@"captureApidDomain"];
+    self.engageAppId = [cfg objectForKey:@"engageAppId"];
+    self.bpBusUrlString = [cfg objectForKey:@"bpBusUrlString"];
+    self.bpChannelUrl = [cfg objectForKey:@"bpChannelUrl"];
+    self.liveFyreNetwork = [cfg objectForKey:@"liveFyreNetwork"];
+    self.liveFyreSiteId = [cfg objectForKey:@"liveFyreSiteId"];
+    self.liveFyreArticleId = [cfg objectForKey:@"liveFyreArticleId"];
 }
 
 - (void)asyncFetchNewBackplaneChannel
 {
+    if (!bpBusUrlString) return;
     NSURL *bpNewChanUrl = [NSURL URLWithString:[bpBusUrlString stringByAppendingString:@"/channel/new"]];
-    NSURLRequest *req = [NSURLRequest requestWithURL:bpNewChanUrl
-                                         cachePolicy:NSURLRequestReloadRevalidatingCacheData
+    NSURLRequest *req = [NSURLRequest requestWithURL:bpNewChanUrl cachePolicy:NSURLRequestReloadRevalidatingCacheData
                                      timeoutInterval:5];
     [NSURLConnection sendAsynchronousRequest:req
                                        queue:[NSOperationQueue mainQueue]
@@ -152,17 +151,18 @@ static SharedData *singleton = nil;
                                    NSString *body = [[NSString alloc] initWithData:d encoding:NSUTF8StringEncoding];
                                    NSCharacterSet *quoteSet = [NSCharacterSet characterSetWithCharactersInString:@"\""];
                                    NSString *bpChannel = [body stringByTrimmingCharactersInSet:quoteSet];
-                                   NSString *bpChannelUrl = [bpBusUrlString stringByAppendingFormat:@"/channel/%@",
+                                   NSString *bpChannelUrl_ = [bpBusUrlString stringByAppendingFormat:@"/channel/%@",
                                                                             bpChannel];
-                                   DLog(@"New BP channel: %@", bpChannelUrl);
-                                   self.bpChannelUrl = bpChannelUrl;
-                                   [JRCapture setBackplaneChannelUrl:bpChannelUrl];
+                                   DLog(@"New BP channel: %@", bpChannelUrl_);
+                                   self.bpChannelUrl = bpChannelUrl_;
+                                   [JRCapture setBackplaneChannelUrl:bpChannelUrl_];
                                }
                            }];
 }
 
 - (void)asyncFetchNewLiveFyreUserToken
 {
+    if (!liveFyreArticleId || !liveFyreNetwork || !liveFyreSiteId) return;
     NSString *lfAuthUrl = [NSString stringWithFormat:@"http://admin.%@/api/v3.0/auth?bp_channel=%@&siteId=%@"
                                                              "&articleId=%@",
                                                      liveFyreNetwork,
@@ -192,13 +192,13 @@ static SharedData *singleton = nil;
                                        ALog(@"Error parsing LF response: %@", body);
                                        return;
                                    }
-                                   NSString *lfToken = [[lfResponse objectForKey:@"data"] objectForKey:@"token"];
-                                   if (!lfToken) {
+                                   NSString *lfToken_ = [[lfResponse objectForKey:@"data"] objectForKey:@"token"];
+                                   if (!lfToken_) {
                                        ALog(@"Error retrieving token from LF response: %@", body);
                                        return;
                                    }
-                                   DLog(@"New LF token: %@", lfToken);
-                                   self.lfToken = lfToken;
+                                   DLog(@"New LF token: %@", lfToken_);
+                                   self.lfToken = lfToken_;
                                }
                            }];
 

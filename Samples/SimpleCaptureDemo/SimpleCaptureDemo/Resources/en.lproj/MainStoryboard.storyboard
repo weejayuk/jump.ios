@@ -96,7 +96,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="captureWidgetButtonPressed:" destination="2" eventType="touchUpInside" id="dad-f8-qmC"/>
+                                    <action selector="thirdButtonPressed:" destination="2" eventType="touchUpInside" id="dad-f8-qmC"/>
                                 </connections>
                             </button>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Lxu-X3-tcS">

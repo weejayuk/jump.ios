@@ -253,7 +253,6 @@
 		C1424EF710014A1D6F823525 /* JRCaptureObject.m in Sources */ = {isa = PBXBuildFile; fileRef = C142480EFB4844EBB033EDF6 /* JRCaptureObject.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C1424EF8D6ECFFF776E98727 /* music_note.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C1424331C7C42431897D0DC3 /* music_note.jpg */; };
 		C1424EFD7E53578A1F2ADFDF /* button_black_135x40.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424D141B02D6E8652B7E49 /* button_black_135x40.png */; };
-		C1424F03157800DE5923AAFC /* janrain-config.plist in Resources */ = {isa = PBXBuildFile; fileRef = C14247B09027E10410E745D5 /* janrain-config.plist */; };
 		C1424F0FCB60899EFF61FB73 /* icon_bw_linkedin_30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424782076C7956E7C882D4 /* icon_bw_linkedin_30x30.png */; };
 		C1424F1233955DDEA615A1EC /* JRCaptureError.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424C6354DC4FD8A6211FE0 /* JRCaptureError.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C1424F19F4D98B4992EA5718 /* misc.xml in Resources */ = {isa = PBXBuildFile; fileRef = C14244E991E8AD2EB27E2DF7 /* misc.xml */; };
@@ -276,6 +275,7 @@
 		C1424FE3EE055521607F1AD1 /* button_janrain_135x40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424844ACE2DB73F774FAAA /* button_janrain_135x40@2x.png */; };
 		C1424FF45D1697F4016A98EC /* icon_linkedin_30x30@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C14246AF7617A1EB475DEC64 /* icon_linkedin_30x30@2x.png */; };
 		C1424FF8F0D6CA271632F616 /* icon_bw_myspace_30x30@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424CF4DD3BFFD8766ED2CF /* icon_bw_myspace_30x30@2x.png */; };
+		D806D1B616A7638E008EEF96 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = D806D1B516A7638E008EEF96 /* assets */; };
 		D83F86E2162373D4007B7163 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D83F86E1162373D4007B7163 /* Default-568h@2x.png */; };
 		D83F86E5162373E2007B7163 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = D83F86E4162373E2007B7163 /* Default.png */; };
 /* End PBXBuildFile section */
@@ -467,7 +467,6 @@
 		C14247897ED63E85BA93C1FB /* icon_google_30x30@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon_google_30x30@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/icons/icon_google_30x30@2x.png"; sourceTree = "<group>"; };
 		C14247A5BA6DA6A538FCCA12 /* JRProvidersController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = JRProvidersController.xib; path = ../../Janrain/JREngage/Resources/xibs/JRProvidersController.xib; sourceTree = "<group>"; };
 		C14247AFA81DC148709A6245 /* logo_google_280x65@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "logo_google_280x65@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/logos/logo_google_280x65@2x.png"; sourceTree = "<group>"; };
-		C14247B09027E10410E745D5 /* janrain-config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; name = "janrain-config.plist"; path = "assets/janrain-config.plist"; sourceTree = "<group>"; };
 		C14247BA84416D58E48D6F00 /* logo_orkut_280x65.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo_orkut_280x65.png; path = ../../Janrain/JREngage/Resources/images/logos/logo_orkut_280x65.png; sourceTree = "<group>"; };
 		C14247DAB973E9F72370D01A /* JRObjectLevelOne.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRObjectLevelOne.m; sourceTree = "<group>"; };
 		C14247EB4A3F3C839FDDD967 /* JRCaptureApidInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRCaptureApidInterface.h; path = ../../Janrain/JRCapture/Classes/JRCaptureApidInterface.h; sourceTree = "<group>"; };
@@ -535,7 +534,6 @@
 		C1424AF2A8DDF3FE8A700DC5 /* JRLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRLocation.h; sourceTree = "<group>"; };
 		C1424AF2D73E4323CB4A9882 /* icon_bw_myspace_30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_bw_myspace_30x30.png; path = ../../Janrain/JREngage/Resources/images/icons_bw/icon_bw_myspace_30x30.png; sourceTree = "<group>"; };
 		C1424AF91891541D65B14D91 /* icon_yahoo_30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_yahoo_30x30.png; path = ../../Janrain/JREngage/Resources/images/icons/icon_yahoo_30x30.png; sourceTree = "<group>"; };
-		C1424AFDBF69679B7CFA04BA /* assets */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; path = assets; sourceTree = "<group>"; };
 		C1424B011D01727275B1403B /* icon_blogger_30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_blogger_30x30.png; path = ../../Janrain/JREngage/Resources/images/icons/icon_blogger_30x30.png; sourceTree = "<group>"; };
 		C1424B046862102A2E89E9EF /* JROnipLevelTwo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JROnipLevelTwo.h; sourceTree = "<group>"; };
 		C1424B05B0069F376F8D74BE /* JRUserInterfaceMaestro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRUserInterfaceMaestro.h; path = ../../Janrain/JREngage/Classes/JRUserInterfaceMaestro.h; sourceTree = "<group>"; };
@@ -637,6 +635,7 @@
 		C1424FD240353636047F7001 /* JREngageWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JREngageWrapper.m; path = ../../Janrain/JRCapture/Classes/JREngageWrapper.m; sourceTree = "<group>"; };
 		C1424FD84D74DDA68712F78C /* triangle_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "triangle_icon@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/other/triangle_icon@2x.png"; sourceTree = "<group>"; };
 		C1424FF00992CE2E024785FA /* logo_flickr_280x65.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo_flickr_280x65.png; path = ../../Janrain/JREngage/Resources/images/logos/logo_flickr_280x65.png; sourceTree = "<group>"; };
+		D806D1B516A7638E008EEF96 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = SOURCE_ROOT; };
 		D83F86E1162373D4007B7163 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		D83F86E4162373E2007B7163 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -679,8 +678,6 @@
 				90C36B6B7717AA0C893E0910 /* SimpleCaptureDemoTests */,
 				C1424BA527F0C8DC376F6AA1 /* Janrain */,
 				C14244B89391F46E108DD73C /* JRCapture */,
-				C1424AFDBF69679B7CFA04BA /* assets */,
-				C14247B09027E10410E745D5 /* janrain-config.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -775,6 +772,7 @@
 		9F7B6A811533644A002BF452 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D806D1B516A7638E008EEF96 /* assets */,
 				9F7B6A9A1533648C002BF452 /* en.lproj */,
 				9F7B6AA71533648C002BF452 /* images */,
 				9F7B6AA91533648C002BF452 /* images-2x */,
@@ -1586,163 +1584,7 @@
 				C1424611CE09C0897CF6AD1F /* JRUserLandingController.xib in Resources */,
 				C1424420CE213BAB3A70098C /* JRProvidersController.xib in Resources */,
 				C14241AE43CA436B4119CB84 /* JRWebViewController.xib in Resources */,
-				9FB1210915C73FD20072BEE6,
-				9FB1211715C73FD20072BEE6,
-				9FB1211915C73FD20072BEE6,
-				9FB1211A15C73FD20072BEE6,
-				9FB1211B15C73FD20072BEE6,
-				9FB1211C15C73FD20072BEE6,
-				9FB1211D15C73FD20072BEE6,
-				9FB1211E15C73FD20072BEE6,
-				9FB1211F15C73FD20072BEE6,
-				9FB1212015C73FD20072BEE6,
-				9FB1212115C73FD20072BEE6,
-				9FB1212215C73FD20072BEE6,
-				9FB1212315C73FD20072BEE6,
-				9FB1212415C73FD20072BEE6,
-				9FB1212515C73FD20072BEE6,
-				9FB1212615C73FD20072BEE6,
-				9FB1212715C73FD20072BEE6,
-				9FB1212815C73FD20072BEE6,
-				9FB1212915C73FD20072BEE6,
-				9FB1212A15C73FD20072BEE6,
-				9FB1212B15C73FD20072BEE6,
-				9FB1212C15C73FD20072BEE6,
-				9FB1212D15C73FD20072BEE6,
-				9FB1212E15C73FD20072BEE6,
-				9FB1212F15C73FD20072BEE6,
-				9FB1213015C73FD20072BEE6,
-				9FB1213115C73FD20072BEE6,
-				9FB1213215C73FD20072BEE6,
-				9FB1213315C73FD20072BEE6,
-				9FB1213415C73FD20072BEE6,
-				9FB1213515C73FD20072BEE6,
-				9FB1213615C73FD20072BEE6,
-				9FB1213715C73FD20072BEE6,
-				9FB1213815C73FD20072BEE6,
-				9FB1213915C73FD20072BEE6,
-				9FB1213A15C73FD20072BEE6,
-				9FB1213B15C73FD20072BEE6,
-				9FB1213C15C73FD20072BEE6,
-				9FB1213D15C73FD20072BEE6,
-				9FB1213E15C73FD20072BEE6,
-				9FB1213F15C73FD20072BEE6,
-				9FB1214015C73FD20072BEE6,
-				9FB1214115C73FD20072BEE6,
-				9FB1214215C73FD20072BEE6,
-				9FB1214315C73FD20072BEE6,
-				9FB1214415C73FD20072BEE6,
-				9FB1214515C73FD20072BEE6,
-				9FB1214615C73FD20072BEE6,
-				9FB1214715C73FD20072BEE6,
-				9FB1214815C73FD20072BEE6,
-				9FB1214915C73FD20072BEE6,
-				9FB1214A15C73FD20072BEE6,
-				9FB1214B15C73FD20072BEE6,
-				9FB1214C15C73FD20072BEE6,
-				9FB1214D15C73FD20072BEE6,
-				9FB1214E15C73FD20072BEE6,
-				9FB1214F15C73FD20072BEE6,
-				9FB1215015C73FD20072BEE6,
-				9FB1215115C73FD20072BEE6,
-				9FB1215215C73FD20072BEE6,
-				9FB1215315C73FD20072BEE6,
-				9FB1215415C73FD20072BEE6,
-				9FB1215515C73FD20072BEE6,
-				9FB1215615C73FD20072BEE6,
-				9FB1215715C73FD20072BEE6,
-				9FB1215815C73FD20072BEE6,
-				9FB1215915C73FD20072BEE6,
-				9FB1215A15C73FD20072BEE6,
-				9FB1215B15C73FD20072BEE6,
-				9FB1215C15C73FD20072BEE6,
-				9FB1215D15C73FD20072BEE6,
-				9FB1215E15C73FD20072BEE6,
-				9FB1215F15C73FD20072BEE6,
-				9FB1216015C73FD20072BEE6,
-				9FB1216115C73FD20072BEE6,
-				9FB1216215C73FD20072BEE6,
-				9FB1216315C73FD20072BEE6,
-				9FB1216415C73FD20072BEE6,
-				9FB1216515C73FD20072BEE6,
-				9FB1216615C73FD20072BEE6,
-				9FB1216715C73FD20072BEE6,
-				9FB1216815C73FD20072BEE6,
-				9FB1216915C73FD20072BEE6,
-				9FB1216A15C73FD20072BEE6,
-				9FB1216B15C73FD20072BEE6,
-				9FB1216C15C73FD20072BEE6,
-				9FB1216D15C73FD20072BEE6,
-				9FB1216E15C73FD20072BEE6,
-				9FB1216F15C73FD20072BEE6,
-				9FB1217015C73FD20072BEE6,
-				9FB1217115C73FD20072BEE6,
-				9FB1217215C73FD20072BEE6,
-				9FB1217315C73FD20072BEE6,
-				9FB1217415C73FD20072BEE6,
-				9FB1217515C73FD20072BEE6,
-				9FB1217615C73FD20072BEE6,
-				9FB1217715C73FD20072BEE6,
-				9FB1217815C73FD20072BEE6,
-				9FB1217915C73FD20072BEE6,
-				9FB1217A15C73FD20072BEE6,
-				9FB1217B15C73FD20072BEE6,
-				9FB1217C15C73FD20072BEE6,
-				9FB1217D15C73FD20072BEE6,
-				9FB1217E15C73FD20072BEE6,
-				9FB1217F15C73FD20072BEE6,
-				9FB1218015C73FD20072BEE6,
-				9FB1218115C73FD20072BEE6,
-				9FB1218215C73FD20072BEE6,
-				9FB1218315C73FD20072BEE6,
-				9FB1218415C73FD20072BEE6,
-				9FB1218515C73FD20072BEE6,
-				9FB1218615C73FD20072BEE6,
-				9FB1218715C73FD20072BEE6,
-				9FB1218815C73FD20072BEE6,
-				9FB1218915C73FD20072BEE6,
-				9FB1218A15C73FD20072BEE6,
-				9FB1218B15C73FD20072BEE6,
-				9FB1218C15C73FD20072BEE6,
-				9FB1218D15C73FD20072BEE6,
-				9FB1218E15C73FD20072BEE6,
-				9FB1218F15C73FD20072BEE6,
-				9FB1219015C73FD20072BEE6,
-				9FB1219115C73FD20072BEE6,
-				9FB1219215C73FD20072BEE6,
-				9FB1219315C73FD20072BEE6,
-				9FB1219415C73FD20072BEE6,
-				9FB1219515C73FD20072BEE6,
-				9FB1219615C73FD20072BEE6,
-				9FB1219715C73FD20072BEE6,
-				9FB1219815C73FD20072BEE6,
-				9FB1219915C73FD20072BEE6,
-				9FB1219A15C73FD20072BEE6,
-				9FB1219B15C73FD20072BEE6,
-				9FB1219C15C73FD20072BEE6,
-				9FB1219D15C73FD20072BEE6,
-				9FB1219E15C73FD20072BEE6,
-				9FB1219F15C73FD20072BEE6,
-				9FB121A015C73FD20072BEE6,
-				9FB121A115C73FD20072BEE6,
-				9FB121A215C73FD20072BEE6,
-				9FB121A315C73FD20072BEE6,
-				9FB121A415C73FD20072BEE6,
-				9FB121A515C73FD20072BEE6,
-				9FB121A615C73FD20072BEE6,
-				9FB121A715C73FD20072BEE6,
-				9FB121A815C73FD20072BEE6,
-				9FB121A915C73FD20072BEE6,
-				9FB121AA15C73FD20072BEE6,
-				9FB121AB15C73FD20072BEE6,
-				9FB121AC15C73FD20072BEE6,
-				9FB121AD15C73FD20072BEE6,
-				9FB121AE15C73FD20072BEE6,
-				9FB121AF15C73FD20072BEE6,
-				9FB121B015C73FD20072BEE6,
-				9FB121B115C73FD20072BEE6,
-				9FB121B215C73FD20072BEE6,
-				C1424F03157800DE5923AAFC /* janrain-config.plist in Resources */,
+				D806D1B616A7638E008EEF96 /* assets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
