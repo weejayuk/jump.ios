@@ -102,15 +102,17 @@ JREngagePlugin.install = function()
     return window.plugins.jrEngagePlugin;
 };
 
-if (typeof Cordova === 'undefined')
-{
-    PgCdv = PhoneGap;
-}
-else
+if (typeof Cordova !== 'undefined')
 {
     PgCdv = Cordova;
 }
+else if (typeof PhoneGap !== 'undefined')
+{
+    PgCdv = PhoneGap;
+}
+else if (typeof cordova !== 'undefined')
+{
+    PgCdv = cordova;
+}
 
 PgCdv.addConstructor(JREngagePlugin.install);
-
-
