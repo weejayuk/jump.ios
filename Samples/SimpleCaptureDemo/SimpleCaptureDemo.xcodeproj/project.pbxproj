@@ -253,6 +253,7 @@
 		9FD2B6BF14F8387100053EA2 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FD2B6BE14F8387100053EA2 /* Security.framework */; };
 		9FD2B6C114F8387B00053EA2 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FD2B6C014F8387B00053EA2 /* MessageUI.framework */; };
 		9FD2B6C114F8387B00053EA4 /* StringArrayDrillDownViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FD2B6C114F8387B00053EA3 /* StringArrayDrillDownViewController.m */; };
+		C1424F03157800DE5923AAFC /* janrain-config.plist in Resources */ = {isa = PBXBuildFile; fileRef = C14247B09027E10410E745D5 /* janrain-config.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -587,6 +588,8 @@
 		9FD2B6C014F8387B00053EA2 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		9FD2B6C114F8387B00053EA3 /* StringArrayDrillDownViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StringArrayDrillDownViewController.m; path = Classes/StringArrayDrillDownViewController.m; sourceTree = "<group>"; };
 		9FD2B6C114F8387B00053EA5 /* StringArrayDrillDownViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StringArrayDrillDownViewController.h; path = Classes/StringArrayDrillDownViewController.h; sourceTree = "<group>"; };
+		C14247B09027E10410E745D5 /* janrain-config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; name = "janrain-config.plist"; path = "assets/janrain-config.plist"; sourceTree = "<group>"; };
+		C1424AFDBF69679B7CFA04BA /* assets */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; path = assets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -625,6 +628,8 @@
 				90C36B6B7717AA0C893E08E8 /* Frameworks */,
 				90C36B6B7717AA0C893E08EF /* SimpleCaptureDemo */,
 				90C36B6B7717AA0C893E0910 /* SimpleCaptureDemoTests */,
+				C1424AFDBF69679B7CFA04BA /* assets */,
+				C14247B09027E10410E745D5 /* janrain-config.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1446,6 +1451,7 @@
 				9FB121B015C73FD20072BEE6 /* JRPublishActivityController.xib in Resources */,
 				9FB121B115C73FD20072BEE6 /* JRUserLandingController.xib in Resources */,
 				9FB121B215C73FD20072BEE6 /* JRWebViewController.xib in Resources */,
+				C1424F03157800DE5923AAFC /* janrain-config.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

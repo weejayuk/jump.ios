@@ -51,35 +51,27 @@
 @end
 
 @interface SharedData ()
-@property (strong) NSUserDefaults     *prefs;
-@property (strong) JRCaptureUser      *captureUser;
-@property          BOOL                isNew;
-@property          BOOL                isNotYetCreated;
-@property (strong) NSString           *currentProvider;
-@property (weak)   id<DemoSignInDelegate> demoSigninDelegate;
-
+@property(strong) NSUserDefaults *prefs;
+@property(strong) JRCaptureUser *captureUser;
+@property BOOL isNew;
+@property BOOL isNotYetCreated;
+@property(strong) NSString *currentProvider;
+@property(weak) id <DemoSignInDelegate> demoSigninDelegate;
+@property(nonatomic) BOOL engageSignInWasCanceled;
+@property(nonatomic) NSString *lfToken;
+@property(nonatomic, retain) NSString *captureClientId;
+@property(nonatomic, retain) NSString *captureUIDomain;
+@property(nonatomic, retain) NSString *captureApidDomain;
+@property(nonatomic, retain) NSString *engageAppId;
+@property(nonatomic, retain) NSString *bpBusUrlString;
+@property(nonatomic, retain) NSString *bpChannelUrl;
+@property(nonatomic, retain) NSString *liveFyreNetwork;
+@property(nonatomic, retain) NSString *liveFyreSiteId;
+@property(nonatomic, retain) NSString *liveFyreArticleId;
 @end
 
 @implementation SharedData
 static SharedData *singleton = nil;
-
-// mobile-dev
-//static NSString *appId              = @"appcfamhnpkagijaeinl";
-//static NSString *captureApidDomain  = @"mobile.dev.janraincapture.com";
-//static NSString *captureUIDomain    = @"mobile.dev.janraincapture.com";
-//static NSString *clientId           = @"zc7tx83fqy68mper69mxbt5dfvd7c2jh";
-//static NSString *entityTypeName     = @"sample_user";
-
-// fox-dev
-static NSString *appId              =
-static NSString *captureApidDomain  =
-static NSString *captureUIDomain    =
-static NSString *clientId           =
-static NSString *entityTypeName     =
-static NSString *bpBusUrlString     =
-static NSString *liveFyreNetwork    =
-static NSString *liveFyreSiteId     =
-static NSString *liveFyreArticleId  =
 
 @synthesize captureUser;
 @synthesize prefs;
@@ -88,16 +80,24 @@ static NSString *liveFyreArticleId  =
 @synthesize isNew;
 @synthesize isNotYetCreated;
 @synthesize engageSignInWasCanceled;
-@synthesize bpChannelUrl = _bpChannelUrl;
-@synthesize lfToken = _lfToken;
+@synthesize bpChannelUrl;
+@synthesize lfToken;
+@synthesize captureClientId;
+@synthesize captureUIDomain;
+@synthesize captureApidDomain;
+@synthesize engageAppId;
+@synthesize bpBusUrlString;
+@synthesize liveFyreNetwork;
+@synthesize liveFyreSiteId;
+@synthesize liveFyreArticleId;
 
 - (id)init
 {
     if ((self = [super init]))
     {
-        [JRCapture setEngageAppId:appId captureApidDomain:captureApidDomain
-                  captureUIDomain:captureUIDomain clientId:clientId
-                andEntityTypeName:entityTypeName];
+        [self loadConfigFromPlist];
+        [JRCapture setEngageAppId:engageAppId captureApidDomain:captureApidDomain
+                  captureUIDomain:captureUIDomain clientId:captureClientId andEntityTypeName:nil];
         [self asyncFetchNewBackplaneChannel];
 
         prefs = [NSUserDefaults standardUserDefaults];
@@ -112,6 +112,24 @@ static NSString *liveFyreArticleId  =
     }
 
     return self;
+}
+
+- (void)loadConfigFromPlist
+{
+    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"janrain-config" ofType:@"plist"];
+    NSDictionary *cfgPlist = [NSDictionary dictionaryWithContentsOfFile:plistPath];
+    NSString *configKeyName = [cfgPlist objectForKey:@"default-config"];
+    NSDictionary *cfg = [cfgPlist objectForKey:configKeyName];
+
+    captureClientId = [cfg objectForKey:@"captureClientId"];
+    captureUIDomain = [cfg objectForKey:@"captureUIDomain"];
+    captureApidDomain = [cfg objectForKey:@"captureApidDomain"];
+    engageAppId = [cfg objectForKey:@"engageAppId"];
+    bpBusUrlString = [cfg objectForKey:@"bpBusUrlString"];
+    bpChannelUrl = [cfg objectForKey:@"bpChannelUrl"];
+    liveFyreNetwork = [cfg objectForKey:@"liveFyreNetwork"];
+    liveFyreSiteId = [cfg objectForKey:@"liveFyreSiteId"];
+    liveFyreArticleId = [cfg objectForKey:@"liveFyreArticleId"];
 }
 
 - (void)asyncFetchNewBackplaneChannel

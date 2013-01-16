@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="CIDR_MODULE" version="4">
   <component name="NewModuleRootManager">
-    <content url="file://$USER_HOME$/Library/Caches/appCode10/DerivedData/QuickSignIn-41061bcd/Build/Products/Debug-iphonesimulator/Quick Sign-In.app">
-      <sourceFolder url="file://$USER_HOME$/Library/Caches/appCode10/DerivedData/QuickSignIn-41061bcd/Build/Products/Debug-iphonesimulator/Quick Sign-In.app" isTestSource="false" />
-    </content>
     <content url="file://$USER_HOME$/Library/Caches/appCode10/DerivedData/QuickSignIn-ebef84a1/Build/Products/Debug-iphoneos/Quick Sign-In.app">
       <sourceFolder url="file://$USER_HOME$/Library/Caches/appCode10/DerivedData/QuickSignIn-ebef84a1/Build/Products/Debug-iphoneos/Quick Sign-In.app" isTestSource="false" />
     </content>
@@ -93,6 +90,9 @@
     </content>
     <content url="file://$MODULE_DIR$/../../Janrain/JREngage/Classes/JRWebViewController.m">
       <sourceFolder url="file://$MODULE_DIR$/../../Janrain/JREngage/Classes/JRWebViewController.m" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Janrain/JREngage/Classes/debug_log.h">
+      <sourceFolder url="file://$MODULE_DIR$/../../Janrain/JREngage/Classes/debug_log.h" isTestSource="false" />
     </content>
     <content url="file://$MODULE_DIR$/../../Janrain/JREngage/JREngage-Info.plist">
       <sourceFolder url="file://$MODULE_DIR$/../../Janrain/JREngage/JREngage-Info.plist" isTestSource="false" />
