@@ -324,8 +324,6 @@ NSString *describeCATransform3D(CATransform3D *t)
                          if (self.delayedRotationWhileAnimating)
                              [self attemptRotationWithoutAnimation];
                      }];
-
-    //[self performSelector:@selector(cancelAnimation) withObject:nil afterDelay:2.5];
 }
 
 - (void)attemptRotationWithoutAnimation
