@@ -39,8 +39,11 @@
 @protocol DemoSignInDelegate <NSObject>
 @optional
 - (void)engageSignInDidSucceed;
+
 - (void)engageSignInDidFailWithError:(NSError *)error;
+
 - (void)captureSignInDidSucceed;
+
 - (void)captureSignInDidFailWithError:(NSError *)error;
 @end
 
@@ -50,9 +53,11 @@
 @property(readonly) BOOL isNew;
 @property(readonly) BOOL isNotYetCreated;
 @property(readonly) NSString *currentProvider;
-@property (weak)   id<DemoSignInDelegate> demoSignInDelegate;
+@property(weak) id <DemoSignInDelegate> demoSignInDelegate;
 
 + (SharedData *)sharedData;
+
+- (void)asyncFetchNewLiveFyreUserToken;
 
 + (void)startAuthenticationWithCustomInterface:(NSDictionary *)customInterface
                                    forDelegate:(id <DemoSignInDelegate>)delegate;

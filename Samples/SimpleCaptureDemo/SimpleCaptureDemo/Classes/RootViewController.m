@@ -136,10 +136,11 @@
 
 - (IBAction)shareButtonPressed:(id)sender
 {
-    DLog(@"");
-
-    NSString *embeddedShareUrl = @"http://nathan.janrain.com/~nathan/share_widget_webview/embedded_share.html";
-    [JRCapture startJsWidgetWithUrl:embeddedShareUrl];
+    //DLog(@"");
+    //
+    //NSString *embeddedShareUrl = @"http://nathan.janrain.com/~nathan/share_widget_webview/embedded_share.html";
+    //[JRCapture startJsWidgetWithUrl:embeddedShareUrl];
+    [[SharedData sharedData] asyncFetchNewLiveFyreUserToken];
 }
 
 - (IBAction)signInButtonPressed:(id)sender

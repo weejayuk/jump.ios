@@ -96,6 +96,8 @@ static JRCaptureData *singleton = nil;
 @synthesize accessToken;
 @synthesize creationToken;
 @synthesize uuid;
+@synthesize bpChannelUrl = _bpChannelUrl;
+
 
 - (JRCaptureData *)init
 {
@@ -149,10 +151,11 @@ static JRCaptureData *singleton = nil;
 {
     NSString *autoCreate = @"false"; // TODO, parameterize into JRCaptureData
     JRCaptureData *captureDataInstance = [JRCaptureData captureDataInstance];
-    return [NSString stringWithFormat:@"%@/oauth/mobile_signin?client_id=%@&redirect_uri=https://%@/cmeu"
-                                              "&auto_create=%@",
+    return [NSString stringWithFormat:@"%@/oauth/mobile_signin?client_id=%@&redirect_uri=%@/cmeu"
+                                              "&auto_create=%@&bp_channel=%@",
                                       captureDataInstance.captureUIBaseUrl, captureDataInstance.clientId,
-                                      captureDataInstance.captureUIBaseUrl, autoCreate];
+                                      captureDataInstance.captureUIBaseUrl, autoCreate,
+                                      captureDataInstance.bpChannelUrl];
 }
 
 + (void)setCaptureApidDomain:(NSString *)newCaptureApidDomain captureUIDomain:(NSString *)newCaptureUIDomain
@@ -325,6 +328,7 @@ static JRCaptureData *singleton = nil;
     [creationToken release];
     [uuid release];
 
+    [_bpChannelUrl release];
     [super dealloc];
 }
 
@@ -338,5 +342,10 @@ static JRCaptureData *singleton = nil;
     [JRCaptureData captureDataInstance].accessToken = nil;
     [JRCaptureData captureDataInstance].creationToken = nil;
     [JRCaptureData captureDataInstance].uuid = nil;
+}
+
++ (void)setBackplaneChannelUrl:(NSString *)bpChannelUrl
+{
+    [JRCaptureData captureDataInstance].bpChannelUrl = bpChannelUrl;
 }
 @end

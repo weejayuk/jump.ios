@@ -40,6 +40,8 @@
 #define ALog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
 
 #import "SharedData.h"
+#import "JSONKit.h"
+#import "JRConnectionManager.h"
 
 #define cJRCurrentProvider  @"simpleCaptureDemo.currentProvider"
 #define cJRCaptureUser      @"simpleCaptureDemo.captureUser"
@@ -49,30 +51,27 @@
 @end
 
 @interface SharedData ()
-@property          BOOL                engageSignInWasCanceled;
-@property (strong) JRCaptureUser      *captureUser;
-@property          BOOL                isNew;
-@property          BOOL                isNotYetCreated;
-@property (strong) NSString           *currentProvider;
-@property(nonatomic, strong) NSUserDefaults *userDefaults;
-
+@property(strong) NSUserDefaults *prefs;
+@property(strong) JRCaptureUser *captureUser;
+@property BOOL isNew;
+@property BOOL isNotYetCreated;
+@property(strong) NSString *currentProvider;
+@property(weak) id <DemoSignInDelegate> demoSigninDelegate;
+@property(nonatomic) BOOL engageSignInWasCanceled;
+@property(nonatomic) NSString *lfToken;
+@property(nonatomic, retain) NSString *captureClientId;
+@property(nonatomic, retain) NSString *captureUIDomain;
+@property(nonatomic, retain) NSString *captureApidDomain;
+@property(nonatomic, retain) NSString *engageAppId;
+@property(nonatomic, retain) NSString *bpBusUrlString;
+@property(nonatomic, retain) NSString *bpChannelUrl;
+@property(nonatomic, retain) NSString *liveFyreNetwork;
+@property(nonatomic, retain) NSString *liveFyreSiteId;
+@property(nonatomic, retain) NSString *liveFyreArticleId;
 @end
 
 @implementation SharedData
 static SharedData *singleton = nil;
-
-// Testing
-static NSString *engageAppId = @"appcfamhnpkagijaeinl";
-static NSString *captureApidDomain  = @"mobile-testing.janraincapture.com";
-static NSString *captureUIDomain    = @"mobile-testing.janraincapture.com";
-static NSString *clientId           = @"atasaz59p8cyecmbzmcwkbthsyq3wrxh";
-
-// old dev instance
-//static NSString *engageAppId = @"appcfamhnpkagijaeinl";
-//static NSString *captureApidDomain  = @"mobile.dev.janraincapture.com";
-//static NSString *captureUIDomain    = @"mobile.dev.janraincapture.com";
-//static NSString *clientId           = @"zc7tx83fqy68mper69mxbt5dfvd7c2jh"; // full access clientId
-//static NSString *clientId           = @"233ke5wadxhdcrqwgtm4wjsqm299yj6g"; // two step clientId
 
 @synthesize captureUser;
 @synthesize currentProvider;
@@ -80,22 +79,32 @@ static NSString *clientId           = @"atasaz59p8cyecmbzmcwkbthsyq3wrxh";
 @synthesize isNew;
 @synthesize isNotYetCreated;
 @synthesize engageSignInWasCanceled;
-@synthesize userDefaults;
-
+@synthesize bpChannelUrl;
+@synthesize lfToken;
+@synthesize captureClientId;
+@synthesize captureUIDomain;
+@synthesize captureApidDomain;
+@synthesize engageAppId;
+@synthesize bpBusUrlString;
+@synthesize liveFyreNetwork;
+@synthesize liveFyreSiteId;
+@synthesize liveFyreArticleId;
+@synthesize prefs;
 
 - (id)init
 {
     if ((self = [super init]))
     {
+        [self loadConfigFromPlist];
         [JRCapture setEngageAppId:engageAppId captureApidDomain:captureApidDomain
-                  captureUIDomain:captureUIDomain clientId:clientId
-                andEntityTypeName:nil];
+                  captureUIDomain:captureUIDomain clientId:captureClientId andEntityTypeName:nil];
+        [self asyncFetchNewBackplaneChannel];
 
-        self.userDefaults = [NSUserDefaults standardUserDefaults];
+        self.prefs = [NSUserDefaults standardUserDefaults];
 
-        currentProvider  = [userDefaults objectForKey:cJRCurrentProvider];
+        currentProvider  = [prefs objectForKey:cJRCurrentProvider];
 
-        NSData *archivedCaptureUser = [userDefaults objectForKey:cJRCaptureUser];
+        NSData *archivedCaptureUser = [prefs objectForKey:cJRCaptureUser];
         if (archivedCaptureUser)
         {
             captureUser = [NSKeyedUnarchiver unarchiveObjectWithData:archivedCaptureUser];
@@ -103,6 +112,96 @@ static NSString *clientId           = @"atasaz59p8cyecmbzmcwkbthsyq3wrxh";
     }
 
     return self;
+}
+
+- (void)loadConfigFromPlist
+{
+    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"janrain-config" ofType:@"plist"];
+    NSDictionary *cfgPlist = [NSDictionary dictionaryWithContentsOfFile:plistPath];
+    NSString *configKeyName = [cfgPlist objectForKey:@"default-config"];
+    NSDictionary *cfg = [cfgPlist objectForKey:configKeyName];
+
+    captureClientId = [cfg objectForKey:@"captureClientId"];
+    captureUIDomain = [cfg objectForKey:@"captureUIDomain"];
+    captureApidDomain = [cfg objectForKey:@"captureApidDomain"];
+    engageAppId = [cfg objectForKey:@"engageAppId"];
+    bpBusUrlString = [cfg objectForKey:@"bpBusUrlString"];
+    bpChannelUrl = [cfg objectForKey:@"bpChannelUrl"];
+    liveFyreNetwork = [cfg objectForKey:@"liveFyreNetwork"];
+    liveFyreSiteId = [cfg objectForKey:@"liveFyreSiteId"];
+    liveFyreArticleId = [cfg objectForKey:@"liveFyreArticleId"];
+}
+
+- (void)asyncFetchNewBackplaneChannel
+{
+    NSURL *bpNewChanUrl = [NSURL URLWithString:[bpBusUrlString stringByAppendingString:@"/channel/new"]];
+    NSURLRequest *req = [NSURLRequest requestWithURL:bpNewChanUrl
+                                         cachePolicy:NSURLRequestReloadRevalidatingCacheData
+                                     timeoutInterval:5];
+    [NSURLConnection sendAsynchronousRequest:req
+                                       queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *r, NSData *d, NSError *e)
+                           {
+                               NSInteger code = [((NSHTTPURLResponse *) r) statusCode];
+                               if (e || code != 200)
+                               {
+                                   ALog(@"Err fetching new BP channel: %@, code: %i", e, code);
+                               }
+                               else
+                               {
+                                   NSString *body = [[NSString alloc] initWithData:d encoding:NSUTF8StringEncoding];
+                                   NSCharacterSet *quoteSet = [NSCharacterSet characterSetWithCharactersInString:@"\""];
+                                   NSString *bpChannel = [body stringByTrimmingCharactersInSet:quoteSet];
+                                   NSString *bpChannelUrl = [bpBusUrlString stringByAppendingFormat:@"/channel/%@",
+                                                                            bpChannel];
+                                   DLog(@"New BP channel: %@", bpChannelUrl);
+                                   self.bpChannelUrl = bpChannelUrl;
+                                   [JRCapture setBackplaneChannelUrl:bpChannelUrl];
+                               }
+                           }];
+}
+
+- (void)asyncFetchNewLiveFyreUserToken
+{
+    NSString *lfAuthUrl = [NSString stringWithFormat:@"http://admin.%@/api/v3.0/auth?bp_channel=%@&siteId=%@"
+                                                             "&articleId=%@",
+                                                     liveFyreNetwork,
+                                                     [self.bpChannelUrl stringByAddingUrlPercentEscapes],
+                                                     liveFyreSiteId,
+                                                     [liveFyreArticleId stringByAddingUrlPercentEscapes]];
+    DLog(@"Fetching LF token from %@", lfAuthUrl);
+    NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:lfAuthUrl]
+                                         cachePolicy:NSURLRequestReloadRevalidatingCacheData
+                                     timeoutInterval:5];
+    [NSURLConnection sendAsynchronousRequest:req
+                                       queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *r, NSData *d, NSError *e)
+                           {
+                               NSString *body = d ? [[NSString alloc] initWithData:d encoding:NSUTF8StringEncoding]
+                                       : nil;
+                               NSInteger code = [((NSHTTPURLResponse *) r) statusCode];
+                               if (e || code != 200)
+                               {
+                                   ALog(@"Err fetching LF token: %@, code: %i, body: %@", e, code, body);
+                               }
+                               else
+                               {
+                                   NSDictionary *lfResponse = [body objectFromJSONString];
+                                   if (!lfResponse)
+                                   {
+                                       ALog(@"Error parsing LF response: %@", body);
+                                       return;
+                                   }
+                                   NSString *lfToken = [[lfResponse objectForKey:@"data"] objectForKey:@"token"];
+                                   if (!lfToken) {
+                                       ALog(@"Error retrieving token from LF response: %@", body);
+                                       return;
+                                   }
+                                   DLog(@"New LF token: %@", lfToken);
+                                   self.lfToken = lfToken;
+                               }
+                           }];
+
 }
 
 + (SharedData *)sharedData
@@ -132,8 +231,8 @@ static NSString *clientId           = @"atasaz59p8cyecmbzmcwkbthsyq3wrxh";
     self.isNew         = NO;
     self.isNotYetCreated = NO;
 
-    [userDefaults setObject:nil forKey:cJRCurrentProvider];
-    [userDefaults setObject:nil forKey:cJRCaptureUser];
+    [prefs setObject:nil forKey:cJRCurrentProvider];
+    [prefs setObject:nil forKey:cJRCaptureUser];
 
     self.engageSignInWasCanceled = NO;
 
@@ -158,8 +257,7 @@ static NSString *clientId           = @"atasaz59p8cyecmbzmcwkbthsyq3wrxh";
 
 - (void)saveCaptureUser
 {
-    [userDefaults setObject:[NSKeyedArchiver archivedDataWithRootObject:captureUser]
-                     forKey:cJRCaptureUser];
+    [prefs setObject:[NSKeyedArchiver archivedDataWithRootObject:captureUser] forKey:cJRCaptureUser];
 }
 
 + (void)saveCaptureUser
@@ -212,7 +310,7 @@ static NSString *clientId           = @"atasaz59p8cyecmbzmcwkbthsyq3wrxh";
                           forProvider:(NSString *)provider
 {
     self.currentProvider = provider;
-    [userDefaults setObject:currentProvider forKey:cJRCurrentProvider];
+    [prefs setObject:currentProvider forKey:cJRCurrentProvider];
 
     if ([demoSignInDelegate respondsToSelector:@selector(engageSignInDidSucceed)])
         [demoSignInDelegate engageSignInDidSucceed];
@@ -238,7 +336,7 @@ static NSString *clientId           = @"atasaz59p8cyecmbzmcwkbthsyq3wrxh";
 
     self.captureUser = newCaptureUser;
 
-    [userDefaults setObject:[NSKeyedArchiver archivedDataWithRootObject:captureUser]
+    [prefs setObject:[NSKeyedArchiver archivedDataWithRootObject:captureUser]
                      forKey:cJRCaptureUser];
 
     if ([demoSignInDelegate respondsToSelector:@selector(captureSignInDidSucceed)])
