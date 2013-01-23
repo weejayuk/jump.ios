@@ -1,0 +1,15 @@
+v2.4.0
+ - First release with release notes
+ - most recent previous release was 2.3.1, but a bunch of interstitial commits had been pushed to master
+ - Fix to reduce possibility of UIWebViewDelegate messages to JRWebViewController zombies
+ - Internal code cleanup / debt reduction / maintenance / ring around the rosie
+ - Adds support for configuration of a Backplane channel for Capture sign-ins.
+ - Updates PhoneGap plugin for 2.3.0, now requires JR_ENABLE_CORDOVA_PLUGIN preprocessor symbol to be defined
+ - Fixes for iOS 6 on iPad animations
+  - Now requires QuartzCore framework
+ - Culls some log fluff
+ - Uses window.rootViewController to present dialogs from when available (e.g. when your host app sets it)
+  - This improves the integrity of the first responder chain and allows dialogs to receive rotation events
+    in some cases.
+ - Updates to the UI of the samples for 4" screens and fixes some older display bug in the sampless
+
