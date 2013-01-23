@@ -46,6 +46,8 @@
 
 #define ALog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
 
+static NSString *const iPhoneUserAgent = @"Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3_3 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8J2 Safari/6533.18.5";
+
 @interface JREngageError (JREngageError_setError)
 + (NSError*)setError:(NSString*)message withCode:(NSInteger)code;
 @end
@@ -59,6 +61,8 @@
 @synthesize myWebView;
 @synthesize originalUserAgent;
 
+#pragma mark UIView overrides
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
    andCustomInterface:(NSDictionary*)theCustomInterface
 {
@@ -69,21 +73,6 @@
     }
 
     return self;
-}
-
-- (void)setUserAgentDefault:(NSString *)userAgent
-{
-    DLog(@"UA: %@", userAgent);
-    if (userAgent)
-    {
-        NSDictionary *uAdefault = [[NSDictionary alloc] initWithObjectsAndKeys:userAgent, @"UserAgent", nil];
-        [[NSUserDefaults standardUserDefaults] registerDefaults:uAdefault];
-        [uAdefault release];
-    }
-    else
-    {
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"UserAgent"];
-    }
 }
 
 - (void)viewDidLoad
@@ -139,16 +128,15 @@
 
     if ([sessionData.currentProvider.name isEqualToString:@"yahoo"])
     {
-        [self setOriginalUserAgent:[[NSUserDefaults standardUserDefaults] stringForKey:@"UserAgent"]];
-        [self setUserAgentDefault:@"Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3_3 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8J2 Safari/6533.18.5"];
+        self.originalUserAgent = [[NSUserDefaults standardUserDefaults] stringForKey:@"UserAgent"];
+        [self setUserAgentDefault:iPhoneUserAgent];
     }
 
     [super viewWillAppear:animated];
 
     self.contentSizeForViewInPopover = CGSizeMake(320, 416);
 
-    self.title = [NSString stringWithFormat:@"%@",
-                           (sessionData.currentProvider) ? sessionData.currentProvider.friendlyName : @"Loading"];
+    self.title = (sessionData.currentProvider) ? sessionData.currentProvider.friendlyName : @"Loading";
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -156,9 +144,9 @@
     DLog(@"");
     [super viewDidAppear:animated];
 
- /* We need to figure out if the user canceled authentication by hitting the back button or the cancel button,
-    or if it stopped because it failed or completed successfully on its own.  Assume that the user did hit the
-    back button until told otherwise. */
+    /* We need to figure out if the user canceled authentication by hitting the back button or the cancel button,
+       or if it stopped because it failed or completed successfully on its own.  Assume that the user did hit the
+       back button until told otherwise. */
     userHitTheBackButton = YES;
 
     if (!sessionData.currentProvider)
@@ -171,14 +159,126 @@
         return;
     }
 
-    //[self webViewWithUrl:[NSURL URLWithString:@"http://whatsmyuseragent.com"]];
     [self webViewWithUrl:[sessionData startUrlForCurrentProvider]];
     [myWebView becomeFirstResponder];
-    //DLog(@"scalePagesToFit: %i", myWebView.scalesPageToFit);
-    // Defaults to YES on iPhone, iPad
-    //myWebView.scalesPageToFit = YES;
 
     [infoBar fadeIn];
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    BOOL b;
+    if (sessionData.canRotate)
+        b = interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
+    else
+        b = interfaceOrientation == UIInterfaceOrientationPortrait;
+    DLog(@"%d", b);
+    return b;
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    DLog(@"");
+
+    [myWebView stopLoading];
+
+    [JRConnectionManager stopConnectionsForDelegate:self];
+    [self stopProgress];
+
+    [infoBar fadeOut];
+
+    /* The webview disappears when authentication completes successfully or fails or if the user cancels by hitting
+       the "back" button or the "cancel" button.  We don't know when a user hits the back button, but we do
+       know when all the other events occur, so we keep track of those events by changing the "userHitTheBackButton"
+       variable to "NO".
+
+       If the view is disappearing because the user hit the cancel button, we already to send sessionData the
+       triggerAuthenticationDidStartOver event.  What we need to do it send the triggerAuthenticationDidStartOver
+       message if we're popping to the publishActivity controller (i.e., if we're publishing an activity), so that
+       the publishActivity controller gets the message from sessionData, and can hide the grayed-out activity indicator
+       view.
+
+       If the userHitTheBackButton variable is set to "YES" and we're publishing an activity ([sessionData social] is
+       "YES"),
+       send the triggerAuthenticationDidStartOver message.  Otherwise, hitting the back button should just pop back
+       to the last controller, the providers or userLanding controller (i.e., behave normally) */
+    if (userHitTheBackButton && [sessionData socialSharing])
+        [sessionData triggerAuthenticationDidStartOver:nil];
+
+    [super viewWillDisappear:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    DLog(@"");
+
+    if ([sessionData.currentProvider.name isEqualToString:@"yahoo"])
+        [self setUserAgentDefault:self.originalUserAgent];
+
+    [myWebView loadHTMLString:@"" baseURL:[NSURL URLWithString:@"/"]];
+
+    [super viewDidDisappear:animated];
+}
+
+- (void)viewDidUnload
+{
+    DLog(@"");
+    [super viewDidUnload];
+}
+
+#pragma mark custom implementation
+
+- (void)setUserAgentDefault:(NSString *)userAgent
+{
+    DLog(@"UA: %@", userAgent);
+    if (userAgent)
+    {
+        NSDictionary *uAdefault = [[NSDictionary alloc] initWithObjectsAndKeys:userAgent, @"UserAgent", nil];
+        [[NSUserDefaults standardUserDefaults] registerDefaults:uAdefault];
+        [uAdefault release];
+    }
+    else
+    {
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"UserAgent"];
+    }
+}
+
+- (void)fixPadWindowSize
+{
+    DLog(@"");
+    //return;
+    if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad) return;
+
+    if (!([sessionData.currentProvider.name isEqualToString:@"google"] ||
+          [sessionData.currentProvider.name isEqualToString:@"yahoo"])) return;
+
+    /* This fixes the UIWebView's display of IDP sign-in pages to make them fit the iPhone sized dialog on the iPad.
+     * It's broken up into separate JS injections in case one statement fails (e.g. there is no document element),
+     * so that the others execute. */
+    [myWebView stringByEvaluatingJavaScriptFromString:@""
+            "window.innerHeight = 480; window.innerWidth = 320;"
+            //"window.screen.height = 480; window.screen.width = 320;"
+            "document.documentElement.clientWidth = 320; document.documentElement.clientHeight = 480;"
+            "document.body.style.minWidth = \"320px\";"
+            "document.body.style.width = \"auto\";"
+            "document.body.style.minHeight = \"0px\";"
+            "document.body.style.height = \"auto\";"
+            "document.body.children[0].style.minHeight = \"0px\";"];
+
+    [myWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@""
+            "(function(){"
+              "var m = document.querySelector('meta[name=viewport]');"
+              "if (m === null) { m = document.createElement('meta'); document.head.appendChild(m); }"
+              "m.name = 'viewport';"
+              "m.content = 'width=%i, height=%i';"
+            "})()",
+            (int) myWebView.frame.size.width,
+            (int) myWebView.frame.size.height]];
 }
 
 - (void)cancelButtonPressed:(id)sender
@@ -207,6 +307,8 @@
     keepProgress = NO;
     [infoBar stopProgress];
 }
+
+#pragma mark JRConnectionManagerDelegate implementation
 
 - (void)connectionDidFinishLoadingWithUnEncodedPayload:(NSData*)payload
                                                request:(NSURLRequest*)request
@@ -369,6 +471,8 @@
     return YES;
 }
 
+#pragma mark UIWebViewDelegate implementation
+
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request
                                                  navigationType:(UIWebViewNavigationType)navigationType
 {
@@ -390,39 +494,6 @@
         return WEBVIEW_SHOULDNT_LOAD;
 
     return YES;
-}
-
-- (void)fixPadWindowSize
-{
-    DLog(@"");
-    //return;
-    if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad) return;
-
-    if (!([sessionData.currentProvider.name isEqualToString:@"google"] ||
-          [sessionData.currentProvider.name isEqualToString:@"yahoo"])) return;
-
-    /* This fixes the UIWebView's display of IDP sign-in pages to make them fit the iPhone sized dialog on the iPad.
-     * It's broken up into separate JS injections in case one statement fails (e.g. there is no document element),
-     * so that the others execute. */
-    [myWebView stringByEvaluatingJavaScriptFromString:@""
-            "window.innerHeight = 480; window.innerWidth = 320;"
-            //"window.screen.height = 480; window.screen.width = 320;"
-            "document.documentElement.clientWidth = 320; document.documentElement.clientHeight = 480;"
-            "document.body.style.minWidth = \"320px\";"
-            "document.body.style.width = \"auto\";"
-            "document.body.style.minHeight = \"0px\";"
-            "document.body.style.height = \"auto\";"
-            "document.body.children[0].style.minHeight = \"0px\";"];
-
-    [myWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@""
-            "(function(){"
-              "var m = document.querySelector('meta[name=viewport]');"
-              "if (m === null) { m = document.createElement('meta'); document.head.appendChild(m); }"
-              "m.name = 'viewport';"
-              "m.content = 'width=%i, height=%i';"
-            "})()",
-            (int) myWebView.frame.size.width,
-            (int) myWebView.frame.size.height]];
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)webView
@@ -472,81 +543,14 @@
     [myWebView loadRequest:request];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    BOOL b;
-    if (sessionData.canRotate)
-        b = interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
-    else
-        b = interfaceOrientation == UIInterfaceOrientationPortrait;
-    DLog(@"%d", b);
-    return b;
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    DLog(@"");
-
-    [myWebView stopLoading];
-
-    // Must set delegate to nil to avoid this controller being called after
-    // it has been freed by the web view.
-    myWebView.delegate = nil;
-
-    [JRConnectionManager stopConnectionsForDelegate:self];
-    [self stopProgress];
-
-    [infoBar fadeOut];
-
- /* The webview disappears when authentication completes successfully or fails or if the user cancels by hitting
-    the "back" button or the "cancel" button.  We don't know when a user hits the back button, but we do
-    know when all the other events occur, so we keep track of those events by changing the "userHitTheBackButton"
-    variable to "NO".
-
-    If the view is disappearing because the user hit the cancel button, we already to send sessionData the
-    triggerAuthenticationDidStartOver event.  What we need to do it send the triggerAuthenticationDidStartOver
-    message if we're popping to the publishActivity controller (i.e., if we're publishing an activity), so that
-    the publishActivity controller gets the message from sessionData, and can hide the grayed-out activity indicator
-    view.
-
-    If the userHitTheBackButton variable is set to "YES" and we're publishing an activity ([sessionData social] is
-    "YES"),
-    send the triggerAuthenticationDidStartOver message.  Otherwise, hitting the back button should just pop back
-    to the last controller, the providers or userLanding controller (i.e., behave normally) */
-    if (userHitTheBackButton && [sessionData socialSharing])
-        [sessionData triggerAuthenticationDidStartOver:nil];
-
-    [super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    DLog(@"");
-
-    if ([sessionData.currentProvider.name isEqualToString:@"yahoo"])
-        [self setUserAgentDefault:self.originalUserAgent];
-
-    [myWebView loadHTMLString:@"" baseURL:[NSURL URLWithString:@"/"]];
-
-    [super viewDidDisappear:animated];
-}
-
-- (void)viewDidUnload
-{
-    DLog(@"");
-    [super viewDidUnload];
-}
-
 - (void)userInterfaceWillClose { }
 - (void)userInterfaceDidClose  { }
 
 - (void)dealloc {
     DLog(@"");
+    // Must set delegate to nil to avoid this controller being called after
+    // it has been freed by the web view.
+    myWebView.delegate = nil;
 
     [customInterface release];
     [myBackgroundView release];
