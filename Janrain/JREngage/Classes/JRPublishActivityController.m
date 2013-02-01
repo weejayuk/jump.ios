@@ -47,6 +47,7 @@
 #import "JRUserInterfaceMaestro.h"
 #import "JRUserLandingController.h"
 #import "JRWebViewController.h"
+#import "JRInfoBar.h"
 
 @interface JRProvider (JRProvider_SocialSharingProperties)
 - (BOOL)willThunkPublishToStatusForActivity:(JRActivityObject*)activity;
@@ -1618,25 +1619,7 @@ Please try again later."
 
 - (IBAction)infoButtonPressed:(id)sender
 {
-    NSDictionary *infoPlist = [NSDictionary dictionaryWithContentsOfFile:
-                               [[[NSBundle mainBundle] resourcePath]
-                                stringByAppendingPathComponent:@"/JREngage-Info.plist"]];
-
-    NSString *version = [infoPlist objectForKey:@"CFBundleShortVersionString"];
-
- /* So long as I always number the versions v#.#.#, this will always trim the leading 'v', leaving just the numbers.
-    Also, if my script accidentally adds a trailing '\n', this gets trimmed too. */
-    version = [[version stringByTrimmingCharactersInSet:[NSCharacterSet lowercaseLetterCharacterSet]]
-               stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-
-    UIActionSheet *action = [[[UIActionSheet alloc] initWithTitle:[NSString stringWithFormat:
-                                                                   @"Janrain Engage for iPhone Library\nVersion %@\nwww.janrain.com", version]
-                                                         delegate:nil
-                                                cancelButtonTitle:@"OK"
-                                           destructiveButtonTitle:nil
-                                                otherButtonTitles:nil] autorelease];
-    action.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
-    [action showFromTabBar:myTabBar];
+    [[JRInfoBar getInfoSheet:nil] showFromTabBar:myTabBar];
 }
 
 - (void)connectionDidFinishLoadingWithPayload:(NSString*)payload request:(NSURLRequest*)request

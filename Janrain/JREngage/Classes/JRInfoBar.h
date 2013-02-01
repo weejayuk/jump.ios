@@ -61,5 +61,8 @@ typedef enum
 - (void)fadeIn;
 - (void)fadeOut;
 
-- (void)getInfo;
+- (void)showInfo:(id <UIActionSheetDelegate>)delegate;
+
++ (UIActionSheet *)getInfoSheet:(id <UIActionSheetDelegate>)delegate;
+
 @end

@@ -225,6 +225,14 @@
 		D866318616694ED200C59B03 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D866318516694ED200C59B03 /* RootViewController.m */; };
 		D88D9D57169616910067E5AA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D88D9D56169616910067E5AA /* QuartzCore.framework */; };
 		D89BEA951666E87500396BCD /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = D89BEA941666E87500396BCD /* MainWindow.xib */; };
+		D8AFE91716BB275D002DCFD9 /* icon_soundcloud_30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = D8AFE91616BB275D002DCFD9 /* icon_soundcloud_30x30.png */; };
+		D8AFE91A16BB276A002DCFD9 /* icon_soundcloud_30x30@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D8AFE91916BB276A002DCFD9 /* icon_soundcloud_30x30@2x.png */; };
+		D8AFE91C16BB27DE002DCFD9 /* icon_tumblr_30x30@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D8AFE91B16BB27DE002DCFD9 /* icon_tumblr_30x30@2x.png */; };
+		D8AFE91E16BB27E6002DCFD9 /* icon_tumblr_30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = D8AFE91D16BB27E6002DCFD9 /* icon_tumblr_30x30.png */; };
+		D8AFE92116BB2EE7002DCFD9 /* logo_soundcloud_280x65@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D8AFE91F16BB2EE7002DCFD9 /* logo_soundcloud_280x65@2x.png */; };
+		D8AFE92216BB2EE7002DCFD9 /* logo_tumblr_280x65@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D8AFE92016BB2EE7002DCFD9 /* logo_tumblr_280x65@2x.png */; };
+		D8AFE92516BB2EF2002DCFD9 /* logo_soundcloud_280x65.png in Resources */ = {isa = PBXBuildFile; fileRef = D8AFE92316BB2EF2002DCFD9 /* logo_soundcloud_280x65.png */; };
+		D8AFE92616BB2EF2002DCFD9 /* logo_tumblr_280x65.png in Resources */ = {isa = PBXBuildFile; fileRef = D8AFE92416BB2EF2002DCFD9 /* logo_tumblr_280x65.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -472,8 +480,16 @@
 		C142443523127DCA3EDD0CFE /* debug_log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = debug_log.h; sourceTree = "<group>"; };
 		D866318416694ED200C59B03 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		D866318516694ED200C59B03 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
-		D88D9D56169616910067E5AA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		D88D9D56169616910067E5AA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = ../../../../../../Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		D89BEA941666E87500396BCD /* MainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
+		D8AFE91616BB275D002DCFD9 /* icon_soundcloud_30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_soundcloud_30x30.png; sourceTree = "<group>"; };
+		D8AFE91916BB276A002DCFD9 /* icon_soundcloud_30x30@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_soundcloud_30x30@2x.png"; sourceTree = "<group>"; };
+		D8AFE91B16BB27DE002DCFD9 /* icon_tumblr_30x30@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_tumblr_30x30@2x.png"; sourceTree = "<group>"; };
+		D8AFE91D16BB27E6002DCFD9 /* icon_tumblr_30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_tumblr_30x30.png; sourceTree = "<group>"; };
+		D8AFE91F16BB2EE7002DCFD9 /* logo_soundcloud_280x65@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo_soundcloud_280x65@2x.png"; sourceTree = "<group>"; };
+		D8AFE92016BB2EE7002DCFD9 /* logo_tumblr_280x65@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo_tumblr_280x65@2x.png"; sourceTree = "<group>"; };
+		D8AFE92316BB2EF2002DCFD9 /* logo_soundcloud_280x65.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_soundcloud_280x65.png; sourceTree = "<group>"; };
+		D8AFE92416BB2EF2002DCFD9 /* logo_tumblr_280x65.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_tumblr_280x65.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -528,7 +544,6 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				D88D9D56169616910067E5AA /* QuartzCore.framework */,
 				9FB1276615C7416C0072BEE6 /* Janrain */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
@@ -556,6 +571,7 @@
 				288765A40DF7441C002DB57D /* CoreGraphics.framework */,
 				9FBE274312A713F600E1F93E /* Security.framework */,
 				9F1816DC13ECC39700D9CA54 /* CoreText.framework */,
+				D88D9D56169616910067E5AA /* QuartzCore.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -746,6 +762,8 @@
 		9FB127C115C7416C0072BEE6 /* icons */ = {
 			isa = PBXGroup;
 			children = (
+				D8AFE91D16BB27E6002DCFD9 /* icon_tumblr_30x30.png */,
+				D8AFE91616BB275D002DCFD9 /* icon_soundcloud_30x30.png */,
 				9FB127C215C7416C0072BEE6 /* icon_aol_30x30.png */,
 				9FB127C315C7416C0072BEE6 /* icon_blogger_30x30.png */,
 				9FB127C415C7416C0072BEE6 /* icon_facebook_30x30.png */,
@@ -790,6 +808,8 @@
 		9FB127E115C7416C0072BEE6 /* logos */ = {
 			isa = PBXGroup;
 			children = (
+				D8AFE92316BB2EF2002DCFD9 /* logo_soundcloud_280x65.png */,
+				D8AFE92416BB2EF2002DCFD9 /* logo_tumblr_280x65.png */,
 				9FB127E215C7416C0072BEE6 /* logo_aol_280x65.png */,
 				9FB127E315C7416C0072BEE6 /* logo_blogger_280x65.png */,
 				9FB127E415C7416C0072BEE6 /* logo_facebook_280x65.png */,
@@ -868,6 +888,8 @@
 		9FB1281215C7416C0072BEE6 /* icons */ = {
 			isa = PBXGroup;
 			children = (
+				D8AFE91B16BB27DE002DCFD9 /* icon_tumblr_30x30@2x.png */,
+				D8AFE91916BB276A002DCFD9 /* icon_soundcloud_30x30@2x.png */,
 				9FB1281315C7416C0072BEE6 /* icon_aol_30x30@2x.png */,
 				9FB1281415C7416C0072BEE6 /* icon_blogger_30x30@2x.png */,
 				9FB1281515C7416C0072BEE6 /* icon_facebook_30x30@2x.png */,
@@ -912,6 +934,8 @@
 		9FB1283215C7416C0072BEE6 /* logos */ = {
 			isa = PBXGroup;
 			children = (
+				D8AFE91F16BB2EE7002DCFD9 /* logo_soundcloud_280x65@2x.png */,
+				D8AFE92016BB2EE7002DCFD9 /* logo_tumblr_280x65@2x.png */,
 				9FB1283315C7416C0072BEE6 /* logo_aol_280x65@2x.png */,
 				9FB1283415C7416C0072BEE6 /* logo_blogger_280x65@2x.png */,
 				9FB1283515C7416C0072BEE6 /* logo_facebook_280x65@2x.png */,
@@ -1217,6 +1241,14 @@
 				9FB1291315C7416C0072BEE6 /* JRUserLandingController.xib in Resources */,
 				9FB1291415C7416C0072BEE6 /* JRWebViewController.xib in Resources */,
 				D89BEA951666E87500396BCD /* MainWindow.xib in Resources */,
+				D8AFE91716BB275D002DCFD9 /* icon_soundcloud_30x30.png in Resources */,
+				D8AFE91A16BB276A002DCFD9 /* icon_soundcloud_30x30@2x.png in Resources */,
+				D8AFE91C16BB27DE002DCFD9 /* icon_tumblr_30x30@2x.png in Resources */,
+				D8AFE91E16BB27E6002DCFD9 /* icon_tumblr_30x30.png in Resources */,
+				D8AFE92116BB2EE7002DCFD9 /* logo_soundcloud_280x65@2x.png in Resources */,
+				D8AFE92216BB2EE7002DCFD9 /* logo_tumblr_280x65@2x.png in Resources */,
+				D8AFE92516BB2EF2002DCFD9 /* logo_soundcloud_280x65.png in Resources */,
+				D8AFE92616BB2EF2002DCFD9 /* logo_tumblr_280x65.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

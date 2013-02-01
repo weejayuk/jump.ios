@@ -71,7 +71,7 @@
         infoButton.autoresizingMask = UIViewAutoresizingNone | UIViewAutoresizingFlexibleLeftMargin;
 
         [infoButton addTarget:self
-                       action:@selector(getInfo)
+                       action:@selector(showInfo:)
              forControlEvents:UIControlEventTouchUpInside];
 
         if (iPad)
@@ -135,29 +135,33 @@
     }
 }
 
-- (void)getInfo
+- (void)showInfo:(id <UIActionSheetDelegate>)delegate
+{
+    [[JRInfoBar getInfoSheet:self] showInView:self.superview];
+}
+
++ (UIActionSheet *)getInfoSheet:(id <UIActionSheetDelegate>)delegate
 {
     DLog(@"");
 
     NSDictionary *infoPlist = [NSDictionary dictionaryWithContentsOfFile:
-                               [[[NSBundle mainBundle] resourcePath]
-                                stringByAppendingPathComponent:@"/JREngage-Info.plist"]];
+                                                    [[[NSBundle mainBundle] resourcePath]
+                                                            stringByAppendingPathComponent:@"/JREngage-Info.plist"]];
 
+    // todo don't use this key, since this isn't actually a CFBundleShortVersionString value, it's just a string we
+    // stick a Janrain release version number in.
     NSString *version = [infoPlist objectForKey:@"CFBundleShortVersionString"];
 
-    /* So long as I always number the versions v#.#.#, this will always trim the leading 'v', leaving just the numbers.
-       Also, if my script accidentally adds a trailing '\n', this gets trimmed too. */
-    version = [[version stringByTrimmingCharactersInSet:[NSCharacterSet lowercaseLetterCharacterSet]]
-                        stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    version = [version stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 
-    UIActionSheet *action = [[[UIActionSheet alloc] initWithTitle:[NSString stringWithFormat:
-                                                                   @"Janrain Engage for iPhone Library\nVersion %@\nwww.janrain.com", version]
-                                                         delegate:self
-                                                cancelButtonTitle:@"OK"
-                                           destructiveButtonTitle:nil
-                                                otherButtonTitles:nil] autorelease];
-    action.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
-    [action showInView:self.superview];
+    NSString *verString = [NSString stringWithFormat:
+                                            @"Janrain Engage for iPhone Library\nVersion %@\nwww.janrain.com", version];
+    UIActionSheet *actionSheet = [[[UIActionSheet alloc] initWithTitle:verString
+                                                              delegate:delegate
+                                                     cancelButtonTitle:@"OK"
+                                                destructiveButtonTitle:nil otherButtonTitles:nil] autorelease];
+    actionSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
+    return actionSheet;
 }
 
 - (void)startProgress

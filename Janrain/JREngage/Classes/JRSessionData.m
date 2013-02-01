@@ -885,40 +885,43 @@ static JRSessionData* singleton = nil;
     return nil;
 }
 
-- (NSError*)finishGetConfiguration:(NSString*)dataStr withEtag:(NSString*)etag
+- (NSError *)finishGetConfiguration:(NSString *)dataStr withEtag:(NSString *)etag
 {
     ALog (@"Configuration information downloaded: %@", dataStr);
 
     NSDictionary *infoPlist = [NSDictionary dictionaryWithContentsOfFile:
-                               [[[NSBundle mainBundle] resourcePath]
-                                stringByAppendingPathComponent:@"/JREngage-Info.plist"]];
+                                                    [[[NSBundle mainBundle] resourcePath]
+                                                            stringByAppendingPathComponent:@"/JREngage-Info.plist"]];
 
     NSString *currentCommit = [infoPlist objectForKey:@"JREngage.GitCommit"];
     NSString *savedCommit = [[NSUserDefaults standardUserDefaults] stringForKey:@"jrengage.sessionData.engageCommit"];
 
     NSString *oldEtag = [[NSUserDefaults standardUserDefaults] stringForKey:@"jrengage.sessionData.configurationEtag"];
 
- /* If the downloaded configuration for this RP has changed, the http://mobile_config... URL's etag will have changed, and we need
-    to update our current configuration information.  Or, any time the JREngage library's code has been changed and committed,
-    the JREngage.GitCommit property in the JREngage-Info.plist will have changed to reflect the current commit.  Since code changes
-    may affect the objects that get synchronized, we need to update our current configuration information when this occurs as well.
-    We test for both of these cases by saving the last etag and commit string, and comparing the saved value to the current value.
-    Almost always, these will be the same, and we are safe using our cached configuration data.  Lastly, if we are testing changes
-    in the synchronization code, we can temporarily set the currentCommit (JREngage.GitCommit) to "1", forcing library to reconfigure
-    itself every time. */
-    if (![oldEtag isEqualToString:etag] || ![currentCommit isEqualToString:savedCommit] || [currentCommit isEqualToString:@"1"])
+    /* If the downloaded configuration for this RP has changed, the http://mobile_config... URL's etag will have
+    changed, and we need to update our current configuration information.  Or, any time the JREngage library's code has
+    been changed and committed, the JREngage.GitCommit property in the JREngage-Info.plist will have changed to reflect
+    the current commit.  Since code changes may affect the objects that get synchronized, we need to update our current
+    configuration information when this occurs as well. We test for both of these cases by saving the last etag and
+    commit string, and comparing the saved value to the current value. Almost always, these will be the same, and we
+    are safe using our cached configuration data.  Lastly, if we are testing changes in the synchronization code, we
+    can temporarily set the currentCommit (JREngage.GitCommit) to "1", forcing library to reconfigure itself every
+    time. */
+    if (![oldEtag isEqualToString:etag]
+            || ![currentCommit isEqualToString:savedCommit] || [currentCommit isEqualToString:@"1"])
     {
         self.updatedEtag = etag;
         self.gitCommit = currentCommit;
 
-     /* We can only update all of our data if the UI isn't currently using that information.  Otherwise, the library may
-        crash/behave inconsistently.  If a dialog isn't showing, go ahead and update new configuration information.
+        /* We can only update all of our data if the UI isn't currently using that information.  Otherwise, the library
+        may crash/behave inconsistently.  If a dialog isn't showing, go ahead and update new configuration information.
 
-        Or, in rare cases, there might not be any data at all (the lists of basic and social providers are nil), perhaps
-        because this is the first time the library was used and the configuration information is still downloading.
-        In these cases, the dialogs will display their view as greyed-out, with a spinning activity indicator and a
-        loading message, as they wait for the lists of providers to download, so we can go ahead and update the
-        configuration information here, too. The dialogs won't try and do anything until we're done updating the lists. */
+        Or, in rare cases, there might not be any data at all (the lists of basic and social providers are nil),
+        perhaps because this is the first time the library was used and the configuration information is still
+        downloading. In these cases, the dialogs will display their view as greyed-out, with a spinning activity
+        indicator and a loading message, as they wait for the lists of providers to download, so we can go ahead and
+        update the configuration information here, too. The dialogs won't try and do anything until we're done updating
+        the lists. */
         if (!dialogIsShowing)
             return [self finishGetConfiguration:dataStr];
         if ([basicProviders count] == 0 && !socialSharing)
@@ -926,10 +929,10 @@ static JRSessionData* singleton = nil;
         if ([socialProviders count] == 0 && socialSharing)
             return [self finishGetConfiguration:dataStr];
 
-     /* Otherwise, we have to save all this information for later.  The UserInterfaceMaestro sends a
-        signal to sessionData when the dialog closes (by setting the boolean dialogIsShowing to "NO".
-        In the setter function, sessionData checks to see if there's anything stored in the
-        savedConfigurationBlock, and updates it then. */
+        /* Otherwise, we have to save all this information for later.  The UserInterfaceMaestro sends a
+           signal to sessionData when the dialog closes (by setting the boolean dialogIsShowing to "NO".
+           In the setter function, sessionData checks to see if there's anything stored in the
+           savedConfigurationBlock, and updates it then. */
         self.savedConfigurationBlock = dataStr;
     }
     else

@@ -37,6 +37,7 @@
 		C142405DF6F355435AAAB980 /* logo_paypal_280x65.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424F4458306E81CA5927A8 /* logo_paypal_280x65.png */; };
 		C14240C8EB017D6432DD602F /* icon_yahoo_30x30@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C142461F4D3772A092237889 /* icon_yahoo_30x30@2x.png */; };
 		C14240D69C454586240A7355 /* logo_verisign_280x65@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C14246641A26C134AAD6EA59 /* logo_verisign_280x65@2x.png */; };
+		C14240D82324781131C8B2B2 /* icon_tumblr_30x30@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C142458158A486188C3231DE /* icon_tumblr_30x30@2x.png */; };
 		C14240DA3917A8907330AEB6 /* JRCaptureApidInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = C14242EDA36523C07B370016 /* JRCaptureApidInterface.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C14240ECA608E0DCD66AD7DA /* icon_vzn_30x30@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424A8D6084F2284E377D15 /* icon_vzn_30x30@2x.png */; };
 		C14240F05D022787A1233FD9 /* logo_myspace_280x65@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C14243BBA7EF5FCA779D820F /* logo_myspace_280x65@2x.png */; };
@@ -71,6 +72,7 @@
 		C142436B0A5FFE01F275A965 /* JRActivityObject.m in Sources */ = {isa = PBXBuildFile; fileRef = C14243C55CA82FBECCA9BEFA /* JRActivityObject.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C142438AEDFC6FF46C1240B4 /* button_facebook_135x40.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424FAC00618C0CCEB28EF7 /* button_facebook_135x40.png */; };
 		C14243AAFA126A996048A190 /* JROnipLevelTwo.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424F162740CDE82DEBD69E /* JROnipLevelTwo.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		C14243B2FE34FE49E5D53DE0 /* logo_soundcloud_280x65.png in Resources */ = {isa = PBXBuildFile; fileRef = C14244A8B9C320D314EFD792 /* logo_soundcloud_280x65.png */; };
 		C14243BE04A67B1CD63F38D3 /* logo_linkedin_280x65.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424C18699DAC8CA0BF2B25 /* logo_linkedin_280x65.png */; };
 		C14243C6BB1B2B57B93CAD8B /* icon_wordpress_30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = C14249A4F2571F8F8F6FF9B4 /* icon_wordpress_30x30.png */; };
 		C14243C6D410B0D2A9E4247F /* logo_twitter_280x65@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424B8BBA034C130EDF81CD /* logo_twitter_280x65@2x.png */; };
@@ -95,6 +97,7 @@
 		C142449165B0918B6C93A3DC /* icon_twitter_30x30@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424F7327F92814DC74DD2D /* icon_twitter_30x30@2x.png */; };
 		C1424495EE43284384630EBC /* JRPinoLevelTwo.m in Sources */ = {isa = PBXBuildFile; fileRef = C14244FCEA597E9925BB70CD /* JRPinoLevelTwo.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C142449AADD1A23641AF5E04 /* button_black_280x40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424E8FFB61D96D82605858 /* button_black_280x40@2x.png */; };
+		C142449D4150C1042552A11D /* logo_tumblr_280x65@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C14246685D7D68D8C21F7582 /* logo_tumblr_280x65@2x.png */; };
 		C14244FF427D956CA6DBCC9C /* JROrganizationsElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C14248A3610E3A0293303D5A /* JROrganizationsElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C1424503B018827D11C51FDB /* button_linkedin_280x40.png in Resources */ = {isa = PBXBuildFile; fileRef = C14247FA6A3D65949D6E8C08 /* button_linkedin_280x40.png */; };
 		C142450B471DAD1EDFC3EFE6 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = C1424CEFEE8C795855AC4586 /* .gitignore */; };
@@ -157,6 +160,7 @@
 		C1424874EE6E5684A943C84B /* icon_google_30x30@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C14247897ED63E85BA93C1FB /* icon_google_30x30@2x.png */; };
 		C142487D5A28217A976418C9 /* JRConventionalSigninViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424877F46D4A7BE209D549 /* JRConventionalSigninViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C14248845A6A9CAE3C4F5F08 /* JRBestHand.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424A0EF84F147845A66507 /* JRBestHand.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		C142488B44E48199D201A5B7 /* logo_tumblr_280x65.png in Resources */ = {isa = PBXBuildFile; fileRef = C14245B020A67DE6CC367386 /* logo_tumblr_280x65.png */; };
 		C1424891F60F3EAD45D92AA6 /* icon_linkedin_30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = C14245C7F846E85199F92427 /* icon_linkedin_30x30.png */; };
 		C142489AC4B8317C177B8EE2 /* icon_vzn_30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = C14246D734379824219E85C6 /* icon_vzn_30x30.png */; };
 		C14248A4EB98380C7665B04E /* JRPinoLevelOne.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424F7FFAB793D992302831 /* JRPinoLevelOne.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -190,6 +194,7 @@
 		C1424ABE8D316A3A43B9BD2F /* JRPhotosElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424F517C5586150B86F29B /* JRPhotosElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C1424AC20CDA9F5D4D6E5636 /* logo_aol_280x65.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424F6969522C628D7C1A05 /* logo_aol_280x65.png */; };
 		C1424AC5DE292B712817154F /* logo_livejournal_280x65.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424504CF612DD92617A3E0 /* logo_livejournal_280x65.png */; };
+		C1424ACCBD321AA050AC6D17 /* icon_soundcloud_30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424DBF7A86E3E28DC9D31E /* icon_soundcloud_30x30.png */; };
 		C1424AD786725CF424D9AC0F /* JRPublishActivityController.m in Sources */ = {isa = PBXBuildFile; fileRef = C14240DE3FB3169FD2DEB7BE /* JRPublishActivityController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C1424AECDA34F79AFDF4DB75 /* JREngage-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C1424156C77CFF6C4323C2CC /* JREngage-Info.plist */; };
 		C1424AEFDE97A05D4123075A /* fox_prod_oct.json in Resources */ = {isa = PBXBuildFile; fileRef = C1424889C42FD51ECF8D41F6 /* fox_prod_oct.json */; };
@@ -240,6 +245,7 @@
 		C1424E010F4352014570F9F2 /* JREngage+CustomInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = C14248E0F3F0EC9421DCA65C /* JREngage+CustomInterface.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C1424E0455C81F99867FE588 /* icon_bw_mail_30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424B065F71D856D0EBB1CB /* icon_bw_mail_30x30.png */; };
 		C1424E34F8D4FF5E3790DDDE /* JRCaptureUser.m in Sources */ = {isa = PBXBuildFile; fileRef = C142411EA018CE3056ADA510 /* JRCaptureUser.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		C1424E3A71B2384934B4E0EE /* icon_soundcloud_30x30@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C142464A5394AE87AFB7E4F6 /* icon_soundcloud_30x30@2x.png */; };
 		C1424E42712967D785376780 /* profilepic_placeholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C142444B85788BBBDE89617B /* profilepic_placeholder@2x.png */; };
 		C1424E4D31C992FCA9BD4D60 /* icon_bw_myspace_30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424AF2D73E4323CB4A9882 /* icon_bw_myspace_30x30.png */; };
 		C1424E8A259D9659D3142B43 /* icon_bw_facebook_30x30@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C14244922A0554C5F6DDFC51 /* icon_bw_facebook_30x30@2x.png */; };
@@ -267,6 +273,8 @@
 		C1424F707377C67A22A289C6 /* button_myspace_280x40.png in Resources */ = {isa = PBXBuildFile; fileRef = C142452F2CE6BB4E6902E93F /* button_myspace_280x40.png */; };
 		C1424F850A9BF6BEBFC7150B /* button_yahoo_280x40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424E30872002F42943BA44 /* button_yahoo_280x40@2x.png */; };
 		C1424F89680573123B0DB955 /* .name in Resources */ = {isa = PBXBuildFile; fileRef = C14243C4D018B5987BBD5487 /* .name */; };
+		C1424F89CCF53A4F4DACBC83 /* logo_soundcloud_280x65@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C14243A4465FC38DC592CA51 /* logo_soundcloud_280x65@2x.png */; };
+		C1424FA9547C17F129FB0B32 /* icon_tumblr_30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424A90065C63920F3B85F2 /* icon_tumblr_30x30.png */; };
 		C1424FACB1EE8791978C9B08 /* icon_bw_yahoo_30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = C142422ACE8DF6FA7206BCD4 /* icon_bw_yahoo_30x30.png */; };
 		C1424FAF0CBACC530CC5D240 /* icon_netlog_30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424F2C5E9EF9433DB576EA /* icon_netlog_30x30.png */; };
 		C1424FBDDF63281F348A5566 /* encodings.xml in Resources */ = {isa = PBXBuildFile; fileRef = C1424A940DEF393CF1E10DF7 /* encodings.xml */; };
@@ -395,6 +403,7 @@
 		C1424380B8B78E2128F29D99 /* JROnipLevelOneElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JROnipLevelOneElement.m; sourceTree = "<group>"; };
 		C142438118DAD61319E9445D /* button_iosblue_280x40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = button_iosblue_280x40.png; path = ../../Janrain/JREngage/Resources/images/buttons/button_iosblue_280x40.png; sourceTree = "<group>"; };
 		C14243911A4F42EAB3A6220A /* logo_livejournal_280x65@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "logo_livejournal_280x65@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/logos/logo_livejournal_280x65@2x.png"; sourceTree = "<group>"; };
+		C14243A4465FC38DC592CA51 /* logo_soundcloud_280x65@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "logo_soundcloud_280x65@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/logos/logo_soundcloud_280x65@2x.png"; sourceTree = "<group>"; };
 		C14243BBA7EF5FCA779D820F /* logo_myspace_280x65@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "logo_myspace_280x65@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/logos/logo_myspace_280x65@2x.png"; sourceTree = "<group>"; };
 		C14243BC1DD9904956F33BE2 /* JRCaptureUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCaptureUser.h; sourceTree = "<group>"; };
 		C14243C0549B0DBC33D903CF /* icon_bw_sms_30x30@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon_bw_sms_30x30@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/icons_bw/icon_bw_sms_30x30@2x.png"; sourceTree = "<group>"; };
@@ -415,6 +424,7 @@
 		C142448FE37E8FCF942F347E /* logo_myopenid_280x65@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "logo_myopenid_280x65@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/logos/logo_myopenid_280x65@2x.png"; sourceTree = "<group>"; };
 		C14244922A0554C5F6DDFC51 /* icon_bw_facebook_30x30@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon_bw_facebook_30x30@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/icons_bw/icon_bw_facebook_30x30@2x.png"; sourceTree = "<group>"; };
 		C14244A1E5A5CF5220EB75ED /* button_yahoo_135x40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button_yahoo_135x40@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/buttons/button_yahoo_135x40@2x.png"; sourceTree = "<group>"; };
+		C14244A8B9C320D314EFD792 /* logo_soundcloud_280x65.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo_soundcloud_280x65.png; path = ../../Janrain/JREngage/Resources/images/logos/logo_soundcloud_280x65.png; sourceTree = "<group>"; };
 		C14244CEAD35D89E7DA451B2 /* workspace.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = workspace.xml; path = ../../Janrain/JRCapture/Script/.idea/workspace.xml; sourceTree = "<group>"; };
 		C14244D333F257733D109C3C /* default-schema.json */ = {isa = PBXFileReference; lastKnownFileType = file.json; name = "default-schema.json"; path = "../../Janrain/JRCapture/Script/default-schema.json"; sourceTree = "<group>"; };
 		C14244E271590F727C80C4FA /* button_yahoo_135x40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = button_yahoo_135x40.png; path = ../../Janrain/JREngage/Resources/images/buttons/button_yahoo_135x40.png; sourceTree = "<group>"; };
@@ -431,7 +441,9 @@
 		C142455FFD6F6CE5B248B6EC /* JRBodyType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRBodyType.m; sourceTree = "<group>"; };
 		C14245646994EA0DA27DEEE7 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSONKit.m; path = ../../Janrain/JSONKit/JSONKit.m; sourceTree = "<group>"; };
 		C142456490E441CE55814D46 /* button_myspace_135x40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = button_myspace_135x40.png; path = ../../Janrain/JREngage/Resources/images/buttons/button_myspace_135x40.png; sourceTree = "<group>"; };
+		C142458158A486188C3231DE /* icon_tumblr_30x30@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon_tumblr_30x30@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/icons/icon_tumblr_30x30@2x.png"; sourceTree = "<group>"; };
 		C14245847B7BCA214F6F9448 /* icon_flickr_30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_flickr_30x30.png; path = ../../Janrain/JREngage/Resources/images/icons/icon_flickr_30x30.png; sourceTree = "<group>"; };
+		C14245B020A67DE6CC367386 /* logo_tumblr_280x65.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo_tumblr_280x65.png; path = ../../Janrain/JREngage/Resources/images/logos/logo_tumblr_280x65.png; sourceTree = "<group>"; };
 		C14245C3C59D495C17527569 /* logo_foursquare_280x65.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo_foursquare_280x65.png; path = ../../Janrain/JREngage/Resources/images/logos/logo_foursquare_280x65.png; sourceTree = "<group>"; };
 		C14245C7F846E85199F92427 /* icon_linkedin_30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_linkedin_30x30.png; path = ../../Janrain/JREngage/Resources/images/icons/icon_linkedin_30x30.png; sourceTree = "<group>"; };
 		C14245C8C3A72582FC442F97 /* Script.iml */ = {isa = PBXFileReference; lastKnownFileType = file.iml; name = Script.iml; path = ../../Janrain/JRCapture/Script/.idea/Script.iml; sourceTree = "<group>"; };
@@ -443,7 +455,9 @@
 		C142461F4FBD7F600763C3CB /* JRCapture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRCapture.h; path = ../../Janrain/JRCapture/Classes/JRCapture.h; sourceTree = "<group>"; };
 		C142462A0D1D74C2C45CCACD /* button_google_135x40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = button_google_135x40.png; path = ../../Janrain/JREngage/Resources/images/buttons/button_google_135x40.png; sourceTree = "<group>"; };
 		C142463966F02915948F5392 /* button_myspace_280x40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button_myspace_280x40@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/buttons/button_myspace_280x40@2x.png"; sourceTree = "<group>"; };
+		C142464A5394AE87AFB7E4F6 /* icon_soundcloud_30x30@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon_soundcloud_30x30@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/icons/icon_soundcloud_30x30@2x.png"; sourceTree = "<group>"; };
 		C14246641A26C134AAD6EA59 /* logo_verisign_280x65@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "logo_verisign_280x65@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/logos/logo_verisign_280x65@2x.png"; sourceTree = "<group>"; };
+		C14246685D7D68D8C21F7582 /* logo_tumblr_280x65@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "logo_tumblr_280x65@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/logos/logo_tumblr_280x65@2x.png"; sourceTree = "<group>"; };
 		C1424670AAA631606EA2D56D /* logo_twitter_280x65.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo_twitter_280x65.png; path = ../../Janrain/JREngage/Resources/images/logos/logo_twitter_280x65.png; sourceTree = "<group>"; };
 		C142467B872F992162EB1D06 /* icon_verisign_30x30@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon_verisign_30x30@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/icons/icon_verisign_30x30@2x.png"; sourceTree = "<group>"; };
 		C1424684EFBB2758B952E6DE /* button_facebook_280x40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = button_facebook_280x40.png; path = ../../Janrain/JREngage/Resources/images/buttons/button_facebook_280x40.png; sourceTree = "<group>"; };
@@ -527,6 +541,7 @@
 		C1424A79A9CF94764D21510E /* JRObjectLevelOne.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRObjectLevelOne.h; sourceTree = "<group>"; };
 		C1424A80F4760645E0067F65 /* icon_netlog_30x30@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon_netlog_30x30@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/icons/icon_netlog_30x30@2x.png"; sourceTree = "<group>"; };
 		C1424A8D6084F2284E377D15 /* icon_vzn_30x30@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon_vzn_30x30@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/icons/icon_vzn_30x30@2x.png"; sourceTree = "<group>"; };
+		C1424A90065C63920F3B85F2 /* icon_tumblr_30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_tumblr_30x30.png; path = ../../Janrain/JREngage/Resources/images/icons/icon_tumblr_30x30.png; sourceTree = "<group>"; };
 		C1424A940DEF393CF1E10DF7 /* encodings.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = encodings.xml; path = ../../Janrain/JRCapture/Script/.idea/encodings.xml; sourceTree = "<group>"; };
 		C1424AA276D10327B9122B97 /* icon_livejournal_30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_livejournal_30x30.png; path = ../../Janrain/JREngage/Resources/images/icons/icon_livejournal_30x30.png; sourceTree = "<group>"; };
 		C1424AC9F66D872EF284214C /* JRObjectLevelThree.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRObjectLevelThree.m; sourceTree = "<group>"; };
@@ -590,6 +605,7 @@
 		C1424D60294F485E98815DBC /* logo_vzn_280x65.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo_vzn_280x65.png; path = ../../Janrain/JREngage/Resources/images/logos/logo_vzn_280x65.png; sourceTree = "<group>"; };
 		C1424D6E4E22B5885439828F /* JREngagePlugin.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = JREngagePlugin.js; path = ../../Janrain/JREngage/JREngagePlugin.js; sourceTree = "<group>"; };
 		C1424DB6E89F2AE4E57ECAA2 /* icon_foursquare_30x30@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon_foursquare_30x30@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/icons/icon_foursquare_30x30@2x.png"; sourceTree = "<group>"; };
+		C1424DBF7A86E3E28DC9D31E /* icon_soundcloud_30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_soundcloud_30x30.png; path = ../../Janrain/JREngage/Resources/images/icons/icon_soundcloud_30x30.png; sourceTree = "<group>"; };
 		C1424DE50904AA1B49BD3899 /* JRInfoBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JRInfoBar.m; path = ../../Janrain/JREngage/Classes/JRInfoBar.m; sourceTree = "<group>"; };
 		C1424DEC45BD4F62ED8AD2E9 /* JRCaptureJsWidgetWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRCaptureJsWidgetWrapper.h; path = ../../Janrain/JRCapture/Classes/JRCaptureJsWidgetWrapper.h; sourceTree = "<group>"; };
 		C1424DEE969C819ECDB68DBA /* debug_log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = debug_log.h; path = ../../Janrain/JRCapture/Classes/debug_log.h; sourceTree = "<group>"; };
@@ -888,6 +904,8 @@
 				C1424C4573533FAA266A51B3 /* logo_verisign_280x65.png */,
 				C142432D22D9ABB13C50ADC3 /* logo_yahoo_280x65.png */,
 				C14247BA84416D58E48D6F00 /* logo_orkut_280x65.png */,
+				C14244A8B9C320D314EFD792 /* logo_soundcloud_280x65.png */,
+				C14245B020A67DE6CC367386 /* logo_tumblr_280x65.png */,
 			);
 			name = logos;
 			sourceTree = "<group>";
@@ -951,6 +969,8 @@
 				C14240FB244037779E5F665E /* logo_flickr_280x65@2x.png */,
 				C1424428F3AB9D71E2148357 /* logo_hyves_280x65@2x.png */,
 				C1424ECB1B1DAAAEE1D16E0C /* logo_orkut_280x65@2x.png */,
+				C14243A4465FC38DC592CA51 /* logo_soundcloud_280x65@2x.png */,
+				C14246685D7D68D8C21F7582 /* logo_tumblr_280x65@2x.png */,
 			);
 			name = logos;
 			sourceTree = "<group>";
@@ -1022,6 +1042,8 @@
 				C14245847B7BCA214F6F9448 /* icon_flickr_30x30.png */,
 				C1424BD14B86E8734778D129 /* icon_salesforce_30x30.png */,
 				C14249B609081272F9D242AB /* icon_verisign_30x30.png */,
+				C1424DBF7A86E3E28DC9D31E /* icon_soundcloud_30x30.png */,
+				C1424A90065C63920F3B85F2 /* icon_tumblr_30x30.png */,
 			);
 			name = icons;
 			sourceTree = "<group>";
@@ -1289,6 +1311,8 @@
 				C1424A8D6084F2284E377D15 /* icon_vzn_30x30@2x.png */,
 				C14245068A7120E57C37321E /* icon_aol_30x30@2x.png */,
 				C1424F62252FD1FEBB5C0E92 /* icon_wordpress_30x30@2x.png */,
+				C142464A5394AE87AFB7E4F6 /* icon_soundcloud_30x30@2x.png */,
+				C142458158A486188C3231DE /* icon_tumblr_30x30@2x.png */,
 			);
 			name = icons;
 			sourceTree = "<group>";
@@ -1585,6 +1609,14 @@
 				C1424420CE213BAB3A70098C /* JRProvidersController.xib in Resources */,
 				C14241AE43CA436B4119CB84 /* JRWebViewController.xib in Resources */,
 				D806D1B616A7638E008EEF96 /* assets in Resources */,
+				C14243B2FE34FE49E5D53DE0 /* logo_soundcloud_280x65.png in Resources */,
+				C142488B44E48199D201A5B7 /* logo_tumblr_280x65.png in Resources */,
+				C1424ACCBD321AA050AC6D17 /* icon_soundcloud_30x30.png in Resources */,
+				C1424FA9547C17F129FB0B32 /* icon_tumblr_30x30.png in Resources */,
+				C1424E3A71B2384934B4E0EE /* icon_soundcloud_30x30@2x.png in Resources */,
+				C14240D82324781131C8B2B2 /* icon_tumblr_30x30@2x.png in Resources */,
+				C1424F89CCF53A4F4DACBC83 /* logo_soundcloud_280x65@2x.png in Resources */,
+				C142449D4150C1042552A11D /* logo_tumblr_280x65@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
