@@ -1,3 +1,7 @@
+v2.4.1
+ - Added image assets for two providers
+ - Dead code elim, minor DRY up
+ - Have a new pre-commit git hook to keep lib version changing, it will be one commit behind
 v2.4.0
  - First release with release notes
  - most recent previous release was 2.3.1, but a bunch of interstitial commits had been pushed to master
