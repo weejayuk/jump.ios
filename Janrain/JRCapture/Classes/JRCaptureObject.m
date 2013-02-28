@@ -600,6 +600,7 @@
 
         if ([prop isKindOfClass:[NSArray class]])
         {
+            if (![otherProp isKindOfClass:[NSArray class]] || [otherProp count] != [prop count]) return NO;
             for (id elmt in ((NSArray *) prop))
             {
                 id otherElmt = [((NSArray *) otherProp) objectAtIndex:[((NSArray *) prop) indexOfObject:elmt]];
