@@ -34,9 +34,7 @@
 #import "SFHFKeychainUtils.h"
 
 #define cJRCaptureKeychainIdentifier @"capture_tokens.janrain"
-#define cJRCaptureUserUuid           @"jrcapture.captureUserUuid"
-#define cJRCreationTokenDummyUuid    @"no_uuid_available.new_user"
-#define cJRMissingUuidDummyString    @"no_uuid_available"
+#define cJRCaptureKeychainUserName @"capture_user"
 
 @implementation NSString (JRString_UrlWithDomain)
 - (NSString *)urlStringFromBaseDomain
@@ -102,7 +100,7 @@ static JRCaptureData *singleton = nil;
     {
         uuid          = [[JRCaptureData loadUuidForLastLoggedInUser] retain];
         accessToken   = [[JRCaptureData retrieveTokenFromKeychainOfType:JRTokenTypeAccess forUser:uuid] retain];
-        creationToken = [[JRCaptureData retrieveTokenFromKeychainOfType:JRTokenTypeCreation forUser:cJRCreationTokenDummyUuid] retain];
+        creationToken = [[JRCaptureData retrieveTokenFromKeychainOfType:JRTokenTypeCreation forUser:nil] retain];
     }
 
     return self;
@@ -167,16 +165,6 @@ captureTraditionalSignInType:(JRConventionalSigninType) tradSignInType;
     captureDataInstance.captureTradSignInType = tradSignInType;
 }
 
-+ (NSString *)loadUuidForLastLoggedInUser
-{
-    return [[NSUserDefaults standardUserDefaults] objectForKey:cJRCaptureUserUuid];
-}
-
-+ (void)saveUuidForLastLoggedInUser:(NSString *)uuid
-{
-    [[NSUserDefaults standardUserDefaults] setObject:uuid forKey:cJRCaptureUserUuid];
-}
-
 + (NSString *)serviceNameForTokenType:(JRTokenType)tokenType
 {
     return [NSString stringWithFormat:@"%@.%@.%@.",
@@ -185,23 +173,18 @@ captureTraditionalSignInType:(JRConventionalSigninType) tradSignInType;
                 applicationBundleDisplayNameAndIdentifier()];
 }
 
-+ (void)deleteTokenFromKeychainOfType:(JRTokenType)tokenType forUser:(NSString *)uuid
++ (void)deleteTokenFromKeychainOfType:(JRTokenType)tokenType
 {
-    NSError  *error = nil;
-
-    [SFHFKeychainUtils deleteItemForUsername:uuid
+    [SFHFKeychainUtils deleteItemForUsername:cJRCaptureKeychainUserName
                               andServiceName:[JRCaptureData serviceNameForTokenType:tokenType]
-                                       error:&error];
-
-    //if (error)
-    //    ALog (@"Error deleting device token from keychain: %@", [error localizedDescription]);
+                                       error:nil];
 }
 
-+ (void)storeTokenInKeychain:(NSString *)token ofType:(JRTokenType)tokenType forUser:(NSString *)uuid
++ (void)storeTokenInKeychain:(NSString *)token ofType:(JRTokenType)tokenType
 {
     NSError  *error = nil;
 
-    [SFHFKeychainUtils storeUsername:uuid
+    [SFHFKeychainUtils storeUsername:cJRCaptureKeychainUserName
                          andPassword:token
                       forServiceName:[JRCaptureData serviceNameForTokenType:tokenType]
                       updateExisting:YES
@@ -211,52 +194,39 @@ captureTraditionalSignInType:(JRConventionalSigninType) tradSignInType;
         ALog (@"Error storing device token in keychain: %@", [error localizedDescription]);
 }
 
-+ (NSString *)retrieveTokenFromKeychainOfType:(JRTokenType)tokenType forUser:(NSString *)uuid
++ (NSString *)retrieveTokenFromKeychainOfType:(JRTokenType)tokenType
 {
-    NSError  *error = nil;
-
-    NSString *token = [SFHFKeychainUtils getPasswordForUsername:uuid
+    NSString *token = [SFHFKeychainUtils getPasswordForUsername:cJRCaptureKeychainUserName
                                                  andServiceName:[JRCaptureData serviceNameForTokenType:tokenType]
-                                                          error:&error];
-
-    if (error)
-        ALog (@"Error retrieving device token in keychain: %@", [error localizedDescription]);
+                                                          error:nil];
 
     return token;
 }
 
-+ (void)saveNewToken:(NSString *)token ofType:(JRTokenType)tokenType andUuid:(NSString *)newUuid
++ (void)saveNewToken:(NSString *)token ofType:(JRTokenType)tokenType
 {
-    NSString *oldUuid = [[JRCaptureData captureDataInstance] uuid];
-
-    [JRCaptureData deleteTokenFromKeychainOfType:JRTokenTypeAccess forUser:oldUuid];
-    [JRCaptureData deleteTokenFromKeychainOfType:JRTokenTypeCreation forUser:oldUuid];
-
-    [[JRCaptureData captureDataInstance] setUuid:newUuid];
-    [JRCaptureData saveUuidForLastLoggedInUser:newUuid];
+    [JRCaptureData deleteTokenFromKeychainOfType:JRTokenTypeAccess];
+    [JRCaptureData deleteTokenFromKeychainOfType:JRTokenTypeCreation];
 
     if (tokenType == JRTokenTypeAccess)
     {
         [JRCaptureData captureDataInstance].accessToken = token;
         [JRCaptureData captureDataInstance].creationToken = nil;
 
-        [JRCaptureData storeTokenInKeychain:token ofType:JRTokenTypeAccess forUser:newUuid];
+        [JRCaptureData storeTokenInKeychain:token ofType:JRTokenTypeAccess];
     }
     else
     {
         [JRCaptureData captureDataInstance].creationToken = token;
         [JRCaptureData captureDataInstance].accessToken = nil;
 
-        [JRCaptureData storeTokenInKeychain:token ofType:JRTokenTypeCreation forUser:newUuid];
+        [JRCaptureData storeTokenInKeychain:token ofType:JRTokenTypeCreation];
     }
 }
 
-+ (void)setAccessToken:(NSString *)newAccessToken forUser:(NSString *)newUuid
++ (void)setAccessToken:(NSString *)newAccessToken
 {
-    if (!newUuid || [newUuid isEqualToString:@""])
-        newUuid = cJRMissingUuidDummyString;
-
-    [JRCaptureData saveNewToken:newAccessToken ofType:JRTokenTypeAccess andUuid:newUuid];
+    [JRCaptureData saveNewToken:newAccessToken ofType:JRTokenTypeAccess];
 }
 
 + (NSString *)getAccessToken
@@ -264,23 +234,11 @@ captureTraditionalSignInType:(JRConventionalSigninType) tradSignInType;
     return [JRCaptureData captureDataInstance].accessToken;
 }
 
-+ (void)setCreationToken:(NSString *)newCreationToken// forUser:(NSString *)newUuid
++ (void)setCreationToken:(NSString *)newCreationToken
 {
-    NSString *newUuid = cJRCreationTokenDummyUuid;
-
-    [JRCaptureData saveNewToken:newCreationToken ofType:JRTokenTypeCreation andUuid:newUuid];
+    [JRCaptureData saveNewToken:newCreationToken ofType:JRTokenTypeCreation];
 }
 
-+ (NSString *)accessTokenForUser:(NSString *)uuid
-{
-    if (!uuid || [uuid isEqualToString:@""])
-        uuid = cJRMissingUuidDummyString;
-
-    if ([uuid isEqualToString:[[JRCaptureData captureDataInstance] uuid]])
-        return [[JRCaptureData captureDataInstance] accessToken];
-
-    return nil;
-}
 
 + (NSString *)accessToken
 {
@@ -321,8 +279,8 @@ captureTraditionalSignInType:(JRConventionalSigninType) tradSignInType;
 {
     DLog(@"");
     NSString* currentUuid = [JRCaptureData captureDataInstance].uuid;
-    [JRCaptureData deleteTokenFromKeychainOfType:JRTokenTypeAccess forUser:currentUuid];
-    [JRCaptureData deleteTokenFromKeychainOfType:JRTokenTypeCreation forUser:currentUuid];
+    [JRCaptureData deleteTokenFromKeychainOfType:JRTokenTypeAccess];
+    [JRCaptureData deleteTokenFromKeychainOfType:JRTokenTypeCreation];
     [JRCaptureData saveUuidForLastLoggedInUser:nil];
     [JRCaptureData captureDataInstance].accessToken = nil;
     [JRCaptureData captureDataInstance].creationToken = nil;
