@@ -334,83 +334,6 @@ typedef enum
 - (void)captureAuthenticationDidFailWithError:(NSError*)error;
 @end
 
-#ifdef JRENGAGE_SHARING_WITH_CAPTURE
-/**
- * @brief
- * Protocol adopted by an object that wishes to receive notifications when and information about a
- * user that authenticates with your application and publishes activities to their social networks.
- *
- * This protocol will notify the delegate when social sharing succeeds or fails.
- **/
-@protocol JRCaptureSharingDelegate <JRCaptureSigninDelegate>
-@optional
-/**
- * @name Configuration
- * Messages sent by JRCapture during dialog launch/configuration of the Engage for iOS portion of the library
- **/
-/*@{*/
-/**
- * Sent if the application tries to show the Engage for iOS dialog and the dialog failed to show.  May
- * occur if the \c JREngage library failed to configure, or if the dialog is already being displayed, etc.
- *
- * @param error
- *   The error that occurred during configuration. Please see the lists of \ref captureErrors "Capture Errors" and
- *   <a href="http://janrain.github.com/jump.ios/gh_docs/engage/html/group__engage_errors.html">Engage Errors</a>
- *   for more information
- *
- * @note
- * This message is only sent if your application tries to show a Engage for iOS dialog, and not necessarily
- * when an error occurs, if, say, the error occurred during the library's configuration. The raison d'etre
- * is based on the possibility that your application may preemptively configure Capture and Engage, but never
- * actually use it. If that is the case, then you won't get any error.
- **/
-- (void)engageSocialSharingDialogDidFailToShowWithError:(NSError*)error;
-/*@}*/
-
-/**
- * @name SocialSharing
- * Messages sent by JRCapture during social sharing
- **/
-/*@{*/
-/**
- * Sent if social sharing was canceled for any reason other than an error.  For example,
- * the user hits the "Cancel" button, any class calls the cancelAuthentication message, or if
- * configuration of the library is taking more than about 16 seconds (rare) to download.
- **/
-- (void)engageSocialSharingDidNotComplete;
-
-/**
- * Sent after the user successfully shares an activity on the given provider.
- *
- * @param activity
- *   The shared activity
- *
- * @param provider
- *   The name of the provider on which the user shared the activity. For a list of possible strings,
- *   please see the \ref socialProviders "List of Social Providers"
- **/
-- (void)engageSocialSharingDidSucceedForActivity:(JRActivityObject*)activity onProvider:(NSString*)provider;
-
-/**
- * Sent when sharing an activity failed and could not be recovered by the library.
- *
- * @param activity
- *   The activity the user was trying to share
- *
- * @param error
- *   The error that occurred during sharing. Please see the lists of \ref captureErrors "Capture Errors" and
- *   <a href="http://janrain.github.com/jump.ios/gh_docs/engage/html/group__engage_errors.html">Engage Errors</a>
- *   for more information
- *
- * @param provider
- *   The name of the provider on which the user attempted to share the activity. For a list of possible strings,
- *   please see the \ref socialProviders "List of Social Providers"
- **/
-- (void)engageSocialSharingDidFailForActivity:(JRActivityObject*)activity withError:(NSError*)error onProvider:(NSString*)provider;
-/*@}*/
-@end
-#endif // JRENGAGE_SHARING_WITH_CAPTURE
-
 /**
  * @brief
  * Main API for interacting with the Janrain Capture for iOS library
@@ -478,11 +401,8 @@ captureTraditionalSignInType:(JRConventionalSigninType) tradSignInType;
  * Methods that initiate signin through the Engage for iOS dialogs
  **/
 /*@{*/
-
-+ (void)startJsWidgetWithUrl:(NSString *)url;
-
 /**
-* Use this function to begin authentication. The Engage for iOS portion of the library will
+* Begin authentication. The Engage for iOS portion of the library will
 * pop up a modal dialog and take the user through the sign-in process.
 *
 * @param delegate
@@ -491,7 +411,7 @@ captureTraditionalSignInType:(JRConventionalSigninType) tradSignInType;
 + (void)startEngageSigninDialogForDelegate:(id<JRCaptureSigninDelegate>)delegate;
 
 /**
- * Use this method to begin authentication for one specific provider. The library will
+ * Begin authentication for one specific provider. The library will
  * pop up a modal dialog, skipping the list of providers, and take the user straight to the sign-in
  * flow of the passed provider. The user will not be able to return to the list of providers.
  *
@@ -503,7 +423,7 @@ captureTraditionalSignInType:(JRConventionalSigninType) tradSignInType;
                               forDelegate:(id<JRCaptureSigninDelegate>)delegate;
 
 /**
- * Use this function to begin authentication. The Engage for iOS portion of the library will
+ * Begin authentication. The Engage for iOS portion of the library will
  * pop up a modal dialog and take the user through the sign-in process.
  *
  * @param customInterfaceOverrides
@@ -514,9 +434,8 @@ captureTraditionalSignInType:(JRConventionalSigninType) tradSignInType;
 + (void)startEngageSigninDialogWithCustomInterfaceOverrides:(NSDictionary*)customInterfaceOverrides
                                                 forDelegate:(id<JRCaptureSigninDelegate>)delegate;
 
-
 /**
- * Use this method to begin authentication for one specific provider. The library will
+ * Begin authentication for one specific provider. The library will
  * pop up a modal dialog, skipping the list of providers, and take the user straight to the sign-in
  * flow of the passed provider. The user will not be able to return to the list of providers.
  *
@@ -534,7 +453,7 @@ captureTraditionalSignInType:(JRConventionalSigninType) tradSignInType;
                               forDelegate:(id<JRCaptureSigninDelegate>)delegate;
 
 /**
- * Use this method to begin authentication, adding the option for your users to log directly into Capture through
+ * Begin authentication, adding the option for your users to log directly into Capture through
  * your conventional signin mechanism. By using this method to initiate signin, the library automatically adds
  * a direct login form, above the list of social providers, that allows your users to login with a username/password
  * or email/password combination.
@@ -553,7 +472,7 @@ captureTraditionalSignInType:(JRConventionalSigninType) tradSignInType;
 + (void)startEngageSigninDialogWithConventionalSignin:(JRConventionalSigninType)conventionalSigninType
                                           forDelegate:(id<JRCaptureSigninDelegate>)delegate;
 /**
- * Use this method to begin authentication, adding the option for your users to log directly into Capture through
+ * Begin authentication, adding the option for your users to log directly into Capture through
  * your conventional signin mechanism. By using this method to initiate signin, the library automatically adds
  * a direct login form, above the list of social providers, that allows your users to login with a username/password
  * or email/password combination.
@@ -578,7 +497,7 @@ captureTraditionalSignInType:(JRConventionalSigninType) tradSignInType;
                                           forDelegate:(id<JRCaptureSigninDelegate>)delegate;
 
 /**
- * Signs a user in via conventional (username/email and password) authentication on Capture.
+ * Signs a user in via traditional (username/email and password) authentication on Capture.
  *
  * @param user
  *  The username or the email address
@@ -591,38 +510,6 @@ captureTraditionalSignInType:(JRConventionalSigninType) tradSignInType;
                                withSigninType:(JRConventionalSigninType)conventionalSignInType
                                   forDelegate:(id <JRCaptureSigninDelegate>)delegate;
 
-#ifdef JRENGAGE_SHARING_WITH_CAPTURE
-+ (void)setBackplaneChannelUrl:(NSString *)string;
-/**
- * Use this function to begin social sharing. The library will pop up a modal dialog and
- * take the user through the sign-in process, if necessary, and share the given JRActivityObject.
- *
- * @param activity
- *   The activity you wish to share
- **/
-+ (void)startEngageSharingDialogWithActivity:(JRActivityObject*)activity
-                                 forDelegate:(id<JRCaptureSharingDelegate>)delegate;
-
-/**
- * Use this function to begin social sharing.  The library will pop up a modal dialog, configured with the given
- * custom interface, take the user through the sign-in process, if necessary, and share the given JRActivityObject.
- *
- * @param activity
- *   The activity you wish to share
- *
- * @param customInterfaceOverrides
- *   A dictionary of objects and properties, indexed by the set of
- *   \link customInterface pre-defined custom interface keys\endlink, to be used by the library to customize the look
- *   and feel of the user interface and/or add a native login experience
- *
- * @note
- * Any values specified in the \e customInterfaceOverrides dictionary will override the corresponding
- * values specified the dictionary passed into the setCustomInterfaceDefaults:() method.
- **/
-+ (void)startEngageSharingDialogWithActivity:(JRActivityObject*)activity
-                withCustomInterfaceOverrides:(NSDictionary*)customInterfaceOverrides
-                                 forDelegate:(id<JRCaptureSharingDelegate>)delegate;
-#endif // JRENGAGE_SHARING_WITH_CAPTURE
 @end
 
 /**

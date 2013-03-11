@@ -1,3 +1,8 @@
+v3.0.0
+ - Removes deprecated JRCaptureRecordMissingRequiredFields enum value of JRCaptureRecordstatus
+   (See the replacement, JRCaptureRecordRequiresCreation)
+ - Removes old JRCapture+setEngageAppId... signature in favor of new configuration signature
+   covering new configuration parameters
 v2.4.2
  - Guards against exceptions in a private test API
  - Minor internal changes

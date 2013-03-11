@@ -80,7 +80,6 @@ captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType
     [JRCaptureData clearSignInState];
 }
 
-
 + (void)setAccessToken:(NSString *)newAccessToken
 {
     [JRCaptureData setAccessToken:newAccessToken forUser:nil];
