@@ -1,3 +1,6 @@
+v2.4.2
+ - Guards against exceptions in a private test API
+ - Minor internal changes
 v2.4.1
  - Added image assets for two providers
  - Dead code elim, minor DRY up
