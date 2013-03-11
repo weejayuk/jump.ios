@@ -28,31 +28,34 @@
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+#import "JRCapture.h"
+
 /**
  * @internal
  * Intended for internal use. Please see JRCapture.h
  */
 @interface JRCaptureData : NSObject
-@property(nonatomic, retain) id bpChannelUrl;
+@property(nonatomic, retain) NSString *bpChannelUrl;
+@property(nonatomic, readonly) NSString *captureBaseUrl;
+@property(nonatomic, readonly) NSString *captureUIBaseUrl;
+@property(nonatomic, readonly) NSString *clientId;
+@property(nonatomic, readonly) NSString *accessToken;
+@property(nonatomic, readonly) NSString *creationToken;
+@property(nonatomic, readonly) NSString *uuid;
+@property(nonatomic, readonly) NSString *captureLocale;
+@property(nonatomic, readonly) NSString *captureFormName;
+@property(nonatomic, readonly) JRConventionalSigninType captureTradSignInType;
 
 + (void)setAccessToken:(NSString *)newAccessToken forUser:(NSString *)userId;
 + (void)setCreationToken:(NSString *)newCreationToken;
-+ (NSString *)accessTokenForUser:(NSString *)userId;
-+ (NSString *)accessToken;
-+ (NSString *)creationToken;
-+ (NSURL *)captureApidBaseUrl;
-+ (NSURL *)captureUIBaseUrl;
-+ (NSString *)clientId;
-+ (NSString *)entityTypeName;
-+ (void)setCaptureApidDomain:(NSString *)newCaptureApidDomain
-             captureUIDomain:(NSString *)newCaptureUIDomain
-                    clientId:(NSString *)newClientId
-           andEntityTypeName:(NSString *)newEntityTypeName;
-+ (NSString *)captureMobileEndpointUrl;
 
-+ (NSString *)getAccessToken;
++ (void)    setCaptureDomain:(NSString *)captureDomain captureClientId:(NSString *)clientId
+               captureLocale:(NSString *)captureLocale captureFormName:(NSString *)captureFormName
+captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType;
+
++ (NSString *)captureMobileEndpointUrl;
 
 + (void)clearSignInState;
 
-+ (void)setBackplaneChannelUrl:(NSString *)bpChannelUrl;
++ (JRCaptureData *)sharedCaptureData;
 @end

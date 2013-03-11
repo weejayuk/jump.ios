@@ -180,11 +180,6 @@ typedef enum
  **/
  JRCaptureRecordRequiresCreation, /* not created, does not exist */
 
-/**
- * @deprecated subsumed by JRCaptureRecordRequiresCreation.
- */
- JRCaptureRecordMissingRequiredFields = JRCaptureRecordRequiresCreation, /* not created, does not exist */
-
 } JRCaptureRecordStatus;
 
 @class JRActivityObject;
@@ -445,25 +440,27 @@ typedef enum
  *   on <a href="http://rpxnow.com">http://rpxnow.com</a>. <em>Please do not use your API key. The API key
  *   should never be stored on the device, in code or otherwise.</em>
  *
- * @param captureApidDomain
- *   The domain of your Capture APID server (e.g., \@"mobile.dev.janraincapture.com")
+ * @param captureDomain
+ *   The domain of your Capture app instance (e.g., \@"my-name.janraincapture.com")
  *
- * @param captureUIDomain
- *   The domain of your Capture UI instance (e.g., \@"mobile.dev.janraincapture.com"); this may be the same as the
- *   captureApidDomain
- *
- * @param clientId
+ * @param captureClientId
  *   This is your 32-character client ID for Capture. You can find this on your Capture Dashboard
  *   on <a href="http://janraincapture.com">https://janraincapture.com/home</a>. <em>Please do not use your client secret.
  *   The client secret should never be stored on the device, in code or otherwise.</em>
  *
- * @param entityTypeName
- *   The type name of your Capture record entities (e.g., \@"sample_user"). You can find this on your
- *   Capture Dashboard on <a href="http://janraincapture.com">https://janraincapture.com/home</a>
+ * @param captureLocale
+ *   The locale to use when signing-in, from your Capture flow.
+ *
+ * @param captureFormName
+ *   The name of the sign-in form in the Capture flow your users will sign-in with
+ *
+ * @param captureTraditionalSignInType
+ *   The type of traditional sign-in your end-users will sign-in with.
  **/
-+ (void)setEngageAppId:(NSString *)appId captureApidDomain:(NSString *)captureApidDomain
-       captureUIDomain:(NSString *)captureUIDomain clientId:(NSString *)clientId
-     andEntityTypeName:(NSString *)entityTypeName;
++ (void)      setEngageAppId:(NSString *)appId captureDomain:(NSString *)captureDomain
+             captureClientId:(NSString *)clientId captureLocale:(NSString *)captureLocale
+             captureFormName:(NSString *)captureFormName
+captureTraditionalSignInType:(JRConventionalSigninType) tradSignInType;
 
 /**
  * Set the Capture access token for an authenticated user

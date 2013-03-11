@@ -28,13 +28,7 @@
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#ifdef DEBUG
-#define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-#else
-#define DLog(...)
-#endif
-
-#define ALog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
+#import "debug_log.h"
 
 #import "JRCaptureData.h"
 #import "SFHFKeychainUtils.h"
@@ -77,27 +71,30 @@ typedef enum
 + (void)saveUuidForLastLoggedInUser:(NSString *)uuid;
 + (NSString *)retrieveTokenFromKeychainOfType:(JRTokenType)tokenType forUser:(NSString *)uuid;
 
-@property (nonatomic, copy) NSString *captureApidBaseUrl;
-@property (nonatomic, copy) NSString *captureUIBaseUrl;
-@property (nonatomic, copy) NSString *clientId;
-@property (nonatomic, copy) NSString *entityTypeName;
-@property (nonatomic, copy) NSString *accessToken;
-@property (nonatomic, copy) NSString *creationToken;
-@property (nonatomic, copy) NSString *uuid;
+@property(nonatomic, retain) NSString *captureBaseUrl;
+@property(nonatomic, retain) NSString *captureUIBaseUrl;
+@property(nonatomic, retain) NSString *clientId;
+@property(nonatomic, retain) NSString *accessToken;
+@property(nonatomic, retain) NSString *creationToken;
+@property(nonatomic, retain) NSString *uuid;
+@property(nonatomic, retain) NSString *captureLocale;
+@property(nonatomic, retain) NSString *captureFormName;
+@property(nonatomic) JRConventionalSigninType captureTradSignInType;
+
 @end
 
 @implementation JRCaptureData
 static JRCaptureData *singleton = nil;
 
 @synthesize clientId;
-@synthesize entityTypeName;
-@synthesize captureApidBaseUrl = captureApidDomain;
-@synthesize captureUIBaseUrl = captureUIDomain;
+@synthesize captureBaseUrl;
 @synthesize accessToken;
 @synthesize creationToken;
 @synthesize uuid;
 @synthesize bpChannelUrl;
-
+@synthesize captureLocale;
+@synthesize captureFormName;
+@synthesize captureTradSignInType;
 
 - (JRCaptureData *)init
 {
@@ -125,7 +122,7 @@ static JRCaptureData *singleton = nil;
     return [[self captureDataInstance] retain];
 }
 
-- (id)copyWithZone:(NSZone *)zone
+- (id)copyWithZone:(__unused NSZone *)zone
 {
     return self;
 }
@@ -157,14 +154,17 @@ static JRCaptureData *singleton = nil;
                                       captureDataInstance.captureUIBaseUrl, bpChannelParam];
 }
 
-+ (void)setCaptureApidDomain:(NSString *)newCaptureApidDomain captureUIDomain:(NSString *)newCaptureUIDomain
-                    clientId:(NSString *)newClientId andEntityTypeName:(NSString *)newEntityTypeName
++ (void)    setCaptureDomain:(NSString *)captureDomain captureClientId:(NSString *)clientId
+               captureLocale:(NSString *)captureLocale captureFormName:(NSString *)captureFormName
+captureTraditionalSignInType:(JRConventionalSigninType) tradSignInType;
 {
     JRCaptureData *captureDataInstance     = [JRCaptureData captureDataInstance];
-    captureDataInstance.captureApidBaseUrl = [newCaptureApidDomain urlStringFromBaseDomain];
-    captureDataInstance.captureUIBaseUrl   = [newCaptureUIDomain urlStringFromBaseDomain];
-    captureDataInstance.clientId           = newClientId;
-    captureDataInstance.entityTypeName     = newEntityTypeName;
+    
+    captureDataInstance.captureBaseUrl = [captureDomain urlStringFromBaseDomain];
+    captureDataInstance.clientId           = clientId;
+    captureDataInstance.captureLocale = captureLocale;
+    captureDataInstance.captureFormName = captureFormName;
+    captureDataInstance.captureTradSignInType = tradSignInType;
 }
 
 + (NSString *)loadUuidForLastLoggedInUser
@@ -292,14 +292,9 @@ static JRCaptureData *singleton = nil;
     return [[JRCaptureData captureDataInstance] creationToken];
 }
 
-+ (NSString *)creationTokenForUser:(NSString *)uuid
++ (NSString *)captureBaseUrl
 {
-    return [[JRCaptureData captureDataInstance] creationToken];
-}
-
-+ (NSString *)captureApidBaseUrl
-{
-    return [[JRCaptureData captureDataInstance] captureApidBaseUrl];
+    return [[JRCaptureData captureDataInstance] captureBaseUrl];
 }
 
 + (NSString *)captureUIBaseUrl
@@ -312,17 +307,9 @@ static JRCaptureData *singleton = nil;
     return [[JRCaptureData captureDataInstance] clientId];
 }
 
-+ (NSString *)entityTypeName
-{
-    return [[JRCaptureData captureDataInstance] entityTypeName];
-}
-
 - (void)dealloc
 {
     [clientId release];
-    [entityTypeName release];
-    [captureApidDomain release];
-    [captureUIDomain release];
     [accessToken release];
     [creationToken release];
     [uuid release];
@@ -341,6 +328,12 @@ static JRCaptureData *singleton = nil;
     [JRCaptureData captureDataInstance].creationToken = nil;
     [JRCaptureData captureDataInstance].uuid = nil;
 }
+
++ (JRCaptureData *)sharedCaptureData
+{
+    return singleton;
+}
+
 
 + (void)setBackplaneChannelUrl:(NSString *)bpChannelUrl
 {

@@ -33,13 +33,6 @@
  Date:   Tuesday, January 31, 2012
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#ifdef DEBUG
-#define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-#else
-#define DLog(...)
-#endif
-
-#define ALog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
 
 #import "JRCapture.h"
 
@@ -49,26 +42,19 @@
 
 @implementation JRCapture
 
-+ (void)setEngageAppId:(NSString *)appId
-{
-    [JREngageWrapper configureEngageWithCaptureMobileEndpointUrlAndAppId:appId];
-}
-
 + (void)setBackplaneChannelUrl:(NSString *)backplaneChannelUrl
 {
-    [JRCaptureData setBackplaneChannelUrl:backplaneChannelUrl];
+    [JRCaptureData sharedCaptureData].bpChannelUrl = backplaneChannelUrl;
 }
 
-+ (void)setEngageAppId:(NSString *)appId
-     captureApidDomain:(NSString *)captureApidDomain
-       captureUIDomain:(NSString *)captureUIDomain
-              clientId:(NSString *)clientId
-     andEntityTypeName:(NSString *)entityTypeName
++ (void)      setEngageAppId:(NSString *)appId captureDomain:(NSString *)captureDomain
+             captureClientId:(NSString *)clientId captureLocale:(NSString *)captureLocale
+             captureFormName:(NSString *)captureFormName
+captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType
 {
-    [JRCaptureData setCaptureApidDomain:captureApidDomain
-                        captureUIDomain:captureUIDomain
-                               clientId:clientId
-                      andEntityTypeName:entityTypeName];
+    [JRCaptureData setCaptureDomain:captureDomain captureClientId:clientId
+                      captureLocale:captureLocale captureFormName:captureFormName
+       captureTraditionalSignInType:tradSignInType];
     [JREngageWrapper configureEngageWithCaptureMobileEndpointUrlAndAppId:appId];
 }
 
@@ -94,6 +80,7 @@
     [JRCaptureData clearSignInState];
 }
 
+
 + (void)setAccessToken:(NSString *)newAccessToken
 {
     [JRCaptureData setAccessToken:newAccessToken forUser:nil];
@@ -101,7 +88,7 @@
 
 + (NSString *)getAccessToken
 {
-    return [JRCaptureData getAccessToken];
+    return [JRCaptureData sharedCaptureData].accessToken;
 }
 
 + (void)setCreationToken:(NSString *)newCreationToken
@@ -157,23 +144,6 @@
     [JREngageWrapper startAuthenticationDialogOnProvider:provider
                             withCustomInterfaceOverrides:customInterfaceOverrides forDelegate:delegate];
 }
-
-#ifdef JRENGAGE_SHARING_WITH_CAPTURE
-+ (void)startEngageSharingDialogWithActivity:(JRActivityObject *)activity
-                                    forDelegate:(id <JRCaptureSharingDelegate>)delegate
-{
-    [JREngageWrapper startSocialPublishingDialogWithActivity:activity
-                                withCustomInterfaceOverrides:nil forDelegate:delegate];
-}
-
-+ (void)startEngageSharingDialogWithActivity:(JRActivityObject *)activity
-                   withCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
-                                    forDelegate:(id <JRCaptureSharingDelegate>)delegate
-{
-    [JREngageWrapper startSocialPublishingDialogWithActivity:activity
-                                withCustomInterfaceOverrides:customInterfaceOverrides forDelegate:delegate];
-}
-#endif // JRENGAGE_SHARING_WITH_CAPTURE
 
 + (void)startCaptureConventionalSigninForUser:(NSString *)user withPassword:(NSString *)password
                                withSigninType:(JRConventionalSigninType)conventionalSignInType
