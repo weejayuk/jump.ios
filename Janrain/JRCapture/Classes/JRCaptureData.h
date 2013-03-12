@@ -37,20 +37,20 @@
 @interface JRCaptureData : NSObject
 @property(nonatomic, retain) NSString *bpChannelUrl;
 @property(nonatomic, readonly) NSString *captureBaseUrl;
-@property(nonatomic, readonly) NSString *captureUIBaseUrl;
 @property(nonatomic, readonly) NSString *clientId;
 @property(nonatomic, readonly) NSString *accessToken;
 @property(nonatomic, readonly) NSString *creationToken;
-@property(nonatomic, readonly) NSString *uuid;
 @property(nonatomic, readonly) NSString *captureLocale;
 @property(nonatomic, readonly) NSString *captureFormName;
+@property(nonatomic, readonly) NSString *captureFlowName;
 @property(nonatomic, readonly) JRConventionalSigninType captureTradSignInType;
 
-+ (void)setAccessToken:(NSString *)newAccessToken forUser:(NSString *)userId;
++ (void)setAccessToken:(NSString *)newAccessToken;
 + (void)setCreationToken:(NSString *)newCreationToken;
 
 + (void)    setCaptureDomain:(NSString *)captureDomain captureClientId:(NSString *)clientId
                captureLocale:(NSString *)captureLocale captureFormName:(NSString *)captureFormName
+             captureFlowName:(NSString *)captureFlowName
 captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType;
 
 + (NSString *)captureMobileEndpointUrl;

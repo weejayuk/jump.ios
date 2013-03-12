@@ -32,6 +32,7 @@
 
 #import "JRCaptureData.h"
 #import "SFHFKeychainUtils.h"
+#import "NSMutableDictionary+get_params.h"
 
 #define cJRCaptureKeychainIdentifier @"capture_tokens.janrain"
 #define cJRCaptureKeychainUserName @"capture_user"
@@ -65,19 +66,17 @@ typedef enum
 } JRTokenType;
 
 @interface JRCaptureData ()
-+ (NSString *)loadUuidForLastLoggedInUser;
-+ (void)saveUuidForLastLoggedInUser:(NSString *)uuid;
-+ (NSString *)retrieveTokenFromKeychainOfType:(JRTokenType)tokenType forUser:(NSString *)uuid;
++ (NSString *)retrieveTokenFromKeychainOfType:(JRTokenType)tokenType;
 
 @property(nonatomic, retain) NSString *captureBaseUrl;
-@property(nonatomic, retain) NSString *captureUIBaseUrl;
 @property(nonatomic, retain) NSString *clientId;
 @property(nonatomic, retain) NSString *accessToken;
 @property(nonatomic, retain) NSString *creationToken;
-@property(nonatomic, retain) NSString *uuid;
 @property(nonatomic, retain) NSString *captureLocale;
 @property(nonatomic, retain) NSString *captureFormName;
+@property(nonatomic, retain) NSString *captureFlowName;
 @property(nonatomic) JRConventionalSigninType captureTradSignInType;
+
 
 @end
 
@@ -88,25 +87,25 @@ static JRCaptureData *singleton = nil;
 @synthesize captureBaseUrl;
 @synthesize accessToken;
 @synthesize creationToken;
-@synthesize uuid;
 @synthesize bpChannelUrl;
 @synthesize captureLocale;
 @synthesize captureFormName;
 @synthesize captureTradSignInType;
+@synthesize captureFlowName;
+
 
 - (JRCaptureData *)init
 {
     if ((self = [super init]))
     {
-        uuid          = [[JRCaptureData loadUuidForLastLoggedInUser] retain];
-        accessToken   = [[JRCaptureData retrieveTokenFromKeychainOfType:JRTokenTypeAccess forUser:uuid] retain];
-        creationToken = [[JRCaptureData retrieveTokenFromKeychainOfType:JRTokenTypeCreation forUser:nil] retain];
+        accessToken   = [[JRCaptureData retrieveTokenFromKeychainOfType:JRTokenTypeAccess] retain];
+        creationToken = [[JRCaptureData retrieveTokenFromKeychainOfType:JRTokenTypeCreation] retain];
     }
 
     return self;
 }
 
-+ (JRCaptureData *)captureDataInstance
++ (JRCaptureData *)sharedCaptureData
 {
     if (singleton == nil) {
         singleton = [((JRCaptureData*)[super allocWithZone:NULL]) init];
@@ -117,7 +116,7 @@ static JRCaptureData *singleton = nil;
 
 + (id)allocWithZone:(NSZone *)zone
 {
-    return [[self captureDataInstance] retain];
+    return [[self sharedCaptureData] retain];
 }
 
 - (id)copyWithZone:(__unused NSZone *)zone
@@ -144,24 +143,45 @@ static JRCaptureData *singleton = nil;
 
 + (NSString *)captureMobileEndpointUrl
 {
-    JRCaptureData *captureDataInstance = [JRCaptureData captureDataInstance];
-    NSString *bpChannelParam = captureDataInstance.bpChannelUrl ?
-            [NSString stringWithFormat:@"&bp_channel=%@", captureDataInstance.bpChannelUrl] : @"";
-    return [NSString stringWithFormat:@"%@/oauth/mobile_signin?client_id=%@&redirect_uri=%@/cmeu%@",
-                                      captureDataInstance.captureUIBaseUrl, captureDataInstance.clientId,
-                                      captureDataInstance.captureUIBaseUrl, bpChannelParam];
+    /**
+    * client_id
+    * locale
+    * response_type
+    * redirect_uri
+    * token
+    * attributeUpdates
+    * thin_registration
+    * flow_name
+    */
+
+    JRCaptureData *captureData = [JRCaptureData sharedCaptureData];
+    NSString *redirectUri = [NSString stringWithFormat:@"%@/cmeu", captureData.captureBaseUrl];
+    NSMutableDictionary *urlArgs = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                                                @"client_id", captureData.clientId,
+                                                                @"locale", captureData.captureLocale,
+                                                                @"response_type", @"token",
+                                                                @"redirect_uri", redirectUri,
+                                                                @"flow_name", captureData.captureFlowName,
+                                                                nil];
+
+    if (captureData.bpChannelUrl) [urlArgs setObject:captureData.bpChannelUrl forKey:@"bp_channel"];
+
+    NSString *getParams = [urlArgs asGetParamString];
+    return [NSString stringWithFormat:@"%@/oauth/auth_native?%@", captureData.captureBaseUrl, getParams];
 }
 
 + (void)    setCaptureDomain:(NSString *)captureDomain captureClientId:(NSString *)clientId
                captureLocale:(NSString *)captureLocale captureFormName:(NSString *)captureFormName
+             captureFlowName:(NSString *)captureFlowName
 captureTraditionalSignInType:(JRConventionalSigninType) tradSignInType;
 {
-    JRCaptureData *captureDataInstance     = [JRCaptureData captureDataInstance];
-    
+    JRCaptureData *captureDataInstance = [JRCaptureData sharedCaptureData];
+
     captureDataInstance.captureBaseUrl = [captureDomain urlStringFromBaseDomain];
-    captureDataInstance.clientId           = clientId;
+    captureDataInstance.clientId = clientId;
     captureDataInstance.captureLocale = captureLocale;
     captureDataInstance.captureFormName = captureFormName;
+    captureDataInstance.captureFlowName = captureFlowName;
     captureDataInstance.captureTradSignInType = tradSignInType;
 }
 
@@ -210,15 +230,15 @@ captureTraditionalSignInType:(JRConventionalSigninType) tradSignInType;
 
     if (tokenType == JRTokenTypeAccess)
     {
-        [JRCaptureData captureDataInstance].accessToken = token;
-        [JRCaptureData captureDataInstance].creationToken = nil;
+        [JRCaptureData sharedCaptureData].accessToken = token;
+        [JRCaptureData sharedCaptureData].creationToken = nil;
 
         [JRCaptureData storeTokenInKeychain:token ofType:JRTokenTypeAccess];
     }
     else
     {
-        [JRCaptureData captureDataInstance].creationToken = token;
-        [JRCaptureData captureDataInstance].accessToken = nil;
+        [JRCaptureData sharedCaptureData].creationToken = token;
+        [JRCaptureData sharedCaptureData].accessToken = nil;
 
         [JRCaptureData storeTokenInKeychain:token ofType:JRTokenTypeCreation];
     }
@@ -231,7 +251,7 @@ captureTraditionalSignInType:(JRConventionalSigninType) tradSignInType;
 
 + (NSString *)getAccessToken
 {
-    return [JRCaptureData captureDataInstance].accessToken;
+    return [JRCaptureData sharedCaptureData].accessToken;
 }
 
 + (void)setCreationToken:(NSString *)newCreationToken
@@ -239,30 +259,24 @@ captureTraditionalSignInType:(JRConventionalSigninType) tradSignInType;
     [JRCaptureData saveNewToken:newCreationToken ofType:JRTokenTypeCreation];
 }
 
-
 + (NSString *)accessToken
 {
-    return [[JRCaptureData captureDataInstance] accessToken];
+    return [[JRCaptureData sharedCaptureData] accessToken];
 }
 
 + (NSString *)creationToken
 {
-    return [[JRCaptureData captureDataInstance] creationToken];
+    return [[JRCaptureData sharedCaptureData] creationToken];
 }
 
 + (NSString *)captureBaseUrl
 {
-    return [[JRCaptureData captureDataInstance] captureBaseUrl];
-}
-
-+ (NSString *)captureUIBaseUrl
-{
-    return [[JRCaptureData captureDataInstance] captureUIBaseUrl];
+    return [[JRCaptureData sharedCaptureData] captureBaseUrl];
 }
 
 + (NSString *)clientId
 {
-    return [[JRCaptureData captureDataInstance] clientId];
+    return [[JRCaptureData sharedCaptureData] clientId];
 }
 
 - (void)dealloc
@@ -270,7 +284,10 @@ captureTraditionalSignInType:(JRConventionalSigninType) tradSignInType;
     [clientId release];
     [accessToken release];
     [creationToken release];
-    [uuid release];
+    [captureBaseUrl release];
+    [captureFlowName release];
+    [captureLocale release];
+    [captureFormName release];
     [bpChannelUrl release];
     [super dealloc];
 }
@@ -278,23 +295,14 @@ captureTraditionalSignInType:(JRConventionalSigninType) tradSignInType;
 + (void)clearSignInState
 {
     DLog(@"");
-    NSString* currentUuid = [JRCaptureData captureDataInstance].uuid;
     [JRCaptureData deleteTokenFromKeychainOfType:JRTokenTypeAccess];
     [JRCaptureData deleteTokenFromKeychainOfType:JRTokenTypeCreation];
-    [JRCaptureData saveUuidForLastLoggedInUser:nil];
-    [JRCaptureData captureDataInstance].accessToken = nil;
-    [JRCaptureData captureDataInstance].creationToken = nil;
-    [JRCaptureData captureDataInstance].uuid = nil;
+    [JRCaptureData sharedCaptureData].accessToken = nil;
+    [JRCaptureData sharedCaptureData].creationToken = nil;
 }
-
-+ (JRCaptureData *)sharedCaptureData
-{
-    return singleton;
-}
-
 
 + (void)setBackplaneChannelUrl:(NSString *)bpChannelUrl
 {
-    [JRCaptureData captureDataInstance].bpChannelUrl = bpChannelUrl;
+    [JRCaptureData sharedCaptureData].bpChannelUrl = bpChannelUrl;
 }
 @end

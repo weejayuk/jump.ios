@@ -382,6 +382,7 @@ typedef enum
  **/
 + (void)      setEngageAppId:(NSString *)appId captureDomain:(NSString *)captureDomain
              captureClientId:(NSString *)clientId captureLocale:(NSString *)captureLocale
+             captureFlowName:(NSString *)captureFlowName
              captureFormName:(NSString *)captureFormName
 captureTraditionalSignInType:(JRConventionalSigninType) tradSignInType;
 

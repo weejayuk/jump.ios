@@ -49,11 +49,13 @@
 
 + (void)      setEngageAppId:(NSString *)appId captureDomain:(NSString *)captureDomain
              captureClientId:(NSString *)clientId captureLocale:(NSString *)captureLocale
+             captureFlowName:(NSString *)captureFlowName
              captureFormName:(NSString *)captureFormName
 captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType
 {
     [JRCaptureData setCaptureDomain:captureDomain captureClientId:clientId
                       captureLocale:captureLocale captureFormName:captureFormName
+                    captureFlowName:(NSString *)captureFlowName
        captureTraditionalSignInType:tradSignInType];
     [JREngageWrapper configureEngageWithCaptureMobileEndpointUrlAndAppId:appId];
 }
@@ -82,7 +84,7 @@ captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType
 
 + (void)setAccessToken:(NSString *)newAccessToken
 {
-    [JRCaptureData setAccessToken:newAccessToken forUser:nil];
+    [JRCaptureData setAccessToken:newAccessToken];
 }
 
 + (NSString *)getAccessToken

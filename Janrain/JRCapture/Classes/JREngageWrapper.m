@@ -48,12 +48,16 @@
 @implementation JREngageWrapperErrorWriter
 + (NSError *)invalidPayloadError:(NSObject *)payload
 {
-    return [JRCaptureError errorFromResult:
-                            [NSDictionary dictionaryWithObjectsAndKeys:
-                                                     @"error", @"stat",
-                                                     @"invalid_endpoint_response", @"error",
-                                                     [NSString stringWithFormat:@"The Capture Mobile Endpoint Url did not have the expected data: %@", [payload description]], @"error_description",
-                                                     [NSNumber numberWithInteger:JRCaptureWrappedEngageErrorInvalidEndpointPayload], @"code", nil]];
+    NSString *string = [NSString stringWithFormat:@"The Capture Mobile Endpoint Url did not have the expected data: %@",
+                                                  [payload description]];
+    NSNumber *number = [NSNumber numberWithInteger:JRCaptureWrappedEngageErrorInvalidEndpointPayload];
+    NSDictionary *result = [NSDictionary dictionaryWithObjectsAndKeys:
+                                                 @"error", @"stat",
+                                                 @"invalid_endpoint_response", @"error",
+                                                 string, @"error_description",
+                                                 number, @"code",
+                                                 nil];
+    return [JRCaptureError errorFromResult:result];
 }
 @end
 
@@ -180,18 +184,6 @@ static JREngageWrapper *singleton = nil;
     [JREngage showAuthenticationDialogForProvider:provider withCustomInterfaceOverrides:customInterfaceOverrides];
 }
 
-#ifdef JRENGAGE_SHARING_WITH_CAPTURE
-+ (void)startSocialPublishingDialogWithActivity:(JRActivityObject *)activity
-                   withCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
-                                    forDelegate:(id <JRCaptureSharingDelegate>)delegate
-{
-    [[JREngageWrapper singletonInstance] setDelegate:delegate];
-    [[JREngageWrapper singletonInstance] setDialogState:JREngageDialogStateSharing];
-
-    [JREngage showSharingDialogWithActivity:activity withCustomInterfaceOverrides:customInterfaceOverrides];
-}
-#endif // JRENGAGE_SHARING_WITH_CAPTURE
-
 - (void)engageLibraryTearDown
 {
     [JREngage updateTokenUrl:nil];
@@ -226,8 +218,7 @@ static JREngageWrapper *singleton = nil;
 - (void)authenticationDidReachTokenUrl:(NSString *)tokenUrl withResponse:(NSURLResponse *)response
                             andPayload:(NSData *)tokenUrlPayload forProvider:(NSString *)provider
 {
-    NSString     *payload     = [[[NSString alloc] initWithData:tokenUrlPayload encoding:NSUTF8StringEncoding]
-            autorelease];
+    NSString *payload = [[[NSString alloc] initWithData:tokenUrlPayload encoding:NSUTF8StringEncoding] autorelease];
     NSDictionary *payloadDict = [payload objectFromJSONString];
 
     DLog(@"%@", payload);
@@ -272,48 +263,9 @@ static JREngageWrapper *singleton = nil;
         if ([delegate respondsToSelector:@selector(engageSigninDialogDidFailToShowWithError:)])
             [delegate engageSigninDialogDidFailToShowWithError:error];
     }
-#ifdef JRENGAGE_SHARING_WITH_CAPTURE
-    else
-    {
-        if ([delegate respondsToSelector:@selector(engageSocialSharingDialogDidFailToShowWithError:)])
-            [(id<JRCaptureSharingDelegate>)delegate engageSocialSharingDialogDidFailToShowWithError:error];
-    }
-#endif // JRENGAGE_SHARING_WITH_CAPTURE
 
     [self engageLibraryTearDown];
 }
-
-#ifdef JRENGAGE_SHARING_WITH_CAPTURE
-- (void)sharingDidComplete
-{
-    if ([delegate respondsToSelector:@selector(engageSocialSharingDidComplete)])
-        [(id<JRCaptureSharingDelegate>)delegate engageSocialSharingDidComplete];
-
-    [self engageLibraryTearDown];
-}
-
-- (void)sharingDidNotComplete
-{
-    if ([delegate respondsToSelector:@selector(engageSocialSharingDidNotComplete)])
-        [(id<JRCaptureSharingDelegate>)delegate engageSocialSharingDidNotComplete];
-
-    [self engageLibraryTearDown];
-}
-
-- (void)sharingDidSucceedForActivity:(JRActivityObject *)activity forProvider:(NSString *)provider
-{
-    if ([delegate respondsToSelector:@selector(engageSocialSharingDidSucceedForActivity:onProvider:)])
-        [(id<JRCaptureSharingDelegate>)delegate engageSocialSharingDidSucceedForActivity:activity onProvider:provider];
-}
-
-- (void)sharingDidFailForActivity:(JRActivityObject*)activity withError:(NSError*)error forProvider:(NSString*)provider;
-{
-    if ([delegate respondsToSelector:@selector(engageSocialSharingDidFailForActivity:withError:onProvider:)])
-        [(id<JRCaptureSharingDelegate>)delegate engageSocialSharingDidFailForActivity:activity withError:error onProvider:provider];
-
-    [self engageLibraryTearDown];
-}
-#endif // JRENGAGE_SHARING_WITH_CAPTURE
 
 - (void)dealloc
 {
