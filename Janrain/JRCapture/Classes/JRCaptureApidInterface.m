@@ -36,9 +36,6 @@
 #import "JRCaptureApidInterface.h"
 #import "JRCaptureData.h"
 #import "JSONKit.h"
-#import "JRCaptureError.h"
-#import "JRCapture.h"
-#import "JRCaptureUser.h"
 
 static NSString *const cSignInUser = @"signinUser";
 static NSString *const cCreateUser = @"createUser";
@@ -74,7 +71,7 @@ static JRCaptureApidInterface *singleton = nil;
     return [[self captureInterfaceInstance] retain];
 }
 
-- (id)copyWithZone:(NSZone *)zone
+- (id)copyWithZone:(__unused NSZone *)zone
 {
     return self;
 }
@@ -712,8 +709,6 @@ typedef enum CaptureInterfaceStatEnum
     JRCaptureUser *captureUser = [JRCaptureUser captureUserObjectFromDictionary:captureProfile];
 
     if (!captureUser) return cJRInvalidCaptureUser;
-
-    NSString *uuid = [captureUser performSelector:NSSelectorFromString(@"uuid")];
 
     if (accessToken)
         [JRCaptureData setAccessToken:accessToken];

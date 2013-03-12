@@ -59,8 +59,10 @@
 @property BOOL engageSignInWasCanceled;
 @property(nonatomic) NSString *lfToken;
 @property(nonatomic, strong) NSString *captureClientId;
-@property(nonatomic, strong) NSString *captureUIDomain;
-@property(nonatomic, strong) NSString *captureApidDomain;
+@property(nonatomic, strong) NSString *captureDomain;
+@property(nonatomic, strong) NSString *captureLocale;
+@property(nonatomic, strong) NSString *captureFlowName;
+@property(nonatomic, strong) NSString *captureFormName;
 @property(nonatomic, strong) NSString *engageAppId;
 @property(nonatomic, strong) NSString *bpBusUrlString;
 @property(nonatomic, strong) NSString *bpChannelUrl;
@@ -81,8 +83,10 @@ static SharedData *singleton = nil;
 @synthesize bpChannelUrl;
 @synthesize lfToken;
 @synthesize captureClientId;
-@synthesize captureUIDomain;
-@synthesize captureApidDomain;
+@synthesize captureDomain;
+@synthesize captureLocale;
+@synthesize captureFormName;
+@synthesize captureFlowName;
 @synthesize engageAppId;
 @synthesize bpBusUrlString;
 @synthesize liveFyreNetwork;
@@ -95,8 +99,10 @@ static SharedData *singleton = nil;
     if ((self = [super init]))
     {
         [self loadConfigFromPlist];
-        [JRCapture setEngageAppId:engageAppId captureApidDomain:captureApidDomain
-                  captureUIDomain:captureUIDomain clientId:captureClientId andEntityTypeName:nil];
+        [JRCapture setEngageAppId:engageAppId captureDomain:captureDomain
+                  captureClientId:captureClientId captureLocale:captureLocale
+                  captureFlowName:captureFlowName captureFormName:captureFormName
+     captureTraditionalSignInType:JRConventionalSigninEmailPassword];
         [self asyncFetchNewBackplaneChannel];
 
         self.prefs = [NSUserDefaults standardUserDefaults];
@@ -121,8 +127,10 @@ static SharedData *singleton = nil;
     NSDictionary *cfg = [cfgPlist objectForKey:configKeyName];
 
     self.captureClientId = [cfg objectForKey:@"captureClientId"];
-    self.captureUIDomain = [cfg objectForKey:@"captureUIDomain"];
-    self.captureApidDomain = [cfg objectForKey:@"captureApidDomain"];
+    self.captureDomain = [cfg objectForKey:@"captureDomain"];
+    self.captureLocale = [cfg objectForKey:@"captureLocale"];
+    self.captureFormName = [cfg objectForKey:@"captureFormName"];
+    self.captureFlowName = [cfg objectForKey:@"captureFlowName"];
     self.engageAppId = [cfg objectForKey:@"engageAppId"];
     self.bpBusUrlString = [cfg objectForKey:@"bpBusUrlString"];
     self.bpChannelUrl = [cfg objectForKey:@"bpChannelUrl"];
@@ -329,7 +337,7 @@ static SharedData *singleton = nil;
     else
         self.isNew = NO;
 
-    if (captureRecordStatus == JRCaptureRecordMissingRequiredFields)
+    if (captureRecordStatus == JRCaptureRecordRequiresCreation)
         self.isNotYetCreated = YES;
     else
         self.isNotYetCreated = NO;
