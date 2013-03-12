@@ -57,6 +57,7 @@
 		C14242103EB8F65F287EA2FD /* button_janrain_280x40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C14248429E6E258DCDB1FEA7 /* button_janrain_280x40@2x.png */; };
 		C142421C360B5CDD04D2B2EF /* logo_orkut_280x65@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424ECB1B1DAAAEE1D16E0C /* logo_orkut_280x65@2x.png */; };
 		C14242214A34D2F52273A539 /* icon_myspace_30x30@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424855504C6C97F9FD4530 /* icon_myspace_30x30@2x.png */; };
+		C14242372F43ECBE4FC3B913 /* JRPluralLevelThreeElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424580A96FA450B14016EA /* JRPluralLevelThreeElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C14242472E16BD6519162837 /* logo_google_280x65.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424E0260D89C187A61A874 /* logo_google_280x65.png */; };
 		C142424E43DA098E32674AE7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C142401A5A8AAAFC251E5853 /* QuartzCore.framework */; };
 		C14242525E9D34ED62261CA1 /* JRCaptureWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C142482E01FFA44280BE1D8E /* JRCaptureWebViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -69,17 +70,21 @@
 		C1424328018E0D26EB12D589 /* JRName.m in Sources */ = {isa = PBXBuildFile; fileRef = C14242B75343FD75920D56E4 /* JRName.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C1424348AA5C311E306A242D /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C14249B9A86322CE1634EA23 /* MessageUI.framework */; };
 		C142436B0A5FFE01F275A965 /* JRActivityObject.m in Sources */ = {isa = PBXBuildFile; fileRef = C14243C55CA82FBECCA9BEFA /* JRActivityObject.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		C142437C81E8238B9093B74D /* JRTournamentsPlayedElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C14242300A50D35712FFE73C /* JRTournamentsPlayedElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C142438AEDFC6FF46C1240B4 /* button_facebook_135x40.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424FAC00618C0CCEB28EF7 /* button_facebook_135x40.png */; };
 		C142439B25C783C9CF399150 /* JRCurrentLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = C14248EFE00221900673E886 /* JRCurrentLocation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C14243B2FE34FE49E5D53DE0 /* logo_soundcloud_280x65.png in Resources */ = {isa = PBXBuildFile; fileRef = C14244A8B9C320D314EFD792 /* logo_soundcloud_280x65.png */; };
 		C14243BE04A67B1CD63F38D3 /* logo_linkedin_280x65.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424C18699DAC8CA0BF2B25 /* logo_linkedin_280x65.png */; };
 		C14243C6BB1B2B57B93CAD8B /* icon_wordpress_30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = C14249A4F2571F8F8F6FF9B4 /* icon_wordpress_30x30.png */; };
 		C14243C6D410B0D2A9E4247F /* logo_twitter_280x65@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424B8BBA034C130EDF81CD /* logo_twitter_280x65@2x.png */; };
-		C14243D27039CF596970752A /* NSMutableDictionary+get_params.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424203B4DC59ACED063AA7 /* NSMutableDictionary+get_params.m */; };
+		C14243C8ABEC0F7AEA754D0E /* JRObjectLevelThree.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424BAB9EBE3E94B18F01FF /* JRObjectLevelThree.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		C14243D27039CF596970752A /* NSMutableDictionary+get_params.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424203B4DC59ACED063AA7 /* NSMutableDictionary+get_params.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C14243D790ADAFCDC23DE0B2 /* triangle_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424BACBF8A92A9357F4652 /* triangle_icon.png */; };
 		C14243DE5C2E34BDC17AAB9E /* button_google_280x40.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424C56495C47500BF1531B /* button_google_280x40.png */; };
+		C14243E0897EA7034B5CF388 /* JRPluralLevelOneElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C142474CF67B29AAD7184D6F /* JRPluralLevelOneElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C14243E51EBAFED7421B789B /* logo_aol_280x65@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C14241C700BFA34B059F5F02 /* logo_aol_280x65@2x.png */; };
 		C14243E7A98314635A409168 /* icon_bw_yahoo_30x30@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C14241602E2011598C0F0497 /* icon_bw_yahoo_30x30@2x.png */; };
+		C14243F5868AE72713CFEB39 /* JROnipLevelTwo.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424C5D86D5E45ACF27960A /* JROnipLevelTwo.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C14243FD63B2DD36EB7DF392 /* button_twitter_280x40.png in Resources */ = {isa = PBXBuildFile; fileRef = C142402A967BF5EF30B193D6 /* button_twitter_280x40.png */; };
 		C1424401A56F02F445D906FE /* icon_bw_sms_30x30@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C14243C0549B0DBC33D903CF /* icon_bw_sms_30x30@2x.png */; };
 		C14244027D292ED123F53B08 /* fox_dev_oct.json in Resources */ = {isa = PBXBuildFile; fileRef = C14242C9D8E38A156DC91544 /* fox_dev_oct.json */; };
@@ -104,6 +109,7 @@
 		C142452E138CE1DBC498C7D4 /* JRUserInterfaceMaestro.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424190A1F36D38BD3F8303 /* JRUserInterfaceMaestro.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C1424543D51800B2D92700EB /* triangle_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424FD84D74DDA68712F78C /* triangle_icon@2x.png */; };
 		C142455C0ECF51FF2B08788C /* button_myspace_135x40.png in Resources */ = {isa = PBXBuildFile; fileRef = C142456490E441CE55814D46 /* button_myspace_135x40.png */; };
+		C142456F0C50A0C0655FA135 /* JRGamesElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424A85D1F57A461D300A4E /* JRGamesElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C142459603ED1E5AADC59CE5 /* logo_flickr_280x65.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424FF00992CE2E024785FA /* logo_flickr_280x65.png */; };
 		C142459D05FDC8286586B539 /* icon_bw_linkedin_30x30@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C142423AF3D1BE09B4E0D1A9 /* icon_bw_linkedin_30x30@2x.png */; };
 		C142459F66CED8ABA18C2FBF /* media_view_background_bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = C14242C018EDE3F08C703D58 /* media_view_background_bottom.png */; };
@@ -114,9 +120,12 @@
 		C14246103BE0A523306FAFED /* logo_blogger_280x65@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424B2B5EC95FC5376981C9 /* logo_blogger_280x65@2x.png */; };
 		C1424611CE09C0897CF6AD1F /* JRUserLandingController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C14240824250D404653F6131 /* JRUserLandingController.xib */; };
 		C142463D2448DBD0A9D0E2F8 /* icon_hyves_30x30@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424F0A1FB36287B1FE63EC /* icon_hyves_30x30@2x.png */; };
+		C14246446BA8F4CFB0000354 /* JRObjectLevelOne.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424A15A5D0B0B0C299B0FF /* JRObjectLevelOne.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		C142464E6400856B090FF8FD /* JROnipLevelThree.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424291B49E5600AC8E83D1 /* JROnipLevelThree.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C142467CAC8021D49865652D /* workspace.xml in Resources */ = {isa = PBXBuildFile; fileRef = C14244CEAD35D89E7DA451B2 /* workspace.xml */; };
 		C1424681E1985D105D5201AD /* JRPreviewLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = C14244484B5CFD682DAF2782 /* JRPreviewLabel.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C1424688E1FB1AB28A65DE7B /* JRProvidersController.m in Sources */ = {isa = PBXBuildFile; fileRef = C14247ECC289D4A788C597AF /* JRProvidersController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		C14246938BE8C8B01ED849DA /* JRObjectLevelTwo.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424820BB3D15DC3A2181F6 /* JRObjectLevelTwo.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C142469726764B17967FDD71 /* JRImsElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C14247EEEB36676C7556608E /* JRImsElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C142469D42D84A62B77A1213 /* icon_yahoo_30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424AF91891541D65B14D91 /* icon_yahoo_30x30.png */; };
 		C142469E45DDD756EF4C2FB0 /* icon_facebook_30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424DFC34A287208C8F50B8 /* icon_facebook_30x30.png */; };
@@ -142,6 +151,7 @@
 		C142478A976A234E2B98D6D7 /* ObjCMethodParts.pl in Resources */ = {isa = PBXBuildFile; fileRef = C142400CBFE872CEDB5DAE5F /* ObjCMethodParts.pl */; };
 		C142478F4E4C0B831DFCA060 /* button_iosblue_135x40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C142472FD8A853442360A5AE /* button_iosblue_135x40@2x.png */; };
 		C142479F89AA562FBDA3B0E3 /* button_linkedin_135x40.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424C9C0ECE62A0AB5017CE /* button_linkedin_135x40.png */; };
+		C14247A2A61A413139D8CEA8 /* JRPluralLevelTwoElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424FD90D1DBB8C115B8826 /* JRPluralLevelTwoElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C14247CD922FBC7B1F41A8FA /* icon_openid_30x30@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C14244726F6E828704CBD14D /* icon_openid_30x30@2x.png */; };
 		C14247F5E50F8EB9CEC547F5 /* button_janrain_135x40.png in Resources */ = {isa = PBXBuildFile; fileRef = C14247EF0458B02DD4125E45 /* button_janrain_135x40.png */; };
 		C14248151CAB686C69DCE02B /* CaptureParserIO.pl in Resources */ = {isa = PBXBuildFile; fileRef = C1424AE498DE0A996796FDAF /* CaptureParserIO.pl */; };
@@ -164,6 +174,7 @@
 		C142491E9AF425174C28F450 /* logo_paypal_280x65@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424D4E35CD6551BCC817F8 /* logo_paypal_280x65@2x.png */; };
 		C1424936B640AC467BD415FA /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = C1424870E40B8714E017E66D /* .gitignore */; };
 		C142493BE3FDBFF5BA14375E /* logo_livejournal_280x65@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C14243911A4F42EAB3A6220A /* logo_livejournal_280x65@2x.png */; };
+		C142494BA3A9BF2BE9DB63E7 /* JROnipLevelOneElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424280FC0D8147B2F3F632 /* JROnipLevelOneElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C1424958DCFF7AEBE5613ED0 /* icon_bw_mail_sms_30x30@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C14249E05A43189F03F88119 /* icon_bw_mail_sms_30x30@2x.png */; };
 		C1424960D4A31034C3139EC3 /* logo_foursquare_280x65@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C14246B94F3BD9BEA3231548 /* logo_foursquare_280x65@2x.png */; };
 		C1424987999B551BF43B03FA /* logo_myspace_280x65.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424B814A52DF511182D7C1 /* logo_myspace_280x65.png */; };
@@ -179,6 +190,7 @@
 		C1424A46855548816F872292 /* icon_bw_facebook_30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = C14249067938B56E635B8FEE /* icon_bw_facebook_30x30.png */; };
 		C1424A538AC1AF64B9839581 /* icon_wordpress_30x30@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424F62252FD1FEBB5C0E92 /* icon_wordpress_30x30@2x.png */; };
 		C1424A81923514586EF3ECE1 /* icon_verisign_30x30@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C142467B872F992162EB1D06 /* icon_verisign_30x30@2x.png */; };
+		C1424A8BB07F4A722F10E7A4 /* JRPinoLevelThreeElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424F2F1B46A605E1784AA0 /* JRPinoLevelThreeElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C1424AC20CDA9F5D4D6E5636 /* logo_aol_280x65.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424F6969522C628D7C1A05 /* logo_aol_280x65.png */; };
 		C1424AC5DE292B712817154F /* logo_livejournal_280x65.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424504CF612DD92617A3E0 /* logo_livejournal_280x65.png */; };
 		C1424ACCBD321AA050AC6D17 /* icon_soundcloud_30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424DBF7A86E3E28DC9D31E /* icon_soundcloud_30x30.png */; };
@@ -199,6 +211,7 @@
 		C1424B9B470C347427131243 /* logo_orkut_280x65.png in Resources */ = {isa = PBXBuildFile; fileRef = C14247BA84416D58E48D6F00 /* logo_orkut_280x65.png */; };
 		C1424BBB0884BDF748CC8CF9 /* icon_live_id_30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = C14240C71A260CC690E6976B /* icon_live_id_30x30.png */; };
 		C1424BCFEC4DFDC792F6E400 /* icon_myopenid_30x30@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C142424D30EBD42FF190592D /* icon_myopenid_30x30@2x.png */; };
+		C1424BE68E9D62FF40F0C529 /* JRPinoLevelOne.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424EB91544FC0C5A9AB0BA /* JRPinoLevelOne.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C1424C147744F8A00B534B35 /* scope_settings.xml in Resources */ = {isa = PBXBuildFile; fileRef = C1424EB7AC977A1B13162487 /* scope_settings.xml */; };
 		C1424C1813F6ABEE885FD22B /* logo_netlog_280x65@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424258DC3E6D297975BC25 /* logo_netlog_280x65@2x.png */; };
 		C1424C2C2DBA90B1864CE44B /* JROrganizationsElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C14240A47CC507EA303462A1 /* JROrganizationsElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -222,6 +235,7 @@
 		C1424D6A02BE95BC65F5097D /* SFHFKeychainUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C14249F6CBF98BDF3C6825D1 /* SFHFKeychainUtils.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C1424D6DA143BFC13913C5C2 /* logo_myopenid_280x65@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C142448FE37E8FCF942F347E /* logo_myopenid_280x65@2x.png */; };
 		C1424D833B715B980FAD48D2 /* button_linkedin_135x40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424D1EC9184526A5144B61 /* button_linkedin_135x40@2x.png */; };
+		C1424D8C0D3CAA6BD49936BF /* JRBestHand.m in Sources */ = {isa = PBXBuildFile; fileRef = C14248B63A1E7AD3B10A0458 /* JRBestHand.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C1424D9427DA599B0C9E17E1 /* JREngagePhonegapPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424E9B09E4A2E5DA70FBE6 /* JREngagePhonegapPlugin.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C1424DA806C966265CE45E4F /* JRConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424B55E1561AB88BDC29A3 /* JRConnectionManager.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C1424DB863176877F0DB00FD /* JRCaptureJsWidgetWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424421D412ED60049CDF80 /* JRCaptureJsWidgetWrapper.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -263,6 +277,7 @@
 		C1424FA9547C17F129FB0B32 /* icon_tumblr_30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424A90065C63920F3B85F2 /* icon_tumblr_30x30.png */; };
 		C1424FACB1EE8791978C9B08 /* icon_bw_yahoo_30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = C142422ACE8DF6FA7206BCD4 /* icon_bw_yahoo_30x30.png */; };
 		C1424FAF0CBACC530CC5D240 /* icon_netlog_30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424F2C5E9EF9433DB576EA /* icon_netlog_30x30.png */; };
+		C1424FB0FC907D384EFFAB75 /* JRPinoLevelTwo.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424F6B40DA73E6114C4084 /* JRPinoLevelTwo.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C1424FBDDF63281F348A5566 /* encodings.xml in Resources */ = {isa = PBXBuildFile; fileRef = C1424A940DEF393CF1E10DF7 /* encodings.xml */; };
 		C1424FD54188D7E40E906D39 /* icon_twitter_30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424B5CF6B68C5466BB16F6 /* icon_twitter_30x30.png */; };
 		C1424FE374C34F805D529203 /* icon_bw_sms_30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424F8F2FE018E4847A87A7 /* icon_bw_sms_30x30.png */; };
@@ -325,14 +340,18 @@
 		C142401A5A8AAAFC251E5853 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		C142401DEAB8BDC6ABE47E82 /* JRLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRLocation.h; sourceTree = "<group>"; };
 		C142401E31AE03A30F61C13E /* JREngage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JREngage.h; path = ../../Janrain/JREngage/Classes/JREngage.h; sourceTree = "<group>"; };
+		C14240251E4400698918475F /* JRObjectLevelOne.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRObjectLevelOne.h; sourceTree = "<group>"; };
 		C142402A967BF5EF30B193D6 /* button_twitter_280x40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = button_twitter_280x40.png; path = ../../Janrain/JREngage/Resources/images/buttons/button_twitter_280x40.png; sourceTree = "<group>"; };
 		C14240301A4EB2618762A097 /* JRCaptureData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JRCaptureData.m; path = ../../Janrain/JRCapture/Classes/JRCaptureData.m; sourceTree = "<group>"; };
+		C142405B980E0915FF271995 /* JRPinoLevelTwo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRPinoLevelTwo.h; sourceTree = "<group>"; };
+		C142405CFE00AF36E95A00C5 /* JRBestHand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRBestHand.h; sourceTree = "<group>"; };
 		C142406C2445886C62A3438C /* JRCaptureUser+Extras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "JRCaptureUser+Extras.m"; path = "../../Janrain/JRCapture/Classes/JRCaptureUser+Extras.m"; sourceTree = "<group>"; };
 		C142407A746BD284FA03D078 /* icon_livejournal_30x30@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon_livejournal_30x30@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/icons/icon_livejournal_30x30@2x.png"; sourceTree = "<group>"; };
 		C142407EB8086ACFAE29F405 /* JRProvidersController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRProvidersController.h; path = ../../Janrain/JREngage/Classes/JRProvidersController.h; sourceTree = "<group>"; };
 		C14240824250D404653F6131 /* JRUserLandingController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = JRUserLandingController.xib; path = ../../Janrain/JREngage/Resources/xibs/JRUserLandingController.xib; sourceTree = "<group>"; };
 		C1424084FC08BAC429FA5350 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSONKit.h; path = ../../Janrain/JSONKit/JSONKit.h; sourceTree = "<group>"; };
 		C142408A315646B089CF7CCE /* JRImsElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRImsElement.h; sourceTree = "<group>"; };
+		C14240982598BE236DBEE9EE /* JRTournamentsPlayedElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRTournamentsPlayedElement.h; sourceTree = "<group>"; };
 		C14240A47CC507EA303462A1 /* JROrganizationsElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JROrganizationsElement.m; sourceTree = "<group>"; };
 		C14240A6AD2E29761205C148 /* icon_orkut_30x30@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon_orkut_30x30@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/icons/icon_orkut_30x30@2x.png"; sourceTree = "<group>"; };
 		C14240AD403CB62FF3144D28 /* logo_yahoo_280x65@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "logo_yahoo_280x65@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/logos/logo_yahoo_280x65@2x.png"; sourceTree = "<group>"; };
@@ -364,10 +383,13 @@
 		C1424216ED79F8A56655709D /* JRConventionalSigninViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRConventionalSigninViewController.h; path = ../../Janrain/JRCapture/Classes/JRConventionalSigninViewController.h; sourceTree = "<group>"; };
 		C142421AAD402D51EC94E8CD /* ATTRIBUTION */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ATTRIBUTION; path = ../../Janrain/JREngage/ATTRIBUTION; sourceTree = "<group>"; };
 		C142422ACE8DF6FA7206BCD4 /* icon_bw_yahoo_30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_bw_yahoo_30x30.png; path = ../../Janrain/JREngage/Resources/images/icons_bw/icon_bw_yahoo_30x30.png; sourceTree = "<group>"; };
+		C14242300A50D35712FFE73C /* JRTournamentsPlayedElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRTournamentsPlayedElement.m; sourceTree = "<group>"; };
 		C142423AF3D1BE09B4E0D1A9 /* icon_bw_linkedin_30x30@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon_bw_linkedin_30x30@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/icons_bw/icon_bw_linkedin_30x30@2x.png"; sourceTree = "<group>"; };
 		C142424D30EBD42FF190592D /* icon_myopenid_30x30@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon_myopenid_30x30@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/icons/icon_myopenid_30x30@2x.png"; sourceTree = "<group>"; };
 		C1424258DC3E6D297975BC25 /* logo_netlog_280x65@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "logo_netlog_280x65@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/logos/logo_netlog_280x65@2x.png"; sourceTree = "<group>"; };
 		C14242805B642621E2487A08 /* user_dev.json */ = {isa = PBXFileReference; lastKnownFileType = file.json; name = user_dev.json; path = ../../Janrain/JRCapture/Script/user_dev.json; sourceTree = "<group>"; };
+		C1424280FC0D8147B2F3F632 /* JROnipLevelOneElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JROnipLevelOneElement.m; sourceTree = "<group>"; };
+		C1424291B49E5600AC8E83D1 /* JROnipLevelThree.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JROnipLevelThree.m; sourceTree = "<group>"; };
 		C14242B75343FD75920D56E4 /* JRName.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRName.m; sourceTree = "<group>"; };
 		C14242B7C2FF810827779BF4 /* JREngagePhonegapPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JREngagePhonegapPlugin.h; path = ../../Janrain/JREngage/Classes/JREngagePhonegapPlugin.h; sourceTree = "<group>"; };
 		C14242C018EDE3F08C703D58 /* media_view_background_bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = media_view_background_bottom.png; path = ../../Janrain/JREngage/Resources/images/other/media_view_background_bottom.png; sourceTree = "<group>"; };
@@ -417,9 +439,11 @@
 		C1424540B9149BC23FAC2047 /* vcs.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = vcs.xml; path = ../../Janrain/JRCapture/Script/.idea/vcs.xml; sourceTree = "<group>"; };
 		C14245646994EA0DA27DEEE7 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSONKit.m; path = ../../Janrain/JSONKit/JSONKit.m; sourceTree = "<group>"; };
 		C142456490E441CE55814D46 /* button_myspace_135x40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = button_myspace_135x40.png; path = ../../Janrain/JREngage/Resources/images/buttons/button_myspace_135x40.png; sourceTree = "<group>"; };
+		C1424580A96FA450B14016EA /* JRPluralLevelThreeElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRPluralLevelThreeElement.m; sourceTree = "<group>"; };
 		C142458158A486188C3231DE /* icon_tumblr_30x30@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon_tumblr_30x30@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/icons/icon_tumblr_30x30@2x.png"; sourceTree = "<group>"; };
 		C14245847B7BCA214F6F9448 /* icon_flickr_30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_flickr_30x30.png; path = ../../Janrain/JREngage/Resources/images/icons/icon_flickr_30x30.png; sourceTree = "<group>"; };
 		C14245B020A67DE6CC367386 /* logo_tumblr_280x65.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo_tumblr_280x65.png; path = ../../Janrain/JREngage/Resources/images/logos/logo_tumblr_280x65.png; sourceTree = "<group>"; };
+		C14245C3951CF02145544E9E /* JRPluralLevelTwoElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRPluralLevelTwoElement.h; sourceTree = "<group>"; };
 		C14245C3C59D495C17527569 /* logo_foursquare_280x65.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo_foursquare_280x65.png; path = ../../Janrain/JREngage/Resources/images/logos/logo_foursquare_280x65.png; sourceTree = "<group>"; };
 		C14245C7F846E85199F92427 /* icon_linkedin_30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_linkedin_30x30.png; path = ../../Janrain/JREngage/Resources/images/icons/icon_linkedin_30x30.png; sourceTree = "<group>"; };
 		C14245C8C3A72582FC442F97 /* Script.iml */ = {isa = PBXFileReference; lastKnownFileType = file.iml; name = Script.iml; path = ../../Janrain/JRCapture/Script/.idea/Script.iml; sourceTree = "<group>"; };
@@ -439,6 +463,7 @@
 		C142467B872F992162EB1D06 /* icon_verisign_30x30@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon_verisign_30x30@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/icons/icon_verisign_30x30@2x.png"; sourceTree = "<group>"; };
 		C142467F8016EFC1FF106D0B /* JRProfilesElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRProfilesElement.m; sourceTree = "<group>"; };
 		C1424684EFBB2758B952E6DE /* button_facebook_280x40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = button_facebook_280x40.png; path = ../../Janrain/JREngage/Resources/images/buttons/button_facebook_280x40.png; sourceTree = "<group>"; };
+		C142468F037422034F48FBE8 /* JRPluralLevelOneElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRPluralLevelOneElement.h; sourceTree = "<group>"; };
 		C14246975FDB992B2BFBBEEC /* logo_salesforce_280x65.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo_salesforce_280x65.png; path = ../../Janrain/JREngage/Resources/images/logos/logo_salesforce_280x65.png; sourceTree = "<group>"; };
 		C14246AF7617A1EB475DEC64 /* icon_linkedin_30x30@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon_linkedin_30x30@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/icons/icon_linkedin_30x30@2x.png"; sourceTree = "<group>"; };
 		C14246B94F3BD9BEA3231548 /* logo_foursquare_280x65@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "logo_foursquare_280x65@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/logos/logo_foursquare_280x65@2x.png"; sourceTree = "<group>"; };
@@ -452,6 +477,7 @@
 		C142472FD8A853442360A5AE /* button_iosblue_135x40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button_iosblue_135x40@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/buttons/button_iosblue_135x40@2x.png"; sourceTree = "<group>"; };
 		C1424734F496FB4C4BBB0EDD /* JRCaptureObject+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "JRCaptureObject+Internal.h"; path = "../../Janrain/JRCapture/Classes/JRCaptureObject+Internal.h"; sourceTree = "<group>"; };
 		C14247470DAADFD1C1038C2B /* JRCurrentLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCurrentLocation.h; sourceTree = "<group>"; };
+		C142474CF67B29AAD7184D6F /* JRPluralLevelOneElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRPluralLevelOneElement.m; sourceTree = "<group>"; };
 		C142475447C1783CC2A03E88 /* icon_foursquare_30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_foursquare_30x30.png; path = ../../Janrain/JREngage/Resources/images/icons/icon_foursquare_30x30.png; sourceTree = "<group>"; };
 		C142476671A0BC7A9BA0C750 /* button_google_280x40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button_google_280x40@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/buttons/button_google_280x40@2x.png"; sourceTree = "<group>"; };
 		C142478088F82269D21D1350 /* media_view_background_top@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "media_view_background_top@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/other/media_view_background_top@2x.png"; sourceTree = "<group>"; };
@@ -471,6 +497,7 @@
 		C1424812951E101FEF255A11 /* button_iosblue_280x40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button_iosblue_280x40@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/buttons/button_iosblue_280x40@2x.png"; sourceTree = "<group>"; };
 		C14248143E00C2AC1C32FD25 /* logo_live_id_280x65@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "logo_live_id_280x65@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/logos/logo_live_id_280x65@2x.png"; sourceTree = "<group>"; };
 		C142481FA0D5834C8DD858A4 /* JRWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRWebViewController.h; path = ../../Janrain/JREngage/Classes/JRWebViewController.h; sourceTree = "<group>"; };
+		C1424820BB3D15DC3A2181F6 /* JRObjectLevelTwo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRObjectLevelTwo.m; sourceTree = "<group>"; };
 		C142482E01FFA44280BE1D8E /* JRCaptureWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JRCaptureWebViewController.m; path = ../../Janrain/JRCapture/Classes/JRCaptureWebViewController.m; sourceTree = "<group>"; };
 		C14248429E6E258DCDB1FEA7 /* button_janrain_280x40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button_janrain_280x40@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/buttons/button_janrain_280x40@2x.png"; sourceTree = "<group>"; };
 		C1424844ACE2DB73F774FAAA /* button_janrain_135x40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button_janrain_135x40@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/buttons/button_janrain_135x40@2x.png"; sourceTree = "<group>"; };
@@ -481,7 +508,9 @@
 		C1424889C42FD51ECF8D41F6 /* fox_prod_oct.json */ = {isa = PBXFileReference; lastKnownFileType = file.json; name = fox_prod_oct.json; path = ../../Janrain/JRCapture/Script/fox_prod_oct.json; sourceTree = "<group>"; };
 		C1424897E42590A50CBFEC59 /* JRPublishActivityController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = JRPublishActivityController.xib; path = ../../Janrain/JREngage/Resources/xibs/JRPublishActivityController.xib; sourceTree = "<group>"; };
 		C142489A367BFB2E67CAF6FE /* logo_linkedin_280x65@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "logo_linkedin_280x65@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/logos/logo_linkedin_280x65@2x.png"; sourceTree = "<group>"; };
+		C14248B63A1E7AD3B10A0458 /* JRBestHand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRBestHand.m; sourceTree = "<group>"; };
 		C14248C0744E029DE1CDF783 /* button_google_135x40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button_google_135x40@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/buttons/button_google_135x40@2x.png"; sourceTree = "<group>"; };
+		C14248C574CFEBC65C9F98CA /* JRGamesElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRGamesElement.h; sourceTree = "<group>"; };
 		C14248C7CA43A06708CB3EC7 /* button_myspace_135x40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button_myspace_135x40@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/buttons/button_myspace_135x40@2x.png"; sourceTree = "<group>"; };
 		C14248E0F3F0EC9421DCA65C /* JREngage+CustomInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "JREngage+CustomInterface.m"; path = "../../Janrain/JREngage/Classes/JREngage+CustomInterface.m"; sourceTree = "<group>"; };
 		C14248EFE00221900673E886 /* JRCurrentLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRCurrentLocation.m; sourceTree = "<group>"; };
@@ -489,8 +518,10 @@
 		C14249352079D33F2A4F8ED3 /* JRStatusesElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRStatusesElement.m; sourceTree = "<group>"; };
 		C14249473DE45F645A744EE2 /* icon_bw_mail_sms_30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_bw_mail_sms_30x30.png; path = ../../Janrain/JREngage/Resources/images/icons_bw/icon_bw_mail_sms_30x30.png; sourceTree = "<group>"; };
 		C142495F8B0E24E69E55DAD6 /* icon_live_id_30x30@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon_live_id_30x30@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/icons/icon_live_id_30x30@2x.png"; sourceTree = "<group>"; };
+		C1424969307CDB4C8BD8B17E /* JRPinoLevelOne.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRPinoLevelOne.h; sourceTree = "<group>"; };
 		C1424969E35765D1F6B20A29 /* JRSessionData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JRSessionData.m; path = ../../Janrain/JREngage/Classes/JRSessionData.m; sourceTree = "<group>"; };
 		C142497A7D335B4E84CD7CD1 /* JREngage+CustomInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "JREngage+CustomInterface.h"; path = "../../Janrain/JREngage/Classes/JREngage+CustomInterface.h"; sourceTree = "<group>"; };
+		C142497BAC5C83591463065E /* JRObjectLevelTwo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRObjectLevelTwo.h; sourceTree = "<group>"; };
 		C1424983616C7F19C55CBAD1 /* button_yahoo_280x40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = button_yahoo_280x40.png; path = ../../Janrain/JREngage/Resources/images/buttons/button_yahoo_280x40.png; sourceTree = "<group>"; };
 		C142498FB6A52E1E17B2C1B5 /* icon_hyves_30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_hyves_30x30.png; path = ../../Janrain/JREngage/Resources/images/icons/icon_hyves_30x30.png; sourceTree = "<group>"; };
 		C1424993C9104E5E7E7C4CC3 /* media_view_background_top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = media_view_background_top.png; path = ../../Janrain/JREngage/Resources/images/other/media_view_background_top.png; sourceTree = "<group>"; };
@@ -505,11 +536,14 @@
 		C14249EAE725AA85F4527C99 /* logo_facebook_280x65@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "logo_facebook_280x65@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/logos/logo_facebook_280x65@2x.png"; sourceTree = "<group>"; };
 		C14249EF8825828526E0BA2B /* icon_bw_mail_30x30@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon_bw_mail_30x30@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/icons_bw/icon_bw_mail_30x30@2x.png"; sourceTree = "<group>"; };
 		C14249F6CBF98BDF3C6825D1 /* SFHFKeychainUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SFHFKeychainUtils.m; path = ../../Janrain/Security/SFHFKeychainUtils.m; sourceTree = "<group>"; };
+		C14249FB06A4203793D87DCA /* JRObjectLevelThree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRObjectLevelThree.h; sourceTree = "<group>"; };
 		C1424A0BD28B10D9DD4551C4 /* JRCaptureData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRCaptureData.h; path = ../../Janrain/JRCapture/Classes/JRCaptureData.h; sourceTree = "<group>"; };
+		C1424A15A5D0B0B0C299B0FF /* JRObjectLevelOne.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRObjectLevelOne.m; sourceTree = "<group>"; };
 		C1424A17EF74C5D2DC2DAC12 /* typemap.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = typemap.txt; path = ../../Janrain/JRCapture/Script/typemap.txt; sourceTree = "<group>"; };
 		C1424A6694A08401B740AFAD /* icon_facebook_30x30@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon_facebook_30x30@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/icons/icon_facebook_30x30@2x.png"; sourceTree = "<group>"; };
 		C1424A80F4760645E0067F65 /* icon_netlog_30x30@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon_netlog_30x30@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/icons/icon_netlog_30x30@2x.png"; sourceTree = "<group>"; };
 		C1424A814250D940D84AC7E9 /* JRPhoneNumbersElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRPhoneNumbersElement.m; sourceTree = "<group>"; };
+		C1424A85D1F57A461D300A4E /* JRGamesElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRGamesElement.m; sourceTree = "<group>"; };
 		C1424A8D6084F2284E377D15 /* icon_vzn_30x30@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon_vzn_30x30@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/icons/icon_vzn_30x30@2x.png"; sourceTree = "<group>"; };
 		C1424A90065C63920F3B85F2 /* icon_tumblr_30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_tumblr_30x30.png; path = ../../Janrain/JREngage/Resources/images/icons/icon_tumblr_30x30.png; sourceTree = "<group>"; };
 		C1424A940DEF393CF1E10DF7 /* encodings.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = encodings.xml; path = ../../Janrain/JRCapture/Script/.idea/encodings.xml; sourceTree = "<group>"; };
@@ -533,12 +567,14 @@
 		C1424B5CF6B68C5466BB16F6 /* icon_twitter_30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_twitter_30x30.png; path = ../../Janrain/JREngage/Resources/images/icons/icon_twitter_30x30.png; sourceTree = "<group>"; };
 		C1424B73140D0B245F198B8C /* JRCaptureWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRCaptureWebViewController.h; path = ../../Janrain/JRCapture/Classes/JRCaptureWebViewController.h; sourceTree = "<group>"; };
 		C1424B7614E4241C4B0281A9 /* button_janrain_280x40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = button_janrain_280x40.png; path = ../../Janrain/JREngage/Resources/images/buttons/button_janrain_280x40.png; sourceTree = "<group>"; };
+		C1424B7FDCF7AC3EF4F8AE10 /* JROnipLevelOneElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JROnipLevelOneElement.h; sourceTree = "<group>"; };
 		C1424B814A52DF511182D7C1 /* logo_myspace_280x65.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo_myspace_280x65.png; path = ../../Janrain/JREngage/Resources/images/logos/logo_myspace_280x65.png; sourceTree = "<group>"; };
 		C1424B87BAEE593965503D2C /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 		C1424B8BBA034C130EDF81CD /* logo_twitter_280x65@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "logo_twitter_280x65@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/logos/logo_twitter_280x65@2x.png"; sourceTree = "<group>"; };
 		C1424B99517E925515349892 /* JREmailsElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JREmailsElement.m; sourceTree = "<group>"; };
 		C1424BA14B666E827EEBB45B /* logo_facebook_280x65.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo_facebook_280x65.png; path = ../../Janrain/JREngage/Resources/images/logos/logo_facebook_280x65.png; sourceTree = "<group>"; };
 		C1424BA1FEE9C320BF902FB1 /* icon_bw_twitter_30x30@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon_bw_twitter_30x30@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/icons_bw/icon_bw_twitter_30x30@2x.png"; sourceTree = "<group>"; };
+		C1424BAB9EBE3E94B18F01FF /* JRObjectLevelThree.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRObjectLevelThree.m; sourceTree = "<group>"; };
 		C1424BACBF8A92A9357F4652 /* triangle_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = triangle_icon.png; path = ../../Janrain/JREngage/Resources/images/other/triangle_icon.png; sourceTree = "<group>"; };
 		C1424BD14B86E8734778D129 /* icon_salesforce_30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_salesforce_30x30.png; path = ../../Janrain/JREngage/Resources/images/icons/icon_salesforce_30x30.png; sourceTree = "<group>"; };
 		C1424C18699DAC8CA0BF2B25 /* logo_linkedin_280x65.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo_linkedin_280x65.png; path = ../../Janrain/JREngage/Resources/images/logos/logo_linkedin_280x65.png; sourceTree = "<group>"; };
@@ -549,6 +585,7 @@
 		C1424C51242288EBF6524A90 /* JRSessionData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRSessionData.h; path = ../../Janrain/JREngage/Classes/JRSessionData.h; sourceTree = "<group>"; };
 		C1424C52A56F4FF600D3CDA0 /* button_black_135x40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button_black_135x40@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/buttons/button_black_135x40@2x.png"; sourceTree = "<group>"; };
 		C1424C56495C47500BF1531B /* button_google_280x40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = button_google_280x40.png; path = ../../Janrain/JREngage/Resources/images/buttons/button_google_280x40.png; sourceTree = "<group>"; };
+		C1424C5D86D5E45ACF27960A /* JROnipLevelTwo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JROnipLevelTwo.m; sourceTree = "<group>"; };
 		C1424C6354DC4FD8A6211FE0 /* JRCaptureError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JRCaptureError.m; path = ../../Janrain/JRCapture/Classes/JRCaptureError.m; sourceTree = "<group>"; };
 		C1424C65A3294FCEAF0953FD /* check_mark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "check_mark@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/other/check_mark@2x.png"; sourceTree = "<group>"; };
 		C1424C7FEA52D6260CC1EA4F /* button_facebook_135x40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button_facebook_135x40@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/buttons/button_facebook_135x40@2x.png"; sourceTree = "<group>"; };
@@ -570,6 +607,7 @@
 		C1424D4E35CD6551BCC817F8 /* logo_paypal_280x65@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "logo_paypal_280x65@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/logos/logo_paypal_280x65@2x.png"; sourceTree = "<group>"; };
 		C1424D60294F485E98815DBC /* logo_vzn_280x65.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo_vzn_280x65.png; path = ../../Janrain/JREngage/Resources/images/logos/logo_vzn_280x65.png; sourceTree = "<group>"; };
 		C1424D6E4E22B5885439828F /* JREngagePlugin.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = JREngagePlugin.js; path = ../../Janrain/JREngage/JREngagePlugin.js; sourceTree = "<group>"; };
+		C1424D7ECB9C03332297E44E /* JROnipLevelTwo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JROnipLevelTwo.h; sourceTree = "<group>"; };
 		C1424DB6E89F2AE4E57ECAA2 /* icon_foursquare_30x30@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon_foursquare_30x30@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/icons/icon_foursquare_30x30@2x.png"; sourceTree = "<group>"; };
 		C1424DBF7A86E3E28DC9D31E /* icon_soundcloud_30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_soundcloud_30x30.png; path = ../../Janrain/JREngage/Resources/images/icons/icon_soundcloud_30x30.png; sourceTree = "<group>"; };
 		C1424DE50904AA1B49BD3899 /* JRInfoBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JRInfoBar.m; path = ../../Janrain/JREngage/Classes/JRInfoBar.m; sourceTree = "<group>"; };
@@ -587,19 +625,25 @@
 		C1424E9B09E4A2E5DA70FBE6 /* JREngagePhonegapPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JREngagePhonegapPlugin.m; path = ../../Janrain/JREngage/Classes/JREngagePhonegapPlugin.m; sourceTree = "<group>"; };
 		C1424EA134F3C4021507A47B /* media_view_background_bottom@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "media_view_background_bottom@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/other/media_view_background_bottom@2x.png"; sourceTree = "<group>"; };
 		C1424EB7AC977A1B13162487 /* scope_settings.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = scope_settings.xml; path = ../../Janrain/JRCapture/Script/.idea/scopes/scope_settings.xml; sourceTree = "<group>"; };
+		C1424EB91544FC0C5A9AB0BA /* JRPinoLevelOne.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRPinoLevelOne.m; sourceTree = "<group>"; };
 		C1424EBCBFB5CE1C2C7A5A42 /* icon_myspace_30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_myspace_30x30.png; path = ../../Janrain/JREngage/Resources/images/icons/icon_myspace_30x30.png; sourceTree = "<group>"; };
 		C1424ECB1B1DAAAEE1D16E0C /* logo_orkut_280x65@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "logo_orkut_280x65@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/logos/logo_orkut_280x65@2x.png"; sourceTree = "<group>"; };
 		C1424EE0316404161563B921 /* JRAccountsElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRAccountsElement.h; sourceTree = "<group>"; };
 		C1424EF1C50B3452A54BD9CD /* button_black_280x40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = button_black_280x40.png; path = ../../Janrain/JREngage/Resources/images/buttons/button_black_280x40.png; sourceTree = "<group>"; };
 		C1424F0A1FB36287B1FE63EC /* icon_hyves_30x30@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon_hyves_30x30@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/icons/icon_hyves_30x30@2x.png"; sourceTree = "<group>"; };
 		C1424F0B285311C5951C9F26 /* JRPrimaryAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRPrimaryAddress.h; sourceTree = "<group>"; };
+		C1424F23CB7C9BD6A494B361 /* JRPinoLevelThreeElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRPinoLevelThreeElement.h; sourceTree = "<group>"; };
 		C1424F2C5E9EF9433DB576EA /* icon_netlog_30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_netlog_30x30.png; path = ../../Janrain/JREngage/Resources/images/icons/icon_netlog_30x30.png; sourceTree = "<group>"; };
+		C1424F2F1B46A605E1784AA0 /* JRPinoLevelThreeElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRPinoLevelThreeElement.m; sourceTree = "<group>"; };
+		C1424F43C04501CDB84C229D /* JROnipLevelThree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JROnipLevelThree.h; sourceTree = "<group>"; };
 		C1424F4458306E81CA5927A8 /* logo_paypal_280x65.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo_paypal_280x65.png; path = ../../Janrain/JREngage/Resources/images/logos/logo_paypal_280x65.png; sourceTree = "<group>"; };
+		C1424F50237D7AC7AB6D3CA4 /* JRPluralLevelThreeElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRPluralLevelThreeElement.h; sourceTree = "<group>"; };
 		C1424F581D69818A3C18EE76 /* JREngageWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JREngageWrapper.h; path = ../../Janrain/JRCapture/Classes/JREngageWrapper.h; sourceTree = "<group>"; };
 		C1424F585B481C5D49BD59CE /* PickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickerViewController.m; sourceTree = "<group>"; };
 		C1424F62252FD1FEBB5C0E92 /* icon_wordpress_30x30@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon_wordpress_30x30@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/icons/icon_wordpress_30x30@2x.png"; sourceTree = "<group>"; };
 		C1424F6509C388745950892B /* icon_aol_30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_aol_30x30.png; path = ../../Janrain/JREngage/Resources/images/icons/icon_aol_30x30.png; sourceTree = "<group>"; };
 		C1424F6969522C628D7C1A05 /* logo_aol_280x65.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo_aol_280x65.png; path = ../../Janrain/JREngage/Resources/images/logos/logo_aol_280x65.png; sourceTree = "<group>"; };
+		C1424F6B40DA73E6114C4084 /* JRPinoLevelTwo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRPinoLevelTwo.m; sourceTree = "<group>"; };
 		C1424F70E9A7A1DEF72BFA4C /* JRCaptureTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRCaptureTypes.h; path = ../../Janrain/JRCapture/Classes/JRCaptureTypes.h; sourceTree = "<group>"; };
 		C1424F7327F92814DC74DD2D /* icon_twitter_30x30@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon_twitter_30x30@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/icons/icon_twitter_30x30@2x.png"; sourceTree = "<group>"; };
 		C1424F8F2FE018E4847A87A7 /* icon_bw_sms_30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_bw_sms_30x30.png; path = ../../Janrain/JREngage/Resources/images/icons_bw/icon_bw_sms_30x30.png; sourceTree = "<group>"; };
@@ -608,6 +652,7 @@
 		C1424FD1BBDA0C347029E41D /* music_note@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "music_note@2x.jpg"; path = "../../Janrain/JREngage/Resources/images-2x/other/music_note@2x.jpg"; sourceTree = "<group>"; };
 		C1424FD240353636047F7001 /* JREngageWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JREngageWrapper.m; path = ../../Janrain/JRCapture/Classes/JREngageWrapper.m; sourceTree = "<group>"; };
 		C1424FD84D74DDA68712F78C /* triangle_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "triangle_icon@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/other/triangle_icon@2x.png"; sourceTree = "<group>"; };
+		C1424FD90D1DBB8C115B8826 /* JRPluralLevelTwoElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRPluralLevelTwoElement.m; sourceTree = "<group>"; };
 		C1424FF00992CE2E024785FA /* logo_flickr_280x65.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo_flickr_280x65.png; path = ../../Janrain/JREngage/Resources/images/logos/logo_flickr_280x65.png; sourceTree = "<group>"; };
 		D806D1B516A7638E008EEF96 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = SOURCE_ROOT; };
 		D83F86E1162373D4007B7163 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -934,6 +979,36 @@
 				C14249352079D33F2A4F8ED3 /* JRStatusesElement.m */,
 				C14240EAEF1851921DF34812 /* JRUrlsElement.h */,
 				C14240C14E4B336479AE4D7E /* JRUrlsElement.m */,
+				C142405CFE00AF36E95A00C5 /* JRBestHand.h */,
+				C14248B63A1E7AD3B10A0458 /* JRBestHand.m */,
+				C14248C574CFEBC65C9F98CA /* JRGamesElement.h */,
+				C1424A85D1F57A461D300A4E /* JRGamesElement.m */,
+				C14240251E4400698918475F /* JRObjectLevelOne.h */,
+				C1424A15A5D0B0B0C299B0FF /* JRObjectLevelOne.m */,
+				C14249FB06A4203793D87DCA /* JRObjectLevelThree.h */,
+				C1424BAB9EBE3E94B18F01FF /* JRObjectLevelThree.m */,
+				C142497BAC5C83591463065E /* JRObjectLevelTwo.h */,
+				C1424820BB3D15DC3A2181F6 /* JRObjectLevelTwo.m */,
+				C1424B7FDCF7AC3EF4F8AE10 /* JROnipLevelOneElement.h */,
+				C1424280FC0D8147B2F3F632 /* JROnipLevelOneElement.m */,
+				C1424F43C04501CDB84C229D /* JROnipLevelThree.h */,
+				C1424291B49E5600AC8E83D1 /* JROnipLevelThree.m */,
+				C1424D7ECB9C03332297E44E /* JROnipLevelTwo.h */,
+				C1424C5D86D5E45ACF27960A /* JROnipLevelTwo.m */,
+				C1424969307CDB4C8BD8B17E /* JRPinoLevelOne.h */,
+				C1424EB91544FC0C5A9AB0BA /* JRPinoLevelOne.m */,
+				C1424F23CB7C9BD6A494B361 /* JRPinoLevelThreeElement.h */,
+				C1424F2F1B46A605E1784AA0 /* JRPinoLevelThreeElement.m */,
+				C142405B980E0915FF271995 /* JRPinoLevelTwo.h */,
+				C1424F6B40DA73E6114C4084 /* JRPinoLevelTwo.m */,
+				C142468F037422034F48FBE8 /* JRPluralLevelOneElement.h */,
+				C142474CF67B29AAD7184D6F /* JRPluralLevelOneElement.m */,
+				C1424F50237D7AC7AB6D3CA4 /* JRPluralLevelThreeElement.h */,
+				C1424580A96FA450B14016EA /* JRPluralLevelThreeElement.m */,
+				C14245C3951CF02145544E9E /* JRPluralLevelTwoElement.h */,
+				C1424FD90D1DBB8C115B8826 /* JRPluralLevelTwoElement.m */,
+				C14240982598BE236DBEE9EE /* JRTournamentsPlayedElement.h */,
+				C14242300A50D35712FFE73C /* JRTournamentsPlayedElement.m */,
 			);
 			path = Generated;
 			sourceTree = "<group>";
@@ -1638,6 +1713,21 @@
 				C1424ED02A2490D5B54FBE8D /* JRStatusesElement.m in Sources */,
 				C14249A701577A202A265659 /* JRUrlsElement.m in Sources */,
 				C14243D27039CF596970752A /* NSMutableDictionary+get_params.m in Sources */,
+				C1424D8C0D3CAA6BD49936BF /* JRBestHand.m in Sources */,
+				C142456F0C50A0C0655FA135 /* JRGamesElement.m in Sources */,
+				C14246446BA8F4CFB0000354 /* JRObjectLevelOne.m in Sources */,
+				C14243C8ABEC0F7AEA754D0E /* JRObjectLevelThree.m in Sources */,
+				C14246938BE8C8B01ED849DA /* JRObjectLevelTwo.m in Sources */,
+				C142494BA3A9BF2BE9DB63E7 /* JROnipLevelOneElement.m in Sources */,
+				C142464E6400856B090FF8FD /* JROnipLevelThree.m in Sources */,
+				C14243F5868AE72713CFEB39 /* JROnipLevelTwo.m in Sources */,
+				C1424BE68E9D62FF40F0C529 /* JRPinoLevelOne.m in Sources */,
+				C1424A8BB07F4A722F10E7A4 /* JRPinoLevelThreeElement.m in Sources */,
+				C1424FB0FC907D384EFFAB75 /* JRPinoLevelTwo.m in Sources */,
+				C14243E0897EA7034B5CF388 /* JRPluralLevelOneElement.m in Sources */,
+				C14242372F43ECBE4FC3B913 /* JRPluralLevelThreeElement.m in Sources */,
+				C14247A2A61A413139D8CEA8 /* JRPluralLevelTwoElement.m in Sources */,
+				C142437C81E8238B9093B74D /* JRTournamentsPlayedElement.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
