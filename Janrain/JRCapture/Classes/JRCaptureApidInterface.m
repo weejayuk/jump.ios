@@ -36,6 +36,7 @@
 #import "JRCaptureApidInterface.h"
 #import "JRCaptureData.h"
 #import "JSONKit.h"
+#import "NSMutableDictionary+get_params.h"
 
 static NSString *const cSignInUser = @"signinUser";
 static NSString *const cCreateUser = @"createUser";
@@ -116,43 +117,43 @@ typedef enum CaptureInterfaceStatEnum
     }
 }
 
-- (void)startCreateCaptureUser:(NSDictionary *)captureUser withToken:(NSString *)token
-                   forDelegate:(id <JRCaptureInterfaceDelegate>)delegate withContext:(NSObject *)context
-{
-    DLog(@"");
-
-    NSString      *attributes = [[captureUser JSONString] stringByAddingUrlPercentEscapes];
-    NSMutableData *body       = [NSMutableData data];
-
-    [body appendData:[[NSString stringWithFormat:@"&attributes=%@", attributes] dataUsingEncoding:NSUTF8StringEncoding]];
-    [body appendData:[[NSString stringWithFormat:@"&creation_token=%@", token] dataUsingEncoding:NSUTF8StringEncoding]];
-    [body appendData:[@"&include_record=true" dataUsingEncoding:NSUTF8StringEncoding]];
-
-    NSString *createUrl = [NSString stringWithFormat:@"%@/entity.create",
-                                                     [[JRCaptureData sharedCaptureData] captureBaseUrl]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:createUrl]];
-
-    [request setHTTPMethod:@"POST"];
-    [request setHTTPBody:body];
-
-    NSDictionary *tag = [NSDictionary dictionaryWithObjectsAndKeys:
-                                              cCreateUser, cTagAction,
-                                              delegate, @"delegate",
-                                              context, @"context", nil];
-
-    DLog(@"%@ attributes=%@ creation_token=%@", [[request URL] absoluteString], attributes, token);
-
-    if (![JRConnectionManager createConnectionFromRequest:request forDelegate:self withTag:tag])
-        [self finishCreateCaptureUserWithStat:StatFail
-                                    andResult:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                            @"error", @"stat",
-                                                            @"url_connection", @"error",
-                                                            [NSString stringWithFormat:@"Could not create a connection to %@", [[request URL] absoluteString]], @"error_description",
-                                                            [NSNumber numberWithInteger:JRCaptureLocalApidErrorUrlConnection], @"code", nil]
-                                       forDelegate:delegate
-                                       withContext:context];
-
-}
+//- (void)startCreateCaptureUser:(NSDictionary *)captureUser withToken:(NSString *)token
+//                   forDelegate:(id <JRCaptureInterfaceDelegate>)delegate withContext:(NSObject *)context
+//{
+//    DLog(@"");
+//
+//    NSString      *attributes = [[captureUser JSONString] stringByAddingUrlPercentEscapes];
+//    NSMutableData *body       = [NSMutableData data];
+//
+//    [body appendData:[[NSString stringWithFormat:@"&attributes=%@", attributes] dataUsingEncoding:NSUTF8StringEncoding]];
+//    [body appendData:[[NSString stringWithFormat:@"&creation_token=%@", token] dataUsingEncoding:NSUTF8StringEncoding]];
+//    [body appendData:[@"&include_record=true" dataUsingEncoding:NSUTF8StringEncoding]];
+//
+//    NSString *createUrl = [NSString stringWithFormat:@"%@/entity.create",
+//                                                     [[JRCaptureData sharedCaptureData] captureBaseUrl]];
+//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:createUrl]];
+//
+//    [request setHTTPMethod:@"POST"];
+//    [request setHTTPBody:body];
+//
+//    NSDictionary *tag = [NSDictionary dictionaryWithObjectsAndKeys:
+//                                              cCreateUser, cTagAction,
+//                                              delegate, @"delegate",
+//                                              context, @"context", nil];
+//
+//    DLog(@"%@ attributes=%@ creation_token=%@", [[request URL] absoluteString], attributes, token);
+//
+//    if (![JRConnectionManager createConnectionFromRequest:request forDelegate:self withTag:tag])
+//        [self finishCreateCaptureUserWithStat:StatFail
+//                                    andResult:[NSDictionary dictionaryWithObjectsAndKeys:
+//                                                            @"error", @"stat",
+//                                                            @"url_connection", @"error",
+//                                                            [NSString stringWithFormat:@"Could not create a connection to %@", [[request URL] absoluteString]], @"error_description",
+//                                                            [NSNumber numberWithInteger:JRCaptureLocalApidErrorUrlConnection], @"code", nil]
+//                                       forDelegate:delegate
+//                                       withContext:context];
+//
+//}
 
 - (void)finishSignInFailureWithResult:(NSDictionary *)result forDelegate:(id <JRCaptureInterfaceDelegate>)delegate
                           withContext:(NSObject *)context
@@ -173,24 +174,32 @@ typedef enum CaptureInterfaceStatEnum
                              forDelegate:(id)delegate withContext:(NSObject *)context
 {
     DLog(@"");
-
-    NSMutableData *body = [NSMutableData data];
     NSString *signInName = [credentials objectForKey:signInType];
     NSString *password   = [credentials objectForKey:@"password"];
+    NSString *clientId = [JRCaptureData sharedCaptureData].clientId;
+    NSString *locale = [JRCaptureData sharedCaptureData].captureLocale;
+    NSString *formName = [JRCaptureData sharedCaptureData].captureFormName;
+    NSString *flowName = [JRCaptureData sharedCaptureData].captureFlowName;
+    NSString *redirectUri = [[JRCaptureData sharedCaptureData] redirectUri];
 
-    [body appendData:[[NSString stringWithFormat:@"%@=%@", signInType, signInName]
-            dataUsingEncoding:NSUTF8StringEncoding]];
-    [body appendData:[[NSString stringWithFormat:@"&password=%@", password]
-            dataUsingEncoding:NSUTF8StringEncoding]];
-    [body appendData:[[NSString stringWithFormat:@"&client_id=%@", [[JRCaptureData sharedCaptureData] clientId]]
-            dataUsingEncoding:NSUTF8StringEncoding]];
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                                               signInName, signInType,
+                                                               password, @"password",
+                                                               clientId, @"client_id",
+                                                               locale, @"locale",
+                                                               formName, @"form",
+                                                               redirectUri, @"redirect_uri",
+                                                               @"token", @"response_type",
+                                                               nil];
 
-    NSString *const signInEndpoint = [NSString stringWithFormat:@"%@/oauth/mobile_signin_username_password",
+    if (flowName) [params setObject:flowName forKey:@"flow_name"];
+
+    NSString *const signInEndpoint = [NSString stringWithFormat:@"%@/oauth/auth_native_traditional.json",
                                                [[JRCaptureData sharedCaptureData] captureBaseUrl]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:signInEndpoint]];
 
     [request setHTTPMethod:@"POST"];
-    [request setHTTPBody:body];
+    [request setHTTPBody:[[params asGetParamString] dataUsingEncoding:NSUTF8StringEncoding]];
 
     NSDictionary *tag = [NSDictionary dictionaryWithObjectsAndKeys:
                                                  cSignInUser, cTagAction,
@@ -467,11 +476,6 @@ typedef enum CaptureInterfaceStatEnum
     else
         [body appendData:[[NSString stringWithFormat:@"&attribute_name=%@", entityPath] dataUsingEncoding:NSUTF8StringEncoding]];
 
-#ifdef TESTING_CARL_LOCAL
-    if (appIdArg)
-        [body appendData:[appIdArg dataUsingEncoding:NSUTF8StringEncoding]];
-#endif
-
     NSString *replaceUrl = [NSString stringWithFormat:@"%@/entity.replace",
                                                       [JRCaptureData sharedCaptureData].captureBaseUrl];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:replaceUrl]];
@@ -514,12 +518,12 @@ typedef enum CaptureInterfaceStatEnum
             startGetCaptureUserWithToken:token forDelegate:delegate withContext:context];
 }
 
-+ (void)createCaptureUser:(NSDictionary *)captureUser withToken:(NSString *)token
-              forDelegate:(id <JRCaptureInterfaceDelegate>)delegate withContext:(NSObject *)context
-{
-    [[JRCaptureApidInterface captureInterfaceInstance]
-            startCreateCaptureUser:captureUser withToken:token forDelegate:delegate withContext:context];
-}
+//+ (void)createCaptureUser:(NSDictionary *)captureUser withToken:(NSString *)token
+//              forDelegate:(id <JRCaptureInterfaceDelegate>)delegate withContext:(NSObject *)context
+//{
+//    [[JRCaptureApidInterface captureInterfaceInstance]
+//            startCreateCaptureUser:captureUser withToken:token forDelegate:delegate withContext:context];
+//}
 
 + (void)getCaptureObjectAtPath:(NSString *)entityPath withToken:(NSString *)token
                    forDelegate:(id <JRCaptureInterfaceDelegate>)delegate withContext:(NSObject *)context

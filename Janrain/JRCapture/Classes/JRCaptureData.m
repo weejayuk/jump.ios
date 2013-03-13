@@ -155,19 +155,25 @@ static JRCaptureData *singleton = nil;
     */
 
     JRCaptureData *captureData = [JRCaptureData sharedCaptureData];
-    NSString *redirectUri = [NSString stringWithFormat:@"%@/cmeu", captureData.captureBaseUrl];
+    NSString *redirectUri = [singleton redirectUri];
     NSMutableDictionary *urlArgs = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                                                @"client_id", captureData.clientId,
-                                                                @"locale", captureData.captureLocale,
-                                                                @"response_type", @"token",
-                                                                @"redirect_uri", redirectUri,
-                                                                @"flow_name", captureData.captureFlowName,
+                                                                captureData.clientId, @"client_id",
+                                                                captureData.captureLocale, @"locale",
+                                                                @"token", @"response_type",
+                                                                redirectUri, @"redirect_uri",
+                                                                @"", @"thin_reg",
                                                                 nil];
 
+    if (captureData.captureFlowName) [urlArgs setObject:captureData.captureFlowName forKey:@"flow_name"];
     if (captureData.bpChannelUrl) [urlArgs setObject:captureData.bpChannelUrl forKey:@"bp_channel"];
 
     NSString *getParams = [urlArgs asGetParamString];
     return [NSString stringWithFormat:@"%@/oauth/auth_native?%@", captureData.captureBaseUrl, getParams];
+}
+
+- (NSString *)redirectUri
+{
+    return [NSString stringWithFormat:@"%@/cmeu", singleton.captureBaseUrl];
 }
 
 + (void)    setCaptureDomain:(NSString *)captureDomain captureClientId:(NSString *)clientId

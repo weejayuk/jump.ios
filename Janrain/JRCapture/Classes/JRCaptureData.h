@@ -58,4 +58,7 @@ captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType;
 + (void)clearSignInState;
 
 + (JRCaptureData *)sharedCaptureData;
+
+- (NSString *)redirectUri;
+
 @end
