@@ -135,7 +135,10 @@ typedef enum
 /**
  * @internal (for now)
  **/
-@interface JRCaptureError : NSObject
-+ (NSError *)errorFromResult:(NSObject *)result;
+@interface JRCaptureError : NSError
++ (JRCaptureError *)errorFromResult:(NSObject *)result;
+
++ (JRCaptureError *)invalidPayloadError:(NSObject *)payload;
+
 @end
 /** @}*/

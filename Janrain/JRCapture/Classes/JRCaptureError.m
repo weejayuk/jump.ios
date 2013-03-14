@@ -28,26 +28,30 @@
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#ifdef DEBUG
-#define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-#else
-#define DLog(...)
-#endif
-
-#define ALog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-
+#import "debug_log.h"
 #import "JRCaptureError.h"
 #import "JSONKit.h"
 
-@implementation JRCaptureError
-{
+#define btwn(a, b, c) ((a >= b && a < c) ? YES : NO)
 
+@implementation JRCaptureError
+NSString *JRCaptureErrorDomain = @"JRCapture.ErrorDomain";
+
++ (JRCaptureError *)invalidPayloadError:(NSObject *)payload
+{
+    NSString *desc = [NSString stringWithFormat:@"The Capture Mobile Endpoint Url did not have the expected data: %@",
+                                                [payload description]];
+    NSNumber *code = [NSNumber numberWithInteger:JRCaptureWrappedEngageErrorInvalidEndpointPayload];
+    NSDictionary *result = [NSDictionary dictionaryWithObjectsAndKeys:
+                                                 @"error", @"stat",
+                                                 @"invalid_endpoint_response", @"error",
+                                                 desc, @"error_description",
+                                                 code, @"code",
+                                                 nil];
+    return [JRCaptureError errorFromResult:result];
 }
 
-NSString * JRCaptureErrorDomain = @"JRCapture.ErrorDomain";
-
-
-+ (NSError*)setError:(NSString*)error withCode:(NSInteger)code description:(NSString *)description
++ (JRCaptureError*)setError:(NSString*)error withCode:(NSInteger)code description:(NSString *)description
       andExtraFields:(NSDictionary *)extraFields
 {
     ALog (@"An error occured (%d): %@", code, description);
@@ -59,14 +63,12 @@ NSString * JRCaptureErrorDomain = @"JRCapture.ErrorDomain";
     for (NSString *key in [extraFields allKeys])
         [userInfo setObject:[extraFields objectForKey:key] forKey:key];
 
-    return [[[NSError alloc] initWithDomain:JRCaptureErrorDomain
-                                       code:code
-                                   userInfo:[NSDictionary dictionaryWithDictionary:userInfo]] autorelease];
+    return [[[JRCaptureError alloc] initWithDomain:JRCaptureErrorDomain
+                                              code:code
+                                          userInfo:[NSDictionary dictionaryWithDictionary:userInfo]] autorelease];
 }
 
-#define btwn(a, b, c) ((a >= b && a < c) ? YES : NO)
-
-+ (NSError *)errorFromResult:(NSObject *)result
++ (JRCaptureError *)errorFromResult:(NSObject *)result
 {
     /* {"error_description":"/basicIpAddress was not a valid ip address.","stat":"error","code":200,"error":"invalid_argument","argument_name":"/basicIpAddress"} */
     NSDictionary *resultDictionary;

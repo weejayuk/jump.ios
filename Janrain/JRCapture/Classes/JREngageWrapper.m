@@ -28,37 +28,11 @@
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#ifdef DEBUG
-#define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-#else
-#define DLog(...)
-#endif
-
-#define ALog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-
+#import "debug_log.h"
 #import "JREngageWrapper.h"
 #import "JRCaptureData.h"
 #import "JREngage+CustomInterface.h"
 #import "JSONKit.h"
-
-@interface JREngageWrapperErrorWriter : NSObject
-@end
-
-@implementation JREngageWrapperErrorWriter
-+ (NSError *)invalidPayloadError:(NSObject *)payload
-{
-    NSString *desc = [NSString stringWithFormat:@"The Capture Mobile Endpoint Url did not have the expected data: %@",
-                                                [payload description]];
-    NSNumber *code = [NSNumber numberWithInteger:JRCaptureWrappedEngageErrorInvalidEndpointPayload];
-    NSDictionary *result = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                 @"error", @"stat",
-                                                 @"invalid_endpoint_response", @"error",
-                                                 desc, @"error_description",
-                                                 code, @"code",
-                                                 nil];
-    return [JRCaptureError errorFromResult:result];
-}
-@end
 
 typedef enum
 {
@@ -226,24 +200,24 @@ static JREngageWrapper *singleton = nil;
 
     if (!payloadDict)
         return [self authenticationCallToTokenUrl:tokenUrl
-                                   didFailWithError:[JREngageWrapperErrorWriter invalidPayloadError:payload]
+                                   didFailWithError:[JRCaptureError invalidPayloadError:payload]
                                         forProvider:provider];
 
     if (![(NSString *)[payloadDict objectForKey:@"stat"] isEqualToString:@"ok"])
         return [self authenticationCallToTokenUrl:tokenUrl
-                                   didFailWithError:[JREngageWrapperErrorWriter invalidPayloadError:payload]
+                                   didFailWithError:[JRCaptureError invalidPayloadError:payload]
                                         forProvider:provider];
 
     FinishSignInError error = [JRCaptureApidInterface finishSignInWithPayload:payloadDict forDelegate:delegate];
 
     if (error == cJRInvalidResponse)
         [self authenticationCallToTokenUrl:tokenUrl
-                          didFailWithError:[JREngageWrapperErrorWriter invalidPayloadError:payload]
+                          didFailWithError:[JRCaptureError invalidPayloadError:payload]
                                forProvider:provider];
 
     if (error == cJRInvalidCaptureUser)
         return [self authenticationCallToTokenUrl:tokenUrl
-                                 didFailWithError:[JREngageWrapperErrorWriter invalidPayloadError:payload]
+                                 didFailWithError:[JRCaptureError invalidPayloadError:payload]
                                       forProvider:provider];
 
     [self engageLibraryTearDown];

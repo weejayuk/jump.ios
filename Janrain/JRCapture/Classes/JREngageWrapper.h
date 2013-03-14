@@ -43,9 +43,4 @@
                withCustomInterfaceOverrides:(NSDictionary*)customInterfaceOverrides
                                 forDelegate:(id<JRCaptureSigninDelegate>)delegate;
 
-#ifdef JRENGAGE_SHARING_WITH_CAPTURE
-+ (void)startSocialPublishingDialogWithActivity:(JRActivityObject*)activity
-                   withCustomInterfaceOverrides:(NSDictionary*)customInterfaceOverrides
-                                    forDelegate:(id<JRCaptureSharingDelegate>)delegate;
-#endif // JRENGAGE_SHARING_WITH_CAPTURE
 @end
