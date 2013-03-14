@@ -145,12 +145,12 @@
 
     self.callbackID = command.callbackId;
 
-    NSString *appId = [command argumentAtIndex:0];
+    NSString *engageAppId = [command argumentAtIndex:0];
 
-    if (!appId)
+    if (!engageAppId)
     {
         [self finishWithFailureMessage:[self stringFromCode:JRMissingAppIdError
-                                                 andMessage:@"Missing appId in call to initialize"]];
+                                                 andMessage:@engageAppId]];
         return;
     }
 
@@ -167,7 +167,7 @@
     [infoPlist setObject:version forKey:@"CFBundleShortVersionString"];
     [infoPlist writeToFile:path atomically:YES];
 
-    [JREngage setEngageAppId:appId tokenUrl:tokenUrl andDelegate:self];
+    [JREngage setEngageAppId:engageAppId tokenUrl:tokenUrl andDelegate:self];
 
     [self finishWithSuccessMessage:@"{'stat':'ok','message':'Initializing JREngage...'}"];
 }

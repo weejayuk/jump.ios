@@ -47,7 +47,7 @@
     [JRCaptureData sharedCaptureData].bpChannelUrl = backplaneChannelUrl;
 }
 
-+ (void)      setEngageAppId:(NSString *)appId captureDomain:(NSString *)captureDomain
++ (void)      setEngageAppId:(NSString *)engageAppId captureDomain:(NSString *)captureDomain
              captureClientId:(NSString *)clientId captureLocale:(NSString *)captureLocale
              captureFlowName:(NSString *)captureFlowName
              captureFormName:(NSString *)captureFormName
@@ -57,7 +57,7 @@ captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType
                       captureLocale:captureLocale captureFormName:captureFormName
                     captureFlowName:(NSString *)captureFlowName
        captureTraditionalSignInType:tradSignInType];
-    [JREngageWrapper configureEngageWithCaptureMobileEndpointUrlAndAppId:appId];
+    [JREngageWrapper configureEngageWithCaptureMobileEndpointUrlAndAppId:engageAppId];
 }
 
 + (NSString *)captureMobileEndpointUrl

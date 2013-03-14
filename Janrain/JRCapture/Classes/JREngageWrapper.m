@@ -38,7 +38,6 @@
 
 #import "JREngageWrapper.h"
 #import "JRCaptureData.h"
-#import "JRCaptureUser+Extras.h"
 #import "JREngage+CustomInterface.h"
 #import "JSONKit.h"
 
@@ -48,14 +47,14 @@
 @implementation JREngageWrapperErrorWriter
 + (NSError *)invalidPayloadError:(NSObject *)payload
 {
-    NSString *string = [NSString stringWithFormat:@"The Capture Mobile Endpoint Url did not have the expected data: %@",
-                                                  [payload description]];
-    NSNumber *number = [NSNumber numberWithInteger:JRCaptureWrappedEngageErrorInvalidEndpointPayload];
+    NSString *desc = [NSString stringWithFormat:@"The Capture Mobile Endpoint Url did not have the expected data: %@",
+                                                [payload description]];
+    NSNumber *code = [NSNumber numberWithInteger:JRCaptureWrappedEngageErrorInvalidEndpointPayload];
     NSDictionary *result = [NSDictionary dictionaryWithObjectsAndKeys:
                                                  @"error", @"stat",
                                                  @"invalid_endpoint_response", @"error",
-                                                 string, @"error_description",
-                                                 number, @"code",
+                                                 desc, @"error_description",
+                                                 code, @"code",
                                                  nil];
     return [JRCaptureError errorFromResult:result];
 }
@@ -66,7 +65,6 @@ typedef enum
     JREngageDialogStateAuthentication,
     JREngageDialogStateSharing,
 } JREngageDialogState;
-
 
 @interface JREngageWrapper ()
 @property (retain) JRConventionalSignInViewController *nativeSigninViewController;
@@ -102,7 +100,7 @@ static JREngageWrapper *singleton = nil;
     return [[self singletonInstance] retain];
 }
 
-- (id)copyWithZone:(NSZone *)zone
+- (id)copyWithZone:(__unused NSZone *)zone
 {
     return self;
 }
@@ -135,8 +133,9 @@ static JREngageWrapper *singleton = nil;
 {
     [JREngage updateTokenUrl:[JRCaptureData captureMobileEndpointUrl]];
 
-    [[JREngageWrapper singletonInstance] setDelegate:delegate];
-    [[JREngageWrapper singletonInstance] setDialogState:JREngageDialogStateAuthentication];
+    JREngageWrapper *wrapper = [JREngageWrapper singletonInstance];
+    [wrapper setDelegate:delegate];
+    [wrapper setDialogState:JREngageDialogStateAuthentication];
 
     NSMutableDictionary *expandedCustomInterfaceOverrides =
             [NSMutableDictionary dictionaryWithDictionary:customInterfaceOverrides];
@@ -155,16 +154,17 @@ static JREngageWrapper *singleton = nil;
                                                  forKey:kJRProviderTableSectionHeaderTitleString];
 
         UIView *const titleView = [expandedCustomInterfaceOverrides objectForKey:kJRCaptureConventionalSigninTitleView];
-        [[JREngageWrapper singletonInstance] setNativeSigninViewController:
-                 [JRConventionalSignInViewController conventionalSignInViewController:nativeSigninType
-                                                                          titleString:nativeSignInTitleString
-                                                                            titleView:titleView
-                                                                        engageWrapper:[JREngageWrapper singletonInstance]]];
+        JRConventionalSignInViewController *controller =
+                [JRConventionalSignInViewController conventionalSignInViewController:nativeSigninType
+                                                                         titleString:nativeSignInTitleString
+                                                                           titleView:titleView
+                                                                       engageWrapper:wrapper];
+        [wrapper setNativeSigninViewController:controller];
 
-        [expandedCustomInterfaceOverrides setObject:[[JREngageWrapper singletonInstance] nativeSigninViewController].view
+        [expandedCustomInterfaceOverrides setObject:[wrapper nativeSigninViewController].view
                                              forKey:kJRProviderTableHeaderView];
 
-        [expandedCustomInterfaceOverrides setObject:[[JREngageWrapper singletonInstance] nativeSigninViewController]
+        [expandedCustomInterfaceOverrides setObject:[wrapper nativeSigninViewController]
                                              forKey:kJRCaptureConventionalSigninViewController];
     }
 
@@ -191,7 +191,8 @@ static JREngageWrapper *singleton = nil;
     [self setNativeSigninViewController:nil];
 }
 
-- (void)authenticationCallToTokenUrl:(NSString *)tokenUrl didFailWithError:(NSError *)error forProvider:(NSString *)provider
+- (void)authenticationCallToTokenUrl:(NSString *)tokenUrl didFailWithError:(NSError *)error 
+                         forProvider:(NSString *)provider
 {
     if ([delegate respondsToSelector:@selector(captureAuthenticationDidFailWithError:)])
         [delegate captureAuthenticationDidFailWithError:error];

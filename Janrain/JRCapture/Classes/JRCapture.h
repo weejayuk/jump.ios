@@ -126,7 +126,7 @@ typedef enum
  * combination. Use this if your Capture instance is set up to accept a \c email argument when signing in
  * directly to your server
  **/
- JRConventionalSigninEmailPassword,
+ JRConventionalSigninEmailPassword
 } JRConventionalSigninType;
 
 /**
@@ -178,8 +178,7 @@ typedef enum
  *       CaptureSigninDelegate#captureAuthenticationDidSucceedForUser:status:
  *     - Once the information is collected, your application needs to create the record on Capture
  **/
- JRCaptureRecordRequiresCreation, /* not created, does not exist */
-
+ JRCaptureRecordRequiresCreation
 } JRCaptureRecordStatus;
 
 @class JRActivityObject;
@@ -358,7 +357,7 @@ typedef enum
 /**
  * Method for configuring the library to work with your Janrain Capture and Engage applications.
  *
- * @param appId
+ * @param engageAppId
  *   This is your 20-character application ID for Engage. You can find this on your application's Engage Dashboard
  *   on <a href="http://rpxnow.com">http://rpxnow.com</a>. <em>Please do not use your API key. The API key
  *   should never be stored on the device, in code or otherwise.</em>
@@ -372,19 +371,24 @@ typedef enum
  *   The client secret should never be stored on the device, in code or otherwise.</em>
  *
  * @param captureLocale
- *   The locale to use when signing-in, from your Capture flow.
+ *   The locale to use when signing-in, from your Capture flow. Required. Follows ISO locale conventions. This locale
+ *   must be defined by your Capture flow in its "translations" data structure.
+ *
+ * @param captureFlowName
+ *   The name of the Capture sign-in flow your users will sign-in with. Optional. Pass nil to have Capture use the
+ *   flow specified by the default_flow_name setting for your Capture app, specified in the Capture dashboard.
  *
  * @param captureFormName
- *   The name of the sign-in form in the Capture flow your users will sign-in with
+ *   The name of the sign-in form in the Capture flow your users will sign-in with. Required. Likely to be "signinForm"
  *
  * @param captureTraditionalSignInType
  *   The type of traditional sign-in your end-users will sign-in with.
  **/
-+ (void)      setEngageAppId:(NSString *)appId captureDomain:(NSString *)captureDomain
++ (void)      setEngageAppId:(NSString *)engageAppId captureDomain:(NSString *)captureDomain
              captureClientId:(NSString *)clientId captureLocale:(NSString *)captureLocale
              captureFlowName:(NSString *)captureFlowName
              captureFormName:(NSString *)captureFormName
-captureTraditionalSignInType:(JRConventionalSigninType) tradSignInType;
+captureTraditionalSignInType:(JRConventionalSigninType)captureTraditionalSignInType;
 
 /**
  * Set the Capture access token for an authenticated user
