@@ -38,7 +38,6 @@
 
 #import "JREngageWrapper.h"
 #import "JRCaptureData.h"
-#import "JRCaptureJsWidgetWrapper.h"
 
 @implementation JRCapture
 
@@ -95,11 +94,6 @@ captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType
 + (void)setCreationToken:(NSString *)newCreationToken
 {
     [JRCaptureData setCreationToken:newCreationToken];
-}
-
-+ (void)startJsWidgetWithUrl:(NSString *)url
-{
-    [JRCaptureJsWidgetWrapper startJsWidgetWithUrl:url];
 }
 
 + (void)startEngageSigninDialogForDelegate:(id <JRCaptureSigninDelegate>)delegate

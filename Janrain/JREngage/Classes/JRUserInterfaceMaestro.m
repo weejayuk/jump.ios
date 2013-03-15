@@ -32,14 +32,7 @@
  Date:   Tuesday, August 24, 2010
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#ifdef DEBUG
-#define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-#else
-#define DLog(...)
-#endif
-
-#define ALog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-
+#import "debug_log.h"
 #import "QuartzCore/QuartzCore.h"
 
 #import "JRUserInterfaceMaestro.h"
@@ -66,7 +59,7 @@ static void handleCustomInterfaceException(NSException* exception, NSString* kJR
 }
 
 #define IS_IPAD ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad))
-#define IOS6 ([[[UIDevice currentDevice] systemVersion] compare:@"6.0" options:NSNumericSearch] >= NSOrderedSame)
+#define IS_IOS6 ([[[UIDevice currentDevice] systemVersion] compare:@"6.0" options:NSNumericSearch] >= NSOrderedSame)
 #define IS_PORTRAIT (UIDeviceOrientationIsPortrait([UIDevice currentDevice].orientation))
 #define IS_LANDSCAPE (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
 
@@ -328,6 +321,7 @@ NSString *describeCATransform3D(CATransform3D *t)
 
 - (void)attemptRotationWithoutAnimation
 {
+    DLog(@"");
     // http://stackoverflow.com/questions/8594111/forcing-orientation-change
     [self.jrPresentingViewController dismissModalViewControllerAnimated:NO];
     [self.jrPresentingViewController presentModalViewController:self animated:NO];

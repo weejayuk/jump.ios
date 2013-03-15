@@ -34,25 +34,59 @@
 
 #define btwn(a, b, c) ((a >= b && a < c) ? YES : NO)
 
-@implementation JRCaptureError
-NSString *JRCaptureErrorDomain = @"JRCapture.ErrorDomain";
+NSString *const kJRCaptureErrorDomain = @"JRCapture.ErrorDomain";
 
-+ (JRCaptureError *)invalidPayloadError:(NSObject *)payload
+@interface JRCaptureError ()
+@property (nonatomic, retain) NSObject *rawResponse;
+@property (nonatomic, retain) NSObject *mergeToken;
+@end
+
+@implementation JRCaptureError
+@synthesize rawResponse;
+@synthesize mergeToken;
+
+- (id)initWithDomain:(NSString *)domain code:(NSInteger)code userInfo:(NSDictionary *)dict
+         rawResponse:(NSObject *)rawResponse_
 {
-    NSString *desc = [NSString stringWithFormat:@"The Capture Mobile Endpoint Url did not have the expected data: %@",
-                                                [payload description]];
+    self = [super initWithDomain:domain code:code userInfo:dict];
+    if (self)
+    {
+        self.rawResponse = rawResponse_;
+    }
+
+    return self;
+}
+
++ (JRCaptureError *)errorWithError:(JRCaptureError *)error andMergeToken:(NSString *)mergeToken
+{
+    JRCaptureError *errorWithToken = [[JRCaptureError alloc] initWithDomain:error.domain code:error.code
+                                                                   userInfo:error.userInfo
+                                                                rawResponse:error.rawResponse];
+    error.mergeToken = mergeToken;
+    return [errorWithToken autorelease];
+ }
+
++ (JRCaptureError *)invalidApiResponseError:(NSObject *)payload
+{
+    NSString *desc = [NSString stringWithFormat:@"The Capture API request response was not well formed"];
     NSNumber *code = [NSNumber numberWithInteger:JRCaptureWrappedEngageErrorInvalidEndpointPayload];
     NSDictionary *result = [NSDictionary dictionaryWithObjectsAndKeys:
                                                  @"error", @"stat",
                                                  @"invalid_endpoint_response", @"error",
                                                  desc, @"error_description",
                                                  code, @"code",
+                                                 payload, @"raw_response",
                                                  nil];
     return [JRCaptureError errorFromResult:result];
 }
 
-+ (JRCaptureError*)setError:(NSString*)error withCode:(NSInteger)code description:(NSString *)description
-      andExtraFields:(NSDictionary *)extraFields
+- (BOOL)isMergeFlowError
+{
+    return self.code == 3380;
+}
+
++ (JRCaptureError *)setError:(NSString *)error withCode:(NSInteger)code description:(NSString *)description
+                 extraFields:(NSDictionary *)extraFields rawResponse:(NSObject *)rawResponse
 {
     ALog (@"An error occured (%d): %@", code, description);
 
@@ -63,9 +97,9 @@ NSString *JRCaptureErrorDomain = @"JRCapture.ErrorDomain";
     for (NSString *key in [extraFields allKeys])
         [userInfo setObject:[extraFields objectForKey:key] forKey:key];
 
-    return [[[JRCaptureError alloc] initWithDomain:JRCaptureErrorDomain
-                                              code:code
-                                          userInfo:[NSDictionary dictionaryWithDictionary:userInfo]] autorelease];
+    return [[[JRCaptureError alloc] initWithDomain:kJRCaptureErrorDomain code:code
+                                          userInfo:[NSDictionary dictionaryWithDictionary:userInfo]
+                                       rawResponse:rawResponse] autorelease];
 }
 
 + (JRCaptureError *)errorFromResult:(NSObject *)result
@@ -77,29 +111,30 @@ NSString *JRCaptureErrorDomain = @"JRCapture.ErrorDomain";
         resultDictionary = (NSDictionary *) result;
     else if ([result isKindOfClass:[NSString class]])
         resultDictionary = [(NSString *)result objectFromJSONString];
-    else /* Uh-oh!! */
+    else
         return nil;
 
     NSString *errorDescription = [resultDictionary objectForKey:@"error_description"];
-    NSString *error            = [resultDictionary objectForKey:@"error"];
-    NSNumber *code             = [resultDictionary objectForKey:@"code"];
-
+    NSString *error = [resultDictionary objectForKey:@"error"];
+    NSNumber *code = [resultDictionary objectForKey:@"code"];
+    NSObject *rawResponse = [resultDictionary objectForKey:@"raw_response"];
     NSDictionary *extraFields = nil;
 
     if (btwn([code integerValue], GENERIC_ERROR_RANGE, LOCAL_APID_ERROR_RANGE))
-        return [self setError:error withCode:[code integerValue] description:errorDescription andExtraFields:nil];
+        return [self setError:error withCode:[code integerValue] description:errorDescription extraFields:nil
+                  rawResponse:nil];
 
     if (btwn([code integerValue], LOCAL_APID_ERROR_RANGE, APID_ERROR_RANGE))
-        return [self setError:error withCode:[code integerValue]
-                  description:errorDescription andExtraFields:[resultDictionary objectForKey:@"extraFields"]];
+        return [self setError:error withCode:[code integerValue] description:errorDescription
+                  extraFields:[resultDictionary objectForKey:@"extraFields"] rawResponse:nil];
 
     if (btwn([code integerValue], CAPTURE_WRAPPED_ENGAGE_ERROR_RANGE, CAPTURE_WRAPPED_WEBVIEW_ERROR_RANGE))
-        return [self setError:error withCode:[code integerValue] description:errorDescription andExtraFields:nil];
+        return [self setError:error withCode:[code integerValue] description:errorDescription extraFields:nil
+                  rawResponse:nil];
 
     if ([code integerValue] > CAPTURE_WRAPPED_WEBVIEW_ERROR_RANGE)
-        return [self setError:error withCode:[code integerValue] description:errorDescription andExtraFields:nil];
-
-    /* else if (btwn([code integerValue], APID_ERROR_RANGE, CAPTURE_WRAPPED_ENGAGE_ERROR_RANGE)) */
+        return [self setError:error withCode:[code integerValue] description:errorDescription extraFields:nil
+                  rawResponse:nil];
 
     switch ([code integerValue])
     {
@@ -123,10 +158,9 @@ NSString *JRCaptureErrorDomain = @"JRCapture.ErrorDomain";
 
         case 222: /* 'unknown_entity_type' The entity type does not exist. Extra fields: 'type_name' */
         case 232: /* 'entity_type_exists' Attempted to create an entity type that already exists. Extra fields: 'type_name' */
-            extraFields = [NSDictionary dictionaryWithObjectsAndKeys:[resultDictionary objectForKey:@"type_name"],
-                                        @"type_name", nil];
+            extraFields = [NSDictionary dictionaryWithObjectsAndKeys:
+                                                [resultDictionary objectForKey:@"type_name"], @"type_name", nil];
             break;
-
 
         case 330: /* 'timestamp_mismatch' The created or lastUpdated value does not match the supplied argument. Extra fields: 'attribute_name', 'actual_value', 'supplied_value' */
             extraFields = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -134,6 +168,12 @@ NSString *JRCaptureErrorDomain = @"JRCapture.ErrorDomain";
                                                 [resultDictionary objectForKey:@"actual_value"], @"actual_value",
                                                 [resultDictionary objectForKey:@"supplied_value"], @"supplied_value",
                                                 nil];
+            break;
+
+        case 380:
+            extraFields = [NSDictionary dictionaryWithObjectsAndKeys:
+                                                [resultDictionary objectForKey:@"existing_provider"],
+                                                @"existing_provider", nil];
             break;
 
         case 420: /* 'redirect_uri_mismatch' The redirectUri did not match. Occurs in the oauth/token API call with the authorization_code grant type. Extra fields: 'expected_value', 'supplied_value' */
@@ -167,8 +207,8 @@ NSString *JRCaptureErrorDomain = @"JRCapture.ErrorDomain";
             break;
     }
 
-    return [self setError:error withCode:([code integerValue] + APID_ERROR_RANGE)
-              description:errorDescription andExtraFields:extraFields];
+    return [self setError:error withCode:([code integerValue] + APID_ERROR_RANGE) description:errorDescription
+              extraFields:extraFields rawResponse:rawResponse];
 }
 
 + (NSDictionary *)invalidClassErrorForResult:(NSObject *)result

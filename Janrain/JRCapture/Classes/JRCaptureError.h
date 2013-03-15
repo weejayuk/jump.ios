@@ -41,7 +41,7 @@
  * @{
  **/
 
-
+NSString *const kJRCaptureErrorDomain;
 #define GENERIC_ERROR_RANGE 1000
 #define LOCAL_APID_ERROR_RANGE 2000
 #define APID_ERROR_RANGE 3000
@@ -103,6 +103,7 @@ typedef enum
     JRCaptureApidErrorUniqueViolation          = JRCaptureApidErrorGeneric + 361, /**< Error returned when a unique or locally-unique constraint was violated */
     JRCaptureApidErrorMissingRequiredAttribute = JRCaptureApidErrorGeneric + 362, /**< Error returned when an attribute with the required constraint was either missing or set to null */
     JRCaptureApidErrorLengthViolation          = JRCaptureApidErrorGeneric + 363, /**< Error returned when a string value violated an attribute’s length constraint */
+    JRCaptureApidErrorEmailAddressInUse        = JRCaptureApidErrorGeneric + 380, /**< Error returned when thin registration fails because the email address is already in use */
     JRCaptureApidErrorInvalidClientCredentials = JRCaptureApidErrorGeneric + 402, /**< Error returned when the client id does not exist or the client secret was wrong */
     JRCaptureApidErrorClientPermissionError    = JRCaptureApidErrorGeneric + 403, /**< Error returned when the client does not have permission to perform the action; needs a feature */
     JRCaptureApidErrorAccessTokenExpired       = JRCaptureApidErrorGeneric + 414, /**< Error returned when the supplied \c access_token has expired */
@@ -120,8 +121,15 @@ typedef enum
  **/
 typedef enum
 {
-    JRCaptureWrappedEngageErrorGeneric                = CAPTURE_WRAPPED_ENGAGE_ERROR_RANGE,       /**< Generic error */
-    JRCaptureWrappedEngageErrorInvalidEndpointPayload = JRCaptureWrappedEngageErrorGeneric + 100, /**< Capture Mobile Endpoint URL payload is invalid */
+    /**
+    *
+    */
+    JRCaptureWrappedEngageErrorGeneric                = CAPTURE_WRAPPED_ENGAGE_ERROR_RANGE,
+
+    /**
+    * Malformed API request response
+    */
+    JRCaptureWrappedEngageErrorInvalidEndpointPayload = JRCaptureWrappedEngageErrorGeneric + 100,
 } JRCaptureWrappedEngageError;
 
 /**
@@ -136,9 +144,14 @@ typedef enum
  * @internal (for now)
  **/
 @interface JRCaptureError : NSError
+@property (nonatomic, readonly) NSObject *rawResponse;
+@property (nonatomic, readonly) NSObject *mergeToken;
 + (JRCaptureError *)errorFromResult:(NSObject *)result;
 
-+ (JRCaptureError *)invalidPayloadError:(NSObject *)payload;
++ (JRCaptureError *)errorWithError:(JRCaptureError *)error andMergeToken:(NSString *)mergeToken;
 
++ (JRCaptureError *)invalidApiResponseError:(NSObject *)payload;
+
+- (BOOL)isMergeFlowError;
 @end
 /** @}*/

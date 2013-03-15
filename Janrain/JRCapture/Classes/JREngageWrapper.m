@@ -41,6 +41,7 @@ typedef enum
 } JREngageDialogState;
 
 @interface JREngageWrapper ()
+@property (retain) NSString *mergeToken;
 @property (retain) JRConventionalSignInViewController *nativeSigninViewController;
 @property (retain) id<JRCaptureSigninDelegate> delegate;
 @property          JREngageDialogState dialogState;
@@ -50,6 +51,7 @@ typedef enum
 @synthesize nativeSigninViewController;
 @synthesize delegate;
 @synthesize dialogState;
+@synthesize mergeToken;
 
 static JREngageWrapper *singleton = nil;
 
@@ -161,8 +163,9 @@ static JREngageWrapper *singleton = nil;
 - (void)engageLibraryTearDown
 {
     [JREngage updateTokenUrl:nil];
-    [self setDelegate:nil];
-    [self setNativeSigninViewController:nil];
+    self.delegate = nil;
+    self.nativeSigninViewController = nil;
+    self.mergeToken = nil;
 }
 
 - (void)authenticationCallToTokenUrl:(NSString *)tokenUrl didFailWithError:(NSError *)error 
@@ -200,35 +203,42 @@ static JREngageWrapper *singleton = nil;
 
     if (!payloadDict)
         return [self authenticationCallToTokenUrl:tokenUrl
-                                   didFailWithError:[JRCaptureError invalidPayloadError:payload]
-                                        forProvider:provider];
+                                 didFailWithError:[JRCaptureError invalidApiResponseError:payload]
+                                      forProvider:provider];
 
-    if (![(NSString *)[payloadDict objectForKey:@"stat"] isEqualToString:@"ok"])
-        return [self authenticationCallToTokenUrl:tokenUrl
-                                   didFailWithError:[JRCaptureError invalidPayloadError:payload]
-                                        forProvider:provider];
+    if (![[payloadDict objectForKey:@"stat"] isEqual:@"ok"]) {
+        JRCaptureError *error = [JRCaptureError errorFromResult:payloadDict];
+        if ([error isMergeFlowError])
+        {
+            [delegate captureAuthenticationDidFailWithError:[JRCaptureError errorWithError:error
+                                                                             andMergeToken:mergeToken]];
+        }
+        else
+        {
+            return [self authenticationCallToTokenUrl:tokenUrl didFailWithError:error forProvider:provider];
+        }
+    }
 
     FinishSignInError error = [JRCaptureApidInterface finishSignInWithPayload:payloadDict forDelegate:delegate];
 
     if (error == cJRInvalidResponse)
-        [self authenticationCallToTokenUrl:tokenUrl
-                          didFailWithError:[JRCaptureError invalidPayloadError:payload]
+        [self authenticationCallToTokenUrl:tokenUrl didFailWithError:[JRCaptureError invalidApiResponseError:payload]
                                forProvider:provider];
 
     if (error == cJRInvalidCaptureUser)
-        return [self authenticationCallToTokenUrl:tokenUrl
-                                 didFailWithError:[JRCaptureError invalidPayloadError:payload]
-                                      forProvider:provider];
+        [self authenticationCallToTokenUrl:tokenUrl didFailWithError:[JRCaptureError invalidApiResponseError:payload]
+                               forProvider:provider];
 
     [self engageLibraryTearDown];
 }
 
 - (void)authenticationDidSucceedForUser:(NSDictionary *)auth_info forProvider:(NSString *)provider
 {
+    self.mergeToken = [auth_info objectForKey:@"token"];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 
     if ([delegate respondsToSelector:@selector(engageSigninDidSucceedForUser:forProvider:)])
-            [delegate engageSigninDidSucceedForUser:auth_info forProvider:provider];
+        [delegate engageSigninDidSucceedForUser:auth_info forProvider:provider];
 }
 
 - (void)engageDialogDidFailToShowWithError:(NSError *)error
