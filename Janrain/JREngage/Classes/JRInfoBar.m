@@ -206,28 +206,6 @@
     }
 }
 
-- (void)fadeIn
-{
-    [UIView beginAnimations:@"fade" context:nil];
-    [UIView setAnimationDuration:0.1];
-    [UIView setAnimationDelay:0.0];
-    poweredByLabel.alpha = 1.0;
-    infoButton.alpha = 1.0;
-    [UIView commitAnimations];
-}
-
-- (void)fadeOut
-{
-    [UIView beginAnimations:@"fade" context:nil];
-    [UIView setAnimationDuration:0.1];
-    [UIView setAnimationDelay:0.0];
-    poweredByLabel.alpha = 0.0;
-    infoButton.alpha = 0.0;
-    spinner.alpha = 0.0;
-    loadingLabel.alpha = 0.0;
-    [UIView commitAnimations];
-}
-
 - (void)dealloc
 {
     [barBackground release];

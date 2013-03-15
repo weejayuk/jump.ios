@@ -161,8 +161,6 @@ static NSString *const iPhoneUserAgent = @"Mozilla/5.0 (iPhone; U; CPU iPhone OS
 
     [self webViewWithUrl:[sessionData startUrlForCurrentProvider]];
     [myWebView becomeFirstResponder];
-
-    [infoBar fadeIn];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -190,23 +188,21 @@ static NSString *const iPhoneUserAgent = @"Mozilla/5.0 (iPhone; U; CPU iPhone OS
     [JRConnectionManager stopConnectionsForDelegate:self];
     [self stopProgress];
 
-    [infoBar fadeOut];
-
-    /* The webview disappears when authentication completes successfully or fails or if the user cancels by hitting
-       the "back" button or the "cancel" button.  We don't know when a user hits the back button, but we do
-       know when all the other events occur, so we keep track of those events by changing the "userHitTheBackButton"
-       variable to "NO".
-
-       If the view is disappearing because the user hit the cancel button, we already to send sessionData the
-       triggerAuthenticationDidStartOver event.  What we need to do it send the triggerAuthenticationDidStartOver
-       message if we're popping to the publishActivity controller (i.e., if we're publishing an activity), so that
-       the publishActivity controller gets the message from sessionData, and can hide the grayed-out activity indicator
-       view.
-
-       If the userHitTheBackButton variable is set to "YES" and we're publishing an activity ([sessionData social] is
-       "YES"),
-       send the triggerAuthenticationDidStartOver message.  Otherwise, hitting the back button should just pop back
-       to the last controller, the providers or userLanding controller (i.e., behave normally) */
+    // The webview disappears when authentication completes successfully or fails or if the user cancels by hitting
+    // the "back" button or the "cancel" button.  We don't know when a user hits the back button, but we do
+    // know when all the other events occur, so we keep track of those events by changing the "userHitTheBackButton"
+    // variable to "NO".
+    //
+    // If the view is disappearing because the user hit the cancel button, we already to send sessionData the
+    // triggerAuthenticationDidStartOver event.  What we need to do it send the triggerAuthenticationDidStartOver
+    // message if we're popping to the publishActivity controller (i.e., if we're publishing an activity), so that
+    // the publishActivity controller gets the message from sessionData, and can hide the grayed-out activity indicator
+    // view.
+    //
+    // If the userHitTheBackButton variable is set to "YES" and we're publishing an activity ([sessionData social] is
+    // "YES"),
+    // send the triggerAuthenticationDidStartOver message.  Otherwise, hitting the back button should just pop back
+    // to the last controller, the providers or userLanding controller (i.e., behave normally)
     if (userHitTheBackButton && [sessionData socialSharing])
         [sessionData triggerAuthenticationDidStartOver:nil];
 

@@ -58,8 +58,6 @@ typedef enum
 
 - (void)startProgress;
 - (void)stopProgress;
-- (void)fadeIn;
-- (void)fadeOut;
 
 - (void)showInfo:(id <UIActionSheetDelegate>)delegate;
 

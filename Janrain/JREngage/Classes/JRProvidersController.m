@@ -32,19 +32,12 @@
  Date:   Tuesday, June 1, 2010
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+#import "debug_log.h"
 #import "JRProvidersController.h"
 #import "JREngage+CustomInterface.h"
 #import "JRUserLandingController.h"
 #import "JRWebViewController.h"
 #import "JRInfoBar.h"
-
-#ifdef DEBUG
-#define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-#else
-#define DLog(...)
-#endif
-
-#define ALog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
 
 @interface UITableViewCellProviders : UITableViewCell { }
 @end
@@ -105,11 +98,11 @@
     [super viewDidLoad];
     myTableView.backgroundColor = [UIColor clearColor];
 
- /* If there is a UIColor object set for the background color, use this */
+    // If there is a UIColor object set for the background color, use this
     if ([customInterface objectForKey:kJRAuthenticationBackgroundColor])
         myBackgroundView.backgroundColor = [customInterface objectForKey:kJRAuthenticationBackgroundColor];
 
- /* Weird hack necessary on the iPad, as the iPad table views have some background view that is always gray */
+    // Weird hack necessary on the iPad, as the iPad table views have some background view that is always gray
     if ([myTableView respondsToSelector:@selector(setBackgroundView:)])
         [myTableView setBackgroundView:nil];
 
@@ -171,12 +164,12 @@
     DLog(@"");
     [super viewWillAppear:animated];
 
-// /* We need to figure out if the user canceled authentication by hitting the back button or the cancel button,
-//    or if it stopped because it failed or completed successfully on its own.  Assume that the user did hit the
-//    back button until told otherwise. */
-//  userHitTheBackButton = YES;
+    // We need to figure out if the user canceled authentication by hitting the back button or the cancel button,
+    // or if it stopped because it failed or completed successfully on its own.  Assume that the user did hit the
+    // back button until told otherwise.
+    //userHitTheBackButton = YES;
 
- /* Load the custom background view, if there is one. */
+    // Load the custom background view, if there is one.
     if ([customInterface objectForKey:kJRAuthenticationBackgroundImageView])
         [myBackgroundView addSubview:[customInterface objectForKey:kJRAuthenticationBackgroundImageView]];
 
@@ -216,24 +209,24 @@
         [myActivitySpinner setHidden:YES];
         [myLoadingLabel setHidden:YES];
 
-     /* Load the table with the list of providers. */
+        // Load the table with the list of providers.
         [myTableView reloadData];
     }
     else
     {
         DLog(@"prov count = %d", [[sessionData basicProviders] count]);
 
-     /* If the user calls the library before the session data object is done initializing -
-        because either the requests for the base URL or provider list haven't returned -
-        display the "Loading Providers" label and activity spinner.
-        sessionData = nil when the call to get the base URL hasn't returned
-        [sessionData.configuredProviders count] = 0 when the provider list hasn't returned */
+        // If the user calls the library before the session data object is done initializing -
+        // because either the requests for the base URL or provider list haven't returned -
+        // display the "Loading Providers" label and activity spinner.
+        // sessionData = nil when the call to get the base URL hasn't returned
+        // [sessionData.configuredProviders count] = 0 when the provider list hasn't returned
         [myActivitySpinner setHidden:NO];
         [myLoadingLabel setHidden:NO];
 
         [myActivitySpinner startAnimating];
 
-     /* Now poll every few milliseconds, for about 16 seconds, until the provider list is loaded or we time out. */
+        // Now poll every few milliseconds, for about 16 seconds, until the provider list is loaded or we time out.
         timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self
                                                selector:@selector(checkSessionDataAndProviders:)
                                                userInfo:nil repeats:NO];
@@ -246,8 +239,6 @@
     [super viewDidAppear:animated];
 
     self.contentSizeForViewInPopover = CGSizeMake(320, 416);
-
-    [infoBar fadeIn];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -270,7 +261,7 @@
     DLog(@"prov count = %d", [[sessionData basicProviders] count]);
     DLog(@"interval = %f", interval);
 
- /* If we have our list of providers, stop the progress indicators and load the table. */
+    // If we have our list of providers, stop the progress indicators and load the table.
     if ([[sessionData basicProviders] count] > 0)
     {
         [self setProviders:[NSMutableArray arrayWithArray:sessionData.basicProviders]];
@@ -285,7 +276,7 @@
         return;
     }
 
- /* Otherwise, keep polling until we've timed out. */
+    // Otherwise, keep polling until we've timed out.
     if (interval >= 16.0)
     {
         DLog(@"No Available Providers");
@@ -297,20 +288,17 @@
         UIApplication* app = [UIApplication sharedApplication];
         app.networkActivityIndicatorVisible = YES;
 
-        UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"No Available Providers" message:
-@"There are no available providers. \
-Either there is a problem connecting \
-or no providers have been configured. \
-Please try again later."
-                                                        delegate:self
-                                               cancelButtonTitle:@"OK"
-                                               otherButtonTitles:nil] autorelease];
+        NSString *message = @"There are no available providers. Either there is a problem connecting or no providers "
+                "have been configured. Please try again later.";
+        UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"No Available Providers" message:message
+                                                                                          delegate:self
+                                                                                 cancelButtonTitle:@"OK"
+                                                                                 otherButtonTitles:nil] autorelease];
         [alert show];
         return;
     }
 
-    timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self
-                                           selector:@selector(checkSessionDataAndProviders:)
+    timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(checkSessionDataAndProviders:)
                                            userInfo:nil repeats:NO];
 }
 
@@ -336,7 +324,7 @@ Please try again later."
 - (void)showLoading
 {
     UIActivityIndicatorView *myConventionalSigninLoadingSpinner =
-                  (UIActivityIndicatorView *)[myConventionalSigninLoadingView viewWithTag:LOADING_VIEW_SPINNER_TAG];
+            (UIActivityIndicatorView *) [myConventionalSigninLoadingView viewWithTag:LOADING_VIEW_SPINNER_TAG];
 
     [myConventionalSigninLoadingView setHidden:NO];
     [myConventionalSigninLoadingSpinner startAnimating];
@@ -351,7 +339,7 @@ Please try again later."
 - (void)hideLoading
 {
     UIActivityIndicatorView *myConventionalSigninLoadingSpinner =
-                  (UIActivityIndicatorView *)[myConventionalSigninLoadingView viewWithTag:LOADING_VIEW_SPINNER_TAG];
+            (UIActivityIndicatorView *) [myConventionalSigninLoadingView viewWithTag:LOADING_VIEW_SPINNER_TAG];
 
     [UIView beginAnimations:@"fade" context:nil];
     [UIView setAnimationDuration:0.2];
@@ -457,12 +445,17 @@ Please try again later."
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
-    if ([customInterface objectForKey:kJRProviderTableSectionFooterView])
+    if ([customInterface objectForKey:kJRProviderTableSectionFooterView]){
         return [customInterface objectForKey:kJRProviderTableSectionFooterView];
+    }
     else if (![customInterface objectForKey:kJRProviderTableSectionFooterTitleString])
-        return [[[UIView alloc] initWithFrame:CGRectMake(0, 0, myTableView.frame.size.width, infoBar.frame.size.height)] autorelease];
-    else
+    {
+        CGRect frame = CGRectMake(0, 0, myTableView.frame.size.width, infoBar.frame.size.height);
+        return [[[UIView alloc] initWithFrame:frame] autorelease];
+    }
+    else {
         return nil;
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -489,7 +482,7 @@ Please try again later."
         cell = [[[UITableViewCellProviders alloc]
                  initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cachedCell"] autorelease];
 
-    JRProvider* provider = [sessionData getProviderNamed:[providers objectAtIndex:indexPath.row]];
+    JRProvider* provider = [sessionData getProviderNamed:[providers objectAtIndex:(NSUInteger) indexPath.row]];
 
     if (!provider)
         return cell;
@@ -510,27 +503,25 @@ Please try again later."
     DLog(@"");
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
 
- /* Let sessionData know which provider the user selected */
-    JRProvider *provider = [sessionData getProviderNamed:[providers objectAtIndex:indexPath.row]];
+    // Let sessionData know which provider the user selected
+    JRProvider *provider = [sessionData getProviderNamed:[providers objectAtIndex:(NSUInteger) indexPath.row]];
     [sessionData setCurrentProvider:provider];
 
     DLog(@"cell for %@ was selected", provider);
 
-//    userHitTheBackButton = NO;
-
     // TODO: Change me (comment)!
- /* If the selected provider requires input from the user, go to the user landing view.
-    Or if the user started on the user landing page, went back to the list of providers, then selected
-    the same provider as their last-used provider, go back to the user landing view. */
-    if (provider.requiresInput ||
-        ([sessionData authenticatedUserForProvider:provider] && !(provider.forceReauth || sessionData.alwaysForceReauth)))
+    if (provider.requiresInput || ([sessionData authenticatedUserForProvider:provider]
+                && !(provider.forceReauth || sessionData.alwaysForceReauth)))
     {
+        // If the selected provider requires input from the user, to the user landing view.
+        // Or if the user started on the user landing page, went back to the list of providers, then selected
+        // the same provider as their last-used provider, go back to the user landing view.
         [[self navigationController] pushViewController:[JRUserInterfaceMaestro sharedMaestro].myUserLandingController
                                                animated:YES];
     }
- /* Otherwise, go straight to the web view. */
     else
     {
+        // Otherwise, straight to the web view.
         [[self navigationController] pushViewController:[JRUserInterfaceMaestro sharedMaestro].myWebViewController
                                                animated:YES];
     }
@@ -545,7 +536,6 @@ Please try again later."
 - (void)viewWillDisappear:(BOOL)animated
 {
     DLog(@"");
-    [infoBar fadeOut];
     [super viewWillDisappear:animated];
 }
 
@@ -553,9 +543,6 @@ Please try again later."
 {
     DLog(@"");
     [super viewDidDisappear:animated];
-
-//    if (hidesCancelButton && userHitTheBackButton)
-//        [sessionData triggerAuthenticationDidCancel];
 }
 
 - (void)viewDidUnload

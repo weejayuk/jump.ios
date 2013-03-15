@@ -184,11 +184,9 @@
     UITableViewCell *cell = [self getTableCell];
     UITextField     *textField = [self getTextField:cell];
 
- /* Only make the cell's text field the first responder (and show the keyboard) in certain situations */
+    // Only make the cell's text field the first responder (and show the keyboard) in certain situations
     if ([sessionData weShouldBeFirstResponder] && !textField.text)
         [textField becomeFirstResponder];
-
-    [infoBar fadeIn];
 }
 
 - (void)didReceiveMemoryWarning
@@ -199,7 +197,6 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     DLog(@"");
-    [infoBar fadeOut];
     [super viewWillDisappear:animated];
 }
 
