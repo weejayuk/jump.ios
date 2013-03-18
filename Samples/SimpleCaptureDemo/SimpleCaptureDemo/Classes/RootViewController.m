@@ -87,15 +87,6 @@
     [self configureUserLabelAndIcon];
 }
 
-- (void)setButtonsEnabled:(BOOL)enabled
-{
-    [browseButton setEnabled:enabled];
-    [captureWidgetButton setEnabled:enabled];
-    [updateButton setEnabled:enabled];
-    [signInButton setEnabled:enabled];
-    [signOutButton setEnabled:enabled];
-}
-
 - (IBAction)browseButtonPressed:(id)sender
 {
     ObjectDrillDownViewController *drillDown =
@@ -123,7 +114,6 @@
 
 - (IBAction)signInButtonPressed:(id)sender
 {
-    [self setButtonsEnabled:NO];
     currentUserProviderIcon.image = nil;
     
     NSDictionary *customInterface = [NSDictionary dictionaryWithObject:self.navigationController
@@ -164,7 +154,6 @@
 
 - (void)captureSignInDidSucceed
 {
-    [self setButtonsEnabled:YES];
     [self configureButtons];
     [self configureUserLabelAndIcon];
 
