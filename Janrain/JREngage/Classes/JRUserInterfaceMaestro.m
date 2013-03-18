@@ -466,6 +466,15 @@ static NSString *describeCATransform3D(CATransform3D *t)
 @property (retain) UIViewController *vcToPresent;
 @end
 
+@interface JRUserInterfaceMaestro ()
+@property(retain) JRModalViewController *jrModalViewController;
+@property(retain) UINavigationController *customModalNavigationController;
+@property(retain) UINavigationController *applicationNavigationController;
+@property(retain) UINavigationController *savedNavigationController;
+@property(retain) NSDictionary *janrainInterfaceDefaults;
+@property(nonatomic, retain) NSDictionary *customInterface;
+@end
+
 @implementation JRModalViewController
 @synthesize myPopoverController, myNavigationController, animationController;
 @synthesize vcToPresent;
@@ -545,7 +554,7 @@ static NSString *describeCATransform3D(CATransform3D *t)
 
     // Figure out how to present & record how
     UIViewController *vcToPresentFrom;
-    NSDictionary *customUi = [JRUserInterfaceMaestro sharedMaestro]->customInterface;
+    NSDictionary *customUi = [[JRUserInterfaceMaestro sharedMaestro] customInterface];
     if ([customUi objectForKey:kJRModalDialogPresentationViewController])
     {
         vcToPresentFrom = [customUi objectForKey:kJRModalDialogPresentationViewController];
@@ -624,14 +633,6 @@ static NSString *describeCATransform3D(CATransform3D *t)
 }
 @end
 
-@interface JRUserInterfaceMaestro ()
-@property(retain) JRModalViewController *jrModalViewController;
-@property(retain) UINavigationController *customModalNavigationController;
-@property(retain) UINavigationController *applicationNavigationController;
-@property(retain) UINavigationController *savedNavigationController;
-@property(retain) NSDictionary *janrainInterfaceDefaults;
-@end
-
 @implementation JRUserInterfaceMaestro
 {
     // This is an invisible container VC used to present the modal and popover dialogs
@@ -663,7 +664,7 @@ static NSString *describeCATransform3D(CATransform3D *t)
 
     NSDictionary *janrainInterfaceDefaults;
     NSMutableDictionary *customInterfaceDefaults;
-@package NSDictionary *customInterface;
+    NSDictionary *customInterface;
 }
 @synthesize myProvidersController;
 @synthesize myUserLandingController;
@@ -676,6 +677,8 @@ static NSString *describeCATransform3D(CATransform3D *t)
 @synthesize customInterfaceDefaults;
 @synthesize janrainInterfaceDefaults;
 @synthesize directProvider;
+@synthesize customInterface = customInterface;
+
 
 static JRUserInterfaceMaestro* singleton = nil;
 
@@ -764,7 +767,7 @@ static JRUserInterfaceMaestro* singleton = nil;
     for (NSString *key in nullKeys)
         [dict removeObjectForKey:key];
 
-    customInterface = [[NSDictionary alloc] initWithDictionary:dict];
+    self.customInterface = [NSDictionary dictionaryWithDictionary:dict];
 }
 
 - (void)setUpDialogPresentation
@@ -888,7 +891,7 @@ static JRUserInterfaceMaestro* singleton = nil;
     [jrModalViewController release], jrModalViewController = nil;
     [customModalNavigationController release], customModalNavigationController = nil;
 
-    [customInterface release], customInterface = nil;
+    self.customInterface = nil;
     [directProvider release], directProvider = nil;
 
     sessionData.dialogIsShowing = NO;
@@ -1027,13 +1030,15 @@ static JRUserInterfaceMaestro* singleton = nil;
     }
 
     if (padPopoverMode == PadPopoverFromBar)
-        [jrModalViewController
-            presentPopoverNavigationControllerFromBarButton:[customInterface objectForKey:kJRPopoverPresentationBarButtonItem]
-                                                inDirection:arrowDirection];
+    {
+        UIBarButtonItem *item = [customInterface objectForKey:kJRPopoverPresentationBarButtonItem];
+        [jrModalViewController presentPopoverNavigationControllerFromBarButton:item inDirection:arrowDirection];
+    }
     else if (padPopoverMode == PadPopoverFromFrame)
-        [jrModalViewController
-            presentPopoverNavigationControllerFromCGRect:[[customInterface objectForKey:kJRPopoverPresentationFrameValue] CGRectValue]
-                                             inDirection:arrowDirection];
+    {
+        CGRect rect = [[customInterface objectForKey:kJRPopoverPresentationFrameValue] CGRectValue];
+        [jrModalViewController presentPopoverNavigationControllerFromCGRect:rect inDirection:arrowDirection];
+    }
     else
         [jrModalViewController presentModalNavigationController];
 }
