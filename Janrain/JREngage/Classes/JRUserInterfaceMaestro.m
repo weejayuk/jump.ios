@@ -539,19 +539,20 @@ NSString *describeCATransform3D(CATransform3D *t)
     }
 
     // Figure out how to present it and present it
+    UIViewController *vcToPresentFrom;
     if (rvc)
     {
         // If we can do it the right way, and do the animation by hand
-        animationController.jrPresentingViewController = rvc;
-        [rvc presentModalViewController:vcToPresent animated:!IS_IPAD];
+        vcToPresentFrom = animationController.jrPresentingViewController = rvc;
+        while (vcToPresentFrom.presentedViewController) vcToPresentFrom = vcToPresentFrom.presentedViewController;
     }
     else
     {
-        // Yarr, it be a pirate's life for me
+        // Do it the old, hack way
         [getWindow() addSubview:self.view];
-        animationController.jrPresentingViewController = self;
-        [self presentModalViewController:vcToPresent animated:!IS_IPAD];
+        vcToPresentFrom = animationController.jrPresentingViewController = self;
     }
+    [vcToPresentFrom presentModalViewController:vcToPresent animated:!IS_IPAD];
 }
 
 - (void)viewDidAppear:(BOOL)animated
