@@ -70,10 +70,10 @@ static void handleCustomInterfaceException(NSException* exception, NSString* kJR
 #define IS_PORTRAIT (UIDeviceOrientationIsPortrait([UIDevice currentDevice].orientation))
 #define IS_LANDSCAPE (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
 
-CATransform3D normalizedCATransform3D(CATransform3D d);
+static CATransform3D normalizedCATransform3D(CATransform3D d);
 
 // get the app window with some fallbacks for legacy bad behavior?
-UIWindow *getWindow()
+static UIWindow *getWindow()
 {
     UIWindow* window = [UIApplication sharedApplication].keyWindow;
     if (!window) window = [[UIApplication sharedApplication].windows objectAtIndex:0];
@@ -81,14 +81,14 @@ UIWindow *getWindow()
 }
 
 // return the center of a view in it's own coordinate system
-CGPoint centerOfView(UIView *v)
+static CGPoint centerOfView(UIView *v)
 {
     return CGPointMake(v.bounds.origin.x + v.bounds.size.width / 2, v.bounds.origin.y + v.bounds.size.height / 2);
 }
 
 // for each view in a chain of views from a view to a root view (:= a view with no superview),
 // center the view in it's superview
-void centerViewChain(UIView *view)
+static void centerViewChain(UIView *view)
 {
     NSMutableArray *views = [NSMutableArray array];
     UIView *v = view;
@@ -104,7 +104,7 @@ void centerViewChain(UIView *view)
     }
 }
 
-UIView *findUIDimmingView(UIView *v)
+static UIView *findUIDimmingView(UIView *v)
 {
     while (v && ![v isKindOfClass:[UIWindow class]]) v = v.superview;
     if (![v isKindOfClass:[UIWindow class]]) return nil;
@@ -117,14 +117,14 @@ UIView *findUIDimmingView(UIView *v)
     return nil;
 }
 
-UIView *findUIDropShadowView(UIView *v)
+static UIView *findUIDropShadowView(UIView *v)
 {
     while (v && ![v isKindOfClass:NSClassFromString(@"UIDropShadowView")]) v = v.superview;
     if ([v isKindOfClass:NSClassFromString(@"UIDropShadowView")]) return v;
     return nil;
 }
 
-CATransform3D computeTransformMatrix(CGRect rect, CGPoint p1, CGPoint p2, CGPoint p3, CGPoint p4)
+static CATransform3D computeTransformMatrix(CGRect rect, CGPoint p1, CGPoint p2, CGPoint p3, CGPoint p4)
 {
     CGFloat X = rect.origin.x;
     CGFloat Y = rect.origin.y;
@@ -173,7 +173,7 @@ CATransform3D computeTransformMatrix(CGRect rect, CGPoint p1, CGPoint p2, CGPoin
     return r;
 }
 
-CATransform3D normalizedCATransform3D(CATransform3D d)
+static CATransform3D normalizedCATransform3D(CATransform3D d)
 {
     CATransform3D r;
     r = d;
@@ -185,7 +185,7 @@ CATransform3D normalizedCATransform3D(CATransform3D d)
     return r;
 }
 
-NSString *describeCATransform3D(CATransform3D *t)
+static NSString *describeCATransform3D(CATransform3D *t)
 {
     return [NSString stringWithFormat:@"[%f %f %f %f, %f %f %f %f, %f %f %f %f, %f %f %f %f]",
             t->m11, t->m12, t->m13, t->m14,
