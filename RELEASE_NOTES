@@ -1,3 +1,8 @@
+v2.5.0
+ - Fixes major modal dialog presentation on iPad bug
+  - Now follows presentedViewController chain down from .rootViewController and presents from the end
+ - Minor internal updates, including visibility fixes for previously over-visible helper funcs
+ - Demo bug fix
 v2.4.2
  - Guards against exceptions in a private test API
  - Minor internal changes
