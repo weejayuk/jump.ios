@@ -848,7 +848,9 @@ static JRUserInterfaceMaestro* singleton = nil;
                                                                     andCustomInterface:customInterface];
 
     @try
-    {/* We do this here, because sometimes we pop straight to the user landing controller and we need the back-button's title to be correct */
+    {
+        // We do this here, because sometimes we pop straight to the user landing controller and we need the
+        // back-button's title to be correct
         if ([customInterface objectForKey:kJRProviderTableTitleString] &&
             ((NSString*)[customInterface objectForKey:kJRProviderTableTitleString]).length)
             myProvidersController.title = [customInterface objectForKey:kJRProviderTableTitleString];
@@ -933,10 +935,7 @@ static JRUserInterfaceMaestro* singleton = nil;
 
 - (UIPopoverController*)createPopoverControllerWithNavigationController:(UINavigationController*)navigationController
 {
-//    UIPopoverController *popoverController =
-//        [[[UIPopoverController alloc]
-//            initWithContentViewController:navigationController] autorelease];
-    /* Allocating UIPopoverController with class string allocation so that it compiles for iPhone OS versions < v3.2 */
+    // Allocating UIPopoverController with class string allocation so that it compiles for iPhone OS versions < v3.2
     UIPopoverController *popoverController =
         [[[NSClassFromString(@"UIPopoverController") alloc]
             initWithContentViewController:navigationController] autorelease];
@@ -1221,11 +1220,9 @@ static JRUserInterfaceMaestro* singleton = nil;
 - (void)publishingFailed
 {
     DLog(@"");
-//  [self popToOriginalRootViewController];
-//  [self unloadUserInterfaceWithTransitionStyle:UIModalTransitionStyleCoverVertical];
 }
 
-- (JRModalViewController *) getJrModalViewController
+- (JRModalViewController *)getJrModalViewController
 {
     return jrModalViewController;
 }

@@ -109,29 +109,29 @@
 
 - (IBAction)thirdButtonPressed:(id)sender
 {
-    UIViewController *testModal = [[UIViewController alloc] initWithNibName:nil bundle:nil];
-    testModal.view = ([[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)]);
-    testModal.view.backgroundColor = [UIColor redColor];
-
-    UIButton *testButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [testButton addTarget:self action:@selector(signInButtonPressed:) forControlEvents:UIControlEventTouchDown];
-    [testButton setTitle:@"Show View" forState:UIControlStateNormal];
-    testButton.frame = CGRectMake(80.0, 210.0, 160.0, 40.0);
-    [testModal.view addSubview:testButton];
-
-    testModal.modalPresentationStyle = UIModalPresentationFormSheet;
-    [self presentModalViewController:testModal animated:YES];
-    //[self presentViewController:testModal animated:YES completion:nil];
+    //UIViewController *testModal = [[UIViewController alloc] initWithNibName:nil bundle:nil];
+    //testModal.view = ([[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)]);
+    //testModal.view.backgroundColor = [UIColor redColor];
+    //
+    //UIButton *testButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    //[testButton addTarget:self action:@selector(signInButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    //[testButton setTitle:@"Show View" forState:UIControlStateNormal];
+    //testButton.frame = CGRectMake(80.0, 210.0, 160.0, 40.0);
+    //[testModal.view addSubview:testButton];
+    //
+    //testModal.modalPresentationStyle = UIModalPresentationFormSheet;
+    //[self presentModalViewController:testModal animated:YES];
+    ////[self presentViewController:testModal animated:YES completion:nil];
 }
 
 - (IBAction)signInButtonPressed:(id)sender
 {
     currentUserProviderIcon.image = nil;
-    
-    NSDictionary *customInterface = [NSDictionary dictionaryWithObject:self.navigationController
-                                                                forKey:kJRApplicationNavigationController];
-    
-    [SharedData startAuthenticationWithCustomInterface:customInterface forDelegate:self];
+
+    NSMutableDictionary *customUi = [NSMutableDictionary dictionaryWithObject:self.navigationController
+                                                                       forKey:kJRApplicationNavigationController];
+
+    [SharedData startAuthenticationWithCustomInterface:customUi forDelegate:self];
 }
 
 - (IBAction)signOutButtonPressed:(id)sender
