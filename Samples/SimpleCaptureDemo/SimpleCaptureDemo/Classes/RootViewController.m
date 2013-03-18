@@ -109,7 +109,19 @@
 
 - (IBAction)thirdButtonPressed:(id)sender
 {
-    [[SharedData sharedData] asyncFetchNewLiveFyreUserToken];
+    UIViewController *testModal = [[UIViewController alloc] initWithNibName:nil bundle:nil];
+    testModal.view = ([[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)]);
+    testModal.view.backgroundColor = [UIColor redColor];
+
+    UIButton *testButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [testButton addTarget:self action:@selector(signInButtonPressed:) forControlEvents:UIControlEventTouchDown];
+    [testButton setTitle:@"Show View" forState:UIControlStateNormal];
+    testButton.frame = CGRectMake(80.0, 210.0, 160.0, 40.0);
+    [testModal.view addSubview:testButton];
+
+    testModal.modalPresentationStyle = UIModalPresentationFormSheet;
+    [self presentModalViewController:testModal animated:YES];
+    //[self presentViewController:testModal animated:YES completion:nil];
 }
 
 - (IBAction)signInButtonPressed:(id)sender

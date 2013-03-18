@@ -98,7 +98,6 @@ typedef enum
 + (JRUserInterfaceMaestro*)jrUserInterfaceMaestroWithSessionData:(JRSessionData*)newSessionData;
 + (JRUserInterfaceMaestro*)sharedMaestro;
 
-//- (void)useApplicationNavigationController:(UINavigationController*)navigationController;
 - (void)loadModalNavigationControllerWithViewController:(UIViewController *)rootViewController;
 - (void)loadApplicationNavigationControllerWithViewController:(UIViewController *)rootViewController;
 - (void)showAuthenticationDialogWithCustomInterface:(NSDictionary*)customizations;
@@ -114,7 +113,7 @@ typedef enum
 - (void)publishingCanceled;
 - (void)publishingFailed;
 
-// Question to self: Do I want to make customInterfaceDefaults nonatomic?
+// make customInterfaceDefaults nonatomic?
 @property (copy)     NSMutableDictionary         *customInterfaceDefaults;
 
 

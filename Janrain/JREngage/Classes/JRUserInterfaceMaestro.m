@@ -32,14 +32,7 @@
  Date:   Tuesday, August 24, 2010
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#ifdef DEBUG
-#define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-#else
-#define DLog(...)
-#endif
-
-#define ALog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-
+#import "debug_log.h"
 #import "QuartzCore/QuartzCore.h"
 
 #import "JRUserInterfaceMaestro.h"
@@ -66,7 +59,9 @@ static void handleCustomInterfaceException(NSException* exception, NSString* kJR
 }
 
 #define IS_IPAD ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad))
-#define IOS6 ([[[UIDevice currentDevice] systemVersion] compare:@"6.0" options:NSNumericSearch] >= NSOrderedSame)
+#define IOS6_OR_ABOVE ([[[UIDevice currentDevice] systemVersion] compare:@"6.0" options:NSNumericSearch] >= NSOrderedSame)
+#define IOS5_OR_ABOVE ([[[UIDevice currentDevice] systemVersion] compare:@"5.0" options:NSNumericSearch] >= NSOrderedSame)
+#define IOS4_OR_ABOVE ([[[UIDevice currentDevice] systemVersion] compare:@"4.0" options:NSNumericSearch] >= NSOrderedSame)
 #define IS_PORTRAIT (UIDeviceOrientationIsPortrait([UIDevice currentDevice].orientation))
 #define IS_LANDSCAPE (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
 
@@ -203,6 +198,17 @@ static NSString *describeCATransform3D(CATransform3D *t)
 -(BOOL)hasRvc
 {
     return [self respondsToSelector:@selector(rootViewController)] && self.rootViewController;
+}
+@end
+
+@interface UIViewController (JRUtils)
+-(BOOL)hasPresentedViewController;
+@end
+
+@implementation UIViewController (JRUtils)
+-(BOOL)hasPresentedViewController
+{
+    return [self respondsToSelector:@selector(presentedViewController)] && self.presentedViewController;
 }
 @end
 
@@ -382,12 +388,14 @@ static NSString *describeCATransform3D(CATransform3D *t)
     self.modalDimmingView.backgroundColor = [UIColor whiteColor];
     [UIView animateWithDuration:0 delay:0
                         options:UIViewAnimationOptionCurveLinear
-                     animations:^() {
-        self.dropShadow.layer.transform = self.originalTransform;
-        self.windowDimmingView.backgroundColor = self.originalDimmingViewColor;
-        self.modalDimmingView.backgroundColor = [UIColor clearColor];
-    }
-                     completion:^(BOOL finished){
+                     animations:^()
+                     {
+                         self.dropShadow.layer.transform = self.originalTransform;
+                         self.windowDimmingView.backgroundColor = self.originalDimmingViewColor;
+                         self.modalDimmingView.backgroundColor = [UIColor clearColor];
+                     }
+                     completion:^(BOOL finished)
+                     {
                          [self.modalDimmingView removeFromSuperview];
                      }];
 }
@@ -500,8 +508,7 @@ static NSString *describeCATransform3D(CATransform3D *t)
 {
     DLog (@"");
     [myPopoverController presentPopoverFromBarButtonItem:barButtonItem
-                                permittedArrowDirections:direction
-                                                animated:YES];
+                                permittedArrowDirections:direction animated:YES];
 }
 
 - (void)presentPopoverNavigationControllerFromCGRect:(CGRect)rect inDirection:(UIPopoverArrowDirection)direction
@@ -510,10 +517,8 @@ static NSString *describeCATransform3D(CATransform3D *t)
     if (![self.view superview]) [getWindow() addSubview:self.view];
     CGRect popoverPresentationFrame = [self.view convertRect:rect toView:getWindow()];
 
-    [myPopoverController presentPopoverFromRect:popoverPresentationFrame
-                                         inView:self.view
-                       permittedArrowDirections:direction
-                                       animated:YES];
+    [myPopoverController presentPopoverFromRect:popoverPresentationFrame inView:self.view
+                       permittedArrowDirections:direction animated:YES];
 }
 
 - (void)presentModalNavigationController
@@ -526,7 +531,7 @@ static NSString *describeCATransform3D(CATransform3D *t)
     animationController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     animationController.modalPresentationStyle = myNavigationController.modalPresentationStyle;
 
-    // Figure out what to present
+    // Figure out what to present & set it up
     if (IS_IPAD)
     {
         self.vcToPresent = animationController;
@@ -538,13 +543,14 @@ static NSString *describeCATransform3D(CATransform3D *t)
         self.vcToPresent = myNavigationController;
     }
 
-    // Figure out how to present it and present it
+    // Figure out how to present & record how
     UIViewController *vcToPresentFrom;
-    if (rvc)
+    if (rvc && IOS5_OR_ABOVE)
     {
-        // If we can do it the right way, and do the animation by hand
-        vcToPresentFrom = animationController.jrPresentingViewController = rvc;
-        while (vcToPresentFrom.presentedViewController) vcToPresentFrom = vcToPresentFrom.presentedViewController;
+        // If we can, do it the right way, and do the animation by hand
+        vcToPresentFrom = rvc;
+        while ([vcToPresentFrom hasPresentedViewController]) vcToPresentFrom = vcToPresentFrom.presentedViewController;
+        animationController.jrPresentingViewController = vcToPresentFrom;
     }
     else
     {
@@ -552,6 +558,7 @@ static NSString *describeCATransform3D(CATransform3D *t)
         [getWindow() addSubview:self.view];
         vcToPresentFrom = animationController.jrPresentingViewController = self;
     }
+
     [vcToPresentFrom presentModalViewController:vcToPresent animated:!IS_IPAD];
 }
 
