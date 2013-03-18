@@ -545,7 +545,11 @@ static NSString *describeCATransform3D(CATransform3D *t)
 
     // Figure out how to present & record how
     UIViewController *vcToPresentFrom;
-    if (rvc && IOS5_OR_ABOVE)
+    if ([JRUserInterfaceMaestro sharedMaestro]->customInterface)
+    {
+        vcToPresentFrom = animationController.jrPresentingViewController =
+    }
+    else if (rvc && IOS5_OR_ABOVE)
     {
         // If we can, do it the right way, and do the animation by hand
         vcToPresentFrom = rvc;
@@ -620,14 +624,46 @@ static NSString *describeCATransform3D(CATransform3D *t)
 @end
 
 @interface JRUserInterfaceMaestro ()
-@property (retain) JRModalViewController *jrModalViewController;
-@property (retain) UINavigationController       *customModalNavigationController;
-@property (retain) UINavigationController       *applicationNavigationController;
-@property (retain) UINavigationController       *savedNavigationController;
-@property (retain) NSDictionary                 *janrainInterfaceDefaults;
+@property(retain) JRModalViewController *jrModalViewController;
+@property(retain) UINavigationController *customModalNavigationController;
+@property(retain) UINavigationController *applicationNavigationController;
+@property(retain) UINavigationController *savedNavigationController;
+@property(retain) NSDictionary *janrainInterfaceDefaults;
 @end
 
 @implementation JRUserInterfaceMaestro
+{
+    // This is an invisible container VC used to present the modal and popover dialogs
+    JRModalViewController *jrModalViewController;
+    JRSessionData *sessionData;
+    NSMutableArray *delegates;
+
+    PadPopoverMode padPopoverMode;
+    // Pushing JUMP dialog VCs onto the host application's UINavigationController
+    BOOL usingAppNav;
+    // Presenting custom UINavigationController and pushing JUMP dialog VCs onto it
+    BOOL usingCustomNav;
+
+    // The provider to direct-auth on
+    NSString *directProvider;
+
+    // An app supplied UINavigationController to present, and then push dialogs onto, passed via custom interface dict
+    UINavigationController *customModalNavigationController;
+    // The host app's UINavigationController, optionally passed via custom interface dict
+    UINavigationController *applicationNavigationController;
+    UINavigationController *savedNavigationController;
+    UIViewController *viewControllerToPopTo;
+
+    // The JUMP VCs
+    JRProvidersController *myProvidersController;
+    JRUserLandingController *myUserLandingController;
+    JRWebViewController *myWebViewController;
+    JRPublishActivityController *myPublishActivityController;
+
+    NSDictionary *janrainInterfaceDefaults;
+    NSMutableDictionary *customInterfaceDefaults;
+@package NSDictionary *customInterface;
+}
 @synthesize myProvidersController;
 @synthesize myUserLandingController;
 @synthesize myWebViewController;
