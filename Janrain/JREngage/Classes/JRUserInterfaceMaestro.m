@@ -545,23 +545,24 @@ static NSString *describeCATransform3D(CATransform3D *t)
 
     // Figure out how to present & record how
     UIViewController *vcToPresentFrom;
-    if ([JRUserInterfaceMaestro sharedMaestro]->customInterface)
+    NSDictionary *customUi = [JRUserInterfaceMaestro sharedMaestro]->customInterface;
+    if ([customUi objectForKey:kJRModalDialogPresentationViewController])
     {
-        vcToPresentFrom = animationController.jrPresentingViewController =
+        vcToPresentFrom = [customUi objectForKey:kJRModalDialogPresentationViewController];
     }
     else if (rvc && IOS5_OR_ABOVE)
     {
         // If we can, do it the right way, and do the animation by hand
         vcToPresentFrom = rvc;
         while ([vcToPresentFrom hasPresentedViewController]) vcToPresentFrom = vcToPresentFrom.presentedViewController;
-        animationController.jrPresentingViewController = vcToPresentFrom;
     }
     else
     {
         // Do it the old, hack way
         [getWindow() addSubview:self.view];
-        vcToPresentFrom = animationController.jrPresentingViewController = self;
+        vcToPresentFrom = self;
     }
+    animationController.jrPresentingViewController = vcToPresentFrom;
 
     [vcToPresentFrom presentModalViewController:vcToPresent animated:!IS_IPAD];
 }
