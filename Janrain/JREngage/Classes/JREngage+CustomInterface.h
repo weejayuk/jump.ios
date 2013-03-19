@@ -104,6 +104,20 @@
 /*@}*/
 
 /**
+* @name Presenting View Controller
+* A key to explicitly specify which UIViewController from which the library will present its
+* modal view controllers when running on iPad
+*/
+/*@{*/
+/**
+ * Key for a \e UIViewController object that your application owns, which will be used to present the library's
+ * modal dialogs.
+*/
+#define kJRModalDialogPresentationViewController @"PresentingViewController"
+/*@}*/
+
+
+/**
  * @name Background Colors
  * Keys to specify the background color of the library's dialogs
  **/

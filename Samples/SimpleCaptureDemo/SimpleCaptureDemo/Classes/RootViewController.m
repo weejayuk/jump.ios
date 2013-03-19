@@ -87,15 +87,6 @@
     [self configureUserLabelAndIcon];
 }
 
-- (void)setButtonsEnabled:(BOOL)enabled
-{
-    [browseButton setEnabled:enabled];
-    [captureWidgetButton setEnabled:enabled];
-    [updateButton setEnabled:enabled];
-    [signInButton setEnabled:enabled];
-    [signOutButton setEnabled:enabled];
-}
-
 - (IBAction)browseButtonPressed:(id)sender
 {
     ObjectDrillDownViewController *drillDown =
@@ -118,18 +109,29 @@
 
 - (IBAction)thirdButtonPressed:(id)sender
 {
-    [[SharedData sharedData] asyncFetchNewLiveFyreUserToken];
+    //UIViewController *testModal = [[UIViewController alloc] initWithNibName:nil bundle:nil];
+    //testModal.view = ([[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)]);
+    //testModal.view.backgroundColor = [UIColor redColor];
+    //
+    //UIButton *testButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    //[testButton addTarget:self action:@selector(signInButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    //[testButton setTitle:@"Show View" forState:UIControlStateNormal];
+    //testButton.frame = CGRectMake(80.0, 210.0, 160.0, 40.0);
+    //[testModal.view addSubview:testButton];
+    //
+    //testModal.modalPresentationStyle = UIModalPresentationFormSheet;
+    //[self presentModalViewController:testModal animated:YES];
+    ////[self presentViewController:testModal animated:YES completion:nil];
 }
 
 - (IBAction)signInButtonPressed:(id)sender
 {
-    [self setButtonsEnabled:NO];
     currentUserProviderIcon.image = nil;
-    
-    NSDictionary *customInterface = [NSDictionary dictionaryWithObject:self.navigationController
-                                                                forKey:kJRApplicationNavigationController];
-    
-    [SharedData startAuthenticationWithCustomInterface:customInterface forDelegate:self];
+
+    NSMutableDictionary *customUi = [NSMutableDictionary dictionaryWithObject:self.navigationController
+                                                                       forKey:kJRApplicationNavigationController];
+
+    [SharedData startAuthenticationWithCustomInterface:customUi forDelegate:self];
 }
 
 - (IBAction)signOutButtonPressed:(id)sender
@@ -164,7 +166,6 @@
 
 - (void)captureSignInDidSucceed
 {
-    [self setButtonsEnabled:YES];
     [self configureButtons];
     [self configureUserLabelAndIcon];
 
