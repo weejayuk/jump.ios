@@ -31,14 +31,7 @@
  Date:   ${DATE}
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#ifdef DEBUG
-#define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-#else
-#define DLog(...)
-#endif
-
-#define ALog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-
+#import "debug_log.h"
 #import "SharedData.h"
 #import "JSONKit.h"
 #import "JRConnectionManager.h"
@@ -168,7 +161,7 @@ static SharedData *singleton = nil;
                            }];
 }
 
-- (void)asyncFetchNewLiveFyreUserToken
+- (void)asyncFetchNewLiveFyreUserToken __unused
 {
     if (!liveFyreArticleId || !liveFyreNetwork || !liveFyreSiteId) return;
     NSString *lfAuthUrl = [NSString stringWithFormat:@"http://admin.%@/api/v3.0/auth?bp_channel=%@&siteId=%@"
@@ -209,7 +202,6 @@ static SharedData *singleton = nil;
                                    self.lfToken = lfToken_;
                                }
                            }];
-
 }
 
 + (SharedData *)sharedData
@@ -226,7 +218,7 @@ static SharedData *singleton = nil;
     return [self sharedData];
 }
 
-- (id)copyWithZone:(NSZone *)zone
+- (id)copyWithZone:(NSZone *)zone __unused
 {
     return self;
 }

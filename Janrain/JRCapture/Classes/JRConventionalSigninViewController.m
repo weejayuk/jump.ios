@@ -32,14 +32,7 @@
  Date:   Tuesday, June 1, 2010
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#ifdef DEBUG
-#define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-#else
-#define DLog(...)
-#endif
-
-#define ALog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-
+#import "debug_log.h"
 #import "JRConventionalSignInViewController.h"
 #import "JREngageWrapper.h"
 #import "JRUserInterfaceMaestro.h"
@@ -241,14 +234,6 @@
     if (!nameOrEmail) nameOrEmail = @"";
     if (!password) password = @"";
 
-    //    NSMutableString *errorMessage = [NSMutableString stringWithString:@"Please enter your "];
-//
-//    if (!nameTextField.text || [nameTextField.text isEqualToString:@""])
-//        [errorMessage appendString:self.signinType == JRConventionalSigninEmailPassword ? @"email address " : "username"];
-//
-//    if (!pwdTextField.text || [pwdTextField.text isEqualToString:@""])
-//        [errorMessage appendString:@"password"];
-
     NSString *const signInTypeString = (self.signInType == JRConventionalSigninEmailPassword) ? @"email" : @"username";
     [JRCaptureApidInterface signinCaptureUserWithCredentials:[NSDictionary dictionaryWithObjectsAndKeys:
                                                                                    nameOrEmail, signInTypeString,
@@ -277,7 +262,6 @@
 
 - (void)signinCaptureUserDidFailWithResult:(NSDictionary *)result context:(NSObject *)context
 {
-
     DLog(@"result: %@", [result description]);
     NSString const *type = self.signInType == JRConventionalSigninEmailPassword ? @"Email" : @"Username";
     NSString *title = [NSString stringWithFormat:@"Incorrect %@ or Password", type];

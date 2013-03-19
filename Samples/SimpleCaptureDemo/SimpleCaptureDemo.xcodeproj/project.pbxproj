@@ -60,7 +60,6 @@
 		C14242372F43ECBE4FC3B913 /* JRPluralLevelThreeElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424580A96FA450B14016EA /* JRPluralLevelThreeElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C14242472E16BD6519162837 /* logo_google_280x65.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424E0260D89C187A61A874 /* logo_google_280x65.png */; };
 		C142424E43DA098E32674AE7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C142401A5A8AAAFC251E5853 /* QuartzCore.framework */; };
-		C142426BB30FF4E2713BD32C /* JRLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = C142432F96DD2445E1F449BF /* JRLocation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C142428CFA6596554C2A8352 /* icon_aol_30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424F6509C388745950892B /* icon_aol_30x30.png */; };
 		C14242A3D1348AB208E95D49 /* logo_blogger_280x65.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424312AB8DC876E8FE14D2 /* logo_blogger_280x65.png */; };
 		C14242A78F107CCB11CD8F06 /* icon_paypal_30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = C142418EB5A5481EE30126C6 /* icon_paypal_30x30.png */; };

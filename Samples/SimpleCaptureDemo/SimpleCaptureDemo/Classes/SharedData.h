@@ -57,7 +57,7 @@
 
 + (SharedData *)sharedData;
 
-- (void)asyncFetchNewLiveFyreUserToken;
+- (void)asyncFetchNewLiveFyreUserToken __unused;
 
 + (void)startAuthenticationWithCustomInterface:(NSDictionary *)customInterface
                                    forDelegate:(id <DemoSignInDelegate>)delegate;
