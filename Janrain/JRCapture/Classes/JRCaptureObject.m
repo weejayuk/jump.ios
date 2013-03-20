@@ -105,11 +105,10 @@
 {
     DLog(@"");
 
-    NSDictionary    *myContext     = (NSDictionary *)context;
+    NSDictionary *myContext = (NSDictionary *) context;
     JRCaptureObject *captureObject = [myContext objectForKey:@"captureObject"];
-    NSObject        *callerContext = [myContext objectForKey:@"callerContext"];
-    id<JRCaptureObjectDelegate>
-                     delegate      = [myContext objectForKey:@"delegate"];
+    NSObject *callerContext = [myContext objectForKey:@"callerContext"];
+    id <JRCaptureObjectDelegate> delegate = [myContext objectForKey:@"delegate"];
 
     NSDictionary *resultDictionary;
     NSString     *resultString;
@@ -142,9 +141,8 @@
     if ([delegate conformsToProtocol:@protocol(JRCaptureObjectTesterDelegate)] &&
             [delegate respondsToSelector:testSelector])
     {
-        [((id<JRCaptureObjectTesterDelegate>)delegate) updateCaptureObject:captureObject
-                                                      didSucceedWithResult:resultString
-                                                                   context:callerContext];
+        [((id <JRCaptureObjectTesterDelegate>) delegate) updateCaptureObject:captureObject
+                                                        didSucceedWithResult:resultString context:callerContext];
     }
 
     if ([delegate respondsToSelector:@selector(updateDidSucceedForObject:context:)])

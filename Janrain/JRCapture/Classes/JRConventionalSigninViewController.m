@@ -56,7 +56,6 @@
 @synthesize delegate;
 @synthesize firstResponder;
 
-
 - (id)initWithConventionalSignInType:(JRConventionalSigninType)theSignInType titleString:(NSString *)theTitleString
                                                                                titleView:(UIView *)theTitleView
                                                                            engageWrapper:(JREngageWrapper *)theWrapper

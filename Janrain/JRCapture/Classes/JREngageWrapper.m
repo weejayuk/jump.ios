@@ -206,17 +206,11 @@ static JREngageWrapper *singleton = nil;
                                  didFailWithError:[JRCaptureError invalidApiResponseError:payload]
                                       forProvider:provider];
 
-    if (![[payloadDict objectForKey:@"stat"] isEqual:@"ok"]) {
+    if (![[payloadDict objectForKey:@"stat"] isEqual:@"ok"])
+    {
         JRCaptureError *error = [JRCaptureError errorFromResult:payloadDict];
-        if ([error isMergeFlowError])
-        {
-            [delegate captureAuthenticationDidFailWithError:[JRCaptureError errorWithError:error
-                                                                             andMergeToken:mergeToken]];
-        }
-        else
-        {
-            return [self authenticationCallToTokenUrl:tokenUrl didFailWithError:error forProvider:provider];
-        }
+        [self authenticationCallToTokenUrl:tokenUrl didFailWithError:error forProvider:provider];
+        return;
     }
 
     FinishSignInError error = [JRCaptureApidInterface finishSignInWithPayload:payloadDict forDelegate:delegate];
