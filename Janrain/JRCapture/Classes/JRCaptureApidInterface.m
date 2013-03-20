@@ -616,8 +616,7 @@ typedef enum CaptureInterfaceStatEnum
         {
             FinishSignInError err = [JRCaptureApidInterface finishSignInWithPayload:response forDelegate:delegate_];
 
-            if ((err == cJRInvalidResponse || err == cJRInvalidCaptureUser) &&
-                    respondsToFail)
+            if ((err == cJRInvalidResponse || err == cJRInvalidCaptureUser) && respondsToFail)
             {
                 NSString *errorDesc = [NSString stringWithFormat:
                         @"The Capture Mobile Endpoint URL did not have the expected data: %@", [payload description]];

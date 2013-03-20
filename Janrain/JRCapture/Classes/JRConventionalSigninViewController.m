@@ -235,9 +235,11 @@
     if (!password) password = @"";
 
     NSString *const signInTypeString = (self.signInType == JRConventionalSigninEmailPassword) ? @"email" : @"username";
-    [JRCaptureApidInterface signinCaptureUserWithCredentials:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                                                   nameOrEmail, signInTypeString,
-                                                                                   password, @"password", nil]
+    NSDictionary *credentials = [NSDictionary dictionaryWithObjectsAndKeys:
+                                                      nameOrEmail, signInTypeString,
+                                                      password, @"password", nil];
+
+    [JRCaptureApidInterface signinCaptureUserWithCredentials:credentials
                                                       ofType:signInTypeString
                                                  forDelegate:self
                                                  withContext:nil];
@@ -252,10 +254,8 @@
 {
     [delegate hideLoading];
 
-    [wrapper authenticationDidReachTokenUrl:@"/oath/mobile_signin_username_password"
-                               withResponse:nil
-                                 andPayload:[result dataUsingEncoding:NSUTF8StringEncoding]
-                                forProvider:nil];
+    [wrapper authenticationDidReachTokenUrl:@"/oath/auth_native_traditional" withResponse:nil
+                                 andPayload:[result dataUsingEncoding:NSUTF8StringEncoding] forProvider:nil];
 
     [delegate authenticationDidComplete];
 }
