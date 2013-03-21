@@ -30,12 +30,13 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "SharedData.h"
+#import "BackplaneUtils.h"
 #import "JRCapture.h"
 
 
 @interface ArrayDrillDownViewController : UIViewController <UINavigationBarDelegate, UITableViewDelegate,
-                                                            UITableViewDataSource, UITextFieldDelegate, JRCaptureObjectDelegate>
+                                                            UITableViewDataSource, UITextFieldDelegate,
+        JRCaptureObjectDelegate>
 {
     UITableView    *myTableView;
     NSMutableArray *objectDataArray;

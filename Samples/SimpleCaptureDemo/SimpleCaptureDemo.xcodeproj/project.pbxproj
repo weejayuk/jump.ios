@@ -22,7 +22,7 @@
 		9F7B6A9415336480002BF452 /* ArrayDrillDownViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7B6A8815336480002BF452 /* ArrayDrillDownViewController.m */; };
 		9F7B6A9515336480002BF452 /* CaptureProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7B6A8A15336480002BF452 /* CaptureProfileViewController.m */; };
 		9F7B6A9615336480002BF452 /* ObjectDrillDownViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7B6A8C15336480002BF452 /* ObjectDrillDownViewController.m */; };
-		9F7B6A9715336480002BF452 /* SharedData.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7B6A8E15336480002BF452 /* SharedData.m */; };
+		9F7B6A9715336480002BF452 /* BackplaneUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7B6A8E15336480002BF452 /* BackplaneUtils.m */; };
 		9F7B6A9915336480002BF452 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7B6A9215336480002BF452 /* RootViewController.m */; };
 		9F7B6AAA1533648C002BF452 /* ArrayDrillDownViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F7B6A9B1533648C002BF452 /* ArrayDrillDownViewController.xib */; };
 		9F7B6AAB1533648C002BF452 /* CaptureProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F7B6A9D1533648C002BF452 /* CaptureProfileViewController.xib */; };
@@ -321,8 +321,8 @@
 		9F7B6A8A15336480002BF452 /* CaptureProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CaptureProfileViewController.m; path = Classes/CaptureProfileViewController.m; sourceTree = "<group>"; };
 		9F7B6A8B15336480002BF452 /* ObjectDrillDownViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectDrillDownViewController.h; path = Classes/ObjectDrillDownViewController.h; sourceTree = "<group>"; };
 		9F7B6A8C15336480002BF452 /* ObjectDrillDownViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ObjectDrillDownViewController.m; path = Classes/ObjectDrillDownViewController.m; sourceTree = "<group>"; };
-		9F7B6A8D15336480002BF452 /* SharedData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SharedData.h; path = Classes/SharedData.h; sourceTree = "<group>"; };
-		9F7B6A8E15336480002BF452 /* SharedData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SharedData.m; path = Classes/SharedData.m; sourceTree = "<group>"; };
+		9F7B6A8D15336480002BF452 /* BackplaneUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BackplaneUtils.h; path = Classes/BackplaneUtils.h; sourceTree = "<group>"; };
+		9F7B6A8E15336480002BF452 /* BackplaneUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BackplaneUtils.m; path = Classes/BackplaneUtils.m; sourceTree = "<group>"; };
 		9F7B6A9115336480002BF452 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RootViewController.h; path = Classes/RootViewController.h; sourceTree = "<group>"; };
 		9F7B6A9215336480002BF452 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RootViewController.m; path = Classes/RootViewController.m; sourceTree = "<group>"; };
 		9F7B6A9C1533648C002BF452 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = ArrayDrillDownViewController.xib; sourceTree = "<group>"; };
@@ -775,8 +775,8 @@
 				9F7B6A8A15336480002BF452 /* CaptureProfileViewController.m */,
 				9F7B6A8B15336480002BF452 /* ObjectDrillDownViewController.h */,
 				9F7B6A8C15336480002BF452 /* ObjectDrillDownViewController.m */,
-				9F7B6A8D15336480002BF452 /* SharedData.h */,
-				9F7B6A8E15336480002BF452 /* SharedData.m */,
+				9F7B6A8D15336480002BF452 /* BackplaneUtils.h */,
+				9F7B6A8E15336480002BF452 /* BackplaneUtils.m */,
 				9F7B6A9115336480002BF452 /* RootViewController.h */,
 				9F7B6A9215336480002BF452 /* RootViewController.m */,
 				C1424F585B481C5D49BD59CE /* PickerViewController.m */,
@@ -1658,7 +1658,7 @@
 				9F7B6A9415336480002BF452 /* ArrayDrillDownViewController.m in Sources */,
 				9F7B6A9515336480002BF452 /* CaptureProfileViewController.m in Sources */,
 				9F7B6A9615336480002BF452 /* ObjectDrillDownViewController.m in Sources */,
-				9F7B6A9715336480002BF452 /* SharedData.m in Sources */,
+				9F7B6A9715336480002BF452 /* BackplaneUtils.m in Sources */,
 				9F7B6A9915336480002BF452 /* RootViewController.m in Sources */,
 				9FD2B6C114F8387B00053EA4 /* StringArrayDrillDownViewController.m in Sources */,
 				C142484A42B9AFC6D5D601D1 /* PickerViewController.m in Sources */,

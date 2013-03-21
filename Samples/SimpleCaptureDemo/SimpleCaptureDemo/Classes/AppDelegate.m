@@ -29,15 +29,70 @@
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #import "AppDelegate.h"
+#import "JRCapture.h"
+#import "BackplaneUtils.h"
+#import "debug_log.h"
+
+AppDelegate *appDelegate = nil;
 
 @implementation AppDelegate
 
 @synthesize window = _window;
 
+@synthesize captureUser;
+@synthesize currentProvider;
+@synthesize isNew;
+@synthesize isNotYetCreated;
+@synthesize engageSignInWasCanceled;
+@synthesize bpChannelUrl;
+@synthesize lfToken;
+@synthesize captureClientId;
+@synthesize captureDomain;
+@synthesize captureLocale;
+@synthesize captureFormName;
+@synthesize captureFlowName;
+@synthesize engageAppId;
+@synthesize bpBusUrlString;
+@synthesize liveFyreNetwork;
+@synthesize liveFyreSiteId;
+@synthesize liveFyreArticleId;
+@synthesize prefs;
+
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+    appDelegate = self;
+
+    [self loadConfigFromPlist];
+    [JRCapture setEngageAppId:engageAppId captureDomain:captureDomain
+              captureClientId:captureClientId captureLocale:captureLocale
+              captureFlowName:captureFlowName captureFormName:captureFormName
+ captureTraditionalSignInType:JRConventionalSigninEmailPassword];
+
+    [BackplaneUtils asyncFetchNewBackplaneChannelWithBus:bpBusUrlString
+                                              completion:^(NSString *newChannel, NSError *error)
+                                              {
+                                                  if (newChannel)
+                                                  {
+                                                      bpChannelUrl = newChannel;
+                                                  }
+                                                  else
+                                                  {
+                                                      ALog("%@", [error description]);
+                                                  }
+                                              }];
+
+    self.prefs = [NSUserDefaults standardUserDefaults];
+
+    self.currentProvider  = [prefs objectForKey:cJRCurrentProvider];
+
+    NSData *archivedCaptureUser = [prefs objectForKey:cJRCaptureUser];
+    if (archivedCaptureUser)
+    {
+        self.captureUser = [NSKeyedUnarchiver unarchiveObjectWithData:archivedCaptureUser];
+    }
+
     return YES;
 }
 
@@ -73,4 +128,29 @@
 
 }
 
+- (void)loadConfigFromPlist
+{
+    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"assets/janrain-config" ofType:@"plist"];
+    NSDictionary *cfgPlist = [NSDictionary dictionaryWithContentsOfFile:plistPath];
+    NSString *configKeyName = [cfgPlist objectForKey:@"default-config"];
+    NSDictionary *cfg = [cfgPlist objectForKey:configKeyName];
+
+    self.captureClientId = [cfg objectForKey:@"captureClientId"];
+    self.captureDomain = [cfg objectForKey:@"captureDomain"];
+    self.captureLocale = [cfg objectForKey:@"captureLocale"];
+    self.captureFormName = [cfg objectForKey:@"captureFormName"];
+    self.captureFlowName = [cfg objectForKey:@"captureFlowName"];
+    self.engageAppId = [cfg objectForKey:@"engageAppId"];
+    self.bpBusUrlString = [cfg objectForKey:@"bpBusUrlString"];
+    self.bpChannelUrl = [cfg objectForKey:@"bpChannelUrl"];
+    self.liveFyreNetwork = [cfg objectForKey:@"liveFyreNetwork"];
+    self.liveFyreSiteId = [cfg objectForKey:@"liveFyreSiteId"];
+    self.liveFyreArticleId = [cfg objectForKey:@"liveFyreArticleId"];
+}
+
+- (void)saveCaptureUser
+{
+    [appDelegate.prefs setObject:[NSKeyedArchiver archivedDataWithRootObject:appDelegate.captureUser]
+                          forKey:cJRCaptureUser];
+}
 @end

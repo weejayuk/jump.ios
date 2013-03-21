@@ -35,9 +35,10 @@
 #import "JRCaptureObject.h"
 #import "JRCaptureUser+Extras.h"
 #import "CaptureProfileViewController.h"
-#import "SharedData.h"
+#import "BackplaneUtils.h"
 
 #include "debug_log.h"
+#import "AppDelegate.h"
 
 @interface CaptureProfileViewController ()
 @property (nonatomic, retain) id             firstResponder;
@@ -72,7 +73,7 @@
     [myAboutMeTextView setInputAccessoryView:myKeyboardToolbar];
     [myEmailTextField setInputAccessoryView:myKeyboardToolbar];
 
-    self.captureUser = [SharedData sharedData].captureUser;
+    self.captureUser = appDelegate.captureUser;
 
     if (captureUser.email)
         myEmailTextField.text  = captureUser.email;
@@ -155,13 +156,12 @@
     else if (myGenderIdentitySegControl.selectedSegmentIndex == 1)
         captureUser.gender = @"male";
 
-    if ([SharedData sharedData].isNotYetCreated)
-        [captureUser createOnCaptureForDelegate:self context:nil];
-    else
+    //if ([SharedData sharedData].isNotYetCreated)
+    //    [captureUser createOnCaptureForDelegate:self context:nil];
+    //else
         [captureUser updateOnCaptureForDelegate:self context:nil];
 }
 
-#define LOCATION_TEXT_VIEW_TAG 10
 #define ABOUT_ME_TEXT_VIEW_TAG 20
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
@@ -200,7 +200,7 @@
 
     [self.navigationController popViewControllerAnimated:YES];
 
-    [SharedData saveCaptureUser];
+    [appDelegate saveCaptureUser];
 }
 
 - (void)handleFailureWithMessage:(NSString *)message

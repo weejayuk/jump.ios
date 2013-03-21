@@ -33,10 +33,10 @@
 
 
 #import <UIKit/UIKit.h>
-#import "SharedData.h"
+#import "BackplaneUtils.h"
 #import "JRCaptureObject.h"
 
-@interface RootViewController : UIViewController <DemoSignInDelegate, JRCaptureObjectDelegate, UIAlertViewDelegate>
+@interface RootViewController : UIViewController <JRCaptureSigninDelegate, JRCaptureObjectDelegate, UIAlertViewDelegate>
 - (IBAction)browseButtonPressed:(id)sender;
 - (IBAction)updateButtonPressed:(id)sender;
 - (IBAction)thirdButtonPressed:(id)sender;

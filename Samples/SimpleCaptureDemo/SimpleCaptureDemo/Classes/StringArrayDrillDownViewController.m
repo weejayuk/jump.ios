@@ -32,6 +32,7 @@
 #import "StringArrayDrillDownViewController.h"
 #import "JSONKit.h"
 #import "Utils.h"
+#import "AppDelegate.h"
 
 @interface CellDatum : NSObject
 @property (strong) NSString *stringValue;
@@ -407,7 +408,7 @@
     [self setTableDataWithArray:replacedArray];
     [myTableView reloadData];
 
-    [SharedData saveCaptureUser];
+    [appDelegate saveCaptureUser];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation

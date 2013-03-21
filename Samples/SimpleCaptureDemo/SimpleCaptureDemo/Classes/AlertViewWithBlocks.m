@@ -3,7 +3,7 @@
 #import "AlertViewWithBlocks.h"
 
 @interface AlertViewWithBlocks ()
-@property (copy, nonatomic) void (^completion)(BOOL, NSInteger);
+@property (copy, nonatomic) void (^completion)(UIAlertView *, BOOL, NSInteger);
 @end
 
 @implementation AlertViewWithBlocks
@@ -12,7 +12,8 @@
 
 - (id)initWithTitle:(NSString *)title
             message:(NSString *)message
-         completion:(void (^)(BOOL cancelled, NSInteger buttonIndex))completion
+         completion:(void (^)(UIAlertView *alertView, BOOL cancelled, NSInteger buttonIndex))completion
+              style:(UIAlertViewStyle)style
   cancelButtonTitle:(NSString *)cancelButtonTitle
   otherButtonTitles:(NSString *)otherButtonTitles, ...
 {
@@ -22,6 +23,7 @@
 
     if (self)
     {
+        self.alertViewStyle = style;
         _completion = completion;
 
         va_list _arguments;
@@ -39,6 +41,6 @@
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    self.completion(buttonIndex == self.cancelButtonIndex, buttonIndex);
+    self.completion(alertView, buttonIndex == self.cancelButtonIndex, buttonIndex);
 }
 @end

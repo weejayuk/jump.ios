@@ -36,35 +36,14 @@
 #import "JRCaptureUser.h"
 #import "JRCapture.h"
 
-@protocol DemoSignInDelegate <NSObject>
-@optional
-- (void)engageSignInDidSucceed;
+@interface BackplaneUtils : NSObject
 
-- (void)engageSignInDidFailWithError:(NSError *)error;
++ (void)asyncFetchNewBackplaneChannelWithBus:(NSString *)bpBusUrlString
+                                  completion:(void (^)(NSString *, NSError *))completion __unused;
 
-- (void)captureSignInDidSucceed;
-
-- (void)captureSignInDidFailWithError:(NSError *)error;
-@end
-
-@interface SharedData : NSObject <JRCaptureSigninDelegate>
-@property(readonly) BOOL engageSignInWasCanceled;
-@property(readonly) JRCaptureUser *captureUser;
-@property(readonly) BOOL isNew;
-@property(readonly) BOOL isNotYetCreated;
-@property(readonly) NSString *currentProvider;
-@property(weak) id <DemoSignInDelegate> demoSignInDelegate;
-
-+ (SharedData *)sharedData;
-
-- (void)asyncFetchNewLiveFyreUserToken __unused;
-
-+ (void)startAuthenticationWithCustomInterface:(NSDictionary *)customInterface
-                                   forDelegate:(id <DemoSignInDelegate>)delegate;
-
-+ (void)saveCaptureUser;
-
-+ (void)signOutCurrentUser;
++ (void)asyncFetchNewLiveFyreUserTokenWithArticleId:(NSString *)liveFyreArticleId network:(NSString *)liveFyreNetwork
+                                             siteId:(NSString *)liveFyreSiteId backplaneChannel:(NSString *)bpChannelUrl
+                                         completion:(void (^)(NSString *, NSError *))completion;
 
 @end
 

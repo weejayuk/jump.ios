@@ -31,12 +31,13 @@
 #include "debug_log.h"
 #import "PickerViewController.h"
 #import "ObjectDrillDownViewController.h"
-#import "SharedData.h"
+#import "BackplaneUtils.h"
 #import "ArrayDrillDownViewController.h"
 #import "StringArrayDrillDownViewController.h"
 #import "JRCaptureObject+Internal.h"
 #import "JSONKit.h"
 #import "Utils.h"
+#import "AppDelegate.h"
 
 @interface PropertyData : NSObject
 @property          PropertyType propertyType;
@@ -1049,7 +1050,7 @@ replacementString:(NSString *)string
 - (void)updateDidSucceedForObject:(JRCaptureObject *)object context:(NSObject *)context
 {
     DLog(@"");
-    [SharedData saveCaptureUser];
+    [appDelegate saveCaptureUser];
 
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Success"
                                                         message:[[object toDictionaryForEncoder:NO] JSONString]

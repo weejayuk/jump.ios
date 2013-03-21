@@ -390,6 +390,8 @@ typedef enum
              captureFormName:(NSString *)captureFormName
 captureTraditionalSignInType:(JRConventionalSigninType)captureTraditionalSignInType;
 
++ (void)clearSignInState;
+
 /**
  * Set the Capture access token for an authenticated user
  **/

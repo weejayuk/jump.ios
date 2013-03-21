@@ -34,6 +34,7 @@
 #import "JRCaptureObject+Internal.h"
 #import "JSONKit.h"
 #import "Utils.h"
+#import "AppDelegate.h"
 
 @interface ElementData : NSObject
 @property (strong) NSString *stringValue;
@@ -504,7 +505,7 @@
     [self setTableDataWithArray:replacedArray];
     [myTableView reloadData];
 
-    [SharedData saveCaptureUser];
+    [appDelegate saveCaptureUser];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
