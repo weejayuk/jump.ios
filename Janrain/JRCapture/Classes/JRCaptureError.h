@@ -46,7 +46,6 @@ NSString *const kJRCaptureErrorDomain;
 #define LOCAL_APID_ERROR_RANGE 2000
 #define APID_ERROR_RANGE 3000
 #define CAPTURE_WRAPPED_ENGAGE_ERROR_RANGE 4000
-#define CAPTURE_WRAPPED_WEBVIEW_ERROR_RANGE 5000
 
 /**
  * Generic Capture errors
@@ -135,14 +134,6 @@ typedef enum
 /**
  * @internal (for now)
  **/
-typedef enum
-{
-    JRCaptureWebviewErrorGeneric = CAPTURE_WRAPPED_WEBVIEW_ERROR_RANGE,
-} JRCaptureWebviewError;
-
-/**
- * @internal (for now)
- **/
 @interface JRCaptureError : NSError
 @property (nonatomic, readonly) NSString *rawResponse;
 @property (nonatomic, readonly) NSString *mergeToken;
@@ -154,8 +145,8 @@ typedef enum
 @end
 
 @interface JRCaptureError (JRCaptureError_Builders)
-+ (JRCaptureError *)errorFromResult:(NSObject *)result onProvider:(NSString *)onProvider;
-+ (JRCaptureError *)errorWithError:(JRCaptureError *)error andMergeToken:(NSString *)mergeToken;
++ (JRCaptureError *)errorFromResult:(NSObject *)result onProvider:(NSString *)onProvider
+                         mergeToken:(NSString *)mergeToken;
 + (JRCaptureError *)invalidApiResponseError:(NSString *)rawResponse_;
 @end
 
@@ -172,4 +163,5 @@ typedef enum
 - (BOOL)isJRMergeFlowError;
 - (NSString *)JRMergeFlowConflictedProvider;
 - (NSString *)JRMergeFlowExistingProvider;
+- (NSString *)JRMergeToken;
 @end

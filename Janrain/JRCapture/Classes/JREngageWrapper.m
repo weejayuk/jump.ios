@@ -107,7 +107,7 @@ static JREngageWrapper *singleton = nil;
                             andCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
                                             forDelegate:(id <JRCaptureSigninDelegate>)delegate
 {
-    [JREngage updateTokenUrl:[JRCaptureData captureMobileEndpointUrl]];
+    [JREngage updateTokenUrl:[JRCaptureData captureMobileEndpointUrlWithMergeToken:nil]];
 
     JREngageWrapper *wrapper = [JREngageWrapper singletonInstance];
     [wrapper setDelegate:delegate];
@@ -148,11 +148,13 @@ static JREngageWrapper *singleton = nil;
                       [NSDictionary dictionaryWithDictionary:expandedCustomInterfaceOverrides]];
 }
 
+
 + (void)startAuthenticationDialogOnProvider:(NSString *)provider
                withCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
+                                 mergeToken:(NSString *)mergeToken
                                 forDelegate:(id <JRCaptureSigninDelegate>)delegate
 {
-    [JREngage updateTokenUrl:[JRCaptureData captureMobileEndpointUrl]];
+    [JREngage updateTokenUrl:[JRCaptureData captureMobileEndpointUrlWithMergeToken:mergeToken]];
 
     [[JREngageWrapper singletonInstance] setDelegate:delegate];
     [[JREngageWrapper singletonInstance] setDialogState:JREngageDialogStateAuthentication];
@@ -168,7 +170,7 @@ static JREngageWrapper *singleton = nil;
     self.mergeToken = nil;
 }
 
-- (void)authenticationCallToTokenUrl:(NSString *)tokenUrl didFailWithError:(NSError *)error 
+- (void)authenticationCallToTokenUrl:(NSString *)tokenUrl didFailWithError:(NSError *)error
                          forProvider:(NSString *)provider
 {
     if ([delegate respondsToSelector:@selector(captureAuthenticationDidFailWithError:)])
@@ -208,7 +210,7 @@ static JREngageWrapper *singleton = nil;
 
     if (![[payloadDict objectForKey:@"stat"] isEqual:@"ok"])
     {
-        JRCaptureError *error = [JRCaptureError errorFromResult:payloadDict onProvider:provider];
+        JRCaptureError *error = [JRCaptureError errorFromResult:payloadDict onProvider:provider mergeToken:mergeToken];
         [self authenticationCallToTokenUrl:tokenUrl didFailWithError:error forProvider:provider];
         return;
     }

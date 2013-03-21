@@ -141,7 +141,7 @@ static JRCaptureData *singleton = nil;
     return self;
 }
 
-+ (NSString *)captureMobileEndpointUrl
++ (NSString *)captureMobileEndpointUrlWithMergeToken:(NSString *)mergeToken
 {
     /**
     * client_id
@@ -152,6 +152,7 @@ static JRCaptureData *singleton = nil;
     * attributeUpdates
     * thin_registration
     * flow_name
+    * token
     */
 
     JRCaptureData *captureData = [JRCaptureData sharedCaptureData];
@@ -166,6 +167,7 @@ static JRCaptureData *singleton = nil;
 
     if (captureData.captureFlowName) [urlArgs setObject:captureData.captureFlowName forKey:@"flow_name"];
     if (captureData.bpChannelUrl) [urlArgs setObject:captureData.bpChannelUrl forKey:@"bp_channel"];
+    if (mergeToken) [urlArgs setObject:mergeToken forKey:@"merge_token"];
 
     NSString *getParams = [urlArgs asGetParamString];
     return [NSString stringWithFormat:@"%@/oauth/auth_native?%@", captureData.captureBaseUrl, getParams];

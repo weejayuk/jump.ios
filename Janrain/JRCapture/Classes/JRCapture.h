@@ -459,6 +459,29 @@ captureTraditionalSignInType:(JRConventionalSigninType)captureTraditionalSignInT
              withCustomInterfaceOverrides:(NSDictionary*)customInterfaceOverrides
                               forDelegate:(id<JRCaptureSigninDelegate>)delegate;
 
+
+/**
+ * Begin authentication for one specific provider. The library will
+ * pop up a modal dialog, skipping the list of providers, and take the user straight to the sign-in
+ * flow of the passed provider. The user will not be able to return to the list of providers.
+ *
+ * @param provider
+ *   The name of the provider on which the user will authenticate. For a list of possible strings,
+ *   please see the \ref basicProviders "List of Providers"
+ *
+ * @param customInterfaceOverrides
+ *   A dictionary of objects and properties, indexed by the set of
+ *   \link customInterface pre-defined custom interface keys\endlink, to be used by the library to customize the look
+ *   and feel of the user interface and/or add a native login experience
+ *
+ * @param mergeToken
+ *   The merge token, retrieved from the merge flow error instance.
+ **/
++ (void)startEngageSigninDialogOnProvider:(NSString *)provider
+             withCustomInterfaceOverrides:(NSMutableDictionary *)customInterfaceOverrides
+                               mergeToken:(NSString *)mergeToken
+                              forDelegate:(id <JRCaptureSigninDelegate>)delegate;
+
 /**
  * Begin authentication, adding the option for your users to log directly into Capture through
  * your conventional signin mechanism. By using this method to initiate signin, the library automatically adds
@@ -502,6 +525,23 @@ captureTraditionalSignInType:(JRConventionalSigninType)captureTraditionalSignInT
 + (void)startEngageSigninDialogWithConventionalSignin:(JRConventionalSigninType)conventionalSignInType
                           andCustomInterfaceOverrides:(NSDictionary*)customInterfaceOverrides
                                           forDelegate:(id<JRCaptureSigninDelegate>)delegate;
+
+/**
+ * Signs a user in via traditional (username/email and password) authentication on Capture.
+ *
+ * @param user
+ *  The username or the email address
+ * @param password
+ *  The password
+ * @param conventionalSignInType
+ *  A JRConventionalSigninType value used to indicate whether the user paramater is a username or an email address
+ * @param mergeToken
+ *  The Engage token to merge with, retrieved from the merge error
+ */
++ (void)startCaptureConventionalSigninForUser:(NSString *)user withPassword:(NSString *)password
+                               withSigninType:(JRConventionalSigninType)conventionalSignInType
+                                   mergeToken:(NSString *)mergeToken
+                                  forDelegate:(id <JRCaptureSigninDelegate>)delegate;
 
 /**
  * Signs a user in via traditional (username/email and password) authentication on Capture.

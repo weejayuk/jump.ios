@@ -50,13 +50,14 @@ NSString *const kJRCaptureErrorDomain = @"JRCapture.ErrorDomain";
 @synthesize onProvider;
 
 - (id)initWithDomain:(NSString *)domain code:(NSInteger)code userInfo:(NSDictionary *)dict
-         rawResponse:(NSString *)rawResponse_ onProvider:(NSString *)onProvider_
+         rawResponse:(NSString *)rawResponse_ onProvider:(NSString *)onProvider_ mergeToken:(NSString *)mergeToken_
 {
     self = [super initWithDomain:domain code:code userInfo:dict];
     if (self)
     {
         self.rawResponse = rawResponse_;
         self.onProvider = onProvider_;
+        self.mergeToken = mergeToken_;
     }
 
     return self;
@@ -75,15 +76,6 @@ NSString *const kJRCaptureErrorDomain = @"JRCapture.ErrorDomain";
 @end
 
 @implementation JRCaptureError (JRCaptureError_Builders)
-+ (JRCaptureError *)errorWithError:(JRCaptureError *)error andMergeToken:(NSString *)mergeToken
-{
-    JRCaptureError *errorWithToken = [[JRCaptureError alloc] initWithDomain:error.domain code:error.code
-                                                                   userInfo:error.userInfo rawResponse:error.rawResponse
-                                                                 onProvider:error.onProvider];
-    error.mergeToken = mergeToken;
-    return [errorWithToken autorelease];
- }
-
 + (JRCaptureError *)invalidApiResponseError:(NSString *)rawResponse_
 {
     NSString *desc = [NSString stringWithFormat:@"The Capture API request response was not well formed"];
@@ -95,12 +87,12 @@ NSString *const kJRCaptureErrorDomain = @"JRCapture.ErrorDomain";
                                                  code, @"code",
                                                  rawResponse_, @"raw_response",
                                                  nil];
-    return [JRCaptureError errorFromResult:result onProvider:nil];
+    return [JRCaptureError errorFromResult:result onProvider:nil mergeToken:nil];
 }
 
 + (JRCaptureError *)errorWithErrorString:(NSString *)error code:(NSInteger)code description:(NSString *)description
                              extraFields:(NSDictionary *)extraFields rawResponse:(NSString *)rawResponse
-                              onProvider:(NSString *)onProvider
+                              onProvider:(NSString *)onProvider mergeToken:(NSString *)mergeToken
 {
     ALog (@"An error occured (%d): %@", code, description);
 
@@ -113,10 +105,12 @@ NSString *const kJRCaptureErrorDomain = @"JRCapture.ErrorDomain";
 
     return [[[JRCaptureError alloc] initWithDomain:kJRCaptureErrorDomain code:code
                                           userInfo:[NSDictionary dictionaryWithDictionary:userInfo]
-                                       rawResponse:rawResponse onProvider:onProvider] autorelease];
+                                       rawResponse:rawResponse onProvider:onProvider
+                                        mergeToken:mergeToken] autorelease];
 }
 
 + (JRCaptureError *)errorFromResult:(NSObject *)result onProvider:(NSString *)onProvider
+                         mergeToken:(NSString *)mergeToken
 {
     /* {"error_description":"/basicIpAddress was not a valid ip address.","stat":"error","code":200,"error":"invalid_argument","argument_name":"/basicIpAddress"} */
     NSDictionary *resultDictionary;
@@ -142,20 +136,16 @@ NSString *const kJRCaptureErrorDomain = @"JRCapture.ErrorDomain";
 
     if (btwn([code integerValue], GENERIC_ERROR_RANGE, LOCAL_APID_ERROR_RANGE))
         return [self errorWithErrorString:errorString code:[code integerValue] description:errorDescription
-                              extraFields:nil rawResponse:rawResponse onProvider:onProvider];
+                              extraFields:nil rawResponse:rawResponse onProvider:onProvider mergeToken:nil];
 
     if (btwn([code integerValue], LOCAL_APID_ERROR_RANGE, APID_ERROR_RANGE))
         return [self errorWithErrorString:errorString code:[code integerValue] description:errorDescription
                               extraFields:[resultDictionary objectForKey:@"extraFields"] rawResponse:rawResponse
-                               onProvider:nil];
+                               onProvider:nil mergeToken:nil];
 
-    if (btwn([code integerValue], CAPTURE_WRAPPED_ENGAGE_ERROR_RANGE, CAPTURE_WRAPPED_WEBVIEW_ERROR_RANGE))
+    if ([code integerValue] > CAPTURE_WRAPPED_ENGAGE_ERROR_RANGE)
         return [self errorWithErrorString:errorString code:[code integerValue] description:errorDescription
-                              extraFields:nil rawResponse:rawResponse onProvider:onProvider];
-
-    if ([code integerValue] > CAPTURE_WRAPPED_WEBVIEW_ERROR_RANGE)
-        return [self errorWithErrorString:errorString code:[code integerValue] description:errorDescription
-                              extraFields:nil rawResponse:rawResponse onProvider:onProvider];
+                              extraFields:nil rawResponse:rawResponse onProvider:onProvider mergeToken:nil];
 
     switch ([code integerValue])
     {
@@ -229,8 +219,8 @@ NSString *const kJRCaptureErrorDomain = @"JRCapture.ErrorDomain";
     }
 
     return [self errorWithErrorString:errorString code:([code integerValue] + APID_ERROR_RANGE)
-                          description:errorDescription extraFields:extraFields
-                          rawResponse:rawResponse onProvider:onProvider];
+                          description:errorDescription extraFields:extraFields rawResponse:rawResponse
+                           onProvider:onProvider mergeToken:mergeToken];
 }
 
 @end
@@ -297,13 +287,20 @@ NSString *const kJRCaptureErrorDomain = @"JRCapture.ErrorDomain";
 
 - (NSString *)JRMergeFlowConflictedProvider
 {
-    if (![self isKindOfClass:[JRCaptureError class]]) return nil;
+    if (![self isKindOfClass:[JRCaptureError class]] || ![self isJRMergeFlowError]) return nil;
     return [((JRCaptureError *) self) conflictedProvider];
 }
 
 - (NSString *)JRMergeFlowExistingProvider
 {
-    if (![self isKindOfClass:[JRCaptureError class]]) return nil;
+    if (![self isKindOfClass:[JRCaptureError class]] || ![self isJRMergeFlowError]) return nil;
     return [((JRCaptureError *) self) existingProvider];
 }
+
+- (NSString *)JRMergeToken
+{
+    if (![self isKindOfClass:[JRCaptureError class]] || ![self isJRMergeFlowError]) return nil;
+    return [((JRCaptureError *) self) mergeToken];
+}
+
 @end

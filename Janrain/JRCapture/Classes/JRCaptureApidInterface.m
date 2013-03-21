@@ -138,6 +138,7 @@ typedef enum CaptureInterfaceStatEnum
     DLog(@"");
     NSString *signInName = [credentials objectForKey:signInType];
     NSString *password   = [credentials objectForKey:@"password"];
+    NSString *mergeToken = [credentials objectForKey:@"token"];
     NSString *clientId = [JRCaptureData sharedCaptureData].clientId;
     NSString *locale = [JRCaptureData sharedCaptureData].captureLocale;
     NSString *formName = [JRCaptureData sharedCaptureData].captureFormName;
@@ -155,6 +156,7 @@ typedef enum CaptureInterfaceStatEnum
                                                                nil];
 
     if (flowName) [params setObject:flowName forKey:@"flow_name"];
+    if (mergeToken) [params setObject:mergeToken forKey:@"merge_token"];
 
     NSString *const signInEndpoint = [NSString stringWithFormat:@"%@/oauth/auth_native_traditional.json",
                                                [[JRCaptureData sharedCaptureData] captureBaseUrl]];
@@ -629,7 +631,8 @@ typedef enum CaptureInterfaceStatEnum
                                                               errorDesc, @"error_description",
                                                               code, @"code", nil];
                 [delegate_ captureAuthenticationDidFailWithError:[JRCaptureError errorFromResult:errDict
-                                                                                      onProvider:nil]];
+                                                                                      onProvider:nil
+                                                                                      mergeToken:nil]];
             }
         }
         else if (respondsToFail)
@@ -647,7 +650,8 @@ typedef enum CaptureInterfaceStatEnum
                                                           message, @"error_description",
                                                           code, @"code", nil];
 
-            [delegate_ captureAuthenticationDidFailWithError:[JRCaptureError errorFromResult:errDict onProvider:nil]];
+            [delegate_ captureAuthenticationDidFailWithError:[JRCaptureError errorFromResult:errDict onProvider:nil
+                                                                                  mergeToken:nil]];
         }
     }
 }

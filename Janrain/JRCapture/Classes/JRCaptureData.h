@@ -53,7 +53,7 @@
              captureFlowName:(NSString *)captureFlowName
 captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType;
 
-+ (NSString *)captureMobileEndpointUrl;
++ (NSString *)captureMobileEndpointUrlWithMergeToken:(NSString *)mergeToken;
 
 + (void)clearSignInState;
 

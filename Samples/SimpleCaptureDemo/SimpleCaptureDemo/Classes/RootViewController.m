@@ -200,7 +200,6 @@
     }
     else if ([error isJRMergeFlowError])
     {
-        NSString *captureAccountBrand = @"SimpleCaptureDemo";
         NSString *captureAccountBrandPhrase = @"a SimpleCaptureDemo";
         //NSString *mergeConflictedProvider = [error JRMergeFlowConflictedProvider];
         NSString *existingAccountProvider = [error JRMergeFlowExistingProvider];
@@ -220,20 +219,19 @@
 
             if ([existingAccountProvider isEqualToString:@"capture"])
             {
-                NSString *msg = [NSString stringWithFormat:@"Sign in with your %@ account", captureAccountBrand];
                 void (^signInCompletion)(UIAlertView *, BOOL, NSInteger) =
                         ^(UIAlertView *alertView_, BOOL cancelled_, NSInteger buttonIndex_)
                 {
                     if (cancelled_) return;
                     NSString *user = [[alertView_ textFieldAtIndex:0] text];
                     NSString *password = [[alertView_ textFieldAtIndex:1] text];
-                    [JRCapture startCaptureConventionalSigninForUser:user
-                                                        withPassword:password
+                    [JRCapture startCaptureConventionalSigninForUser:user withPassword:password
                                                       withSigninType:JRConventionalSigninEmailPassword
+                                                          mergeToken:[error JRMergeToken]
                                                          forDelegate:self];
                 };
 
-                [[[AlertViewWithBlocks alloc] initWithTitle:@"Sign-in" message:msg
+                [[[AlertViewWithBlocks alloc] initWithTitle:@"Sign in" message:nil
                                                  completion:signInCompletion
                                                       style:UIAlertViewStyleLoginAndPasswordInput
                                           cancelButtonTitle:@"Cancel"
@@ -243,6 +241,7 @@
             {
                 [JRCapture startEngageSigninDialogOnProvider:existingAccountProvider
                                 withCustomInterfaceOverrides:self.customUi
+                                                  mergeToken:[error JRMergeToken]
                                                  forDelegate:self];
             }
         };
