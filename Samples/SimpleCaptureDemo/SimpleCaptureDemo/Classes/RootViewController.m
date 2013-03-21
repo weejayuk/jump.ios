@@ -36,6 +36,7 @@
 #import "JREngage+CustomInterface.h"
 #import "CaptureProfileViewController.h"
 #import "ObjectDrillDownViewController.h"
+#import "AlertViewWithBlocks.h"
 
 @interface RootViewController ()
 - (void)configureButtons;
@@ -50,11 +51,15 @@
 @synthesize signInButton;
 @synthesize signOutButton;
 @synthesize shareWidgetButton;
+@synthesize customUi = _customUi;
+
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
+    self.customUi = [NSMutableDictionary dictionaryWithObject:self.navigationController
+                                                       forKey:kJRApplicationNavigationController];
     [self configureUserLabelAndIcon];
 }
 
@@ -128,10 +133,7 @@
 {
     currentUserProviderIcon.image = nil;
 
-    NSMutableDictionary *customUi = [NSMutableDictionary dictionaryWithObject:self.navigationController
-                                                                       forKey:kJRApplicationNavigationController];
-
-    [SharedData startAuthenticationWithCustomInterface:customUi forDelegate:self];
+    [SharedData startAuthenticationWithCustomInterface:self.customUi forDelegate:self];
 }
 
 - (IBAction)signOutButtonPressed:(id)sender
@@ -197,6 +199,41 @@
                                   delegate:nil cancelButtonTitle:@"Dismiss"
                          otherButtonTitles:nil] show];
     }
+    else if ([error isJRMergeFlowError])
+    {
+        NSString *captureAccountBrandPhrase = @"a SimpleCaptureDemo ";
+        //NSString *mergeConflictedProvider = [error JRMergeFlowConflictedProvider];
+        NSString *existingAccountProvider = [error JRMergeFlowExistingProvider];
+        NSString *existingAccountProviderPhrase = [existingAccountProvider isEqualToString:@"capture"] ?
+                @"" : [NSString stringWithFormat:@"It is associated with your %@ account. ", existingAccountProvider];
+
+        NSString *message = [NSString stringWithFormat:@"There is already %@ account with that email address. %@ Tap "
+                                                               "'Merge' to sign-in with that account and link the two.",
+                                                       captureAccountBrandPhrase,
+                                                       existingAccountProviderPhrase];
+
+        [[AlertViewWithBlocks alloc] initWithTitle:@"Email address in use" message:message
+                                        completion:^(BOOL cancelled, NSInteger buttonIndex)
+                                                   {
+                                                       if (cancelled) return;
+
+                                                       if ([existingAccountProvider isEqualToString:@"capture"])
+                                                       {
+                                                           // ugh
+                                                       }
+                                                       else
+                                                       {
+                                                           SharedData *sharedData = [SharedData sharedData];
+                                                           [sharedData setDemoSignInDelegate:self];
+
+                                                           [JRCapture startEngageSigninDialogOnProvider:existingAccountProvider
+                                                                           withCustomInterfaceOverrides:self.customUi
+                                                                                            forDelegate:sharedData];
+                                                       }
+                                                   }
+                                 cancelButtonTitle:@"Cancel"
+                                 otherButtonTitles:@"Merge", nil];
+    }
     else
     {
         DLog(@"error: %@", [error description]);
@@ -208,6 +245,7 @@
         [alertView show];
     }
 }
+
 
 - (void)viewDidUnload
 {

@@ -144,14 +144,32 @@ typedef enum
  * @internal (for now)
  **/
 @interface JRCaptureError : NSError
-@property (nonatomic, readonly) NSObject *rawResponse;
-@property (nonatomic, readonly) NSObject *mergeToken;
-+ (JRCaptureError *)errorFromResult:(NSObject *)result;
-
-+ (JRCaptureError *)errorWithError:(JRCaptureError *)error andMergeToken:(NSString *)mergeToken;
-
-+ (JRCaptureError *)invalidApiResponseError:(NSObject *)payload;
+@property (nonatomic, readonly) NSString *rawResponse;
+@property (nonatomic, readonly) NSString *mergeToken;
+@property (nonatomic, readonly) NSString *onProvider;
 
 - (BOOL)isMergeFlowError;
+- (NSString *)existingProvider;
+- (NSString *)conflictedProvider;
+@end
+
+@interface JRCaptureError (JRCaptureError_Builders)
++ (JRCaptureError *)errorFromResult:(NSObject *)result onProvider:(NSString *)onProvider;
++ (JRCaptureError *)errorWithError:(JRCaptureError *)error andMergeToken:(NSString *)mergeToken;
++ (JRCaptureError *)invalidApiResponseError:(NSString *)rawResponse_;
+@end
+
+@interface JRCaptureError (JRCaptureError_Helpers)
++ (NSDictionary *)invalidClassErrorForResult:(NSObject *)result;
++ (NSDictionary *)invalidStatErrorForResult:(NSObject *)result;
++ (NSDictionary *)invalidDataErrorForResult:(NSObject *)result;
++ (NSDictionary *)missingAccessTokenInResult:(__unused NSObject *)result;
++ (NSDictionary *)lastUpdatedSelectorNotAvailable;
 @end
 /** @}*/
+
+@interface NSError (JRCaptureError_Extensions)
+- (BOOL)isJRMergeFlowError;
+- (NSString *)JRMergeFlowConflictedProvider;
+- (NSString *)JRMergeFlowExistingProvider;
+@end

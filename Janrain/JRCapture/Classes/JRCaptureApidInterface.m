@@ -168,11 +168,12 @@ typedef enum CaptureInterfaceStatEnum
                                                  delegate, @"delegate",
                                                  context, @"context", nil];
 
-    DLog(@"%@ %@=%@", [[request URL] absoluteString], signInType, signInName);
+    NSString *urlString = [[request URL] absoluteString];
+    DLog(@"%@ %@=%@", urlString, signInType, signInName);
 
     if (![JRConnectionManager createConnectionFromRequest:request forDelegate:self withTag:tag])
     {
-        NSString *desc = [NSString stringWithFormat:@"Could not create a connection to %@", [[request URL] absoluteString]];
+        NSString *desc = [NSString stringWithFormat:@"Could not create a connection to %@", urlString];
         NSNumber *code = [NSNumber numberWithInteger:JRCaptureLocalApidErrorUrlConnection];
         NSDictionary *errDict = [NSDictionary dictionaryWithObjectsAndKeys:
                                                       @"error", @"stat",
@@ -387,7 +388,8 @@ typedef enum CaptureInterfaceStatEnum
 }
 
 - (void)startReplaceObject:(NSDictionary *)captureObject atPath:(NSString *)entityPath
-                 withToken:(NSString *)token forDelegate:(id <JRCaptureInterfaceDelegate>)delegate withContext:(NSObject *)context
+                 withToken:(NSString *)token forDelegate:(id <JRCaptureInterfaceDelegate>)delegate
+               withContext:(NSObject *)context
 {
     DLog(@"");
 
@@ -626,7 +628,8 @@ typedef enum CaptureInterfaceStatEnum
                                                               @"invalid_endpoint_response", @"error",
                                                               errorDesc, @"error_description",
                                                               code, @"code", nil];
-                [delegate_ captureAuthenticationDidFailWithError:[JRCaptureError errorFromResult:errDict]];
+                [delegate_ captureAuthenticationDidFailWithError:[JRCaptureError errorFromResult:errDict
+                                                                                      onProvider:nil]];
             }
         }
         else if (respondsToFail)
@@ -644,7 +647,7 @@ typedef enum CaptureInterfaceStatEnum
                                                           message, @"error_description",
                                                           code, @"code", nil];
 
-            [delegate_ captureAuthenticationDidFailWithError:[JRCaptureError errorFromResult:errDict]];
+            [delegate_ captureAuthenticationDidFailWithError:[JRCaptureError errorFromResult:errDict onProvider:nil]];
         }
     }
 }

@@ -35,12 +35,6 @@
 #import "JRCaptureData.h"
 #import "JSONKit.h"
 
-@interface JRCaptureError (JRCaptureError_ApidResultErrorHelpers)
-+ (NSDictionary *)invalidClassErrorForResult:(NSObject *)result;
-+ (NSDictionary *)invalidStatErrorForResult:(NSObject *)result;
-+ (NSDictionary *)invalidDataErrorForResult:(NSObject *)result;
-@end
-
 @implementation NSArray (JRArray_StringArray)
 // TODO: Test this!
 /* If it's just an array of strings, it will return an array of string. If it's not an array of strings or
@@ -96,7 +90,7 @@
 
     if ([delegate respondsToSelector:@selector(updateDidFailForObject:withError:context:)]) 
     {
-        [delegate updateDidFailForObject:captureObject withError:[JRCaptureError errorFromResult:result] 
+        [delegate updateDidFailForObject:captureObject withError:[JRCaptureError errorFromResult:result onProvider:nil]
                                  context:callerContext];        
     }
 }
@@ -151,11 +145,10 @@
 
 - (void)replaceCaptureObjectDidFailWithResult:(NSObject *)result context:(NSObject *)context
 {
-    NSDictionary    *myContext     = (NSDictionary *)context;
+    NSDictionary *myContext = (NSDictionary *) context;
     JRCaptureObject *captureObject = [myContext objectForKey:@"captureObject"];
-    NSObject        *callerContext = [myContext objectForKey:@"callerContext"];
-    id<JRCaptureObjectDelegate>
-                     delegate      = [myContext objectForKey:@"delegate"];
+    NSObject *callerContext = [myContext objectForKey:@"callerContext"];
+    id <JRCaptureObjectDelegate> delegate = [myContext objectForKey:@"delegate"];
 
     /* Calling the old protocol methods for testing purposes, but have to make sure we pass the result string... */
     SEL selector = @selector(replaceCaptureObject:didFailWithResult:context:);
@@ -172,8 +165,8 @@
     if ([delegate conformsToProtocol:@protocol(JRCaptureObjectTesterDelegate)] &&
             [delegate respondsToSelector:testSelector])
     {
-        [delegate replaceDidFailForObject:captureObject withError:[JRCaptureError errorFromResult:result]
-                                  context:callerContext];        
+        JRCaptureError *error = [JRCaptureError errorFromResult:result onProvider:nil];
+        [delegate replaceDidFailForObject:captureObject withError:error context:callerContext];
     }
 }
 
@@ -239,10 +232,9 @@
 {
     NSDictionary    *myContext     = (NSDictionary *)context;
     JRCaptureObject *captureObject = [myContext objectForKey:@"captureObject"];
-    NSString        *arrayName     = [myContext objectForKey:@"arrayName"];
-    NSObject        *callerContext = [myContext objectForKey:@"callerContext"];
-    id<JRCaptureObjectDelegate>
-                     delegate      = [myContext objectForKey:@"delegate"];
+    NSString *arrayName = [myContext objectForKey:@"arrayName"];
+    NSObject *callerContext = [myContext objectForKey:@"callerContext"];
+    id <JRCaptureObjectDelegate> delegate = [myContext objectForKey:@"delegate"];
 
     /* Calling the old protocol methods for testing purposes, but have to make sure we pass the result string... */
     SEL testSelector = @selector(replaceArrayNamed:onCaptureObject:didFailWithResult:context:);
@@ -258,8 +250,9 @@
 
     if ([delegate respondsToSelector:@selector(replaceArrayDidFailForObject:arrayNamed:withError:context:)])
     {
-        [delegate replaceArrayDidFailForObject:captureObject arrayNamed:arrayName 
-                                     withError:[JRCaptureError errorFromResult:result] context:callerContext];
+        [delegate replaceArrayDidFailForObject:captureObject arrayNamed:arrayName
+                                     withError:[JRCaptureError errorFromResult:result onProvider:nil]
+                                       context:callerContext];
     }
 }
 
@@ -267,13 +260,12 @@
 {
     NSDictionary    *myContext     = (NSDictionary *)context;
     JRCaptureObject *captureObject = [myContext objectForKey:@"captureObject"];
-    NSString        *capturePath   = [myContext objectForKey:@"capturePath"];
-    NSString        *arrayName     = [myContext objectForKey:@"arrayName"];
-    NSString        *elementType   = [myContext objectForKey:@"elementType"];
-    BOOL             isStringArray = [((NSNumber *)[myContext objectForKey:@"isStringArray"]) boolValue];
-    NSObject        *callerContext = [myContext objectForKey:@"callerContext"];
-    id<JRCaptureObjectDelegate>
-                     delegate      = [myContext objectForKey:@"delegate"];
+    NSString *capturePath = [myContext objectForKey:@"capturePath"];
+    NSString *arrayName = [myContext objectForKey:@"arrayName"];
+    NSString *elementType = [myContext objectForKey:@"elementType"];
+    BOOL isStringArray = [((NSNumber *) [myContext objectForKey:@"isStringArray"]) boolValue];
+    NSObject *callerContext = [myContext objectForKey:@"callerContext"];
+    id <JRCaptureObjectDelegate> delegate = [myContext objectForKey:@"delegate"];
 
 
     NSDictionary *resultDictionary;
@@ -288,7 +280,7 @@
         resultString     = (NSString *)result;
         resultDictionary = [(NSString *)result objectFromJSONString];
     }
-    else /* Uh-oh!! */
+    else
     {
         return [self replaceCaptureArrayDidFailWithResult:[JRCaptureError invalidClassErrorForResult:result] 
                                                   context:context];

@@ -245,6 +245,7 @@
 		C1424E010F4352014570F9F2 /* JREngage+CustomInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = C14248E0F3F0EC9421DCA65C /* JREngage+CustomInterface.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C1424E0455C81F99867FE588 /* icon_bw_mail_30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424B065F71D856D0EBB1CB /* icon_bw_mail_30x30.png */; };
 		C1424E3A71B2384934B4E0EE /* icon_soundcloud_30x30@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C142464A5394AE87AFB7E4F6 /* icon_soundcloud_30x30@2x.png */; };
+		C1424E3B144EDDE0ABA1E0E7 /* AlertViewWithBlocks.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424FEDA9B53C3B9EE9AB6E /* AlertViewWithBlocks.m */; };
 		C1424E42712967D785376780 /* profilepic_placeholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C142444B85788BBBDE89617B /* profilepic_placeholder@2x.png */; };
 		C1424E4D31C992FCA9BD4D60 /* icon_bw_myspace_30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424AF2D73E4323CB4A9882 /* icon_bw_myspace_30x30.png */; };
 		C1424E8A259D9659D3142B43 /* icon_bw_facebook_30x30@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C14244922A0554C5F6DDFC51 /* icon_bw_facebook_30x30@2x.png */; };
@@ -538,6 +539,7 @@
 		C1424A0BD28B10D9DD4551C4 /* JRCaptureData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRCaptureData.h; path = ../../Janrain/JRCapture/Classes/JRCaptureData.h; sourceTree = "<group>"; };
 		C1424A15A5D0B0B0C299B0FF /* JRObjectLevelOne.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRObjectLevelOne.m; sourceTree = "<group>"; };
 		C1424A17EF74C5D2DC2DAC12 /* typemap.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = typemap.txt; path = ../../Janrain/JRCapture/Script/typemap.txt; sourceTree = "<group>"; };
+		C1424A4F9A63C7BD1C90EBC0 /* AlertViewWithBlocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlertViewWithBlocks.h; path = Classes/AlertViewWithBlocks.h; sourceTree = "<group>"; };
 		C1424A6694A08401B740AFAD /* icon_facebook_30x30@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon_facebook_30x30@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/icons/icon_facebook_30x30@2x.png"; sourceTree = "<group>"; };
 		C1424A80F4760645E0067F65 /* icon_netlog_30x30@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon_netlog_30x30@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/icons/icon_netlog_30x30@2x.png"; sourceTree = "<group>"; };
 		C1424A814250D940D84AC7E9 /* JRPhoneNumbersElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRPhoneNumbersElement.m; sourceTree = "<group>"; };
@@ -649,6 +651,7 @@
 		C1424FD240353636047F7001 /* JREngageWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JREngageWrapper.m; path = ../../Janrain/JRCapture/Classes/JREngageWrapper.m; sourceTree = "<group>"; };
 		C1424FD84D74DDA68712F78C /* triangle_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "triangle_icon@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/other/triangle_icon@2x.png"; sourceTree = "<group>"; };
 		C1424FD90D1DBB8C115B8826 /* JRPluralLevelTwoElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRPluralLevelTwoElement.m; sourceTree = "<group>"; };
+		C1424FEDA9B53C3B9EE9AB6E /* AlertViewWithBlocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlertViewWithBlocks.m; path = Classes/AlertViewWithBlocks.m; sourceTree = "<group>"; };
 		C1424FF00992CE2E024785FA /* logo_flickr_280x65.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo_flickr_280x65.png; path = ../../Janrain/JREngage/Resources/images/logos/logo_flickr_280x65.png; sourceTree = "<group>"; };
 		D806D1B516A7638E008EEF96 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = SOURCE_ROOT; };
 		D83F86E1162373D4007B7163 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -780,6 +783,8 @@
 				C1424E75D6BC0B600C577C8F /* PickerViewController.h */,
 				C14243136AB00031127FB128 /* Utils.m */,
 				C1424B87BAEE593965503D2C /* Utils.h */,
+				C1424FEDA9B53C3B9EE9AB6E /* AlertViewWithBlocks.m */,
+				C1424A4F9A63C7BD1C90EBC0 /* AlertViewWithBlocks.h */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -1718,6 +1723,7 @@
 				C14242372F43ECBE4FC3B913 /* JRPluralLevelThreeElement.m in Sources */,
 				C14247A2A61A413139D8CEA8 /* JRPluralLevelTwoElement.m in Sources */,
 				C142437C81E8238B9093B74D /* JRTournamentsPlayedElement.m in Sources */,
+				C1424E3B144EDDE0ABA1E0E7 /* AlertViewWithBlocks.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

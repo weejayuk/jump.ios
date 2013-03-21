@@ -208,7 +208,7 @@ static JREngageWrapper *singleton = nil;
 
     if (![[payloadDict objectForKey:@"stat"] isEqual:@"ok"])
     {
-        JRCaptureError *error = [JRCaptureError errorFromResult:payloadDict];
+        JRCaptureError *error = [JRCaptureError errorFromResult:payloadDict onProvider:provider];
         [self authenticationCallToTokenUrl:tokenUrl didFailWithError:error forProvider:provider];
         return;
     }
