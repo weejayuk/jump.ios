@@ -69,7 +69,6 @@
 - (NSDictionary *)toUpdateDictionary;
 - (NSDictionary *)toReplaceDictionary;
 - (NSDictionary *)objectProperties;
-//- (NSSet *)setOfAllUpdatableProperties;
 
 - (NSSet *)updatablePropertySet;
 - (void)setAllPropertiesToDirty;
@@ -77,7 +76,7 @@
 - (void)restoreDirtyPropertiesFromSnapshotDictionary:(NSDictionary *)snapshot;
 
 
-- (void)updateFromDictionary:(__unused NSDictionary*)dictionary withPath:(__unused NSString *)capturePath;
+- (void)updateFromDictionary:(__unused NSDictionary*)dictionary withPath:(__unused NSString *)capturePath __unused;
 - (void)replaceFromDictionary:(NSDictionary*)dictionary withPath:(NSString *)capturePath;
 
 - (void)replaceOnCaptureForDelegate:(id<JRCaptureObjectDelegate>)delegate context:(NSObject *)context;

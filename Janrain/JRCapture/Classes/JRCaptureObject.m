@@ -90,8 +90,8 @@
 
     if ([delegate respondsToSelector:@selector(updateDidFailForObject:withError:context:)]) 
     {
-        [delegate updateDidFailForObject:captureObject withError:[JRCaptureError errorFromResult:result onProvider:nil]
-                                 context:callerContext];        
+        JRCaptureError *error = [JRCaptureError errorFromResult:result onProvider:nil mergeToken:nil];
+        [delegate updateDidFailForObject:captureObject withError:error context:callerContext];
     }
 }
 
@@ -165,7 +165,7 @@
     if ([delegate conformsToProtocol:@protocol(JRCaptureObjectTesterDelegate)] &&
             [delegate respondsToSelector:testSelector])
     {
-        JRCaptureError *error = [JRCaptureError errorFromResult:result onProvider:nil];
+        JRCaptureError *error = [JRCaptureError errorFromResult:result onProvider:nil mergeToken:nil];
         [delegate replaceDidFailForObject:captureObject withError:error context:callerContext];
     }
 }
@@ -251,7 +251,7 @@
     if ([delegate respondsToSelector:@selector(replaceArrayDidFailForObject:arrayNamed:withError:context:)])
     {
         [delegate replaceArrayDidFailForObject:captureObject arrayNamed:arrayName
-                                     withError:[JRCaptureError errorFromResult:result onProvider:nil]
+                                     withError:[JRCaptureError errorFromResult:result onProvider:nil mergeToken:nil]
                                        context:callerContext];
     }
 }
@@ -453,7 +453,7 @@
                 format:@"You must override %@ in a subclass", NSStringFromSelector(_cmd)];
 }
 
-- (void)updateFromDictionary:(__unused NSDictionary *)dictionary withPath:(__unused NSString *)capturePath
+- (void)updateFromDictionary:(__unused NSDictionary *)dictionary withPath:(__unused NSString *)capturePath __unused
 {
     [NSException raise:NSInternalInconsistencyException
                 format:@"You must override %@ in a subclass", NSStringFromSelector(_cmd)];

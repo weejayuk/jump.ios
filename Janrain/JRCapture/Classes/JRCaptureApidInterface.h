@@ -85,7 +85,7 @@ typedef enum
 + (void)getCaptureObjectAtPath:(NSString *)entityPath
                      withToken:(NSString *)token
                    forDelegate:(id <JRCaptureInterfaceDelegate>)delegate
-                   withContext:(NSObject *)context;
+                   withContext:(NSObject *)context __unused;
 
 + (void)updateCaptureObject:(NSDictionary *)captureObject
                      atPath:(NSString *)entityPath

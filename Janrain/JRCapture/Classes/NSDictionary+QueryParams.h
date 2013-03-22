@@ -7,7 +7,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSMutableDictionary (get_params)
+@interface NSDictionary (QueryParams)
 
-- (NSString *)asGetParamString;
+- (NSString *)asGetQueryParamString;
 @end

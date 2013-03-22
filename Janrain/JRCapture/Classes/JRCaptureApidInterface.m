@@ -36,7 +36,7 @@
 #import "JRCaptureApidInterface.h"
 #import "JRCaptureData.h"
 #import "JSONKit.h"
-#import "NSMutableDictionary+get_params.h"
+#import "NSDictionary+QueryParams.h"
 
 static NSString *const cSignInUser = @"signinUser";
 static NSString *const cCreateUser = @"createUser";
@@ -163,7 +163,7 @@ typedef enum CaptureInterfaceStatEnum
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:signInEndpoint]];
 
     [request setHTTPMethod:@"POST"];
-    [request setHTTPBody:[[params asGetParamString] dataUsingEncoding:NSUTF8StringEncoding]];
+    [request setHTTPBody:[[params asGetQueryParamString] dataUsingEncoding:NSUTF8StringEncoding]];
 
     NSDictionary *tag = [NSDictionary dictionaryWithObjectsAndKeys:
                                                  cSignInUser, cTagAction,
@@ -530,7 +530,7 @@ typedef enum CaptureInterfaceStatEnum
 }
 
 + (void)getCaptureObjectAtPath:(NSString *)entityPath withToken:(NSString *)token
-                   forDelegate:(id <JRCaptureInterfaceDelegate>)delegate withContext:(NSObject *)context
+                   forDelegate:(id <JRCaptureInterfaceDelegate>)delegate withContext:(NSObject *)context __unused
 {
     [[JRCaptureApidInterface captureInterfaceInstance]
             startGetCaptureObjectAtPath:entityPath withToken:token forDelegate:delegate withContext:context];

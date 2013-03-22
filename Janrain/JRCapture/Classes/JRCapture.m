@@ -59,7 +59,7 @@ captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType
     [JREngageWrapper configureEngageWithCaptureMobileEndpointUrlAndAppId:engageAppId];
 }
 
-+ (NSString *)captureMobileEndpointUrl
++ (NSString *)captureMobileEndpointUrl __unused
 {
     return [JRCaptureData captureMobileEndpointUrlWithMergeToken:nil];
 }
@@ -68,7 +68,6 @@ captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType
  * Clears user sign-in state from the Capture Library
  * This includes:
  *  - access token
- *  - creation token
  *  - uuid
  * These are cleared from memory as well as from disk.
  *
@@ -81,43 +80,38 @@ captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType
     [JRCaptureData clearSignInState];
 }
 
-+ (void)setAccessToken:(NSString *)newAccessToken
++ (void)setAccessToken:(NSString *)newAccessToken __unused
 {
     [JRCaptureData setAccessToken:newAccessToken];
 }
 
-+ (NSString *)getAccessToken
++ (NSString *)getAccessToken __unused
 {
     return [JRCaptureData sharedCaptureData].accessToken;
 }
 
-+ (void)setCreationToken:(NSString *)newCreationToken
-{
-    [JRCaptureData setCreationToken:newCreationToken];
-}
-
-+ (void)startEngageSigninDialogForDelegate:(id <JRCaptureSigninDelegate>)delegate
++ (void)startEngageSigninDialogForDelegate:(id <JRCaptureSigninDelegate>)delegate __unused
 {
     [JREngageWrapper startAuthenticationDialogWithConventionalSignIn:JRConventionalSigninNone
                                          andCustomInterfaceOverrides:nil forDelegate:delegate];
 }
 
 + (void)startEngageSigninDialogWithConventionalSignin:(JRConventionalSigninType)conventionalSigninType
-                                          forDelegate:(id <JRCaptureSigninDelegate>)delegate
+                                          forDelegate:(id <JRCaptureSigninDelegate>)delegate __unused
 {
     [JREngageWrapper startAuthenticationDialogWithConventionalSignIn:conventionalSigninType
                                          andCustomInterfaceOverrides:nil forDelegate:delegate];
 }
 
 + (void)startEngageSigninDialogOnProvider:(NSString *)provider
-                              forDelegate:(id <JRCaptureSigninDelegate>)delegate
+                              forDelegate:(id <JRCaptureSigninDelegate>)delegate __unused
 {
     [JREngageWrapper startAuthenticationDialogOnProvider:provider withCustomInterfaceOverrides:nil mergeToken:nil
                                              forDelegate:delegate];
 }
 
 + (void)startEngageSigninDialogWithCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
-                                                forDelegate:(id <JRCaptureSigninDelegate>)delegate
+                                                forDelegate:(id <JRCaptureSigninDelegate>)delegate __unused
 {
     [JREngageWrapper startAuthenticationDialogWithConventionalSignIn:JRConventionalSigninNone
                                          andCustomInterfaceOverrides:customInterfaceOverrides
@@ -144,7 +138,7 @@ captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType
 
 + (void)startEngageSigninDialogOnProvider:(NSString *)provider
                withCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
-                                forDelegate:(id <JRCaptureSigninDelegate>)delegate
+                                forDelegate:(id <JRCaptureSigninDelegate>)delegate __unused
 {
     [JREngageWrapper startAuthenticationDialogOnProvider:provider
                             withCustomInterfaceOverrides:customInterfaceOverrides mergeToken:nil
@@ -169,7 +163,7 @@ captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType
 
 + (void)startCaptureConventionalSigninForUser:(NSString *)user withPassword:(NSString *)password
                                withSigninType:(JRConventionalSigninType)conventionalSignInType
-                                  forDelegate:(id <JRCaptureSigninDelegate>)delegate
+                                  forDelegate:(id <JRCaptureSigninDelegate>)delegate __unused
 {
     [self startCaptureConventionalSigninForUser:user withPassword:password
                                  withSigninType:conventionalSignInType

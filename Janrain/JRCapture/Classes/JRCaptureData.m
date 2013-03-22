@@ -32,7 +32,7 @@
 
 #import "JRCaptureData.h"
 #import "SFHFKeychainUtils.h"
-#import "NSMutableDictionary+get_params.h"
+#import "NSDictionary+QueryParams.h"
 
 #define cJRCaptureKeychainIdentifier @"capture_tokens.janrain"
 #define cJRCaptureKeychainUserName @"capture_user"
@@ -119,7 +119,7 @@ static JRCaptureData *singleton = nil;
     return [[self sharedCaptureData] retain];
 }
 
-- (id)copyWithZone:(__unused NSZone *)zone
+- (id)copyWithZone:(__unused NSZone *)zone __unused
 {
     return self;
 }
@@ -169,7 +169,7 @@ static JRCaptureData *singleton = nil;
     if (captureData.bpChannelUrl) [urlArgs setObject:captureData.bpChannelUrl forKey:@"bp_channel"];
     if (mergeToken) [urlArgs setObject:mergeToken forKey:@"merge_token"];
 
-    NSString *getParams = [urlArgs asGetParamString];
+    NSString *getParams = [urlArgs asGetQueryParamString];
     return [NSString stringWithFormat:@"%@/oauth/auth_native?%@", captureData.captureBaseUrl, getParams];
 }
 
@@ -257,7 +257,7 @@ captureTraditionalSignInType:(JRConventionalSigninType) tradSignInType;
     [JRCaptureData saveNewToken:newAccessToken ofType:JRTokenTypeAccess];
 }
 
-+ (NSString *)getAccessToken
++ (NSString *)getAccessToken __unused
 {
     return [JRCaptureData sharedCaptureData].accessToken;
 }
@@ -267,22 +267,17 @@ captureTraditionalSignInType:(JRConventionalSigninType) tradSignInType;
     [JRCaptureData saveNewToken:newCreationToken ofType:JRTokenTypeCreation];
 }
 
-+ (NSString *)accessToken
++ (NSString *)accessToken __unused
 {
     return [[JRCaptureData sharedCaptureData] accessToken];
 }
 
-+ (NSString *)creationToken
-{
-    return [[JRCaptureData sharedCaptureData] creationToken];
-}
-
-+ (NSString *)captureBaseUrl
++ (NSString *)captureBaseUrl __unused
 {
     return [[JRCaptureData sharedCaptureData] captureBaseUrl];
 }
 
-+ (NSString *)clientId
++ (NSString *)clientId __unused
 {
     return [[JRCaptureData sharedCaptureData] clientId];
 }
@@ -309,7 +304,7 @@ captureTraditionalSignInType:(JRConventionalSigninType) tradSignInType;
     [JRCaptureData sharedCaptureData].creationToken = nil;
 }
 
-+ (void)setBackplaneChannelUrl:(NSString *)bpChannelUrl
++ (void)setBackplaneChannelUrl:(NSString *)bpChannelUrl __unused
 {
     [JRCaptureData sharedCaptureData].bpChannelUrl = bpChannelUrl;
 }

@@ -76,6 +76,12 @@
     <content url="file://$MODULE_DIR$/../../Janrain/JRCapture/Classes/JRNSDate+ISO8601_CaptureDateTimeString.m">
       <sourceFolder url="file://$MODULE_DIR$/../../Janrain/JRCapture/Classes/JRNSDate+ISO8601_CaptureDateTimeString.m" isTestSource="false" />
     </content>
+    <content url="file://$MODULE_DIR$/../../Janrain/JRCapture/Classes/NSDictionary+QueryParams.h">
+      <sourceFolder url="file://$MODULE_DIR$/../../Janrain/JRCapture/Classes/NSDictionary+QueryParams.h" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Janrain/JRCapture/Classes/NSDictionary+QueryParams.m">
+      <sourceFolder url="file://$MODULE_DIR$/../../Janrain/JRCapture/Classes/NSDictionary+QueryParams.m" isTestSource="false" />
+    </content>
     <content url="file://$MODULE_DIR$/../../Janrain/JRCapture/Classes/NSMutableDictionary+get_params.h">
       <sourceFolder url="file://$MODULE_DIR$/../../Janrain/JRCapture/Classes/NSMutableDictionary+get_params.h" isTestSource="false" />
     </content>

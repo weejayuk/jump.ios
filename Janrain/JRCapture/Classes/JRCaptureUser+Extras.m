@@ -31,7 +31,6 @@
 #import "debug_log.h"
 #import "JRCaptureData.h"
 #import "JRCaptureApidInterface.h"
-#import "JRCaptureObject+Internal.h"
 #import "JSONKit.h"
 
 @interface JRCaptureUserApidHandler : NSObject <JRCaptureInterfaceDelegate>
@@ -51,7 +50,7 @@
     id <JRCaptureUserDelegate> delegate = [myContext objectForKey:@"delegate"];
 
     if ([delegate respondsToSelector:@selector(fetchUserDidFailWithError:context:)])
-        [delegate fetchUserDidFailWithError:[JRCaptureError errorFromResult:result onProvider:nil] 
+        [delegate fetchUserDidFailWithError:[JRCaptureError errorFromResult:result onProvider:nil mergeToken:nil]
                                     context:callerContext];
 }
 

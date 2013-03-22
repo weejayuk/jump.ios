@@ -36,13 +36,13 @@
  */
 @interface JRCaptureData : NSObject
 @property(nonatomic, retain) NSString *bpChannelUrl;
-@property(nonatomic, readonly) NSString *captureBaseUrl;
-@property(nonatomic, readonly) NSString *clientId;
-@property(nonatomic, readonly) NSString *accessToken;
-@property(nonatomic, readonly) NSString *creationToken;
-@property(nonatomic, readonly) NSString *captureLocale;
-@property(nonatomic, readonly) NSString *captureFormName;
-@property(nonatomic, readonly) NSString *captureFlowName;
+@property(nonatomic, readonly, retain) NSString *captureBaseUrl;
+@property(nonatomic, readonly, retain) NSString *clientId;
+@property(nonatomic, readonly, retain) NSString *accessToken;
+@property(nonatomic, readonly, retain) NSString *creationToken;
+@property(nonatomic, readonly, retain) NSString *captureLocale;
+@property(nonatomic, readonly, retain) NSString *captureFormName;
+@property(nonatomic, readonly, retain) NSString *captureFlowName;
 @property(nonatomic, readonly) JRConventionalSigninType captureTradSignInType;
 
 + (void)setAccessToken:(NSString *)newAccessToken;

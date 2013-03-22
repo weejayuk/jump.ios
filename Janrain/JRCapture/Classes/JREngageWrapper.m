@@ -37,7 +37,6 @@
 typedef enum
 {
     JREngageDialogStateAuthentication,
-    JREngageDialogStateSharing,
 } JREngageDialogState;
 
 @interface JREngageWrapper ()
@@ -253,6 +252,7 @@ static JREngageWrapper *singleton = nil;
     [delegate release];
 
     [nativeSigninViewController release];
+    [mergeToken release];
     [super dealloc];
 }
 @end

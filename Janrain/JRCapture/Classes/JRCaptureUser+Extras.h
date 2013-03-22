@@ -42,41 +42,6 @@
  * Capture server or fetching the remote JRCaptureUser from the Capture server
  **/
 @protocol JRCaptureUserDelegate <JRCaptureObjectDelegate>
-@optional
-/**
- * Sent if a call to JRCaptureUser#createOnCaptureForDelegate:context:() succeeded for the JRCaptureUser on which
- * the selector was performed.
- *
- * @param user
- *   The JRCaptureUser on which the selector JRCaptureUser#createOnCaptureForDelegate:context:() was performed
- *
- * @param context
- *   The same NSObject that was sent to the method JRCaptureUser#createOnCaptureForDelegate:context:().
- *   The \e context argument is used if you would like to send some data through the asynchronous network call back
- *   to your delegate, or \c nil. This object will be passed back to your JRCaptureUserDelegate as is. Contexts are
- *   used across most of the asynchronous Capture methods to facilitate correlation of the response messages with the
- *   calling code. Use of the context is entirely optional and at your discretion.
- **/
-- (void)createDidSucceedForUser:(JRCaptureUser *)user context:(NSObject *)context;
-
-/**
- * Sent if a call to JRCaptureUser#createOnCaptureForDelegate:context:() failed for the JRCaptureUser on which
- * the selector was performed.
- *
- * @param user
- *   The JRCaptureUser on which the selector JRCaptureUser#createOnCaptureForDelegate:context:() was performed
- *
- * @param error
- *   The cause of the failure. Please see the list of \ref captureErrors "Capture Errors" for more information
- *
- * @param context
- *   The same NSObject that was sent to the method JRCaptureUser#createOnCaptureForDelegate:context:().
- *   The \e context argument is used if you would like to send some data through the asynchronous network call back
- *   to your delegate, or \c nil. This object will be passed back to your JRCaptureUserDelegate as is. Contexts are
- *   used across most of the asynchronous Capture methods to facilitate correlation of the response messages with the
- *   calling code. Use of the context is entirely optional and at your discretion.
- **/
-- (void)createDidFailForUser:(JRCaptureUser *)user withError:(NSError *)error context:(NSObject *)context;
 
 /**
  * Sent if a call to JRCaptureUser#fetchCaptureUserFromServerForDelegate:context:() succeeded

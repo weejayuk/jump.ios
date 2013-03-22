@@ -135,10 +135,6 @@ typedef enum
  * @internal (for now)
  **/
 @interface JRCaptureError : NSError
-@property (nonatomic, readonly) NSString *rawResponse;
-@property (nonatomic, readonly) NSString *mergeToken;
-@property (nonatomic, readonly) NSString *onProvider;
-
 - (BOOL)isMergeFlowError;
 - (NSString *)existingProvider;
 - (NSString *)conflictedProvider;
@@ -155,7 +151,6 @@ typedef enum
 + (NSDictionary *)invalidStatErrorForResult:(NSObject *)result;
 + (NSDictionary *)invalidDataErrorForResult:(NSObject *)result;
 + (NSDictionary *)missingAccessTokenInResult:(__unused NSObject *)result;
-+ (NSDictionary *)lastUpdatedSelectorNotAvailable;
 @end
 /** @}*/
 
