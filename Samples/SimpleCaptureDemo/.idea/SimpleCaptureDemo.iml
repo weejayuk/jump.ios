@@ -4,6 +4,207 @@
     <content url="file://$USER_HOME$/Library/Caches/appCode10/DerivedData/SimpleCaptureDemo-616ab049/Build/Products/Debug-iphonesimulator/SimpleCaptureDemo.app">
       <sourceFolder url="file://$USER_HOME$/Library/Caches/appCode10/DerivedData/SimpleCaptureDemo-616ab049/Build/Products/Debug-iphonesimulator/SimpleCaptureDemo.app" isTestSource="false" />
     </content>
+    <content url="file://$MODULE_DIR$/../../Docs/Capture Integration Guide.html">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/Capture Integration Guide.html" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/Doxygen/JRCapture/Doxyfile">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/Doxygen/JRCapture/Doxyfile" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/Doxygen/JRCapture/DoxygenLayout.xml">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/Doxygen/JRCapture/DoxygenLayout.xml" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/Doxygen/JRCapture/GHPagesDoxyfile">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/Doxygen/JRCapture/GHPagesDoxyfile" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/Doxygen/JRCapture/customdoxygen.css">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/Doxygen/JRCapture/customdoxygen.css" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/Doxygen/JRCapture/doxygen_preprocessor-r30/Makefile">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/Doxygen/JRCapture/doxygen_preprocessor-r30/Makefile" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/Doxygen/JRCapture/doxygen_preprocessor-r30/doxycomment.py">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/Doxygen/JRCapture/doxygen_preprocessor-r30/doxycomment.py" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/Doxygen/JRCapture/doxygen_preprocessor-r30/doxygen_preprocessor.py">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/Doxygen/JRCapture/doxygen_preprocessor-r30/doxygen_preprocessor.py" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/Doxygen/JRCapture/doxygen_preprocessor-r30/enhancedtable.py">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/Doxygen/JRCapture/doxygen_preprocessor-r30/enhancedtable.py" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/Doxygen/JRCapture/doxygen_preprocessor-r30/error_handler.py">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/Doxygen/JRCapture/doxygen_preprocessor-r30/error_handler.py" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/Doxygen/JRCapture/doxygen_preprocessor-r30/filterprocessor.py">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/Doxygen/JRCapture/doxygen_preprocessor-r30/filterprocessor.py" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/Doxygen/JRCapture/doxygen_preprocessor-r30/setup.py">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/Doxygen/JRCapture/doxygen_preprocessor-r30/setup.py" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/Doxygen/JRCapture/doxygen_preprocessor-r30/statemachine.py">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/Doxygen/JRCapture/doxygen_preprocessor-r30/statemachine.py" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/Doxygen/JRCapture/footer.html">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/Doxygen/JRCapture/footer.html" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/Doxygen/JRCapture/header.html">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/Doxygen/JRCapture/header.html" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/Doxygen/JREngage/Doxyfile">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/Doxygen/JREngage/Doxyfile" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/Doxygen/JREngage/DoxygenLayout.xml">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/Doxygen/JREngage/DoxygenLayout.xml" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/Doxygen/JREngage/GHPagesDoxyfile">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/Doxygen/JREngage/GHPagesDoxyfile" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/Doxygen/JREngage/customdoxygen.css">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/Doxygen/JREngage/customdoxygen.css" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/Doxygen/JREngage/footer.html">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/Doxygen/JREngage/footer.html" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/Doxygen/JREngage/header.html">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/Doxygen/JREngage/header.html" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/JREngage/html/_j_r_activity_object_8h.html">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/JREngage/html/_j_r_activity_object_8h.html" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/JREngage/html/_j_r_activity_object_8h_source.html">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/JREngage/html/_j_r_activity_object_8h_source.html" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/JREngage/html/_j_r_connection_manager_8h_source.html">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/JREngage/html/_j_r_connection_manager_8h_source.html" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/JREngage/html/_j_r_engage_09_custom_interface_8h_source.html">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/JREngage/html/_j_r_engage_09_custom_interface_8h_source.html" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/JREngage/html/_j_r_engage_8h_source.html">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/JREngage/html/_j_r_engage_8h_source.html" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/JREngage/html/_j_r_engage_phonegap_plugin_8h_source.html">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/JREngage/html/_j_r_engage_phonegap_plugin_8h_source.html" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/JREngage/html/_j_r_info_bar_8h_source.html">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/JREngage/html/_j_r_info_bar_8h_source.html" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/JREngage/html/_j_r_preview_label_8h_source.html">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/JREngage/html/_j_r_preview_label_8h_source.html" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/JREngage/html/_j_r_providers_controller_8h_source.html">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/JREngage/html/_j_r_providers_controller_8h_source.html" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/JREngage/html/_j_r_publish_activity_controller_8h_source.html">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/JREngage/html/_j_r_publish_activity_controller_8h_source.html" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/JREngage/html/_j_r_session_data_8h_source.html">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/JREngage/html/_j_r_session_data_8h_source.html" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/JREngage/html/_j_r_user_interface_maestro_8h_source.html">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/JREngage/html/_j_r_user_interface_maestro_8h_source.html" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/JREngage/html/_j_r_user_landing_controller_8h_source.html">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/JREngage/html/_j_r_user_landing_controller_8h_source.html" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/JREngage/html/_j_r_web_view_controller_8h_source.html">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/JREngage/html/_j_r_web_view_controller_8h_source.html" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/JREngage/html/_providers.html">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/JREngage/html/_providers.html" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/JREngage/html/annotated.html">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/JREngage/html/annotated.html" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/JREngage/html/class_j_r_action_link-members.html">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/JREngage/html/class_j_r_action_link-members.html" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/JREngage/html/class_j_r_activity_object-members.html">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/JREngage/html/class_j_r_activity_object-members.html" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/JREngage/html/class_j_r_email_object-members.html">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/JREngage/html/class_j_r_email_object-members.html" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/JREngage/html/class_j_r_engage-members.html">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/JREngage/html/class_j_r_engage-members.html" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/JREngage/html/class_j_r_engage.html">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/JREngage/html/class_j_r_engage.html" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/JREngage/html/class_j_r_flash_media_object-members.html">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/JREngage/html/class_j_r_flash_media_object-members.html" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/JREngage/html/class_j_r_image_media_object-members.html">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/JREngage/html/class_j_r_image_media_object-members.html" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/JREngage/html/class_j_r_mp3_media_object-members.html">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/JREngage/html/class_j_r_mp3_media_object-members.html" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/JREngage/html/class_j_r_sms_object-members.html">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/JREngage/html/class_j_r_sms_object-members.html" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/JREngage/html/classes.html">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/JREngage/html/classes.html" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/JREngage/html/customdoxygen.css">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/JREngage/html/customdoxygen.css" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/JREngage/html/deprecated.html">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/JREngage/html/deprecated.html" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/JREngage/html/files.html">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/JREngage/html/files.html" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/JREngage/html/functions.html">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/JREngage/html/functions.html" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/JREngage/html/functions_func.html">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/JREngage/html/functions_func.html" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/JREngage/html/functions_prop.html">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/JREngage/html/functions_prop.html" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/JREngage/html/group__custom_interface.html">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/JREngage/html/group__custom_interface.html" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/JREngage/html/index.html">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/JREngage/html/index.html" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/JREngage/html/interface_j_r_action_link.html">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/JREngage/html/interface_j_r_action_link.html" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/JREngage/html/interface_j_r_activity_object.html">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/JREngage/html/interface_j_r_activity_object.html" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/JREngage/html/interface_j_r_email_object.html">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/JREngage/html/interface_j_r_email_object.html" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/JREngage/html/interface_j_r_flash_media_object.html">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/JREngage/html/interface_j_r_flash_media_object.html" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/JREngage/html/interface_j_r_image_media_object.html">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/JREngage/html/interface_j_r_image_media_object.html" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/JREngage/html/interface_j_r_mp3_media_object.html">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/JREngage/html/interface_j_r_mp3_media_object.html" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/JREngage/html/interface_j_r_sms_object.html">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/JREngage/html/interface_j_r_sms_object.html" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/JREngage/html/modules.html">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/JREngage/html/modules.html" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/JREngage/html/pages.html">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/JREngage/html/pages.html" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/JREngage/html/protocol_j_r_engage_delegate-p-members.html">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/JREngage/html/protocol_j_r_engage_delegate-p-members.html" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/JREngage/html/protocol_j_r_engage_delegate-p.html">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/JREngage/html/protocol_j_r_engage_delegate-p.html" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Docs/JREngage/html/tabs.css">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/JREngage/html/tabs.css" isTestSource="false" />
+    </content>
     <content url="file://$MODULE_DIR$/../../Janrain/JRCapture/Classes/JRCapture.h">
       <sourceFolder url="file://$MODULE_DIR$/../../Janrain/JRCapture/Classes/JRCapture.h" isTestSource="false" />
     </content>
@@ -81,6 +282,12 @@
     </content>
     <content url="file://$MODULE_DIR$/../../Janrain/JRCapture/Classes/NSDictionary+QueryParams.m">
       <sourceFolder url="file://$MODULE_DIR$/../../Janrain/JRCapture/Classes/NSDictionary+QueryParams.m" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Janrain/JRCapture/Classes/NSMutableDictionary+QueryParams.h">
+      <sourceFolder url="file://$MODULE_DIR$/../../Janrain/JRCapture/Classes/NSMutableDictionary+QueryParams.h" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Janrain/JRCapture/Classes/NSMutableDictionary+QueryParams.m">
+      <sourceFolder url="file://$MODULE_DIR$/../../Janrain/JRCapture/Classes/NSMutableDictionary+QueryParams.m" isTestSource="false" />
     </content>
     <content url="file://$MODULE_DIR$/../../Janrain/JRCapture/Classes/NSMutableDictionary+get_params.h">
       <sourceFolder url="file://$MODULE_DIR$/../../Janrain/JRCapture/Classes/NSMutableDictionary+get_params.h" isTestSource="false" />

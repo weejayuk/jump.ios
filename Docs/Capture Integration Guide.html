@@ -1,0 +1,240 @@
+<h2>Generating the Capture User Model</h2>
+Get the <a title="Getting the Library" href="/documentation/mobile-libraries/ios-v2/getting-the-library/">JUMP for iOS library</a> and the required <a title="JSON-2.53+" href="http://search.cpan.org/~makamaka/JSON-2.53/lib/JSON.pm" target="_blank">JSON-2.53+</a> perl module.
+
+Change into the script directory:
+<code>$ cd jump.ios/Janrain/JRCapture/Script</code>
+
+Run the <tt>CaptureSchemaParser.pl</tt> script, passing in your Capture schema as an argument with the <tt>-f</tt> flag:
+<code>$ ./CaptureSchemaParser.pl -f /</code>
+
+The script sends its output to <tt>jump.ios/Janrain/JRCapture/Classes/CaptureUserModel/Generated/</tt>, which contains the files necessary to use the Janrain Capture Record Interface from your iOS application.
+
+After you have generated the code, you can <a title="Adding to Xcode" href="/documentation/mobile-libraries/jump-for-ios/adding-to-xcode/">add the library to Xcode</a>.
+
+<strong>Note</strong>: If you’ve already added the library to Xcode, see <a href="documentation/mobile-libraries/jump-for-ios/adding-to-xcode/#adding-the-generated-capture-user-model">Adding the Generated User Model</a>.
+<h3>Generated Documentation</h3>
+The script uses Doxygen to generate a full set of documentation for your newly created Objective-C classes using the attribute descriptions found in the schema. You can find the documentation in the <tt>jump.ios/Docs/JRCapture/html/</tt> directory.
+
+If you do not have Doxygen installed, the script skips this step automatically. You can still view the inline documentation found in the Objective-C header files of the generated classes.
+<h2>Using the Capture Library</h2>
+In your application, decide where you want to manage the authenticated Capture user object. You will want to implement your Capture library interface code in an object that won’t go away, such as the <tt>AppDelegate</tt> or a singleton object that manages your application’s data model.
+
+1. Import the Capture header:
+<code>#import "JRCapture.h"</code>
+
+2. Modify your class to conform to <a title="JRCaptureSigninDelegate" href="http://janrain.github.com/jump.ios/gh_docs/capture/html/protocol_j_r_capture_signin_delegate-p.html">JRCaptureSigninDelegate</a>, by adding it to the list of delegates. (All the messages of the protocol are optional.)
+<code>@interface MyDataModel : NSObject </code>
+
+3. Add a captureUser property to your delegate’s header (see <a title="JRCaptureUser" href="http://janrain.github.com/jump.ios/gh_docs/capture/html/interface_j_r_capture_user.html" target="_blank">JRCaptureUser</a> and <a title="captureUser" href="http://janrain.github.com/jump.ios/gh_docs/capture/html/interface_j_r_capture_user.html#a131f0426ed1cfb455a1b13c8e525e697" target="_blank">captureUser</a>):
+<code>@property (retain, nonatomic) JRCaptureUser *captureUser;</code>
+
+4. And synthesize that property in your application delegate’s implementation:
+<code>@synthesize captureUser;</code>
+<h3>Configure</h3>
+To configure the library, pass your Engage Application ID, Capture APID domain, Capture UI domain, Capture Client ID, and entity type name to the class method <tt>setEngageAppId:captureApidDomain:captureUIDomain:clientId:andEntityTypeName:</tt> of the <tt>JRCapture</tt> class:
+
+[sourcecode lang="objc"]   ... // Your existing initialization logic here
+
+NSString *appId              = @"your_engage_app_id";
+NSString *captureApidDomain  = @"your_capture_apid_base_url";
+NSString *captureUIDomain    = @"your_capture_ui_base_url";
+NSString *clientId           = @"your_capture_client_id";
+NSString *entityTypeName     = @"your_capture_record_type_name";
+
+[JRCapture setEngageAppId:appId captureApidDomain:captureApidDomain
+          captureUIDomain:captureUIDomain clientId:clientId
+        andEntityTypeName:entityTypeName];[/sourcecode]
+
+<strong>Note</strong>: Typically, your Capture APID domain and Capture UI domain are the same.
+<h2>Start the User Sign-In Flow</h2>
+To launch the authentication process, send the <tt>startEngageSigninForDelegate:</tt> message to the <tt>JRCapture</tt> class:
+<code>[JRCapture startEngageSigninForDelegate:self];</code>
+
+This starts the Engage sign-in flow, the result of which is sent to Capture. JUMP for iOS then returns a user record, through a <a title="JRCaptureUser" href="http://janrain.github.com/jump.ios/gh_docs/capture/html/interface_j_r_capture_user.html" target="_blank">JRCaptureUser</a> instance.
+
+The <a title="JRCaptureSigninDelegate" href="http://janrain.github.com/jump.ios/gh_docs/capture/html/protocol_j_r_capture_signin_delegate-p.html">JRCaptureSigninDelegate</a> protocol defines a set of optional messages your delegate can respond to in order to receive information about the user’s authentication with the Engage and Capture servers. All of the messages in this protocol are optional. As the flow proceeds, a series of delegate messages will be sent to your delegate.
+
+First, you will receive <a title="engageSigninDidSucceedForUser:forProvider:" href="http://janrain.github.com/jump.ios/gh_docs/capture/html/protocol_j_r_capture_signin_delegate-p.html#a39eb082986c4a029cbc8545cc8029c18" target="_blank">engageSigninDidSucceedForUser:forProvider:</a> when Engage authentication is complete. At this point, the library will close the dialog and then complete authentication headlessly on Capture. This notification will contain limited data which can be used to update UI while your app waits for Capture to complete authentication.
+
+To receive the user’s basic profile data (that is, the <a title="auth_info" href="/documentation/api/auth_info/">auth_info</a> data) respond to the <a title="engageSigninDidSucceedForUser:forProvider:" href="http://janrain.github.com/jump.ios/gh_docs/capture/html/protocol_j_r_capture_signin_delegate-p.html#a39eb082986c4a029cbc8545cc8029c18" target="_blank">engageSigninDidSucceedForUser:forProvider:</a> message from the <a title="JRCaptureSigninDelegate" href="http://janrain.github.com/jump.ios/gh_docs/capture/html/protocol_j_r_capture_signin_delegate-p.html">JRCaptureSigninDelegate</a> protocol:
+
+[sourcecode lang="objc"]
+- (void)engageSigninDidSucceedForUser:(NSDictionary *)engageAuthInfo
+                          forProvider:(NSString *)provider
+{
+  self.currentDisplayName = [self getDisplayNameFromProfile:engageAuthInfo];
+
+  // Update the UI to show that authentication is completing...
+  [self showCompletingSigninMessage];
+
+  [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+}[/sourcecode]
+
+The basic profile data is included for your information while authentication completes. Once authentication reaches the Capture server, Capture automatically adds the profile data from your user to the Capture record.
+<h3>More</h3>
+<ul>
+	<li>For more information on what is returned by Engage, please see the <a title="auth_info" href="/documentation/api/auth_info/">auth_info</a> section of the Engage API docs.</li>
+	<li>For more information on the Capture flow, please see <a href="/documentation/mobile-libraries/#capture-sign-in">Capture Flow</a> section of the <a title="Mobile" href="/documentation/mobile-libraries/">Overview</a>.</li>
+</ul>
+<h2>Finish the User Sign-In Flow</h2>
+Once the the user record is retrieved from the Capture server, the <a title="captureAuthenticationDidSucceedForUser" href="/documentation/api/add_or_update_access_token/" target="_blank">captureAuthenticationDidSucceedForUser:status:</a> message is sent to your delegate. This message passes the <a title="JRCaptureUser" href="http://janrain.github.com/jump.ios/gh_docs/capture/html/interface_j_r_capture_user.html" target="_blank">JRCaptureUser</a> object and the creation state of the record.
+
+[sourcecode lang="objc"]
+- (void)captureAuthenticationDidSucceedForUser:(JRCaptureUser *)newCaptureUser
+                                        status:(JRCaptureRecordStatus)captureRecordStatus
+{
+    // Hold a reference to the current user
+    self.captureUser = newCaptureUser;
+
+    // User records can come back with one of three states; have the app
+    // act accordingly
+    if (captureRecordStatus == JRCaptureRecordMissingRequiredFields)
+    {
+        // Your schema has required fields that must be filled before
+        // the user record can be created (e.g. an email address);
+        // collect them
+    }
+    else if (captureRecordStatus == JRCaptureRecordNewlyCreated)
+    {
+        // The user has not signed in to Capture before and a new record
+        // has been created.
+
+        // You may wish to collect additional data from the user and add it
+        // to the user’s record, such as an avatar image URL or other
+        // relevant personal information
+    }
+    else if (captureRecordStatus == JRCaptureRecordExists)
+    {
+        // The user had an existing Capture user record; update the
+        // app state to reflect this
+    }
+}[/sourcecode]
+
+There are three possible values for <a title="JRCaptureRecordStatus" href="http://janrain.github.com/jump.ios/gh_docs/capture/html/_j_r_capture_8h.html#a3de9970dfc3458baae757eb39c61da6e" target="_blank">captureRecordStatus:</a>
+
+<a title="JRCaptureRecordStatus" href="http://janrain.github.com/jump.ios/gh_docs/capture/html/_j_r_capture_8h.html#a3de9970dfc3458baae757eb39c61da6e" target="_blank">JRCaptureRecordExists</a> indicates that the user had an existing Capture record and that record has been retrieved. Your application should update its state to reflect the user being signed-in.
+
+<a title="JRCaptureRecordStatus" href="http://janrain.github.com/jump.ios/gh_docs/capture/html/_j_r_capture_8h.html#a3de9970dfc3458baae757eb39c61da6e" target="_blank">JRCaptureRecordNewlyCreated</a> indicates that this is a new user and that a new Capture record has been automatically created. Your application may wish to collect additional new-user information and push that information back to the Capture server.
+
+<a title="JRCaptureRecordStatus" href="http://janrain.github.com/jump.ios/gh_docs/capture/html/_j_r_capture_8h.html#a3de9970dfc3458baae757eb39c61da6e" target="_blank">JRCaptureRecordMissingRequiredFields</a> indicates that this is a new user but that there was not enough information from the social profile data to fill the required user record fields. (For example, your Capture instance may require an email address, but Twitter social profiles do not have an email address, so the record cannot be automatically created on Capture when a user signs in with Twitter.) The partially complete user record is passed back to your application, where it is your application’s responsibility to collect the missing required data and create the user record on Capture:
+<ul>
+	<li>Your application should present a dialog to collect the missing information and any additional information you wish to collect.</li>
+	<li>Your application should store this information in the <a title="JRCaptureUser" href="http://janrain.github.com/jump.ios/gh_docs/capture/html/interface_j_r_capture_user.html" target="_blank">JRCaptureUser</a> instance provided by the <a title="captureAuthenticationDidSucceedForUser" href="http://janrain.github.com/jump.ios/gh_docs/capture/html/protocol_j_r_capture_signin_delegate-p.html#aa5dc2ae621394b1a97b55eb3fca6b2ef" target="_blank">captureAuthenticationDidSucceedForUser:status:</a> message.</li>
+	<li>Once the profile is complete, your application needs to create the record on Capture, see <a href="#creating-a-new-capture-user-record">Creating a New Capture User Record</a> for details.</li>
+</ul>
+<h3>More</h3>
+<ul>
+	<li>For information about Capture Authentication with Conventional Sign-In, please see <a href="documentation/mobile-libraries/jump-for-ios/capture-for-ios/capture-ios-examples/#sample-app-code">Example Server-side Authentication App</a>.</li>
+</ul>
+<h2>Creating a New Capture User Record</h2>
+When you set your <tt>captureRecordStatus</tt> to <tt>JRCaptureRecordMissingRequiredFields</tt>, you will need to gather the required information and create the user on Capture.
+
+1. Add the <a title="JRCaptureUserDelegate" href="http://janrain.github.com/jump.ios/gh_docs/capture/html/protocol_j_r_capture_user_delegate-p.html" target="_blank">JRCaptureUserDelegate</a> protocol conformity to your delegate, as you did with the <tt>JRCaptureSigninDelegate</tt> above:
+
+[sourcecode lang="objc"]@interface MyDelegate : UIResponder <JRCaptureSigninDelegate, JRCaptureUserDelegate>[/sourcecode]
+
+2. Once you have populated the required attributes, send the user creation message:
+
+[sourcecode lang="objc"]- (void)createUserRecordOnCapture
+{
+[captureUser createOnCaptureForDelegate:self context:nil];
+}[/sourcecode]
+
+3. Respond to the <tt>createDidSucceedForUser:context:</tt> message:
+
+[sourcecode lang="objc"]- (void)createDidSucceedForUser:(JRCaptureUser *)user context:(NSObject *)context
+{
+// Now, update the application state to reflect the newly signed-in user
+}[/sourcecode]
+<h3>More</h3>
+<ul>
+	<li>For more information on Capture authentication with Engage, please <a title="Conventional Sign-in" href="/documentation/mobile-libraries/jump-for-ios/capture-for-ios/conventional-sign-in/">Conventional Sign-in</a>.</li>
+</ul>
+<h2>Making Changes in a Capture User Record</h2>
+Capture user records are structured by the Capture schema, which defines the attributes of the record. An attribute is either a primitive value (a number, a string, a date, or similar) an object, or a plural.
+
+Primitive attribute values are the actual data that make up your user record. For example, they are your user’s identifier or their email address.
+
+Objects and plurals make up the structure of your user record. For example, in the default Capture schema, the user’s name is represented by an object with six primitive values (strings) used to contain the different parts of the name. (The six values are <tt>familyName</tt>, <tt>formatted</tt>, <tt>givenName</tt>, <tt>honorificPrefix</tt>, <tt>honorificSuffix</tt>, <tt>middleName</tt>.) Objects can contain primitive values, sub-objects, or plurals, and those attributes are defined in the schema.
+
+Plurals contain collections of objects, or elements, where an element is just an object stored in a plural. Like objects, plural elements can contain primitive values, sub-objects, or sub-plurals. Every element in a plural has the same set of attributes, which are defined in the schema. You can think of a plural as an object that may have zero-or-more instances. Each instance is called a plural element.
+
+Generating your Capture user model produces Objective-C classes for all your objects and non-string-plural plural elements. For example, you will have a <tt>JRName</tt> class which contains <tt>NSString</tt> properties for the six attributes noted above.
+
+Internally, Capture user record updates occur through one of two mechanisms: updating and replacing. Both updating and replacing are limited in scope to part of the record, depending on the object from which they are called. Broadly speaking, parts of the record that are limited to objects can be updated, but to change the plural elements in a plural you must replace the plural. For example, <tt>JRName</tt> (the users name) is an object and can be updated if the user changes their name, but <tt>JRInterests</tt> (a plural of strings holding the user’s interests) must be replaced if the user adds or removes an interest.
+<h3>Updating Objects (Non-plurals)</h3>
+Conform to the <a title="JRCaptureObjectDelegate" href="http://janrain.github.com/jump.ios/gh_docs/capture/html/protocol_j_r_capture_object_delegate-p.html" target="_blank">JRCaptureObjectDelegate</a> protocol in your class:
+
+[sourcecode lang="objc"]@interface MyDataModel : UIResponder <JRCaptureSigninDelegate, JRCaptureUserDelegate,
+                                    JRCaptureObjectDelegate>[/sourcecode]
+
+Update the object’s non-plural properties, and then send the object the <a title="updateOnCaptureForDelegate" href="http://janrain.github.com/jump.ios/gh_docs/capture/html/interface_j_r_capture_object.html#a307b20b8cb70eec684e7197550c9f4c3"><tt>updateOnCaptureForDelegate:context:</tt></a> message. For example:
+
+[sourcecode lang="objc"]captureUser.aboutMe = @"Hello. My name is Inigo Montoya.";
+[captureUser updateOnCaptureForDelegate:self context:nil];[/sourcecode]
+
+<strong>Note</strong>: Contexts are used across most of the asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the context is entirely optional. You can use any object which conforms to the <tt>NSObject</tt> protocol.
+
+You may respond to <a title="updateDidSucceedForObject" href="http://janrain.github.com/jump.ios/gh_docs/capture/html/protocol_j_r_capture_object_delegate-p.html#afa043773e69351fc3115d7ae765986db" target="_blank"><tt>updateDidSucceedForObject:context:</tt></a> for notification of success:
+
+[sourcecode lang="objc"]- (void)updateDidSucceedForObject:(JRCaptureObject *)object context:(NSObject *)context
+{
+  // Successful update
+}[/sourcecode]
+
+Similarly <a title="updateDidFailForObject" href="http://janrain.github.com/jump.ios/gh_docs/capture/html/protocol_j_r_capture_object_delegate-p.html#affff9e5fe9d03312a4d5db8b39ba5ff0" target="_blank"><tt>updateDidFailForObject:withError:context:</tt></a> will be sent on failure. See <a title="CaptureErrors" href="http://janrain.github.com/jump.ios/gh_docs/capture/html/group__capture_errors.html#ggabc7274cb58c13d8cda35a6554a013de9ac24c5311be2739cfa10797413b2023ca" target="_blank">Capture Errors</a> in the API documentation for possible errors.
+
+You can send the <tt>updateOnCaptureForDelegate:context:</tt> message to the top-level object (a <a title="JRCaptureUser" href="http://janrain.github.com/jump.ios/gh_docs/capture/html/interface_j_r_capture_user.html" target="_blank">JRCaptureUser</a> instance) or a sub-object.
+
+<strong>Warning</strong>: When you update an object, the update <em>does not</em> affect plurals inside of that object.
+<h3>Replacing Plurals</h3>
+To add or remove the elements of a plural send the <tt>replace<em>ArrayName</em>ArrayOnCaptureForDelegate:context:</tt> message to the parent-object of the plural.
+
+If you have a schema with a plural attribute named <tt>photos</tt>, Janrain generates a method named <tt>replacePhotosArrayOnCaptureForDelegate:context:</tt>. So the <tt><em>ArrayName</em></tt> above is replaced with the actual name of the array. After updating the plural array invoke 
+<tt>replace<em>ArrayName</em>ArrayOnCaptureForDelegate:context:</tt>, replacing the <tt><em>ArrayName</em></tt> as appropriate.
+
+For example:
+
+[sourcecode lang="objc"]// Make a new photos plural element:
+JRPhotosElement *newPhoto = [[JRPhotosElement alloc] init];
+newPhoto.value = @"http://janrain.com/wp-content/uploads/drupal/janrain-logo.png";
+
+// Make a new array with the new element added:
+NSMutableArray *newPhotos = [NSMutableArray arrayWithArray:captureUser.photos];
+[newPhotos addObject:newPhoto];
+
+// Assign the new array to the photos plural property:
+captureUser.photos = newPhotos;
+
+// ... And update the Capture server:
+[captureUser replacePhotosArrayOnCaptureForDelegate:self context:nil];[/sourcecode]
+
+<strong>Warning</strong>: The <tt>NSArray</tt> properties used to model plurals are copy-on-set. This means that to modify the array you must create a new mutable array with the existing array, then modify the mutable array, then assign the mutable array to the property. (Because the property is copy-on-set further modifications to the copied array will not change the property.)
+<h2>Storing the Capture User Record</h2>
+When your application terminates, you should save your active user record to local storage. For example, from your <a title="UIApplicationDelegate" href="http://developer.apple.com/library/ios/#DOCUMENTATION/UIKit/Reference/UIApplicationDelegate_Protocol/Reference/Reference.html">UIApplicationDelegate</a>:
+
+[sourcecode lang="objc"]#define cJRCaptureUser @"jr_capture_user"
+
+- (void)applicationWillTerminate:(UIApplication *)application
+{
+  // Store the Capture user record for use when your app restarts;
+  // JRCaptureUser objects conform to NSCoding so you can serialize them with the
+  // rest of your app state
+  NSUserDefaults *myPreferences = [NSUserDefaults standardUserDefaults];
+  [myPreferences setObject:[NSKeyedArchiver archivedDataWithRootObject:captureUser]
+                    forKey:cJRCaptureUser];
+}[/sourcecode]
+
+Likewise, you should load any saved user record state when your application launches. For example, from your <tt>UIApplicationDelegate</tt>:
+
+[sourcecode lang="objc"]- (BOOL)          application:(UIApplication *)application
+didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+  NSUserDefaults *myPreferences = [NSUserDefaults standardUserDefaults];
+  NSData *encodedUser = [myPreferences objectForKey:cJRCaptureUser];
+  self.captureUser = [NSKeyedUnarchiver unarchiveObjectWithData:encodedUser];
+}[/sourcecode]
+
+<strong>Note</strong>: While your application is responsible for saving and restoring the user record the Capture library will automatically save and restore the session token.
+<h3>Next</h3>
+We recommend that you look at the <a title="Capture iOS Examples" href="/documentation/mobile-libraries/jump-for-ios/capture-for-ios/capture-ios-examples/">Capture iOS Examples</a> page.
