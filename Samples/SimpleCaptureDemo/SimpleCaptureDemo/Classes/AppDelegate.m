@@ -37,28 +37,31 @@ AppDelegate *appDelegate = nil;
 
 @implementation AppDelegate
 
-@synthesize window = _window;
+@synthesize window;
+@synthesize prefs;
 
+// Capture stuff:
 @synthesize captureUser;
-@synthesize currentProvider;
-@synthesize isNew;
-@synthesize isNotYetCreated;
-@synthesize engageSignInWasCanceled;
-@synthesize bpChannelUrl;
-@synthesize lfToken;
 @synthesize captureClientId;
 @synthesize captureDomain;
 @synthesize captureLocale;
 @synthesize captureFormName;
 @synthesize captureFlowName;
 @synthesize engageAppId;
+
+// Backplane / LiveFyre stuff:
+@synthesize bpChannelUrl;
+@synthesize lfToken;
 @synthesize bpBusUrlString;
 @synthesize liveFyreNetwork;
 @synthesize liveFyreSiteId;
 @synthesize liveFyreArticleId;
-@synthesize prefs;
 
-
+// Demo state machine stuff:
+@synthesize currentProvider;
+@synthesize isNew;
+@synthesize isNotYetCreated;
+@synthesize engageSignInWasCanceled;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -75,7 +78,7 @@ AppDelegate *appDelegate = nil;
                                               {
                                                   if (newChannel)
                                                   {
-                                                      bpChannelUrl = newChannel;
+                                                      self.bpChannelUrl = newChannel;
                                                   }
                                                   else
                                                   {
@@ -85,9 +88,9 @@ AppDelegate *appDelegate = nil;
 
     self.prefs = [NSUserDefaults standardUserDefaults];
 
-    self.currentProvider  = [prefs objectForKey:cJRCurrentProvider];
+    self.currentProvider  = [self.prefs objectForKey:cJRCurrentProvider];
 
-    NSData *archivedCaptureUser = [prefs objectForKey:cJRCaptureUser];
+    NSData *archivedCaptureUser = [self.prefs objectForKey:cJRCaptureUser];
     if (archivedCaptureUser)
     {
         self.captureUser = [NSKeyedUnarchiver unarchiveObjectWithData:archivedCaptureUser];
@@ -130,6 +133,9 @@ AppDelegate *appDelegate = nil;
 
 - (void)loadConfigFromPlist
 {
+    // See assets folder in Resources project group for janrain-config-example.plist
+    // Copy to janrain-config.plist and change it to your details
+
     NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"assets/janrain-config" ofType:@"plist"];
     NSDictionary *cfgPlist = [NSDictionary dictionaryWithContentsOfFile:plistPath];
     NSString *configKeyName = [cfgPlist objectForKey:@"default-config"];
@@ -150,7 +156,7 @@ AppDelegate *appDelegate = nil;
 
 - (void)saveCaptureUser
 {
-    [appDelegate.prefs setObject:[NSKeyedArchiver archivedDataWithRootObject:appDelegate.captureUser]
-                          forKey:cJRCaptureUser];
+    [self.prefs setObject:[NSKeyedArchiver archivedDataWithRootObject:self.captureUser] forKey:cJRCaptureUser];
 }
+
 @end
