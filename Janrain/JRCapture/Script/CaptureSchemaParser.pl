@@ -1922,13 +1922,4 @@ foreach my $fileName (@mFileNames) {
   print "Finished $fileName.\n";
 }
 
-# TODO: Make sure the correct input/output directories are known by doxygen when passing in a different out dir
-# TODO: Better success/fail reporting if doxygen works or not
-
-if (!$usingCustomOutputDir) {
-  my $doxygenResult = `cd $pathToOutputDir `;
-  $doxygenResult   .= `doxygen ../../../Docs/Doxygen/JRCapture/Doxyfile 2>&1`;
-  print $doxygenResult;
-}
-
 print "\n[SUCCESS] Capture schema successfully parsed.\n\n";
