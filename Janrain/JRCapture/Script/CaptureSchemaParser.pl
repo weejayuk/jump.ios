@@ -36,17 +36,27 @@
 
 use strict;
 use warnings;
-
-require './ObjCMethodParts.pl';
-require './CaptureParserIO.pl';
-
-use JSON; # imports encode_json, decode_json, to_json and from_json.
+use JSON;
 use Getopt::Std;
 
+require './ObjCMethodParts.pl';
+
+sub openSchemaNamed {
+  my $name = $_[0];
+
+  open(FH, "$name") or getCaptureSchema(1, $name);
+
+  return join("", <FH>);
+}
+
+sub usage {
+  print "Usage:\n";
+  print "CaptureSchemaParser.pl -f path/to/schema.json -o path/to/output/directory\n";
+}
 
 ########################################################################
-# First things first: If the schema was passed in on the command line
-# with the option '-f', open it up, otherwise, find out where it is
+# schema was passed in on the command line
+# with the option '-f', open it up
 ########################################################################
 our ($opt_o);
 our ($opt_f);
@@ -57,11 +67,12 @@ my $schema = "";
 if ($schemaName) {
   $schema = openSchemaNamed ($schemaName);
 } else {
-  $schema = getCaptureSchema (0, "");
+  usage();
+  die "[ERROR] Schema not found.";
 }
 
 ########################################################################
-# Next, if the output directory was passed in on the command line
+# the output directory was passed in on the command line
 # with the option '-o', remember it
 ########################################################################
 my $outputDir;
@@ -71,7 +82,10 @@ if (defined $opt_o) {
   $usingCustomOutputDir = 1;
   $outputDir = $opt_o;
   
-  print "Using cutom output directory: $outputDir\n";
+  print "Using output directory: $outputDir\n";
+} else {
+  usage();
+  die "[ERROR] Missing output directory parameter.";
 }
 
 

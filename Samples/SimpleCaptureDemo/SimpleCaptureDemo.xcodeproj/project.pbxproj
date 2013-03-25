@@ -161,7 +161,6 @@
 		C14247A2A61A413139D8CEA8 /* JRPluralLevelTwoElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424FD90D1DBB8C115B8826 /* JRPluralLevelTwoElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C14247CD922FBC7B1F41A8FA /* icon_openid_30x30@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C14244726F6E828704CBD14D /* icon_openid_30x30@2x.png */; };
 		C14247F5E50F8EB9CEC547F5 /* button_janrain_135x40.png in Resources */ = {isa = PBXBuildFile; fileRef = C14247EF0458B02DD4125E45 /* button_janrain_135x40.png */; };
-		C14248151CAB686C69DCE02B /* CaptureParserIO.pl in Resources */ = {isa = PBXBuildFile; fileRef = C1424AE498DE0A996796FDAF /* CaptureParserIO.pl */; };
 		C1424830020495C7BE3CCD48 /* default-schema.json in Resources */ = {isa = PBXBuildFile; fileRef = C14244D333F257733D109C3C /* default-schema.json */; };
 		C1424836341750C8BE7AC8AA /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = C14243136AB00031127FB128 /* Utils.m */; };
 		C14248491BFA9DCD646AF94A /* JRProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424361C4A4257D86155B10 /* JRProfile.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -178,7 +177,7 @@
 		C14248F917F6AC7E833447CA /* Script.iml in Resources */ = {isa = PBXBuildFile; fileRef = C14245C8C3A72582FC442F97 /* Script.iml */; };
 		C142490269E5CF0303B01694 /* logo_hyves_280x65@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424428F3AB9D71E2148357 /* logo_hyves_280x65@2x.png */; };
 		C1424905EC57CA9A6614FF6D /* JRPublishActivityController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1424897E42590A50CBFEC59 /* JRPublishActivityController.xib */; };
-		C142491925832C54B6ECBF33 /* Capture Integration Guide.html in Resources */ = {isa = PBXBuildFile; fileRef = C1424E7B60B494FE93B6A787 /* Capture Integration Guide.html */; };
+		C142491925832C54B6ECBF33 /* Capture Integration Guide.md in Resources */ = {isa = PBXBuildFile; fileRef = C1424E7B60B494FE93B6A787 /* Capture Integration Guide.md */; };
 		C142491AE8F1544CDB050CCA /* icon_bw_mail_30x30@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C14249EF8825828526E0BA2B /* icon_bw_mail_30x30@2x.png */; };
 		C142491E9AF425174C28F450 /* logo_paypal_280x65@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424D4E35CD6551BCC817F8 /* logo_paypal_280x65@2x.png */; };
 		C1424936B640AC467BD415FA /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = C1424870E40B8714E017E66D /* .gitignore */; };
@@ -580,7 +579,6 @@
 		C1424A90065C63920F3B85F2 /* icon_tumblr_30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_tumblr_30x30.png; path = ../../Janrain/JREngage/Resources/images/icons/icon_tumblr_30x30.png; sourceTree = "<group>"; };
 		C1424A940DEF393CF1E10DF7 /* encodings.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = encodings.xml; path = ../../Janrain/JRCapture/Script/.idea/encodings.xml; sourceTree = "<group>"; };
 		C1424AA276D10327B9122B97 /* icon_livejournal_30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_livejournal_30x30.png; path = ../../Janrain/JREngage/Resources/images/icons/icon_livejournal_30x30.png; sourceTree = "<group>"; };
-		C1424AE498DE0A996796FDAF /* CaptureParserIO.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; name = CaptureParserIO.pl; path = ../../Janrain/JRCapture/Script/CaptureParserIO.pl; sourceTree = "<group>"; };
 		C1424AE85C4444AA55B3E90D /* NSDictionary+QueryParams.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+QueryParams.h"; path = "../../Janrain/JRCapture/Classes/NSDictionary+QueryParams.h"; sourceTree = "<group>"; };
 		C1424AF2D73E4323CB4A9882 /* icon_bw_myspace_30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_bw_myspace_30x30.png; path = ../../Janrain/JREngage/Resources/images/icons_bw/icon_bw_myspace_30x30.png; sourceTree = "<group>"; };
 		C1424AF91891541D65B14D91 /* icon_yahoo_30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_yahoo_30x30.png; path = ../../Janrain/JREngage/Resources/images/icons/icon_yahoo_30x30.png; sourceTree = "<group>"; };
@@ -657,7 +655,7 @@
 		C1424E4F6720D4D136539857 /* icon_openid_30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_openid_30x30.png; path = ../../Janrain/JREngage/Resources/images/icons/icon_openid_30x30.png; sourceTree = "<group>"; };
 		C1424E64C0E35DC2511C3DA2 /* DoxygenLayout.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = DoxygenLayout.xml; path = ../../Docs/Doxygen/JREngage/DoxygenLayout.xml; sourceTree = "<group>"; };
 		C1424E75D6BC0B600C577C8F /* PickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickerViewController.h; sourceTree = "<group>"; };
-		C1424E7B60B494FE93B6A787 /* Capture Integration Guide.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = "Capture Integration Guide.html"; path = "../../Docs/Capture Integration Guide.html"; sourceTree = "<group>"; };
+		C1424E7B60B494FE93B6A787 /* Capture Integration Guide.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.md; name = "Capture Integration Guide.md"; path = "../../Docs/Capture Integration Guide.md"; sourceTree = "<group>"; };
 		C1424E7F1B193D1EB475CF89 /* JRCaptureObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRCaptureObject.h; path = ../../Janrain/JRCapture/Classes/JRCaptureObject.h; sourceTree = "<group>"; };
 		C1424E7FC07EC40BBFF0D039 /* enhancedtable.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = enhancedtable.py; path = "../../Docs/Doxygen/JRCapture/doxygen_preprocessor-r30/enhancedtable.py"; sourceTree = "<group>"; };
 		C1424E8FFB61D96D82605858 /* button_black_280x40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button_black_280x40@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/buttons/button_black_280x40@2x.png"; sourceTree = "<group>"; };
@@ -1253,7 +1251,7 @@
 		C1424A8BB874F02EEE6D8982 /* Docs */ = {
 			isa = PBXGroup;
 			children = (
-				C1424E7B60B494FE93B6A787 /* Capture Integration Guide.html */,
+				C1424E7B60B494FE93B6A787 /* Capture Integration Guide.md */,
 				C142438118E1128F1DD35B08 /* Doxygen */,
 			);
 			name = Docs;
@@ -1369,7 +1367,6 @@
 			isa = PBXGroup;
 			children = (
 				C14240971648C13D480CFBA2 /* .idea */,
-				C1424AE498DE0A996796FDAF /* CaptureParserIO.pl */,
 				C1424CC097B49F08D926BF97 /* CaptureSchemaParser.pl */,
 				C142400CBFE872CEDB5DAE5F /* ObjCMethodParts.pl */,
 				C1424D00C1E8820BDC614840 /* regen_demo.sh */,
@@ -1555,7 +1552,6 @@
 				C142467CAC8021D49865652D /* workspace.xml in Resources */,
 				C14248F917F6AC7E833447CA /* Script.iml in Resources */,
 				C1424F89680573123B0DB955 /* .name in Resources */,
-				C14248151CAB686C69DCE02B /* CaptureParserIO.pl in Resources */,
 				C142477FF68537CF1E409265 /* CaptureSchemaParser.pl in Resources */,
 				C142478A976A234E2B98D6D7 /* ObjCMethodParts.pl in Resources */,
 				C14246CCB660700915D64FF1 /* regen_demo.sh in Resources */,
@@ -1733,7 +1729,7 @@
 				C14240D82324781131C8B2B2 /* icon_tumblr_30x30@2x.png in Resources */,
 				C1424F89CCF53A4F4DACBC83 /* logo_soundcloud_280x65@2x.png in Resources */,
 				C142449D4150C1042552A11D /* logo_tumblr_280x65@2x.png in Resources */,
-				C142491925832C54B6ECBF33 /* Capture Integration Guide.html in Resources */,
+				C142491925832C54B6ECBF33 /* Capture Integration Guide.md in Resources */,
 				C1424E5689AD0F1CCEC09D3C /* customdoxygen.css in Resources */,
 				C14245C2383AA3B93AF465ED /* Doxyfile in Resources */,
 				C1424497B2B2C8AC2EAAD862 /* doxycomment.py in Resources */,

@@ -4,8 +4,8 @@
     <content url="file://$USER_HOME$/Library/Caches/appCode10/DerivedData/SimpleCaptureDemo-616ab049/Build/Products/Debug-iphonesimulator/SimpleCaptureDemo.app">
       <sourceFolder url="file://$USER_HOME$/Library/Caches/appCode10/DerivedData/SimpleCaptureDemo-616ab049/Build/Products/Debug-iphonesimulator/SimpleCaptureDemo.app" isTestSource="false" />
     </content>
-    <content url="file://$MODULE_DIR$/../../Docs/Capture Integration Guide.html">
-      <sourceFolder url="file://$MODULE_DIR$/../../Docs/Capture Integration Guide.html" isTestSource="false" />
+    <content url="file://$MODULE_DIR$/../../Docs/Capture Integration Guide.md">
+      <sourceFolder url="file://$MODULE_DIR$/../../Docs/Capture Integration Guide.md" isTestSource="false" />
     </content>
     <content url="file://$MODULE_DIR$/../../Docs/Doxygen/JRCapture/Doxyfile">
       <sourceFolder url="file://$MODULE_DIR$/../../Docs/Doxygen/JRCapture/Doxyfile" isTestSource="false" />
