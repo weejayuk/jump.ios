@@ -1,6 +1,6 @@
 ## Generating the Capture User Model
 
-Get the [JUMP for iOS library](http://developers.janrain.com/documentation/mobile-libraries/ios-v2/getting-the-library/ "Getting the Library") and
+Get the [JUMP for iOS library](http://developers.janrain.com/documentation/mobile-libraries/ios-v2/getting-the-library/) and
 the required [JSON-2.53+](http://search.cpan.org/~makamaka/JSON-2.53/lib/JSON.pm) perl module.
 
 1. Change into the script directory: `$ cd jump.ios/Janrain/JRCapture/Script`
