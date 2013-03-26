@@ -82,8 +82,8 @@ To configure the library, pass your:
     captureTraditionalSignInType:captureTraditionalSignInType];
 
 **Note**: See the Capture API doc for [`/oauth/auth_native`](http://developers.janrain.com/documentation/api-methods/capture/oauth/auth_native/)
-for more information on the default flow file, and default flow version. Contact your Janrain Deployment Engineer or
-Janrain Support for help configuring the Capture Flow parameters.
+for more information on the default Capture flow name, and default flow version. Contact your Janrain Deployment
+Engineer or Janrain Support for help configuring the flow parameters.
 
 ## Start the User Sign-In Flow
 
@@ -92,12 +92,12 @@ To start the authentication and sign-in flow, send the `startEngageSigninForDele
     [JRCapture startEngageSigninForDelegate:self];
 
 This starts the Engage user authentication flow, the result of which is used to sign-in to Capture. Once a user is
-signed in JUMP for iOS creates a user record as a
-[JRCaptureUser](http://janrain.github.com/jump.ios/gh_docs/capture/html/interface_j_r_capture_user.html) instance.
+signed in, the library instantiates a user record model (which is an instance of
+[JRCaptureUser](http://janrain.github.com/jump.ios/gh_docs/capture/html/interface_j_r_capture_user.html).)
 
 The [JRCaptureSigninDelegate](http://janrain.github.com/jump.ios/gh_docs/capture/html/protocol_j_r_capture_signin_delegate-p.html)
 protocol defines a set of (optional) messages your Capture delegate can respond to. As the flow proceeds, a series of
-delegate messages will be sent to your delegate, if implemented.
+delegate messages will be sent to your delegate.
 
 First, your delegate will receive 
 [engageSigninDidSucceedForUser:forProvider:](http://janrain.github.com/jump.ios/gh_docs/capture/html/protocol_j_r_capture_signin_delegate-p.html#a39eb082986c4a029cbc8545cc8029c18)
@@ -105,12 +105,9 @@ when Engage authentication is complete. At this point, the library will close th
 complete sign-in to Capture headlessly. This message contains limited data which can be used to update UI while your
 app waits for Capture to complete authentication.
 
-To receive the user's basic profile data (that is, the
-[auth_info](http://developers.janrain.com/documentation/api/auth_info/) data) respond to the
-[engageSigninDidSucceedForUser:forProvider:](http://janrain.github.com/jump.ios/gh_docs/capture/html/protocol_j_r_capture_signin_delegate-p.html#a39eb082986c4a029cbc8545cc8029c18)
-message from the
-[JRCaptureSigninDelegate](http://janrain.github.com/jump.ios/gh_docs/capture/html/protocol_j_r_capture_signin_delegate-p.html)
-protocol:
+To receive the user's basic profile data (the
+[auth_info](http://developers.janrain.com/documentation/api/auth_info/) data) have your delegate respond to
+[engageSigninDidSucceedForUser:forProvider:](http://janrain.github.com/jump.ios/gh_docs/capture/html/protocol_j_r_capture_signin_delegate-p.html#a39eb082986c4a029cbc8545cc8029c18):
 
     - (void)engageSigninDidSucceedForUser:(NSDictionary *)engageAuthInfo
                               forProvider:(NSString *)provider
@@ -130,26 +127,24 @@ Capture, Capture automatically adds the profile data to the Capture record.
 
 - For more information on what is returned by Engage, please see the
   [auth_info](http://developers.janrain.com/documentation/api/auth_info/) section of the Engage API docs.
-- For more information on the Capture flow, please see
-  [Capture Flow](http://developers.janrain.com/documentation/mobile-libraries/#capture-sign-in) section of the
-  [Overview](http://developers.janrain.com/documentation/mobile-libraries/).
+- For a broader look at the Capture sign-in flow, please see
+  [Capture Sign-In Flow](http://developers.janrain.com/documentation/mobile-libraries/#capture-sign-in).
 
 ## Finish the User Sign-In Flow
 
 Once the the user record is retrieved from Capture, the
 [captureAuthenticationDidSucceedForUser:status:](http://janrain.github.com/jump.ios/gh_docs/capture/html/protocol_j_r_capture_signin_delegate-p.html#aa5dc2ae621394b1a97b55eb3fca6b2ef)
 message is sent to your delegate. This message delivers the
-[JRCaptureUser](http://janrain.github.com/jump.ios/gh_docs/capture/html/interface_j_r_capture_user.html) object, and
-the state of the record.
+[JRCaptureUser](http://janrain.github.com/jump.ios/gh_docs/capture/html/interface_j_r_capture_user.html) instance, and
+also the state of the record.
 
     - (void)captureAuthenticationDidSucceedForUser:(JRCaptureUser *)newCaptureUser
                                             status:(JRCaptureRecordStatus)captureRecordStatus
     {
-        // Hold a reference to the current user
+        // Retain a reference to the user object
         self.captureUser = newCaptureUser;
     
-        // User records can come back with one of N states; have the app
-        // act accordingly
+        // User records can come back with one of two states
         if (captureRecordStatus == JRCaptureRecordNewlyCreated)
         {
             // The user has not signed in to this Capture instance before and a new record
@@ -176,12 +171,30 @@ indicates that this is a new user and that a new Capture record has been automat
 registration.") Because this is a new user, your application may wish to collect additional profile information and
 push that information back to Capture.
 
-### More
+### Traditional Sign-In and Social Sign-In
 
-* For more information on traditional Capture sign-in (e.g. sign-in with a  username and password) see
-  [Conventional Sign-In](http://developers.janrain.com/documentation/mobile-libraries/jump-for-ios/capture-for-ios/conventional-sign-in/).
+The Capture part of the SDK supports both social sign-in via Engage (e.g. Facebook) as well as traditional sign-in (i.e.
+username and password or email and password sign-in.) There are four main ways to start sign-in:
 
-### Handling the Sign-In Merge Flow
+- `+[JRCapture startEngageSigninDialogForDelegate:]`: Starts the Engage social sign-in process for all currently
+  configured social sign-in providers, displaying a list of them initially, and guiding the user through the
+  authentication.
+- `+[JRCapture startEngageSigninDialogOnProvider:withCustomInterfaceOverrides:mergeToken:forDelegate:]`: Starts the
+   Engage social sign-in process beginning directly with the specified social sign-in identity provider (skipping the
+   list of configured social sign-in providers)
+- `+[JRCapture startEngageSigninDialogWithConventionalSignin:forDelegate:]`: Start the Engage social sign-in process
+  for all currently configured social sign-in providers, preceding the list with a traditional sign-in form.
+- `+[JRCapture startCaptureConventionalSigninForUser:withPassword:withSigninType:mergeToken:forDelegate:]`: Starts
+  the traditional sign-in flow headlessly.
+
+The first two methods start social sign-in only (either by presenting a list of configured providers, or by starting
+the sign-in flow directly on a configured provider.) The fourth method performs a headless traditional sign-in -
+useful if your host app wishes to present it's own traditional sign-in UI. The third method combines social sign-in
+with a stock traditional sign-in UI.
+
+The merge token parameters are used in the second part of the Merge Account Flow, described below.
+
+### Handling the Merge Sign-In Flow
 
 Sometimes a user will have created a record with one means of sign-in (e.g. a traditional username and password record)
 and will later attempt to sign-in with a different means (e.g. with Facebook.)
@@ -264,7 +277,7 @@ Example:
                                   otherButtonTitles:@"Sign-in", nil] show];
     }
 
-**Note**: This example makes use of the `AlertViewWithBlocks` class extension of `UIAlertView` (which, as its name
+**Note**: This example makes use of the `AlertViewWithBlocks` subclass of `UIAlertView` (which, as its name
 indicates, provides an interface to `UIAlertView` with a block handler, as opposed to a delegate object handler.) See
 the SimpleCaptureDemo project in the Samples directory of the SDK for the source.
 
