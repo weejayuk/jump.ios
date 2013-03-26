@@ -194,63 +194,11 @@
 {
     if ([error code] == JRCaptureErrorGenericBadPassword)
     {
-        [[[UIAlertView alloc] initWithTitle:@"Access Denied" message:@"Invalid password for email@address.com"
-                                  delegate:nil cancelButtonTitle:@"Dismiss"
-                         otherButtonTitles:nil] show];
+        [self handleBadPasswordError];
     }
     else if ([error isJRMergeFlowError])
     {
-        NSString *captureAccountBrandPhrase = @"a SimpleCaptureDemo";
-        //NSString *mergeConflictedProvider = [error JRMergeFlowConflictedProvider];
-        NSString *existingAccountProvider = [error JRMergeFlowExistingProvider];
-        NSString *existingAccountProviderPhrase = [existingAccountProvider isEqualToString:@"capture"] ?
-                @"" : [NSString stringWithFormat:@"It is associated with your %@ account. ", existingAccountProvider];
-
-        NSString *message = [NSString stringWithFormat:@"There is already %@ account with that email address. %@ Tap "
-                                                               "'Merge' to sign-in with that account, and link the "
-                                                               "two.",
-                                                       captureAccountBrandPhrase,
-                                                       existingAccountProviderPhrase];
-
-        void (^mergeAlertCompletion)(UIAlertView *, BOOL, NSInteger) =
-                ^(UIAlertView *alertView, BOOL cancelled, NSInteger buttonIndex)
-        {
-            if (cancelled) return;
-
-            if ([existingAccountProvider isEqualToString:@"capture"])
-            {
-                void (^signInCompletion)(UIAlertView *, BOOL, NSInteger) =
-                        ^(UIAlertView *alertView_, BOOL cancelled_, NSInteger buttonIndex_)
-                {
-                    if (cancelled_) return;
-                    NSString *user = [[alertView_ textFieldAtIndex:0] text];
-                    NSString *password = [[alertView_ textFieldAtIndex:1] text];
-                    [JRCapture startCaptureConventionalSigninForUser:user withPassword:password
-                                                      withSigninType:JRConventionalSigninEmailPassword
-                                                          mergeToken:[error JRMergeToken]
-                                                         forDelegate:self];
-                };
-
-                [[[AlertViewWithBlocks alloc] initWithTitle:@"Sign in" message:nil
-                                                 completion:signInCompletion
-                                                      style:UIAlertViewStyleLoginAndPasswordInput
-                                          cancelButtonTitle:@"Cancel"
-                                          otherButtonTitles:@"Sign-in", nil] show];
-            }
-            else
-            {
-                [JRCapture startEngageSigninDialogOnProvider:existingAccountProvider
-                                withCustomInterfaceOverrides:self.customUi
-                                                  mergeToken:[error JRMergeToken]
-                                                 forDelegate:self];
-            }
-        };
-        
-        [[[AlertViewWithBlocks alloc] initWithTitle:@"Email address in use" message:message
-                                         completion:mergeAlertCompletion
-                                              style:UIAlertViewStyleDefault
-                                  cancelButtonTitle:@"Cancel"
-                                  otherButtonTitles:@"Merge", nil] show];
+        [self handleMergeFlowError:error];
     }
     else
     {
@@ -262,6 +210,80 @@
                                                   otherButtonTitles:nil];
         [alertView show];
     }
+}
+
+- (void)handleBadPasswordError
+{
+    [[[UIAlertView alloc] initWithTitle:@"Access Denied" message:@"Invalid password for email@address.com"
+                                  delegate:nil cancelButtonTitle:@"Dismiss"
+                         otherButtonTitles:nil] show];
+}
+
+- (void)handleMergeFlowError:(NSError *)error
+{
+    NSString *existingAccountProvider = [error JRMergeFlowExistingProvider];
+    void (^mergeAlertCompletion)(UIAlertView *, BOOL, NSInteger) =
+            ^(UIAlertView *alertView, BOOL cancelled, NSInteger buttonIndex)
+            {
+                if (cancelled) return;
+
+                if ([existingAccountProvider isEqualToString:@"capture"]) // Traditional sign-in required
+                {
+                    [self handleTradMerge:error];
+
+                }
+                else
+                {
+                    // Social sign-in required:
+                    [JRCapture startEngageSigninDialogOnProvider:existingAccountProvider
+                                    withCustomInterfaceOverrides:self.customUi
+                                                      mergeToken:[error JRMergeToken]
+                                                     forDelegate:self];
+                }
+            };
+
+    [self showMergeAlertDialog:existingAccountProvider mergeAlertCompletion:mergeAlertCompletion];
+
+}
+
+- (void)handleTradMerge:(NSError *)error
+{
+    void (^signInCompletion)(UIAlertView *, BOOL, NSInteger) =
+            ^(UIAlertView *alertView_, BOOL cancelled_, NSInteger buttonIndex_)
+            {
+                if (cancelled_) return;
+                NSString *user = [[alertView_ textFieldAtIndex:0] text];
+                NSString *password = [[alertView_ textFieldAtIndex:1] text];
+                [JRCapture startCaptureConventionalSigninForUser:user withPassword:password
+                                                  withSigninType:JRConventionalSigninEmailPassword
+                                                      mergeToken:[error JRMergeToken]
+                                                     forDelegate:self];
+            };
+
+    [[[AlertViewWithBlocks alloc] initWithTitle:@"Sign in" message:nil completion:signInCompletion
+                                          style:UIAlertViewStyleLoginAndPasswordInput
+                              cancelButtonTitle:@"Cancel"
+                              otherButtonTitles:@"Sign-in", nil] show];
+}
+
+- (void)showMergeAlertDialog:(NSString *)existingAccountProvider
+        mergeAlertCompletion:(void (^)(UIAlertView *, BOOL, NSInteger))mergeAlertCompletion
+{
+    NSString *captureAccountBrandPhrase = @"a SimpleCaptureDemo";
+    NSString *existingAccountProviderPhrase = [existingAccountProvider isEqualToString:@"capture"] ?
+            @"" : [NSString stringWithFormat:@"It is associated with your %@ account. ", existingAccountProvider];
+
+    NSString *message = [NSString stringWithFormat:@"There is already %@ account with that email address. %@ Tap "
+                                                           "'Merge' to sign-in with that account, and link the "
+                                                           "two.",
+                                                   captureAccountBrandPhrase,
+                                                   existingAccountProviderPhrase];
+
+    [[[AlertViewWithBlocks alloc] initWithTitle:@"Email address in use" message:message
+                                     completion:mergeAlertCompletion
+                                          style:UIAlertViewStyleDefault
+                              cancelButtonTitle:@"Cancel"
+                              otherButtonTitles:@"Merge", nil] show];
 }
 
 
