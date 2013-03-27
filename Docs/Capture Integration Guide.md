@@ -199,10 +199,13 @@ The merge token parameters are used in the second part of the Merge Account Flow
 Sometimes a user will have created a record with one means of sign-in (e.g. a traditional username and password record)
 and will later attempt to sign-in with a different means (e.g. with Facebook.)
 
-When this happens the sign-in does not succeed at first, because there is no record of the second identity being
-associated with a Capture record. But neither can a new record be automatically created because the second identity
-shares an email address with the existing record. So, before being able to sign-in with the second identity, it will
-need to be merged in to the existing record. This is called the "Merge Account Flow."
+When this happens the sign-in does not succeed, because there is no Capture record associated with the Social sign-in
+identity and the email address from the identity is already in use. Before being able to sign-in with the identity,
+the user must merge the identity into their existing record. This is called the "Merge Account Flow."
+
+The merge is achieved at the conclusion of a second sign-in flow authenticated by the record's existing associated
+identity. The second sign-in is initiated upon the failure of the first sign-in flow, and also includes a merge token
+which Capture uses to merge the identity from the first (failed) sign-in into the record.
 
 Capture SDK time-line for Merge Account Flow:
 
@@ -213,8 +216,14 @@ Capture SDK time-line for Merge Account Flow:
     representing this state. This state is to be discerned via the `-[NSError isJRMergeFlowError]` class category
     message.
  4. The host application (your iOS app) notifies the user of the conflict and advises the user to merge the accounts
- 5. The host app restarts Capture sign-in based on the value of the `-[NSError JRMergeFlowExistingProvider]`, and
-    `-[NSError JRMergeToken]` class category messages.
+ 5. The user elects to take action
+ 6. the merge sign-in is started by invoking either
+    `+[JRCapture startEngageSigninDialogOnProvider:withCustomInterfaceOverrides:mergeToken:forDelegate:]` or
+    `+[JRCapture startCaptureConventionalSigninForUser:withPassword:withSigninType:mergeToken:forDelegate:]` depending
+    on the existing identity provider for the record.
+
+    The existing identity provider of the record is retrieved with the `-[NSError JRMergeFlowExistingProvider]` message,
+    and the merge token with the `-[NSError JRMergeToken]` message.
 
 Example: 
 
@@ -396,12 +405,12 @@ When your application terminates, you should save your active user record to loc
     
     - (void)applicationWillTerminate:(UIApplication *)application
     {
-      // Store the Capture user record for use when your app restarts;
-      // JRCaptureUser objects conform to NSCoding so you can serialize them with the
-      // rest of your app state
-      NSUserDefaults *myPreferences = [NSUserDefaults standardUserDefaults];
-      [myPreferences setObject:[NSKeyedArchiver archivedDataWithRootObject:captureUser]
-                        forKey:cJRCaptureUser];
+        // Store the Capture user record for use when your app restarts;
+        // JRCaptureUser objects conform to NSCoding so you can serialize them with the
+        // rest of your app state
+        NSUserDefaults *myPreferences = [NSUserDefaults standardUserDefaults];
+        [myPreferences setObject:[NSKeyedArchiver archivedDataWithRootObject:captureUser]
+                          forKey:cJRCaptureUser];
     }
 
 Likewise, load the saved user record state when your application launches. For example, from the
@@ -410,9 +419,9 @@ Likewise, load the saved user record state when your application launches. For e
     - (BOOL)          application:(UIApplication *)application
     didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     {
-      NSUserDefaults *myPreferences = [NSUserDefaults standardUserDefaults];
-      NSData *encodedUser = [myPreferences objectForKey:cJRCaptureUser];
-      self.captureUser = [NSKeyedUnarchiver unarchiveObjectWithData:encodedUser];
+        NSUserDefaults *myPreferences = [NSUserDefaults standardUserDefaults];
+        NSData *encodedUser = [myPreferences objectForKey:cJRCaptureUser];
+        self.captureUser = [NSKeyedUnarchiver unarchiveObjectWithData:encodedUser];
     }
 
 **Note**: While your application is responsible for saving and restoring the user record, the Capture library will
