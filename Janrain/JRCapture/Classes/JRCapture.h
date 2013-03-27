@@ -384,11 +384,11 @@ typedef enum
  * @param captureTraditionalSignInType
  *   The type of traditional sign-in your end-users will sign-in with.
  **/
-+ (void)      setEngageAppId:(NSString *)engageAppId captureDomain:(NSString *)captureDomain
-             captureClientId:(NSString *)clientId captureLocale:(NSString *)captureLocale
-             captureFlowName:(NSString *)captureFlowName
-             captureFormName:(NSString *)captureFormName
-captureTraditionalSignInType:(JRConventionalSigninType)captureTraditionalSignInType;
++ (void)       setEngageAppId:(NSString *)engageAppId captureDomain:(NSString *)captureDomain
+              captureClientId:(NSString *)clientId captureLocale:(NSString *)captureLocale
+              captureFlowName:(NSString *)captureFlowName captureFormName:(NSString *)captureFormName
+captureEnableThinRegistration:(BOOL)enableThinRegistration
+ captureTraditionalSignInType:(JRConventionalSigninType)captureTraditionalSignInType;
 
 + (void)clearSignInState;
 

@@ -42,7 +42,7 @@
  * Capture server or fetching the remote JRCaptureUser from the Capture server
  **/
 @protocol JRCaptureUserDelegate <JRCaptureObjectDelegate>
-
+@optional
 /**
  * Sent if a call to JRCaptureUser#fetchCaptureUserFromServerForDelegate:context:() succeeded
  *

@@ -76,7 +76,7 @@ typedef enum
 @property(nonatomic, retain) NSString *captureFormName;
 @property(nonatomic, retain) NSString *captureFlowName;
 @property(nonatomic) JRConventionalSigninType captureTradSignInType;
-
+@property(nonatomic) BOOL captureEnableThinRegistration;
 
 @end
 
@@ -157,12 +157,13 @@ static JRCaptureData *singleton = nil;
 
     JRCaptureData *captureData = [JRCaptureData sharedCaptureData];
     NSString *redirectUri = [singleton redirectUri];
+    NSString *thinReg = [JRCaptureData sharedCaptureData].captureEnableThinRegistration ? @"true" : @"false";
     NSMutableDictionary *urlArgs = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                                                 captureData.clientId, @"client_id",
                                                                 captureData.captureLocale, @"locale",
                                                                 @"token", @"response_type",
                                                                 redirectUri, @"redirect_uri",
-                                                                @"true", @"thin_registration",
+                                                                thinReg, @"thin_registration",
                                                                 nil];
 
     if (captureData.captureFlowName) [urlArgs setObject:captureData.captureFlowName forKey:@"flow_name"];
@@ -178,10 +179,10 @@ static JRCaptureData *singleton = nil;
     return [NSString stringWithFormat:@"%@/cmeu", singleton.captureBaseUrl];
 }
 
-+ (void)    setCaptureDomain:(NSString *)captureDomain captureClientId:(NSString *)clientId
-               captureLocale:(NSString *)captureLocale captureFormName:(NSString *)captureFormName
-             captureFlowName:(NSString *)captureFlowName
-captureTraditionalSignInType:(JRConventionalSigninType) tradSignInType;
++ (void)     setCaptureDomain:(NSString *)captureDomain captureClientId:(NSString *)clientId
+                captureLocale:(NSString *)captureLocale captureFormName:(NSString *)captureFormName
+              captureFlowName:(NSString *)captureFlowName captureEnableThinRegistration:(BOOL)enableThinRegistration
+ captureTraditionalSignInType:(JRConventionalSigninType) tradSignInType;
 {
     JRCaptureData *captureDataInstance = [JRCaptureData sharedCaptureData];
 
@@ -190,6 +191,7 @@ captureTraditionalSignInType:(JRConventionalSigninType) tradSignInType;
     captureDataInstance.captureLocale = captureLocale;
     captureDataInstance.captureFormName = captureFormName;
     captureDataInstance.captureFlowName = captureFlowName;
+    captureDataInstance.captureEnableThinRegistration = enableThinRegistration;
     captureDataInstance.captureTradSignInType = tradSignInType;
 }
 

@@ -48,10 +48,10 @@
 + (void)setAccessToken:(NSString *)newAccessToken;
 + (void)setCreationToken:(NSString *)newCreationToken;
 
-+ (void)    setCaptureDomain:(NSString *)captureDomain captureClientId:(NSString *)clientId
-               captureLocale:(NSString *)captureLocale captureFormName:(NSString *)captureFormName
-             captureFlowName:(NSString *)captureFlowName
-captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType;
++ (void)     setCaptureDomain:(NSString *)captureDomain captureClientId:(NSString *)clientId
+                captureLocale:(NSString *)captureLocale captureFormName:(NSString *)captureFormName
+              captureFlowName:(NSString *)captureFlowName captureEnableThinRegistration:(BOOL)enableThinRegistration
+ captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType;
 
 + (NSString *)captureMobileEndpointUrlWithMergeToken:(NSString *)mergeToken;
 

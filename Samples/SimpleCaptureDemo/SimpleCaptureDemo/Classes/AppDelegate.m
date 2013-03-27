@@ -36,6 +36,9 @@
 AppDelegate *appDelegate = nil;
 
 @implementation AppDelegate
+{
+    BOOL captureEnableThinRegistration;
+}
 
 @synthesize window;
 @synthesize prefs;
@@ -63,6 +66,8 @@ AppDelegate *appDelegate = nil;
 @synthesize isNotYetCreated;
 @synthesize engageSignInWasCanceled;
 
+@synthesize captureEnableThinRegistration;
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     appDelegate = self;
@@ -71,6 +76,7 @@ AppDelegate *appDelegate = nil;
     [JRCapture setEngageAppId:engageAppId captureDomain:captureDomain
               captureClientId:captureClientId captureLocale:captureLocale
               captureFlowName:captureFlowName captureFormName:captureFormName
+captureEnableThinRegistration:captureEnableThinRegistration
  captureTraditionalSignInType:JRConventionalSigninEmailPassword];
 
     [BackplaneUtils asyncFetchNewBackplaneChannelWithBus:bpBusUrlString
@@ -88,7 +94,7 @@ AppDelegate *appDelegate = nil;
 
     self.prefs = [NSUserDefaults standardUserDefaults];
 
-    self.currentProvider  = [self.prefs objectForKey:cJRCurrentProvider];
+    self.currentProvider = [self.prefs objectForKey:cJRCurrentProvider];
 
     NSData *archivedCaptureUser = [self.prefs objectForKey:cJRCaptureUser];
     if (archivedCaptureUser)
@@ -146,6 +152,8 @@ AppDelegate *appDelegate = nil;
     self.captureLocale = [cfg objectForKey:@"captureLocale"];
     self.captureFormName = [cfg objectForKey:@"captureFormName"];
     self.captureFlowName = [cfg objectForKey:@"captureFlowName"];
+    self.captureEnableThinRegistration = [cfg objectForKey:@"captureEnableThinRegistration"] ?
+            [[cfg objectForKey:@"captureEnableThinRegistration"] boolValue] : YES;
     self.engageAppId = [cfg objectForKey:@"engageAppId"];
     self.bpBusUrlString = [cfg objectForKey:@"bpBusUrlString"];
     self.bpChannelUrl = [cfg objectForKey:@"bpChannelUrl"];

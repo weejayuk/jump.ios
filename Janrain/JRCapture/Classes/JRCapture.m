@@ -48,13 +48,14 @@
 
 + (void)      setEngageAppId:(NSString *)engageAppId captureDomain:(NSString *)captureDomain
              captureClientId:(NSString *)clientId captureLocale:(NSString *)captureLocale
-             captureFlowName:(NSString *)captureFlowName
-             captureFormName:(NSString *)captureFormName
+             captureFlowName:(NSString *)captureFlowName captureFormName:(NSString *)captureFormName
+captureEnableThinRegistration:(BOOL)enableThinRegistration
 captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType
 {
     [JRCaptureData setCaptureDomain:captureDomain captureClientId:clientId
                       captureLocale:captureLocale captureFormName:captureFormName
                     captureFlowName:captureFlowName
+      captureEnableThinRegistration:enableThinRegistration
        captureTraditionalSignInType:tradSignInType];
     [JREngageWrapper configureEngageWithCaptureMobileEndpointUrlAndAppId:engageAppId];
 }

@@ -54,12 +54,14 @@ AppDelegate *appDelegate;
 @property(nonatomic, strong) NSString *captureLocale;
 @property(nonatomic, strong) NSString *captureFlowName;
 @property(nonatomic, strong) NSString *captureFormName;
+@property(nonatomic) BOOL captureEnableThinRegistration;
 @property(nonatomic, strong) NSString *engageAppId;
 @property(nonatomic, strong) NSString *bpBusUrlString;
 @property(nonatomic, strong) NSString *bpChannelUrl;
 @property(nonatomic, strong) NSString *liveFyreNetwork;
 @property(nonatomic, strong) NSString *liveFyreSiteId;
 @property(nonatomic, strong) NSString *liveFyreArticleId;
+
 
 - (void)saveCaptureUser;
 @end
