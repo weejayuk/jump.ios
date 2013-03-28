@@ -115,34 +115,8 @@
 
 - (IBAction)thirdButtonPressed:(id)sender
 {
-    //UIViewController *testModal = [[UIViewController alloc] initWithNibName:nil bundle:nil];
-    //testModal.view = ([[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)]);
-    //testModal.view.backgroundColor = [UIColor redColor];
-    //
-    //UIButton *testButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    ////[testButton addTarget:self action:@selector(signInButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    //[testButton addTarget:self action:@selector(customNavTest) forControlEvents:UIControlEventTouchUpInside];
-    //[testButton setTitle:@"Show View" forState:UIControlStateNormal];
-    //testButton.frame = CGRectMake(80.0, 210.0, 160.0, 40.0);
-    //[testModal.view addSubview:testButton];
-    //
-    //testModal.modalPresentationStyle = UIModalPresentationFormSheet;
-    //[self presentModalViewController:testModal animated:YES];
+    [self showRegistrationForm];
 }
-
-//- (void)customNavTest
-//{
-//    UINavigationController * customNavController = [[UINavigationController alloc] init];
-//
-//    [customNavController setValue:[[UINavigationBar alloc] init] forKeyPath:@"navigationBar"];
-//
-//    NSMutableDictionary * interfaceOverrides = [[NSMutableDictionary alloc] init];
-//
-//    [interfaceOverrides setValue:customNavController forKey:kJRCustomModalNavigationController];
-//
-//    [JRCapture startEngageSigninDialogOnProvider:@"facebook" withCustomInterfaceOverrides:interfaceOverrides
-//                                     forDelegate:[SharedData sharedData]];
-//}
 
 - (IBAction)signInButtonPressed:(id)sender
 {
@@ -251,8 +225,7 @@
             @"" : [NSString stringWithFormat:@"It is associated with your %@ account. ", existingAccountProvider];
 
     NSString *message = [NSString stringWithFormat:@"There is already %@ account with that email address. %@ Tap "
-                                                           "'Merge' to sign-in with that account, and link the "
-                                                           "two.",
+                                                           "'Merge' to sign-in with that account, and link the two.",
                                                    captureAccountBrandPhrase,
                                                    existingAccountProviderPhrase];
 
@@ -265,7 +238,7 @@
 
 - (void)handleTwoStepRegFlowError:(NSError *)error
 {
-    showRegistrationScreen
+    [self showRegistrationForm];
     appDelegate.isNotYetCreated = YES;
 }
 
@@ -280,7 +253,6 @@
     appDelegate.currentProvider  = nil;
     appDelegate.captureUser      = nil;
 
-    appDelegate.isNew         = NO;
     appDelegate.isNotYetCreated = NO;
 
     [appDelegate.prefs setObject:nil forKey:cJRCurrentProvider];
@@ -355,28 +327,27 @@
     DLog(@"");
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 
-    if (captureRecordStatus == JRCaptureRecordNewlyCreated)
-        appDelegate.isNew = YES;
-    else
-        appDelegate.isNew = NO;
-
     appDelegate.captureUser = newCaptureUser;
-
     [appDelegate.prefs setObject:[NSKeyedArchiver archivedDataWithRootObject:appDelegate.captureUser]
                           forKey:cJRCaptureUser];
 
     [self configureButtons];
     [self configureUserLabelAndIcon];
 
-    if (appDelegate.isNotYetCreated || appDelegate.isNew)
+    if (captureRecordStatus == JRCaptureRecordNewlyCreated)
     {
-        CaptureProfileViewController *viewController = [[CaptureProfileViewController alloc]
-            initWithNibName:@"CaptureProfileViewController" bundle:[NSBundle mainBundle]];
-
-        [self.navigationController pushViewController:viewController animated:YES];
+        [self showRegistrationForm];
     }
 
     appDelegate.engageSignInWasCanceled = NO;
+}
+
+- (void)showRegistrationForm
+{
+    CaptureProfileViewController *viewController = [[CaptureProfileViewController alloc]
+            initWithNibName:@"CaptureProfileViewController" bundle:[NSBundle mainBundle]];
+
+    [self.navigationController pushViewController:viewController animated:YES];
 }
 
 @end

@@ -31,19 +31,16 @@
  Date:   Thursday, January 26, 2012
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-
+#import "debug_log.h"
 #import "JRCaptureObject.h"
 #import "JRCaptureUser+Extras.h"
 #import "CaptureProfileViewController.h"
-#import "BackplaneUtils.h"
-
-#include "debug_log.h"
 #import "AppDelegate.h"
+#import "JRCapture.h"
 
 @interface CaptureProfileViewController ()
-@property (nonatomic, retain) id             firstResponder;
-@property (nonatomic, retain) NSDate        *myBirthdate;
-@property (nonatomic, strong) JRCaptureUser *captureUser;
+@property(nonatomic, retain) id firstResponder;
+@property(nonatomic, retain) NSDate *myBirthdate;
 @end
 
 @implementation CaptureProfileViewController
@@ -55,7 +52,6 @@
 @synthesize myKeyboardToolbar;
 @synthesize firstResponder;
 @synthesize myBirthdate;
-@synthesize captureUser;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -64,8 +60,6 @@
     return self;
 }
 
-#pragma mark - View lifecycle
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -73,19 +67,17 @@
     [myAboutMeTextView setInputAccessoryView:myKeyboardToolbar];
     [myEmailTextField setInputAccessoryView:myKeyboardToolbar];
 
-    self.captureUser = appDelegate.captureUser;
-
-    if (captureUser.email)
-        myEmailTextField.text  = captureUser.email;
-    if (captureUser.aboutMe)
-        myAboutMeTextView.text = captureUser.aboutMe;
-    if ([[captureUser.gender lowercaseString] isEqualToString:[@"F" lowercaseString]] ||
-        [[captureUser.gender lowercaseString] isEqualToString:[@"female" lowercaseString]] ||
-        [[captureUser.gender lowercaseString] isEqualToString:[@"girl" lowercaseString]] ||
-        [[captureUser.gender lowercaseString] isEqualToString:[@"woman" lowercaseString]]) /* Blah, blah, loose test... */
+    if (appDelegate.captureUser.email)
+        myEmailTextField.text  = appDelegate.captureUser.email;
+    if (appDelegate.captureUser.aboutMe)
+        myAboutMeTextView.text = appDelegate.captureUser.aboutMe;
+    if ([[appDelegate.captureUser.gender lowercaseString] isEqualToString:[@"F" lowercaseString]] ||
+        [[appDelegate.captureUser.gender lowercaseString] isEqualToString:[@"female" lowercaseString]] ||
+        [[appDelegate.captureUser.gender lowercaseString] isEqualToString:[@"girl" lowercaseString]] ||
+        [[appDelegate.captureUser.gender lowercaseString] isEqualToString:[@"woman" lowercaseString]])
         [myGenderIdentitySegControl setSelectedSegmentIndex:0];
-    if (captureUser.birthday)
-        [myDatePicker setDate:captureUser.birthday];
+    if (appDelegate.captureUser.birthday)
+        [myDatePicker setDate:appDelegate.captureUser.birthday];
 }
 
 - (void)scrollUpBy:(NSInteger)scrollOffset
@@ -122,16 +114,13 @@
     DLog(@"");
     [myBirthdayButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 
-    static NSDateFormatter *dateFormatter = nil;
-    if (!dateFormatter)
-    {
-        dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"]];
-        [dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
-        [dateFormatter setDateFormat:@"MM/dd/yyyy"];
-    }
+    NSDateFormatter *dateFormatter = nil;
+    dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"]];
+    [dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+    [dateFormatter setDateFormat:@"MM/dd/yyyy"];
 
-    NSDate   *pickerDate = myDatePicker.date;
+    NSDate *pickerDate = myDatePicker.date;
     NSString *dateString = [dateFormatter stringFromDate:pickerDate];
 
     [myBirthdayButton setTitle:dateString forState:UIControlStateNormal];
@@ -147,19 +136,23 @@
 
 - (IBAction)doneButtonPressed:(id)sender
 {
-    captureUser.aboutMe  = myAboutMeTextView.text;
-    captureUser.birthday = myBirthdate;
-    captureUser.email    = myEmailTextField.text;
+    appDelegate.captureUser.aboutMe  = myAboutMeTextView.text;
+    appDelegate.captureUser.birthday = myBirthdate;
+    appDelegate.captureUser.email    = myEmailTextField.text;
 
     if (myGenderIdentitySegControl.selectedSegmentIndex == 0)
-        captureUser.gender = @"female";
+        appDelegate.captureUser.gender = @"female";
     else if (myGenderIdentitySegControl.selectedSegmentIndex == 1)
-        captureUser.gender = @"male";
+        appDelegate.captureUser.gender = @"male";
 
-    //if ([SharedData sharedData].isNotYetCreated)
-    //    [captureUser createOnCaptureForDelegate:self context:nil];
-    //else
-        [captureUser updateOnCaptureForDelegate:self context:nil];
+    if (appDelegate.isNotYetCreated)
+    {
+        [JRCapture registerNewUser:appDelegate.captureUser context:nil];
+    }
+    else
+    {
+        [appDelegate.captureUser updateOnCaptureForDelegate:self context:nil];
+    }
 }
 
 #define ABOUT_ME_TEXT_VIEW_TAG 20
@@ -183,7 +176,10 @@
     [self scrollBack];
 }
 
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text { return YES; }
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    return YES;
+}
 - (void)textViewDidChange:(UITextView *)textView { }
 - (void)textViewDidChangeSelection:(UITextView *)textView { }
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView { return YES; }
@@ -211,20 +207,6 @@
                                            cancelButtonTitle:@"Dismiss"
                                            otherButtonTitles:nil];
     [alert show];
-
-//    [self.navigationController popViewControllerAnimated:YES];
-//
-//    [SharedData saveCaptureUser];
-}
-
-- (void)createDidSucceedForUser:(JRCaptureUser *)user context:(NSObject *)context
-{
-    [self handleSuccessWithMessage:@"Profile created"];
-}
-
-- (void)createDidFailForUser:(JRCaptureUser *)user withError:(NSError *)error context:(NSObject *)context
-{
-    [self handleFailureWithMessage:@"Profile not created"];
 }
 
 - (void)updateDidSucceedForObject:(JRCaptureObject *)object context:(NSObject *)context

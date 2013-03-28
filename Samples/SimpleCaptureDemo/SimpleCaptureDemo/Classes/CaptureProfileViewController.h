@@ -36,13 +36,7 @@
 #import "PickerViewController.h"
 
 @interface CaptureProfileViewController : PickerViewController <UITextViewDelegate, UIAlertViewDelegate,
-                                                            JRCaptureUserDelegate, UITextFieldDelegate>
-{
-    UIScrollView *myScrollView;
-
-    NSDate       *myBirthdate;
-    UIButton     *myBirthdayButton;
-}
+        JRCaptureUserDelegate, UITextFieldDelegate>
 @property (nonatomic, retain) IBOutlet UITextField        *myEmailTextField;
 @property (nonatomic, retain) IBOutlet UISegmentedControl *myGenderIdentitySegControl;
 @property (nonatomic, retain) IBOutlet UIButton           *myBirthdayButton;

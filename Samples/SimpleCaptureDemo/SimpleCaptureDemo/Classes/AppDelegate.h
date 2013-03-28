@@ -44,7 +44,6 @@ AppDelegate *appDelegate;
 
 @property(strong) NSUserDefaults *prefs;
 @property(strong) JRCaptureUser *captureUser;
-@property BOOL isNew;
 @property BOOL isNotYetCreated;
 @property(strong) NSString *currentProvider;
 @property BOOL engageSignInWasCanceled;

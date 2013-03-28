@@ -62,7 +62,6 @@ AppDelegate *appDelegate = nil;
 
 // Demo state machine stuff:
 @synthesize currentProvider;
-@synthesize isNew;
 @synthesize isNotYetCreated;
 @synthesize engageSignInWasCanceled;
 

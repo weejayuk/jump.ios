@@ -146,6 +146,11 @@ captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType
                                              forDelegate:delegate];
 }
 
++ (void)registerNewUser:(JRCaptureUser *)newUser forDelegate:(id <JRCaptureSigninDelegate>)delegate
+                context:(void *)context
+{
+}
+
 + (void)startCaptureConventionalSigninForUser:(NSString *)user withPassword:(NSString *)password
                                withSigninType:(JRConventionalSigninType)conventionalSignInType
                                    mergeToken:(NSString *)mergeToken forDelegate:(id <JRCaptureSigninDelegate>)delegate
