@@ -97,11 +97,10 @@
 - (IBAction)browseButtonPressed:(id)sender
 {
     ObjectDrillDownViewController *drillDown =
-        [[ObjectDrillDownViewController alloc] initWithNibName:@"ObjectDrillDownViewController"
-                                                        bundle:[NSBundle mainBundle]
-                                                     forObject:appDelegate.captureUser
-                                           captureParentObject:nil
-                                                        andKey:@"CaptureUser"];
+            [[ObjectDrillDownViewController alloc] initWithNibName:@"ObjectDrillDownViewController"
+                                                            bundle:[NSBundle mainBundle]
+                                                         forObject:appDelegate.captureUser
+                                               captureParentObject:nil andKey:@"CaptureUser"];
 
     [[self navigationController] pushViewController:drillDown animated:YES];
 }
@@ -179,20 +178,6 @@
     currentUserProviderIcon.image = [UIImage imageNamed:icon];
 }
 
-- (void)captureSignInDidSucceed
-{
-    [self configureButtons];
-    [self configureUserLabelAndIcon];
-
-    if (appDelegate.isNotYetCreated || appDelegate.isNew)
-    {
-        CaptureProfileViewController *viewController = [[CaptureProfileViewController alloc]
-            initWithNibName:@"CaptureProfileViewController" bundle:[NSBundle mainBundle]];
-
-        [self.navigationController pushViewController:viewController animated:YES];
-    }
-}
-
 - (void)engageSignInDidFailWithError:(NSError *)error
 {
     DLog(@"error: %@", [error description]);
@@ -202,28 +187,6 @@
                                               cancelButtonTitle:@"Dismiss"
                                               otherButtonTitles:nil];
     [alertView show];
-}
-
-- (void)captureSignInDidFailWithError:(NSError *)error
-{
-    if ([error code] == JRCaptureErrorGenericBadPassword)
-    {
-        [self handleBadPasswordError];
-    }
-    else if ([error isJRMergeFlowError])
-    {
-        [self handleMergeFlowError:error];
-    }
-    else
-    {
-        DLog(@"error: %@", [error description]);
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                            message:[error description]
-                                                           delegate:nil
-                                                  cancelButtonTitle:@"Dismiss"
-                                                  otherButtonTitles:nil];
-        [alertView show];
-    }
 }
 
 - (void)handleBadPasswordError
@@ -300,13 +263,17 @@
                               otherButtonTitles:@"Merge", nil] show];
 }
 
+- (void)handleTwoStepRegFlowError:(NSError *)error
+{
+    showRegistrationScreen
+    appDelegate.isNotYetCreated = YES;
+}
 
 - (void)viewDidUnload
 {
     [self setShareWidgetButton:nil];
     [super viewDidUnload];
 }
-
 
 - (void)signOutCurrentUser
 {
@@ -348,11 +315,30 @@
 - (void)captureAuthenticationDidFailWithError:(NSError *)error
 {
     DLog(@"error: %@", [error description]);
-    [self captureSignInDidFailWithError:error];
+    if ([error code] == JRCaptureErrorGenericBadPassword)
+    {
+        [self handleBadPasswordError];
+    }
+    else if ([error isJRMergeFlowError])
+    {
+        [self handleMergeFlowError:error];
+    }
+    else if ([error isJRTwoStepRegFlowError])
+    {
+        [self handleTwoStepRegFlowError:error];
+    }
+    else
+    {
+        DLog(@"error: %@", [error description]);
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                            message:[error description]
+                                                           delegate:nil cancelButtonTitle:@"Dismiss"
+                                                  otherButtonTitles:nil];
+        [alertView show];
+    }
 }
 
-- (void)engageSigninDidSucceedForUser:(NSDictionary *)engageAuthInfo
-                          forProvider:(NSString *)provider
+- (void)engageSigninDidSucceedForUser:(NSDictionary *)engageAuthInfo forProvider:(NSString *)provider
 {
     appDelegate.currentProvider = provider;
     [appDelegate.prefs setObject:appDelegate.currentProvider forKey:cJRCurrentProvider];
@@ -374,20 +360,23 @@
     else
         appDelegate.isNew = NO;
 
-    if (captureRecordStatus == JRCaptureRecordRequiresCreation)
-        appDelegate.isNotYetCreated = YES;
-    else
-        appDelegate.isNotYetCreated = NO;
-
     appDelegate.captureUser = newCaptureUser;
 
     [appDelegate.prefs setObject:[NSKeyedArchiver archivedDataWithRootObject:appDelegate.captureUser]
-                     forKey:cJRCaptureUser];
+                          forKey:cJRCaptureUser];
 
-    [self captureSignInDidSucceed];
+    [self configureButtons];
+    [self configureUserLabelAndIcon];
+
+    if (appDelegate.isNotYetCreated || appDelegate.isNew)
+    {
+        CaptureProfileViewController *viewController = [[CaptureProfileViewController alloc]
+            initWithNibName:@"CaptureProfileViewController" bundle:[NSBundle mainBundle]];
+
+        [self.navigationController pushViewController:viewController animated:YES];
+    }
 
     appDelegate.engageSignInWasCanceled = NO;
 }
-
 
 @end

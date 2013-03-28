@@ -156,6 +156,7 @@ typedef enum
 
 @interface NSError (JRCaptureError_Extensions)
 - (BOOL)isJRMergeFlowError;
+- (BOOL)isJRTwoStepRegFlowError;
 - (NSString *)JRMergeFlowConflictedProvider;
 - (NSString *)JRMergeFlowExistingProvider;
 - (NSString *)JRMergeToken;

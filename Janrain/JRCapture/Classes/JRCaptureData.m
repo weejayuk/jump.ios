@@ -163,7 +163,7 @@ static JRCaptureData *singleton = nil;
                                                                 captureData.captureLocale, @"locale",
                                                                 @"token", @"response_type",
                                                                 redirectUri, @"redirect_uri",
-                                                                thinReg, @"thin_registration",
+                                                                //thinReg, @"thin_registration",
                                                                 nil];
 
     if (captureData.captureFlowName) [urlArgs setObject:captureData.captureFlowName forKey:@"flow_name"];

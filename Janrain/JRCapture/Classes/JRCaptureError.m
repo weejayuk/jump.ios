@@ -68,6 +68,11 @@ NSString *const kJRCaptureErrorDomain = @"JRCapture.ErrorDomain";
     return self.code == 3380;
 }
 
+- (BOOL)isTwoStepRegFlowError
+{
+    return self.code == 3310;
+}
+
 - (NSString *)existingProvider
 {
     return [self.userInfo objectForKey:@"existing_provider"];
@@ -101,7 +106,9 @@ NSString *const kJRCaptureErrorDomain = @"JRCapture.ErrorDomain";
                                                    description, NSLocalizedFailureReasonErrorKey, nil];
 
     for (NSString *key in [extraFields allKeys])
+    {
         [userInfo setObject:[extraFields objectForKey:key] forKey:key];
+    }
 
     return [[[JRCaptureError alloc] initWithDomain:kJRCaptureErrorDomain code:code
                                           userInfo:[NSDictionary dictionaryWithDictionary:userInfo]
@@ -283,6 +290,11 @@ NSString *const kJRCaptureErrorDomain = @"JRCapture.ErrorDomain";
 - (BOOL)isJRMergeFlowError
 {
     return [self isKindOfClass:[JRCaptureError class]] && [((JRCaptureError *) self) isMergeFlowError];
+}
+
+- (BOOL)isJRTwoStepRegFlowError
+{
+    return [self isKindOfClass:[JRCaptureError class]] && [((JRCaptureError *) self) isTwoStepRegFlowError];
 }
 
 - (NSString *)JRMergeFlowConflictedProvider

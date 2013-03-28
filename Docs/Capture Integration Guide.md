@@ -225,9 +225,9 @@ Capture SDK time-line for Merge Account Flow:
     The existing identity provider of the record is retrieved with the `-[NSError JRMergeFlowExistingProvider]` message,
     and the merge token with the `-[NSError JRMergeToken]` message.
 
-Example: 
+Example:
 
-    - (void)captureSignInDidFailWithError:(NSError *)error
+    - (void)captureAuthenticationDidFailWithError:(NSError *)error
     {
         if ([error code] == JRCaptureErrorGenericBadPassword)
         {
