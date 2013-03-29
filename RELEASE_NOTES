@@ -11,7 +11,6 @@ v2.5.2
  - Custom UINavigationController bug fix 
 v2.5.1
  - Adds PhoneGap 2.3.0 test project
->>>>>>> jumpios-master
 v2.5.0
  - Fixes major modal dialog presentation on iPad bug
   - Now follows presentedViewController chain down from .rootViewController and presents from the end
