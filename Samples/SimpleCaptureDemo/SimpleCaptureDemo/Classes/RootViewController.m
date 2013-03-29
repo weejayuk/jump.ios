@@ -70,14 +70,9 @@
     [self configureButtons];
 }
 
-- (BOOL)isUserSignedIn
-{
-    return appDelegate.captureUser != nil;
-}
-
 - (void)configureButtons
 {
-    if ([self isUserSignedIn])
+    if (appDelegate.captureUser)
     {
         signInButton.hidden = YES;
         signOutButton.hidden = NO;
@@ -121,15 +116,29 @@
     //testModal.view.backgroundColor = [UIColor redColor];
     //
     //UIButton *testButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    //[testButton addTarget:self action:@selector(signInButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    ////[testButton addTarget:self action:@selector(signInButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    //[testButton addTarget:self action:@selector(customNavTest) forControlEvents:UIControlEventTouchUpInside];
     //[testButton setTitle:@"Show View" forState:UIControlStateNormal];
     //testButton.frame = CGRectMake(80.0, 210.0, 160.0, 40.0);
     //[testModal.view addSubview:testButton];
     //
     //testModal.modalPresentationStyle = UIModalPresentationFormSheet;
     //[self presentModalViewController:testModal animated:YES];
-    ////[self presentViewController:testModal animated:YES completion:nil];
 }
+
+//- (void)customNavTest
+//{
+//    UINavigationController * customNavController = [[UINavigationController alloc] init];
+//
+//    [customNavController setValue:[[UINavigationBar alloc] init] forKeyPath:@"navigationBar"];
+//
+//    NSMutableDictionary * interfaceOverrides = [[NSMutableDictionary alloc] init];
+//
+//    [interfaceOverrides setValue:customNavController forKey:kJRCustomModalNavigationController];
+//
+//    [JRCapture startEngageSigninDialogOnProvider:@"facebook" withCustomInterfaceOverrides:interfaceOverrides
+//                                     forDelegate:[SharedData sharedData]];
+//}
 
 - (IBAction)signInButtonPressed:(id)sender
 {

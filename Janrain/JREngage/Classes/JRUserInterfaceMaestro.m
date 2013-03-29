@@ -212,7 +212,7 @@ static NSString *describeCATransform3D(CATransform3D *t)
 }
 @end
 
-// Provides a hand-made cover-vertical mimic animation to accomodate for iOS6 breaking the animation of the FormSheet
+// Provides a hand-made cover-vertical mimic animation to accommodate for iOS6 breaking the animation of the FormSheet
 // size hacks
 // Also forwards appearance and rotation events for iOS 4 iPads
 @interface CustomAnimationController : UIViewController
@@ -996,6 +996,11 @@ static JRUserInterfaceMaestro* singleton = nil;
     if (usingCustomNav)
     {
         jrModalViewController.myNavigationController = customModalNavigationController;
+        jrModalViewController.myNavigationController.navigationBar.clipsToBounds = YES;
+        jrModalViewController.myNavigationController.view.autoresizingMask =
+                UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin
+                | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+        jrModalViewController.myNavigationController.view.bounds = CGRectMake(0, 0, 320, 460);
         [jrModalViewController.myNavigationController pushViewController:rootViewController animated:NO];
     }
     else
@@ -1225,5 +1230,11 @@ static JRUserInterfaceMaestro* singleton = nil;
 - (JRModalViewController *)getJrModalViewController
 {
     return jrModalViewController;
+}
+
+- (void)dealloc
+{
+    [delegates release];
+    [super dealloc];
 }
 @end

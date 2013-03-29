@@ -1,8 +1,16 @@
 v3.0.0
- - Removes deprecated JRCaptureRecordMissingRequiredFields enum value of JRCaptureRecordstatus
-   (See the replacement, JRCaptureRecordRequiresCreation)
  - Removes old JRCapture+setEngageAppId... signature in favor of new configuration signature
    covering new configuration parameters
+ - Adds merge flow support
+  - See developers.janrain.com Capture for iOS integration guide for usage
+ - Uses new Capture flow-config-enabled endpoints
+ - Removes legacy two-step social reg
+ - Paves the way for new two-step social reg, trad reg
+v2.5.2
+ - Internal project file cleanup
+ - Custom UINavigationController bug fix 
+v2.5.1
+ - Adds PhoneGap 2.3.0 test project
 v2.5.0
  - Fixes major modal dialog presentation on iPad bug
   - Now follows presentedViewController chain down from .rootViewController and presents from the end
