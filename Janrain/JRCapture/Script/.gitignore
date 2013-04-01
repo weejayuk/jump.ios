@@ -1,1 +1,3 @@
 *.json
+!simple_capture_demo_schema.json
+
