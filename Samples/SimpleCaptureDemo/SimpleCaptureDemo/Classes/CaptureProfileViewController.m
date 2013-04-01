@@ -77,15 +77,27 @@
 
     if (captureUser.email)
         myEmailTextField.text  = captureUser.email;
+
     if (captureUser.aboutMe)
         myAboutMeTextView.text = captureUser.aboutMe;
+
     if ([[captureUser.gender lowercaseString] isEqualToString:[@"F" lowercaseString]] ||
         [[captureUser.gender lowercaseString] isEqualToString:[@"female" lowercaseString]] ||
         [[captureUser.gender lowercaseString] isEqualToString:[@"girl" lowercaseString]] ||
         [[captureUser.gender lowercaseString] isEqualToString:[@"woman" lowercaseString]]) /* Blah, blah, loose test... */
+    {
         [myGenderIdentitySegControl setSelectedSegmentIndex:0];
+    }
+    else
+    {
+        [myGenderIdentitySegControl setSelectedSegmentIndex:1];
+    }
+
     if (captureUser.birthday)
+    {
         [myDatePicker setDate:captureUser.birthday];
+        [self pickerChanged];
+    }
 }
 
 - (void)scrollUpBy:(NSInteger)scrollOffset
