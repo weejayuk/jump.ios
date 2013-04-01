@@ -1,3 +1,7 @@
+v3.0.1
+ - Regenerates SCD user model for new schema
+ - Updated SCD schema to modern default schema to accomodate existing native flow config file
+ - This resolves misidentified bug in merge flow
 v3.0.0
  - Removes old JRCapture+setEngageAppId... signature in favor of new configuration signature
    covering new configuration parameters

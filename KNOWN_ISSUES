@@ -1,3 +1,2 @@
 - 3/29/2013 There is a back-end bug affecting sign-in for social identities which don't include an email and/or verified email field
-- 3/29/2013 There is a back-end bug affecting the merge account flow
 
