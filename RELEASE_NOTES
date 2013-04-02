@@ -1,3 +1,5 @@
+v3.0.4
+ - Removes internal error string from the built-in traditional sign-in UI
 v3.0.3
  - Updates Capture model generation script to auto-include reserved attrs
 v3.0.2
