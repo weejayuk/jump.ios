@@ -1,3 +1,5 @@
+v3.0.2
+ - Fixes for the display bugs in the example Capture "form" in SimpleCaptureDemo
 v3.0.1
  - Regenerates SCD user model for new schema
  - Updated SCD schema to modern default schema to accomodate existing native flow config file
