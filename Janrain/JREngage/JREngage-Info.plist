@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleShortVersionString</key>
-	<string>v3.0.2-3-g13dc38d</string>
+	<string>v3.0.2-4-g74b1408</string>
 	<key>JREngage.GitCommit</key>
-	<string>v3.0.2-3-g13dc38d</string>
+	<string>v3.0.2-4-g74b1408</string>
 	<key>JREngage.CustomInterface</key>
 	<dict>
 		<key>DefaultValues</key>
