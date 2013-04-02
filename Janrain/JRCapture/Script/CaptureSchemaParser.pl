@@ -44,7 +44,7 @@ require './ObjCMethodParts.pl';
 sub openSchemaNamed {
   my $name = $_[0];
 
-  open(FH, "$name") or getCaptureSchema(1, $name);
+  open(FH, "$name") or usage("[ERROR] Could not open schema $name for reading");
 
   return join("", <FH>);
 }
@@ -52,6 +52,7 @@ sub openSchemaNamed {
 sub usage {
   print "Usage:\n";
   print "CaptureSchemaParser.pl -f path/to/schema.json -o path/to/output/directory\n";
+  die $_[0];
 }
 
 ########################################################################
@@ -63,12 +64,13 @@ our ($opt_f);
 getopt('fo');
 my $schemaName = $opt_f;
 my $schema = "";
+my $reserved_schema = "";
 
 if ($schemaName) {
   $schema = openSchemaNamed ($schemaName);
+  $reserved_schema = openSchemaNamed ("reserved_attributes.json");
 } else {
-  usage();
-  die "[ERROR] Schema not found.";
+  usage("[ERROR] Schema not found.");
 }
 
 ########################################################################
@@ -84,8 +86,7 @@ if (defined $opt_o) {
   
   print "Using output directory: $outputDir\n";
 } else {
-  usage();
-  die "[ERROR] Missing output directory parameter.";
+  usage("[ERROR] Missing output directory parameter.");
 }
 
 
@@ -1630,12 +1631,7 @@ sub recursiveParse {
   ##########################################################################
   $hFile .= "\@interface $className : JRCaptureObject\n";# <NSCopying, JRJsonifying>\n";
   $hFile .= $propertiesSection;
-    
-#  if ($requiredProperties) {
-#    $minConstructorDocSection[5] = $minClassConstructorDocSection[5] = $objFromDictDocSection[5] = 
-#        " * \n * \@note\n * Method creates a $className object without the required properties TODO: MAKE A LIST!\n * These properties are required when updating the object on Capture.\n"; 
-#  }
-  
+
   $hFile .= "\n/**\n * \@name Constructors\n **/\n/*\@{*/\n";
   
   for (my $i = 0; $i < @minConstructorDocSection; $i++) { $hFile .= $minConstructorDocSection[$i]; }
@@ -1769,13 +1765,6 @@ sub recursiveParse {
       $mFile .= $classConstructorSection[$i];
     }
   }
-  
-#   ##########################################################################                                           
-#   # Loop through our copy constructor pieces...                                           
-#   ##########################################################################                                           
-#   for (my $i = 0; $i < @copyConstructorSection; $i++) {                                           
-#       $mFile .= $copyConstructorSection[$i];                                           
-#   }                                           
 
   ##########################################################################
   # Loop through the rest of our methods, and add '@end'
@@ -1793,10 +1782,6 @@ sub recursiveParse {
       $mFile .= $decodeUserFromDictSection[$i];
     }
   }
-  
-#   for (my $i = 0; $i < @updateFromDictSection; $i++) {                                           
-#     $mFile .= $updateFromDictSection[$i];                                           
-#   }                                           
   
   for (my $i = 0; $i < @replaceFromDictSection; $i++) {
     $mFile .= $replaceFromDictSection[$i];
@@ -1857,6 +1842,7 @@ my $json = JSON->new->allow_nonref;
 # Decode our JSON schema
 ##########################################################################
 my $topMostScalarRef = $json->decode( $schema );
+my $reservedAttributes = $json->decode( $reserved_schema );
 
 ##########################################################################
 # If the schema attr_defs is buried in a dictionary, pull them out
@@ -1874,6 +1860,8 @@ if (ref($topMostScalarRef) eq "ARRAY") {
   
   $attrDefsArrayRef = $schemaDictionaryObj{"attr_defs"};
 }
+
+$attrDefsArrayRef = $attrDefsArrayRef, $reservedAttributes;
 
 ##########################################################################
 # Then recursively parse it...
