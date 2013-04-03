@@ -1,3 +1,5 @@
+v3.0.5
+ - Updates to the user generator model to fix merging bug in new script feature
 v3.0.4
  - Removes internal error string from the built-in traditional sign-in UI
 v3.0.3
