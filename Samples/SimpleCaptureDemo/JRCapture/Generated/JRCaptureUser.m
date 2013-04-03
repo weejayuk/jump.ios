@@ -251,6 +251,10 @@
     JRPrimaryAddress *_primaryAddress;
     NSArray *_profiles;
     NSArray *_statuses;
+    JRDateTime *_created;
+    JRDateTime *_lastUpdated;
+    JRObjectId *_captureUserId;
+    JRUuid *_uuid;
 }
 @synthesize canBeUpdatedOnCapture;
 
@@ -471,6 +475,58 @@
     _statuses = [newStatuses copy];
 }
 
+- (JRDateTime *)created
+{
+    return _created;
+}
+
+- (void)setCreated:(JRDateTime *)newCreated
+{
+    [self.dirtyPropertySet addObject:@"created"];
+
+    [_created autorelease];
+    _created = [newCreated copy];
+}
+
+- (JRDateTime *)lastUpdated
+{
+    return _lastUpdated;
+}
+
+- (void)setLastUpdated:(JRDateTime *)newLastUpdated
+{
+    [self.dirtyPropertySet addObject:@"lastUpdated"];
+
+    [_lastUpdated autorelease];
+    _lastUpdated = [newLastUpdated copy];
+}
+
+- (JRObjectId *)captureUserId
+{
+    return _captureUserId;
+}
+
+- (void)setCaptureUserId:(JRObjectId *)newCaptureUserId
+{
+    [self.dirtyPropertySet addObject:@"captureUserId"];
+
+    [_captureUserId autorelease];
+    _captureUserId = [newCaptureUserId copy];
+}
+
+- (JRUuid *)uuid
+{
+    return _uuid;
+}
+
+- (void)setUuid:(JRUuid *)newUuid
+{
+    [self.dirtyPropertySet addObject:@"uuid"];
+
+    [_uuid autorelease];
+    _uuid = [newUuid copy];
+}
+
 - (id)init
 {
     if ((self = [super init]))
@@ -555,6 +611,14 @@
                    forKey:@"profiles"];
     [dictionary setObject:(self.statuses ? [self.statuses arrayOfStatusesDictionariesFromStatusesElementsForEncoder:forEncoder] : [NSNull null])
                    forKey:@"statuses"];
+    [dictionary setObject:(self.created ? [self.created stringFromISO8601DateTime] : [NSNull null])
+                   forKey:@"created"];
+    [dictionary setObject:(self.lastUpdated ? [self.lastUpdated stringFromISO8601DateTime] : [NSNull null])
+                   forKey:@"lastUpdated"];
+    [dictionary setObject:(self.captureUserId ? [NSNumber numberWithInteger:[self.captureUserId integerValue]] : [NSNull null])
+                   forKey:@"id"];
+    [dictionary setObject:(self.uuid ? self.uuid : [NSNull null])
+                   forKey:@"uuid"];
 
     if (forEncoder)
     {
@@ -652,6 +716,22 @@
         [dictionary objectForKey:@"statuses"] != [NSNull null] ? 
         [(NSArray*)[dictionary objectForKey:@"statuses"] arrayOfStatusesElementsFromStatusesDictionariesWithPath:captureUser.captureObjectPath fromDecoder:fromDecoder] : nil;
 
+    captureUser.created =
+        [dictionary objectForKey:@"created"] != [NSNull null] ? 
+        [JRDateTime dateFromISO8601DateTimeString:[dictionary objectForKey:@"created"]] : nil;
+
+    captureUser.lastUpdated =
+        [dictionary objectForKey:@"lastUpdated"] != [NSNull null] ? 
+        [JRDateTime dateFromISO8601DateTimeString:[dictionary objectForKey:@"lastUpdated"]] : nil;
+
+    captureUser.captureUserId =
+        [dictionary objectForKey:@"id"] != [NSNull null] ? 
+        [NSNumber numberWithInteger:[(NSNumber*)[dictionary objectForKey:@"id"] integerValue]] : nil;
+
+    captureUser.uuid =
+        [dictionary objectForKey:@"uuid"] != [NSNull null] ? 
+        [dictionary objectForKey:@"uuid"] : nil;
+
     if (fromDecoder)
         [captureUser.dirtyPropertySet setSet:dirtyPropertySetCopy];
     else
@@ -740,6 +820,22 @@
         [dictionary objectForKey:@"statuses"] != [NSNull null] ? 
         [(NSArray*)[dictionary objectForKey:@"statuses"] arrayOfStatusesElementsFromStatusesDictionariesWithPath:self.captureObjectPath fromDecoder:YES] : nil;
 
+    self.created =
+        [dictionary objectForKey:@"created"] != [NSNull null] ? 
+        [JRDateTime dateFromISO8601DateTimeString:[dictionary objectForKey:@"created"]] : nil;
+
+    self.lastUpdated =
+        [dictionary objectForKey:@"lastUpdated"] != [NSNull null] ? 
+        [JRDateTime dateFromISO8601DateTimeString:[dictionary objectForKey:@"lastUpdated"]] : nil;
+
+    self.captureUserId =
+        [dictionary objectForKey:@"id"] != [NSNull null] ? 
+        [NSNumber numberWithInteger:[(NSNumber*)[dictionary objectForKey:@"id"] integerValue]] : nil;
+
+    self.uuid =
+        [dictionary objectForKey:@"uuid"] != [NSNull null] ? 
+        [dictionary objectForKey:@"uuid"] : nil;
+
     [self.dirtyPropertySet setSet:dirtyPropertySetCopy];
 }
 
@@ -822,12 +918,28 @@
         [dictionary objectForKey:@"statuses"] != [NSNull null] ? 
         [(NSArray*)[dictionary objectForKey:@"statuses"] arrayOfStatusesElementsFromStatusesDictionariesWithPath:self.captureObjectPath fromDecoder:NO] : nil;
 
+    self.created =
+        [dictionary objectForKey:@"created"] != [NSNull null] ? 
+        [JRDateTime dateFromISO8601DateTimeString:[dictionary objectForKey:@"created"]] : nil;
+
+    self.lastUpdated =
+        [dictionary objectForKey:@"lastUpdated"] != [NSNull null] ? 
+        [JRDateTime dateFromISO8601DateTimeString:[dictionary objectForKey:@"lastUpdated"]] : nil;
+
+    self.captureUserId =
+        [dictionary objectForKey:@"id"] != [NSNull null] ? 
+        [NSNumber numberWithInteger:[(NSNumber*)[dictionary objectForKey:@"id"] integerValue]] : nil;
+
+    self.uuid =
+        [dictionary objectForKey:@"uuid"] != [NSNull null] ? 
+        [dictionary objectForKey:@"uuid"] : nil;
+
     [self.dirtyPropertySet setSet:dirtyPropertySetCopy];
 }
 
 - (NSSet *)updatablePropertySet
 {
-    return [NSSet setWithObjects:@"aboutMe", @"birthday", @"currentLocation", @"display", @"displayName", @"email", @"emailVerified", @"familyName", @"gender", @"givenName", @"lastLogin", @"middleName", @"password", @"primaryAddress", nil];
+    return [NSSet setWithObjects:@"aboutMe", @"birthday", @"currentLocation", @"display", @"displayName", @"email", @"emailVerified", @"familyName", @"gender", @"givenName", @"lastLogin", @"middleName", @"password", @"primaryAddress", @"created", @"lastUpdated", @"captureUserId", @"uuid", nil];
 }
 
 - (void)setAllPropertiesToDirty
@@ -1094,6 +1206,10 @@
     [dictionary setObject:@"JRPrimaryAddress" forKey:@"primaryAddress"];
     [dictionary setObject:@"NSArray" forKey:@"profiles"];
     [dictionary setObject:@"NSArray" forKey:@"statuses"];
+    [dictionary setObject:@"JRDateTime" forKey:@"created"];
+    [dictionary setObject:@"JRDateTime" forKey:@"lastUpdated"];
+    [dictionary setObject:@"JRObjectId" forKey:@"captureUserId"];
+    [dictionary setObject:@"JRUuid" forKey:@"uuid"];
 
     return [NSDictionary dictionaryWithDictionary:dictionary];
 }
@@ -1117,6 +1233,10 @@
     [_primaryAddress release];
     [_profiles release];
     [_statuses release];
+    [_created release];
+    [_lastUpdated release];
+    [_captureUserId release];
+    [_uuid release];
 
     [super dealloc];
 }

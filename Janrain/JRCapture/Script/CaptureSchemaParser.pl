@@ -1861,7 +1861,14 @@ if (ref($topMostScalarRef) eq "ARRAY") {
   $attrDefsArrayRef = $schemaDictionaryObj{"attr_defs"};
 }
 
-$attrDefsArrayRef = $attrDefsArrayRef, $reservedAttributes;
+my %reservedAttrsToAdd = map { $_->{'name'}, $_ } @$reservedAttributes;
+
+for my $attrDef (@$attrDefsArrayRef) {
+    my $name = $attrDef->{'name'};
+    delete $reservedAttrsToAdd{$name} if (exists $reservedAttrsToAdd{$name});
+}
+
+push @$attrDefsArrayRef, values %reservedAttrsToAdd;
 
 ##########################################################################
 # Then recursively parse it...
