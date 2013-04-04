@@ -67,17 +67,31 @@
     [myAboutMeTextView setInputAccessoryView:myKeyboardToolbar];
     [myEmailTextField setInputAccessoryView:myKeyboardToolbar];
 
+    appDelegate.captureUser = appDelegate.captureUser;
+
     if (appDelegate.captureUser.email)
         myEmailTextField.text  = appDelegate.captureUser.email;
+
     if (appDelegate.captureUser.aboutMe)
         myAboutMeTextView.text = appDelegate.captureUser.aboutMe;
+
     if ([[appDelegate.captureUser.gender lowercaseString] isEqualToString:[@"F" lowercaseString]] ||
         [[appDelegate.captureUser.gender lowercaseString] isEqualToString:[@"female" lowercaseString]] ||
         [[appDelegate.captureUser.gender lowercaseString] isEqualToString:[@"girl" lowercaseString]] ||
         [[appDelegate.captureUser.gender lowercaseString] isEqualToString:[@"woman" lowercaseString]])
+    {
         [myGenderIdentitySegControl setSelectedSegmentIndex:0];
+    }
+    else
+    {
+        [myGenderIdentitySegControl setSelectedSegmentIndex:1];
+    }
+
     if (appDelegate.captureUser.birthday)
+    {
         [myDatePicker setDate:appDelegate.captureUser.birthday];
+        [self pickerChanged];
+    }
 }
 
 - (void)scrollUpBy:(NSInteger)scrollOffset

@@ -1,8 +1,25 @@
+v3.1.0
+ - Adds new two-step social registration and tradtional registration support
+v3.0.5
+ - Updates to the user generator model to fix merging bug in new script feature
+v3.0.4
+ - Removes internal error string from the built-in traditional sign-in UI
+v3.0.3
+ - Updates Capture model generation script to auto-include reserved attrs
+v3.0.2
+ - Fixes for the display bugs in the example Capture "form" in SimpleCaptureDemo
+v3.0.1
+ - Regenerates SCD user model for new schema
+ - Updated SCD schema to modern default schema to accomodate existing native flow config file
+ - This resolves misidentified bug in merge flow
 v3.0.0
- - Removes deprecated JRCaptureRecordMissingRequiredFields enum value of JRCaptureRecordstatus
-   (See the replacement, JRCaptureRecordRequiresCreation)
  - Removes old JRCapture+setEngageAppId... signature in favor of new configuration signature
    covering new configuration parameters
+ - Adds merge flow support
+  - See developers.janrain.com Capture for iOS integration guide for usage
+ - Uses new Capture flow-config-enabled endpoints
+ - Removes legacy two-step social reg
+ - Paves the way for new two-step social reg, trad reg
 v2.5.2
  - Internal project file cleanup
  - Custom UINavigationController bug fix 

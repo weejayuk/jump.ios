@@ -138,10 +138,14 @@ captureEnableThinRegistration:captureEnableThinRegistration
 
 - (void)loadConfigFromPlist
 {
-    // See assets folder in Resources project group for janrain-config-example.plist
+    // See assets folder in Resources project group for janrain-config-default.plist
     // Copy to janrain-config.plist and change it to your details
 
     NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"assets/janrain-config" ofType:@"plist"];
+    if (!plistPath)
+    {
+        plistPath = [[NSBundle mainBundle] pathForResource:@"assets/janrain-config-default" ofType:@"plist"];
+    }
     NSDictionary *cfgPlist = [NSDictionary dictionaryWithContentsOfFile:plistPath];
     NSString *configKeyName = [cfgPlist objectForKey:@"default-config"];
     NSDictionary *cfg = [cfgPlist objectForKey:configKeyName];

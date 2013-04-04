@@ -266,7 +266,7 @@
     NSString *title = [NSString stringWithFormat:@"Incorrect %@ or Password", type];
     NSString *const message = [result objectForKey:@"error"];
     UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:title
-                                                         message:message
+                                                         message:nil // MOB-73
                                                         delegate:nil
                                                cancelButtonTitle:@"Dismiss"
                                                otherButtonTitles:nil] autorelease];

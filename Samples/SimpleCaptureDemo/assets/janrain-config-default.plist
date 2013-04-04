@@ -7,17 +7,18 @@
 
     <key>test</key>
     <dict>
-        <!-- required: -->
         <key>engageAppId</key>
         <string>appcfamhnpkagijaeinl</string>
-        <key>captureApidDomain</key>
-        <string>mobile-testing.janraincapture.com</string>
-        <key>captureUIDomain</key>
-        <string>mobile-testing.janraincapture.com</string>
+        <key>captureDomain</key>
+        <string>mobile-dev.janraincapture.com</string>
         <key>captureClientId</key>
-        <string>atasaz59p8cyecmbzmcwkbthsyq3wrxh</string>
-
-        <!-- not required: -->
+        <string>9vt2ej43mxyftkf68c3xthkm2rtweg8w</string>
+        <!--<key>captureFlowName</key>-->
+        <!--<string></string>-->
+        <key>captureFormName</key>
+        <string>signinForm</string>
+        <key>captureLocale</key>
+        <string>en-US</string>
         <key>bpBusUrlString</key>
         <string></string>
         <key>liveFyreNetwork</key>
@@ -26,6 +27,6 @@
         <string></string>
         <key>liveFyreArticleId</key>
         <string></string>
-     </dict>
+    </dict>
 </dict>
 </plist>

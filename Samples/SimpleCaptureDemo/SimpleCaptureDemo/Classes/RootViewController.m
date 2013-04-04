@@ -70,14 +70,9 @@
     [self configureButtons];
 }
 
-- (BOOL)isUserSignedIn
-{
-    return appDelegate.captureUser != nil;
-}
-
 - (void)configureButtons
 {
-    if ([self isUserSignedIn])
+    if (appDelegate.captureUser)
     {
         signInButton.hidden = YES;
         signOutButton.hidden = NO;
