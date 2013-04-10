@@ -56,7 +56,6 @@
 @synthesize shareBlobs;
 @synthesize shareInProgress = _shareInProgress;
 
-
 - (id)init
 {
     if ((self = [super init]))
@@ -139,7 +138,7 @@
     self.fullAuthenticationResponse = nil;
 }
 
-- (void)initializeJREngage:(CDVInvokedUrlCommand *)command
+- (void)initializeJREngage:(CDVInvokedUrlCommand *)command __unused
 {
     DLog(@"");
 
@@ -150,7 +149,7 @@
     if (!engageAppId)
     {
         [self finishWithFailureMessage:[self stringFromCode:JRMissingAppIdError
-                                                 andMessage:@engageAppId]];
+                                                 andMessage:@"Missing appId in call to initialize"]];
         return;
     }
 
@@ -159,12 +158,12 @@
     NSMutableDictionary *infoPlist =
             [NSMutableDictionary dictionaryWithDictionary:[NSDictionary dictionaryWithContentsOfFile:path]];
 
-    NSMutableString *version = [NSMutableString stringWithString:[infoPlist objectForKey:@"CFBundleShortVersionString"]];
+    NSMutableString *ver = [NSMutableString stringWithString:[infoPlist objectForKey:@"CFBundleShortVersionString"]];
 
-    if (![version hasSuffix:@":cordova"])
-        [version appendString:@":cordova"];
+    if (![ver hasSuffix:@":cordova"])
+        [ver appendString:@":cordova"];
 
-    [infoPlist setObject:version forKey:@"CFBundleShortVersionString"];
+    [infoPlist setObject:ver forKey:@"CFBundleShortVersionString"];
     [infoPlist writeToFile:path atomically:YES];
 
     [JREngage setEngageAppId:engageAppId tokenUrl:tokenUrl andDelegate:self];
@@ -172,7 +171,7 @@
     [self finishWithSuccessMessage:@"{'stat':'ok','message':'Initializing JREngage...'}"];
 }
 
-- (void)showAuthenticationDialog:(CDVInvokedUrlCommand *)command
+- (void)showAuthenticationDialog:(CDVInvokedUrlCommand *)command __unused
 {
     DLog(@"");
 
@@ -181,7 +180,7 @@
     [JREngage showAuthenticationDialog];
 }
 
-- (void)showSharingDialog:(CDVInvokedUrlCommand *)command
+- (void)showSharingDialog:(CDVInvokedUrlCommand *)command __unused
 {
     DLog(@"");
 
