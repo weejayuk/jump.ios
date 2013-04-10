@@ -38,7 +38,7 @@
 
 #pragma mark consts
 static NSString * const serverUrl = @"https://rpxnow.com";
-/* Lists of the standard names for providers' logo and icons */
+
 static NSString * const iconNames[] = { @"icon_%@_30x30.png",
                                          @"icon_%@_30x30@2x.png",
                                          @"logo_%@_280x65.png",
@@ -56,11 +56,12 @@ static NSString * const iconNamesSocial[] = { @"icon_%@_30x30.png",
                                                 @"button_%@_280x40@2x.png", nil };
 
 static NSString *const GET_CONFIGURATION_TAG = @"getConfiguration";
-static NSString *const CONFIG_KEY_ETAG = @"jrengage.sessionData.configurationEtag";
-static NSString *const CONFIG_KEY_GIT_COMMIT = @"jrengage.sessionData.engageCommit";
+static NSString *const PREFS_KEY_ETAG = @"jrengage.sessionData.configurationEtag";
 static NSString *const CONFIG_KEY_PROVIDER_INFO = @"provider_info";
-
 static NSString *const CONFIG_KEY_BASEURL = @"baseurl";
+static NSString *const CONFIG_KEY_SIGNIN_PROVIDERS = @"enabled_providers";
+static NSString *const CONFIG_KEY_SHARING_PROVIDERS = @"social_providers";
+
 #define cJRAuthenticatedUsersByProvider @"jrengage.sessionData.authenticatedUsersByProvider"
 #define cJRAllProviders                 @"jrengage.sessionData.allProviders"
 #define cJRBasicProviders               @"jrengage.sessionData.basicProviders"
@@ -409,7 +410,6 @@ static NSString* applicationBundleDisplayName()
 @property (retain) NSString *appId;
 @property (retain) NSError  *error;
 @property (retain) NSString *updatedEtag;
-@property (retain) NSString *gitCommit;
 @property (retain) NSDictionary *savedConfigurationBlock;
 @end
 
@@ -429,7 +429,6 @@ static NSString* applicationBundleDisplayName()
 @synthesize hidePoweredBy;
 @synthesize error;
 @synthesize updatedEtag;
-@synthesize gitCommit;
 @synthesize savedConfigurationBlock;
 @synthesize canRotate;
 
@@ -445,7 +444,7 @@ static JRSessionData* singleton = nil;
     return [[self jrSessionData] retain];
 }
 
-- (id)copyWithZone:(NSZone*)zone
+- (id)copyWithZone:(__unused NSZone *)zone __unused
 {
     return self;
 }
@@ -516,14 +515,8 @@ static JRSessionData* singleton = nil;
         self.appId    = newAppId;
         self.tokenUrl = newTokenUrl;
 
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-            device = @"ipad";
-        else
-            device = @"iphone";
+        device = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? @"ipad" : @"iphone";
 
-        /* First, we load all of the cached data (the list of providers, saved users, base url, etc.) */
-
-        /* Load the dictionary of authenticated users */
         NSData *archivedUsers = [[NSUserDefaults standardUserDefaults] objectForKey:cJRAuthenticatedUsersByProvider];
         if (archivedUsers != nil)
         {
@@ -532,27 +525,20 @@ static JRSessionData* singleton = nil;
                 authenticatedUsersByProvider = [[NSMutableDictionary alloc] initWithDictionary:unarchivedUsers];
         }
 
-        /* And if there weren't any saved users, init the dictionary */
         if (!authenticatedUsersByProvider)
-            authenticatedUsersByProvider = [[NSMutableDictionary alloc] initWithCapacity:1];
+            authenticatedUsersByProvider = [[NSMutableDictionary alloc] init];
 
-        /* Load the list of all providers */
-        NSData *archivedProviders = [[NSUserDefaults standardUserDefaults] objectForKey:cJRAllProviders];
-        if (archivedProviders != nil)
+        NSData *providersData = [[NSUserDefaults standardUserDefaults] objectForKey:cJRAllProviders];
+        if (providersData != nil)
         {
-            NSDictionary *unarchivedProviders = [NSKeyedUnarchiver unarchiveObjectWithData:archivedProviders];
+            NSDictionary *unarchivedProviders = [NSKeyedUnarchiver unarchiveObjectWithData:providersData];
             if (unarchivedProviders != nil)
                 allProviders = [[NSMutableDictionary alloc] initWithDictionary:unarchivedProviders];
         }
 
-        /* Load the list of basic providers */
         basicProviders = [[[NSUserDefaults standardUserDefaults] objectForKey:cJRBasicProviders] retain];
-
-        /* Load the list of social providers */
         socialProviders = [[[NSUserDefaults standardUserDefaults] objectForKey:cJRSocialProviders] retain];
 
-        /* Load the list of icons that the library should re-attempt to download, in case previous attempts failed 
-           for whatever reason */
         NSData *archivedIconsStillNeeded = [[NSUserDefaults standardUserDefaults] objectForKey:cJRIconsStillNeeded];
         if (archivedIconsStillNeeded != nil)
         {
@@ -561,8 +547,6 @@ static JRSessionData* singleton = nil;
                 iconsStillNeeded = [[NSMutableDictionary alloc] initWithDictionary:iconsStillNeeded_];
         }
 
-        /* Load the set of providers that already have all of their icons; checking this list is faster than checking 
-           for the icons themselves */
         NSData *providersWithIcons_ = [[NSUserDefaults standardUserDefaults] objectForKey:cJRProvidersWithIcons];
         if (providersWithIcons_ != nil)
         {
@@ -571,18 +555,12 @@ static JRSessionData* singleton = nil;
                 providersWithIcons = [[NSMutableSet alloc] initWithSet:unarchivedProvidersWithIcons];
         }
 
-        /* Load the base url and whether or not we need to hide the tag-line */
         baseUrl = [[[NSUserDefaults standardUserDefaults] stringForKey:cJRBaseUrl] retain];
-        if (!baseUrl) /* The we assume this is the first time running the library ever */
-            hidePoweredBy = YES; /* And say that hidePoweredBy is 'YES' for our Pro/Enterprise customers */
-        else
-            hidePoweredBy = [[NSUserDefaults standardUserDefaults] boolForKey:cJRHidePoweredBy];
+        hidePoweredBy = !baseUrl ? YES : ([[NSUserDefaults standardUserDefaults] boolForKey:cJRHidePoweredBy]);
 
-        /* And load the last used basic and social providers */
         returningSocialProvider = [[[NSUserDefaults standardUserDefaults] stringForKey:cJRLastUsedSocialProvider] retain];
         returningBasicProvider = [[[NSUserDefaults standardUserDefaults] stringForKey:cJRLastUsedBasicProvider] retain];
 
-        /* As this information may have changed, we're going to ask rpx for this information anyway */
         self.error = [self startGetConfiguration];
     }
 
@@ -754,7 +732,7 @@ static JRSessionData* singleton = nil;
     NSDictionary *providerInfo = [configDict objectForKey:CONFIG_KEY_PROVIDER_INFO];
 
     [allProviders release];
-    allProviders = [NSMutableDictionary dictionary];
+    allProviders = [[NSMutableDictionary dictionary] retain];
 
     for (NSString *name in [providerInfo allKeys])
     {
@@ -773,8 +751,8 @@ static JRSessionData* singleton = nil;
     [basicProviders release];
     [socialProviders release];
 
-    basicProviders = [[configDict objectForKey:@"enabled_providers"] retain];
-    socialProviders = [[configDict objectForKey:@"social_providers"] retain];
+    basicProviders = [[configDict objectForKey:CONFIG_KEY_SIGNIN_PROVIDERS] retain];
+    socialProviders = [[configDict objectForKey:CONFIG_KEY_SHARING_PROVIDERS] retain];
 
     [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:allProviders]
                                               forKey:cJRAllProviders];
@@ -784,8 +762,7 @@ static JRSessionData* singleton = nil;
     hidePoweredBy = ([[configDict objectForKey:@"hide_tagline"] isEqualToString:@"YES"]) ? YES : NO;
     [[NSUserDefaults standardUserDefaults] setBool:hidePoweredBy forKey:cJRHidePoweredBy];
 
-    [[NSUserDefaults standardUserDefaults] setValue:updatedEtag forKey:CONFIG_KEY_ETAG];
-    [[NSUserDefaults standardUserDefaults] setValue:gitCommit forKey:CONFIG_KEY_GIT_COMMIT];
+    [[NSUserDefaults standardUserDefaults] setValue:updatedEtag forKey:PREFS_KEY_ETAG];
     [[NSUserDefaults standardUserDefaults] synchronize];
 
     [self downloadNeededIcons:iconsStillNeeded];
@@ -815,8 +792,7 @@ static JRSessionData* singleton = nil;
     }
 
     self.updatedEtag = ([self etagFromResponse:response]);
-    self.gitCommit = ([self getCurrentCommit]);
-    
+
     /* We can only update all of our data if the UI isn't currently using that information.  Otherwise, the library
     may crash/behave inconsistently.  If a dialog isn't showing, go ahead and update new configuration information.
 
@@ -852,15 +828,6 @@ static JRSessionData* singleton = nil;
         }];
     NSString *etag = [[response allHeaderFields] objectForKey:[etagKeys anyObject]];
     return etag;
-}
-
-- (NSString *)getCurrentCommit
-{
-    NSDictionary *infoPlist = [NSDictionary dictionaryWithContentsOfFile:
-                                                    [[[NSBundle mainBundle] resourcePath]
-                                                            stringByAppendingPathComponent:@"/JREngage-Info.plist"]];
-
-    return [infoPlist objectForKey:@"JREngage.GitCommit"];
 }
 
 #pragma mark user_management
@@ -1882,7 +1849,6 @@ CALL_DELEGATE_SELECTOR:
     [currentProvider release];
     [error release];
     [updatedEtag release];
-    [gitCommit release];
     [savedConfigurationBlock release];
     [returningBasicProvider release];
     [returningSocialProvider release];
