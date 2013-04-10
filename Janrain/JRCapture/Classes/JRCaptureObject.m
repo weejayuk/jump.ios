@@ -65,7 +65,7 @@
     return [[[JRCaptureObjectApidHandler alloc] init] autorelease];
 }
 
-- (void)updateCaptureObjectDidFailWithResult:(NSObject *)result context:(NSObject *)context
+- (void)updateCaptureObjectDidFailWithResult:(NSDictionary *)result context:(NSObject *)context
 {
     DLog(@"");
 
@@ -82,10 +82,8 @@
     if ([delegate conformsToProtocol:@protocol(JRCaptureObjectTesterDelegate)] &&
             [((id <JRCaptureObjectTesterDelegate>) delegate) respondsToSelector:testerSelector])
     {
-        NSString *resultAsString = [result isKindOfClass:[NSString class]] ? 
-                (NSString *) result : [(NSDictionary *) result JSONString];
         [((id <JRCaptureObjectTesterDelegate>) delegate) updateCaptureObject:captureObject
-                                                           didFailWithResult:resultAsString context:callerContext];
+                                                           didFailWithResult:[result JSONString] context:callerContext];
     }
 
     if ([delegate respondsToSelector:@selector(updateDidFailForObject:withError:context:)]) 
@@ -143,7 +141,7 @@
             [delegate updateDidSucceedForObject:captureObject context:callerContext];
 }
 
-- (void)replaceCaptureObjectDidFailWithResult:(NSObject *)result context:(NSObject *)context
+- (void)replaceCaptureObjectDidFailWithResult:(NSDictionary *)result context:(NSObject *)context
 {
     NSDictionary *myContext = (NSDictionary *) context;
     JRCaptureObject *captureObject = [myContext objectForKey:@"captureObject"];
@@ -155,8 +153,7 @@
     if ([delegate conformsToProtocol:@protocol(JRCaptureObjectTesterDelegate)] &&
             [delegate respondsToSelector:selector])
     {
-        NSString *restulString = [result isKindOfClass:[NSString class]] ? 
-                (NSString *) result : [(NSDictionary *) result JSONString];
+        NSString *restulString = [result JSONString];
         [((id <JRCaptureObjectTesterDelegate>) delegate) replaceCaptureObject:captureObject
                                                             didFailWithResult:restulString context:callerContext];
     }
@@ -165,8 +162,9 @@
     if ([delegate conformsToProtocol:@protocol(JRCaptureObjectTesterDelegate)] &&
             [delegate respondsToSelector:testSelector])
     {
+        id <JRCaptureObjectTesterDelegate> delegate_ = (id <JRCaptureObjectTesterDelegate>) delegate;
         JRCaptureError *error = [JRCaptureError errorFromResult:result onProvider:nil mergeToken:nil];
-        [delegate replaceDidFailForObject:captureObject withError:error context:callerContext];
+        [delegate_ replaceDidFailForObject:captureObject withError:error context:callerContext];
     }
 }
 
@@ -217,18 +215,20 @@
     if ([delegate conformsToProtocol:@protocol(JRCaptureObjectTesterDelegate)] &&
             [delegate respondsToSelector:testSelector])
     {
-        [delegate replaceCaptureObject:captureObject didSucceedWithResult:resultString context:callerContext];
+        id <JRCaptureObjectTesterDelegate> delegate_ = (id <JRCaptureObjectTesterDelegate>) delegate;
+        [delegate_ replaceCaptureObject:captureObject didSucceedWithResult:resultString context:callerContext];
     }
 
     SEL testSelector2 = @selector(replaceDidSucceedForObject:context:);
     if ([delegate conformsToProtocol:@protocol(JRCaptureObjectTesterDelegate)] &&
             [delegate respondsToSelector:testSelector2])
     {
-        [delegate replaceDidSucceedForObject:captureObject context:callerContext];
+        id <JRCaptureObjectTesterDelegate> delegate_ = (id <JRCaptureObjectTesterDelegate>) delegate;
+        [delegate_ replaceDidSucceedForObject:captureObject context:callerContext];
     }
 }
 
-- (void)replaceCaptureArrayDidFailWithResult:(NSObject *)result context:(NSObject *)context
+- (void)replaceCaptureArrayDidFailWithResult:(NSDictionary *)result context:(NSObject *)context
 {
     NSDictionary    *myContext     = (NSDictionary *)context;
     JRCaptureObject *captureObject = [myContext objectForKey:@"captureObject"];
@@ -236,13 +236,11 @@
     NSObject *callerContext = [myContext objectForKey:@"callerContext"];
     id <JRCaptureObjectDelegate> delegate = [myContext objectForKey:@"delegate"];
 
-    /* Calling the old protocol methods for testing purposes, but have to make sure we pass the result string... */
     SEL testSelector = @selector(replaceArrayNamed:onCaptureObject:didFailWithResult:context:);
     if ([delegate conformsToProtocol:@protocol(JRCaptureObjectTesterDelegate)] &&
             [delegate respondsToSelector:testSelector])
     {
-        NSString *resultString = [result isKindOfClass:[NSString class]] ? 
-                (NSString *) result : [(NSDictionary *) result JSONString];
+        NSString *resultString = [result JSONString];
         [((id <JRCaptureObjectTesterDelegate>) delegate) replaceArrayNamed:arrayName onCaptureObject:captureObject
                                                          didFailWithResult:resultString
                                                                    context:callerContext];
@@ -360,7 +358,7 @@
     return self;
 }
 
-- (id)copyWithZone:(NSZone*)zone
+- (id)copyWithZone:(NSZone*)zone __unused
 {
     JRCaptureObject *objectCopy = [[[self class] allocWithZone:zone] init];
 
@@ -416,7 +414,7 @@
                 format:@"You must override %@ in a subclass", NSStringFromSelector(_cmd)];
 }
 
-- (NSSet *)setOfAllUpdatableProperties
+- (NSSet *)setOfAllUpdatableProperties __unused
 {
     [NSException raise:NSInternalInconsistencyException
                 format:@"You must override %@ in a subclass", NSStringFromSelector(_cmd)];
@@ -501,7 +499,7 @@
                                     withContext:newContext];
 }
 
-- (void)replaceOnCaptureForDelegate:(id <JRCaptureObjectDelegate>)delegate context:(NSObject *)context
+- (void)replaceOnCaptureForDelegate:(id <JRCaptureObjectDelegate>)delegate context:(NSObject *)context __unused
 {
     NSDictionary *newContext = [NSDictionary dictionaryWithObjectsAndKeys:
                                                      self, @"captureObject",
@@ -566,39 +564,43 @@
                                     withContext:newContext];
 }
 
-+ (void)testCaptureObjectApidHandlerUpdateCaptureObjectDidFailWithResult:(NSObject *)result context:(NSObject *)context
++ (void)testCaptureObjectApidHandlerUpdateCaptureObjectDidFailWithResult:(NSDictionary *)result
+                                                                 context:(NSObject *)context __unused
 {
-    [[JRCaptureObjectApidHandler captureObjectApidHandler] updateCaptureObjectDidFailWithResult:result context:context];
+    [[JRCaptureObjectApidHandler captureObjectApidHandler] updateCaptureObjectDidFailWithResult:result
+                                                                                        context:context];
 }
 
 + (void)testCaptureObjectApidHandlerUpdateCaptureObjectDidSucceedWithResult:(NSObject *)result 
-                                                                    context:(NSObject *)context
+                                                                    context:(NSObject *)context __unused
 {
     [[JRCaptureObjectApidHandler captureObjectApidHandler] updateCaptureObjectDidSucceedWithResult:result 
                                                                                            context:context];
 }
 
-+ (void)testCaptureObjectApidHandlerReplaceCaptureObjectDidFailWithResult:(NSObject *)result context:(NSObject *)context
++ (void)testCaptureObjectApidHandlerReplaceCaptureObjectDidFailWithResult:(NSDictionary *)result
+                                                                  context:(NSObject *)context __unused
 {
     [[JRCaptureObjectApidHandler captureObjectApidHandler] replaceCaptureObjectDidFailWithResult:result 
                                                                                          context:context];
 }
 
-+ (void)testCaptureObjectApidHandlerReplaceCaptureObjectDidSucceedWithResult:(NSObject *)result 
-                                                                     context:(NSObject *)context
++ (void)testCaptureObjectApidHandlerReplaceCaptureObjectDidSucceedWithResult:(NSDictionary *)result
+                                                                     context:(NSObject *)context __unused
 {
     [[JRCaptureObjectApidHandler captureObjectApidHandler] replaceCaptureObjectDidSucceedWithResult:result 
                                                                                             context:context];
 }
 
-+ (void)testCaptureObjectApidHandlerReplaceCaptureArrayDidFailWithResult:(NSObject *)result 
-                                                                 context:(NSObject *)context
++ (void)testCaptureObjectApidHandlerReplaceCaptureArrayDidFailWithResult:(NSDictionary *)result
+                                                                 context:(NSObject *)context __unused
 {
-    [[JRCaptureObjectApidHandler captureObjectApidHandler] replaceCaptureArrayDidFailWithResult:result context:context];
+    [[JRCaptureObjectApidHandler captureObjectApidHandler] replaceCaptureArrayDidFailWithResult:result
+                                                                                        context:context];
 }
 
-+ (void)testCaptureObjectApidHandlerReplaceCaptureArrayDidSucceedWithResult:(NSObject *)result 
-                                                                    context:(NSObject *)context
++ (void)testCaptureObjectApidHandlerReplaceCaptureArrayDidSucceedWithResult:(NSDictionary *)result
+                                                                    context:(NSObject *)context __unused
 {
     [[JRCaptureObjectApidHandler captureObjectApidHandler] replaceCaptureArrayDidSucceedWithResult:result 
                                                                                            context:context];
@@ -606,7 +608,6 @@
 
 - (BOOL)isEqualByPrivateProperties:(JRCaptureObject *)otherObj
 {
-    //DLog(@"%@: %@", [[self class] description], self.captureObjectPath);
     if (![self.captureObjectPath isEqual:otherObj.captureObjectPath]) return NO;
     if (![self.dirtyPropertySet isEqual:otherObj.dirtyPropertySet]) return NO;
     if (self.canBeUpdatedOnCapture != otherObj.canBeUpdatedOnCapture) return NO;
@@ -624,11 +625,11 @@
         if ([prop isKindOfClass:[NSArray class]])
         {
             if (![otherProp isKindOfClass:[NSArray class]] || [otherProp count] != [prop count]) return NO;
-            for (id elmt in ((NSArray *) prop))
+            for (id element in ((NSArray *) prop))
             {
-                id otherElmt = [((NSArray *) otherProp) objectAtIndex:[((NSArray *) prop) indexOfObject:elmt]];
-                if ([elmt isKindOfClass:[JRCaptureObject class]])
-                    if (![((JRCaptureObject *) elmt) isEqualByPrivateProperties:otherElmt]) return NO;
+                id element_ = [((NSArray *) otherProp) objectAtIndex:[((NSArray *) prop) indexOfObject:element]];
+                if ([element isKindOfClass:[JRCaptureObject class]])
+                    if (![((JRCaptureObject *) element) isEqualByPrivateProperties:element_]) return NO;
             }
         }
     }

@@ -85,7 +85,7 @@
                                             network:(NSString *)liveFyreNetwork
                                              siteId:(NSString *)liveFyreSiteId
                                    backplaneChannel:(NSString *)bpChannelUrl
-                                         completion:(void(^)(NSString *token, NSError *error))completion __unused
+                                         completion:(void(^)(NSString *, NSError *))completion __unused
 {
     if (!liveFyreArticleId || !liveFyreNetwork || !liveFyreSiteId) {
         completion(nil, [NSError errorWithDomain:@"BackplaneUtils" code:0

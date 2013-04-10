@@ -178,6 +178,11 @@ captureEnableThinRegistration:(BOOL)enableThinRegistration
                                     forDelegate:delegate];
 }
 
++ (void)registerNewUser:(JRCaptureUser *)newUser context:(void *)context
+{
+    //asdfasdf
+}
+
 
 - (void)dealloc
 {

@@ -41,9 +41,11 @@
 + (void)asyncFetchNewBackplaneChannelWithBus:(NSString *)bpBusUrlString
                                   completion:(void (^)(NSString *, NSError *))completion __unused;
 
-+ (void)asyncFetchNewLiveFyreUserTokenWithArticleId:(NSString *)liveFyreArticleId network:(NSString *)liveFyreNetwork
-                                             siteId:(NSString *)liveFyreSiteId backplaneChannel:(NSString *)bpChannelUrl
-                                         completion:(void (^)(NSString *, NSError *))completion;
++ (void)asyncFetchNewLiveFyreUserTokenWithArticleId:(NSString *)liveFyreArticleId
+                                            network:(NSString *)liveFyreNetwork
+                                             siteId:(NSString *)liveFyreSiteId
+                                   backplaneChannel:(NSString *)bpChannelUrl
+                                         completion:(void (^)(NSString *, NSError *))completion __unused;
 
 @end
 

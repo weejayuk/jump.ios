@@ -54,15 +54,15 @@ typedef enum
 - (void)signinCaptureUserDidSucceedWithResult:(NSString *)result context:(NSObject *)context;
 - (void)signinCaptureUserDidFailWithResult:(NSDictionary *)result context:(NSObject *)context;
 - (void)getCaptureUserDidSucceedWithResult:(NSObject *)result context:(NSObject *)context;
-- (void)getCaptureUserDidFailWithResult:(NSObject *)result context:(NSObject *)context;
+- (void)getCaptureUserDidFailWithResult:(NSDictionary *)result context:(NSObject *)context;
 - (void)getCaptureObjectDidSucceedWithResult:(NSObject *)result context:(NSObject *)context;
 - (void)getCaptureObjectDidFailWithResult:(NSObject *)result context:(NSObject *)context;
 - (void)updateCaptureObjectDidSucceedWithResult:(NSObject *)result context:(NSObject *)context;
-- (void)updateCaptureObjectDidFailWithResult:(NSObject *)result context:(NSObject *)context;
+- (void)updateCaptureObjectDidFailWithResult:(NSDictionary *)result context:(NSObject *)context;
 - (void)replaceCaptureObjectDidSucceedWithResult:(NSObject *)result context:(NSObject *)context;
-- (void)replaceCaptureObjectDidFailWithResult:(NSObject *)result context:(NSObject *)context;
+- (void)replaceCaptureObjectDidFailWithResult:(NSDictionary *)result context:(NSObject *)context;
 - (void)replaceCaptureArrayDidSucceedWithResult:(NSObject *)result context:(NSObject *)context;
-- (void)replaceCaptureArrayDidFailWithResult:(NSObject *)result context:(NSObject *)context;
+- (void)replaceCaptureArrayDidFailWithResult:(NSDictionary *)result context:(NSObject *)context;
 @end
 
 /**

@@ -39,7 +39,6 @@
 #import "NSDictionary+QueryParams.h"
 
 static NSString *const cSignInUser = @"signinUser";
-static NSString *const cCreateUser = @"createUser";
 static NSString *const cGetUser = @"getUser";
 static NSString *const cGetObject = @"getObject";
 static NSString *const cUpdateObject = @"updateObject";
@@ -72,7 +71,7 @@ static JRCaptureApidInterface *singleton = nil;
     return [[self captureInterfaceInstance] retain];
 }
 
-- (id)copyWithZone:(__unused NSZone *)zone
+- (id)copyWithZone:(__unused NSZone *)zone __unused
 {
     return self;
 }
@@ -99,23 +98,6 @@ typedef enum CaptureInterfaceStatEnum
     StatOk,
     StatFail,
 } CaptureInterfaceStat;
-
-- (void)finishCreateCaptureUserWithStat:(CaptureInterfaceStat)stat andResult:(NSObject *)result
-                            forDelegate:(id <JRCaptureInterfaceDelegate>)delegate withContext:(NSObject *)context
-{
-    DLog(@"");
-
-    if (stat == StatOk)
-    {
-        if ([delegate respondsToSelector:@selector(createCaptureUserDidSucceedWithResult:context:)])
-            [delegate createCaptureUserDidSucceedWithResult:result context:context];
-    }
-    else
-    {
-        if ([delegate respondsToSelector:@selector(createCaptureUserDidFailWithResult:context:)])
-            [delegate createCaptureUserDidFailWithResult:result context:context];
-    }
-}
 
 - (void)finishSignInFailureWithResult:(NSDictionary *)result forDelegate:(id <JRCaptureInterfaceDelegate>)delegate
                           withContext:(NSObject *)context
@@ -187,7 +169,7 @@ typedef enum CaptureInterfaceStatEnum
     }
 }
 
-- (void)finishGetCaptureUserWithStat:(CaptureInterfaceStat)stat andResult:(NSObject *)result
+- (void)finishGetCaptureUserWithStat:(CaptureInterfaceStat)stat andResult:(NSDictionary *)result
                          forDelegate:(id <JRCaptureInterfaceDelegate>)delegate withContext:(NSObject *)context
 {
     DLog(@"");
@@ -240,7 +222,7 @@ typedef enum CaptureInterfaceStatEnum
     }
 }
 
-- (void)finishGetObjectWithStat:(CaptureInterfaceStat)stat andResult:(NSObject *)result
+- (void)finishGetObjectWithStat:(CaptureInterfaceStat)stat andResult:(NSDictionary *)result
                     forDelegate:(id <JRCaptureInterfaceDelegate>)delegate withContext:(NSObject *)context
 {
     DLog(@"");
@@ -302,7 +284,7 @@ typedef enum CaptureInterfaceStatEnum
     }
 }
 
-- (void)finishUpdateObjectWithStat:(CaptureInterfaceStat)stat andResult:(NSObject *)result
+- (void)finishUpdateObjectWithStat:(CaptureInterfaceStat)stat andResult:(NSDictionary *)result
                        forDelegate:(id <JRCaptureInterfaceDelegate>)delegate withContext:(NSObject *)context
 {
     DLog(@"");
@@ -373,7 +355,7 @@ typedef enum CaptureInterfaceStatEnum
 
 }
 
-- (void)finishReplaceObjectWithStat:(CaptureInterfaceStat)stat andResult:(NSObject *)result
+- (void)finishReplaceObjectWithStat:(CaptureInterfaceStat)stat andResult:(NSDictionary *)result
                         forDelegate:(id <JRCaptureInterfaceDelegate>)delegate withContext:(NSObject *)context
 {
     DLog(@"");
@@ -442,7 +424,7 @@ typedef enum CaptureInterfaceStatEnum
 
 }
 
-- (void)finishReplaceArrayWithStat:(CaptureInterfaceStat)stat andResult:(NSObject *)result
+- (void)finishReplaceArrayWithStat:(CaptureInterfaceStat)stat andResult:(NSDictionary *)result
                        forDelegate:(id <JRCaptureInterfaceDelegate>)delegate withContext:(NSObject *)context
 {
     DLog(@"");
@@ -559,7 +541,7 @@ typedef enum CaptureInterfaceStatEnum
             startReplaceArray:captureArray atPath:entityPath withToken:token forDelegate:delegate withContext:context];
 }
 
-- (void)connectionDidFinishLoadingWithPayload:(NSString*)payload request:(NSURLRequest*)request andTag:(id)userData
+- (void)connectionDidFinishLoadingWithPayload:(NSString *)payload request:(NSURLRequest*)request andTag:(id)userData
 {
     DLog(@"%@", payload);
 
@@ -572,33 +554,29 @@ typedef enum CaptureInterfaceStatEnum
 
     id<JRCaptureInterfaceDelegate> delegate = [tag objectForKey:@"delegate"];
 
-    if ([action isEqualToString:cCreateUser])
-    {
-        [self finishCreateCaptureUserWithStat:stat andResult:payload forDelegate:delegate withContext:context];
-    }
-    else if ([action isEqualToString:cSignInUser])
+    if ([action isEqualToString:cSignInUser])
     {
         [self finishSignInUserWithPayload:payload context:context response:response stat:stat delegate:delegate];
     }
     else if ([action isEqualToString:cGetUser])
     {
-        [self finishGetCaptureUserWithStat:stat andResult:payload forDelegate:delegate withContext:context];
+        [self finishGetCaptureUserWithStat:stat andResult:response forDelegate:delegate withContext:context];
     }
     else if ([action isEqualToString:cGetObject])
     {
-        [self finishGetObjectWithStat:stat andResult:payload forDelegate:delegate withContext:context];
+        [self finishGetObjectWithStat:stat andResult:response forDelegate:delegate withContext:context];
     }
     else if ([action isEqualToString:cUpdateObject])
     {
-        [self finishUpdateObjectWithStat:stat andResult:payload forDelegate:delegate withContext:context];
+        [self finishUpdateObjectWithStat:stat andResult:response forDelegate:delegate withContext:context];
     }
     else if ([action isEqualToString:cReplaceObject])
     {
-        [self finishReplaceObjectWithStat:stat andResult:payload forDelegate:delegate withContext:context];
+        [self finishReplaceObjectWithStat:stat andResult:response forDelegate:delegate withContext:context];
     }
     else if ([action isEqualToString:cReplaceArray])
     {
-        [self finishReplaceArrayWithStat:stat andResult:payload forDelegate:delegate withContext:context];
+        [self finishReplaceArrayWithStat:stat andResult:response forDelegate:delegate withContext:context];
     }
 }
 
@@ -675,11 +653,7 @@ typedef enum CaptureInterfaceStatEnum
                                     [NSNumber numberWithInteger:JRCaptureLocalApidErrorConnectionDidFail], @"code",
                                     nil];
 
-    if ([action isEqualToString:cCreateUser])
-    {
-        [self finishCreateCaptureUserWithStat:StatFail andResult:result forDelegate:delegate withContext:context];
-    }
-    else if ([action isEqualToString:cSignInUser])
+    if ([action isEqualToString:cSignInUser])
     {
         [self finishSignInFailureWithResult:result forDelegate:delegate withContext:context];
     }

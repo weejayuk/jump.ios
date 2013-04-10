@@ -42,7 +42,7 @@
     return [[[JRCaptureUserApidHandler alloc] init] autorelease];
 }
 
-- (void)getCaptureUserDidFailWithResult:(NSObject *)result context:(NSObject *)context
+- (void)getCaptureUserDidFailWithResult:(NSDictionary *)result context:(NSObject *)context
 {
     DLog(@"");
     NSDictionary *myContext = (NSDictionary *) context;
@@ -90,7 +90,8 @@
 
 @implementation JRCaptureUser (JRCaptureUser_Extras)
 
-+ (void)fetchCaptureUserFromServerForDelegate:(id <JRCaptureUserDelegate>)delegate context:(NSObject *)context
++ (void)fetchCaptureUserFromServerForDelegate:(id<JRCaptureUserDelegate>)delegate
+                                      context:(NSObject *)context __unused
 {
     DLog(@"");
     NSDictionary *newContext = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -108,12 +109,14 @@
     return [JRCaptureUser captureUserObjectFromDictionary:dictionary withPath:@""];
 }
 
-+ (void)testCaptureUserApidHandlerGetCaptureUserDidFailWithResult:(NSObject *)result context:(NSObject *)context
++ (void)testCaptureUserApidHandlerGetCaptureUserDidFailWithResult:(NSDictionary *)result
+                                                          context:(NSObject *)context __unused
 {
     [[JRCaptureUserApidHandler captureUserApidHandler] getCaptureUserDidFailWithResult:result context:context];
 }
 
-+ (void)testCaptureUserApidHandlerGetCaptureUserDidSucceedWithResult:(NSObject *)result context:(NSObject *)context
++ (void)testCaptureUserApidHandlerGetCaptureUserDidSucceedWithResult:(NSDictionary *)result
+                                                             context:(NSObject *)context __unused
 {
     [[JRCaptureUserApidHandler captureUserApidHandler] getCaptureUserDidSucceedWithResult:result context:context];
 }

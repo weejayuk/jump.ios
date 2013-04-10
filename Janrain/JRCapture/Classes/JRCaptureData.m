@@ -168,7 +168,7 @@ static JRCaptureData *singleton = nil;
 
     JRCaptureData *captureData = [JRCaptureData sharedCaptureData];
     NSString *redirectUri = [singleton redirectUri];
-    NSString *thinReg = [JRCaptureData sharedCaptureData].captureEnableThinRegistration ? @"true" : @"false";
+    //NSString *thinReg = [JRCaptureData sharedCaptureData].captureEnableThinRegistration ? @"true" : @"false";
     NSMutableDictionary *urlArgs = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                                                 captureData.clientId, @"client_id",
                                                                 captureData.captureLocale, @"locale",

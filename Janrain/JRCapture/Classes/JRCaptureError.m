@@ -249,7 +249,7 @@ NSString *const kJRCaptureErrorDomain = @"JRCapture.ErrorDomain";
     return [((JRCaptureError *) self) mergeToken];
 }
 
-- (NSString *)JRPreregistrationRecord
+- (JRCaptureUser *)JRPreregistrationRecord
 {
     if (![self isKindOfClass:[JRCaptureError class]] || ![self isJRTwoStepRegFlowError]) return nil;
     return [((JRCaptureError *) self) preRegistrationRecord];

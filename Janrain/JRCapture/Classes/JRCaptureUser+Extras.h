@@ -92,7 +92,7 @@
  *   asynchronous Capture methods to facilitate correlation of the response messages with the calling code. Use of the
  *   context is entirely optional and at your discretion.
  **/
-+ (void)fetchCaptureUserFromServerForDelegate:(id<JRCaptureUserDelegate>)delegate context:(NSObject *)context;
++ (void)fetchCaptureUserFromServerForDelegate:(id<JRCaptureUserDelegate>)delegate context:(NSObject *)context __unused;
 
 /**
  * @internal

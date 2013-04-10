@@ -30,6 +30,7 @@
 
 
 #import <Foundation/Foundation.h>
+#import "JRCaptureUser.h"
 
 /**
  * @file
@@ -170,4 +171,5 @@ typedef enum
 - (NSString *)JRMergeFlowConflictedProvider;
 - (NSString *)JRMergeFlowExistingProvider;
 - (NSString *)JRMergeToken;
+- (JRCaptureUser *)JRPreregistrationRecord;
 @end
