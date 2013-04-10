@@ -1,3 +1,5 @@
+v3.0.6
+ - Fixes a build error with the Phonegap Plugin
 v3.0.5
  - Updates to the user generator model to fix merging bug in new script feature
 v3.0.4
