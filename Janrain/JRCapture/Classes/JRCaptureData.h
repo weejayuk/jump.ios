@@ -32,7 +32,6 @@
 
 /**
  * @internal
- * Intended for internal use. Please see JRCapture.h
  */
 @interface JRCaptureData : NSObject
 @property(nonatomic, retain) NSString *bpChannelUrl;
@@ -41,19 +40,25 @@
 @property(nonatomic, readonly, retain) NSString *accessToken;
 @property(nonatomic, readonly, retain) NSString *creationToken;
 @property(nonatomic, readonly, retain) NSString *captureLocale;
-@property(nonatomic, readonly, retain) NSString *captureFormName;
+@property(nonatomic, readonly, retain) NSString *captureSignInFormName;
 @property(nonatomic, readonly, retain) NSString *captureFlowName;
 @property(nonatomic, readonly) JRConventionalSigninType captureTradSignInType;
+@property(nonatomic, readonly, retain) NSString *captureRegistrationFormName;
+@property(nonatomic, readonly, retain) NSString *captureFlowVersion;
+@property(nonatomic, readonly, retain) NSString *captureAppId;
+@property(nonatomic, readonly, retain) NSDictionary *captureFlow;
 
-+ (void)setAccessToken:(NSString *)newAccessToken;
-+ (void)setCreationToken:(NSString *)newCreationToken;
++ (void)setAccessToken:(NSString *)token;
++ (void)setCreationToken:(NSString *)token;
 
-+ (void)     setCaptureDomain:(NSString *)captureDomain captureClientId:(NSString *)clientId
-                captureLocale:(NSString *)captureLocale captureFormName:(NSString *)captureFormName
-              captureFlowName:(NSString *)captureFlowName captureEnableThinRegistration:(BOOL)enableThinRegistration
- captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType;
++     (void)setCaptureDomain:(NSString *)captureDomain captureClientId:(NSString *)clientId
+               captureLocale:(NSString *)captureLocale captureSignInFormName:(NSString *)captureSignInFormName
+             captureFlowName:(NSString *)captureFlowName captureEnableThinRegistration:(BOOL)enableThinRegistration
+captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType
+ captureRegistrationFormName:(NSString *)captureRegistrationFormName captureFlowVersion:(NSString *)captureFlowVersion
+                captureAppId:(NSString *)captureAppId;
 
-+ (NSString *)captureMobileEndpointUrlWithMergeToken:(NSString *)mergeToken;
++ (NSString *)captureMobileEndpointUrlWithMergeToken:(NSString *)token;
 
 + (void)clearSignInState;
 
@@ -61,4 +66,5 @@
 
 - (NSString *)redirectUri;
 
+- (void)loadFlow;
 @end

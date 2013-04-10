@@ -33,6 +33,7 @@
 #import "JRCaptureData.h"
 #import "SFHFKeychainUtils.h"
 #import "NSDictionary+QueryParams.h"
+#import "JRConnectionManager.h"
 
 #define cJRCaptureKeychainIdentifier @"capture_tokens.janrain"
 #define cJRCaptureKeychainUserName @"capture_user"
@@ -65,6 +66,9 @@ typedef enum
     JRTokenTypeCreation,
 } JRTokenType;
 
+static NSString *const FLOW_ETAG_KEY = @"JR_capture_flow_etag";
+static NSString *const FLOW_KEY = @"JR_capture_flow";
+
 @interface JRCaptureData ()
 + (NSString *)retrieveTokenFromKeychainOfType:(JRTokenType)tokenType;
 
@@ -73,11 +77,14 @@ typedef enum
 @property(nonatomic, retain) NSString *accessToken;
 @property(nonatomic, retain) NSString *creationToken;
 @property(nonatomic, retain) NSString *captureLocale;
-@property(nonatomic, retain) NSString *captureFormName;
+@property(nonatomic, retain) NSString *captureSignInFormName;
 @property(nonatomic, retain) NSString *captureFlowName;
 @property(nonatomic) JRConventionalSigninType captureTradSignInType;
 @property(nonatomic) BOOL captureEnableThinRegistration;
-
+@property(nonatomic, retain) NSString *captureRegistrationFormName;
+@property(nonatomic, retain) NSString *captureFlowVersion;
+@property(nonatomic, retain) NSString *captureAppId;
+@property(nonatomic, retain) NSDictionary *captureFlow;
 @end
 
 @implementation JRCaptureData
@@ -89,10 +96,13 @@ static JRCaptureData *singleton = nil;
 @synthesize creationToken;
 @synthesize bpChannelUrl;
 @synthesize captureLocale;
-@synthesize captureFormName;
+@synthesize captureSignInFormName;
 @synthesize captureTradSignInType;
 @synthesize captureFlowName;
-
+@synthesize captureRegistrationFormName;
+@synthesize captureFlowVersion;
+@synthesize captureAppId;
+@synthesize captureFlow;
 
 - (JRCaptureData *)init
 {
@@ -107,7 +117,8 @@ static JRCaptureData *singleton = nil;
 
 + (JRCaptureData *)sharedCaptureData
 {
-    if (singleton == nil) {
+    if (singleton == nil)
+    {
         singleton = [((JRCaptureData*)[super allocWithZone:NULL]) init];
     }
 
@@ -141,7 +152,7 @@ static JRCaptureData *singleton = nil;
     return self;
 }
 
-+ (NSString *)captureMobileEndpointUrlWithMergeToken:(NSString *)mergeToken
++ (NSString *)captureMobileEndpointUrlWithMergeToken:(NSString *)token
 {
     /**
     * client_id
@@ -168,7 +179,7 @@ static JRCaptureData *singleton = nil;
 
     if (captureData.captureFlowName) [urlArgs setObject:captureData.captureFlowName forKey:@"flow_name"];
     if (captureData.bpChannelUrl) [urlArgs setObject:captureData.bpChannelUrl forKey:@"bp_channel"];
-    if (mergeToken) [urlArgs setObject:mergeToken forKey:@"merge_token"];
+    if (token) [urlArgs setObject:token forKey:@"merge_token"];
 
     NSString *getParams = [urlArgs asGetQueryParamString];
     return [NSString stringWithFormat:@"%@/oauth/auth_native?%@", captureData.captureBaseUrl, getParams];
@@ -179,20 +190,128 @@ static JRCaptureData *singleton = nil;
     return [NSString stringWithFormat:@"%@/cmeu", singleton.captureBaseUrl];
 }
 
-+ (void)     setCaptureDomain:(NSString *)captureDomain captureClientId:(NSString *)clientId
-                captureLocale:(NSString *)captureLocale captureFormName:(NSString *)captureFormName
-              captureFlowName:(NSString *)captureFlowName captureEnableThinRegistration:(BOOL)enableThinRegistration
- captureTraditionalSignInType:(JRConventionalSigninType) tradSignInType;
++     (void)setCaptureDomain:(NSString *)captureDomain captureClientId:(NSString *)clientId
+               captureLocale:(NSString *)captureLocale captureSignInFormName:(NSString *)captureSignInFormName
+             captureFlowName:(NSString *)captureFlowName captureEnableThinRegistration:(BOOL)enableThinRegistration
+captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType
+ captureRegistrationFormName:(NSString *)captureRegistrationFormName captureFlowVersion:(NSString *)captureFlowVersion
+                captureAppId:(NSString *)captureAppId
 {
     JRCaptureData *captureDataInstance = [JRCaptureData sharedCaptureData];
 
     captureDataInstance.captureBaseUrl = [captureDomain urlStringFromBaseDomain];
     captureDataInstance.clientId = clientId;
     captureDataInstance.captureLocale = captureLocale;
-    captureDataInstance.captureFormName = captureFormName;
+    captureDataInstance.captureSignInFormName = captureSignInFormName;
     captureDataInstance.captureFlowName = captureFlowName;
     captureDataInstance.captureEnableThinRegistration = enableThinRegistration;
     captureDataInstance.captureTradSignInType = tradSignInType;
+    captureDataInstance.captureRegistrationFormName = captureRegistrationFormName;
+    captureDataInstance.captureFlowVersion = captureFlowVersion;
+    captureDataInstance.captureAppId = captureAppId;
+    [captureDataInstance loadFlow];
+    [captureDataInstance downloadFlow];
+}
+
+- (void)loadFlow
+{
+    self.captureFlow = [[NSUserDefaults standardUserDefaults] objectForKey:FLOW_KEY];
+    if (![captureFlow isKindOfClass:[NSDictionary class]])
+    {
+        [self writeFlowEtag:nil];
+    }
+}
+
+- (void)downloadFlow
+{
+    // update this etag stuff
+    NSString *etag = [self loadFlowEtag];
+    NSString *flowVersion = self.captureFlowVersion ? self.captureFlowVersion : @"HEAD";
+
+    //dlzjvycct5xka
+    // http://d1lqe9temigv1p.cloudfront.net/widget_data/flows/q3w3ktgthxwsq9qyh3kuejj4pk/webView/7c6f7ac1-aaff-4726-95d0-f4918a4cfebd/en-US.json
+    NSString *flowUrlString =
+            [NSString stringWithFormat:@"https://dlzjvycct5xka.cloudfront.net/widget_data/flows/%@/%@/%@/%@.json",
+                                       self.captureAppId, self.captureFlowName, flowVersion, self.captureLocale];
+    NSMutableURLRequest *downloadRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:flowUrlString]];
+    if (etag) [downloadRequest setValue:etag forHTTPHeaderField:@"If-None-Match"];
+    [downloadRequest setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
+
+    [NSURLConnection sendAsynchronousRequest:downloadRequest queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *r, NSData *d, NSError *e)
+                           {
+                               if (e)
+                               {
+                                   ALog(@"Error downloading flow: %@", e);
+                                   return;
+                               }
+                               DLog(@"Fetched flow URL: %@", flowUrlString);
+                               [self processFlow:d response:(NSHTTPURLResponse *) r];
+                           }];
+}
+
+- (NSString *)loadFlowEtag
+{
+    return [[NSUserDefaults standardUserDefaults] stringForKey:FLOW_ETAG_KEY];
+}
+
+- (void)processFlow:(NSData *)flowData response:(NSHTTPURLResponse *)response
+{
+    if ([response statusCode] == 304)
+    {
+        DLog(@"not modified");
+        return;
+    }
+
+    NSError *jsonErr = nil;
+    NSObject *parsedFlow = [NSJSONSerialization JSONObjectWithData:flowData options:0 error:&jsonErr];
+
+    if (jsonErr)
+    {
+        NSString *responseString = [NSHTTPURLResponse localizedStringForStatusCode:[response statusCode]];
+        ALog(@"Error parsing flow JSON, response: %@", responseString);
+        ALog(@"Error parsing flow JSON, err: %@", [jsonErr description]);
+        return;
+    }
+    
+    if (![parsedFlow isKindOfClass:[NSDictionary class]])
+    {
+        ALog(@"Error parsing flow JSON, top level object was not a hash...: %@", [parsedFlow description]);
+        return;
+    }
+
+    self.captureFlow = (NSDictionary *) parsedFlow;
+    DLog(@"Parsed flow, version: %@", [self flowVersion]);
+    
+    [self writeCaptureFlow];
+
+    NSString *etag = [[response allHeaderFields] objectForKey:@"etag"];
+    [self writeFlowEtag:etag];
+}
+
+- (NSString *)flowVersion
+{
+    id version = [captureFlow objectForKey:@"version"];
+    if ([version isKindOfClass:[NSString class]]) return version;
+    ALog(@"Error parsing flow version: %@", version);
+    return nil;
+}
+
+- (void)writeCaptureFlow
+{
+    [[NSUserDefaults standardUserDefaults] setValue:captureFlow forKey:FLOW_KEY];
+}
+
+- (void)writeFlowEtag:(NSString *)etag
+{
+    DLog(@"etag: %@", etag);
+    if (etag)
+    {
+        [[NSUserDefaults standardUserDefaults] setValue:etag forKey:FLOW_ETAG_KEY];
+        return;
+    }
+
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:FLOW_ETAG_KEY];
 }
 
 + (NSString *)serviceNameForTokenType:(JRTokenType)tokenType
@@ -254,9 +373,9 @@ static JRCaptureData *singleton = nil;
     }
 }
 
-+ (void)setAccessToken:(NSString *)newAccessToken
++ (void)setAccessToken:(NSString *)token
 {
-    [JRCaptureData saveNewToken:newAccessToken ofType:JRTokenTypeAccess];
+    [JRCaptureData saveNewToken:token ofType:JRTokenTypeAccess];
 }
 
 + (NSString *)getAccessToken __unused
@@ -264,9 +383,9 @@ static JRCaptureData *singleton = nil;
     return [JRCaptureData sharedCaptureData].accessToken;
 }
 
-+ (void)setCreationToken:(NSString *)newCreationToken
++ (void)setCreationToken:(NSString *)token
 {
-    [JRCaptureData saveNewToken:newCreationToken ofType:JRTokenTypeCreation];
+    [JRCaptureData saveNewToken:token ofType:JRTokenTypeCreation];
 }
 
 + (NSString *)accessToken __unused
@@ -292,14 +411,20 @@ static JRCaptureData *singleton = nil;
     [captureBaseUrl release];
     [captureFlowName release];
     [captureLocale release];
-    [captureFormName release];
+    [captureSignInFormName release];
     [bpChannelUrl release];
+    [captureRegistrationFormName release];
+    [captureFlowVersion release];
+    [captureRegistrationFormName release];
+    [captureFlowVersion release];
+    [captureAppId release];
+    [captureAppId release];
+    [captureFlow release];
     [super dealloc];
 }
 
 + (void)clearSignInState
 {
-    DLog(@"");
     [JRCaptureData deleteTokenFromKeychainOfType:JRTokenTypeAccess];
     [JRCaptureData deleteTokenFromKeychainOfType:JRTokenTypeCreation];
     [JRCaptureData sharedCaptureData].accessToken = nil;

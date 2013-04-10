@@ -32,46 +32,12 @@
  Date:   Tuesday, June 1, 2010
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#ifdef DEBUG
-#define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-#else
-#define DLog(...)
-#endif
-
-#define ALog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-
+#import "debug_log.h"
 #import "JRSessionData.h"
 #import "JREngageError.h"
 
-#pragma mark server_urls
-//#define ENGAGE_STAGING_SERVER
-//#define ENGAGE_TESTING_SERVER
-//#define LOCAL_ENGAGE_SERVER
-//#define NATHAN_ENGAGE_SERVER
-//#define OLEG_ENGAGE_SERVER
-#ifdef ENGAGE_STAGING_SERVER
-static NSString * const serverUrl = @"https://rpxstaging.com";
-#else
-#ifdef ENGAGE_TESTING_SERVER
-static NSString * const serverUrl = @"https://rpxtesting.com";
-#else
-#ifdef LOCAL_ENGAGE_SERVER
-static NSString * const serverUrl = @"http://lilli.janrain.com:8080";
-#else
-#ifdef NATHAN_ENGAGE_SERVER
-static NSString * const serverUrl = @"http://nathan-dev.janrain.com:8080";
-#else
-#ifdef OLEG_ENGAGE_SERVER
-static NSString * const serverUrl = @"http://oleg.janrain.com:8080";
-#else
-static NSString * const serverUrl = @"https://rpxnow.com";
-#endif
-#endif
-#endif
-#endif
-#endif
-
 #pragma mark consts
+static NSString * const serverUrl = @"https://rpxnow.com";
 /* Lists of the standard names for providers' logo and icons */
 static NSString * const iconNames[] = { @"icon_%@_30x30.png",
                                          @"icon_%@_30x30@2x.png",
@@ -89,6 +55,12 @@ static NSString * const iconNamesSocial[] = { @"icon_%@_30x30.png",
                                                 @"button_%@_280x40.png",
                                                 @"button_%@_280x40@2x.png", nil };
 
+static NSString *const GET_CONFIGURATION_TAG = @"getConfiguration";
+static NSString *const CONFIG_KEY_ETAG = @"jrengage.sessionData.configurationEtag";
+static NSString *const CONFIG_KEY_GIT_COMMIT = @"jrengage.sessionData.engageCommit";
+static NSString *const CONFIG_KEY_PROVIDER_INFO = @"provider_info";
+
+static NSString *const CONFIG_KEY_BASEURL = @"baseurl";
 #define cJRAuthenticatedUsersByProvider @"jrengage.sessionData.authenticatedUsersByProvider"
 #define cJRAllProviders                 @"jrengage.sessionData.allProviders"
 #define cJRBasicProviders               @"jrengage.sessionData.basicProviders"
@@ -154,7 +126,8 @@ static NSString* applicationBundleDisplayName()
 
 #pragma mark JRAuthenticatedUser ()
 @interface JRAuthenticatedUser ()
-- (id)initUserWithDictionary:(NSDictionary*)dictionary andWelcomeString:(NSString*)welcomeString forProviderNamed:(NSString*)providerName;
+- (id)initUserWithDictionary:(NSDictionary*)dictionary andWelcomeString:(NSString*)welcomeString
+            forProviderNamed:(NSString*)providerName;
 @end
 
 @implementation JRAuthenticatedUser
@@ -165,7 +138,8 @@ static NSString* applicationBundleDisplayName()
 @synthesize providerName      = _providerName;
 @synthesize welcomeString     = _welcomeString;
 
-- (id)initUserWithDictionary:(NSDictionary*)dictionary andWelcomeString:(NSString*)welcomeString forProviderNamed:(NSString*)providerName
+- (id)initUserWithDictionary:(NSDictionary*)dictionary andWelcomeString:(NSString*)welcomeString
+            forProviderNamed:(NSString*)providerName
 {
     if (dictionary == nil || providerName == nil || (void*)[dictionary objectForKey:@"device_token"] == kCFNull)
     {
@@ -247,9 +221,6 @@ static NSString* applicationBundleDisplayName()
             _deviceToken = [[coder decodeObjectForKey:@"device_token"] retain];
     }
 
-//    if (!_providerName)
-//        [self release], self = nil;
-
     return self;
 }
 
@@ -257,7 +228,8 @@ static NSString* applicationBundleDisplayName()
 {
     NSError *error = nil;
     [SFHFKeychainUtils deleteItemForUsername:_providerName
-                              andServiceName:[NSString stringWithFormat:@"%@.%@.", cJREngageKeychainIdentifier, applicationBundleDisplayNameAndIdentifier()]
+                              andServiceName:[NSString stringWithFormat:@"%@.%@.", cJREngageKeychainIdentifier,
+                                                       applicationBundleDisplayNameAndIdentifier()]
                                        error:&error];
     if (error)
         ALog (@"Error deleting device token from keychain: %@", [error localizedDescription]);
@@ -265,8 +237,6 @@ static NSString* applicationBundleDisplayName()
 
 - (void)dealloc
 {
-    // Question to self: Are we ever going to be leaking these?  Assuming correct retain counting,
-    // these should dealloc when the user is signed out.
     [self removeDeviceTokenFromKeychain];
 
     DLog (@"");
@@ -276,7 +246,7 @@ static NSString* applicationBundleDisplayName()
     [_preferredUsername release];
     [_deviceToken release];
     [_welcomeString release];
-
+    [_displayName release];
     [super dealloc];
 }
 @end
@@ -307,8 +277,6 @@ static NSString* applicationBundleDisplayName()
     [userInput retain], [_userInput release];
     _userInput = userInput;
 
- /* Save our dynamic variables, in case we ever need to re-initialize a provider object, the init... functions can pull these
-    from the user defaults. */
     [[NSUserDefaults standardUserDefaults] setValue:_userInput
                                              forKey:[NSString stringWithFormat:cJRProviderUserInput, self.name]];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -319,17 +287,12 @@ static NSString* applicationBundleDisplayName()
 {
     _forceReauth = forceReauth;
 
- /* Save our dynamic variables, in case we ever need to re-initialize a provider object, the init... functions can pull these
-    from the user defaults. */
     [[NSUserDefaults standardUserDefaults] setBool:_forceReauth
                                             forKey:[NSString stringWithFormat:cJRProviderForceReauth, self.name]];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-/* For a number of reasons, we may need to reload the configuration information for our providers.  Because these variables
-   are dynamic (i.e., not returned in the block of configuration code), we need to save them elsewhere and call them by our
-   init... functions. */
-- (void)loadDynamicVariables
+- (void)loadLocalConfig
 {
     _userInput     = [[[NSUserDefaults standardUserDefaults]
                        stringForKey:[NSString stringWithFormat:cJRProviderUserInput, _name]] retain];
@@ -380,7 +343,7 @@ static NSString* applicationBundleDisplayName()
         if ([_socialSharingProperties count])
             _social = YES;
 
-        [self loadDynamicVariables];
+        [self loadLocalConfig];
     }
 
     return self;
@@ -413,7 +376,7 @@ static NSString* applicationBundleDisplayName()
         _socialSharingProperties = [[coder decodeObjectForKey:cJRProviderSocialSharingProperties] retain];
         _cookieDomains           = [[coder decodeObjectForKey:cJRProviderCookieDomains] retain];
     }
-    [self loadDynamicVariables];
+    [self loadLocalConfig];
 
     return self;
 }
@@ -443,14 +406,11 @@ static NSString* applicationBundleDisplayName()
 
 #pragma mark JRSessionData
 @interface JRSessionData ()
-@property (copy)   NSString *appId;
+@property (retain) NSString *appId;
 @property (retain) NSError  *error;
 @property (retain) NSString *updatedEtag;
 @property (retain) NSString *gitCommit;
-@property (retain) NSString *savedConfigurationBlock;
-- (NSError*)startGetConfiguration;
-- (NSError*)finishGetConfiguration:(NSString*)dataStr;
-- (void)startGetShortenedUrlsForActivity:(JRActivityObject*)theActivity;
+@property (retain) NSDictionary *savedConfigurationBlock;
 @end
 
 @implementation JRSessionData
@@ -472,8 +432,6 @@ static NSString* applicationBundleDisplayName()
 @synthesize gitCommit;
 @synthesize savedConfigurationBlock;
 @synthesize canRotate;
-@synthesize captureWidget = _captureWidget;
-
 
 #pragma mark singleton_methods
 static JRSessionData* singleton = nil;
@@ -500,11 +458,6 @@ static JRSessionData* singleton = nil;
 #pragma mark accessors
 - (NSString*)returningBasicProvider
 {
-// /* This is here so that when a calling application sets skipReturningUserLandingPage, the dialog always opens
-//    to the providers list, and never opens to the returning user landing page. */
-//    if (skipReturningUserLandingPage)
-//        return nil;
-
     return returningBasicProvider;
 }
 
@@ -514,12 +467,14 @@ static JRSessionData* singleton = nil;
 }
 
 - (void)setDialogIsShowing:(BOOL)isShowing
-{/* If we found out that the configuration changed while a dialog was showing, we saved it until the dialog wasn't showing
-    since the dialogs dynamically load our data. Now that the dialog isn't showing, load the saved configuration information. */
+{
+    /* If we found out that the configuration changed while a dialog was showing, we saved it until the dialog wasn't
+       showing since the dialogs dynamically load our data. Now that the dialog isn't showing, load the saved
+       configuration information. */
     if (!isShowing && savedConfigurationBlock)
-        self.error = [self finishGetConfiguration:savedConfigurationBlock];
+        self.error = [self updateConfig:savedConfigurationBlock];
 
- /* If the dialog is going away, then we don't still need to shorten the urls */
+    /* If the dialog is going away, then we don't still need to shorten the urls */
     if (!isShowing)
         stillNeedToShortenUrls = NO;
 
@@ -596,25 +551,27 @@ static JRSessionData* singleton = nil;
         /* Load the list of social providers */
         socialProviders = [[[NSUserDefaults standardUserDefaults] objectForKey:cJRSocialProviders] retain];
 
-        /* Load the list of icons that the library should re-attempt to download, in case previous attempts failed for whatever reason */
+        /* Load the list of icons that the library should re-attempt to download, in case previous attempts failed 
+           for whatever reason */
         NSData *archivedIconsStillNeeded = [[NSUserDefaults standardUserDefaults] objectForKey:cJRIconsStillNeeded];
         if (archivedIconsStillNeeded != nil)
         {
-            NSDictionary *unarchivedIconsStillNeeded = [NSKeyedUnarchiver unarchiveObjectWithData:archivedIconsStillNeeded];
-            if (unarchivedIconsStillNeeded != nil)
-                iconsStillNeeded = [[NSMutableDictionary alloc] initWithDictionary:unarchivedIconsStillNeeded];
+            NSDictionary *iconsStillNeeded_ = [NSKeyedUnarchiver unarchiveObjectWithData:archivedIconsStillNeeded];
+            if (iconsStillNeeded_ != nil)
+                iconsStillNeeded = [[NSMutableDictionary alloc] initWithDictionary:iconsStillNeeded_];
         }
 
-        /* Load the set of providers that already have all of their icons; checking this list is faster than checking for the icons themselves */
-        NSData *archivedProvidersWithIcons = [[NSUserDefaults standardUserDefaults] objectForKey:cJRProvidersWithIcons];
-        if (archivedProvidersWithIcons != nil)
+        /* Load the set of providers that already have all of their icons; checking this list is faster than checking 
+           for the icons themselves */
+        NSData *providersWithIcons_ = [[NSUserDefaults standardUserDefaults] objectForKey:cJRProvidersWithIcons];
+        if (providersWithIcons_ != nil)
         {
-            NSSet *unarchivedProvidersWithIcons = [NSKeyedUnarchiver unarchiveObjectWithData:archivedProvidersWithIcons];
+            NSSet *unarchivedProvidersWithIcons = [NSKeyedUnarchiver unarchiveObjectWithData:providersWithIcons_];
             if (unarchivedProvidersWithIcons != nil)
                 providersWithIcons = [[NSMutableSet alloc] initWithSet:unarchivedProvidersWithIcons];
         }
 
-        /* Load the base url and whether or not we need to hide the tagline */
+        /* Load the base url and whether or not we need to hide the tag-line */
         baseUrl = [[[NSUserDefaults standardUserDefaults] stringForKey:cJRBaseUrl] retain];
         if (!baseUrl) /* The we assume this is the first time running the library ever */
             hidePoweredBy = YES; /* And say that hidePoweredBy is 'YES' for our Pro/Enterprise customers */
@@ -632,12 +589,15 @@ static JRSessionData* singleton = nil;
     return self;
 }
 
-+ (id)jrSessionDataWithAppId:(NSString*)newAppId tokenUrl:(NSString*)newTokenUrl andDelegate:(id<JRSessionDelegate>)newDelegate
++ (id)jrSessionDataWithAppId:(NSString*)newAppId tokenUrl:(NSString*)newTokenUrl 
+                 andDelegate:(id<JRSessionDelegate>)newDelegate
 {
     if(singleton)
         return [singleton reconfigureWithAppId:newAppId tokenUrl:newTokenUrl];
 
-    return [[((JRSessionData*)[super allocWithZone:nil]) initWithAppId:newAppId tokenUrl:newTokenUrl andDelegate:newDelegate] autorelease];
+    return [[((JRSessionData *)[super allocWithZone:nil]) initWithAppId:newAppId 
+                                                               tokenUrl:newTokenUrl 
+                                                            andDelegate:newDelegate] autorelease];
 }
 
 - (void)tryToReconfigureLibrary
@@ -690,8 +650,7 @@ static JRSessionData* singleton = nil;
     [JRConnectionManager createConnectionFromRequest:request forDelegate:self returnFullResponse:YES withTag:tag];
 }
 
-/* Download any icons that need to be downloaded */
-- (void)downloadAnyIcons:(NSMutableDictionary*)neededIcons
+- (void)downloadNeededIcons:(NSMutableDictionary *)neededIcons
 {
     DLog ("Icons that are still needed:\n%@", [iconsStillNeeded description]);
 
@@ -705,18 +664,15 @@ static JRSessionData* singleton = nil;
     }
 }
 
-- (void)checkForIcons:(NSString**)icons forProvider:(NSString*)providerName
+- (void)checkForNeededIcons:(NSString **)icons forProvider:(NSString*)providerName
 {
-//    DLog ("Checking providersWithIcons for %@:\n%@", providerName, [providersWithIcons description]);
-//    DLog ("Icons needed so far:\n%@", [iconsStillNeeded description]);
-
- /* If we've already found this provider's icons, they should be in this list; just return. */
+    /* If we've already found this provider's icons, they should be in this list; just return. */
     if ([providersWithIcons containsObject:providerName])
         return;
 
- /* If the provider isn't in the list, either the provider's icons need to be downloaded or this is
-    the first time this code was run (and no providers have been added to providersWithIcons yet).
-    If it's the latter, both these saved lists will probably be nil, so init them. */
+    /* If the provider isn't in the list, either the provider's icons need to be downloaded or this is the first time 
+       this code was run (and no providers have been added to providersWithIcons yet). If it's the latter, both these 
+       saved lists will probably be nil, so init them. */
     if (!providersWithIcons)
         providersWithIcons = [[NSMutableSet alloc] initWithCapacity:4];
 
@@ -725,7 +681,6 @@ static JRSessionData* singleton = nil;
 
     NSMutableSet *iconsNeeded = [NSMutableSet setWithCapacity:4];
 
- /* Iterate our static arrays of standard image names, insert the provider name, and check if they're there */
     for (int i = 0; icons[i]; i++)
     {
         if (![UIImage imageNamed:[NSString stringWithFormat:icons[i], providerName]])
@@ -734,20 +689,21 @@ static JRSessionData* singleton = nil;
             DLog ("Found icon: %@", [NSString stringWithFormat:icons[i], providerName]);
     }
 
-    if ([iconsNeeded count]) /* And if there are icons that aren't there, add them to the list of icons */
-        [iconsStillNeeded setObject:iconsNeeded forKey:providerName];   /*  that need to be downloaded. */
-    else /* Otherwise, add the provider to the providersWithIcons list so that we can check these much  */
-        [providersWithIcons addObject:providerName];                    /* quicker next time.           */
+    if ([iconsNeeded count])
+        [iconsStillNeeded setObject:iconsNeeded forKey:providerName];
+    else
+        [providersWithIcons addObject:providerName];
 }
 
 #pragma mark configuration
 - (NSString*)appNameAndVersion
-{   // TODO: Redo this
+{
+    // TODO: Redo this
     NSDictionary *infoPlist = [[NSBundle mainBundle] infoDictionary];
     NSString     *name      = [[[infoPlist objectForKey:@"CFBundleDisplayName"]
                                 stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
                                 stringByAddingUrlPercentEscapes];
-    NSString     *ident     = [[[infoPlist objectForKey:@"CFBundleIdentifier"]
+    NSString     *bundle    = [[[infoPlist objectForKey:@"CFBundleIdentifier"]
                                 stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
                                 stringByAddingUrlPercentEscapes];
 
@@ -759,7 +715,7 @@ static JRSessionData* singleton = nil;
                                 stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
                                 stringByAddingUrlPercentEscapes];
 
-    return [NSString stringWithFormat:@"appName=%@.%@3&version=%@_%@", name, ident, device, version];
+    return [NSString stringWithFormat:@"appName=%@.%@3&version=%@_%@", name, bundle, device, version];
 }
 
 - (NSError*)startGetConfiguration
@@ -768,190 +724,155 @@ static JRSessionData* singleton = nil;
     NSString *urlString = [NSString stringWithFormat:
                            @"%@/openid/mobile_config_and_baseurl?device=%@&appId=%@&%@",
                            serverUrl, device, appId, nameAndVersion];
-
     ALog (@"Getting configuration for RP: %@", urlString);
 
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+    NSMutableURLRequest *configRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
 
-    NSString *tag = @"getConfiguration";
+    if (![JRConnectionManager createConnectionFromRequest:configRequest forDelegate:self returnFullResponse:YES
+                                                  withTag:GET_CONFIGURATION_TAG])
+    {
+        NSString *errMsg = @"There was a problem connecting to the Janrain server while configuring authentication.";
+        return [JREngageError setError:errMsg withCode:JRUrlError];
+    }
 
-    if (![JRConnectionManager createConnectionFromRequest:request forDelegate:self returnFullResponse:YES withTag:tag])
-        return [JREngageError setError:@"There was a problem connecting to the Janrain server while configuring authentication."
-                              withCode:JRUrlError];
     return nil;
 }
 
-- (NSError*)finishGetConfiguration:(NSString*)dataStr
+- (NSError*)updateConfig:(NSDictionary *)configDict
 {
-    ALog (@"Configuration information needs to be updated.");
-
-    NSDictionary *jsonDict = (NSDictionary*)[dataStr objectFromJSONString];
-
-    /* Double-check the return value */
-    if (!jsonDict)
-    {
-        DLog(@"%@", dataStr);
-        return [JREngageError setError:@"There was a problem communicating with the Janrain server while configuring authentication."
-                              withCode:JRJsonError];
-    }
-
-    if (![jsonDict objectForKey:@"baseurl"] || ![jsonDict objectForKey:@"provider_info"])
-    {
-        DLog(@"%@", dataStr);
-        return [JREngageError setError:@"There was a problem communicating with the Janrain server while configuring authentication."
-                              withCode:JRConfigurationInformationError];
-    }
+    ALog (@"Updating JREngage configuration");
 
     [baseUrl release];
-    baseUrl = [[[jsonDict objectForKey:@"baseurl"]
-                stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"/"]] retain];
+    baseUrl = [[[configDict objectForKey:CONFIG_KEY_BASEURL]
+            stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"/"]] retain];
 
     if (stillNeedToShortenUrls && activity)
         [self startGetShortenedUrlsForActivity:activity];
     stillNeedToShortenUrls = NO;
 
-    /* Then save it */
     [[NSUserDefaults standardUserDefaults] setValue:baseUrl forKey:cJRBaseUrl];
-
-    /* Get the providers out of the provider_info section.  These are most likely to have changed. */
-    NSDictionary *providerInfo   = [NSDictionary dictionaryWithDictionary:[jsonDict objectForKey:@"provider_info"]];
+    NSDictionary *providerInfo = [configDict objectForKey:CONFIG_KEY_PROVIDER_INFO];
 
     [allProviders release];
-    allProviders = [[NSMutableDictionary alloc] initWithCapacity:[[providerInfo allKeys] count]];
+    allProviders = [NSMutableDictionary dictionary];
 
-    /* For each provider... */
     for (NSString *name in [providerInfo allKeys])
-    {   /* Get its dictionary, */
-        NSDictionary *dictionary = [providerInfo objectForKey:name];
-
-        /* use this to create a provider object, */
-        JRProvider *provider = [[[JRProvider alloc] initWithName:name
-                                                   andDictionary:dictionary] autorelease];
-
-        /* make sure we have this provider's icons, */
-        [self checkForIcons:((provider.social) ? (NSString**)iconNamesSocial : (NSString**)iconNames) forProvider:name];
-
-        /* and finally add the object to our dictionary of providers. */
+    {
+        NSDictionary *providerDict = [providerInfo objectForKey:name];
+        JRProvider *provider = [[[JRProvider alloc] initWithName:name andDictionary:providerDict] autorelease];
+        [self checkForNeededIcons:((provider.social) ? (NSString **) iconNamesSocial : (NSString **) iconNames)
+                      forProvider:name];
         [allProviders setObject:provider forKey:name];
     }
 
-    /* Save these now, in case the downloading of the icons gets interrupted for any reason */
     [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:iconsStillNeeded]
                                               forKey:cJRIconsStillNeeded];
     [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:providersWithIcons]
                                               forKey:cJRProvidersWithIcons];
-    [[NSUserDefaults standardUserDefaults] synchronize];
 
     [basicProviders release];
     [socialProviders release];
 
-    /* Get the ordered list of basic providers */
-    basicProviders = [[NSArray arrayWithArray:[jsonDict objectForKey:@"enabled_providers"]] retain];
+    basicProviders = [[configDict objectForKey:@"enabled_providers"] retain];
+    socialProviders = [[configDict objectForKey:@"social_providers"] retain];
 
-    /* Get the ordered list of social providers */
-    socialProviders = [[NSArray arrayWithArray:[jsonDict objectForKey:@"social_providers"]] retain];
-
-    /* yippie, yahoo! */
-
-    /* Then save our stuff */
     [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:allProviders]
                                               forKey:cJRAllProviders];
     [[NSUserDefaults standardUserDefaults] setObject:basicProviders forKey:cJRBasicProviders];
     [[NSUserDefaults standardUserDefaults] setObject:socialProviders forKey:cJRSocialProviders];
 
-    /* Figure out if we need to hide the tag line */
-    if ([[jsonDict objectForKey:@"hide_tagline"] isEqualToString:@"YES"])
-        hidePoweredBy = YES;
-    else
-        hidePoweredBy = NO;
-
-    /* And finally, save that too */
+    hidePoweredBy = ([[configDict objectForKey:@"hide_tagline"] isEqualToString:@"YES"]) ? YES : NO;
     [[NSUserDefaults standardUserDefaults] setBool:hidePoweredBy forKey:cJRHidePoweredBy];
 
-    /* Once we know that everything is parsed and saved correctly, save the new etag */
-    [[NSUserDefaults standardUserDefaults] setValue:updatedEtag forKey:@"jrengage.sessionData.configurationEtag"];
-
-    [[NSUserDefaults standardUserDefaults] setValue:gitCommit forKey:@"jrengage.sessionData.engageCommit"];
-
+    [[NSUserDefaults standardUserDefaults] setValue:updatedEtag forKey:CONFIG_KEY_ETAG];
+    [[NSUserDefaults standardUserDefaults] setValue:gitCommit forKey:CONFIG_KEY_GIT_COMMIT];
     [[NSUserDefaults standardUserDefaults] synchronize];
 
-    /* Now, download any missing icons */
-    [self downloadAnyIcons:iconsStillNeeded];
+    [self downloadNeededIcons:iconsStillNeeded];
 
-    /* Then nullify our saved configuration information */
     self.savedConfigurationBlock = nil;
     self.updatedEtag = nil;
 
     return nil;
 }
 
-- (NSError *)finishGetConfiguration:(NSString *)dataStr withEtag:(NSString *)etag
+- (NSError *)finishGetConfiguration:(NSString *)configJson response:(NSHTTPURLResponse *)response
 {
-    ALog (@"Configuration information downloaded: %@", dataStr);
+    ALog (@"Configuration information downloaded (%d): %@", [response statusCode], configJson);
 
+    NSDictionary *configDict = (NSDictionary *)[configJson objectFromJSONString];
+    NSString *err = @"There was a problem communicating with the Janrain server while configuring authentication.";
+    if (!configDict)
+    {
+        ALog(@"%@", configJson);
+        return [JREngageError setError:err withCode:JRJsonError];
+    }
+
+    if (![configDict objectForKey:CONFIG_KEY_BASEURL] || ![configDict objectForKey:CONFIG_KEY_PROVIDER_INFO])
+    {
+        ALog(@"%@", configJson);
+        return [JREngageError setError:err withCode:JRConfigurationInformationError];
+    }
+
+    self.updatedEtag = ([self etagFromResponse:response]);
+    self.gitCommit = ([self getCurrentCommit]);
+    
+    /* We can only update all of our data if the UI isn't currently using that information.  Otherwise, the library
+    may crash/behave inconsistently.  If a dialog isn't showing, go ahead and update new configuration information.
+
+    Or, in rare cases, there might not be any data at all (the lists of basic and social providers are nil),
+    perhaps because this is the first time the library was used and the configuration information is still
+    downloading. In these cases, the dialogs will display their view as greyed-out, with a spinning activity
+    indicator and a loading message, as they wait for the lists of providers to download, so we can go ahead and
+    update the configuration information here, too. The dialogs won't try and do anything until we're done updating
+    the lists. */
+    if (!dialogIsShowing
+            || ([basicProviders count] == 0 && !socialSharing)
+            || ([socialProviders count] == 0 && socialSharing))
+    {
+        return [self updateConfig:configDict];
+    }
+    else
+    {
+        self.savedConfigurationBlock = configDict;
+        return nil;
+    }
+}
+
+- (NSString *)etagFromResponse:(NSHTTPURLResponse *)response
+{
+    NSSet *etagKeys = [[response allHeaderFields] keysOfEntriesPassingTest:^(id key, id val, BOOL *stop)
+        {
+            if ([key isKindOfClass:[NSString class]] && [[key lowercaseString] isEqual:@"etag"])
+            {
+                *stop = YES;
+                return YES;
+            }
+            return NO;
+        }];
+    NSString *etag = [[response allHeaderFields] objectForKey:[etagKeys anyObject]];
+    return etag;
+}
+
+- (NSString *)getCurrentCommit
+{
     NSDictionary *infoPlist = [NSDictionary dictionaryWithContentsOfFile:
                                                     [[[NSBundle mainBundle] resourcePath]
                                                             stringByAppendingPathComponent:@"/JREngage-Info.plist"]];
 
-    NSString *currentCommit = [infoPlist objectForKey:@"JREngage.GitCommit"];
-    NSString *savedCommit = [[NSUserDefaults standardUserDefaults] stringForKey:@"jrengage.sessionData.engageCommit"];
-
-    NSString *oldEtag = [[NSUserDefaults standardUserDefaults] stringForKey:@"jrengage.sessionData.configurationEtag"];
-
-    /* If the downloaded configuration for this RP has changed, the http://mobile_config... URL's etag will have
-    changed, and we need to update our current configuration information.  Or, any time the JREngage library's code has
-    been changed and committed, the JREngage.GitCommit property in the JREngage-Info.plist will have changed to reflect
-    the current commit.  Since code changes may affect the objects that get synchronized, we need to update our current
-    configuration information when this occurs as well. We test for both of these cases by saving the last etag and
-    commit string, and comparing the saved value to the current value. Almost always, these will be the same, and we
-    are safe using our cached configuration data.  Lastly, if we are testing changes in the synchronization code, we
-    can temporarily set the currentCommit (JREngage.GitCommit) to "1", forcing library to reconfigure itself every
-    time. */
-    if (![oldEtag isEqualToString:etag]
-            || ![currentCommit isEqualToString:savedCommit] || [currentCommit isEqualToString:@"1"])
-    {
-        self.updatedEtag = etag;
-        self.gitCommit = currentCommit;
-
-        /* We can only update all of our data if the UI isn't currently using that information.  Otherwise, the library
-        may crash/behave inconsistently.  If a dialog isn't showing, go ahead and update new configuration information.
-
-        Or, in rare cases, there might not be any data at all (the lists of basic and social providers are nil),
-        perhaps because this is the first time the library was used and the configuration information is still
-        downloading. In these cases, the dialogs will display their view as greyed-out, with a spinning activity
-        indicator and a loading message, as they wait for the lists of providers to download, so we can go ahead and
-        update the configuration information here, too. The dialogs won't try and do anything until we're done updating
-        the lists. */
-        if (!dialogIsShowing)
-            return [self finishGetConfiguration:dataStr];
-        if ([basicProviders count] == 0 && !socialSharing)
-            return [self finishGetConfiguration:dataStr];
-        if ([socialProviders count] == 0 && socialSharing)
-            return [self finishGetConfiguration:dataStr];
-
-        /* Otherwise, we have to save all this information for later.  The UserInterfaceMaestro sends a
-           signal to sessionData when the dialog closes (by setting the boolean dialogIsShowing to "NO".
-           In the setter function, sessionData checks to see if there's anything stored in the
-           savedConfigurationBlock, and updates it then. */
-        self.savedConfigurationBlock = dataStr;
-    }
-    else
-    {/* Even if we don't reconfigure, there may be icons that we still need to download.
-        (This is also called at the end of the finishGetConfiguration method.) */
-        [self downloadAnyIcons:iconsStillNeeded];
-    }
-
-    return nil;
+    return [infoPlist objectForKey:@"JREngage.GitCommit"];
 }
 
 #pragma mark user_management
 - (BOOL)weShouldBeFirstResponder
 {
- /* If we're authenticating with a provider for social publishing, then don't worry about the return experience for basic authentication. */
+    /* If we're authenticating with a provider for social publishing, then don't worry about the return experience
+       for basic authentication. */
     if (socialSharing)
         return currentProvider.requiresInput;
 
- /* If we're authenticating with a basic provider, then we don't need to gather information if we're displaying return screen. */
+    /* If we're authenticating with a basic provider, then we don't need to gather information if we're displaying
+       return screen. */
     if ([currentProvider isEqualToReturningProvider:returningBasicProvider])
         return NO;
 
@@ -972,13 +893,13 @@ static JRSessionData* singleton = nil;
 {
     DLog (@"");
 
- /* If you are explicitly signing out a user for a provider, you should explicitly force reauthentication. */
+    /* If you are explicitly signing out a user for a provider, you should explicitly force reauthentication. */
     JRProvider* provider = [allProviders objectForKey:providerName];
     provider.forceReauth = YES;
 
     [authenticatedUsersByProvider removeObjectForKey:providerName];
-    [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:authenticatedUsersByProvider]
-                                              forKey:cJRAuthenticatedUsersByProvider];
+    NSData *usersData = [NSKeyedArchiver archivedDataWithRootObject:authenticatedUsersByProvider];
+    [[NSUserDefaults standardUserDefaults] setObject:usersData forKey:cJRAuthenticatedUsersByProvider];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
@@ -993,8 +914,8 @@ static JRSessionData* singleton = nil;
     }
 
     [authenticatedUsersByProvider removeAllObjects];
-    [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:authenticatedUsersByProvider]
-                                              forKey:cJRAuthenticatedUsersByProvider];
+    NSData *usersData = [NSKeyedArchiver archivedDataWithRootObject:authenticatedUsersByProvider];
+    [[NSUserDefaults standardUserDefaults] setObject:usersData forKey:cJRAuthenticatedUsersByProvider];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
@@ -1082,7 +1003,7 @@ static JRSessionData* singleton = nil;
     return nil;
 }
 
-- (void)deleteWebviewCookiesForDomains:(NSArray*)domains
+- (void)deleteWebViewCookiesForDomains:(NSArray*)domains
 {
     NSHTTPCookieStorage* cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage];
 
@@ -1090,12 +1011,14 @@ static JRSessionData* singleton = nil;
     for (NSString *domain in domains)
     {
         /* http:// */
-        cookiesWithDomain = [cookies cookiesForURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@", domain]]];
+        NSString *domainBaseUrl = [NSString stringWithFormat:@"http://%@", domain];
+        cookiesWithDomain = [cookies cookiesForURL:[NSURL URLWithString:domainBaseUrl]];
         for (NSHTTPCookie* cookie in cookiesWithDomain)
             [cookies deleteCookie:cookie];
 
         /* https:// */
-        cookiesWithDomain = [cookies cookiesForURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://%@", domain]]];
+        domainBaseUrl = [NSString stringWithFormat:@"https://%@", domain];
+        cookiesWithDomain = [cookies cookiesForURL:[NSURL URLWithString:domainBaseUrl]];
         for (NSHTTPCookie* cookie in cookiesWithDomain)
             [cookies deleteCookie:cookie];
     }
@@ -1156,7 +1079,7 @@ static JRSessionData* singleton = nil;
 
     // TODO: currentProvider => currentlyAuthenticatingProvider
     if (weNeedToForceReauth)
-        [self deleteWebviewCookiesForDomains:currentProvider.cookieDomains];
+        [self deleteWebViewCookiesForDomains:currentProvider.cookieDomains];
 
     str = [NSString stringWithFormat:@"%@%@?%@%@device=%@&extended=true",
            baseUrl,
@@ -1574,10 +1497,9 @@ CALL_DELEGATE_SELECTOR:
     NSArray *delegatesCopy = [NSArray arrayWithArray:delegates];
     for (id<JRSessionDelegate> delegate in delegatesCopy)
     {
-        if ([delegate respondsToSelector:@selector(authenticationDidReachTokenUrl:withResponse:andPayload:forProvider:)])
-            [delegate authenticationDidReachTokenUrl:_tokenUrl
-                                        withResponse:fullResponse
-                                          andPayload:payload
+        SEL tokenUrlSelector = @selector(authenticationDidReachTokenUrl:withResponse:andPayload:forProvider:);
+        if ([delegate respondsToSelector:tokenUrlSelector])
+            [delegate authenticationDidReachTokenUrl:_tokenUrl withResponse:fullResponse andPayload:payload
                                          forProvider:providerName];
     }
 }
@@ -1586,11 +1508,7 @@ CALL_DELEGATE_SELECTOR:
 - (void)connectionDidFinishLoadingWithFullResponse:(NSURLResponse*)fullResponse unencodedPayload:(NSData*)payload
                                            request:(NSURLRequest*)request andTag:(id)tag
 {
-    NSDictionary      *headers      = nil;
-    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)fullResponse;
-
-    if ([httpResponse respondsToSelector:@selector(allHeaderFields)])
-        headers = [httpResponse allHeaderFields];
+    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) fullResponse;
 
     if ([tag isKindOfClass:[NSDictionary class]])
     {
@@ -1616,13 +1534,10 @@ CALL_DELEGATE_SELECTOR:
     }
     else if ([tag isKindOfClass:[NSString class]])
     {
-        //DLog (@"Connect did finish loading: %@", tag);
-
-        if ([(NSString*)tag isEqualToString:@"getConfiguration"])
+        if ([(NSString *) tag isEqualToString:GET_CONFIGURATION_TAG])
         {
-            NSString *payloadString = [[[NSString alloc] initWithData:payload encoding:NSASCIIStringEncoding] autorelease];
-            self.error = [self finishGetConfiguration:payloadString
-                                             withEtag:[headers objectForKey:@"Etag"]];
+            NSString *configJson = [[[NSString alloc] initWithData:payload encoding:NSUTF8StringEncoding] autorelease];
+            self.error = [self finishGetConfiguration:configJson response:httpResponse];
         }
     }
 }
@@ -1671,7 +1586,7 @@ CALL_DELEGATE_SELECTOR:
     {
         ALog (@"Connection for %@ failed with error: %@", tag, [connectionError localizedDescription]);
 
-        if ([(NSString*)tag isEqualToString:@"getConfiguration"])
+        if ([(NSString *) tag isEqualToString:GET_CONFIGURATION_TAG])
         {
             self.error = [JREngageError setError:@"There was a problem communicating with the Janrain server while configuring authentication."
                                         withCode:JRConfigurationInformationError];
@@ -1956,5 +1871,29 @@ CALL_DELEGATE_SELECTOR:
 {
     DLog (@"");
     [self startRecordActivitySharedBy:@"sms"];
+}
+
+- (void)dealloc
+{
+    [basicProviders release];
+    [socialProviders release];
+    [appId release];
+    [tokenUrl release];
+    [currentProvider release];
+    [error release];
+    [updatedEtag release];
+    [gitCommit release];
+    [savedConfigurationBlock release];
+    [returningBasicProvider release];
+    [returningSocialProvider release];
+    [activity release];
+    [delegates release];
+    [authenticatedUsersByProvider release];
+    [authenticatedUsersByProvider release];
+    [allProviders release];
+    [iconsStillNeeded release];
+    [providersWithIcons release];
+    [baseUrl release];
+    [super dealloc];
 }
 @end

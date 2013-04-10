@@ -264,7 +264,7 @@
     DLog(@"result: %@", [result description]);
     NSString const *type = self.signInType == JRConventionalSigninEmailPassword ? @"Email" : @"Username";
     NSString *title = [NSString stringWithFormat:@"Incorrect %@ or Password", type];
-    NSString *const message = [result objectForKey:@"error"];
+    //NSString *const message = [result objectForKey:@"error"];
     UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:title
                                                          message:nil // MOB-73
                                                         delegate:nil

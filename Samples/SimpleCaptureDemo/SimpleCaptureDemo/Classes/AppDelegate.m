@@ -48,9 +48,12 @@ AppDelegate *appDelegate = nil;
 @synthesize captureClientId;
 @synthesize captureDomain;
 @synthesize captureLocale;
-@synthesize captureFormName;
+@synthesize captureSignInFormName;
 @synthesize captureFlowName;
 @synthesize engageAppId;
+@synthesize captureFlowVersion;
+@synthesize captureRegistrationFormName;
+@synthesize captureAppId;
 
 // Backplane / LiveFyre stuff:
 @synthesize bpChannelUrl;
@@ -72,11 +75,12 @@ AppDelegate *appDelegate = nil;
     appDelegate = self;
 
     [self loadConfigFromPlist];
-    [JRCapture setEngageAppId:engageAppId captureDomain:captureDomain
-              captureClientId:captureClientId captureLocale:captureLocale
-              captureFlowName:captureFlowName captureFormName:captureFormName
-captureEnableThinRegistration:captureEnableThinRegistration
- captureTraditionalSignInType:JRConventionalSigninEmailPassword];
+
+    [JRCapture setEngageAppId:engageAppId captureDomain:captureDomain captureClientId:captureClientId
+                captureLocale:captureLocale captureFlowName:captureFlowName
+        captureSignInFormName:captureSignInFormName captureEnableThinRegistration:captureEnableThinRegistration
+ captureTraditionalSignInType:JRConventionalSigninEmailPassword captureFlowVersion:captureFlowVersion
+  captureRegistrationFormName:captureRegistrationFormName captureAppId:captureAppId];
 
     [BackplaneUtils asyncFetchNewBackplaneChannelWithBus:bpBusUrlString
                                               completion:^(NSString *newChannel, NSError *error)
@@ -153,10 +157,13 @@ captureEnableThinRegistration:captureEnableThinRegistration
     self.captureClientId = [cfg objectForKey:@"captureClientId"];
     self.captureDomain = [cfg objectForKey:@"captureDomain"];
     self.captureLocale = [cfg objectForKey:@"captureLocale"];
-    self.captureFormName = [cfg objectForKey:@"captureFormName"];
+    self.captureSignInFormName = [cfg objectForKey:@"captureSignInFormName"];
     self.captureFlowName = [cfg objectForKey:@"captureFlowName"];
     self.captureEnableThinRegistration = [cfg objectForKey:@"captureEnableThinRegistration"] ?
             [[cfg objectForKey:@"captureEnableThinRegistration"] boolValue] : YES;
+    self.captureFlowVersion = [cfg objectForKey:@"captureFlowVersion"];
+    self.captureRegistrationFormName = [cfg objectForKey:@"captureRegistrationFormName"];
+    self.captureAppId = [cfg objectForKey:@"captureAppId"];
     self.engageAppId = [cfg objectForKey:@"engageAppId"];
     self.bpBusUrlString = [cfg objectForKey:@"bpBusUrlString"];
     self.bpChannelUrl = [cfg objectForKey:@"bpChannelUrl"];

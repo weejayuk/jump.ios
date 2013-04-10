@@ -61,7 +61,7 @@ To configure the library, pass your:
 
 ... to the class method:
 
-`+[JRCapture setEngageAppId:captureDomain:captureClientId:captureLocale:captureFlowName:captureFormName:captureTraditionalSignInType:]`
+`+[JRCapture setEngageAppId:captureDomain:captureClientId:captureLocale:captureFlowName:captureSignInFormName:captureTraditionalSignInType:]`
         
 ... of the `JRCapture` class. For example:
 
@@ -72,13 +72,13 @@ To configure the library, pass your:
     NSString *captureClientId = @"your_capture_client_id";
     NSString *captureLocale = @"en-US"; // e.g.
     NSString *captureFlowName = nil; // e.g.
-    NSString *captureFormName = @"signinForm"; // e.g.
+    NSString *captureSignInFormName = @"signinForm"; // e.g.
     JRConventionalSigninType captureTraditionalSignInType =
         JRConventionalSigninEmailPassword; // e.g.    
 
        [JRCapture setEngageAppId:engageAppId captureDomain:captureDomain
                  captureClientId:captureClientId captureLocale:captureLocale
-                 captureFlowName:captureFlowName captureFormName:captureFormName 
+                 captureFlowName:captureFlowName captureSignInFormName:captureSignInFormName
     captureTraditionalSignInType:captureTraditionalSignInType];
 
 **Note**: See the Capture API doc for [`/oauth/auth_native`](http://developers.janrain.com/documentation/api-methods/capture/oauth/auth_native/)

@@ -46,17 +46,18 @@
     [JRCaptureData sharedCaptureData].bpChannelUrl = backplaneChannelUrl;
 }
 
-+ (void)      setEngageAppId:(NSString *)engageAppId captureDomain:(NSString *)captureDomain
-             captureClientId:(NSString *)clientId captureLocale:(NSString *)captureLocale
-             captureFlowName:(NSString *)captureFlowName captureFormName:(NSString *)captureFormName
++        (void)setEngageAppId:(NSString *)engageAppId captureDomain:(NSString *)captureDomain
+              captureClientId:(NSString *)clientId captureLocale:(NSString *)captureLocale
+              captureFlowName:(NSString *)captureFlowName captureSignInFormName:(NSString *)captureSignInFormName
 captureEnableThinRegistration:(BOOL)enableThinRegistration
-captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType
+ captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType captureFlowVersion:(NSString *)captureFlowVersion
+  captureRegistrationFormName:(NSString *)captureRegistrationFormName captureAppId:(NSString *)captureAppId
 {
-    [JRCaptureData setCaptureDomain:captureDomain captureClientId:clientId
-                      captureLocale:captureLocale captureFormName:captureFormName
-                    captureFlowName:captureFlowName
-      captureEnableThinRegistration:enableThinRegistration
-       captureTraditionalSignInType:tradSignInType];
+    [JRCaptureData setCaptureDomain:captureDomain captureClientId:clientId captureLocale:captureLocale
+              captureSignInFormName:captureSignInFormName captureFlowName:captureFlowName
+      captureEnableThinRegistration:enableThinRegistration captureTraditionalSignInType:tradSignInType
+        captureRegistrationFormName:captureRegistrationFormName captureFlowVersion:captureFlowVersion
+                       captureAppId:captureAppId];
     [JREngageWrapper configureEngageWithCaptureMobileEndpointUrlAndAppId:engageAppId];
 }
 

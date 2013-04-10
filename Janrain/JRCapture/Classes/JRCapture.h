@@ -378,17 +378,19 @@ typedef enum
  *   The name of the Capture sign-in flow your users will sign-in with. Optional. Pass nil to have Capture use the
  *   flow specified by the default_flow_name setting for your Capture app, specified in the Capture dashboard.
  *
- * @param captureFormName
+ * @param captureSignInFormName
  *   The name of the sign-in form in the Capture flow your users will sign-in with. Required. Likely to be "signinForm"
  *
  * @param captureTraditionalSignInType
  *   The type of traditional sign-in your end-users will sign-in with.
  **/
-+ (void)       setEngageAppId:(NSString *)engageAppId captureDomain:(NSString *)captureDomain
++        (void)setEngageAppId:(NSString *)engageAppId captureDomain:(NSString *)captureDomain
               captureClientId:(NSString *)clientId captureLocale:(NSString *)captureLocale
-              captureFlowName:(NSString *)captureFlowName captureFormName:(NSString *)captureFormName
+              captureFlowName:(NSString *)captureFlowName captureSignInFormName:(NSString *)captureSignInFormName
 captureEnableThinRegistration:(BOOL)enableThinRegistration
- captureTraditionalSignInType:(JRConventionalSigninType)captureTraditionalSignInType;
+ captureTraditionalSignInType:(JRConventionalSigninType)captureTraditionalSignInType
+           captureFlowVersion:(NSString *)captureFlowVersion
+  captureRegistrationFormName:(NSString *)captureRegistrationFormName captureAppId:(NSString *)captureAppId;
 
 + (void)clearSignInState;
 

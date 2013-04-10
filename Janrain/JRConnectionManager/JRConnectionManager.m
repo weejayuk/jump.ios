@@ -234,8 +234,6 @@ static JRConnectionManager* singleton = nil;
     [new_request setValue:@"Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.4) Gecko/20100527 Firefox/3.6.4 GTB7.1"
        forHTTPHeaderField:@"User-Agent"];
 
-//    DLog(@"willSendNewRequest: %@", [[new_request URL] absoluteString]);
-
     return new_request;
 }
 

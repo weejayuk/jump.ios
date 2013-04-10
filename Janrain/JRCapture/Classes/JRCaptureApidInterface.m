@@ -141,7 +141,7 @@ typedef enum CaptureInterfaceStatEnum
     NSString *mergeToken = [credentials objectForKey:@"token"];
     NSString *clientId = [JRCaptureData sharedCaptureData].clientId;
     NSString *locale = [JRCaptureData sharedCaptureData].captureLocale;
-    NSString *formName = [JRCaptureData sharedCaptureData].captureFormName;
+    NSString *formName = [JRCaptureData sharedCaptureData].captureSignInFormName;
     NSString *flowName = [JRCaptureData sharedCaptureData].captureFlowName;
     NSString *redirectUri = [[JRCaptureData sharedCaptureData] redirectUri];
 

@@ -111,8 +111,10 @@
 - (void)authenticationDidCompleteForUser:(NSDictionary*)profile forProvider:(NSString*)provider;
 - (void)authenticationDidFailWithError:(NSError*)error forProvider:(NSString*)provider;
 
-- (void)authenticationDidReachTokenUrl:(NSString*)tokenUrl withResponse:(NSURLResponse*)response andPayload:(NSData*)tokenUrlPayload forProvider:(NSString*)provider;
-- (void)authenticationCallToTokenUrl:(NSString*)tokenUrl didFailWithError:(NSError*)error forProvider:(NSString*)provider;
+- (void)authenticationDidReachTokenUrl:(NSString*)tokenUrl withResponse:(NSURLResponse*)response
+                            andPayload:(NSData*)tokenUrlPayload forProvider:(NSString*)provider;
+- (void)authenticationCallToTokenUrl:(NSString*)tokenUrl didFailWithError:(NSError*)error
+                         forProvider:(NSString*)provider;
 
 - (void)publishingDidRestart;
 - (void)publishingDidCancel;
@@ -135,9 +137,9 @@
     NSString   *returningSocialProvider;
 
 /*  allProviders is a dictionary of JRProviders, where each JRProvider contains the information specific to that
-    provider. basicProviders and socialProviders are arrays of NSStrings, each string being the primary key in allProviders
-    for that provider, representing the list of providers to be used in authentication and social publishing.
-    The arrays are in the order configured by the RP on http://rpxnow.com. */
+    provider. basicProviders and socialProviders are arrays of NSStrings, each string being the primary key in
+    allProviders for that provider, representing the list of providers to be used in authentication and social
+    publishing. The arrays are in the order configured by the RP on http://rpxnow.com. */
     NSMutableDictionary *allProviders;
     NSArray             *basicProviders;
     NSArray             *socialProviders;
@@ -145,18 +147,18 @@
 
  /* These values are used by sessionData to determine if the cached configuration is dirty or not.  As both the code and
     the configuration information (mostly regarding RP's chosen providers) will rarely change, the library caches the
-    information so that it can use it immediately.  The http etag of the mobile_config_and_baseurl action indicates if the
-    downloaded configuration information has changes, and the git commit value stored in JREngage-info.plist indicates if
-    the code itself has changed. */
-    NSString *savedConfigurationBlock;
+    information so that it can use it immediately.  The http etag of the mobile_config_and_baseurl action indicates if
+    the downloaded configuration information has changes, and the git commit value stored in JREngage-info.plist
+    indicates if the code itself has changed. */
+    NSDictionary *savedConfigurationBlock;
     NSString *newEtag;
     NSString *gitCommit;
 
  /* So that customers can add new providers without rereleasing their code, the library dynamically downloads any of the
     icons it may be missing.  Once the library knows that a provider has all of it's icons, it adds the provider's name
-    to the providersWithIcons set.  If a provider doesn't have its icons, the icon urls are added to the iconsStillNeeded
-    dictionary with the provider as the key.  This dictionary is saved between launches, in case the downloading of the
-    icons fails, is interrupted, etc. */
+    to the providersWithIcons set.  If a provider doesn't have its icons, the icon urls are added to the
+    iconsStillNeeded dictionary with the provider as the key.  This dictionary is saved between launches, in case the
+    downloading of the icons fails, is interrupted, etc. */
     NSMutableSet        *providersWithIcons;
     NSMutableDictionary *iconsStillNeeded;
 
@@ -217,7 +219,8 @@
 @property(nonatomic) BOOL captureWidget;
 
 + (id)jrSessionData;
-+ (id)jrSessionDataWithAppId:(NSString*)newAppId tokenUrl:(NSString*)newTokenUrl andDelegate:(id<JRSessionDelegate>)newDelegate;
++ (id)jrSessionDataWithAppId:(NSString*)newAppId tokenUrl:(NSString*)newTokenUrl
+                 andDelegate:(id<JRSessionDelegate>)newDelegate;
 
 - (void)tryToReconfigureLibrary;
 - (id)reconfigureWithAppId:(NSString*)newAppId tokenUrl:(NSString*)newTokenUrl;

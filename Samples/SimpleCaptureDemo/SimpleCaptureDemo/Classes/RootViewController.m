@@ -102,15 +102,11 @@
 
 - (IBAction)updateButtonPressed:(id)sender
 {
-    CaptureProfileViewController *viewController = [[CaptureProfileViewController alloc]
-        initWithNibName:@"CaptureProfileViewController" bundle:[NSBundle mainBundle]];
-
-    [self.navigationController pushViewController:viewController animated:YES];
+    [self showRegistrationForm];
 }
 
 - (IBAction)thirdButtonPressed:(id)sender
 {
-    [self showRegistrationForm];
 }
 
 - (IBAction)signInButtonPressed:(id)sender
@@ -207,8 +203,7 @@
             };
 
     [[[AlertViewWithBlocks alloc] initWithTitle:@"Sign in" message:nil completion:signInCompletion
-                                          style:UIAlertViewStyleLoginAndPasswordInput
-                              cancelButtonTitle:@"Cancel"
+                                          style:UIAlertViewStyleLoginAndPasswordInput cancelButtonTitle:@"Cancel"
                               otherButtonTitles:@"Sign-in", nil] show];
 }
 
@@ -239,7 +234,6 @@
 
 - (void)viewDidUnload
 {
-    [self setShareWidgetButton:nil];
     [super viewDidUnload];
 }
 
@@ -281,6 +275,8 @@
 
 - (void)captureAuthenticationDidFailWithError:(NSError *)error
 {
+    [self setProviderAndConfigureIcon:nil];
+
     DLog(@"error: %@", [error description]);
     if ([error code] == JRCaptureErrorGenericBadPassword)
     {
@@ -307,13 +303,18 @@
 
 - (void)engageSigninDidSucceedForUser:(NSDictionary *)engageAuthInfo forProvider:(NSString *)provider
 {
-    appDelegate.currentProvider = provider;
-    [appDelegate.prefs setObject:appDelegate.currentProvider forKey:cJRCurrentProvider];
+    [self setProviderAndConfigureIcon:provider];
 
     currentUserLabel.text = @"Signing in...";
-    [self configureProviderIcon];
 
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+}
+
+- (void)setProviderAndConfigureIcon:(NSString *)provider
+{
+    appDelegate.currentProvider = provider;
+    [appDelegate.prefs setObject:appDelegate.currentProvider forKey:cJRCurrentProvider];
+    [self configureProviderIcon];
 }
 
 - (void)captureAuthenticationDidSucceedForUser:(JRCaptureUser *)newCaptureUser

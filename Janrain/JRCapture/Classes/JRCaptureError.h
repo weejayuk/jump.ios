@@ -128,32 +128,42 @@ typedef enum
     /**
     * Malformed API request response
     */
-    JRCaptureWrappedEngageErrorInvalidEndpointPayload = JRCaptureWrappedEngageErrorGeneric + 100,
+    JRCaptureWrappedEngageErrorInvalidEndpointPayload = JRCaptureWrappedEngageErrorGeneric + 100
 } JRCaptureWrappedEngageError;
 
 /**
- * @internal (for now)
+ * NSError subclass for errors from the Capture library
  **/
 @interface JRCaptureError : NSError
 - (BOOL)isMergeFlowError;
 - (NSString *)existingProvider;
 - (NSString *)conflictedProvider;
-@end
 
+- (NSString *)mergeToken;
+@end
+/** @}*/
+
+/**
+* @internal
+*/
 @interface JRCaptureError (JRCaptureError_Builders)
-+ (JRCaptureError *)errorFromResult:(NSObject *)result onProvider:(NSString *)onProvider
++ (JRCaptureError *)errorFromResult:(NSDictionary *)result onProvider:(NSString *)onProvider
                          mergeToken:(NSString *)mergeToken;
 + (JRCaptureError *)invalidApiResponseError:(NSString *)rawResponse_;
 @end
 
+/**
+* @internal
+*/
 @interface JRCaptureError (JRCaptureError_Helpers)
 + (NSDictionary *)invalidClassErrorForResult:(NSObject *)result;
 + (NSDictionary *)invalidStatErrorForResult:(NSObject *)result;
 + (NSDictionary *)invalidDataErrorForResult:(NSObject *)result;
-+ (NSDictionary *)missingAccessTokenInResult:(__unused NSObject *)result;
 @end
-/** @}*/
 
+/**
+* NSError class categories to help with use of JRCaptureError instances
+*/
 @interface NSError (JRCaptureError_Extensions)
 - (BOOL)isJRMergeFlowError;
 - (BOOL)isJRTwoStepRegFlowError;
