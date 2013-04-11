@@ -58,7 +58,7 @@ captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType
  captureRegistrationFormName:(NSString *)captureRegistrationFormName captureFlowVersion:(NSString *)captureFlowVersion
                 captureAppId:(NSString *)captureAppId;
 
-+ (NSString *)captureMobileEndpointUrlWithMergeToken:(NSString *)token;
++ (NSString *)captureMobileEndpointUrlWithMergeToken:(NSString *)mergeToken;
 
 + (void)clearSignInState;
 

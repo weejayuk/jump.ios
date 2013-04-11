@@ -228,8 +228,9 @@
 
 - (void)handleTwoStepRegFlowError:(NSError *)error
 {
-    [self showRegistrationForm];
     appDelegate.isNotYetCreated = YES;
+    appDelegate.captureUser = [error JRPreregistrationRecord];
+    [self showRegistrationForm];
 }
 
 - (void)viewDidUnload

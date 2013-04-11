@@ -152,7 +152,7 @@ static JRCaptureData *singleton = nil;
     return self;
 }
 
-+ (NSString *)captureMobileEndpointUrlWithMergeToken:(NSString *)token
++ (NSString *)captureMobileEndpointUrlWithMergeToken:(NSString *)mergeToken
 {
     /**
     * client_id
@@ -168,18 +168,22 @@ static JRCaptureData *singleton = nil;
 
     JRCaptureData *captureData = [JRCaptureData sharedCaptureData];
     NSString *redirectUri = [singleton redirectUri];
-    //NSString *thinReg = [JRCaptureData sharedCaptureData].captureEnableThinRegistration ? @"true" : @"false";
-    NSMutableDictionary *urlArgs = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                                                captureData.clientId, @"client_id",
-                                                                captureData.captureLocale, @"locale",
-                                                                @"token", @"response_type",
-                                                                redirectUri, @"redirect_uri",
-                                                                //thinReg, @"thin_registration",
-                                                                nil];
+    NSString *thinReg = [JRCaptureData sharedCaptureData].captureEnableThinRegistration ? @"true" : @"false";
+    NSMutableDictionary *urlArgs = [NSMutableDictionary dictionaryWithDictionary:
+            @{
+                    @"client_id" : captureData.clientId,
+                    @"locale" : captureData.captureLocale,
+                    @"response_type" : @"token",
+                    @"redirect_uri" : redirectUri,
+                    @"thin_registration" : thinReg
+            }];
 
     if (captureData.captureFlowName) [urlArgs setObject:captureData.captureFlowName forKey:@"flow_name"];
+    if (captureData.captureFlowVersion) [urlArgs setObject:captureData.flowVersion forKey:@"flow_version"];
     if (captureData.bpChannelUrl) [urlArgs setObject:captureData.bpChannelUrl forKey:@"bp_channel"];
-    if (token) [urlArgs setObject:token forKey:@"merge_token"];
+    if (mergeToken) [urlArgs setObject:mergeToken forKey:@"merge_token"];
+    if (captureData.captureRegistrationFormName) [urlArgs setObject:captureData.captureRegistrationFormName
+                                                             forKey:@"registration_form"];
 
     NSString *getParams = [urlArgs asGetQueryParamString];
     return [NSString stringWithFormat:@"%@/oauth/auth_native?%@", captureData.captureBaseUrl, getParams];

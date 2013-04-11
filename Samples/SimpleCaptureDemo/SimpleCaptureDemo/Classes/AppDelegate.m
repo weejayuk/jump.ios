@@ -36,10 +36,6 @@
 AppDelegate *appDelegate = nil;
 
 @implementation AppDelegate
-{
-    BOOL captureEnableThinRegistration;
-}
-
 @synthesize window;
 @synthesize prefs;
 
@@ -52,6 +48,7 @@ AppDelegate *appDelegate = nil;
 @synthesize captureFlowName;
 @synthesize engageAppId;
 @synthesize captureFlowVersion;
+@synthesize captureEnableThinRegistration;
 @synthesize captureRegistrationFormName;
 @synthesize captureAppId;
 
@@ -67,8 +64,6 @@ AppDelegate *appDelegate = nil;
 @synthesize currentProvider;
 @synthesize isNotYetCreated;
 @synthesize engageSignInWasCanceled;
-
-@synthesize captureEnableThinRegistration;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
