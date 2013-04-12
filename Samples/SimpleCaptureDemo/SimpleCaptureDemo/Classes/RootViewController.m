@@ -41,10 +41,14 @@
 
 
 @interface RootViewController ()
+@property(nonatomic, copy) void (^viewDidAppearContinuation)();
+@property(nonatomic) BOOL viewIsApparent;
+
 - (void)configureButtons;
 @end
 
 @implementation RootViewController
+@synthesize viewDidAppearContinuation;
 @synthesize currentUserLabel;
 @synthesize currentUserProviderIcon;
 @synthesize browseButton;
@@ -53,7 +57,7 @@
 @synthesize signInButton;
 @synthesize signOutButton;
 @synthesize shareWidgetButton;
-@synthesize customUi = _customUi;
+@synthesize customUi;
 
 
 - (void)viewDidLoad
@@ -86,8 +90,22 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    DLog();
+    self.viewIsApparent = YES;
     [self configureUserLabelAndIcon];
+    if (viewDidAppearContinuation)
+    {
+        viewDidAppearContinuation();
+        self.viewDidAppearContinuation = nil;
+    }
 }
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    self.viewIsApparent = NO;
+    [super viewDidDisappear:animated];
+}
+
 
 - (IBAction)browseButtonPressed:(id)sender
 {
@@ -230,7 +248,15 @@
 {
     appDelegate.isNotYetCreated = YES;
     appDelegate.captureUser = [error JRPreregistrationRecord];
-    [self showRegistrationForm];
+
+    if (self.viewIsApparent)
+    {
+        [self showRegistrationForm];
+    }
+    else
+    {
+        self.viewDidAppearContinuation = ^(){ [self showRegistrationForm]; };
+    }
 }
 
 - (void)viewDidUnload

@@ -559,7 +559,8 @@ captureEnableThinRegistration:(BOOL)enableThinRegistration
                                withSigninType:(JRConventionalSigninType)conventionalSignInType
                                   forDelegate:(id <JRCaptureSigninDelegate>)delegate __unused;
 
-+ (void)registerNewUser:(JRCaptureUser *)newUser context:(void *)context;
++ (void)registerNewUser:(JRCaptureUser *)newUser forDelegate:(id <JRCaptureSigninDelegate>)delegate
+                context:(void *)context;
 @end
 
 /**

@@ -277,11 +277,11 @@
     <content url="file://$MODULE_DIR$/../../Janrain/JRCapture/Classes/JRNSDate+ISO8601_CaptureDateTimeString.m">
       <sourceFolder url="file://$MODULE_DIR$/../../Janrain/JRCapture/Classes/JRNSDate+ISO8601_CaptureDateTimeString.m" isTestSource="false" />
     </content>
-    <content url="file://$MODULE_DIR$/../../Janrain/JRCapture/Classes/NSDictionary+QueryParams.h">
-      <sourceFolder url="file://$MODULE_DIR$/../../Janrain/JRCapture/Classes/NSDictionary+QueryParams.h" isTestSource="false" />
+    <content url="file://$MODULE_DIR$/../../Janrain/JRCapture/Classes/NSDictionary+JRQueryParams.h">
+      <sourceFolder url="file://$MODULE_DIR$/../../Janrain/JRCapture/Classes/NSDictionary+JRQueryParams.h" isTestSource="false" />
     </content>
-    <content url="file://$MODULE_DIR$/../../Janrain/JRCapture/Classes/NSDictionary+QueryParams.m">
-      <sourceFolder url="file://$MODULE_DIR$/../../Janrain/JRCapture/Classes/NSDictionary+QueryParams.m" isTestSource="false" />
+    <content url="file://$MODULE_DIR$/../../Janrain/JRCapture/Classes/NSDictionary+JRQueryParams.m">
+      <sourceFolder url="file://$MODULE_DIR$/../../Janrain/JRCapture/Classes/NSDictionary+JRQueryParams.m" isTestSource="false" />
     </content>
     <content url="file://$MODULE_DIR$/../../Janrain/JRCapture/Classes/NSMutableDictionary+QueryParams.h">
       <sourceFolder url="file://$MODULE_DIR$/../../Janrain/JRCapture/Classes/NSMutableDictionary+QueryParams.h" isTestSource="false" />

@@ -79,7 +79,7 @@
 		C14243C6BB1B2B57B93CAD8B /* icon_wordpress_30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = C14249A4F2571F8F8F6FF9B4 /* icon_wordpress_30x30.png */; };
 		C14243C6D410B0D2A9E4247F /* logo_twitter_280x65@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424B8BBA034C130EDF81CD /* logo_twitter_280x65@2x.png */; };
 		C14243C8ABEC0F7AEA754D0E /* JRObjectLevelThree.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424BAB9EBE3E94B18F01FF /* JRObjectLevelThree.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		C14243D27039CF596970752A /* NSDictionary+QueryParams.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424203B4DC59ACED063AA7 /* NSDictionary+QueryParams.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		C14243D27039CF596970752A /* NSDictionary+JRQueryParams.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424203B4DC59ACED063AA7 /* NSDictionary+JRQueryParams.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C14243D790ADAFCDC23DE0B2 /* triangle_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424BACBF8A92A9357F4652 /* triangle_icon.png */; };
 		C14243DE5C2E34BDC17AAB9E /* button_google_280x40.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424C56495C47500BF1531B /* button_google_280x40.png */; };
 		C14243E0897EA7034B5CF388 /* JRPluralLevelOneElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C142474CF67B29AAD7184D6F /* JRPluralLevelOneElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -378,7 +378,7 @@
 		C14241F1FB16BE3DA1C74C7E /* icon_bw_twitter_30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_bw_twitter_30x30.png; path = ../../Janrain/JREngage/Resources/images/icons_bw/icon_bw_twitter_30x30.png; sourceTree = "<group>"; };
 		C14241F54F36F55540419DBC /* JRInfoBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRInfoBar.h; path = ../../Janrain/JREngage/Classes/JRInfoBar.h; sourceTree = "<group>"; };
 		C14241FA9DB52CFF47AC6945 /* JRPublishActivityController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRPublishActivityController.h; path = ../../Janrain/JREngage/Classes/JRPublishActivityController.h; sourceTree = "<group>"; };
-		C1424203B4DC59ACED063AA7 /* NSDictionary+QueryParams.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+QueryParams.m"; path = "../../Janrain/JRCapture/Classes/NSDictionary+QueryParams.m"; sourceTree = "<group>"; };
+		C1424203B4DC59ACED063AA7 /* NSDictionary+JRQueryParams.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+JRQueryParams.m"; path = "../../Janrain/JRCapture/Classes/NSDictionary+JRQueryParams.m"; sourceTree = "<group>"; };
 		C1424216ED79F8A56655709D /* JRConventionalSigninViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRConventionalSigninViewController.h; path = ../../Janrain/JRCapture/Classes/JRConventionalSigninViewController.h; sourceTree = "<group>"; };
 		C142421AAD402D51EC94E8CD /* ATTRIBUTION */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ATTRIBUTION; path = ../../Janrain/JREngage/ATTRIBUTION; sourceTree = "<group>"; };
 		C142422ACE8DF6FA7206BCD4 /* icon_bw_yahoo_30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_bw_yahoo_30x30.png; path = ../../Janrain/JREngage/Resources/images/icons_bw/icon_bw_yahoo_30x30.png; sourceTree = "<group>"; };
@@ -542,7 +542,7 @@
 		C1424A8D6084F2284E377D15 /* icon_vzn_30x30@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon_vzn_30x30@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/icons/icon_vzn_30x30@2x.png"; sourceTree = "<group>"; };
 		C1424A90065C63920F3B85F2 /* icon_tumblr_30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_tumblr_30x30.png; path = ../../Janrain/JREngage/Resources/images/icons/icon_tumblr_30x30.png; sourceTree = "<group>"; };
 		C1424AA276D10327B9122B97 /* icon_livejournal_30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_livejournal_30x30.png; path = ../../Janrain/JREngage/Resources/images/icons/icon_livejournal_30x30.png; sourceTree = "<group>"; };
-		C1424AE85C4444AA55B3E90D /* NSDictionary+QueryParams.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+QueryParams.h"; path = "../../Janrain/JRCapture/Classes/NSDictionary+QueryParams.h"; sourceTree = "<group>"; };
+		C1424AE85C4444AA55B3E90D /* NSDictionary+JRQueryParams.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+JRQueryParams.h"; path = "../../Janrain/JRCapture/Classes/NSDictionary+JRQueryParams.h"; sourceTree = "<group>"; };
 		C1424AF2D73E4323CB4A9882 /* icon_bw_myspace_30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_bw_myspace_30x30.png; path = ../../Janrain/JREngage/Resources/images/icons_bw/icon_bw_myspace_30x30.png; sourceTree = "<group>"; };
 		C1424AF91891541D65B14D91 /* icon_yahoo_30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_yahoo_30x30.png; path = ../../Janrain/JREngage/Resources/images/icons/icon_yahoo_30x30.png; sourceTree = "<group>"; };
 		C1424B011D01727275B1403B /* icon_blogger_30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_blogger_30x30.png; path = ../../Janrain/JREngage/Resources/images/icons/icon_blogger_30x30.png; sourceTree = "<group>"; };
@@ -1280,8 +1280,8 @@
 				C1424B1DC86C6897C28AC3F2 /* JRNSDate+ISO8601_CaptureDateTimeString.h */,
 				C1424C9643E2E50DC874247F /* JRNSDate+ISO8601_CaptureDateTimeString.m */,
 				C1424DEE969C819ECDB68DBA /* debug_log.h */,
-				C1424203B4DC59ACED063AA7 /* NSDictionary+QueryParams.m */,
-				C1424AE85C4444AA55B3E90D /* NSDictionary+QueryParams.h */,
+				C1424203B4DC59ACED063AA7 /* NSDictionary+JRQueryParams.m */,
+				C1424AE85C4444AA55B3E90D /* NSDictionary+JRQueryParams.h */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -1728,7 +1728,7 @@
 				C1424DF78FB8D1A62BF0BB44 /* JRProfilesElement.m in Sources */,
 				C1424ED02A2490D5B54FBE8D /* JRStatusesElement.m in Sources */,
 				C14249A701577A202A265659 /* JRUrlsElement.m in Sources */,
-				C14243D27039CF596970752A /* NSDictionary+QueryParams.m in Sources */,
+				C14243D27039CF596970752A /* NSDictionary+JRQueryParams.m in Sources */,
 				C1424D8C0D3CAA6BD49936BF /* JRBestHand.m in Sources */,
 				C142456F0C50A0C0655FA135 /* JRGamesElement.m in Sources */,
 				C14246446BA8F4CFB0000354 /* JRObjectLevelOne.m in Sources */,

@@ -595,6 +595,14 @@ static JREngage* singleton = nil;
     [interfaceMaestro setCustomInterfaceDefaults:customInterfaceDefaults];
 }
 
+- (void)dealloc
+{
+    [interfaceMaestro release];
+    [sessionData release];
+    [delegates release];
+    [super dealloc];
+}
+
 + (void)setCustomInterfaceDefaults:(NSMutableDictionary*)customInterfaceDefaults
 {
     [[JREngage singletonInstance] setCustomInterfaceDefaults:customInterfaceDefaults];

@@ -32,21 +32,14 @@
  Date:   Tuesday, June 1, 2010
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+#import "debug_log.h"
 #import "JRWebViewController.h"
 #import "JRSessionData.h"
 #import "JRInfoBar.h"
 #import "JREngageError.h"
 
-
-#ifdef DEBUG
-#define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-#else
-#define DLog(...)
-#endif
-
-#define ALog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-
-static NSString *const iPhoneUserAgent = @"Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3_3 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8J2 Safari/6533.18.5";
+static NSString *const iPhoneUserAgent = @"Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3_3 like Mac OS X; en-us) "
+        "AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8J2 Safari/6533.18.5";
 
 @interface JREngageError (JREngageError_setError)
 + (NSError*)setError:(NSString*)message withCode:(NSInteger)code;
@@ -306,10 +299,6 @@ static NSString *const iPhoneUserAgent = @"Mozilla/5.0 (iPhone; U; CPU iPhone OS
 
 #pragma mark JRConnectionManagerDelegate implementation
 
-- (void)connectionDidFinishLoadingWithUnEncodedPayload:(NSData*)payload
-                                               request:(NSURLRequest*)request
-                                                andTag:(id)userdata { }
-
 - (void)connectionDidFinishLoadingWithPayload:(NSString*)payload request:(NSURLRequest*)request andTag:(id)userdata
 {
     DLog(@"");
@@ -330,7 +319,8 @@ static NSString *const iPhoneUserAgent = @"Mozilla/5.0 (iPhone; U; CPU iPhone OS
                                             withCode:JRAuthenticationFailedError];
 
             UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Log In Failed"
-                                                             message:@"An error occurred while attempting to sign you in.  Please try again."
+                                                             message:@"An error occurred while attempting to sign you "
+                                                                     "in.  Please try again."
                                                             delegate:self
                                                    cancelButtonTitle:@"OK"
                                                    otherButtonTitles:nil] autorelease];

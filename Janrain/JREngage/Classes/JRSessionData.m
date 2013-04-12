@@ -1657,8 +1657,8 @@ CALL_DELEGATE_SELECTOR:
     if (user)
     {
         [authenticatedUsersByProvider setObject:user forKey:currentProvider.name];
-        [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:authenticatedUsersByProvider]
-                                                  forKey:cJRAuthenticatedUsersByProvider];
+        NSData *usersData = [NSKeyedArchiver archivedDataWithRootObject:authenticatedUsersByProvider];
+        [[NSUserDefaults standardUserDefaults] setObject:usersData forKey:cJRAuthenticatedUsersByProvider];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
     else

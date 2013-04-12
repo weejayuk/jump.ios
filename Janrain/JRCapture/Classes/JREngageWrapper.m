@@ -177,6 +177,7 @@ expandedCustomInterfaceOverrides:(NSMutableDictionary *)expandedCustomInterfaceO
 - (void)authenticationCallToTokenUrl:(NSString *)tokenUrl didFailWithError:(NSError *)error
                          forProvider:(NSString *)provider
 {
+    DLog();
     if ([delegate respondsToSelector:@selector(captureAuthenticationDidFailWithError:)])
         [delegate captureAuthenticationDidFailWithError:error];
 
@@ -185,6 +186,7 @@ expandedCustomInterfaceOverrides:(NSMutableDictionary *)expandedCustomInterfaceO
 
 - (void)authenticationDidFailWithError:(NSError *)error forProvider:(NSString *)provider
 {
+    DLog();
     if ([delegate respondsToSelector:@selector(engageAuthenticationDidFailWithError:forProvider:)])
         [delegate engageAuthenticationDidFailWithError:error forProvider:provider];
 
@@ -193,6 +195,7 @@ expandedCustomInterfaceOverrides:(NSMutableDictionary *)expandedCustomInterfaceO
 
 - (void)authenticationDidNotComplete
 {
+    DLog();
     if ([delegate respondsToSelector:@selector(engageSigninDidNotComplete)])
         [delegate engageSigninDidNotComplete];
 
@@ -209,7 +212,7 @@ expandedCustomInterfaceOverrides:(NSMutableDictionary *)expandedCustomInterfaceO
 
     if (!payloadDict)
         return [self authenticationCallToTokenUrl:tokenUrl
-                                 didFailWithError:[JRCaptureError invalidApiResponseError:payload]
+                                 didFailWithError:[JRCaptureError invalidApiResponseErrorWithString:payload]
                                       forProvider:provider];
 
     if (![[payloadDict objectForKey:@"stat"] isEqual:@"ok"])
@@ -223,7 +226,7 @@ expandedCustomInterfaceOverrides:(NSMutableDictionary *)expandedCustomInterfaceO
 
     if (error == cJRInvalidResponse || error == cJRInvalidCaptureUser)
     {
-        [self authenticationCallToTokenUrl:tokenUrl didFailWithError:[JRCaptureError invalidApiResponseError:payload]
+        [self authenticationCallToTokenUrl:tokenUrl didFailWithError:[JRCaptureError invalidApiResponseErrorWithString:payload]
                                forProvider:provider];
     }
 

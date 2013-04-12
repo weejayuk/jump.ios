@@ -67,31 +67,37 @@
     [myAboutMeTextView setInputAccessoryView:myKeyboardToolbar];
     [myEmailTextField setInputAccessoryView:myKeyboardToolbar];
 
-    appDelegate.captureUser = appDelegate.captureUser;
-
     if (appDelegate.captureUser.email)
         myEmailTextField.text  = appDelegate.captureUser.email;
 
     if (appDelegate.captureUser.aboutMe)
         myAboutMeTextView.text = appDelegate.captureUser.aboutMe;
 
-    if ([[appDelegate.captureUser.gender lowercaseString] isEqualToString:[@"F" lowercaseString]] ||
-        [[appDelegate.captureUser.gender lowercaseString] isEqualToString:[@"female" lowercaseString]] ||
-        [[appDelegate.captureUser.gender lowercaseString] isEqualToString:[@"girl" lowercaseString]] ||
-        [[appDelegate.captureUser.gender lowercaseString] isEqualToString:[@"woman" lowercaseString]])
-    {
-        [myGenderIdentitySegControl setSelectedSegmentIndex:0];
-    }
-    else
-    {
-        [myGenderIdentitySegControl setSelectedSegmentIndex:1];
-    }
+    char genderSegment = ([self isFemaleGender:[appDelegate.captureUser.gender lowercaseString]]) ? 0 : 1;
+    [myGenderIdentitySegControl setSelectedSegmentIndex:genderSegment];
 
     if (appDelegate.captureUser.birthday)
     {
         [myDatePicker setDate:appDelegate.captureUser.birthday];
         [self pickerChanged];
     }
+
+    if (appDelegate.isNotYetCreated)
+    {
+        self.myDoneButton.title = @"Register";
+    }
+    else
+    {
+        self.myDoneButton.title = @"Update";
+    }
+}
+
+- (BOOL)isFemaleGender:(NSString *)gender
+{
+    return [gender isEqualToString:[@"F" lowercaseString]] ||
+        [gender isEqualToString:[@"female" lowercaseString]] ||
+        [gender isEqualToString:[@"girl" lowercaseString]] ||
+        [gender isEqualToString:[@"woman" lowercaseString]];
 }
 
 - (void)scrollUpBy:(NSInteger)scrollOffset
@@ -161,11 +167,21 @@
 
     if (appDelegate.isNotYetCreated)
     {
-        [JRCapture registerNewUser:appDelegate.captureUser context:nil];
+        [JRCapture registerNewUser:appDelegate.captureUser forDelegate:NULL  context:nil];
     }
     else
     {
         [appDelegate.captureUser updateOnCaptureForDelegate:self context:nil];
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    if (appDelegate.isNotYetCreated == YES)
+    {
+        appDelegate.isNotYetCreated = NO;
+        appDelegate.captureUser = nil;
     }
 }
 
@@ -237,9 +253,5 @@
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
-
-- (void)didReceiveMemoryWarning { [super didReceiveMemoryWarning]; }
-
-- (void)viewDidUnload { [super viewDidUnload]; }
 
 @end

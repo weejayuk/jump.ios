@@ -36,7 +36,7 @@
 #import "JRCaptureApidInterface.h"
 #import "JRCaptureData.h"
 #import "JSONKit.h"
-#import "NSDictionary+QueryParams.h"
+#import "NSDictionary+JRQueryParams.h"
 
 static NSString *const cSignInUser = @"signinUser";
 static NSString *const cGetUser = @"getUser";
@@ -145,7 +145,7 @@ typedef enum CaptureInterfaceStatEnum
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:signInEndpoint]];
 
     [request setHTTPMethod:@"POST"];
-    [request setHTTPBody:[[params asGetQueryParamString] dataUsingEncoding:NSUTF8StringEncoding]];
+    [request setHTTPBody:[[params asJRGetQueryParamString] dataUsingEncoding:NSUTF8StringEncoding]];
 
     NSDictionary *tag = [NSDictionary dictionaryWithObjectsAndKeys:
                                                  cSignInUser, cTagAction,

@@ -150,16 +150,17 @@ typedef enum
 @interface JRCaptureError (JRCaptureError_Builders)
 + (JRCaptureError *)errorFromResult:(NSDictionary *)result onProvider:(NSString *)onProvider
                          mergeToken:(NSString *)mergeToken;
-+ (JRCaptureError *)invalidApiResponseError:(NSString *)rawResponse_;
++ (JRCaptureError *)invalidApiResponseErrorWithString:(NSString *)rawResponse;
++ (JRCaptureError *)invalidApiResponseErrorWithObject:(id)rawResponse;
 @end
 
 /**
 * @internal
 */
 @interface JRCaptureError (JRCaptureError_Helpers)
-+ (NSDictionary *)invalidClassErrorForResult:(NSObject *)result;
-+ (NSDictionary *)invalidStatErrorForResult:(NSObject *)result;
-+ (NSDictionary *)invalidDataErrorForResult:(NSObject *)result;
++ (NSDictionary *)invalidClassErrorDictForResult:(NSObject *)result;
++ (NSDictionary *)invalidStatErrorDictForResult:(NSObject *)result;
++ (NSDictionary *)invalidDataErrorDictForResult:(NSObject *)result;
 @end
 
 /**

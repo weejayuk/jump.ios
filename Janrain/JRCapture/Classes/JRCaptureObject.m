@@ -116,16 +116,16 @@
     }
     else /* Uh-oh!! */
     {
-        return [self updateCaptureObjectDidFailWithResult:[JRCaptureError invalidClassErrorForResult:result] 
+        return [self updateCaptureObjectDidFailWithResult:[JRCaptureError invalidClassErrorDictForResult:result]
                                                   context:context];
     }
 
     if (![((NSString *)[resultDictionary objectForKey:@"stat"]) isEqualToString:@"ok"])
-        return [self updateCaptureObjectDidFailWithResult:[JRCaptureError invalidStatErrorForResult:result] 
+        return [self updateCaptureObjectDidFailWithResult:[JRCaptureError invalidStatErrorDictForResult:result]
                                                   context:context];
 
     if (![resultDictionary objectForKey:@"result"])
-        return [self updateCaptureObjectDidFailWithResult:[JRCaptureError invalidDataErrorForResult:result] 
+        return [self updateCaptureObjectDidFailWithResult:[JRCaptureError invalidDataErrorDictForResult:result]
                                                   context:context];
 
     /* Calling the old protocol methods for testing purposes */
@@ -191,18 +191,18 @@
     }
     else /* Uh-oh!! */
     {
-        return [self replaceCaptureObjectDidFailWithResult:[JRCaptureError invalidClassErrorForResult:result] 
+        return [self replaceCaptureObjectDidFailWithResult:[JRCaptureError invalidClassErrorDictForResult:result]
                                                    context:context];
     }
 
     if (![((NSString *)[resultDictionary objectForKey:@"stat"]) isEqualToString:@"ok"])
-        return [self replaceCaptureObjectDidFailWithResult:[JRCaptureError invalidStatErrorForResult:result] 
+        return [self replaceCaptureObjectDidFailWithResult:[JRCaptureError invalidStatErrorDictForResult:result]
                                                    context:context];
 
     if (![resultDictionary objectForKey:@"result"] || ![[resultDictionary objectForKey:@"result"] 
             isKindOfClass:[NSDictionary class]])
     {
-        return [self replaceCaptureObjectDidFailWithResult:[JRCaptureError invalidDataErrorForResult:result] 
+        return [self replaceCaptureObjectDidFailWithResult:[JRCaptureError invalidDataErrorDictForResult:result]
                                                    context:context];
     }
 
@@ -280,22 +280,22 @@
     }
     else
     {
-        return [self replaceCaptureArrayDidFailWithResult:[JRCaptureError invalidClassErrorForResult:result] 
+        return [self replaceCaptureArrayDidFailWithResult:[JRCaptureError invalidClassErrorDictForResult:result]
                                                   context:context];
     }
 
     if (![((NSString *)[resultDictionary objectForKey:@"stat"]) isEqualToString:@"ok"])
-        return [self replaceCaptureArrayDidFailWithResult:[JRCaptureError invalidStatErrorForResult:result]
+        return [self replaceCaptureArrayDidFailWithResult:[JRCaptureError invalidStatErrorDictForResult:result]
                                                   context:context];
 
     if (![resultDictionary objectForKey:@"result"])
-        return [self replaceCaptureArrayDidFailWithResult:[JRCaptureError invalidDataErrorForResult:result] 
+        return [self replaceCaptureArrayDidFailWithResult:[JRCaptureError invalidDataErrorDictForResult:result]
                                                   context:context];
 
     NSArray *resultsArray = [resultDictionary objectForKey:@"result"];
 
     if (![resultsArray isKindOfClass:[NSArray class]])
-        return [self replaceCaptureArrayDidFailWithResult:[JRCaptureError invalidDataErrorForResult:result] 
+        return [self replaceCaptureArrayDidFailWithResult:[JRCaptureError invalidDataErrorDictForResult:result]
                                                   context:context];
 
     NSString *replacement = [[arrayName substringToIndex:1] capitalizedString];

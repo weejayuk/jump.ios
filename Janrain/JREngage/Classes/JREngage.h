@@ -436,7 +436,8 @@
  * Any values specified in the \e customInterfaceOverrides dictionary will override the corresponding
  * values specified the dictionary passed into the setCustomInterfaceDefaults:() method.
  **/
-+ (void)showSharingDialogWithActivity:(JRActivityObject*)activity withCustomInterfaceOverrides:(NSDictionary*)customInterfaceOverrides;
++ (void)showSharingDialogWithActivity:(JRActivityObject*)activity
+         withCustomInterfaceOverrides:(NSDictionary*)customInterfaceOverrides;
 
 /*@}*/
 

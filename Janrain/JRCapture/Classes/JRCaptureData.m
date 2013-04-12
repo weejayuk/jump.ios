@@ -32,7 +32,7 @@
 
 #import "JRCaptureData.h"
 #import "SFHFKeychainUtils.h"
-#import "NSDictionary+QueryParams.h"
+#import "NSDictionary+JRQueryParams.h"
 #import "JRConnectionManager.h"
 
 #define cJRCaptureKeychainIdentifier @"capture_tokens.janrain"
@@ -179,13 +179,13 @@ static JRCaptureData *singleton = nil;
             }];
 
     if (captureData.captureFlowName) [urlArgs setObject:captureData.captureFlowName forKey:@"flow_name"];
-    if (captureData.captureFlowVersion) [urlArgs setObject:captureData.flowVersion forKey:@"flow_version"];
+    if (captureData.captureFlowVersion) [urlArgs setObject:captureData.captureFlowVersion forKey:@"flow_version"];
     if (captureData.bpChannelUrl) [urlArgs setObject:captureData.bpChannelUrl forKey:@"bp_channel"];
     if (mergeToken) [urlArgs setObject:mergeToken forKey:@"merge_token"];
     if (captureData.captureRegistrationFormName) [urlArgs setObject:captureData.captureRegistrationFormName
                                                              forKey:@"registration_form"];
 
-    NSString *getParams = [urlArgs asGetQueryParamString];
+    NSString *getParams = [urlArgs asJRGetQueryParamString];
     return [NSString stringWithFormat:@"%@/oauth/auth_native?%@", captureData.captureBaseUrl, getParams];
 }
 

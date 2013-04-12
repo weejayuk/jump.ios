@@ -71,7 +71,7 @@ NSString *const kJRCaptureErrorDomain = @"JRCapture.ErrorDomain";
 @end
 
 @implementation JRCaptureError (JRCaptureError_Builders)
-+ (JRCaptureError *)invalidApiResponseError:(NSString *)rawResponse_
++ (JRCaptureError *)invalidApiResponseErrorWithString:(NSString *)rawResponse
 {
     NSString *desc = [NSString stringWithFormat:@"The Capture API request response was not well formed"];
     NSNumber *code = [NSNumber numberWithInteger:JRCaptureWrappedEngageErrorInvalidEndpointPayload];
@@ -80,7 +80,21 @@ NSString *const kJRCaptureErrorDomain = @"JRCapture.ErrorDomain";
                                                  @"invalid_endpoint_response", @"error",
                                                  desc, @"error_description",
                                                  code, @"code",
-                                                 rawResponse_, @"raw_response",
+                                                 rawResponse, @"raw_response",
+                                                 nil];
+    return [JRCaptureError errorFromResult:result onProvider:nil mergeToken:nil];
+}
+
++ (JRCaptureError *)invalidApiResponseErrorWithObject:(id)rawResponse
+{
+    NSString *desc = [NSString stringWithFormat:@"The Capture API request response was not well formed"];
+    NSNumber *code = [NSNumber numberWithInteger:JRCaptureWrappedEngageErrorInvalidEndpointPayload];
+    NSDictionary *result = [NSDictionary dictionaryWithObjectsAndKeys:
+                                                 @"error", @"stat",
+                                                 @"invalid_endpoint_response", @"error",
+                                                 desc, @"error_description",
+                                                 code, @"code",
+                                                 rawResponse, @"raw_response",
                                                  nil];
     return [JRCaptureError errorFromResult:result onProvider:nil mergeToken:nil];
 }
@@ -142,6 +156,11 @@ NSString *const kJRCaptureErrorDomain = @"JRCapture.ErrorDomain";
             [extraFields setObject:[result objectForKey:@"type_name"] forKey:@"type_name"];
             break;
 
+        case 310: /* 'record_not_found' Referred to an entity or plural element that does not exist. */
+            [extraFields setObject:[result objectForKey:@"message"] forKey:@"message"];
+            [extraFields setObject:[result objectForKey:@"prereg_attributes"] forKey:@"prereg_attributes"];
+            break;
+
         case 330: /* 'timestamp_mismatch' The created or lastUpdated value does not match the supplied argument. Extra fields: 'attribute_name', 'actual_value', 'supplied_value' */
             [extraFields setObject:[result objectForKey:@"attribute_name"] forKey:@"attribute_name"];
             [extraFields setObject:[result objectForKey:@"actual_value"] forKey:@"actual_value"];
@@ -159,7 +178,6 @@ NSString *const kJRCaptureErrorDomain = @"JRCapture.ErrorDomain";
 
         case 201: /* 'duplicate_argument' Two or more supplied arguments may not have been included in the same call; for example, both id and uuid in entity.update. */
         case 205: /* 'invalid_auth_method' The request used an http auth method other than Basic or OAuth. */
-        case 310: /* 'record_not_found' Referred to an entity or plural element that does not exist. */
         case 320: /* 'id_in_new_record' Attempted to specify a record id in a new entity or plural element. */
         case 340: /* 'invalid_data_format' A JSON value was not formatted correctly according to the attribute type in the schema. */
         case 341: /* 'invalid_json_type' A value did not match the expected JSON type according to the schema. */
@@ -189,34 +207,43 @@ NSString *const kJRCaptureErrorDomain = @"JRCapture.ErrorDomain";
 
 @implementation JRCaptureError (JRCaptureError_Helpers)
 
-+ (NSDictionary *)invalidClassErrorForResult:(NSObject *)result
++ (NSDictionary *)invalidClassErrorDictForResult:(NSObject *)result
 {
+    NSString *errDesc = [NSString stringWithFormat:@"The result object was not a string or dictionary: %@",
+                                       [result description]];
     return [NSDictionary dictionaryWithObjectsAndKeys:
-                             @"error", @"stat",
-                             @"invalid_result", @"error",
-                             [NSString stringWithFormat:@"The result object was not a string or dictionary: %@",
-                                       [result description]], @"error_description",
-                             [NSNumber numberWithInteger:JRCaptureLocalApidErrorInvalidResultClass], @"code", nil];
+                                 @"error", @"stat",
+                                 @"invalid_result", @"error",
+                                 errDesc, @"error_description",
+                                 [NSNumber numberWithInteger:JRCaptureLocalApidErrorInvalidResultClass], @"code",
+                                 result, @"bad_result",
+                                 nil];
 }
 
-+ (NSDictionary *)invalidStatErrorForResult:(NSObject *)result
++ (NSDictionary *)invalidStatErrorDictForResult:(NSObject *)result
 {
+    NSString *errDesc = [NSString stringWithFormat:@"The result object did not have the expected stat: %@",
+                                       [result description]];
     return [NSDictionary dictionaryWithObjectsAndKeys:
-                             @"error", @"stat",
-                             @"invalid_result", @"error",
-                             [NSString stringWithFormat:@"The result object did not have the expected stat: %@",
-                                       [result description]], @"error_description",
-                             [NSNumber numberWithInteger:JRCaptureLocalApidErrorInvalidResultStat], @"code", nil];
+                                 @"error", @"stat",
+                                 @"invalid_result", @"error",
+                                 errDesc, @"error_description",
+                                 [NSNumber numberWithInteger:JRCaptureLocalApidErrorInvalidResultStat], @"code",
+                                 result, @"bad_result",
+                                 nil];
 }
 
-+ (NSDictionary *)invalidDataErrorForResult:(NSObject *)result
++ (NSDictionary *)invalidDataErrorDictForResult:(NSObject *)result
 {
+    NSString *errDesc = [NSString stringWithFormat:@"The result object did not have the expected data: %@",
+                                       [result description]];
     return [NSDictionary dictionaryWithObjectsAndKeys:
-                             @"error", @"stat",
-                             @"invalid_result", @"error",
-                             [NSString stringWithFormat:@"The result object did not have the expected data: %@",
-                                       [result description]], @"error_description",
-                             [NSNumber numberWithInteger:JRCaptureLocalApidErrorInvalidResultData], @"code", nil];
+                                 @"error", @"stat",
+                                 @"invalid_result", @"error",
+                                 errDesc, @"error_description",
+                                 [NSNumber numberWithInteger:JRCaptureLocalApidErrorInvalidResultData], @"code", 
+                                 result, @"bad_result",
+                                 nil];
 }
 @end
 

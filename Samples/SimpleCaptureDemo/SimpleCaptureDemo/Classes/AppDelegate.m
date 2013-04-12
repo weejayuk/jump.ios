@@ -69,7 +69,7 @@ AppDelegate *appDelegate = nil;
 {
     appDelegate = self;
 
-    [self loadConfigFromPlist];
+    [self loadDemoConfigFromPlist];
 
     [JRCapture setEngageAppId:engageAppId captureDomain:captureDomain captureClientId:captureClientId
                 captureLocale:captureLocale captureFlowName:captureFlowName
@@ -135,7 +135,7 @@ AppDelegate *appDelegate = nil;
 
 }
 
-- (void)loadConfigFromPlist
+- (void)loadDemoConfigFromPlist
 {
     // See assets folder in Resources project group for janrain-config-default.plist
     // Copy to janrain-config.plist and change it to your details
@@ -147,7 +147,15 @@ AppDelegate *appDelegate = nil;
     }
     NSDictionary *cfgPlist = [NSDictionary dictionaryWithContentsOfFile:plistPath];
     NSString *configKeyName = [cfgPlist objectForKey:@"default-config"];
-    NSDictionary *cfg = [cfgPlist objectForKey:configKeyName];
+    [self parseConfigNamed:configKeyName fromConfigPlist:cfgPlist];
+}
+
+- (void)parseConfigNamed:(NSString *)cfgKeyName fromConfigPlist:(NSDictionary *)cfgPlist
+{
+    NSDictionary *cfg = [cfgPlist objectForKey:cfgKeyName];
+
+    NSString *parentConfig = [cfg objectForKey:@"parentConfig"];
+    if (parentConfig) [self parseConfigNamed:parentConfig fromConfigPlist:cfgPlist];
 
     self.captureClientId = [cfg objectForKey:@"captureClientId"];
     self.captureDomain = [cfg objectForKey:@"captureDomain"];

@@ -34,6 +34,8 @@
 @interface JRCaptureUser (JRCaptureUser_Internal)
 + (id)captureUserObjectFromDictionary:(NSDictionary*)dictionary withPath:(NSString *)capturePath;
 - (void)decodeFromDictionary:(NSDictionary *)dictionary;
+
+- (NSDictionary *)toFormFieldsForForm:(NSString *)formName withFlow:(NSDictionary *)flow;
 @end
 
 /**
@@ -72,6 +74,10 @@
  *   calling code. Use of the context is entirely optional and at your discretion.
  **/
 - (void)fetchUserDidFailWithError:(NSError *)error context:(NSObject *)context;
+
+- (void)registerUserDidSucceed:(JRCaptureUser *)registeredUser context:(NSObject *)context;
+
+- (void)registerUserDidFailWithError:(NSError *)error context:(NSObject *)context;
 @end
 
 /**

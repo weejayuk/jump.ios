@@ -38,6 +38,7 @@
 
 #import "JREngageWrapper.h"
 #import "JRCaptureData.h"
+#import "NSDictionary+JRQueryParams.h"
 
 @implementation JRCapture
 
@@ -147,11 +148,6 @@ captureEnableThinRegistration:(BOOL)enableThinRegistration
                                              forDelegate:delegate];
 }
 
-+ (void)registerNewUser:(JRCaptureUser *)newUser forDelegate:(id <JRCaptureSigninDelegate>)delegate
-                context:(void *)context
-{
-}
-
 + (void)startCaptureConventionalSigninForUser:(NSString *)user withPassword:(NSString *)password
                                withSigninType:(JRConventionalSigninType)conventionalSignInType
                                    mergeToken:(NSString *)mergeToken forDelegate:(id <JRCaptureSigninDelegate>)delegate
@@ -178,11 +174,97 @@ captureEnableThinRegistration:(BOOL)enableThinRegistration
                                     forDelegate:delegate];
 }
 
-+ (void)registerNewUser:(JRCaptureUser *)newUser context:(void *)context
++ (void)registerNewUser:(JRCaptureUser *)newUser forDelegate:(id <JRCaptureSigninDelegate>)delegate
+                context:(void *)context
 {
-    //asdfasdf
+    NSString *urlString = @"https://%@/oauth/register_native";
+    NSString *registrationForm;
+    NSDictionary *flow;
+    [self jsonRequestToUrl:urlString params:[newUser toFormFieldsForForm:registrationForm withFlow:flow]
+         completionHandler:^(id parsedResponse, NSError *e)
+         {
+             SEL failMsg = @selector(registerUserDidFailWithError:context:);
+             if (e)
+             {
+                 [self maybeDispatch:failMsg forDelegate:delegate withArg:e withArg:context];
+                 return;
+             }
+
+             if (![parsedResponse isKindOfClass:[NSDictionary class]])
+             {
+                 e = [JRCaptureError invalidApiResponseErrorWithObject:parsedResponse];
+                 [self maybeDispatch:failMsg forDelegate:delegate withArg:e withArg:context];
+                 return;
+             }
+
+             NSDictionary *parsedResponse_ = parsedResponse;
+             NSString *stat = [parsedResponse_ objectForKey:@"stat"];
+             if (![stat isEqual:@"ok"])
+             {
+                 NSDictionary *errDict = [JRCaptureError invalidStatErrorDictForResult:parsedResponse_];
+                 e = [JRCaptureError errorFromResult:errDict onProvider:nil mergeToken:nil];
+                 [self maybeDispatch:failMsg forDelegate:delegate withArg:e withArg:context];
+                 return;
+             }
+
+             NSDictionary *newUserDict = [parsedResponse_ objectForKey:@"userrrr"];
+             if (!newUserDict)
+             {
+                 NSDictionary *errDict = [JRCaptureError invalidDataErrorDictForResult:parsedResponse_];
+                 e = [JRCaptureError errorFromResult:errDict onProvider:nil mergeToken:nil];
+                 [self maybeDispatch:failMsg forDelegate:delegate withArg:e withArg:context];
+                 return;
+             }
+
+             JRCaptureUser *newUser = [JRCaptureUser captureUserObjectFromDictionary:newUserDict];
+
+             SEL successMsg = @selector(registerUserDidSucceed:context:);
+             [self maybeDispatch:successMsg forDelegate:delegate withArg:newUser withArg:context];
+         }];
 }
 
++ (void)maybeDispatch:(SEL)pSelector forDelegate:(id <JRCaptureSigninDelegate>)delegate withArg:(id)arg1
+              withArg:(id)arg2
+{
+    if ([delegate respondsToSelector:pSelector])
+    {
+        [delegate performSelector:pSelector withObject:arg1 withObject:arg2];
+    }
+}
+
++ (void)jsonRequestToUrl:(NSString *)url params:(NSDictionary *)params
+     completionHandler:(void(^)(id parsedResponse, NSError *e))handler
+{
+    NSMutableURLRequest *registrationRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
+    [self addParams:params toRequest:registrationRequest];
+    [NSURLConnection sendAsynchronousRequest:registrationRequest queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *r, NSData *d, NSError *e)
+                           {
+                               if (e)
+                               {
+                                   handler(nil, e);
+                               }
+                               else
+                               {
+                                   NSError *err;
+                                   id parsedJson = [NSJSONSerialization JSONObjectWithData:d options:0 error:&err];
+                                   if (err)
+                                   {
+                                       handler(nil, e);
+                                   }
+                                   else
+                                   {
+                                       handler(parsedJson, nil);
+                                   }
+                               }
+                           }];
+}
+
++ (void)addParams:(NSDictionary *)dictionary toRequest:(NSMutableURLRequest *)request
+{
+    [request setHTTPMethod:@"POST"];
+    [request setHTTPBody:[[dictionary asJRGetQueryParamString] dataUsingEncoding:NSUTF8StringEncoding]];
+}
 
 - (void)dealloc
 {

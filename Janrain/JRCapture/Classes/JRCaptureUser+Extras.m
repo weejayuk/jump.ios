@@ -67,19 +67,19 @@
     if ([result isKindOfClass:[NSString class]])
         resultDictionary = [(NSString *)result objectFromJSONString];
     else /* Uh-oh!! */
-        return [self getCaptureUserDidFailWithResult:[JRCaptureError invalidClassErrorForResult:result] 
+        return [self getCaptureUserDidFailWithResult:[JRCaptureError invalidClassErrorDictForResult:result]
                                              context:context];
 
     if (!resultDictionary)
-        return [self createCaptureUserDidFailWithResult:[JRCaptureError invalidDataErrorForResult:result] 
+        return [self createCaptureUserDidFailWithResult:[JRCaptureError invalidDataErrorDictForResult:result]
                                                 context:context];
 
     if (![((NSString *)[resultDictionary objectForKey:@"stat"]) isEqualToString:@"ok"])
-        return [self getCaptureUserDidFailWithResult:[JRCaptureError invalidStatErrorForResult:result] context:context];
+        return [self getCaptureUserDidFailWithResult:[JRCaptureError invalidStatErrorDictForResult:result] context:context];
 
     NSDictionary *result_ = [resultDictionary objectForKey:@"result"];
     if (!result_ || ![result_ isKindOfClass:[NSDictionary class]])
-        return [self getCaptureUserDidFailWithResult:[JRCaptureError invalidDataErrorForResult:result] context:context];
+        return [self getCaptureUserDidFailWithResult:[JRCaptureError invalidDataErrorDictForResult:result] context:context];
 
     JRCaptureUser *captureUser = [JRCaptureUser captureUserObjectFromDictionary:result_];
 
@@ -123,3 +123,10 @@
 
 @end
 
+@implementation JRCaptureUser (JRCaptureUser_Internal)
+- (NSDictionary *)toFormFieldsForForm:(NSString *)formName withFlow:(NSDictionary *)flow
+{
+    return nil;
+}
+
+@end

@@ -5,12 +5,12 @@
 //
 
 
-#import "NSDictionary+QueryParams.h"
+#import "NSDictionary+JRQueryParams.h"
 #import "JRConnectionManager.h"
 
 
-@implementation NSDictionary (QueryParams)
-- (NSString *)asGetQueryParamString
+@implementation NSDictionary (JRQueryParams)
+- (NSString *)asJRGetQueryParamString
 {
     NSMutableString *retVal = [NSMutableString string];
 
