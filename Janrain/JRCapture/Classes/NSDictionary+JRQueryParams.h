@@ -9,5 +9,5 @@
 
 @interface NSDictionary (JRQueryParams)
 
-- (NSString *)asJRGetQueryParamString;
+- (NSString *)asJRURLParamString;
 @end

@@ -145,7 +145,7 @@ typedef enum CaptureInterfaceStatEnum
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:signInEndpoint]];
 
     [request setHTTPMethod:@"POST"];
-    [request setHTTPBody:[[params asJRGetQueryParamString] dataUsingEncoding:NSUTF8StringEncoding]];
+    [request setHTTPBody:[[params asJRURLParamString] dataUsingEncoding:NSUTF8StringEncoding]];
 
     NSDictionary *tag = [NSDictionary dictionaryWithObjectsAndKeys:
                                                  cSignInUser, cTagAction,
@@ -609,8 +609,7 @@ typedef enum CaptureInterfaceStatEnum
                                                               errorDesc, @"error_description",
                                                               code, @"code", nil];
                 [delegate_ captureAuthenticationDidFailWithError:[JRCaptureError errorFromResult:errDict
-                                                                                      onProvider:nil
-                                                                                      mergeToken:nil]];
+                                                                                      onProvider:nil engageToken:nil]];
             }
         }
         else if (respondsToFail)
@@ -629,7 +628,7 @@ typedef enum CaptureInterfaceStatEnum
                                                           code, @"code", nil];
 
             [delegate_ captureAuthenticationDidFailWithError:[JRCaptureError errorFromResult:errDict onProvider:nil
-                                                                                  mergeToken:nil]];
+                                                                                 engageToken:nil]];
         }
     }
 }

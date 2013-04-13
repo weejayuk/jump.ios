@@ -36,6 +36,8 @@
 
 NSString *const kJRCaptureErrorDomain = @"JRCapture.ErrorDomain";
 
+static NSString *const ENGAGE_TOKEN_KEY = @"merge_token";
+
 @implementation JRCaptureError
 - (BOOL)isMergeFlowError
 {
@@ -59,7 +61,12 @@ NSString *const kJRCaptureErrorDomain = @"JRCapture.ErrorDomain";
 
 - (NSString *)mergeToken
 {
-    return [self.userInfo objectForKey:@"merge_token"];
+    return [self.userInfo objectForKey:ENGAGE_TOKEN_KEY];
+}
+
+- (NSString *)registrationToken
+{
+    return [self.userInfo objectForKey:ENGAGE_TOKEN_KEY];
 }
 
 - (JRCaptureUser *)preRegistrationRecord
@@ -82,7 +89,7 @@ NSString *const kJRCaptureErrorDomain = @"JRCapture.ErrorDomain";
                                                  code, @"code",
                                                  rawResponse, @"raw_response",
                                                  nil];
-    return [JRCaptureError errorFromResult:result onProvider:nil mergeToken:nil];
+    return [JRCaptureError errorFromResult:result onProvider:nil engageToken:nil];
 }
 
 + (JRCaptureError *)invalidApiResponseErrorWithObject:(id)rawResponse
@@ -96,7 +103,7 @@ NSString *const kJRCaptureErrorDomain = @"JRCapture.ErrorDomain";
                                                  code, @"code",
                                                  rawResponse, @"raw_response",
                                                  nil];
-    return [JRCaptureError errorFromResult:result onProvider:nil mergeToken:nil];
+    return [JRCaptureError errorFromResult:result onProvider:nil engageToken:nil];
 }
 
 + (JRCaptureError *)errorWithErrorString:(NSString *)error code:(NSInteger)code description:(NSString *)description
@@ -111,14 +118,14 @@ NSString *const kJRCaptureErrorDomain = @"JRCapture.ErrorDomain";
 }
 
 + (JRCaptureError *)errorFromResult:(NSDictionary *)result onProvider:(NSString *)onProvider
-                         mergeToken:(NSString *)mergeToken
+                        engageToken:(NSString *)mergeToken
 {
     NSString *errorDescription = [result objectForKey:@"error_description"];
     NSString *errorString = [result objectForKey:@"error"];
     NSNumber *code = [result objectForKey:@"code"];
     NSString *rawResponse = [result objectForKey:@"raw_response"];
     NSMutableDictionary *extraFields = [NSMutableDictionary dictionaryWithObjectsAndKeys:onProvider, @"provider",
-                                                                                         mergeToken, @"merge_token",
+                                                                                         mergeToken, ENGAGE_TOKEN_KEY,
                                                                                          rawResponse, @"raw_response",
                                                                                          nil];
 
@@ -282,4 +289,9 @@ NSString *const kJRCaptureErrorDomain = @"JRCapture.ErrorDomain";
     return [((JRCaptureError *) self) preRegistrationRecord];
 }
 
+- (NSString *)JRRegistrationToken
+{
+    if (![self isKindOfClass:[JRCaptureError class]] || ![self isJRTwoStepRegFlowError]) return nil;
+    return [((JRCaptureError *) self) registrationToken];
+}
 @end

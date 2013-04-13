@@ -35,7 +35,7 @@
 + (id)captureUserObjectFromDictionary:(NSDictionary*)dictionary withPath:(NSString *)capturePath;
 - (void)decodeFromDictionary:(NSDictionary *)dictionary;
 
-- (NSDictionary *)toFormFieldsForForm:(NSString *)formName withFlow:(NSDictionary *)flow;
+- (NSMutableDictionary *)toFormFieldsForForm:(NSString *)formName withFlow:(NSDictionary *)flow;
 @end
 
 /**

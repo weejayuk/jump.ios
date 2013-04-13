@@ -10,7 +10,7 @@
 
 
 @implementation NSDictionary (JRQueryParams)
-- (NSString *)asJRGetQueryParamString
+- (NSString *)asJRURLParamString
 {
     NSMutableString *retVal = [NSMutableString string];
 

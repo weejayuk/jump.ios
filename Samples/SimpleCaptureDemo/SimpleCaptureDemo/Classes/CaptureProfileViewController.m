@@ -167,7 +167,8 @@
 
     if (appDelegate.isNotYetCreated)
     {
-        [JRCapture registerNewUser:appDelegate.captureUser forDelegate:NULL  context:nil];
+        [JRCapture registerNewUser:appDelegate.captureUser withRegistrationToken:appDelegate.registrationToken 
+                       forDelegate:NULL context:nil];
     }
     else
     {
@@ -182,6 +183,7 @@
     {
         appDelegate.isNotYetCreated = NO;
         appDelegate.captureUser = nil;
+        appDelegate.registrationToken = nil;
     }
 }
 

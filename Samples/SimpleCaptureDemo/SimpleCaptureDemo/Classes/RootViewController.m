@@ -248,6 +248,7 @@
 {
     appDelegate.isNotYetCreated = YES;
     appDelegate.captureUser = [error JRPreregistrationRecord];
+    appDelegate.registrationToken = [error JRRegistrationToken];
 
     if (self.viewIsApparent)
     {

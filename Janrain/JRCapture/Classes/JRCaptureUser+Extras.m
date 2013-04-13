@@ -32,6 +32,7 @@
 #import "JRCaptureData.h"
 #import "JRCaptureApidInterface.h"
 #import "JSONKit.h"
+#import "JRCaptureObject+Internal.h"
 
 @interface JRCaptureUserApidHandler : NSObject <JRCaptureInterfaceDelegate>
 @end
@@ -50,7 +51,7 @@
     id <JRCaptureUserDelegate> delegate = [myContext objectForKey:@"delegate"];
 
     if ([delegate respondsToSelector:@selector(fetchUserDidFailWithError:context:)])
-        [delegate fetchUserDidFailWithError:[JRCaptureError errorFromResult:result onProvider:nil mergeToken:nil]
+        [delegate fetchUserDidFailWithError:[JRCaptureError errorFromResult:result onProvider:nil engageToken:nil]
                                     context:callerContext];
 }
 
@@ -123,10 +124,85 @@
 
 @end
 
+@interface NSArray (JRArrayExtensions)
+- (NSArray *)tail;
+@end
+
 @implementation JRCaptureUser (JRCaptureUser_Internal)
-- (NSDictionary *)toFormFieldsForForm:(NSString *)formName withFlow:(NSDictionary *)flow
+- (NSMutableDictionary *)toFormFieldsForForm:(NSString *)formName withFlow:(NSDictionary *)flow
 {
-    return nil;
+    if (!formName || !flow) return nil;
+    NSMutableDictionary *retval = [NSMutableDictionary dictionary];
+    NSDictionary *form = [[flow objectForKey:@"fields"] objectForKey:formName];
+    NSArray *fieldNames = [form objectForKey:@"fields"];
+    NSArray *fields = [[flow objectForKey:@"fields"] objectsForKeys:fieldNames notFoundMarker:[NSNull null]];
+    for (NSObject *field in fields)
+    {
+        if (![field isKindOfClass:[NSDictionary class]])
+        {
+            ALog(@"unrecognized field defn: %@", [field description]);
+            continue;
+        }
+        NSDictionary *field_ = (NSDictionary *) field;
+
+        NSString *schemaId = [field_ objectForKey:@"schemaId"];
+        NSString *formFieldValue = [self valueForAttrByDotPath:schemaId];
+        [retval setObject:formFieldValue forKey:[fieldNames objectAtIndex:[fields indexOfObject:field]]];
+    }
+
+    return retval;
 }
 
+- (NSString *)valueForAttrByDotPath:(NSString *)dotPath
+{
+
+    NSArray *pathComponents = [dotPath componentsSeparatedByString:@"."];
+    return [JRCaptureUser valueForAttrByDotPathComponents:pathComponents userDict:[self toDictionaryForEncoder:NO]];
+}
+
++ (NSString *)valueForAttrByDotPathComponents:(NSArray *)dotPathComponents userDict:(id)userDict
+{
+    NSError *ignore;
+    if ([dotPathComponents count] == 0)
+    {
+        NSArray *thisIsAHack = [NSArray arrayWithObject:userDict];
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:thisIsAHack options:0 error:&ignore];
+        NSString *jsonString = [[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding] autorelease];
+        [jsonString substringWithRange:NSMakeRange(1, [jsonString length] - 2)];
+        return jsonString;
+    }
+    if (![userDict isKindOfClass:[NSDictionary class]]) return nil;
+    NSDictionary *userDict_ = userDict;
+    NSString *dotPathComponent = [dotPathComponents objectAtIndex:0];
+    NSArray *tail = [dotPathComponents tail];
+    id val = [userDict_ objectForKey:dotPathComponent];
+    NSArray *pluralSplit = [dotPathComponent componentsSeparatedByString:@"#"];
+    if ([pluralSplit count] > 1)
+    {
+        if (![val isKindOfClass:[NSArray class]]) return nil;
+        for (id elt in val)
+        {
+            if (![elt isKindOfClass:[NSDictionary class]]) return nil;
+            if ([[elt objectForKey:@"id"] isEqual:[pluralSplit objectAtIndex:1]]) //fuck it
+            {
+                return [self valueForAttrByDotPathComponents:tail userDict:elt];
+            }
+        }
+        return nil;
+    }
+    else
+    {
+        return [self valueForAttrByDotPathComponents:tail userDict:val];
+    }
+}
+
+@end
+
+@implementation NSArray (JRArrayExtensions)
+- (NSArray *)tail
+{
+    if ([self count] == 0) return nil;
+    if ([self count] == 1) return @[];
+    return [self subarrayWithRange:NSMakeRange(1, [self count] - 1)];
+}
 @end

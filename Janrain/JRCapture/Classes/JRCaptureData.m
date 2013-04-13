@@ -185,7 +185,7 @@ static JRCaptureData *singleton = nil;
     if (captureData.captureRegistrationFormName) [urlArgs setObject:captureData.captureRegistrationFormName
                                                              forKey:@"registration_form"];
 
-    NSString *getParams = [urlArgs asJRGetQueryParamString];
+    NSString *getParams = [urlArgs asJRURLParamString];
     return [NSString stringWithFormat:@"%@/oauth/auth_native?%@", captureData.captureBaseUrl, getParams];
 }
 

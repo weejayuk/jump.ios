@@ -88,7 +88,7 @@
 
     if ([delegate respondsToSelector:@selector(updateDidFailForObject:withError:context:)]) 
     {
-        JRCaptureError *error = [JRCaptureError errorFromResult:result onProvider:nil mergeToken:nil];
+        JRCaptureError *error = [JRCaptureError errorFromResult:result onProvider:nil engageToken:nil];
         [delegate updateDidFailForObject:captureObject withError:error context:callerContext];
     }
 }
@@ -163,7 +163,7 @@
             [delegate respondsToSelector:testSelector])
     {
         id <JRCaptureObjectTesterDelegate> delegate_ = (id <JRCaptureObjectTesterDelegate>) delegate;
-        JRCaptureError *error = [JRCaptureError errorFromResult:result onProvider:nil mergeToken:nil];
+        JRCaptureError *error = [JRCaptureError errorFromResult:result onProvider:nil engageToken:nil];
         [delegate_ replaceDidFailForObject:captureObject withError:error context:callerContext];
     }
 }
@@ -249,7 +249,7 @@
     if ([delegate respondsToSelector:@selector(replaceArrayDidFailForObject:arrayNamed:withError:context:)])
     {
         [delegate replaceArrayDidFailForObject:captureObject arrayNamed:arrayName
-                                     withError:[JRCaptureError errorFromResult:result onProvider:nil mergeToken:nil]
+                                     withError:[JRCaptureError errorFromResult:result onProvider:nil engageToken:nil]
                                        context:callerContext];
     }
 }

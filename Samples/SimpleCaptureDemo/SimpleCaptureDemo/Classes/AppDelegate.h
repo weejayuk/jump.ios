@@ -65,5 +65,7 @@ AppDelegate *appDelegate;
 @property(nonatomic, strong) NSString *liveFyreArticleId;
 
 
+@property(nonatomic, retain) NSString *registrationToken;
+
 - (void)saveCaptureUser;
 @end

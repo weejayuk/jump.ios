@@ -40,7 +40,7 @@ typedef enum
 } JREngageDialogState;
 
 @interface JREngageWrapper ()
-@property(retain) NSString *mergeToken;
+@property(retain) NSString *engageToken;
 @property(retain) JRConventionalSignInViewController *nativeSigninViewController;
 @property(retain) id <JRCaptureSigninDelegate> delegate;
 @property JREngageDialogState dialogState;
@@ -50,7 +50,7 @@ typedef enum
 @synthesize nativeSigninViewController;
 @synthesize delegate;
 @synthesize dialogState;
-@synthesize mergeToken;
+@synthesize engageToken;
 
 static JREngageWrapper *singleton = nil;
 
@@ -171,7 +171,7 @@ expandedCustomInterfaceOverrides:(NSMutableDictionary *)expandedCustomInterfaceO
     [JREngage updateTokenUrl:nil];
     self.delegate = nil;
     self.nativeSigninViewController = nil;
-    self.mergeToken = nil;
+    self.engageToken = nil;
 }
 
 - (void)authenticationCallToTokenUrl:(NSString *)tokenUrl didFailWithError:(NSError *)error
@@ -217,7 +217,8 @@ expandedCustomInterfaceOverrides:(NSMutableDictionary *)expandedCustomInterfaceO
 
     if (![[payloadDict objectForKey:@"stat"] isEqual:@"ok"])
     {
-        JRCaptureError *error = [JRCaptureError errorFromResult:payloadDict onProvider:provider mergeToken:mergeToken];
+        JRCaptureError *error = [JRCaptureError errorFromResult:payloadDict onProvider:provider
+                                                    engageToken:engageToken];
         [self authenticationCallToTokenUrl:tokenUrl didFailWithError:error forProvider:provider];
         return;
     }
@@ -235,7 +236,7 @@ expandedCustomInterfaceOverrides:(NSMutableDictionary *)expandedCustomInterfaceO
 
 - (void)authenticationDidSucceedForUser:(NSDictionary *)auth_info forProvider:(NSString *)provider
 {
-    self.mergeToken = [auth_info objectForKey:@"token"];
+    self.engageToken = [auth_info objectForKey:@"token"];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 
     if ([delegate respondsToSelector:@selector(engageSigninDidSucceedForUser:forProvider:)])
@@ -258,7 +259,7 @@ expandedCustomInterfaceOverrides:(NSMutableDictionary *)expandedCustomInterfaceO
     [delegate release];
 
     [nativeSigninViewController release];
-    [mergeToken release];
+    [engageToken release];
     [super dealloc];
 }
 @end
