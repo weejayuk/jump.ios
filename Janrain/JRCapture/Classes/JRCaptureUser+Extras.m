@@ -147,7 +147,10 @@
 
         NSString *schemaId = [field_ objectForKey:@"schemaId"];
         NSString *formFieldValue = [self valueForAttrByDotPath:schemaId];
-        [retval setObject:formFieldValue forKey:[fieldNames objectAtIndex:[fields indexOfObject:field]]];
+        if (formFieldValue)
+        {
+            [retval setObject:formFieldValue forKey:[fieldNames objectAtIndex:[fields indexOfObject:field]]];
+        }
     }
 
     return retval;
@@ -162,28 +165,21 @@
 
 + (NSString *)valueForAttrByDotPathComponents:(NSArray *)dotPathComponents userDict:(id)userDict
 {
-    NSError *ignore;
-    if ([dotPathComponents count] == 0)
-    {
-        NSArray *thisIsAHack = [NSArray arrayWithObject:userDict];
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:thisIsAHack options:0 error:&ignore];
-        NSString *jsonString = [[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding] autorelease];
-        [jsonString substringWithRange:NSMakeRange(1, [jsonString length] - 2)];
-        return jsonString;
-    }
+    if ([dotPathComponents count] == 0) return [self jsonStringForValue:userDict];
+
     if (![userDict isKindOfClass:[NSDictionary class]]) return nil;
     NSDictionary *userDict_ = userDict;
     NSString *dotPathComponent = [dotPathComponents objectAtIndex:0];
     NSArray *tail = [dotPathComponents tail];
-    id val = [userDict_ objectForKey:dotPathComponent];
     NSArray *pluralSplit = [dotPathComponent componentsSeparatedByString:@"#"];
     if ([pluralSplit count] > 1)
     {
+        id val = [userDict_ objectForKey:[pluralSplit objectAtIndex:0]];
         if (![val isKindOfClass:[NSArray class]]) return nil;
         for (id elt in val)
         {
             if (![elt isKindOfClass:[NSDictionary class]]) return nil;
-            if ([[elt objectForKey:@"id"] isEqual:[pluralSplit objectAtIndex:1]]) //fuck it
+            if ([[elt objectForKey:@"id"] isEqual:[pluralSplit objectAtIndex:1]])
             {
                 return [self valueForAttrByDotPathComponents:tail userDict:elt];
             }
@@ -192,8 +188,28 @@
     }
     else
     {
+        id val = [userDict_ objectForKey:dotPathComponent];
         return [self valueForAttrByDotPathComponents:tail userDict:val];
     }
+}
+
++ (NSString *)jsonStringForValue:(id)userDict
+{
+    if (userDict == [NSNull null]) return nil;
+    // This hack will get us the string-ified version of a JSON-able value.
+    NSError *ignore = nil;
+    NSArray *thisIsAHack = [NSArray arrayWithObject:userDict];
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:thisIsAHack options:(NSJSONWritingOptions) 0
+                                                             error:&ignore];
+    NSString *jsonString = [[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding] autorelease];
+    if ([jsonString characterAtIndex:1] == '"')
+        {
+            return [jsonString substringWithRange:NSMakeRange(2, [jsonString length] - 4)];
+        }
+        else
+        {
+            return [jsonString substringWithRange:NSMakeRange(1, [jsonString length] - 2)];
+        }
 }
 
 @end

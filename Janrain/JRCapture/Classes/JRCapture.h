@@ -560,7 +560,7 @@ captureEnableThinRegistration:(BOOL)enableThinRegistration
                                   forDelegate:(id <JRCaptureSigninDelegate>)delegate __unused;
 
 + (void)registerNewUser:(JRCaptureUser *)newUser withRegistrationToken:(NSString *)registrationToken
-            forDelegate:(id <JRCaptureSigninDelegate>)delegate context:(void *)context;
+            forDelegate:(id <JRCaptureSigninDelegate>)delegate context:(NSObject *)context;
 @end
 
 /**

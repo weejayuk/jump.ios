@@ -38,7 +38,7 @@
 #import "AppDelegate.h"
 #import "JRCapture.h"
 
-@interface CaptureProfileViewController ()
+@interface CaptureProfileViewController () <JRCaptureSigninDelegate>
 @property(nonatomic, retain) id firstResponder;
 @property(nonatomic, retain) NSDate *myBirthdate;
 @end
@@ -168,7 +168,7 @@
     if (appDelegate.isNotYetCreated)
     {
         [JRCapture registerNewUser:appDelegate.captureUser withRegistrationToken:appDelegate.registrationToken 
-                       forDelegate:NULL context:nil];
+                       forDelegate:self context:nil];
     }
     else
     {
@@ -217,13 +217,11 @@
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView { return YES; }
 - (BOOL)textViewShouldEndEditing:(UITextView *)textView { return YES; }
 
-- (void)handleSuccessWithMessage:(NSString *)message
+- (void)handleSuccessWithTitle:(NSString *)title message:(NSString *)message
 {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success"
-                                                     message:message
-                                                    delegate:nil
-                                           cancelButtonTitle:nil
-                                           otherButtonTitles:@"OK", nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
+                                                    message:title
+                                                   delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
     [alert show];
 
     [self.navigationController popViewControllerAnimated:YES];
@@ -231,29 +229,40 @@
     [appDelegate saveCaptureUser];
 }
 
-- (void)handleFailureWithMessage:(NSString *)message
+- (void)handleFailureWithTitle:(NSString *)title message:(NSString *)message
 {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Failure"
-                                                     message:message
-                                                    delegate:nil
-                                           cancelButtonTitle:@"Dismiss"
-                                           otherButtonTitles:nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
+                                                    message:message
+                                                   delegate:nil cancelButtonTitle:@"Dismiss"
+                                          otherButtonTitles:nil];
     [alert show];
 }
 
 - (void)updateDidSucceedForObject:(JRCaptureObject *)object context:(NSObject *)context
 {
-    [self handleSuccessWithMessage:@"Profile updated"];
+    [self handleSuccessWithTitle:@"Profile updated" message:nil];
 }
 
 - (void)updateDidFailForObject:(JRCaptureObject *)object withError:(NSError *)error context:(NSObject *)context
 {
-    [self handleFailureWithMessage:@"Profile not updated"];
+    [self handleFailureWithTitle:@"Profile not updated" message:nil];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+- (void)registerUserDidSucceed:(JRCaptureUser *)registeredUser context:(NSObject *)context
+{
+    appDelegate.isNotYetCreated = NO;
+    appDelegate.captureUser = registeredUser;
+    [self handleSuccessWithTitle:@"Registration Complete" message:nil];
+}
+
+- (void)registerUserDidFailWithError:(NSError *)error context:(NSObject *)context
+{
+    [self handleFailureWithTitle:@"Registration Failed" message:[error localizedDescription]];
 }
 
 @end

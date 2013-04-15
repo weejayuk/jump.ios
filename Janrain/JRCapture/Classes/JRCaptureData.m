@@ -33,7 +33,6 @@
 #import "JRCaptureData.h"
 #import "SFHFKeychainUtils.h"
 #import "NSDictionary+JRQueryParams.h"
-#import "JRConnectionManager.h"
 
 #define cJRCaptureKeychainIdentifier @"capture_tokens.janrain"
 #define cJRCaptureKeychainUserName @"capture_user"
@@ -152,7 +151,7 @@ static JRCaptureData *singleton = nil;
     return self;
 }
 
-+ (NSString *)captureMobileEndpointUrlWithMergeToken:(NSString *)mergeToken
++ (NSString *)captureTokenUrlWithMergeToken:(NSString *)mergeToken
 {
     /**
     * client_id
@@ -175,7 +174,8 @@ static JRCaptureData *singleton = nil;
                     @"locale" : captureData.captureLocale,
                     @"response_type" : @"token",
                     @"redirect_uri" : redirectUri,
-                    @"thin_registration" : thinReg
+                    @"thin_registration" : thinReg,
+                    @"use_deprecated_attributes": @"true"
             }];
 
     if (captureData.captureFlowName) [urlArgs setObject:captureData.captureFlowName forKey:@"flow_name"];
@@ -233,7 +233,6 @@ captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType
     NSString *flowVersion = self.captureFlowVersion ? self.captureFlowVersion : @"HEAD";
 
     //dlzjvycct5xka
-    // http://d1lqe9temigv1p.cloudfront.net/widget_data/flows/q3w3ktgthxwsq9qyh3kuejj4pk/webView/7c6f7ac1-aaff-4726-95d0-f4918a4cfebd/en-US.json
     NSString *flowUrlString =
             [NSString stringWithFormat:@"https://dlzjvycct5xka.cloudfront.net/widget_data/flows/%@/%@/%@/%@.json",
                                        self.captureAppId, self.captureFlowName, flowVersion, self.captureLocale];
@@ -268,7 +267,8 @@ captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType
     }
 
     NSError *jsonErr = nil;
-    NSObject *parsedFlow = [NSJSONSerialization JSONObjectWithData:flowData options:0 error:&jsonErr];
+    NSObject *parsedFlow = [NSJSONSerialization JSONObjectWithData:flowData options:(NSJSONReadingOptions) 0
+                                                             error:&jsonErr];
 
     if (jsonErr)
     {

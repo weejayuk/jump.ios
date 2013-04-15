@@ -65,7 +65,7 @@ captureEnableThinRegistration:(BOOL)enableThinRegistration
 
 + (NSString *)captureMobileEndpointUrl __unused
 {
-    return [JRCaptureData captureMobileEndpointUrlWithMergeToken:nil];
+    return [JRCaptureData captureTokenUrlWithMergeToken:nil];
 }
 
 /**
@@ -176,9 +176,8 @@ captureEnableThinRegistration:(BOOL)enableThinRegistration
 }
 
 + (void)registerNewUser:(JRCaptureUser *)newUser withRegistrationToken:(NSString *)registrationToken
-            forDelegate:(id <JRCaptureSigninDelegate>)delegate context:(void *)context
+            forDelegate:(id <JRCaptureSigninDelegate>)delegate context:(NSObject *)context
 {
-    SEL failMsg = @selector(registerUserDidFailWithError:context:);
     if (!registrationToken)
     {
         NSDictionary *errDict = @{
@@ -187,7 +186,8 @@ captureEnableThinRegistration:(BOOL)enableThinRegistration
                 @"error_description": @"invalid registration token"
         };
         NSError *err = [JRCaptureError errorFromResult:errDict onProvider:nil engageToken:nil];
-        [self maybeDispatch:failMsg forDelegate:delegate withArg:err withArg:context];
+        [self maybeDispatch:@selector(registerUserDidFailWithError:context:) forDelegate:delegate withArg:err
+                    withArg:context];
         return;
     }
     JRCaptureData *config = [JRCaptureData sharedCaptureData];
@@ -204,46 +204,58 @@ captureEnableThinRegistration:(BOOL)enableThinRegistration
             @"flow_name" : config.captureFlowName,
             @"flow_version" : config.captureFlowVersion,
     }];
-    [self jsonRequestToUrl:urlString params:params
-         completionHandler:^(id parsedResponse, NSError *e)
-         {
-             if (e)
-             {
-                 [self maybeDispatch:failMsg forDelegate:delegate withArg:e withArg:context];
-                 return;
-             }
+    [self jsonRequestToUrl:urlString params:params completionHandler:^(id parsedResponse, NSError *e)
+    {
+        [self handleSocialRegistrationResponse:parsedResponse orError:e delegate:delegate context:context];
+    }];
+}
 
-             if (![parsedResponse isKindOfClass:[NSDictionary class]])
-             {
-                 e = [JRCaptureError invalidApiResponseErrorWithObject:parsedResponse];
-                 [self maybeDispatch:failMsg forDelegate:delegate withArg:e withArg:context];
-                 return;
-             }
++ (void)handleSocialRegistrationResponse:(id) parsedResponse orError:(NSError *)e
+                                delegate:(id <JRCaptureSigninDelegate>)delegate
+                                 context:(NSObject *)context
+{
+    SEL failMsg = @selector(registerUserDidFailWithError:context:);
+    SEL successMsg = @selector(registerUserDidSucceed:context:);
+    if (e)
+    {
+        ALog(@"%@", e);
+        [self maybeDispatch:failMsg forDelegate:delegate withArg:e withArg:context];
+        return;
+    }
 
-             NSDictionary *parsedResponse_ = parsedResponse;
-             NSString *stat = [parsedResponse_ objectForKey:@"stat"];
-             if (![stat isEqual:@"ok"])
-             {
-                 NSDictionary *errDict = [JRCaptureError invalidStatErrorDictForResult:parsedResponse_];
-                 e = [JRCaptureError errorFromResult:errDict onProvider:nil engageToken:nil];
-                 [self maybeDispatch:failMsg forDelegate:delegate withArg:e withArg:context];
-                 return;
-             }
+    if (![parsedResponse isKindOfClass:[NSDictionary class]])
+    {
+        e = [JRCaptureError invalidApiResponseErrorWithObject:parsedResponse];
+        ALog(@"%@", e);
+        [self maybeDispatch:failMsg forDelegate:delegate withArg:e withArg:context];
+        return;
+    }
 
-             NSDictionary *newUserDict = [parsedResponse_ objectForKey:@"userrrr"];
-             if (!newUserDict)
-             {
-                 NSDictionary *errDict = [JRCaptureError invalidDataErrorDictForResult:parsedResponse_];
-                 e = [JRCaptureError errorFromResult:errDict onProvider:nil engageToken:nil];
-                 [self maybeDispatch:failMsg forDelegate:delegate withArg:e withArg:context];
-                 return;
-             }
+    NSDictionary *parsedResponse_ = parsedResponse;
+    NSString *stat = [parsedResponse_ objectForKey:@"stat"];
+    if (![stat isEqual:@"ok"])
+    {
+        NSDictionary *errDict = [JRCaptureError invalidStatErrorDictForResult:parsedResponse_];
+        e = [JRCaptureError errorFromResult:errDict onProvider:nil engageToken:nil];
+        ALog(@"%@", e);
+        [self maybeDispatch:failMsg forDelegate:delegate withArg:e withArg:context];
+        return;
+    }
 
-             JRCaptureUser *newUser_ = [JRCaptureUser captureUserObjectFromDictionary:newUserDict];
+    NSDictionary *newUserDict = [parsedResponse_ objectForKey:@"capture_user"];
+    if (!newUserDict)
+    {
+        NSDictionary *errDict = [JRCaptureError invalidDataErrorDictForResult:parsedResponse_];
+        e = [JRCaptureError errorFromResult:errDict onProvider:nil engageToken:nil];
+        ALog(@"%@", e);
+        [self maybeDispatch:failMsg forDelegate:delegate withArg:e withArg:context];
+        return;
+    }
 
-             SEL successMsg = @selector(registerUserDidSucceed:context:);
-             [self maybeDispatch:successMsg forDelegate:delegate withArg:newUser_ withArg:context];
-         }];
+    JRCaptureUser *newUser_ = [JRCaptureUser captureUserObjectFromDictionary:newUserDict];
+    [self setAccessToken:[parsedResponse_ objectForKey:@"access_token"]];
+
+    [self maybeDispatch:successMsg forDelegate:delegate withArg:newUser_ withArg:context];
 }
 
 + (void)maybeDispatch:(SEL)pSelector forDelegate:(id <JRCaptureSigninDelegate>)delegate withArg:(id)arg1

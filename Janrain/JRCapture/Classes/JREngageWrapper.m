@@ -106,7 +106,7 @@ static JREngageWrapper *singleton = nil;
                             andCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
                                             forDelegate:(id <JRCaptureSigninDelegate>)delegate
 {
-    [JREngage updateTokenUrl:[JRCaptureData captureMobileEndpointUrlWithMergeToken:nil]];
+    [JREngage updateTokenUrl:[JRCaptureData captureTokenUrlWithMergeToken:nil]];
 
     JREngageWrapper *wrapper = [JREngageWrapper singletonInstance];
     [wrapper setDelegate:delegate];
@@ -158,7 +158,7 @@ expandedCustomInterfaceOverrides:(NSMutableDictionary *)expandedCustomInterfaceO
                                  mergeToken:(NSString *)mergeToken
                                 forDelegate:(id <JRCaptureSigninDelegate>)delegate
 {
-    [JREngage updateTokenUrl:[JRCaptureData captureMobileEndpointUrlWithMergeToken:mergeToken]];
+    [JREngage updateTokenUrl:[JRCaptureData captureTokenUrlWithMergeToken:mergeToken]];
 
     [[JREngageWrapper singletonInstance] setDelegate:delegate];
     [[JREngageWrapper singletonInstance] setDialogState:JREngageDialogStateAuthentication];

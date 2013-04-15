@@ -75,6 +75,14 @@ static NSString *const ENGAGE_TOKEN_KEY = @"merge_token";
     if (!preregAttrs) return nil;
     return [JRCaptureUser captureUserObjectFromDictionary:preregAttrs];
 }
+
+- (NSString *)localizedDescription
+{
+    NSString *message = [self.userInfo objectForKey:@"message"];
+    if (message) return message;
+    return [super localizedDescription];
+}
+
 @end
 
 @implementation JRCaptureError (JRCaptureError_Builders)
