@@ -202,8 +202,8 @@ captureEnableThinRegistration:(BOOL)enableThinRegistration
             @"redirect_uri" : [config redirectUri],
             @"token" : registrationToken,
             @"flow_name" : config.captureFlowName,
-            @"flow_version" : config.captureFlowVersion,
     }];
+    if ([config getDownloadedFlowVersion]) [params setObject:[config getDownloadedFlowVersion] forKey:@"flow_version"];
     [self jsonRequestToUrl:urlString params:params completionHandler:^(id parsedResponse, NSError *e)
     {
         [self handleSocialRegistrationResponse:parsedResponse orError:e delegate:delegate context:context];

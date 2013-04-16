@@ -212,6 +212,33 @@
         }
 }
 
++ (JRCaptureUser *)captureUserObjectWithPrefilledFields:(NSDictionary *)prefilledFields forForm:(NSString *)form
+                                                   flow:(NSDictionary *)flow
+{
+    NSMutableDictionary *preregAttributes = [NSMutableDictionary dictionary];
+    for (id key in prefilledFields)
+    {
+        id value = [prefilledFields objectForKey:key];
+        if ([value isEqual:[NSNull null]]) continue;
+        NSDictionary *fieldDefn = [self fieldDictForFieldName:key flow:flow];
+        if ([fieldDefn isKindOfClass:[NSDictionary class]] && [fieldDefn objectForKey:@"schemaId"])
+        {
+            [preregAttributes setObject:value forKey:[fieldDefn objectForKey:@"schemaId"]];
+        }
+    }
+    return [JRCaptureUser captureUserObjectFromDictionary:preregAttributes];
+}
+
++ (NSDictionary *)fieldDictForFieldName:(NSString *)fieldName flow:(NSDictionary *)flow
+{
+    NSDictionary *fields = [flow objectForKey:@"fields"];
+    for (id key in fields)
+    {
+        if ([key isEqual:fieldName]) return [fields objectForKey:key];
+    }
+    return nil;
+}
+
 @end
 
 @implementation NSArray (JRArrayExtensions)

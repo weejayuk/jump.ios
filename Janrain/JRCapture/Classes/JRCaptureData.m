@@ -175,11 +175,12 @@ static JRCaptureData *singleton = nil;
                     @"response_type" : @"token",
                     @"redirect_uri" : redirectUri,
                     @"thin_registration" : thinReg,
-                    @"use_deprecated_attributes": @"true"
+                    //@"use_deprecated_attributes": @"true"
             }];
 
     if (captureData.captureFlowName) [urlArgs setObject:captureData.captureFlowName forKey:@"flow_name"];
-    if (captureData.captureFlowVersion) [urlArgs setObject:captureData.captureFlowVersion forKey:@"flow_version"];
+    if ([captureData getDownloadedFlowVersion])
+        [urlArgs setObject:[captureData getDownloadedFlowVersion] forKey:@"flow_version"];
     if (captureData.bpChannelUrl) [urlArgs setObject:captureData.bpChannelUrl forKey:@"bp_channel"];
     if (mergeToken) [urlArgs setObject:mergeToken forKey:@"merge_token"];
     if (captureData.captureRegistrationFormName) [urlArgs setObject:captureData.captureRegistrationFormName
@@ -187,6 +188,11 @@ static JRCaptureData *singleton = nil;
 
     NSString *getParams = [urlArgs asJRURLParamString];
     return [NSString stringWithFormat:@"%@/oauth/auth_native?%@", captureData.captureBaseUrl, getParams];
+}
+
+- (NSString *)getDownloadedFlowVersion
+{
+    return [captureFlow objectForKey:@"version"];
 }
 
 - (NSString *)redirectUri
@@ -228,8 +234,6 @@ captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType
 
 - (void)downloadFlow
 {
-    // update this etag stuff
-    NSString *etag = [self loadFlowEtag];
     NSString *flowVersion = self.captureFlowVersion ? self.captureFlowVersion : @"HEAD";
 
     //dlzjvycct5xka
@@ -237,7 +241,6 @@ captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType
             [NSString stringWithFormat:@"https://dlzjvycct5xka.cloudfront.net/widget_data/flows/%@/%@/%@/%@.json",
                                        self.captureAppId, self.captureFlowName, flowVersion, self.captureLocale];
     NSMutableURLRequest *downloadRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:flowUrlString]];
-    if (etag) [downloadRequest setValue:etag forHTTPHeaderField:@"If-None-Match"];
     [downloadRequest setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
 
     [NSURLConnection sendAsynchronousRequest:downloadRequest queue:[NSOperationQueue mainQueue]
@@ -253,19 +256,8 @@ captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType
                            }];
 }
 
-- (NSString *)loadFlowEtag
-{
-    return [[NSUserDefaults standardUserDefaults] stringForKey:FLOW_ETAG_KEY];
-}
-
 - (void)processFlow:(NSData *)flowData response:(NSHTTPURLResponse *)response
 {
-    if ([response statusCode] == 304)
-    {
-        DLog(@"not modified");
-        return;
-    }
-
     NSError *jsonErr = nil;
     NSObject *parsedFlow = [NSJSONSerialization JSONObjectWithData:flowData options:(NSJSONReadingOptions) 0
                                                              error:&jsonErr];

@@ -36,6 +36,9 @@
 - (void)decodeFromDictionary:(NSDictionary *)dictionary;
 
 - (NSMutableDictionary *)toFormFieldsForForm:(NSString *)formName withFlow:(NSDictionary *)flow;
+
++ (JRCaptureUser *)captureUserObjectWithPrefilledFields:(NSDictionary *)prefilledFields forForm:(NSString *)form
+                                                   flow:(NSDictionary *)flow;
 @end
 
 /**

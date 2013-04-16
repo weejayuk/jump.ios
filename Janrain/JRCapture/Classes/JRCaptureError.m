@@ -31,6 +31,7 @@
 #import "JRCaptureError.h"
 #import "JRCaptureUser.h"
 #import "JRCaptureUser+Extras.h"
+#import "JRCaptureData.h"
 
 #define between(a, b, c) ((a >= b && a < c) ? YES : NO)
 
@@ -42,6 +43,11 @@ static NSString *const ENGAGE_TOKEN_KEY = @"merge_token";
 - (BOOL)isMergeFlowError
 {
     return self.code == 3380;
+}
+
++ (void)maybeCopyEntry:(id)key from:(NSDictionary *)from to:(NSMutableDictionary *)to
+{
+    if ([from objectForKey:key]) [to setObject:[from objectForKey:key] forKey:key];
 }
 
 - (BOOL)isTwoStepRegFlowError
@@ -72,8 +78,17 @@ static NSString *const ENGAGE_TOKEN_KEY = @"merge_token";
 - (JRCaptureUser *)preRegistrationRecord
 {
     NSDictionary *preregAttrs = [self.userInfo objectForKey:@"prereg_attributes"];
-    if (!preregAttrs) return nil;
+    if (!preregAttrs) return [self preRegistrationRecordByPreregFields];
     return [JRCaptureUser captureUserObjectFromDictionary:preregAttrs];
+}
+
+- (JRCaptureUser *)preRegistrationRecordByPreregFields
+{
+    NSDictionary *preregFields = [self.userInfo objectForKey:@"prereg_fields"];
+    if (!preregFields) return nil;
+    JRCaptureData *cfg = [JRCaptureData sharedCaptureData];
+    return [JRCaptureUser captureUserObjectWithPrefilledFields:preregFields forForm:cfg.captureRegistrationFormName
+                                                          flow:cfg.captureFlow];
 }
 
 - (NSString *)localizedDescription
@@ -153,42 +168,43 @@ static NSString *const ENGAGE_TOKEN_KEY = @"merge_token";
     {
         case 100: /* 'missing_argument' A required argument was not supplied. Extra fields: 'argument_name' */
         case 200: /* 'invalid_argument' The argument was malformed, or its value was invalid for some other reason. Extra fields: 'argument_name' */
-            [extraFields setObject:[result objectForKey:@"argument_name"] forKey:@"argument_name"];
+            [self maybeCopyEntry:@"argument_name" from:result to:extraFields];
             break;
 
         case 223: /* 'unknown_attribute' An attribute does not exist. This can occur when trying to create or update a record, or when modifying an attribute. Extra fields: 'attribute_name' */
         case 233: /* 'attribute_exists' Attempted to create an attribute that already exists. Extra fields: 'attribute_name' */
         case 234: /* 'reserved_attribute' Attempted to modify a reserved attribute; can occur if you try to delete, rename, or write to a reserved attribute. Extra fields: 'attribute_name' */
-            [extraFields setObject:[result objectForKey:@"attribute_name"] forKey:@"attribute_name"];
+            [self maybeCopyEntry:@"attribute_name" from:result to:extraFields];
             break;
 
         case 221: /* 'unknown_application' The application id does not exist. Extra fields: 'application_id' */
-            [extraFields setObject:[result objectForKey:@"application_id"] forKey:@"applicaiton_id"];
+            [self maybeCopyEntry:@"applicaiton_id" from:result to:extraFields];
             break;
 
         case 222: /* 'unknown_entity_type' The entity type does not exist. Extra fields: 'type_name' */
         case 232: /* 'entity_type_exists' Attempted to create an entity type that already exists. Extra fields: 'type_name' */
-            [extraFields setObject:[result objectForKey:@"type_name"] forKey:@"type_name"];
+            [self maybeCopyEntry:@"type_name" from:result to:extraFields];
             break;
 
         case 310: /* 'record_not_found' Referred to an entity or plural element that does not exist. */
-            [extraFields setObject:[result objectForKey:@"message"] forKey:@"message"];
-            [extraFields setObject:[result objectForKey:@"prereg_attributes"] forKey:@"prereg_attributes"];
+            [self maybeCopyEntry:@"message" from:result to:extraFields];
+            [self maybeCopyEntry:@"prereg_attributes" from:result to:extraFields];
+            [self maybeCopyEntry:@"prereg_fields" from:result to:extraFields];
             break;
 
         case 330: /* 'timestamp_mismatch' The created or lastUpdated value does not match the supplied argument. Extra fields: 'attribute_name', 'actual_value', 'supplied_value' */
-            [extraFields setObject:[result objectForKey:@"attribute_name"] forKey:@"attribute_name"];
-            [extraFields setObject:[result objectForKey:@"actual_value"] forKey:@"actual_value"];
-            [extraFields setObject:[result objectForKey:@"supplied_value"] forKey:@"supplied_value"];
+            [self maybeCopyEntry:@"attribute_name" from:result to:extraFields];
+            [self maybeCopyEntry:@"actual_value" from:result to:extraFields];
+            [self maybeCopyEntry:@"supplied_value" from:result to:extraFields];
             break;
 
         case 380:
-            [extraFields setObject:[result objectForKey:@"existing_provider"] forKey:@"existing_provider"];
+            [self maybeCopyEntry:@"existing_provider" from:result to:extraFields];
             break;
 
         case 420: /* 'redirect_uri_mismatch' The redirectUri did not match. Occurs in the oauth/token API call with the authorization_code grant type. Extra fields: 'expected_value', 'supplied_value' */
-            [extraFields setObject:[result objectForKey:@"expected_value"] forKey:@"expected_value"];
-            [extraFields setObject:[result objectForKey:@"supplied_value"] forKey:@"supplied_value"];
+            [self maybeCopyEntry:@"expected_value" from:result to:extraFields];
+            [self maybeCopyEntry:@"supplied_value" from:result to:extraFields];
             break;
 
         case 201: /* 'duplicate_argument' Two or more supplied arguments may not have been included in the same call; for example, both id and uuid in entity.update. */

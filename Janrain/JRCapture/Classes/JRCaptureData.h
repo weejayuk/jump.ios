@@ -67,4 +67,6 @@ captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType
 - (NSString *)redirectUri;
 
 - (void)loadFlow;
+
+- (id)getDownloadedFlowVersion;
 @end
