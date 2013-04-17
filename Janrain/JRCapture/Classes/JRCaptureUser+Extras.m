@@ -58,29 +58,29 @@
 - (void)getCaptureUserDidSucceedWithResult:(NSObject *)result context:(NSObject *)context
 {
     DLog(@"");
-    NSDictionary    *myContext     = (NSDictionary *)context;
-    //NSString        *capturePath   = [myContext objectForKey:@"capturePath"];
-    NSObject        *callerContext = [myContext objectForKey:@"callerContext"];
-    id<JRCaptureUserDelegate>
-                     delegate      = [myContext objectForKey:@"delegate"];
+    NSDictionary *myContext = (NSDictionary *) context;
+    NSObject *callerContext = [myContext objectForKey:@"callerContext"];
+    id <JRCaptureUserDelegate> delegate = [myContext objectForKey:@"delegate"];
 
     NSDictionary *resultDictionary;
     if ([result isKindOfClass:[NSString class]])
         resultDictionary = [(NSString *)result objectFromJSONString];
-    else /* Uh-oh!! */
+    else
         return [self getCaptureUserDidFailWithResult:[JRCaptureError invalidClassErrorDictForResult:result]
                                              context:context];
 
     if (!resultDictionary)
-        return [self createCaptureUserDidFailWithResult:[JRCaptureError invalidDataErrorDictForResult:result]
-                                                context:context];
+        return [self getCaptureUserDidFailWithResult:[JRCaptureError invalidDataErrorDictForResult:result]
+                                             context:context];
 
     if (![((NSString *)[resultDictionary objectForKey:@"stat"]) isEqualToString:@"ok"])
-        return [self getCaptureUserDidFailWithResult:[JRCaptureError invalidStatErrorDictForResult:result] context:context];
+        return [self getCaptureUserDidFailWithResult:[JRCaptureError invalidStatErrorDictForResult:result]
+                                             context:context];
 
     NSDictionary *result_ = [resultDictionary objectForKey:@"result"];
     if (!result_ || ![result_ isKindOfClass:[NSDictionary class]])
-        return [self getCaptureUserDidFailWithResult:[JRCaptureError invalidDataErrorDictForResult:result] context:context];
+        return [self getCaptureUserDidFailWithResult:[JRCaptureError invalidDataErrorDictForResult:result]
+                                             context:context];
 
     JRCaptureUser *captureUser = [JRCaptureUser captureUserObjectFromDictionary:result_];
 

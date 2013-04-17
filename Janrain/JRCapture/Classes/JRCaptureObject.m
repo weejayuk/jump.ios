@@ -394,42 +394,49 @@
 {
     [NSException raise:NSInternalInconsistencyException
                 format:@"You must override %@ in a subclass", NSStringFromSelector(_cmd)];
+    return nil;
 }
 
 - (NSDictionary *)toUpdateDictionary
 {
     [NSException raise:NSInternalInconsistencyException
                 format:@"You must override %@ in a subclass", NSStringFromSelector(_cmd)];
+    return nil;
 }
 
 - (NSDictionary *)toReplaceDictionary
 {
     [NSException raise:NSInternalInconsistencyException
                 format:@"You must override %@ in a subclass", NSStringFromSelector(_cmd)];
+    return nil;
 }
 
 - (NSDictionary*)objectProperties
 {
     [NSException raise:NSInternalInconsistencyException
                 format:@"You must override %@ in a subclass", NSStringFromSelector(_cmd)];
+    return nil;
 }
 
 - (NSSet *)setOfAllUpdatableProperties __unused
 {
     [NSException raise:NSInternalInconsistencyException
                 format:@"You must override %@ in a subclass", NSStringFromSelector(_cmd)];
+    return nil;
 }
 
 - (BOOL)needsUpdate
 {
     [NSException raise:NSInternalInconsistencyException
                 format:@"You must override %@ in a subclass", NSStringFromSelector(_cmd)];
+    return nil;
 }
 
 - (NSSet *)updatablePropertySet
 {
     [NSException raise:NSInternalInconsistencyException
                 format:@"You must override %@ in a subclass", NSStringFromSelector(_cmd)];
+    return nil;
 }
 
 - (void)setAllPropertiesToDirty
@@ -442,6 +449,7 @@
 {
     [NSException raise:NSInternalInconsistencyException
                 format:@"You must override %@ in a subclass", NSStringFromSelector(_cmd)];
+    return nil;
 }
 
 

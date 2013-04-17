@@ -52,8 +52,8 @@
 @synthesize currentUserLabel;
 @synthesize currentUserProviderIcon;
 @synthesize browseButton;
-@synthesize captureWidgetButton;
-@synthesize updateButton;
+@synthesize thirdButton;
+@synthesize formButton;
 @synthesize signInButton;
 @synthesize signOutButton;
 @synthesize shareWidgetButton;
@@ -66,12 +66,6 @@
 
     self.customUi = [NSMutableDictionary dictionaryWithObject:self.navigationController
                                                        forKey:kJRApplicationNavigationController];
-    [self configureUserLabelAndIcon];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [self configureButtons];
 }
 
 - (void)configureButtons
@@ -80,11 +74,17 @@
     {
         signInButton.hidden = YES;
         signOutButton.hidden = NO;
+        [formButton setTitle:@"Update" forState:UIControlStateNormal];
+        browseButton.hidden = NO;
+        thirdButton.hidden = YES;
     }
     else
     {
         signInButton.hidden = NO;
         signOutButton.hidden = YES;
+        [formButton setTitle:@"Traditional Registration" forState:UIControlStateNormal];
+        browseButton.hidden = YES;
+        thirdButton.hidden = YES;
     }
 }
 
@@ -93,6 +93,7 @@
     DLog();
     self.viewIsApparent = YES;
     [self configureUserLabelAndIcon];
+    [self configureButtons];
     if (viewDidAppearContinuation)
     {
         viewDidAppearContinuation();

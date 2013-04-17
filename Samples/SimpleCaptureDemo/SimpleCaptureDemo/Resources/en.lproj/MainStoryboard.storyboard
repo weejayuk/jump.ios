@@ -123,13 +123,13 @@
                     <navigationItem key="navigationItem" id="Yue-dQ-Nym"/>
                     <connections>
                         <outlet property="browseButton" destination="Sdc-xo-ZC1" id="3Sx-RY-vcP"/>
-                        <outlet property="captureWidgetButton" destination="9l8-Zj-RBh" id="FEg-vq-zM3"/>
+                        <outlet property="thirdButton" destination="9l8-Zj-RBh" id="FEg-vq-zM3"/>
                         <outlet property="currentUserLabel" destination="Hq8-yJ-Rmg" id="hGr-bA-Zvn"/>
                         <outlet property="currentUserProviderIcon" destination="PZq-1X-zH2" id="vdO-gn-iv0"/>
                         <outlet property="shareWidgetButton" destination="Lxu-X3-tcS" id="6WO-eE-sYh"/>
                         <outlet property="signInButton" destination="gAk-C3-t5t" id="xiB-Pk-aug"/>
                         <outlet property="signOutButton" destination="GHJ-Vx-tee" id="irK-fI-240"/>
-                        <outlet property="updateButton" destination="3Ab-Cb-7AE" id="ewh-dj-wSs"/>
+                        <outlet property="formButton" destination="3Ab-Cb-7AE" id="ewh-dj-wSs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4" sceneMemberID="firstResponder"/>
@@ -167,13 +167,13 @@
                 <relationship kind="action" name="thirdButtonPressed:"/>
                 <relationship kind="action" name="updateButtonPressed:"/>
                 <relationship kind="outlet" name="browseButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="captureWidgetButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="thirdButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="currentUserLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="currentUserProviderIcon" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="shareWidgetButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="signInButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="signOutButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="updateButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="formButton" candidateClass="UIButton"/>
             </relationships>
         </class>
     </classes>

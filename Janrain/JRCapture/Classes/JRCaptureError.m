@@ -29,7 +29,6 @@
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #import "JRCaptureError.h"
-#import "JRCaptureUser.h"
 #import "JRCaptureUser+Extras.h"
 #import "JRCaptureData.h"
 

@@ -178,20 +178,7 @@ captureEnableThinRegistration:(BOOL)enableThinRegistration
 + (void)registerNewUser:(JRCaptureUser *)newUser withRegistrationToken:(NSString *)registrationToken
             forDelegate:(id <JRCaptureSigninDelegate>)delegate context:(NSObject *)context
 {
-    if (!registrationToken)
-    {
-        NSDictionary *errDict = @{
-                @"code": [NSNumber numberWithInt:JRCaptureLocalApidErrorInvalidArgument],
-                @"error": @"invalid_argument",
-                @"error_description": @"invalid registration token"
-        };
-        NSError *err = [JRCaptureError errorFromResult:errDict onProvider:nil engageToken:nil];
-        [self maybeDispatch:@selector(registerUserDidFailWithError:context:) forDelegate:delegate withArg:err
-                    withArg:context];
-        return;
-    }
     JRCaptureData *config = [JRCaptureData sharedCaptureData];
-    NSString *urlString = [NSString stringWithFormat:@"%@/oauth/register_native", config.captureBaseUrl];
     NSString *registrationForm = config.captureRegistrationFormName;
     NSDictionary *flow = config.captureFlow;
     NSMutableDictionary *params = [newUser toFormFieldsForForm:registrationForm withFlow:flow];
@@ -200,19 +187,29 @@ captureEnableThinRegistration:(BOOL)enableThinRegistration
             @"locale" : config.captureLocale,
             @"response_type" : @"token",
             @"redirect_uri" : [config redirectUri],
-            @"token" : registrationToken,
             @"flow_name" : config.captureFlowName,
+            @"form" : config.captureRegistrationFormName
     }];
-    if ([config getDownloadedFlowVersion]) [params setObject:[config getDownloadedFlowVersion] forKey:@"flow_version"];
+    if ([config downloadedFlowVersion]) [params setObject:[config downloadedFlowVersion] forKey:@"flow_version"];
+    NSString *urlString;
+    if (registrationToken)
+    {
+        [params setObject:registrationToken forKey:@"token"];
+        urlString = [NSString stringWithFormat:@"%@/oauth/register_native", config.captureBaseUrl];
+    }
+    else
+    {
+        urlString = [NSString stringWithFormat:@"%@/oauth/register_native_traditional", config.captureBaseUrl];
+    }
+
     [self jsonRequestToUrl:urlString params:params completionHandler:^(id parsedResponse, NSError *e)
     {
-        [self handleSocialRegistrationResponse:parsedResponse orError:e delegate:delegate context:context];
+        [self handleRegistrationResponse:parsedResponse orError:e delegate:delegate context:context];
     }];
 }
 
-+ (void)handleSocialRegistrationResponse:(id) parsedResponse orError:(NSError *)e
-                                delegate:(id <JRCaptureSigninDelegate>)delegate
-                                 context:(NSObject *)context
++ (void)handleRegistrationResponse:(id)parsedResponse orError:(NSError *)e
+                          delegate:(id <JRCaptureSigninDelegate>)delegate context:(NSObject *)context
 {
     SEL failMsg = @selector(registerUserDidFailWithError:context:);
     SEL successMsg = @selector(registerUserDidSucceed:context:);
@@ -242,7 +239,17 @@ captureEnableThinRegistration:(BOOL)enableThinRegistration
         return;
     }
 
-    NSDictionary *newUserDict = [parsedResponse_ objectForKey:@"capture_user"];
+    NSDictionary *userResultDict = [parsedResponse_ objectForKey:@"capture_user"];
+    if (!userResultDict)
+    {
+        NSDictionary *errDict = [JRCaptureError invalidDataErrorDictForResult:parsedResponse_];
+        e = [JRCaptureError errorFromResult:errDict onProvider:nil engageToken:nil];
+        ALog(@"%@", e);
+        [self maybeDispatch:failMsg forDelegate:delegate withArg:e withArg:context];
+        return;
+    }
+
+    NSDictionary *newUserDict = [userResultDict objectForKey:@"result"];
     if (!newUserDict)
     {
         NSDictionary *errDict = [JRCaptureError invalidDataErrorDictForResult:parsedResponse_];
@@ -285,7 +292,7 @@ captureEnableThinRegistration:(BOOL)enableThinRegistration
                                    NSString *bodyString =
                                            [[[NSString alloc] initWithData:d
                                                                   encoding:NSUTF8StringEncoding] autorelease];
-                                   ALog(@"Fetching hopefully JSON: %@", bodyString);
+                                   ALog(@"Fetching expected JSON: %@", bodyString);
                                    NSError *err;
                                    id parsedJson = [NSJSONSerialization JSONObjectWithData:d
                                                                                    options:(NSJSONReadingOptions) 0

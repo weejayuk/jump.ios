@@ -682,13 +682,11 @@ typedef enum CaptureInterfaceStatEnum
                                  forDelegate:(id<JRCaptureSigninDelegate>)delegate
 {
     NSString *accessToken   = [payloadDict objectForKey:@"access_token"];
-    NSString *creationToken = [payloadDict objectForKey:@"creation_token"];
     BOOL      isNew         = [(NSNumber*)[payloadDict objectForKey:@"is_new"] boolValue];
-    BOOL      notYetCreated = creationToken ? YES: NO;
 
     NSDictionary *captureProfile = [payloadDict objectForKey:@"capture_user"];
 
-    if (!captureProfile || !(accessToken || creationToken)) return cJRInvalidResponse;
+    if (!captureProfile || !(accessToken)) return cJRInvalidResponse;
 
     JRCaptureUser *captureUser = [JRCaptureUser captureUserObjectFromDictionary:captureProfile];
 
@@ -696,16 +694,12 @@ typedef enum CaptureInterfaceStatEnum
 
     if (accessToken)
         [JRCaptureData setAccessToken:accessToken];
-    else if (creationToken)
-        [JRCaptureData setCreationToken:creationToken];
 
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 
     JRCaptureRecordStatus recordStatus;
 
-    if (notYetCreated)
-        recordStatus = JRCaptureRecordRequiresCreation;
-    else if (isNew)
+    if (isNew)
         recordStatus = JRCaptureRecordNewlyCreated;
     else
         recordStatus = JRCaptureRecordExists;

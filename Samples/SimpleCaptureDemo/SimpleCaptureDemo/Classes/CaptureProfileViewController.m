@@ -257,6 +257,7 @@
 {
     appDelegate.isNotYetCreated = NO;
     appDelegate.captureUser = registeredUser;
+    appDelegate.registrationToken = nil;
     [self handleSuccessWithTitle:@"Registration Complete" message:nil];
 }
 

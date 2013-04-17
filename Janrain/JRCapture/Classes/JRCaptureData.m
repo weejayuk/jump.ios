@@ -65,7 +65,6 @@ typedef enum
     JRTokenTypeCreation,
 } JRTokenType;
 
-static NSString *const FLOW_ETAG_KEY = @"JR_capture_flow_etag";
 static NSString *const FLOW_KEY = @"JR_capture_flow";
 
 @interface JRCaptureData ()
@@ -179,8 +178,8 @@ static JRCaptureData *singleton = nil;
             }];
 
     if (captureData.captureFlowName) [urlArgs setObject:captureData.captureFlowName forKey:@"flow_name"];
-    if ([captureData getDownloadedFlowVersion])
-        [urlArgs setObject:[captureData getDownloadedFlowVersion] forKey:@"flow_version"];
+    if ([captureData downloadedFlowVersion])
+        [urlArgs setObject:[captureData downloadedFlowVersion] forKey:@"flow_version"];
     if (captureData.bpChannelUrl) [urlArgs setObject:captureData.bpChannelUrl forKey:@"bp_channel"];
     if (mergeToken) [urlArgs setObject:mergeToken forKey:@"merge_token"];
     if (captureData.captureRegistrationFormName) [urlArgs setObject:captureData.captureRegistrationFormName
@@ -190,9 +189,12 @@ static JRCaptureData *singleton = nil;
     return [NSString stringWithFormat:@"%@/oauth/auth_native?%@", captureData.captureBaseUrl, getParams];
 }
 
-- (NSString *)getDownloadedFlowVersion
+- (NSString *)downloadedFlowVersion
 {
-    return [captureFlow objectForKey:@"version"];
+    id version = [captureFlow objectForKey:@"version"];
+    if ([version isKindOfClass:[NSString class]]) return version;
+    ALog(@"Error parsing flow version: %@", version);
+    return nil;
 }
 
 - (NSString *)redirectUri
@@ -225,11 +227,8 @@ captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType
 
 - (void)loadFlow
 {
-    self.captureFlow = [[NSUserDefaults standardUserDefaults] objectForKey:FLOW_KEY];
-    if (![captureFlow isKindOfClass:[NSDictionary class]])
-    {
-        [self writeFlowEtag:nil];
-    }
+    self.captureFlow =
+            [NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:FLOW_KEY]];
 }
 
 - (void)downloadFlow
@@ -277,37 +276,15 @@ captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType
     }
 
     self.captureFlow = (NSDictionary *) parsedFlow;
-    DLog(@"Parsed flow, version: %@", [self flowVersion]);
+    DLog(@"Parsed flow, version: %@", [self downloadedFlowVersion]);
     
     [self writeCaptureFlow];
-
-    NSString *etag = [[response allHeaderFields] objectForKey:@"etag"];
-    [self writeFlowEtag:etag];
-}
-
-- (NSString *)flowVersion
-{
-    id version = [captureFlow objectForKey:@"version"];
-    if ([version isKindOfClass:[NSString class]]) return version;
-    ALog(@"Error parsing flow version: %@", version);
-    return nil;
 }
 
 - (void)writeCaptureFlow
 {
-    [[NSUserDefaults standardUserDefaults] setValue:captureFlow forKey:FLOW_KEY];
-}
-
-- (void)writeFlowEtag:(NSString *)etag
-{
-    DLog(@"etag: %@", etag);
-    if (etag)
-    {
-        [[NSUserDefaults standardUserDefaults] setValue:etag forKey:FLOW_ETAG_KEY];
-        return;
-    }
-
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:FLOW_ETAG_KEY];
+    [[NSUserDefaults standardUserDefaults] setValue:[NSKeyedArchiver archivedDataWithRootObject:captureFlow]
+                                             forKey:FLOW_KEY];
 }
 
 + (NSString *)serviceNameForTokenType:(JRTokenType)tokenType
@@ -351,21 +328,12 @@ captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType
 + (void)saveNewToken:(NSString *)token ofType:(JRTokenType)tokenType
 {
     [JRCaptureData deleteTokenFromKeychainOfType:JRTokenTypeAccess];
-    [JRCaptureData deleteTokenFromKeychainOfType:JRTokenTypeCreation];
 
     if (tokenType == JRTokenTypeAccess)
     {
         [JRCaptureData sharedCaptureData].accessToken = token;
-        [JRCaptureData sharedCaptureData].creationToken = nil;
 
         [JRCaptureData storeTokenInKeychain:token ofType:JRTokenTypeAccess];
-    }
-    else
-    {
-        [JRCaptureData sharedCaptureData].creationToken = token;
-        [JRCaptureData sharedCaptureData].accessToken = nil;
-
-        [JRCaptureData storeTokenInKeychain:token ofType:JRTokenTypeCreation];
     }
 }
 
@@ -377,11 +345,6 @@ captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType
 + (NSString *)getAccessToken __unused
 {
     return [JRCaptureData sharedCaptureData].accessToken;
-}
-
-+ (void)setCreationToken:(NSString *)token
-{
-    [JRCaptureData saveNewToken:token ofType:JRTokenTypeCreation];
 }
 
 + (NSString *)accessToken __unused

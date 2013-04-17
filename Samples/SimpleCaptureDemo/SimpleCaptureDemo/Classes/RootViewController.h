@@ -46,8 +46,8 @@
 @property (weak) IBOutlet UILabel *currentUserLabel;
 @property (weak) IBOutlet UIImageView *currentUserProviderIcon;
 @property (weak) IBOutlet UIButton *browseButton;
-@property (weak) IBOutlet UIButton *updateButton;
-@property (weak) IBOutlet UIButton *captureWidgetButton;
+@property (weak) IBOutlet UIButton *formButton;
+@property (weak) IBOutlet UIButton *thirdButton;
 @property (weak) IBOutlet UIButton *signInButton;
 @property (weak) IBOutlet UIButton *signOutButton;
 @property(nonatomic, strong) NSMutableDictionary *customUi;

@@ -49,7 +49,6 @@
 @property(nonatomic, readonly, retain) NSDictionary *captureFlow;
 
 + (void)setAccessToken:(NSString *)token;
-+ (void)setCreationToken:(NSString *)token;
 
 +     (void)setCaptureDomain:(NSString *)captureDomain captureClientId:(NSString *)clientId
                captureLocale:(NSString *)captureLocale captureSignInFormName:(NSString *)captureSignInFormName
@@ -64,9 +63,10 @@ captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType
 
 + (JRCaptureData *)sharedCaptureData;
 
+- (NSString *)downloadedFlowVersion;
+
 - (NSString *)redirectUri;
 
 - (void)loadFlow;
 
-- (id)getDownloadedFlowVersion;
 @end
