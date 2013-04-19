@@ -5,6 +5,8 @@
 //
 
 
+#import "AppDelegate.h"
+#import "CaptureProfileViewController.h"
 #import "Utils.h"
 
 Class getPluralClassFromKey(NSString *key)
@@ -28,3 +30,26 @@ NSString *upcaseFirst(NSString *string)
     return [string stringByReplacingCharactersInRange:NSMakeRange(0, 1)
                                            withString:[[string substringToIndex:1] capitalizedString]];
 }
+
+@implementation Utils
++ (void)handleSuccessWithTitle:(NSString *)title message:(NSString *)message forVc:(UIViewController *)forVc
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
+                                                    message:message
+                                                   delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+    [alert show];
+
+    [forVc.navigationController popViewControllerAnimated:YES];
+
+    [appDelegate saveCaptureUser];
+}
+
++ (void)handleFailureWithTitle:(NSString *)title message:(NSString *)message
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
+                                                    message:message
+                                                   delegate:nil cancelButtonTitle:@"Dismiss"
+                                          otherButtonTitles:nil];
+    [alert show];
+}
+@end

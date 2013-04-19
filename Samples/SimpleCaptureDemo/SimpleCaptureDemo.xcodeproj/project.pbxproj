@@ -118,6 +118,7 @@
 		C14245DBC78E1ECDA5202BDE /* logo_myopenid_280x65.png in Resources */ = {isa = PBXBuildFile; fileRef = C14246C874CF9355A7E5E13E /* logo_myopenid_280x65.png */; };
 		C14245DDAB3E23F39BFE2B40 /* header.html in Resources */ = {isa = PBXBuildFile; fileRef = C1424F18133CA55D39D2DBEF /* header.html */; };
 		C14245E695DE25DFADE60FF2 /* JRPhotosElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C142414E858492E358637081 /* JRPhotosElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		C14245EB6DB26259A478A2D4 /* CaptureRegistrationForm.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424D6CCEC2655D90E77A75 /* CaptureRegistrationForm.m */; };
 		C14246103BE0A523306FAFED /* logo_blogger_280x65@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424B2B5EC95FC5376981C9 /* logo_blogger_280x65@2x.png */; };
 		C1424611CE09C0897CF6AD1F /* JRUserLandingController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C14240824250D404653F6131 /* JRUserLandingController.xib */; };
 		C142462490AAE690C036EA7B /* error_handler.py in Resources */ = {isa = PBXBuildFile; fileRef = C14248EE2F8D8C0ADD0D0B28 /* error_handler.py */; };
@@ -372,6 +373,7 @@
 		C1424185AB915D99F67221BD /* icon_flickr_30x30@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon_flickr_30x30@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/icons/icon_flickr_30x30@2x.png"; sourceTree = "<group>"; };
 		C142418EB5A5481EE30126C6 /* icon_paypal_30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_paypal_30x30.png; path = ../../Janrain/JREngage/Resources/images/icons/icon_paypal_30x30.png; sourceTree = "<group>"; };
 		C1424190A1F36D38BD3F8303 /* JRUserInterfaceMaestro.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JRUserInterfaceMaestro.m; path = ../../Janrain/JREngage/Classes/JRUserInterfaceMaestro.m; sourceTree = "<group>"; };
+		C14241924614D79EBA00AB21 /* CaptureRegistrationForm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaptureRegistrationForm.h; sourceTree = "<group>"; };
 		C14241B43EF6433EB6221483 /* JRWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JRWebViewController.m; path = ../../Janrain/JREngage/Classes/JRWebViewController.m; sourceTree = "<group>"; };
 		C14241C700BFA34B059F5F02 /* logo_aol_280x65@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "logo_aol_280x65@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/logos/logo_aol_280x65@2x.png"; sourceTree = "<group>"; };
 		C14241D8995CD0F3DD28C324 /* button_twitter_135x40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = button_twitter_135x40.png; path = ../../Janrain/JREngage/Resources/images/buttons/button_twitter_135x40.png; sourceTree = "<group>"; };
@@ -599,6 +601,7 @@
 		C1424D4E35CD6551BCC817F8 /* logo_paypal_280x65@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "logo_paypal_280x65@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/logos/logo_paypal_280x65@2x.png"; sourceTree = "<group>"; };
 		C1424D60294F485E98815DBC /* logo_vzn_280x65.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo_vzn_280x65.png; path = ../../Janrain/JREngage/Resources/images/logos/logo_vzn_280x65.png; sourceTree = "<group>"; };
 		C1424D6CB84E8CC193E9DF1E /* Doxyfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Doxyfile; path = ../../Docs/Doxygen/JREngage/Doxyfile; sourceTree = "<group>"; };
+		C1424D6CCEC2655D90E77A75 /* CaptureRegistrationForm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CaptureRegistrationForm.m; sourceTree = "<group>"; };
 		C1424D6E4E22B5885439828F /* JREngagePlugin.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = JREngagePlugin.js; path = ../../Janrain/JREngage/JREngagePlugin.js; sourceTree = "<group>"; };
 		C1424D7ECB9C03332297E44E /* JROnipLevelTwo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JROnipLevelTwo.h; sourceTree = "<group>"; };
 		C1424DB6E89F2AE4E57ECAA2 /* icon_foursquare_30x30@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon_foursquare_30x30@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/icons/icon_foursquare_30x30@2x.png"; sourceTree = "<group>"; };
@@ -782,6 +785,8 @@
 				C1424B87BAEE593965503D2C /* Utils.h */,
 				C1424FEDA9B53C3B9EE9AB6E /* AlertViewWithBlocks.m */,
 				C1424A4F9A63C7BD1C90EBC0 /* AlertViewWithBlocks.h */,
+				C1424D6CCEC2655D90E77A75 /* CaptureRegistrationForm.m */,
+				C14241924614D79EBA00AB21 /* CaptureRegistrationForm.h */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -1746,6 +1751,7 @@
 				C142437C81E8238B9093B74D /* JRTournamentsPlayedElement.m in Sources */,
 				C1424E3B144EDDE0ABA1E0E7 /* AlertViewWithBlocks.m in Sources */,
 				C1424F638368A482DFD0E5BA /* Makefile in Sources */,
+				C14245EB6DB26259A478A2D4 /* CaptureRegistrationForm.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1890,7 +1896,7 @@
 				GCC_PREFIX_HEADER = "SimpleCaptureDemo/SimpleCaptureDemo-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "JRCAPTURE_CONVENTIONAL_SIGNIN=1";
 				INFOPLIST_FILE = "SimpleCaptureDemo/SimpleCaptureDemo-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -1912,7 +1918,7 @@
 					"DEBUG=1",
 				);
 				INFOPLIST_FILE = "SimpleCaptureDemo/SimpleCaptureDemo-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -1985,7 +1991,7 @@
 				GCC_PREFIX_HEADER = "SimpleCaptureDemo/SimpleCaptureDemo-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "JRCAPTURE_CONVENTIONAL_SIGNIN=1";
 				INFOPLIST_FILE = "SimpleCaptureDemo/SimpleCaptureDemo-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";

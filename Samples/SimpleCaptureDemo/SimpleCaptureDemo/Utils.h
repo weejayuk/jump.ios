@@ -29,3 +29,9 @@ typedef enum propertyTypes
 Class getPluralClassFromKey(NSString *key);
 Class getClassFromKey(NSString *key);
 NSString *upcaseFirst(NSString *string);
+
+@interface Utils : NSObject
++ (void)handleSuccessWithTitle:(NSString *)title message:(NSString *)message forVc:(UIViewController *)forVc;
+
++ (void)handleFailureWithTitle:(NSString *)title message:(NSString *)message;
+@end

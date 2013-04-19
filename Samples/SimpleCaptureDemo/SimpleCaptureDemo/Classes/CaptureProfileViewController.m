@@ -37,6 +37,7 @@
 #import "CaptureProfileViewController.h"
 #import "AppDelegate.h"
 #import "JRCapture.h"
+#import "Utils.h"
 
 @interface CaptureProfileViewController () <JRCaptureSigninDelegate>
 @property(nonatomic, retain) id firstResponder;
@@ -82,7 +83,7 @@
         [self pickerChanged];
     }
 
-    if (appDelegate.isNotYetCreated)
+    if (appDelegate.isNotYetCreated || !appDelegate.captureUser)
     {
         self.myDoneButton.title = @"Register";
     }
@@ -217,35 +218,14 @@
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView { return YES; }
 - (BOOL)textViewShouldEndEditing:(UITextView *)textView { return YES; }
 
-- (void)handleSuccessWithTitle:(NSString *)title message:(NSString *)message
-{
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
-                                                    message:title
-                                                   delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-    [alert show];
-
-    [self.navigationController popViewControllerAnimated:YES];
-
-    [appDelegate saveCaptureUser];
-}
-
-- (void)handleFailureWithTitle:(NSString *)title message:(NSString *)message
-{
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
-                                                    message:message
-                                                   delegate:nil cancelButtonTitle:@"Dismiss"
-                                          otherButtonTitles:nil];
-    [alert show];
-}
-
 - (void)updateDidSucceedForObject:(JRCaptureObject *)object context:(NSObject *)context
 {
-    [self handleSuccessWithTitle:@"Profile updated" message:nil];
+    [Utils handleSuccessWithTitle:@"Profile updated" message:nil forVc:self];
 }
 
 - (void)updateDidFailForObject:(JRCaptureObject *)object withError:(NSError *)error context:(NSObject *)context
 {
-    [self handleFailureWithTitle:@"Profile not updated" message:nil];
+    [Utils handleFailureWithTitle:@"Profile not updated" message:nil];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -258,12 +238,12 @@
     appDelegate.isNotYetCreated = NO;
     appDelegate.captureUser = registeredUser;
     appDelegate.registrationToken = nil;
-    [self handleSuccessWithTitle:@"Registration Complete" message:nil];
+    [Utils handleSuccessWithTitle:@"Registration Complete" message:nil forVc:self];
 }
 
 - (void)registerUserDidFailWithError:(NSError *)error context:(NSObject *)context
 {
-    [self handleFailureWithTitle:@"Registration Failed" message:[error localizedDescription]];
+    [Utils handleFailureWithTitle:@"Registration Failed" message:[error localizedDescription]];
 }
 
 @end

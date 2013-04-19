@@ -78,9 +78,6 @@
  **/
 - (void)fetchUserDidFailWithError:(NSError *)error context:(NSObject *)context;
 
-- (void)registerUserDidSucceed:(JRCaptureUser *)registeredUser context:(NSObject *)context;
-
-- (void)registerUserDidFailWithError:(NSError *)error context:(NSObject *)context;
 @end
 
 /**

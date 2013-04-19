@@ -100,6 +100,12 @@ static NSString *const ENGAGE_TOKEN_KEY = @"merge_token";
 @end
 
 @implementation JRCaptureError (JRCaptureError_Builders)
++ (JRCaptureError *)invalidArgumentErrorWithParameterName:(NSString *)parameterName
+{
+    return [JRCaptureError errorFromResult:[self invalidParameterErrorDictWithParam:parameterName]
+                                onProvider:nil engageToken:nil];
+}
+
 + (JRCaptureError *)invalidApiResponseErrorWithString:(NSString *)rawResponse
 {
     NSString *desc = [NSString stringWithFormat:@"The Capture API request response was not well formed"];
@@ -274,6 +280,16 @@ static NSString *const ENGAGE_TOKEN_KEY = @"merge_token";
                                  [NSNumber numberWithInteger:JRCaptureLocalApidErrorInvalidResultData], @"code", 
                                  result, @"bad_result",
                                  nil];
+}
+
++ (NSDictionary *)invalidParameterErrorDictWithParam:(NSString *)param
+{
+    return @{
+            @"stat" : @"error",
+            @"error" : @"invalid_parameter",
+            @"error_description" : [@"Parameter had an invalid value: " stringByAppendingString:param] ,
+            @"code" : [NSNumber numberWithInteger:JRCaptureLocalApidErrorInvalidArgument],
+    };
 }
 @end
 

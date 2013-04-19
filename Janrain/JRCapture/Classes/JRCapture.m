@@ -169,15 +169,19 @@ captureEnableThinRegistration:(BOOL)enableThinRegistration
                                withSigninType:(JRConventionalSigninType)conventionalSignInType
                                   forDelegate:(id <JRCaptureSigninDelegate>)delegate __unused
 {
-    [self startCaptureConventionalSigninForUser:user withPassword:password
-                                 withSigninType:conventionalSignInType
-                                     mergeToken:nil
-                                    forDelegate:delegate];
+    [self startCaptureConventionalSigninForUser:user withPassword:password withSigninType:conventionalSignInType
+                                     mergeToken:nil forDelegate:delegate];
 }
 
 + (void)registerNewUser:(JRCaptureUser *)newUser withRegistrationToken:(NSString *)registrationToken
             forDelegate:(id <JRCaptureSigninDelegate>)delegate context:(NSObject *)context
 {
+    if (!newUser)
+    {
+        [self maybeDispatch:@selector(registerUserDidFailWithError:context:) forDelegate:delegate
+                    withArg:[JRCaptureError invalidArgumentErrorWithParameterName:@"newUser"] withArg:context];
+        return;
+    }
     JRCaptureData *config = [JRCaptureData sharedCaptureData];
     NSString *registrationForm = config.captureRegistrationFormName;
     NSDictionary *flow = config.captureFlow;

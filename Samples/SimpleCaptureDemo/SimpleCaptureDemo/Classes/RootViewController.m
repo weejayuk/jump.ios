@@ -38,6 +38,7 @@
 #import "ObjectDrillDownViewController.h"
 #import "AlertViewWithBlocks.h"
 #import "AppDelegate.h"
+#import "CaptureRegistrationForm.h"
 
 
 @interface RootViewController ()
@@ -75,15 +76,18 @@
         signInButton.hidden = YES;
         signOutButton.hidden = NO;
         [formButton setTitle:@"Update" forState:UIControlStateNormal];
-        browseButton.hidden = NO;
+        browseButton.enabled = YES;
+        browseButton.alpha = 1;
         thirdButton.hidden = YES;
     }
     else
     {
         signInButton.hidden = NO;
+        [signInButton setTitle:@"Social Sign In" forState:UIControlStateNormal];
         signOutButton.hidden = YES;
         [formButton setTitle:@"Traditional Registration" forState:UIControlStateNormal];
-        browseButton.hidden = YES;
+        browseButton.enabled = NO;
+        browseButton.alpha = 0.5;
         thirdButton.hidden = YES;
     }
 }
@@ -121,7 +125,22 @@
 
 - (IBAction)updateButtonPressed:(id)sender
 {
-    [self showRegistrationForm];
+    if (appDelegate.captureUser)
+    {
+        [self showProfileForm];
+    }
+    else
+    {
+        [self showRegistrationForm];
+    }
+}
+
+- (void)showRegistrationForm
+{
+    CaptureRegistrationForm *viewController = [[CaptureRegistrationForm alloc] initWithNibName:nil
+                                                                                        bundle:[NSBundle mainBundle]];
+
+    [self.navigationController pushViewController:viewController animated:YES];
 }
 
 - (IBAction)thirdButtonPressed:(id)sender
@@ -253,11 +272,14 @@
 
     if (self.viewIsApparent)
     {
-        [self showRegistrationForm];
+        [self showProfileForm];
     }
     else
     {
-        self.viewDidAppearContinuation = ^(){ [self showRegistrationForm]; };
+        self.viewDidAppearContinuation = ^()
+        {
+            [self showProfileForm];
+        };
     }
 }
 
@@ -285,8 +307,6 @@
 {
     DLog(@"");
     appDelegate.engageSignInWasCanceled = YES;
-
-    [self engageSignInDidFailWithError:nil];
 }
 
 - (void)engageSigninDialogDidFailToShowWithError:(NSError *)error
@@ -361,13 +381,13 @@
 
     if (captureRecordStatus == JRCaptureRecordNewlyCreated)
     {
-        [self showRegistrationForm];
+        [self showProfileForm];
     }
 
     appDelegate.engageSignInWasCanceled = NO;
 }
 
-- (void)showRegistrationForm
+- (void)showProfileForm
 {
     CaptureProfileViewController *viewController = [[CaptureProfileViewController alloc]
             initWithNibName:@"CaptureProfileViewController" bundle:[NSBundle mainBundle]];

@@ -143,10 +143,8 @@
             ALog(@"unrecognized field defn: %@", [field description]);
             continue;
         }
-        NSDictionary *field_ = (NSDictionary *) field;
 
-        NSString *schemaId = [field_ objectForKey:@"schemaId"];
-        NSString *formFieldValue = [self valueForAttrByDotPath:schemaId];
+        NSString *formFieldValue = [self valueForAttrByDotPath:[(NSDictionary *) field objectForKey:@"schemaId"]];
         if (formFieldValue)
         {
             [retval setObject:formFieldValue forKey:[fieldNames objectAtIndex:[fields indexOfObject:field]]];

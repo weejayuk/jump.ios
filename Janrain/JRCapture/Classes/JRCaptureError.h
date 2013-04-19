@@ -137,6 +137,8 @@ typedef enum
  * NSError subclass for errors from the Capture library
  **/
 @interface JRCaptureError : NSError
++ (JRCaptureError *)invalidArgumentErrorWithParameterName:(NSString *)parameterName;
+
 - (BOOL)isMergeFlowError;
 - (NSString *)existingProvider;
 - (NSString *)conflictedProvider;
@@ -162,6 +164,8 @@ typedef enum
 + (NSDictionary *)invalidClassErrorDictForResult:(NSObject *)result;
 + (NSDictionary *)invalidStatErrorDictForResult:(NSObject *)result;
 + (NSDictionary *)invalidDataErrorDictForResult:(NSObject *)result;
+
++ (NSDictionary *)invalidParameterErrorDictWithParam:(NSString *)param;
 @end
 
 /**

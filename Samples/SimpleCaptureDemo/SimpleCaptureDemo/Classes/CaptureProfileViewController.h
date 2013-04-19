@@ -38,6 +38,7 @@
 @interface CaptureProfileViewController : PickerViewController <UITextViewDelegate, UIAlertViewDelegate,
         JRCaptureUserDelegate, UITextFieldDelegate>
 
+@property(nonatomic, retain) IBOutlet UILabel *myFormTitle;
 @property(nonatomic, retain) IBOutlet UITextField *myEmailTextField;
 @property(nonatomic, retain) IBOutlet UISegmentedControl *myGenderIdentitySegControl;
 @property(nonatomic, retain) IBOutlet UIButton *myBirthdayButton;
@@ -47,10 +48,13 @@
 @property(nonatomic, retain) IBOutlet UIView *myPickerView;
 @property(nonatomic, retain) IBOutlet UIScrollView *myScrollView;
 @property(nonatomic, retain) IBOutlet UIToolbar *myKeyboardToolbar;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *myDoneButton;
+@property(weak, nonatomic) IBOutlet UIBarButtonItem *myDoneButton;
 
 - (IBAction)emailTextFieldClicked:(id)sender;
+
 - (IBAction)birthdayButtonClicked:(id)sender;
+
 - (IBAction)doneButtonPressed:(id)sender;
+
 - (IBAction)doneEditingButtonPressed:(id)sender;
 @end

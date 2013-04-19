@@ -331,6 +331,10 @@ typedef enum
  *   for more information
  **/
 - (void)captureAuthenticationDidFailWithError:(NSError*)error;
+
+- (void)registerUserDidSucceed:(JRCaptureUser *)registeredUser context:(NSObject *)context;
+
+- (void)registerUserDidFailWithError:(NSError *)error context:(NSObject *)context;
 @end
 
 /**
