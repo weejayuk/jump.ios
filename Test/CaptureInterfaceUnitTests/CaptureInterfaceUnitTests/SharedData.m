@@ -44,17 +44,22 @@
 static SharedData *singleton = nil;
 
 static NSString *captureApidDomain  = @"mobile.dev.janraincapture.com";
-static NSString *captureUIDomain    = @"mobile.dev.janraincapture.com";
-static NSString *clientId           = @"zc7tx83fqy68mper69mxbt5dfvd7c2jh";
-static NSString *entityTypeName     = @"test_user1";
-static NSString *accessToken        = @"98eum88juebzdrtr";
+static NSString *clientId           = @"njzvdpmsamrm339qwyr5gcray9h49ahj";
+static NSString *accessToken        = @"zsa7a43a99yaw3gv";
 
 - (id)init
 {
     if ((self = [super init]))
     {
-        [JRCapture setEngageAppId:nil captureApidDomain:captureApidDomain captureUIDomain:captureUIDomain
-                         clientId:clientId andEntityTypeName:entityTypeName];
+        [JRCapture setEngageAppId:nil captureDomain:captureApidDomain
+                  captureClientId:clientId captureLocale:nil
+                  captureFlowName:nil
+            captureSignInFormName:nil
+    captureEnableThinRegistration:NO
+     captureTraditionalSignInType:JRConventionalSigninEmailPassword
+               captureFlowVersion:nil
+      captureRegistrationFormName:nil
+                     captureAppId:nil];
         [JRCapture setAccessToken:accessToken];
     }
 
