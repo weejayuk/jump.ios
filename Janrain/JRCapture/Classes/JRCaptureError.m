@@ -41,7 +41,7 @@ static NSString *const ENGAGE_TOKEN_KEY = @"merge_token";
 @implementation JRCaptureError
 - (BOOL)isMergeFlowError
 {
-    return self.code == 3380;
+    return self.code == JRCaptureApidErrorEmailAddressInUse;
 }
 
 + (void)maybeCopyEntry:(id)key from:(NSDictionary *)from to:(NSMutableDictionary *)to
@@ -51,7 +51,7 @@ static NSString *const ENGAGE_TOKEN_KEY = @"merge_token";
 
 - (BOOL)isTwoStepRegFlowError
 {
-    return self.code == 3310;
+    return self.code == JRCaptureApidErrorRecordNotFound;
 }
 
 - (NSString *)existingProvider
