@@ -676,6 +676,7 @@
     NSArray *_oinonipL1Plural;
     JROnipinoL1Object *_onipinoL1Object;
     JROinoinoL1Object *_oinoinoL1Object;
+    JRObjectId *_captureUserId;
 }
 @synthesize canBeUpdatedOnCapture;
 
@@ -1325,6 +1326,19 @@
     [_oinoinoL1Object setAllPropertiesToDirty];
 }
 
+- (JRObjectId *)captureUserId
+{
+    return _captureUserId;
+}
+
+- (void)setCaptureUserId:(JRObjectId *)newCaptureUserId
+{
+    [self.dirtyPropertySet addObject:@"captureUserId"];
+
+    [_captureUserId autorelease];
+    _captureUserId = [newCaptureUserId copy];
+}
+
 - (id)init
 {
     if ((self = [super init]))
@@ -1453,6 +1467,8 @@
                    forKey:@"onipinoL1Object"];
     [dictionary setObject:(self.oinoinoL1Object ? [self.oinoinoL1Object toDictionaryForEncoder:forEncoder] : [NSNull null])
                    forKey:@"oinoinoL1Object"];
+    [dictionary setObject:(self.captureUserId ? [NSNumber numberWithInteger:[self.captureUserId integerValue]] : [NSNull null])
+                   forKey:@"id"];
 
     if (forEncoder)
     {
@@ -1674,6 +1690,10 @@
         [dictionary objectForKey:@"oinoinoL1Object"] != [NSNull null] ? 
         [JROinoinoL1Object oinoinoL1ObjectObjectFromDictionary:[dictionary objectForKey:@"oinoinoL1Object"] withPath:captureUser.captureObjectPath fromDecoder:fromDecoder] : nil;
 
+    captureUser.captureUserId =
+        [dictionary objectForKey:@"id"] != [NSNull null] ? 
+        [NSNumber numberWithInteger:[(NSNumber*)[dictionary objectForKey:@"id"] integerValue]] : nil;
+
     if (fromDecoder)
         [captureUser.dirtyPropertySet setSet:dirtyPropertySetCopy];
     else
@@ -1885,6 +1905,10 @@
     self.oinoinoL1Object =
         [dictionary objectForKey:@"oinoinoL1Object"] != [NSNull null] ? 
         [JROinoinoL1Object oinoinoL1ObjectObjectFromDictionary:[dictionary objectForKey:@"oinoinoL1Object"] withPath:self.captureObjectPath fromDecoder:YES] : nil;
+
+    self.captureUserId =
+        [dictionary objectForKey:@"id"] != [NSNull null] ? 
+        [NSNumber numberWithInteger:[(NSNumber*)[dictionary objectForKey:@"id"] integerValue]] : nil;
 
     [self.dirtyPropertySet setSet:dirtyPropertySetCopy];
 }
@@ -2116,12 +2140,16 @@
     else
         [self.oinoinoL1Object replaceFromDictionary:[dictionary objectForKey:@"oinoinoL1Object"] withPath:self.captureObjectPath];
 
+    self.captureUserId =
+        [dictionary objectForKey:@"id"] != [NSNull null] ? 
+        [NSNumber numberWithInteger:[(NSNumber*)[dictionary objectForKey:@"id"] integerValue]] : nil;
+
     [self.dirtyPropertySet setSet:dirtyPropertySetCopy];
 }
 
 - (NSSet *)updatablePropertySet
 {
-    return [NSSet setWithObjects:@"uuid", @"created", @"lastUpdated", @"email", @"basicBoolean", @"basicString", @"basicInteger", @"basicDecimal", @"basicDate", @"basicDateTime", @"basicIpAddress", @"basicPassword", @"jsonNumber", @"jsonString", @"jsonArray", @"jsonDictionary", @"stringTestJson", @"stringTestEmpty", @"stringTestNull", @"stringTestInvalid", @"stringTestNSNull", @"stringTestAlphanumeric", @"stringTestUnicodeLetters", @"stringTestUnicodePrintable", @"stringTestEmailAddress", @"stringTestLength", @"stringTestCaseSensitive", @"stringTestFeatures", @"basicObject", @"objectTestRequired", @"objectTestRequiredUnique", @"pinoL1Object", @"oinoL1Object", @"pinapinoL1Object", @"pinoinoL1Object", @"onipinoL1Object", @"oinoinoL1Object", nil];
+    return [NSSet setWithObjects:@"uuid", @"created", @"lastUpdated", @"email", @"basicBoolean", @"basicString", @"basicInteger", @"basicDecimal", @"basicDate", @"basicDateTime", @"basicIpAddress", @"basicPassword", @"jsonNumber", @"jsonString", @"jsonArray", @"jsonDictionary", @"stringTestJson", @"stringTestEmpty", @"stringTestNull", @"stringTestInvalid", @"stringTestNSNull", @"stringTestAlphanumeric", @"stringTestUnicodeLetters", @"stringTestUnicodePrintable", @"stringTestEmailAddress", @"stringTestLength", @"stringTestCaseSensitive", @"stringTestFeatures", @"basicObject", @"objectTestRequired", @"objectTestRequiredUnique", @"pinoL1Object", @"oinoL1Object", @"pinapinoL1Object", @"pinoinoL1Object", @"onipinoL1Object", @"oinoinoL1Object", @"captureUserId", nil];
 }
 
 - (void)setAllPropertiesToDirty
@@ -2883,6 +2911,7 @@
     [dictionary setObject:@"NSArray" forKey:@"oinonipL1Plural"];
     [dictionary setObject:@"JROnipinoL1Object" forKey:@"onipinoL1Object"];
     [dictionary setObject:@"JROinoinoL1Object" forKey:@"oinoinoL1Object"];
+    [dictionary setObject:@"JRObjectId" forKey:@"captureUserId"];
 
     return [NSDictionary dictionaryWithDictionary:dictionary];
 }
@@ -2937,6 +2966,7 @@
     [_oinonipL1Plural release];
     [_onipinoL1Object release];
     [_oinoinoL1Object release];
+    [_captureUserId release];
 
     [super dealloc];
 }

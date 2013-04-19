@@ -103,6 +103,7 @@
 @property (nonatomic, copy)     NSArray *oinonipL1Plural; /**< Object in an object in a plural (object in an object in an element in a plural) @note This is an array of JROinonipL1PluralElement objects */ 
 @property (nonatomic, retain)   JROnipinoL1Object *onipinoL1Object; /**< Object in a plural in an object (object in an element in a plural in an object) */ 
 @property (nonatomic, retain)   JROinoinoL1Object *oinoinoL1Object; /**< Object in an object in a object */ 
+@property (nonatomic, readonly) JRObjectId *captureUserId; /**< Simple identifier for this entity @note The \e id of the object should not be set. */ 
 
 /**
  * @name Constructors
