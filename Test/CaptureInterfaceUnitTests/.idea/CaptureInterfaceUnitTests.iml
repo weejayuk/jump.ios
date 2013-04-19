@@ -97,6 +97,9 @@
     <content url="file://$MODULE_DIR$/../../JREngage/Security/SFHFKeychainUtils.m">
       <sourceFolder url="file://$MODULE_DIR$/../../JREngage/Security/SFHFKeychainUtils.m" isTestSource="false" />
     </content>
+    <content url="file://$MODULE_DIR$/../../Janrain">
+      <sourceFolder url="file://$MODULE_DIR$/../../Janrain" isTestSource="false" />
+    </content>
     <content url="file://$MODULE_DIR$/../../Janrain/JRCapture/Classes/JRCapture.h">
       <sourceFolder url="file://$MODULE_DIR$/../../Janrain/JRCapture/Classes/JRCapture.h" isTestSource="false" />
     </content>

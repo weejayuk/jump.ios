@@ -153,9 +153,9 @@
     if ([delegate conformsToProtocol:@protocol(JRCaptureObjectTesterDelegate)] &&
             [delegate respondsToSelector:selector])
     {
-        NSString *restulString = [result JSONString];
         [((id <JRCaptureObjectTesterDelegate>) delegate) replaceCaptureObject:captureObject
-                                                            didFailWithResult:restulString context:callerContext];
+                                                            didFailWithResult:[result JSONString]
+                                                                      context:callerContext];
     }
 
     SEL testSelector = @selector(replaceDidFailForObject:withError:context:);
@@ -189,15 +189,17 @@
         resultString     = (NSString *)result;
         resultDictionary = [(NSString *)result objectFromJSONString];
     }
-    else /* Uh-oh!! */
+    else
     {
         return [self replaceCaptureObjectDidFailWithResult:[JRCaptureError invalidClassErrorDictForResult:result]
                                                    context:context];
     }
 
     if (![((NSString *)[resultDictionary objectForKey:@"stat"]) isEqualToString:@"ok"])
+    {
         return [self replaceCaptureObjectDidFailWithResult:[JRCaptureError invalidStatErrorDictForResult:result]
                                                    context:context];
+    }
 
     if (![resultDictionary objectForKey:@"result"] || ![[resultDictionary objectForKey:@"result"] 
             isKindOfClass:[NSDictionary class]])
@@ -301,8 +303,7 @@
     NSString *replacement = [[arrayName substringToIndex:1] capitalizedString];
     NSString *capitalizedName = [arrayName stringByReplacingCharactersInRange:NSMakeRange(0, 1) withString:replacement];
 
-    SEL setNewArrayInParentSelector =
-                NSSelectorFromString([NSString stringWithFormat:@"set%@:", capitalizedName]);
+    SEL setNewArrayInParentSelector = NSSelectorFromString([NSString stringWithFormat:@"set%@:", capitalizedName]);
 
     NSArray *newArray;
     if (isStringArray)
