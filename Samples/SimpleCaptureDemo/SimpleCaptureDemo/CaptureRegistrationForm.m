@@ -45,8 +45,8 @@ static NSMutableDictionary *identifierMap = nil;
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    self.navigationController.toolbarHidden = YES;
     [super viewWillDisappear:animated];
+    self.navigationController.toolbarHidden = YES;
 }
 
 - (void)setupToolbar
