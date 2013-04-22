@@ -51,12 +51,6 @@ static NSMutableDictionary *identifierMap = nil;
 
 - (void)setupToolbar
 {
-    //UIToolbar *tb = [[UIToolbar alloc] init];
-    //[self.view addSubview:tb];
-    //NSDictionary *views = NSDictionaryOfVariableBindings(tb);
-    //[self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[tb]|"
-    //                                                                  options:(NSLayoutFormatOptions) 0
-    //                                                                  metrics:nil views:views]];
     self.navigationController.toolbar.tintColor = [UIColor blackColor];
     self.navigationController.toolbarHidden = NO;
     UIBarButtonItem *flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace

@@ -1,0 +1,3 @@
+[submodule "Janrain/Base64-src"]
+	path = Janrain/Base64-src
+	url = https://github.com/nicklockwood/Base64.git

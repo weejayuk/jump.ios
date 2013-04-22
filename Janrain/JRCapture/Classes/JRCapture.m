@@ -34,6 +34,7 @@
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 
+#import <CommonCrypto/CommonDigest.h>
 #import "JRCapture.h"
 
 #import "JREngageWrapper.h"
@@ -171,6 +172,54 @@ captureEnableThinRegistration:(BOOL)enableThinRegistration
 {
     [self startCaptureConventionalSigninForUser:user withPassword:password withSigninType:conventionalSignInType
                                      mergeToken:nil forDelegate:delegate];
+}
+
++ (void)refreshAccessToken
+{
+    public void refreshAccessToken(final CaptureApiRequestCallback callback) {
+            //accessToken = "6bunfwu42h2rwgbq";
+            //refreshSecret = "a";
+            //String domain = "test-multi.janraincapture.com";
+            String domain = Jump.getCaptureDomain();
+
+            CaptureApiConnection c = new CaptureApiConnection("https://" + domain + "/access/getAccessToken");
+            String date = CAPTURE_API_SIGNATURE_DATE_FORMAT.format(new Date());
+            Set<Pair<String, String>> params = new HashSet<Pair<String, String>>();
+            //params.add(new Pair<String, String>("application_id", "fvbamf9kkkad3gnd9qyb4ggw6w"));
+            params.add(new Pair<String, String>("access_token", accessToken));
+            params.add(new Pair<String, String>("Signature", urlEncode(getRefreshSignature(date))));
+            params.add(new Pair<String, String>("Date", urlEncode(date)));
+            c.addAllToParams(params);
+            c.fetchResponseAsJson(new FetchJsonCallback() {
+                public void run(JSONObject response) {
+                    if (response == null) {
+                        if (callback != null) callback.onFailure(CaptureApiError.INVALID_API_RESPONSE);
+                        return;
+                    }
+
+                    if ("ok".equals(response.opt("stat"))) {
+                        accessToken = (String) response.opt("access_token");
+                        if (callback != null) callback.onSuccess();
+                    } else {
+                        new CaptureApiError(response);
+                    }
+                }
+            });
+        }
+}
+
++ (void)signatureForRefreshWithDate:(NSString *)dateString
+{
+    NSString *accessToken;
+    NSString *stringToSign = [NSString stringWithFormat:@"refresh_access_token\n%@\n%@\n", dateString, accessToken];
+    NSData *bytesToSign = [stringToSign dataUsingEncoding:NSUTF8StringEncoding];
+
+    uint8_t digest[CC_SHA1_DIGEST_LENGTH];
+
+    CC_SHA1(bytesToSign.bytes, bytesToSign.length, digest);
+
+    
+    return Base64.encodeToString(hash, Base64.DEFAULT);
 }
 
 + (void)registerNewUser:(JRCaptureUser *)newUser withRegistrationToken:(NSString *)registrationToken
