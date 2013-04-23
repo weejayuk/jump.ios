@@ -42,6 +42,7 @@
 #import "JRCaptureData.h"
 #import "NSDictionary+JRQueryParams.h"
 #import "debug_log.h"
+#import "JRBase64.h"
 
 @implementation JRCapture
 
@@ -229,8 +230,7 @@ captureEnableThinRegistration:(BOOL)enableThinRegistration
 
     CCHmac(kCCHmacAlgSHA1, cKey, strlen(cKey), cData, strlen(cData), cHMAC);
 
-    NSData *HMAC = [[[NSData alloc] initWithBytes:cHMAC length:sizeof(cHMAC)] autorelease];
-    return [HMAC JR_stringWithBase64Encoding];
+    return [[[[NSData alloc] initWithBytes:cHMAC length:sizeof(cHMAC)] autorelease] JRBase64EncodedString];
 }
 
 + (void)registerNewUser:(JRCaptureUser *)newUser withRegistrationToken:(NSString *)registrationToken
