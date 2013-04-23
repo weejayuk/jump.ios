@@ -38,6 +38,7 @@
 @property(nonatomic, readonly, retain) NSString *captureBaseUrl;
 @property(nonatomic, readonly, retain) NSString *clientId;
 @property(nonatomic, readonly, retain) NSString *accessToken;
+@property(nonatomic, readonly, retain) NSString *refreshSecret;
 @property(nonatomic, readonly, retain) NSString *creationToken;
 @property(nonatomic, readonly, retain) NSString *captureLocale;
 @property(nonatomic, readonly, retain) NSString *captureSignInFormName;

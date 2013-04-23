@@ -73,6 +73,7 @@ static NSString *const FLOW_KEY = @"JR_capture_flow";
 @property(nonatomic, retain) NSString *captureBaseUrl;
 @property(nonatomic, retain) NSString *clientId;
 @property(nonatomic, retain) NSString *accessToken;
+@property(nonatomic, retain) NSString *refreshSecret;
 @property(nonatomic, retain) NSString *creationToken;
 @property(nonatomic, retain) NSString *captureLocale;
 @property(nonatomic, retain) NSString *captureSignInFormName;

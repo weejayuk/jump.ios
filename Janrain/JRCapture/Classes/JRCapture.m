@@ -35,6 +35,7 @@
 
 
 #import <CommonCrypto/CommonDigest.h>
+#import <CommonCrypto/CommonHMAC.h>
 #import "JRCapture.h"
 
 #import "JREngageWrapper.h"
@@ -176,50 +177,60 @@ captureEnableThinRegistration:(BOOL)enableThinRegistration
 
 + (void)refreshAccessToken
 {
-    public void refreshAccessToken(final CaptureApiRequestCallback callback) {
-            //accessToken = "6bunfwu42h2rwgbq";
-            //refreshSecret = "a";
-            //String domain = "test-multi.janraincapture.com";
-            String domain = Jump.getCaptureDomain();
+    NSString *date = [self utcTimeString];
+    NSString *accessToken = [JRCaptureData sharedCaptureData].accessToken;
+    NSString *refreshSecret = [JRCaptureData sharedCaptureData].refreshSecret;
+    NSString *domain = [JRCaptureData sharedCaptureData].captureBaseUrl;
+    NSString *refreshUrl = [NSString stringWithFormat:@"%@/access/getAccessToken", domain];
+    NSDictionary *params = @{
+            @"access_token" : accessToken,
+            @"Signature" : [[self signatureForRefreshWithDate:date refreshSecret:refreshSecret 
+                                                  accessToken:accessToken] stringByAddingUrlPercentEscapes],
+            @"Date" : [date stringByAddingUrlPercentEscapes]
+    };
 
-            CaptureApiConnection c = new CaptureApiConnection("https://" + domain + "/access/getAccessToken");
-            String date = CAPTURE_API_SIGNATURE_DATE_FORMAT.format(new Date());
-            Set<Pair<String, String>> params = new HashSet<Pair<String, String>>();
-            //params.add(new Pair<String, String>("application_id", "fvbamf9kkkad3gnd9qyb4ggw6w"));
-            params.add(new Pair<String, String>("access_token", accessToken));
-            params.add(new Pair<String, String>("Signature", urlEncode(getRefreshSignature(date))));
-            params.add(new Pair<String, String>("Date", urlEncode(date)));
-            c.addAllToParams(params);
-            c.fetchResponseAsJson(new FetchJsonCallback() {
-                public void run(JSONObject response) {
-                    if (response == null) {
-                        if (callback != null) callback.onFailure(CaptureApiError.INVALID_API_RESPONSE);
-                        return;
-                    }
-
-                    if ("ok".equals(response.opt("stat"))) {
-                        accessToken = (String) response.opt("access_token");
-                        if (callback != null) callback.onSuccess();
-                    } else {
-                        new CaptureApiError(response);
-                    }
-                }
-            });
+    [self jsonRequestToUrl:refreshUrl params:params completionHandler:^(id r, NSError *e)
+    {
+        if (e)
+        {
+            fail
+            return;
         }
+
+        if ([@"ok" isEqual:[r objectForKey:@"stat"]])
+        {
+            [JRCaptureData setAccessToken:[r objectForKey:@"access_token"]];
+            success
+        } else {
+            [JRCaptureError errorFromResult:r onProvider:nil engageToken:nil];
+            fail
+        }
+    }];
 }
 
-+ (void)signatureForRefreshWithDate:(NSString *)dateString
++ (NSString *)utcTimeString
 {
-    NSString *accessToken;
+    NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
+    [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"UTC"]];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSString *dateString = [dateFormatter stringFromDate:[NSDate date]];
+    return dateString;
+}
+
++ (NSString *)signatureForRefreshWithDate:(NSString *)dateString refreshSecret:(NSString *)refreshSecret
+                              accessToken:(NSString *)accessToken
+{
     NSString *stringToSign = [NSString stringWithFormat:@"refresh_access_token\n%@\n%@\n", dateString, accessToken];
-    NSData *bytesToSign = [stringToSign dataUsingEncoding:NSUTF8StringEncoding];
 
-    uint8_t digest[CC_SHA1_DIGEST_LENGTH];
+    const char *cKey  = [refreshSecret cStringUsingEncoding:NSASCIIStringEncoding];
+    const char *cData = [stringToSign cStringUsingEncoding:NSASCIIStringEncoding];
 
-    CC_SHA1(bytesToSign.bytes, bytesToSign.length, digest);
+    unsigned char cHMAC[CC_SHA1_DIGEST_LENGTH];
 
-    
-    return Base64.encodeToString(hash, Base64.DEFAULT);
+    CCHmac(kCCHmacAlgSHA1, cKey, strlen(cKey), cData, strlen(cData), cHMAC);
+
+    NSData *HMAC = [[[NSData alloc] initWithBytes:cHMAC length:sizeof(cHMAC)] autorelease];
+    return [HMAC JR_stringWithBase64Encoding];
 }
 
 + (void)registerNewUser:(JRCaptureUser *)newUser withRegistrationToken:(NSString *)registrationToken
