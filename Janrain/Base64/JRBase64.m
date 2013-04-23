@@ -30,20 +30,15 @@
 //  3. This notice may not be removed or altered from any source distribution.
 //
 
-#import "Base64.h"
+// This source is altered from Nick's original version. See JRBase64.h for descriptions.
 
+#import "JRBase64.h"
 
-#import <Availability.h>
-#if !__has_feature(objc_arc)
-#error This library requires automatic reference counting
-#endif
+@implementation NSData (JRBase64)
 
-
-@implementation NSData (Base64)
-
-+ (NSData *)dataWithBase64EncodedString:(NSString *)string
++ (NSData *)dataWithJRBase64EncodedString:(NSString *)string
 {
-    const char lookup[] =
+    const unsigned char lookup[] =
     {
         99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 
         99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 
@@ -56,15 +51,15 @@
     };
     
     NSData *inputData = [string dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-    long long inputLength = [inputData length];
+    NSUInteger inputLength = [inputData length];
     const unsigned char *inputBytes = [inputData bytes];
     
-    long long maxOutputLength = (inputLength / 4 + 1) * 3;
+    NSUInteger maxOutputLength = (inputLength / 4 + 1) * 3;
     NSMutableData *outputData = [NSMutableData dataWithLength:maxOutputLength];
     unsigned char *outputBytes = (unsigned char *)[outputData mutableBytes];
 
     int accumulator = 0;
-    long long outputLength = 0;
+    NSUInteger outputLength = 0;
     unsigned char accumulated[] = {0, 0, 0, 0};
     for (long long i = 0; i < inputLength; i++)
     {
@@ -92,22 +87,22 @@
     return outputLength? outputData: nil;
 }
 
-- (NSString *)base64EncodedStringWithWrapWidth:(NSUInteger)wrapWidth
+- (NSString *)JRBase64EncodedStringWithWrapWidth:(NSUInteger)wrapWidth
 {
     //ensure wrapWidth is a multiple of 4
     wrapWidth = (wrapWidth / 4) * 4;
     
-    const char lookup[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    unsigned char *lookup = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
     
-    long long inputLength = [self length];
+    NSUInteger inputLength = [self length];
     const unsigned char *inputBytes = [self bytes];
     
-    long long maxOutputLength = (inputLength / 3 + 1) * 4;
+    NSUInteger maxOutputLength = (inputLength / 3 + 1) * 4;
     maxOutputLength += wrapWidth? (maxOutputLength / wrapWidth) * 2: 0;
     unsigned char *outputBytes = (unsigned char *)malloc(maxOutputLength);
     
     long long i;
-    long long outputLength = 0;
+    NSUInteger outputLength = 0;
     for (i = 0; i < inputLength - 2; i += 3)
     {
         outputBytes[outputLength++] = lookup[(inputBytes[i] & 0xFC) >> 2];
@@ -145,10 +140,10 @@
     {
         //truncate data to match actual output length
         outputBytes = realloc(outputBytes, outputLength);
-        return [[NSString alloc] initWithBytesNoCopy:outputBytes
+        return [[[NSString alloc] initWithBytesNoCopy:outputBytes
                                               length:outputLength
                                             encoding:NSASCIIStringEncoding
-                                        freeWhenDone:YES];
+                                        freeWhenDone:YES] autorelease];
     }
     else if (outputBytes)
     {
@@ -157,46 +152,46 @@
     return nil;
 }
 
-- (NSString *)base64EncodedString
+- (NSString *)JRBase64EncodedString
 {
-    return [self base64EncodedStringWithWrapWidth:0];
+    return [self JRBase64EncodedStringWithWrapWidth:0];
 }
 
 @end
 
 
-@implementation NSString (Base64)
+@implementation NSString (JRBase64)
 
-+ (NSString *)stringWithBase64EncodedString:(NSString *)string
++ (NSString *)stringWithJRBase64EncodedString:(NSString *)string
 {
-    NSData *data = [NSData dataWithBase64EncodedString:string];
+    NSData *data = [NSData dataWithJRBase64EncodedString:string];
     if (data)
     {
-        return [[self alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        return [[[self alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
     }
     return nil;
 }
 
-- (NSString *)base64EncodedStringWithWrapWidth:(NSUInteger)wrapWidth
+- (NSString *)JRBase64EncodedStringWithWrapWidth:(NSUInteger)wrapWidth __unused
 {
     NSData *data = [self dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-    return [data base64EncodedStringWithWrapWidth:wrapWidth];
+    return [data JRBase64EncodedStringWithWrapWidth:wrapWidth];
 }
 
-- (NSString *)base64EncodedString
+- (NSString *)JRBase64EncodedString __unused
 {
     NSData *data = [self dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-    return [data base64EncodedString];
+    return [data JRBase64EncodedString];
 }
 
-- (NSString *)base64DecodedString
+- (NSString *)JRBase64DecodedString __unused
 {
-    return [NSString stringWithBase64EncodedString:self];
+    return [NSString stringWithJRBase64EncodedString:self];
 }
 
-- (NSData *)base64DecodedData
+- (NSData *)JRBase64DecodedData __unused
 {
-    return [NSData dataWithBase64EncodedString:self];
+    return [NSData dataWithJRBase64EncodedString:self];
 }
 
 @end

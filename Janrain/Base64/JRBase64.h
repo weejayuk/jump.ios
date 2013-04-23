@@ -30,24 +30,28 @@
 //  3. This notice may not be removed or altered from any source distribution.
 //
 
+// Thanks Nick!
+// Changes made:
+//  - name mangling to skirt potential ObjC global-namespace collisions
+//  - de-ARC-ified
+//  - data type tweaks to nice some lint/compiler warnings
+
 #import <Foundation/Foundation.h>
 
+@interface NSData (JRBase64)
 
-@interface NSData (Base64)
-
-+ (NSData *)dataWithBase64EncodedString:(NSString *)string;
-- (NSString *)base64EncodedStringWithWrapWidth:(NSUInteger)wrapWidth;
-- (NSString *)base64EncodedString;
++ (NSData *)dataWithJRBase64EncodedString:(NSString *)string;
+- (NSString *)JRBase64EncodedStringWithWrapWidth:(NSUInteger)wrapWidth;
+- (NSString *)JRBase64EncodedString;
 
 @end
 
+@interface NSString (JRBase64)
 
-@interface NSString (Base64)
-
-+ (NSString *)stringWithBase64EncodedString:(NSString *)string;
-- (NSString *)base64EncodedStringWithWrapWidth:(NSUInteger)wrapWidth;
-- (NSString *)base64EncodedString;
-- (NSString *)base64DecodedString;
-- (NSData *)base64DecodedData;
++ (NSString *)stringWithJRBase64EncodedString:(NSString *)string;
+- (NSString *)JRBase64EncodedStringWithWrapWidth:(NSUInteger)wrapWidth __unused;
+- (NSString *)JRBase64EncodedString __unused;
+- (NSString *)JRBase64DecodedString __unused;
+- (NSData *)JRBase64DecodedData __unused;
 
 @end
