@@ -114,11 +114,11 @@ typedef enum CaptureInterfaceStatEnum
 }
 
 
-- (void)startSigninCaptureUserWithCredentials:(NSDictionary *)credentials ofType:(NSString *)signInType
+- (void)startSigninCaptureUserWithCredentials:(NSDictionary *)credentials ofType:(NSString *)signInFieldName
                              forDelegate:(id)delegate withContext:(NSObject *)context
 {
     DLog(@"");
-    NSString *signInName = [credentials objectForKey:signInType];
+    NSString *signInName = [credentials objectForKey:signInFieldName];
     NSString *password   = [credentials objectForKey:@"password"];
     NSString *mergeToken = [credentials objectForKey:@"token"];
     NSString *clientId = [JRCaptureData sharedCaptureData].clientId;
@@ -126,16 +126,19 @@ typedef enum CaptureInterfaceStatEnum
     NSString *formName = [JRCaptureData sharedCaptureData].captureSignInFormName;
     NSString *flowName = [JRCaptureData sharedCaptureData].captureFlowName;
     NSString *redirectUri = [[JRCaptureData sharedCaptureData] redirectUri];
+    NSString *refreshSecret = [JRCaptureData generateAndStoreRefreshSecret];
 
-    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                                               signInName, signInType,
-                                                               password, @"password",
-                                                               clientId, @"client_id",
-                                                               locale, @"locale",
-                                                               formName, @"form",
-                                                               redirectUri, @"redirect_uri",
-                                                               @"token", @"response_type",
-                                                               nil];
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithDictionary:
+                                                               @{
+                                                                       signInFieldName : signInName,
+                                                                       @"password" : password,
+                                                                       @"client_id" : clientId,
+                                                                       @"locale" : locale,
+                                                                       @"form" : formName,
+                                                                       @"redirect_uri" : redirectUri,
+                                                                       @"response_type" : @"token",
+                                                                       @"refresh_secret" : refreshSecret
+                                                               }];
 
     if (flowName) [params setObject:flowName forKey:@"flow_name"];
     if (mergeToken) [params setObject:mergeToken forKey:@"merge_token"];
@@ -153,7 +156,7 @@ typedef enum CaptureInterfaceStatEnum
                                                  context, @"context", nil];
 
     NSString *urlString = [[request URL] absoluteString];
-    DLog(@"%@ %@=%@", urlString, signInType, signInName);
+    DLog(@"%@ %@=%@", urlString, signInFieldName, signInName);
 
     if (![JRConnectionManager createConnectionFromRequest:request forDelegate:self withTag:tag])
     {

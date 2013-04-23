@@ -62,19 +62,17 @@ static NSString* applicationBundleDisplayNameAndIdentifier()
 typedef enum
 {
     JRTokenTypeAccess,
-    JRTokenTypeCreation,
+    JRTokenTypeRefresh,
 } JRTokenType;
 
 static NSString *const FLOW_KEY = @"JR_capture_flow";
 
 @interface JRCaptureData ()
-+ (NSString *)retrieveTokenFromKeychainOfType:(JRTokenType)tokenType;
 
 @property(nonatomic, retain) NSString *captureBaseUrl;
 @property(nonatomic, retain) NSString *clientId;
 @property(nonatomic, retain) NSString *accessToken;
 @property(nonatomic, retain) NSString *refreshSecret;
-@property(nonatomic, retain) NSString *creationToken;
 @property(nonatomic, retain) NSString *captureLocale;
 @property(nonatomic, retain) NSString *captureSignInFormName;
 @property(nonatomic, retain) NSString *captureFlowName;
@@ -92,7 +90,6 @@ static JRCaptureData *singleton = nil;
 @synthesize clientId;
 @synthesize captureBaseUrl;
 @synthesize accessToken;
-@synthesize creationToken;
 @synthesize bpChannelUrl;
 @synthesize captureLocale;
 @synthesize captureSignInFormName;
@@ -107,11 +104,18 @@ static JRCaptureData *singleton = nil;
 {
     if ((self = [super init]))
     {
-        accessToken   = [[JRCaptureData retrieveTokenFromKeychainOfType:JRTokenTypeAccess] retain];
-        creationToken = [[JRCaptureData retrieveTokenFromKeychainOfType:JRTokenTypeCreation] retain];
+        self.accessToken = [self readTokenForTokenName:@"access_token"];
+        self.refreshSecret = [self readTokenForTokenName:@"refresh_secret"];
     }
 
     return self;
+}
+
+- (NSString *)readTokenForTokenName:(NSString *)tokenName
+{
+    return [[SFHFKeychainUtils getPasswordForUsername:cJRCaptureKeychainUserName
+                                                  andServiceName:[JRCaptureData serviceNameForTokenName:tokenName]
+                                                           error:nil] autorelease];
 }
 
 + (JRCaptureData *)sharedCaptureData
@@ -162,7 +166,6 @@ static JRCaptureData *singleton = nil;
     * attributeUpdates
     * thin_registration
     * flow_name
-    * token
     */
 
     JRCaptureData *captureData = [JRCaptureData sharedCaptureData];
@@ -175,7 +178,7 @@ static JRCaptureData *singleton = nil;
                     @"response_type" : @"token",
                     @"redirect_uri" : redirectUri,
                     @"thin_registration" : thinReg,
-                    //@"use_deprecated_attributes": @"true"
+                    @"refresh_secret" : [self generateAndStoreRefreshSecret],
             }];
 
     if (captureData.captureFlowName) [urlArgs setObject:captureData.captureFlowName forKey:@"flow_name"];
@@ -188,6 +191,11 @@ static JRCaptureData *singleton = nil;
 
     NSString *getParams = [urlArgs asJRURLParamString];
     return [NSString stringWithFormat:@"%@/oauth/auth_native?%@", captureData.captureBaseUrl, getParams];
+}
+
++ (NSString *)generateAndStoreRefreshSecret
+{
+    return [JRCaptureData sharedCaptureData].refreshSecret = @"s3cr3t";
 }
 
 - (NSString *)downloadedFlowVersion
@@ -288,54 +296,48 @@ captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType
                                              forKey:FLOW_KEY];
 }
 
-+ (NSString *)serviceNameForTokenType:(JRTokenType)tokenType
++ (NSString *)serviceNameForTokenName:(NSString *)tokenName
 {
-    return [NSString stringWithFormat:@"%@.%@.%@.",
-                cJRCaptureKeychainIdentifier,
-                (tokenType == JRTokenTypeAccess ? @"access_token" : @"creation_token"),
-                applicationBundleDisplayNameAndIdentifier()];
+    return [NSString stringWithFormat:@"%@.%@.%@.", cJRCaptureKeychainIdentifier, tokenName,
+                     applicationBundleDisplayNameAndIdentifier()];
 }
 
-+ (void)deleteTokenFromKeychainOfType:(JRTokenType)tokenType
++ (void)deleteTokenNameFromKeychain:(NSString *)name
 {
     [SFHFKeychainUtils deleteItemForUsername:cJRCaptureKeychainUserName
-                              andServiceName:[JRCaptureData serviceNameForTokenType:tokenType]
+                              andServiceName:[JRCaptureData serviceNameForTokenName:name]
                                        error:nil];
 }
 
-+ (void)storeTokenInKeychain:(NSString *)token ofType:(JRTokenType)tokenType
++ (void)storeTokenInKeychain:(NSString *)token name:(NSString *)name
 {
     NSError  *error = nil;
 
-    [SFHFKeychainUtils storeUsername:cJRCaptureKeychainUserName
-                         andPassword:token
-                      forServiceName:[JRCaptureData serviceNameForTokenType:tokenType]
-                      updateExisting:YES
-                               error:&error];
+    [SFHFKeychainUtils storeUsername:cJRCaptureKeychainUserName andPassword:token
+                      forServiceName:[JRCaptureData serviceNameForTokenName:name]
+                      updateExisting:YES error:&error];
 
     if (error)
+    {
         ALog (@"Error storing device token in keychain: %@", [error localizedDescription]);
-}
-
-+ (NSString *)retrieveTokenFromKeychainOfType:(JRTokenType)tokenType
-{
-    NSString *token = [SFHFKeychainUtils getPasswordForUsername:cJRCaptureKeychainUserName
-                                                 andServiceName:[JRCaptureData serviceNameForTokenType:tokenType]
-                                                          error:nil];
-
-    return token;
+    }
 }
 
 + (void)saveNewToken:(NSString *)token ofType:(JRTokenType)tokenType
 {
-    [JRCaptureData deleteTokenFromKeychainOfType:JRTokenTypeAccess];
+    NSString *name = tokenType == JRTokenTypeAccess ? @"access_token" : @"refresh_secret";
+    [JRCaptureData deleteTokenNameFromKeychain:name];
 
     if (tokenType == JRTokenTypeAccess)
     {
         [JRCaptureData sharedCaptureData].accessToken = token;
-
-        [JRCaptureData storeTokenInKeychain:token ofType:JRTokenTypeAccess];
     }
+    else if (tokenType == JRTokenTypeRefresh)
+    {
+        [JRCaptureData sharedCaptureData].refreshSecret = token;
+    }
+
+    [JRCaptureData storeTokenInKeychain:token name:name];
 }
 
 + (void)setAccessToken:(NSString *)token
@@ -367,7 +369,6 @@ captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType
 {
     [clientId release];
     [accessToken release];
-    [creationToken release];
     [captureBaseUrl release];
     [captureFlowName release];
     [captureLocale release];
@@ -385,10 +386,10 @@ captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType
 
 + (void)clearSignInState
 {
-    [JRCaptureData deleteTokenFromKeychainOfType:JRTokenTypeAccess];
-    [JRCaptureData deleteTokenFromKeychainOfType:JRTokenTypeCreation];
+    [JRCaptureData deleteTokenNameFromKeychain:@"access_token"];
+    [JRCaptureData deleteTokenNameFromKeychain:@"refresh_secret"];
     [JRCaptureData sharedCaptureData].accessToken = nil;
-    [JRCaptureData sharedCaptureData].creationToken = nil;
+    [JRCaptureData sharedCaptureData].refreshSecret = nil;
 }
 
 + (void)setBackplaneChannelUrl:(NSString *)bpChannelUrl __unused

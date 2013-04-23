@@ -176,7 +176,7 @@ captureEnableThinRegistration:(BOOL)enableThinRegistration
                                      mergeToken:nil forDelegate:delegate];
 }
 
-+ (void)refreshAccessToken
++ (void)refreshAccessTokenWithCallback:(void(^)(BOOL success, NSError *e))callback
 {
     NSString *date = [self utcTimeString];
     NSString *accessToken = [JRCaptureData sharedCaptureData].accessToken;
@@ -189,22 +189,26 @@ captureEnableThinRegistration:(BOOL)enableThinRegistration
                                                   accessToken:accessToken] stringByAddingUrlPercentEscapes],
             @"Date" : [date stringByAddingUrlPercentEscapes]
     };
+    DLog(@"refreshing access token");
 
     [self jsonRequestToUrl:refreshUrl params:params completionHandler:^(id r, NSError *e)
     {
         if (e)
         {
-            fail
+            ALog(@"Failure refreshing access token: %@", e);
+            callback(NO, e);
             return;
         }
 
         if ([@"ok" isEqual:[r objectForKey:@"stat"]])
         {
             [JRCaptureData setAccessToken:[r objectForKey:@"access_token"]];
-            success
-        } else {
-            [JRCaptureError errorFromResult:r onProvider:nil engageToken:nil];
-            fail
+            DLog(@"refreshed access token");
+            callback(YES, nil);
+        }
+        else
+        {
+            callback(NO, [JRCaptureError errorFromResult:r onProvider:nil engageToken:nil]);
         }
     }];
 }
@@ -242,6 +246,7 @@ captureEnableThinRegistration:(BOOL)enableThinRegistration
                     withArg:[JRCaptureError invalidArgumentErrorWithParameterName:@"newUser"] withArg:context];
         return;
     }
+    
     JRCaptureData *config = [JRCaptureData sharedCaptureData];
     NSString *registrationForm = config.captureRegistrationFormName;
     NSDictionary *flow = config.captureFlow;
@@ -252,9 +257,12 @@ captureEnableThinRegistration:(BOOL)enableThinRegistration
             @"response_type" : @"token",
             @"redirect_uri" : [config redirectUri],
             @"flow_name" : config.captureFlowName,
-            @"form" : config.captureRegistrationFormName
+            @"form" : config.captureRegistrationFormName,
+            @"refresh_secret" : [JRCaptureData generateAndStoreRefreshSecret],
     }];
+
     if ([config downloadedFlowVersion]) [params setObject:[config downloadedFlowVersion] forKey:@"flow_version"];
+
     NSString *urlString;
     if (registrationToken)
     {

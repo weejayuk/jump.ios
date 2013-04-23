@@ -183,7 +183,7 @@ static NSString *const ENGAGE_TOKEN_KEY = @"merge_token";
             break;
 
         case 221: /* 'unknown_application' The application id does not exist. Extra fields: 'application_id' */
-            [self maybeCopyEntry:@"applicaiton_id" from:result to:extraFields];
+            [self maybeCopyEntry:@"application_id" from:result to:extraFields];
             break;
 
         case 222: /* 'unknown_entity_type' The entity type does not exist. Extra fields: 'type_name' */
