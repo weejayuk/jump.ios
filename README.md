@@ -7,15 +7,9 @@ It supports:
  * User management with Janrain Capture
  * Broadcast sharing via Engage
 
-http://developers.janrain.com/documentation/mobile-libraries
+See also:
 
--- 
-
-Now requires QuartzCore framework
-
--- 
-
-PhoneGap plugin updates:
- * Updated for Cordova 2.3.0
- * Requires JR_ENABLE_CORDOVA_PLUGIN preprocessor to be defined
-
+ * http://developers.janrain.com/documentation/mobile-libraries - 
+   documentation and guides at the Janrain developers portal
+ * ./Docs/Capture Integration Guide.md - an integration guide
+ * RELEASE_NOTES - for information on changes, bugfixes, and new features
