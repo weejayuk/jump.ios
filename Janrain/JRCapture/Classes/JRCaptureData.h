@@ -36,6 +36,7 @@
 @interface JRCaptureData : NSObject
 @property(nonatomic, retain) NSString *bpChannelUrl;
 @property(nonatomic, readonly, retain) NSString *captureBaseUrl;
+@property(nonatomic, readonly, retain) NSString *captureRedirectUri;
 @property(nonatomic, readonly, retain) NSString *clientId;
 @property(nonatomic, readonly, retain) NSString *accessToken;
 @property(nonatomic, readonly, retain) NSString *refreshSecret;
@@ -49,6 +50,8 @@
 @property(nonatomic, readonly, retain) NSDictionary *captureFlow;
 
 + (void)setAccessToken:(NSString *)token;
+
++ (void)setCaptureRedirectUri:(NSString *)redirectUri;
 
 +     (void)setCaptureDomain:(NSString *)captureDomain captureClientId:(NSString *)clientId
                captureLocale:(NSString *)captureLocale captureSignInFormName:(NSString *)captureSignInFormName

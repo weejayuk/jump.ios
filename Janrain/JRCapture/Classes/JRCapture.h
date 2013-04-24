@@ -161,24 +161,6 @@ typedef enum
  * information back to the Capture server
  **/
  JRCaptureRecordExists,                /* already created, not new */
-
-/**
- * Indicates that this is a new user but that a record was not automatically created on Capture, either because there
- * was not enough information from the social sign-in provider to fill the required attributes, or because record
- * auto-creation was explicitly disabled.
- *
- * Record auto-creation can fail when your Capture schema requires an email address, but Twitter does not provide an
- * email address, so the record cannot be created on Capture when the user signs in with Twitter.)
- *
- *
- * The partially complete user record is passed back to your application, where it is your application’s responsibility
- * to collect required data and create the user record on Capture:
- *     - Your application should present a registration dialog to collect missing information
- *     - Your application should store this information in the JRCaptureUser instance passed to
- *       CaptureSigninDelegate#captureAuthenticationDidSucceedForUser:status:
- *     - Once the information is collected, your application needs to create the record on Capture
- **/
- JRCaptureRecordRequiresCreation
 } JRCaptureRecordStatus;
 
 @class JRActivityObject;
@@ -321,7 +303,7 @@ typedef enum
  * This message is not sent if authentication was canceled. To be notified of a canceled authentication,
  * see engageSigninDidNotComplete().
  **/
-- (void)engageAuthenticationDidFailWithError:(NSError*)error forProvider:(NSString*)provider;
+- (void)engageAuthenticationDidFailWithError:(NSError*)error forProvider:(NSString *)provider;
 
 /**
  * Sent when the call to the Capture server has failed.
@@ -332,9 +314,9 @@ typedef enum
  **/
 - (void)captureAuthenticationDidFailWithError:(NSError*)error;
 
-- (void)registerUserDidSucceed:(JRCaptureUser *)registeredUser context:(NSObject *)context;
+- (void)registerUserDidSucceed:(JRCaptureUser *)registeredUser;
 
-- (void)registerUserDidFailWithError:(NSError *)error context:(NSObject *)context;
+- (void)registerUserDidFailWithError:(NSError *)error;
 @end
 
 /**
@@ -396,12 +378,17 @@ captureEnableThinRegistration:(BOOL)enableThinRegistration
            captureFlowVersion:(NSString *)captureFlowVersion
   captureRegistrationFormName:(NSString *)captureRegistrationFormName captureAppId:(NSString *)captureAppId;
 
-+ (void)clearSignInState;
-
 /**
  * Set the Capture access token for an authenticated user
  **/
 + (void)setAccessToken:(NSString *)newAccessToken __unused;
+
+/**
+ * Sets the "redirect URI" supplied Capture when registering and signing in.
+ *
+ * This parameter is used by Capture in the email-verification and password-reset emails sent by Capture.
+ */
++ (void)setRedirectUri:(NSString *)redirectUri __unused;
 /*@}*/
 
 /**
@@ -432,7 +419,7 @@ captureEnableThinRegistration:(BOOL)enableThinRegistration
  *   The name of the provider on which the user will authenticate. For a list of possible strings,
  *   please see the \ref basicProviders "List of Providers"
  **/
-+ (void)startEngageSigninDialogOnProvider:(NSString*)provider
++ (void)startEngageSigninDialogOnProvider:(NSString *)provider
                               forDelegate:(id<JRCaptureSigninDelegate>)delegate __unused;
 
 /**
@@ -461,7 +448,7 @@ captureEnableThinRegistration:(BOOL)enableThinRegistration
  *   \link customInterface pre-defined custom interface keys\endlink, to be used by the library to customize the look
  *   and feel of the user interface and/or add a native login experience
  **/
-+ (void)startEngageSigninDialogOnProvider:(NSString*)provider
++ (void)startEngageSigninDialogOnProvider:(NSString *)provider
              withCustomInterfaceOverrides:(NSDictionary*)customInterfaceOverrides
                               forDelegate:(id<JRCaptureSigninDelegate>)delegate __unused;
 
@@ -529,7 +516,7 @@ captureEnableThinRegistration:(BOOL)enableThinRegistration
  * Based on this argument, the dialog will prompt your user to either enter their username or email.
  **/
 + (void)startEngageSigninDialogWithConventionalSignin:(JRConventionalSigninType)conventionalSignInType
-                          andCustomInterfaceOverrides:(NSDictionary*)customInterfaceOverrides
+                          andCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
                                           forDelegate:(id<JRCaptureSigninDelegate>)delegate;
 
 /**
@@ -565,8 +552,31 @@ captureEnableThinRegistration:(BOOL)enableThinRegistration
 
 + (void)refreshAccessTokenWithCallback:(void (^)(BOOL, NSError *))callback;
 
-+ (void)registerNewUser:(JRCaptureUser *)newUser withRegistrationToken:(NSString *)registrationToken
-            forDelegate:(id <JRCaptureSigninDelegate>)delegate context:(NSObject *)context;
+/**
+ * Registers a new user.
+ *
+ * WARNING: Only attributes that are part of the registration form configured in your Capture flow file are set in the
+ *          new user's record. Any other attributes (those that are not part of the registration form) will not be set.
+ *
+ * @param newUser
+ *  The user record with which (and in conjunction with your registration form in accordance with the above warning,)
+ *  the new user's Capture record will be created.
+ * @param socialRegistrationToken
+ *  The registration token, used for two-step social registration. The token may be retrieved from the initial (failed)
+ *  social sign-in by retrieving it from the JRCaptureError object returned on the event of that same failure.
+ *  If nil then a traditional registration is performed, not a social registration.
+ * @param delegate
+ *  Your JRCaptureSigninDelegate. This delegate will receive callbacks regarding the success or failure of sign-in
+ *  events. (A successful registration is considered a sign-in, and results in a valid client-server session.)
+ */
++ (void)registerNewUser:(JRCaptureUser *)newUser withSocialRegistrationToken:(NSString *)socialRegistrationToken
+            forDelegate:(id <JRCaptureSigninDelegate>)delegate;
+
+/**
+ * Signs the currently-signed-in user, if any, out.
+ */
++ (void)clearSignInState;
+
 @end
 
 /**
