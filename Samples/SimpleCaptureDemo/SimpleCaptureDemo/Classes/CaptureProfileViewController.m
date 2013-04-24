@@ -168,8 +168,8 @@
 
     if (appDelegate.isNotYetCreated)
     {
-        [JRCapture registerNewUser:appDelegate.captureUser withRegistrationToken:appDelegate.registrationToken 
-                       forDelegate:self context:nil];
+        [JRCapture registerNewUser:appDelegate.captureUser withSocialRegistrationToken:appDelegate.registrationToken
+                       forDelegate:self];
     }
     else
     {
@@ -233,7 +233,7 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)registerUserDidSucceed:(JRCaptureUser *)registeredUser context:(NSObject *)context
+- (void)registerUserDidSucceed:(JRCaptureUser *)registeredUser
 {
     appDelegate.isNotYetCreated = NO;
     appDelegate.captureUser = registeredUser;
@@ -241,7 +241,7 @@
     [Utils handleSuccessWithTitle:@"Registration Complete" message:nil forVc:self];
 }
 
-- (void)registerUserDidFailWithError:(NSError *)error context:(NSObject *)context
+- (void)registerUserDidFailWithError:(NSError *)error
 {
     [Utils handleFailureWithTitle:@"Registration Failed" message:[error localizedDescription]];
 }

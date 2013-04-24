@@ -69,16 +69,16 @@ static NSMutableDictionary *identifierMap = nil;
 
 - (void)registerUser
 {
-    [JRCapture registerNewUser:self.captureUser withRegistrationToken:nil forDelegate:self context:nil];
+    [JRCapture registerNewUser:self.captureUser withSocialRegistrationToken:nil forDelegate:self];
 }
 
-- (void)registerUserDidSucceed:(JRCaptureUser *)registeredUser context:(NSObject *)context
+- (void)registerUserDidSucceed:(JRCaptureUser *)registeredUser
 {
     appDelegate.captureUser = registeredUser;
     [Utils handleSuccessWithTitle:@"Registration Complete" message:nil forVc:self];
 }
 
-- (void)registerUserDidFailWithError:(NSError *)error context:(NSObject *)context
+- (void)registerUserDidFailWithError:(NSError *)error
 {
     [Utils handleFailureWithTitle:@"Registration Failed" message:[error localizedDescription]];
 }

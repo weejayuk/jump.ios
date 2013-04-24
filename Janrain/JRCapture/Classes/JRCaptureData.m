@@ -54,9 +54,9 @@ static NSString* applicationBundleDisplayNameAndIdentifier()
 {
     NSDictionary *infoPlist = [[NSBundle mainBundle] infoDictionary];
     NSString *name = [infoPlist objectForKey:@"CFBundleDisplayName"];
-    NSString *ident = [infoPlist objectForKey:@"CFBundleIdentifier"];
+    NSString *identifier = [infoPlist objectForKey:@"CFBundleIdentifier"];
 
-    return [NSString stringWithFormat:@"%@.%@", name, ident];
+    return [NSString stringWithFormat:@"%@.%@", name, identifier];
 }
 
 typedef enum
@@ -68,20 +68,23 @@ typedef enum
 static NSString *const FLOW_KEY = @"JR_capture_flow";
 
 @interface JRCaptureData ()
-+ (NSString *)retrieveTokenFromKeychainOfType:(JRTokenType)tokenType;
+@property(nonatomic, retain) NSString *accessToken;
+@property(nonatomic, retain) NSString *creationToken;
 
 @property(nonatomic, retain) NSString *captureBaseUrl;
 @property(nonatomic, retain) NSString *clientId;
-@property(nonatomic, retain) NSString *accessToken;
-@property(nonatomic, retain) NSString *creationToken;
+@property(nonatomic, retain) NSString *captureAppId;
+@property(nonatomic, retain) NSString *captureRedirectUri;
+
+@property(nonatomic, retain) NSString *captureFlowName;
+@property(nonatomic, retain) NSString *captureFlowVersion;
 @property(nonatomic, retain) NSString *captureLocale;
 @property(nonatomic, retain) NSString *captureSignInFormName;
-@property(nonatomic, retain) NSString *captureFlowName;
+@property(nonatomic, retain) NSString *captureRegistrationFormName;
+
 @property(nonatomic) JRConventionalSigninType captureTradSignInType;
 @property(nonatomic) BOOL captureEnableThinRegistration;
-@property(nonatomic, retain) NSString *captureRegistrationFormName;
-@property(nonatomic, retain) NSString *captureFlowVersion;
-@property(nonatomic, retain) NSString *captureAppId;
+
 @property(nonatomic, retain) NSDictionary *captureFlow;
 @end
 
@@ -101,6 +104,7 @@ static JRCaptureData *singleton = nil;
 @synthesize captureFlowVersion;
 @synthesize captureAppId;
 @synthesize captureFlow;
+@synthesize captureRedirectUri;
 
 - (JRCaptureData *)init
 {
@@ -199,6 +203,7 @@ static JRCaptureData *singleton = nil;
 
 - (NSString *)redirectUri
 {
+    if (captureRedirectUri) return captureRedirectUri;
     return [NSString stringWithFormat:@"%@/cmeu", singleton.captureBaseUrl];
 }
 
@@ -337,19 +342,14 @@ captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType
     }
 }
 
++ (void)setCaptureRedirectUri:(NSString *)captureRedirectUri
+{
+    [JRCaptureData sharedCaptureData].captureRedirectUri = captureRedirectUri;
+}
+
 + (void)setAccessToken:(NSString *)token
 {
     [JRCaptureData saveNewToken:token ofType:JRTokenTypeAccess];
-}
-
-+ (NSString *)getAccessToken __unused
-{
-    return [JRCaptureData sharedCaptureData].accessToken;
-}
-
-+ (NSString *)accessToken __unused
-{
-    return [[JRCaptureData sharedCaptureData] accessToken];
 }
 
 + (NSString *)captureBaseUrl __unused
@@ -379,6 +379,7 @@ captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType
     [captureAppId release];
     [captureAppId release];
     [captureFlow release];
+    [captureRedirectUri release];
     [super dealloc];
 }
 
