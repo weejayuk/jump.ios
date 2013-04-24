@@ -90,6 +90,7 @@ static JRCaptureData *singleton = nil;
 @synthesize clientId;
 @synthesize captureBaseUrl;
 @synthesize accessToken;
+@synthesize refreshSecret;
 @synthesize bpChannelUrl;
 @synthesize captureLocale;
 @synthesize captureSignInFormName;
@@ -113,9 +114,9 @@ static JRCaptureData *singleton = nil;
 
 - (NSString *)readTokenForTokenName:(NSString *)tokenName
 {
-    return [[SFHFKeychainUtils getPasswordForUsername:cJRCaptureKeychainUserName
-                                                  andServiceName:[JRCaptureData serviceNameForTokenName:tokenName]
-                                                           error:nil] autorelease];
+    return [SFHFKeychainUtils getPasswordForUsername:cJRCaptureKeychainUserName
+                                      andServiceName:[JRCaptureData serviceNameForTokenName:tokenName]
+                                               error:nil];
 }
 
 + (JRCaptureData *)sharedCaptureData
@@ -195,7 +196,17 @@ static JRCaptureData *singleton = nil;
 
 + (NSString *)generateAndStoreRefreshSecret
 {
-    return [JRCaptureData sharedCaptureData].refreshSecret = @"s3cr3t";
+    uint8_t refreshSecret_[10];
+    int errCode = SecRandomCopyBytes(kSecRandomDefault, 10, refreshSecret_);
+    if (errCode)
+    {
+        ALog(@"UNABLE TO GENERATE RANDOM REFRESH SECRET. ERRNO: %d", errno);
+    }
+
+    NSMutableString *buffer = [NSMutableString string];
+    for (int i=0; i<10; i++) [buffer appendFormat:@"%02hhx", refreshSecret_[i]];
+
+    return [JRCaptureData sharedCaptureData].refreshSecret = [NSString stringWithString:buffer];
 }
 
 - (NSString *)downloadedFlowVersion
@@ -381,6 +392,7 @@ captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType
     [captureAppId release];
     [captureAppId release];
     [captureFlow release];
+    [refreshSecret release];
     [super dealloc];
 }
 

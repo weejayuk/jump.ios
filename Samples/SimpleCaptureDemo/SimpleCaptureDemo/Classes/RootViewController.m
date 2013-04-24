@@ -71,24 +71,25 @@
 
 - (void)configureButtons
 {
+    [thirdButton setTitle:@"Refresh Access Token" forState:UIControlStateNormal];
     if (appDelegate.captureUser)
     {
+        thirdButton.hidden = NO;
         signInButton.hidden = YES;
         signOutButton.hidden = NO;
         [formButton setTitle:@"Update" forState:UIControlStateNormal];
         browseButton.enabled = YES;
         browseButton.alpha = 1;
-        thirdButton.hidden = YES;
     }
     else
     {
+        thirdButton.hidden = YES;
         signInButton.hidden = NO;
         [signInButton setTitle:@"Social Sign In" forState:UIControlStateNormal];
         signOutButton.hidden = YES;
         [formButton setTitle:@"Traditional Registration" forState:UIControlStateNormal];
         browseButton.enabled = NO;
         browseButton.alpha = 0.5;
-        thirdButton.hidden = YES;
     }
 }
 
@@ -145,6 +146,23 @@
 
 - (IBAction)thirdButtonPressed:(id)sender
 {
+    [JRCapture refreshAccessTokenWithCallback:^(BOOL success, NSError *err)
+    {
+        if (err)
+        {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:[err description]
+                                                               delegate:nil cancelButtonTitle:@"Dismiss"
+                                                      otherButtonTitles:nil];
+            [alertView show];
+        }
+        else
+        {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Success" message:nil delegate:nil
+                                                      cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
+            [alertView show];
+
+        }
+    }];
 }
 
 - (IBAction)signInButtonPressed:(id)sender
@@ -169,9 +187,14 @@
 - (void)configureUserLabelAndIcon
 {
     if (appDelegate.captureUser)
+    {
         currentUserLabel.text = [NSString stringWithFormat:@"Email: %@", appDelegate.captureUser.email];
+    }
     else
+    {
         currentUserLabel.text = @"No current user";
+    }
+
     [self configureProviderIcon];
 }
 
@@ -184,10 +207,8 @@
 - (void)engageSignInDidFailWithError:(NSError *)error
 {
     DLog(@"error: %@", [error description]);
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                        message:[error description]
-                                                       delegate:nil
-                                              cancelButtonTitle:@"Dismiss"
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:[error description]
+                                                       delegate:nil cancelButtonTitle:@"Dismiss"
                                               otherButtonTitles:nil];
     [alertView show];
 }

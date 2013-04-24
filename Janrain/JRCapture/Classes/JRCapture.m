@@ -182,13 +182,21 @@ captureEnableThinRegistration:(BOOL)enableThinRegistration
     NSString *accessToken = [JRCaptureData sharedCaptureData].accessToken;
     NSString *refreshSecret = [JRCaptureData sharedCaptureData].refreshSecret;
     NSString *domain = [JRCaptureData sharedCaptureData].captureBaseUrl;
-    NSString *refreshUrl = [NSString stringWithFormat:@"%@/access/getAccessToken", domain];
-    NSDictionary *params = @{
-            @"access_token" : accessToken,
-            @"Signature" : [[self signatureForRefreshWithDate:date refreshSecret:refreshSecret 
-                                                  accessToken:accessToken] stringByAddingUrlPercentEscapes],
-            @"Date" : [date stringByAddingUrlPercentEscapes]
-    };
+    NSString *refreshUrl = [NSString stringWithFormat:@"%@/oauth/refresh_access_token", domain];
+    NSString *signature = [[self signatureForRefreshWithDate:date refreshSecret:refreshSecret
+                                                  accessToken:accessToken] stringByAddingUrlPercentEscapes];
+    if (!signature)
+    {
+        callback(NO, [JRCaptureError invalidInternalStateErrorWithDescription:@"missing refresh secret"]);
+        return;
+    }
+
+    NSDictionary *params =
+            @{
+                    @"access_token" : accessToken,
+                    @"signature" : signature,
+                    @"date" : [date stringByAddingUrlPercentEscapes]
+            };
     DLog(@"refreshing access token");
 
     [self jsonRequestToUrl:refreshUrl params:params completionHandler:^(id r, NSError *e)
@@ -225,6 +233,7 @@ captureEnableThinRegistration:(BOOL)enableThinRegistration
 + (NSString *)signatureForRefreshWithDate:(NSString *)dateString refreshSecret:(NSString *)refreshSecret
                               accessToken:(NSString *)accessToken
 {
+    if (!refreshSecret) return nil;
     NSString *stringToSign = [NSString stringWithFormat:@"refresh_access_token\n%@\n%@\n", dateString, accessToken];
 
     const char *cKey  = [refreshSecret cStringUsingEncoding:NSASCIIStringEncoding];
@@ -246,7 +255,7 @@ captureEnableThinRegistration:(BOOL)enableThinRegistration
                     withArg:[JRCaptureError invalidArgumentErrorWithParameterName:@"newUser"] withArg:context];
         return;
     }
-    
+
     JRCaptureData *config = [JRCaptureData sharedCaptureData];
     NSString *registrationForm = config.captureRegistrationFormName;
     NSDictionary *flow = config.captureFlow;

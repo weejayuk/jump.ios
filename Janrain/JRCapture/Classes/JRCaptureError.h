@@ -47,6 +47,7 @@ NSString *const kJRCaptureErrorDomain;
 #define LOCAL_APID_ERROR_RANGE 2000
 #define APID_ERROR_RANGE 3000
 #define CAPTURE_WRAPPED_ENGAGE_ERROR_RANGE 4000
+#define LOCAL_CAPTURE_ERROR_RANGE 5000
 
 /**
  * Generic Capture errors
@@ -74,6 +75,15 @@ typedef enum
     JRCaptureLocalApidErrorMissingAccessToken   = JRCaptureLocalApidErrorGeneric + 400, /**< Error returned when some of the JRCaptureObject or JRCaptureUser methods are called, require an \c access_token and there is no valid \c access_token */
     JRCaptureLocalApidErrorSelectorNotAvailable = JRCaptureLocalApidErrorGeneric + 500, /**< Error returned when a selector is not available */
 } JRCaptureLocalApidError;
+
+/**
+ * Local Capture client errors which are not apid specific
+ */
+typedef enum
+{
+    JRCaptureLocalErrorGeneric = LOCAL_CAPTURE_ERROR_RANGE,
+    JRCaptureLocalErrorInvalidInternalState = JRCaptureLocalErrorGeneric + 101, /**< The internal Capture client state has become corrupted */
+} JRCaptureLocalError;
 
 /**
  * Errors received from the JRCaptureObjectDelegate, JRCaptureUserDelegate, and JRCaptureSigninDelegate protocols
@@ -137,9 +147,9 @@ typedef enum
  * NSError subclass for errors from the Capture library
  **/
 @interface JRCaptureError : NSError
-+ (JRCaptureError *)invalidArgumentErrorWithParameterName:(NSString *)parameterName;
 
 - (BOOL)isMergeFlowError;
+
 - (NSString *)existingProvider;
 - (NSString *)conflictedProvider;
 
@@ -151,6 +161,8 @@ typedef enum
 * @internal
 */
 @interface JRCaptureError (JRCaptureError_Builders)
++ (JRCaptureError *)invalidArgumentErrorWithParameterName:(NSString *)parameterName;
++ (NSError *)invalidInternalStateErrorWithDescription:(NSString *)description;
 + (JRCaptureError *)errorFromResult:(NSDictionary *)result onProvider:(NSString *)onProvider
                                                           engageToken:(NSString *)mergeToken;
 + (JRCaptureError *)invalidApiResponseErrorWithString:(NSString *)rawResponse;
@@ -174,7 +186,7 @@ typedef enum
 @interface NSError (JRCaptureError_Extensions)
 - (BOOL)isJRMergeFlowError;
 - (BOOL)isJRTwoStepRegFlowError;
-- (NSString *)JRMergeFlowConflictedProvider;
+- (NSString *)JRMergeFlowConflictedProvider __unused;
 - (NSString *)JRMergeFlowExistingProvider;
 - (NSString *)JRMergeToken;
 - (JRCaptureUser *)JRPreregistrationRecord;

@@ -36,6 +36,7 @@
 #import "JRConventionalSignInViewController.h"
 #import "JREngageWrapper.h"
 #import "JRUserInterfaceMaestro.h"
+#import "JRCaptureData.h"
 
 @interface JREngageWrapper (JREngageWrapper_InternalMethods)
 - (void)authenticationDidReachTokenUrl:(NSString *)tokenUrl withResponse:(NSURLResponse *)response andPayload:(NSData *)tokenUrlPayload forProvider:(NSString *)provider;
@@ -273,6 +274,8 @@
     [alertView show];
 
     [delegate hideLoading];
+    // XXX hack to skirt the side effects thrown off by the client's sign-in APIs:
+    [JREngage updateTokenUrl:[JRCaptureData captureTokenUrlWithMergeToken:nil]];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation

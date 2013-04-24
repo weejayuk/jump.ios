@@ -100,10 +100,17 @@ static NSString *const ENGAGE_TOKEN_KEY = @"merge_token";
 @end
 
 @implementation JRCaptureError (JRCaptureError_Builders)
+
++ (JRCaptureError *)invalidInternalStateErrorWithDescription:(NSString *)description
+{
+    return [JRCaptureError errorWithErrorString:@"invalid_internal_state" code:JRCaptureLocalErrorInvalidInternalState
+                                    description:description extraFields:nil];
+}
+
 + (JRCaptureError *)invalidArgumentErrorWithParameterName:(NSString *)parameterName
 {
-    return [JRCaptureError errorFromResult:[self invalidParameterErrorDictWithParam:parameterName]
-                                onProvider:nil engageToken:nil];
+    return [JRCaptureError errorFromResult:[self invalidParameterErrorDictWithParam:parameterName] onProvider:nil
+                               engageToken:nil];
 }
 
 + (JRCaptureError *)invalidApiResponseErrorWithString:(NSString *)rawResponse
@@ -304,7 +311,7 @@ static NSString *const ENGAGE_TOKEN_KEY = @"merge_token";
     return [self isKindOfClass:[JRCaptureError class]] && [((JRCaptureError *) self) isTwoStepRegFlowError];
 }
 
-- (NSString *)JRMergeFlowConflictedProvider
+- (NSString *)JRMergeFlowConflictedProvider __unused
 {
     if (![self isKindOfClass:[JRCaptureError class]] || ![self isJRMergeFlowError]) return nil;
     return [((JRCaptureError *) self) conflictedProvider];
