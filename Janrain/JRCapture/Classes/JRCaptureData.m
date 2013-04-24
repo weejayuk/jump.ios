@@ -206,7 +206,8 @@ static JRCaptureData *singleton = nil;
     NSMutableString *buffer = [NSMutableString string];
     for (int i=0; i<10; i++) [buffer appendFormat:@"%02hhx", refreshSecret_[i]];
 
-    return [JRCaptureData sharedCaptureData].refreshSecret = [NSString stringWithString:buffer];
+    [JRCaptureData saveNewToken:[NSString stringWithString:buffer] ofType:JRTokenTypeRefresh];
+    return [JRCaptureData sharedCaptureData].refreshSecret;
 }
 
 - (NSString *)downloadedFlowVersion
