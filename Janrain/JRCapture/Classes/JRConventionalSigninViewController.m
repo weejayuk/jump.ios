@@ -260,9 +260,9 @@
     [delegate authenticationDidComplete];
 }
 
-- (void)signinCaptureUserDidFailWithResult:(NSDictionary *)result context:(NSObject *)context
+- (void)signinCaptureUserDidFailWithResult:(NSError *)error context:(NSObject *)context
 {
-    DLog(@"result: %@", [result description]);
+    DLog(@"error: %@", [error description]);
     NSString const *type = self.signInType == JRConventionalSigninEmailPassword ? @"Email" : @"Username";
     NSString *title = [NSString stringWithFormat:@"Incorrect %@ or Password", type];
     //NSString *const message = [result objectForKey:@"error"];

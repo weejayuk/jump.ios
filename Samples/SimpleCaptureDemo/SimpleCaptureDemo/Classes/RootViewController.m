@@ -85,7 +85,7 @@
     {
         thirdButton.hidden = YES;
         signInButton.hidden = NO;
-        [signInButton setTitle:@"Social Sign In" forState:UIControlStateNormal];
+        [signInButton setTitle:@"Sign In" forState:UIControlStateNormal];
         signOutButton.hidden = YES;
         [formButton setTitle:@"Traditional Registration" forState:UIControlStateNormal];
         browseButton.enabled = NO;

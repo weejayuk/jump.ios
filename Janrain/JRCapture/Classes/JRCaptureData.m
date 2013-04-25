@@ -202,15 +202,18 @@ static JRCaptureData *singleton = nil;
 
 + (NSString *)generateAndStoreRefreshSecret
 {
-    uint8_t refreshSecret_[10];
-    int errCode = SecRandomCopyBytes(kSecRandomDefault, 10, refreshSecret_);
+    #define RANDOM_BYTES 20
+
+    uint8_t refreshSecret_[RANDOM_BYTES];
+    int errCode = SecRandomCopyBytes(kSecRandomDefault, RANDOM_BYTES, refreshSecret_);
     if (errCode)
     {
         ALog(@"UNABLE TO GENERATE RANDOM REFRESH SECRET. ERRNO: %d", errno);
+        return nil;
     }
 
     NSMutableString *buffer = [NSMutableString string];
-    for (int i=0; i<10; i++) [buffer appendFormat:@"%02hhx", refreshSecret_[i]];
+    for (int i=0; i<RANDOM_BYTES; i++) [buffer appendFormat:@"%02hhx", refreshSecret_[i]];
 
     [JRCaptureData saveNewToken:[NSString stringWithString:buffer] ofType:JRTokenTypeRefresh];
     return [JRCaptureData sharedCaptureData].refreshSecret;

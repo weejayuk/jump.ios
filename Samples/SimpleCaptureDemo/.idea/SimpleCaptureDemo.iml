@@ -205,6 +205,9 @@
     <content url="file://$MODULE_DIR$/../../Docs/JREngage/html/tabs.css">
       <sourceFolder url="file://$MODULE_DIR$/../../Docs/JREngage/html/tabs.css" isTestSource="false" />
     </content>
+    <content url="file://$MODULE_DIR$/../../Janrain">
+      <sourceFolder url="file://$MODULE_DIR$/../../Janrain" isTestSource="false" />
+    </content>
     <content url="file://$MODULE_DIR$/../../Janrain/JRCapture/Classes/JRCapture.h">
       <sourceFolder url="file://$MODULE_DIR$/../../Janrain/JRCapture/Classes/JRCapture.h" isTestSource="false" />
     </content>

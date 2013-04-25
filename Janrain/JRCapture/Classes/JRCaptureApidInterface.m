@@ -99,27 +99,52 @@ typedef enum CaptureInterfaceStatEnum
     StatFail,
 } CaptureInterfaceStat;
 
-- (void)finishSignInFailureWithResult:(NSDictionary *)result forDelegate:(id <JRCaptureInterfaceDelegate>)delegate
-                          withContext:(NSObject *)context
+- (void)finishSignInFailureWithError:(JRCaptureError *)error forDelegate:(id)delegate
+                         withContext:(NSObject *)context
 {
-    if ([delegate respondsToSelector:@selector(signinCaptureUserDidFailWithResult:context:)])
-        [delegate signinCaptureUserDidFailWithResult:result context:context];
+    if ([delegate conformsToProtocol:@protocol(JRCaptureSigninDelegate)] &&
+            [delegate respondsToSelector:@selector(captureAuthenticationDidFailWithError:)])
+    {
+        [delegate captureAuthenticationDidFailWithError:error];
+    }
+
+    if ([delegate conformsToProtocol:@protocol(JRCaptureInterfaceDelegate)] &&
+            [delegate respondsToSelector:@selector(signinCaptureUserDidFailWithResult:context:)])
+        [delegate signinCaptureUserDidFailWithResult:error context:context];
 }
 
-- (void)finishSignInSuccessWithResult:(NSString *)result forDelegate:(id <JRCaptureInterfaceDelegate>)delegate
+- (void)finishSignInSuccessWithResult:(NSString *)result forDelegate:(id)delegate
                           withContext:(NSObject *)context
 {
-    if ([delegate respondsToSelector:@selector(signinCaptureUserDidSucceedWithResult:context:)])
+    if ([delegate conformsToProtocol:@protocol(JRCaptureSigninDelegate)] &&
+            [delegate respondsToSelector:@selector(captureAuthenticationDidSucceedForUser:status:)])
+    {
+        BOOL respondsToFail = [delegate respondsToSelector:@selector(captureAuthenticationDidFailWithError:)];
+        NSData *jsonData = [result dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary *resultDict = [NSJSONSerialization JSONObjectWithData:jsonData options:(NSJSONReadingOptions) 0
+                                                                     error:nil];
+
+        FinishSignInError err = [JRCaptureApidInterface finishSignInWithPayload:resultDict forDelegate:delegate];
+
+        if ((err == cJRInvalidResponse || err == cJRInvalidCaptureUser) && respondsToFail)
+        {
+            [delegate captureAuthenticationDidFailWithError:[JRCaptureError invalidApiResponseErrorWithString:result]];
+            return;
+        }
+    }
+
+    if ([delegate conformsToProtocol:@protocol(JRCaptureInterfaceDelegate)] &&
+            [delegate respondsToSelector:@selector(signinCaptureUserDidSucceedWithResult:context:)])
         [delegate signinCaptureUserDidSucceedWithResult:result context:context];
 }
 
 
 - (void)startSigninCaptureUserWithCredentials:(NSDictionary *)credentials ofType:(NSString *)signInFieldName
-                             forDelegate:(id)delegate withContext:(NSObject *)context
+                                  forDelegate:(id)delegate withContext:(NSObject *)context
 {
     DLog(@"");
     NSString *signInName = [credentials objectForKey:signInFieldName];
-    NSString *password   = [credentials objectForKey:@"password"];
+    NSString *password = [credentials objectForKey:@"password"];
     NSString *mergeToken = [credentials objectForKey:@"token"];
     NSString *clientId = [JRCaptureData sharedCaptureData].clientId;
     NSString *locale = [JRCaptureData sharedCaptureData].captureLocale;
@@ -127,6 +152,14 @@ typedef enum CaptureInterfaceStatEnum
     NSString *flowName = [JRCaptureData sharedCaptureData].captureFlowName;
     NSString *redirectUri = [[JRCaptureData sharedCaptureData] redirectUri];
     NSString *refreshSecret = [JRCaptureData generateAndStoreRefreshSecret];
+
+    if (!refreshSecret)
+    {
+        JRCaptureError *error = [JRCaptureError invalidInternalStateErrorWithDescription:@"unable to generate secure "
+                "random refresh secret"];
+        [self finishSignInFailureWithError:error forDelegate:delegate withContext:context];
+        return;
+    }
 
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithDictionary:
                                                                @{
@@ -144,16 +177,16 @@ typedef enum CaptureInterfaceStatEnum
     if (mergeToken) [params setObject:mergeToken forKey:@"merge_token"];
 
     NSString *const signInEndpoint = [NSString stringWithFormat:@"%@/oauth/auth_native_traditional.json",
-                                               [[JRCaptureData sharedCaptureData] captureBaseUrl]];
+                                                                [[JRCaptureData sharedCaptureData] captureBaseUrl]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:signInEndpoint]];
 
     [request setHTTPMethod:@"POST"];
     [request setHTTPBody:[[params asJRURLParamString] dataUsingEncoding:NSUTF8StringEncoding]];
 
     NSDictionary *tag = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                 cSignInUser, cTagAction,
-                                                 delegate, @"delegate",
-                                                 context, @"context", nil];
+                                              cSignInUser, cTagAction,
+                                              delegate, @"delegate",
+                                              context, @"context", nil];
 
     NSString *urlString = [[request URL] absoluteString];
     DLog(@"%@ %@=%@", urlString, signInFieldName, signInName);
@@ -168,7 +201,8 @@ typedef enum CaptureInterfaceStatEnum
                                                       desc, @"error_description",
                                                       code, @"code",
                                                       nil];
-        [self finishSignInFailureWithResult:errDict forDelegate:delegate withContext:context];
+        JRCaptureError *error = [JRCaptureError errorFromResult:errDict onProvider:nil engageToken:nil];
+        [self finishSignInFailureWithError:error forDelegate:delegate withContext:context];
     }
 }
 
@@ -586,60 +620,19 @@ typedef enum CaptureInterfaceStatEnum
 - (void)finishSignInUserWithPayload:(NSString *)payload context:(NSObject *)context response:(NSDictionary *)response
                                stat:(CaptureInterfaceStat)stat delegate:(id <JRCaptureInterfaceDelegate>)delegate
 {
-    if ([delegate conformsToProtocol:@protocol(JRCaptureInterfaceDelegate)])
+    if (stat == StatOk)
+        [self finishSignInSuccessWithResult:payload forDelegate:delegate withContext:context];
+    else
     {
-        if (stat == StatOk)
-            [self finishSignInSuccessWithResult:payload forDelegate:delegate withContext:context];
-        else
-            [self finishSignInFailureWithResult:response forDelegate:delegate withContext:context];
-    }
-    else if ([delegate conformsToProtocol:@protocol(JRCaptureSigninDelegate)])
-    {
-        id <JRCaptureSigninDelegate> delegate_ = (id) delegate;
-        BOOL respondsToFail = [delegate_ respondsToSelector:@selector(captureAuthenticationDidFailWithError:)];
-        if (stat == StatOk)
-        {
-            FinishSignInError err = [JRCaptureApidInterface finishSignInWithPayload:response forDelegate:delegate_];
-
-            if ((err == cJRInvalidResponse || err == cJRInvalidCaptureUser) && respondsToFail)
-            {
-                NSString *errorDesc = [NSString stringWithFormat:
-                        @"The Capture Mobile Endpoint URL did not have the expected data: %@", [payload description]];
-                NSNumber *code = [NSNumber numberWithInt:JRCaptureWrappedEngageErrorInvalidEndpointPayload];
-                NSDictionary *errDict = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                              @"error", @"stat",
-                                                              @"invalid_endpoint_response", @"error",
-                                                              errorDesc, @"error_description",
-                                                              code, @"code", nil];
-                [delegate_ captureAuthenticationDidFailWithError:[JRCaptureError errorFromResult:errDict
-                                                                                      onProvider:nil engageToken:nil]];
-            }
-        }
-        else if (respondsToFail)
-        {
-            NSString *const message = [response objectForKey:@"error"];
-            NSNumber *code;
-            if ([message isEqual:@"bad username/password combo"])
-                code = [NSNumber numberWithInt:JRCaptureErrorGenericBadPassword];
-            else
-                code = [NSNumber numberWithInt:JRCaptureErrorGeneric];
-
-            NSDictionary *errDict = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                          @"error", @"stat",
-                                                          message, @"error",
-                                                          message, @"error_description",
-                                                          code, @"code", nil];
-
-            [delegate_ captureAuthenticationDidFailWithError:[JRCaptureError errorFromResult:errDict onProvider:nil
-                                                                                 engageToken:nil]];
-        }
+        JRCaptureError *error = [JRCaptureError errorFromResult:response onProvider:nil engageToken:nil];
+        [self finishSignInFailureWithError:error forDelegate:delegate withContext:context];
     }
 }
 
 - (void)connectionDidFinishLoadingWithFullResponse:(NSURLResponse*)fullResponse unencodedPayload:(NSData*)payload
                                            request:(NSURLRequest*)request andTag:(id)userData { }
 
-- (void)connectionDidFailWithError:(NSError*)error request:(NSURLRequest*)request andTag:(id)userData
+- (void)connectionDidFailWithError:(NSError *)error request:(NSURLRequest*)request andTag:(id)userData
 {
     DLog(@"");
 
@@ -648,36 +641,39 @@ typedef enum CaptureInterfaceStatEnum
     NSObject     *context   = [tag objectForKey:@"context"];
     id<JRCaptureInterfaceDelegate> delegate = [tag objectForKey:@"delegate"];
 
-    NSDictionary *result = [NSDictionary dictionaryWithObjectsAndKeys:
+    NSDictionary *errDict = [NSDictionary dictionaryWithObjectsAndKeys:
                                     @"error", @"stat",
                                     [error localizedDescription], @"error",
                                     [error localizedFailureReason], @"error_description",
                                     [NSNumber numberWithInteger:JRCaptureLocalApidErrorConnectionDidFail], @"code",
+                                    error, @"wrapped_error",
                                     nil];
+
+    JRCaptureError *wrappingError = [JRCaptureError errorFromResult:errDict onProvider:nil engageToken:nil];
 
     if ([action isEqualToString:cSignInUser])
     {
-        [self finishSignInFailureWithResult:result forDelegate:delegate withContext:context];
+        [self finishSignInFailureWithError:wrappingError forDelegate:delegate withContext:context];
     }
     else if ([action isEqualToString:cGetUser])
     {
-        [self finishGetCaptureUserWithStat:StatFail andResult:result forDelegate:delegate withContext:context];
+        [self finishGetCaptureUserWithStat:StatFail andResult:errDict forDelegate:delegate withContext:context];
     }
     else if ([action isEqualToString:cGetObject])
     {
-        [self finishGetObjectWithStat:StatFail andResult:result forDelegate:delegate withContext:context];
+        [self finishGetObjectWithStat:StatFail andResult:errDict forDelegate:delegate withContext:context];
     }
     else if ([action isEqualToString:cUpdateObject])
     {
-        [self finishUpdateObjectWithStat:StatFail andResult:result forDelegate:delegate withContext:context];
+        [self finishUpdateObjectWithStat:StatFail andResult:errDict forDelegate:delegate withContext:context];
     }
     else if ([action isEqualToString:cReplaceObject])
     {
-        [self finishReplaceObjectWithStat:StatFail andResult:result forDelegate:delegate withContext:context];
+        [self finishReplaceObjectWithStat:StatFail andResult:errDict forDelegate:delegate withContext:context];
     }
     else if ([action isEqualToString:cReplaceArray])
     {
-        [self finishReplaceArrayWithStat:StatFail andResult:result forDelegate:delegate withContext:context];
+        [self finishReplaceArrayWithStat:StatFail andResult:errDict forDelegate:delegate withContext:context];
     }
 }
 

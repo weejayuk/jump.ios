@@ -265,6 +265,16 @@ captureEnableThinRegistration:(BOOL)enableThinRegistration
     NSString *registrationForm = config.captureRegistrationFormName;
     NSDictionary *flow = config.captureFlow;
     NSMutableDictionary *params = [newUser toFormFieldsForForm:registrationForm withFlow:flow];
+    NSString *refreshSecret = [JRCaptureData generateAndStoreRefreshSecret];
+
+    if (!refreshSecret)
+    {
+        [self maybeDispatch:@selector(registerUserDidFailWithError:) forDelegate:delegate
+                    withArg:[JRCaptureError invalidInternalStateErrorWithDescription:@"unable to generate secure "
+                            "random refresh secret"]];
+        return;
+    }
+
     [params addEntriesFromDictionary:@{
             @"client_id" : config.clientId,
             @"locale" : config.captureLocale,
@@ -272,7 +282,7 @@ captureEnableThinRegistration:(BOOL)enableThinRegistration
             @"redirect_uri" : [config redirectUri],
             @"flow_name" : config.captureFlowName,
             @"form" : config.captureRegistrationFormName,
-            @"refresh_secret" : [JRCaptureData generateAndStoreRefreshSecret],
+            @"refresh_secret" : refreshSecret,
     }];
 
     if ([config downloadedFlowVersion]) [params setObject:[config downloadedFlowVersion] forKey:@"flow_version"];

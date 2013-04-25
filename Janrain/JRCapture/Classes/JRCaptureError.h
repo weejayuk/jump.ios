@@ -162,7 +162,7 @@ typedef enum
 */
 @interface JRCaptureError (JRCaptureError_Builders)
 + (JRCaptureError *)invalidArgumentErrorWithParameterName:(NSString *)parameterName;
-+ (NSError *)invalidInternalStateErrorWithDescription:(NSString *)description;
++ (JRCaptureError *)invalidInternalStateErrorWithDescription:(NSString *)description;
 + (JRCaptureError *)errorFromResult:(NSDictionary *)result onProvider:(NSString *)onProvider
                                                           engageToken:(NSString *)mergeToken;
 + (JRCaptureError *)invalidApiResponseErrorWithString:(NSString *)rawResponse;
