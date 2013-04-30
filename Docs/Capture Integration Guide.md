@@ -1,3 +1,58 @@
+# JUMP for iOS
+
+## Features
+
+* Engage social sign-in (includes OpenID, and many OAuth identity providers, e.g. Google, Facebook, etc.)
+* Sign-in to Capture accounts
+    * Either via Engage social sign-in or via traditional username/password sign-in
+    * Including the Capture "merge account flow" (which links two social accounts by verified email address at sign-in
+      time)
+* Register new Capture accounts
+    * Traditional accounts (e.g. authenticated via password)
+    * Social accounts (with pre-populated registration forms.)
+    * "Thin" social registration -- automatic account creation for social sign-in users without a registration form.
+* Capture account record updates
+
+In the pipeline:
+
+* Profile updates (including password and email address updates)
+* In app password reset initiation
+* Social account linking (like the "merge account" sign-in flow, but after a user is signed in.)
+* Session refreshing.
+
+## Usage
+
+1. Generate the Objective-C Capture user model
+2. Import the Jump library and the generated user model into your Xcode project
+2. Initialize the library
+3. Begin user sign-in by calling
+   `+[JRCapture startEngageSigninDialogWithConventionalSignin:andCustomInterfaceOverrides:forDelegate:]`
+4. Update the local user record model
+5. Call `-[JRCaptureUser updateOnCaptureForDelegate:context:]` to update the Capture server
+
+Before you begin integrating you will need configuration details:
+
+1. Sign in to your Engage Dashboard - https://rpxnow.com
+    1. Configure the providers you wish to use for authentication ("Deployment" drop down menu -> "Engage for
+       Android").
+    2. Retrieve your 20-character Application ID from the Engage Dashboard (In the right column of the "Home"
+       page on the dashboard.)
+2. Ask your deployment engineer or account manager for your Capture domain.
+3. Sign in to the Capture dashboard and provision a new API client for your mobile app.
+    1. Use the [set_features API](http://developers.janrain.com/documentation/api-methods/capture/clients/set_features/)
+       to add the "login_client" feature to your new API client.
+    2. Use the [setAccessSchema API](http://developers.janrain.com/documentation/api-methods/capture/entitytype/setaccessschema/)
+       to set the subset of the schema you wish your mobile app to be able to update.
+4. Configure your flow settings:
+    1. Ask your deployment engineer or account manager which "flow" you should use.
+    2. Ask for the appropriate values for default_flow_name and default_flow_version.
+    3. Set those settings for your new API client.
+5. Coordinate with your deployment engineer or account manager for the correct value for your "flow locale."
+   The commonly used value for US English is en-US.
+6. Ask your deployment engineer or account manager for the name of the sign-in form in your flow.
+
+Note: You _must_ create a new API client with the correct feature for proper operation of the JUMP for iOS SDK.
+
 ## Generating the Capture User Model
 
 Get the [JUMP for iOS library](http://developers.janrain.com/documentation/mobile-libraries/ios-v2/getting-the-library/) and

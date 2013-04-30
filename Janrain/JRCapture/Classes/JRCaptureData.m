@@ -266,10 +266,12 @@ captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType
 {
     NSString *flowVersion = self.captureFlowVersion ? self.captureFlowVersion : @"HEAD";
 
-    //dlzjvycct5xka
+    NSString *testing = @"dlzjvycct5xka";
+    NSString *production = @"d1lqe9temigv1p";
     NSString *flowUrlString =
-            [NSString stringWithFormat:@"https://dlzjvycct5xka.cloudfront.net/widget_data/flows/%@/%@/%@/%@.json",
-                                       self.captureAppId, self.captureFlowName, flowVersion, self.captureLocale];
+            [NSString stringWithFormat:@"https://%@.cloudfront.net/widget_data/flows/%@/%@/%@/%@.json",
+                                       production, self.captureAppId, self.captureFlowName, flowVersion,
+                                       self.captureLocale];
     NSMutableURLRequest *downloadRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:flowUrlString]];
     [downloadRequest setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
 
