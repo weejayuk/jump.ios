@@ -152,6 +152,7 @@ typedef enum CaptureInterfaceStatEnum
     NSString *flowName = [JRCaptureData sharedCaptureData].captureFlowName;
     NSString *redirectUri = [[JRCaptureData sharedCaptureData] redirectUri];
     NSString *refreshSecret = [JRCaptureData generateAndStoreRefreshSecret];
+    NSString *bpChannelUrl = [JRCaptureData sharedCaptureData].bpChannelUrl;
 
     if (!refreshSecret)
     {
@@ -173,6 +174,7 @@ typedef enum CaptureInterfaceStatEnum
                                                                        @"refresh_secret" : refreshSecret
                                                                }];
 
+    if (bpChannelUrl) [params setObject:bpChannelUrl forKey:@"bp_channel"];
     if (flowName) [params setObject:flowName forKey:@"flow_name"];
     if (mergeToken) [params setObject:mergeToken forKey:@"merge_token"];
 

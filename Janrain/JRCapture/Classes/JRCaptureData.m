@@ -264,13 +264,18 @@ captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType
 
 - (void)downloadFlow
 {
-    NSString *flowVersion = self.captureFlowVersion ? self.captureFlowVersion : @"HEAD";
-
     NSString *testing = @"dlzjvycct5xka";
     NSString *production = @"d1lqe9temigv1p";
+    [self downloadFlowForCdnRealm:testing];
+}
+
+- (void)downloadFlowForCdnRealm:(NSString *)cdnRealm
+{
+    NSString *flowVersion = self.captureFlowVersion ? self.captureFlowVersion : @"HEAD";
+
     NSString *flowUrlString =
             [NSString stringWithFormat:@"https://%@.cloudfront.net/widget_data/flows/%@/%@/%@/%@.json",
-                                       production, self.captureAppId, self.captureFlowName, flowVersion,
+                                       cdnRealm, self.captureAppId, self.captureFlowName, flowVersion,
                                        self.captureLocale];
     NSMutableURLRequest *downloadRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:flowUrlString]];
     [downloadRequest setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="CIDR_MODULE" version="4">
   <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$/../../Janrain">
+      <sourceFolder url="file://$MODULE_DIR$/../../Janrain" isTestSource="false" />
+    </content>
     <content url="file://$MODULE_DIR$/../../Janrain/JRCapture/Classes/.gitignore">
       <sourceFolder url="file://$MODULE_DIR$/../../Janrain/JRCapture/Classes/.gitignore" isTestSource="false" />
     </content>

@@ -4,6 +4,9 @@
     <content url="file://$USER_HOME$/Library/Caches/appCode10/DerivedData/QuickSignIn-ebef84a1/Build/Products/Debug-iphoneos/Quick Sign-In.app">
       <sourceFolder url="file://$USER_HOME$/Library/Caches/appCode10/DerivedData/QuickSignIn-ebef84a1/Build/Products/Debug-iphoneos/Quick Sign-In.app" isTestSource="false" />
     </content>
+    <content url="file://$MODULE_DIR$/../../Janrain">
+      <sourceFolder url="file://$MODULE_DIR$/../../Janrain" isTestSource="false" />
+    </content>
     <content url="file://$MODULE_DIR$/../../Janrain/JRConnectionManager/JRConnectionManager.h">
       <sourceFolder url="file://$MODULE_DIR$/../../Janrain/JRConnectionManager/JRConnectionManager.h" isTestSource="false" />
     </content>
