@@ -240,8 +240,6 @@ static NSString* applicationBundleDisplayName()
 {
     [self removeDeviceTokenFromKeychain];
 
-    DLog (@"");
-
     [_providerName release];
     [_photo release];
     [_preferredUsername release];
@@ -303,8 +301,6 @@ static NSString* applicationBundleDisplayName()
 
 - (JRProvider*)initWithName:(NSString*)name andDictionary:(NSDictionary*)dictionary
 {
-    DLog (@"New Provider: %@", name);
-
     if (name == nil || name.length == 0 || dictionary == nil)
     {
         [self release];
@@ -628,50 +624,46 @@ static JRSessionData* singleton = nil;
     [JRConnectionManager createConnectionFromRequest:request forDelegate:self returnFullResponse:YES withTag:tag];
 }
 
-- (void)downloadNeededIcons:(NSMutableDictionary *)neededIcons
-{
-    DLog ("Icons that are still needed:\n%@", [iconsStillNeeded description]);
+//- (void)downloadNeededIcons:(NSMutableDictionary *)neededIcons
+//{
+//    for (NSString *provider in [neededIcons allKeys])
+//    {
+//        NSMutableSet *icons = [neededIcons objectForKey:provider];
+//        for (NSString *icon in [icons allObjects])
+//        {
+//            [self startDownloadPicture:icon forProvider:provider];
+//        }
+//    }
+//}
 
-    for (NSString *provider in [neededIcons allKeys])
-    {
-        NSMutableSet *icons = [neededIcons objectForKey:provider];
-        for (NSString *icon in [icons allObjects])
-        {
-            [self startDownloadPicture:icon forProvider:provider];
-        }
-    }
-}
-
-- (void)checkForNeededIcons:(NSString **)icons forProvider:(NSString*)providerName
-{
-    /* If we've already found this provider's icons, they should be in this list; just return. */
-    if ([providersWithIcons containsObject:providerName])
-        return;
-
-    /* If the provider isn't in the list, either the provider's icons need to be downloaded or this is the first time 
-       this code was run (and no providers have been added to providersWithIcons yet). If it's the latter, both these 
-       saved lists will probably be nil, so init them. */
-    if (!providersWithIcons)
-        providersWithIcons = [[NSMutableSet alloc] initWithCapacity:4];
-
-    if (!iconsStillNeeded)
-        iconsStillNeeded = [[NSMutableDictionary alloc] initWithCapacity:4];
-
-    NSMutableSet *iconsNeeded = [NSMutableSet setWithCapacity:4];
-
-    for (int i = 0; icons[i]; i++)
-    {
-        if (![UIImage imageNamed:[NSString stringWithFormat:icons[i], providerName]])
-            [iconsNeeded addObject:[NSString stringWithFormat:icons[i], providerName]];
-        else
-            DLog ("Found icon: %@", [NSString stringWithFormat:icons[i], providerName]);
-    }
-
-    if ([iconsNeeded count])
-        [iconsStillNeeded setObject:iconsNeeded forKey:providerName];
-    else
-        [providersWithIcons addObject:providerName];
-}
+//- (void)checkForNeededIcons:(NSString **)icons forProvider:(NSString*)providerName
+//{
+//    /* If we've already found this provider's icons, they should be in this list; just return. */
+//    if ([providersWithIcons containsObject:providerName])
+//        return;
+//
+//    /* If the provider isn't in the list, either the provider's icons need to be downloaded or this is the first time
+//       this code was run (and no providers have been added to providersWithIcons yet). If it's the latter, both these
+//       saved lists will probably be nil, so init them. */
+//    if (!providersWithIcons)
+//        providersWithIcons = [[NSMutableSet alloc] initWithCapacity:4];
+//
+//    if (!iconsStillNeeded)
+//        iconsStillNeeded = [[NSMutableDictionary alloc] initWithCapacity:4];
+//
+//    NSMutableSet *iconsNeeded = [NSMutableSet setWithCapacity:4];
+//
+//    for (int i = 0; icons[i]; i++)
+//    {
+//        if (![UIImage imageNamed:[NSString stringWithFormat:icons[i], providerName]])
+//            [iconsNeeded addObject:[NSString stringWithFormat:icons[i], providerName]];
+//    }
+//
+//    if ([iconsNeeded count])
+//        [iconsStillNeeded setObject:iconsNeeded forKey:providerName];
+//    else
+//        [providersWithIcons addObject:providerName];
+//}
 
 #pragma mark configuration
 - (NSString*)appNameAndVersion
@@ -738,8 +730,8 @@ static JRSessionData* singleton = nil;
     {
         NSDictionary *providerDict = [providerInfo objectForKey:name];
         JRProvider *provider = [[[JRProvider alloc] initWithName:name andDictionary:providerDict] autorelease];
-        [self checkForNeededIcons:((provider.social) ? (NSString **) iconNamesSocial : (NSString **) iconNames)
-                      forProvider:name];
+        //[self checkForNeededIcons:((provider.social) ? (NSString **) iconNamesSocial : (NSString **) iconNames)
+        //              forProvider:name];
         [allProviders setObject:provider forKey:name];
     }
 
@@ -765,7 +757,7 @@ static JRSessionData* singleton = nil;
     [[NSUserDefaults standardUserDefaults] setValue:updatedEtag forKey:PREFS_KEY_ETAG];
     [[NSUserDefaults standardUserDefaults] synchronize];
 
-    [self downloadNeededIcons:iconsStillNeeded];
+    //[self downloadNeededIcons:iconsStillNeeded];
 
     self.savedConfigurationBlock = nil;
     self.updatedEtag = nil;
@@ -775,7 +767,10 @@ static JRSessionData* singleton = nil;
 
 - (NSError *)finishGetConfiguration:(NSString *)configJson response:(NSHTTPURLResponse *)response
 {
-    ALog (@"Configuration information downloaded (%d): %@", [response statusCode], configJson);
+    #define MAX_LOGGED_CONFIG_RESPONSE_LENGTH 80
+    NSUInteger max = [configJson length];
+    if (max > MAX_LOGGED_CONFIG_RESPONSE_LENGTH) max = MAX_LOGGED_CONFIG_RESPONSE_LENGTH;
+    ALog (@"Configuration information downloaded (%d): %@", [response statusCode], [configJson substringToIndex:max]);
 
     NSDictionary *configDict = (NSDictionary *)[configJson objectFromJSONString];
     NSString *err = @"There was a problem communicating with the Janrain server while configuring authentication.";
