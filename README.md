@@ -9,7 +9,7 @@ It supports:
 
 See also:
 
+ * ./Docs/Capture Integration Guide.md - an integration guide
  * http://developers.janrain.com/documentation/mobile-libraries - 
    documentation and guides at the Janrain developers portal
- * ./Docs/Capture Integration Guide.md - an integration guide
  * RELEASE_NOTES - for information on changes, bugfixes, and new features

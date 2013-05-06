@@ -1,3 +1,5 @@
+v3.0.7
+ - Bug fix to add Backplane channel parameter during sign-ins
 v3.0.6
  - Fixes a build error with the Phonegap Plugin
 v3.0.5
