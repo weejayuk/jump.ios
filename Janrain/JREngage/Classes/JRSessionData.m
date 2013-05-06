@@ -95,7 +95,7 @@ static NSString *const CONFIG_KEY_SHARING_PROVIDERS = @"social_providers";
 #define cJRUserWelcomeString     @"welcome_string"
 
 #pragma mark helper_functions
-static NSString* applicationBundleDisplayNameAndIdentifier()
+static NSString* appBundleDisplayNameAndIdentifier()
 {
     NSDictionary *infoPlist = [[NSBundle mainBundle] infoDictionary];
     NSString *name = [infoPlist objectForKey:@"CFBundleDisplayName"];
@@ -104,7 +104,7 @@ static NSString* applicationBundleDisplayNameAndIdentifier()
     return [NSString stringWithFormat:@"%@.%@", name, ident];
 }
 
-static NSString* applicationBundleDisplayName()
+static NSString* appBundleDisplayName()
 {
     NSDictionary *infoPlist = [[NSBundle mainBundle] infoDictionary];
     return [infoPlist objectForKey:@"CFBundleDisplayName"];
@@ -112,7 +112,7 @@ static NSString* applicationBundleDisplayName()
 
 #pragma mark JREngageError ()
 @interface JREngageError (JREngageError_setError)
-+ (NSError*)setError:(NSString*)message withCode:(NSInteger)code;
++ (NSError *)setError:(NSString *)message withCode:(NSInteger)code;
 @end
 
 #pragma mark JRActivityObject ()
@@ -186,7 +186,7 @@ static NSString* applicationBundleDisplayName()
                          andPassword:_deviceToken
                       forServiceName:[NSString stringWithFormat:@"%@.%@.",
                                                cJREngageKeychainIdentifier,
-                                      applicationBundleDisplayNameAndIdentifier()]
+                                      appBundleDisplayNameAndIdentifier()]
                       updateExisting:YES
                                error:&error];
 
@@ -211,7 +211,7 @@ static NSString* applicationBundleDisplayName()
         _deviceToken = [[SFHFKeychainUtils getPasswordForUsername:_providerName
                                                    andServiceName:[NSString stringWithFormat:@"%@.%@.",
                                                                             cJREngageKeychainIdentifier,
-                                                                   applicationBundleDisplayNameAndIdentifier()]
+                                                                   appBundleDisplayNameAndIdentifier()]
                                                             error:&error] retain];
 
         if (error)
@@ -230,7 +230,7 @@ static NSString* applicationBundleDisplayName()
     NSError *error = nil;
     [SFHFKeychainUtils deleteItemForUsername:_providerName
                               andServiceName:[NSString stringWithFormat:@"%@.%@.", cJREngageKeychainIdentifier,
-                                                       applicationBundleDisplayNameAndIdentifier()]
+                                                       appBundleDisplayNameAndIdentifier()]
                                        error:&error];
     if (error)
         ALog (@"Error deleting device token from keychain: %@", [error localizedDescription]);
@@ -582,47 +582,47 @@ static JRSessionData* singleton = nil;
 }
 
 #pragma mark dynamic_icon_handling
-- (void)finishDownloadPicture:(NSData*)picture named:(NSString*)pictureName forProvider:(NSString*)provider
-{
-    DLog (@"Downloaded %@ for %@", pictureName, provider);
+//- (void)finishDownloadPicture:(NSData*)picture named:(NSString*)pictureName forProvider:(NSString*)provider
+//{
+//    DLog (@"Downloaded %@ for %@", pictureName, provider);
+//
+//    NSFileManager *fileManager = [NSFileManager defaultManager];
+//    NSString *path = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:pictureName];
+//    [fileManager createFileAtPath:path contents:picture attributes:nil];
+//
+//    NSMutableSet *iconsForProvider = [iconsStillNeeded objectForKey:provider];
+//    [iconsForProvider removeObject:pictureName];
+//
+//    if ([iconsForProvider count] == 0)
+//    {
+//        [iconsStillNeeded removeObjectForKey:provider];
+//        [providersWithIcons addObject:provider];
+//    }
+//
+//    [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:iconsStillNeeded]
+//                                              forKey:cJRIconsStillNeeded];
+//    [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:providersWithIcons]
+//                                              forKey:cJRProvidersWithIcons];
+//    [[NSUserDefaults standardUserDefaults] synchronize];
+//}
 
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *path = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:pictureName];
-    [fileManager createFileAtPath:path contents:picture attributes:nil];
-
-    NSMutableSet *iconsForProvider = [iconsStillNeeded objectForKey:provider];
-    [iconsForProvider removeObject:pictureName];
-
-    if ([iconsForProvider count] == 0)
-    {
-        [iconsStillNeeded removeObjectForKey:provider];
-        [providersWithIcons addObject:provider];
-    }
-
-    [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:iconsStillNeeded]
-                                              forKey:cJRIconsStillNeeded];
-    [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:providersWithIcons]
-                                              forKey:cJRProvidersWithIcons];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-- (void)startDownloadPicture:(NSString*)picture forProvider:(NSString*)provider
-{
-    NSString *urlString = [NSString stringWithFormat:
-                           @"%@/cdn/images/mobile_icons/%@/%@",
-                           serverUrl, device, picture];
-
-    DLog (@"Attempting to download icon for %@: %@", provider, urlString);
-
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-
-    NSDictionary *tag = [NSDictionary dictionaryWithObjectsAndKeys:
-                                              picture, @"pictureName",
-                                              provider, @"providerName",
-                                              @"downloadPicture", @"action", nil];
-
-    [JRConnectionManager createConnectionFromRequest:request forDelegate:self returnFullResponse:YES withTag:tag];
-}
+//- (void)startDownloadPicture:(NSString*)picture forProvider:(NSString*)provider
+//{
+//    NSString *urlString = [NSString stringWithFormat:
+//                           @"%@/cdn/images/mobile_icons/%@/%@",
+//                           serverUrl, device, picture];
+//
+//    DLog (@"Attempting to download icon for %@: %@", provider, urlString);
+//
+//    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+//
+//    NSDictionary *tag = [NSDictionary dictionaryWithObjectsAndKeys:
+//                                              picture, @"pictureName",
+//                                              provider, @"providerName",
+//                                              @"downloadPicture", @"action", nil];
+//
+//    [JRConnectionManager createConnectionFromRequest:request forDelegate:self returnFullResponse:YES withTag:tag];
+//}
 
 //- (void)downloadNeededIcons:(NSMutableDictionary *)neededIcons
 //{
@@ -1057,54 +1057,58 @@ static JRSessionData* singleton = nil;
 }
 
 #pragma mark sharing
-- (void)startShareActivityForUser:(JRAuthenticatedUser*)user
+- (void)startShareActivityForUser:(JRAuthenticatedUser *)user
 {
     // TODO: Better error checking in sessionData's share activity bit
     NSMutableDictionary *activityDictionary = [activity dictionaryForObject];
 
     if ([currentProvider.name isEqualToString:@"linkedin"])
     {
-        [activityDictionary setObject:
-                [activity.resourceDescription substringToIndex:((activity.resourceDescription.length < 256) ?
-                                                                  activity.resourceDescription.length : 256)]
-                               forKey:@"description"];
+        NSString *desc = [activity.resourceDescription substringToIndex:((activity.resourceDescription.length < 256) ?
+                                                activity.resourceDescription.length : 256)];
+        [activityDictionary setObject:desc forKey:@"description"];
     }
 
 
     NSString *activityContent = [[activityDictionary JSONString] stringByAddingUrlPercentEscapes];
-    NSString *deviceToken     = user.deviceToken;
+    NSString *deviceToken = user.deviceToken;
 
-    DLog(@"activity json string \n %@" , activityContent);
+    DLog(@"activity json string \n %@", activityContent);
 
-    NSMutableData* body = [NSMutableData data];
-    [body appendData:[[NSString stringWithFormat:@"activity=%@", activityContent] dataUsingEncoding:NSUTF8StringEncoding]];
-    [body appendData:[[NSString stringWithFormat:@"&device_token=%@", deviceToken] dataUsingEncoding:NSUTF8StringEncoding]];
+    NSMutableData *body = [NSMutableData data];
+    [body appendData:[[NSString stringWithFormat:@"activity=%@",
+                                                 activityContent] dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[[NSString stringWithFormat:@"&device_token=%@",
+                                                 deviceToken] dataUsingEncoding:NSUTF8StringEncoding]];
     [body appendData:[[NSString stringWithFormat:@"&url_shortening=true"] dataUsingEncoding:NSUTF8StringEncoding]];
     [body appendData:[[NSString stringWithFormat:@"&device=%@", device] dataUsingEncoding:NSUTF8StringEncoding]];
-    [body appendData:[[NSString stringWithFormat:@"&provider=%@", currentProvider.name] dataUsingEncoding:NSUTF8StringEncoding]];
-    [body appendData:[[NSString stringWithFormat:@"&app_name=%@", applicationBundleDisplayName()] dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[[NSString stringWithFormat:@"&provider=%@",
+                                                 currentProvider.name] dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[[NSString stringWithFormat:@"&app_name=%@",
+                                                 appBundleDisplayName()] dataUsingEncoding:NSUTF8StringEncoding]];
 
-    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:
-                                     [NSURL URLWithString:
-                                      [NSString stringWithFormat:@"%@/api/v2/activity", serverUrl]]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/api/v2/activity", serverUrl]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
 
     [request setHTTPMethod:@"POST"];
     [request setHTTPBody:body];
 
-    NSDictionary* tag = [NSDictionary dictionaryWithObjectsAndKeys:
-                                            @"shareActivity", @"action",
-                                            activity, @"activity",
-                                            currentProvider.name, @"providerName", nil];
+    NSDictionary *tag = [NSDictionary dictionaryWithObjectsAndKeys:
+                                              @"shareActivity", @"action",
+                                              activity, @"activity",
+                                              currentProvider.name, @"providerName", nil];
 
     ALog ("Sharing activity on %@:\n request=%@\nbody=%@", user.providerName, [[request URL] absoluteString],
-          [NSString stringWithCString:body.bytes encoding:NSUTF8StringEncoding]);
+    [NSString stringWithCString:body.bytes encoding:NSUTF8StringEncoding]);
 
     if (![JRConnectionManager createConnectionFromRequest:request forDelegate:self withTag:tag])
-        [self triggerPublishingDidFailWithError:[JREngageError setError:@"There was a problem connecting to the Janrain server to share this activity"
-                                                               withCode:JRPublishErrorBadConnection]];
+    {
+        NSString *message = @"There was a problem connecting to the Janrain server to share this activity";
+        [self triggerPublishingDidFailWithError:[JREngageError setError:message withCode:JRPublishErrorBadConnection]];
+    }
 }
 
-- (void)startSetStatusForUser:(JRAuthenticatedUser*)user
+- (void)startSetStatusForUser:(JRAuthenticatedUser *)user
 {
     DLog (@"activity status: %@", [activity userGeneratedContent]);
 
@@ -1112,31 +1116,35 @@ static JRSessionData* singleton = nil;
 
     NSString *deviceToken = user.deviceToken;
 
-    NSMutableData* body = [NSMutableData data];
+    NSMutableData *body = [NSMutableData data];
     [body appendData:[[NSString stringWithFormat:@"status=%@", status] dataUsingEncoding:NSUTF8StringEncoding]];
-    [body appendData:[[NSString stringWithFormat:@"&device_token=%@", deviceToken] dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[[NSString stringWithFormat:@"&device_token=%@",
+                                                 deviceToken] dataUsingEncoding:NSUTF8StringEncoding]];
     [body appendData:[[NSString stringWithFormat:@"&device=%@", device] dataUsingEncoding:NSUTF8StringEncoding]];
-    [body appendData:[[NSString stringWithFormat:@"&app_name=%@", applicationBundleDisplayName()] dataUsingEncoding:NSUTF8StringEncoding]];
-    [body appendData:[[NSString stringWithFormat:@"&provider=%@", currentProvider.name] dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[[NSString stringWithFormat:@"&app_name=%@",
+                                                 appBundleDisplayName()] dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[[NSString stringWithFormat:@"&provider=%@",
+                                                 currentProvider.name] dataUsingEncoding:NSUTF8StringEncoding]];
 
-    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:
-                                     [NSURL URLWithString:
-                                      [NSString stringWithFormat:@"%@/api/v2/set_status", serverUrl]]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/api/v2/set_status", serverUrl]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
 
     [request setHTTPMethod:@"POST"];
     [request setHTTPBody:body];
 
-    NSDictionary* tag = [NSDictionary dictionaryWithObjectsAndKeys:
-                                        @"shareActivity", @"action",
-                                        activity, @"activity",
-                                        currentProvider.name, @"providerName", nil];
+    NSDictionary *tag = [NSDictionary dictionaryWithObjectsAndKeys:
+                                              @"shareActivity", @"action",
+                                              activity, @"activity",
+                                              currentProvider.name, @"providerName", nil];
 
     ALog ("Sharing activity on %@:\n request=%@\nbody=%@", user.providerName, [[request URL] absoluteString],
-          [NSString stringWithCString:body.bytes encoding:NSUTF8StringEncoding]);
+    [NSString stringWithCString:body.bytes encoding:NSUTF8StringEncoding]);
 
     if (![JRConnectionManager createConnectionFromRequest:request forDelegate:self withTag:tag])
-        [self triggerPublishingDidFailWithError:[JREngageError setError:@"There was a problem connecting to the Janrain server to share this activity"
-                                                               withCode:JRPublishErrorBadConnection]];
+    {
+        NSString *message = @"There was a problem connecting to the Janrain server to share this activity";
+        [self triggerPublishingDidFailWithError:[JREngageError setError:message withCode:JRPublishErrorBadConnection]];
+    }
 }
 
 - (void)shareActivityForUser:(JRAuthenticatedUser*)user
@@ -1483,16 +1491,16 @@ CALL_DELEGATE_SELECTOR:
                                 andPayload:payload
                                forProvider:[(NSDictionary*)tag objectForKey:@"providerName"]];
         }
-        else if ([action isEqualToString:@"downloadPicture"])
-        {
-            // TODO: Later, make this more dynamic, and not fixed to just pngs.
-            if ([[fullResponse MIMEType] isEqualToString:@"image/png"])
-                [self finishDownloadPicture:payload
-                                      named:[(NSDictionary*)tag objectForKey:@"pictureName"]
-                                forProvider:[(NSDictionary*)tag objectForKey:@"providerName"]];
-            else
-                ALog ("Not able to download the picture: %@", [[request URL] absoluteString]);
-        }
+        //else if ([action isEqualToString:@"downloadPicture"])
+        //{
+        //    // TODO: Later, make this more dynamic, and not fixed to just pngs.
+        //    if ([[fullResponse MIMEType] isEqualToString:@"image/png"])
+        //        [self finishDownloadPicture:payload
+        //                              named:[(NSDictionary*)tag objectForKey:@"pictureName"]
+        //                        forProvider:[(NSDictionary*)tag objectForKey:@"providerName"]];
+        //    else
+        //        ALog ("Not able to download the picture: %@", [[request URL] absoluteString]);
+        //}
     }
     else if ([tag isKindOfClass:[NSString class]])
     {

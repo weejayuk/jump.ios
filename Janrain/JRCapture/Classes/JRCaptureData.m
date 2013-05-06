@@ -50,7 +50,7 @@
 }
 @end
 
-static NSString* applicationBundleDisplayNameAndIdentifier()
+static NSString*appBundleDisplayNameAndIdentifier()
 {
     NSDictionary *infoPlist = [[NSBundle mainBundle] infoDictionary];
     NSString *name = [infoPlist objectForKey:@"CFBundleDisplayName"];
@@ -328,7 +328,7 @@ captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType
 + (NSString *)serviceNameForTokenName:(NSString *)tokenName
 {
     return [NSString stringWithFormat:@"%@.%@.%@.", cJRCaptureKeychainIdentifier, tokenName,
-                     applicationBundleDisplayNameAndIdentifier()];
+                     appBundleDisplayNameAndIdentifier()];
 }
 
 + (void)deleteTokenNameFromKeychain:(NSString *)name
