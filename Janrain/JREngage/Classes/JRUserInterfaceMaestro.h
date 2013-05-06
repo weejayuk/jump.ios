@@ -42,8 +42,16 @@
 @class JRWebViewController;
 @class JRPublishActivityController;
 
-#define JANRAIN_BLUE    [UIColor colorWithRed:0.102 green:0.33 blue:0.48 alpha:1.0]
-#define JANRAIN_BLUE_20 [UIColor colorWithRed:0.102 green:0.33 blue:0.48 alpha:0.2]
+#define JANRAIN_BLUE    ([UIColor colorWithRed:0.102 green:0.33 blue:0.48 alpha:1.0])
+#define JANRAIN_BLUE_20 ([UIColor colorWithRed:0.102 green:0.33 blue:0.48 alpha:0.2])
+#define IS_IPAD ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad))
+#define IS_IPHONE (!IS_IPAD)
+//#define IOS6_OR_ABOVE ([[[UIDevice currentDevice] systemVersion] compare:@"6.0" options:NSNumericSearch] >= NSOrderedSame)
+#define IOS5_OR_ABOVE ([[[UIDevice currentDevice] systemVersion] compare:@"5.0" options:NSNumericSearch] >= NSOrderedSame)
+//#define IOS4_OR_ABOVE ([[[UIDevice currentDevice] systemVersion] compare:@"4.0" options:NSNumericSearch] >= NSOrderedSame)
+//#define IS_PORTRAIT (UIDeviceOrientationIsPortrait([UIDevice currentDevice].orientation))
+//#define IS_LANDSCAPE (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
+
 typedef enum
 {
     PadPopoverModeNone,

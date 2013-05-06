@@ -58,13 +58,6 @@ static void handleCustomInterfaceException(NSException* exception, NSString* kJR
 #endif
 }
 
-#define IS_IPAD ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad))
-#define IOS6_OR_ABOVE ([[[UIDevice currentDevice] systemVersion] compare:@"6.0" options:NSNumericSearch] >= NSOrderedSame)
-#define IOS5_OR_ABOVE ([[[UIDevice currentDevice] systemVersion] compare:@"5.0" options:NSNumericSearch] >= NSOrderedSame)
-#define IOS4_OR_ABOVE ([[[UIDevice currentDevice] systemVersion] compare:@"4.0" options:NSNumericSearch] >= NSOrderedSame)
-#define IS_PORTRAIT (UIDeviceOrientationIsPortrait([UIDevice currentDevice].orientation))
-#define IS_LANDSCAPE (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
-
 static CATransform3D normalizedCATransform3D(CATransform3D d);
 
 // get the app window with some fallbacks for legacy bad behavior?

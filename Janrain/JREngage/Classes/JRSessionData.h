@@ -100,6 +100,9 @@
 @property (retain)   NSString     *userInput;
 @property (readonly) NSDictionary *socialSharingProperties;
 @property (readonly) NSArray      *cookieDomains;
+
+@property(nonatomic, retain) NSString *customUserAgentString;
+
 - (BOOL)isEqualToReturningProvider:(NSString*)returningProvider;
 @end
 
