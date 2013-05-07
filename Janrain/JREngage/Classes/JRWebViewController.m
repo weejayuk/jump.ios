@@ -36,6 +36,8 @@
 #import "JRSessionData.h"
 #import "JRInfoBar.h"
 #import "JREngageError.h"
+#import "JRUserInterfaceMaestro.h"
+#import "debug_log.h"
 
 
 #ifdef DEBUG
@@ -59,7 +61,7 @@ static NSString *const iPhoneUserAgent = @"Mozilla/5.0 (iPhone; U; CPU iPhone OS
 @implementation JRWebViewController
 @synthesize myBackgroundView;
 @synthesize myWebView;
-@synthesize originalUserAgent;
+@synthesize originalCustomUserAgent;
 
 #pragma mark UIView overrides
 
@@ -126,17 +128,41 @@ static NSString *const iPhoneUserAgent = @"Mozilla/5.0 (iPhone; U; CPU iPhone OS
 {
     DLog(@"");
 
-    if ([sessionData.currentProvider.name isEqualToString:@"yahoo"])
-    {
-        self.originalUserAgent = [[NSUserDefaults standardUserDefaults] stringForKey:@"UserAgent"];
-        [self setUserAgentDefault:iPhoneUserAgent];
-    }
+    [self configureUserAgent];
 
     [super viewWillAppear:animated];
 
     self.contentSizeForViewInPopover = CGSizeMake(320, 416);
 
     self.title = (sessionData.currentProvider) ? sessionData.currentProvider.friendlyName : @"Loading";
+}
+
+- (void)configureUserAgent
+{
+    NSString *customUa = nil;
+    NSString *origCustomUa = [[NSUserDefaults standardUserDefaults] stringForKey:@"UserAgent"];
+    if ([sessionData.currentProvider.name isEqualToString:@"yahoo"])
+    {
+        customUa = iPhoneUserAgent;
+    }
+    else if (sessionData.currentProvider.customUserAgentString)
+    {
+        customUa = sessionData.currentProvider.customUserAgentString;
+    }
+    else if (IS_IPAD && (sessionData.currentProvider.usesPhoneUserAgentString ||
+            [sessionData.currentProvider.name isEqualToString:@"facebook"]))
+    {
+        NSString *padUa = [myWebView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
+        customUa = [padUa stringByReplacingOccurrencesOfString:@"iPad" withString:@"iPhone"
+                                                       options:NSCaseInsensitiveSearch
+                                                         range:NSMakeRange(0, [origCustomUa length])];
+    }
+    
+    if (customUa)
+    {
+        self.originalCustomUserAgent = origCustomUa;
+        [self setUserAgentDefault:customUa];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -213,9 +239,7 @@ static NSString *const iPhoneUserAgent = @"Mozilla/5.0 (iPhone; U; CPU iPhone OS
 {
     DLog(@"");
 
-    if ([sessionData.currentProvider.name isEqualToString:@"yahoo"])
-        [self setUserAgentDefault:self.originalUserAgent];
-
+    [self setUserAgentDefault:self.originalCustomUserAgent];
     [myWebView loadHTMLString:@"" baseURL:[NSURL URLWithString:@"/"]];
 
     [super viewDidDisappear:animated];
@@ -234,9 +258,9 @@ static NSString *const iPhoneUserAgent = @"Mozilla/5.0 (iPhone; U; CPU iPhone OS
     DLog(@"UA: %@", userAgent);
     if (userAgent)
     {
-        NSDictionary *uAdefault = [[NSDictionary alloc] initWithObjectsAndKeys:userAgent, @"UserAgent", nil];
-        [[NSUserDefaults standardUserDefaults] registerDefaults:uAdefault];
-        [uAdefault release];
+        NSDictionary *uaDefault = [[NSDictionary alloc] initWithObjectsAndKeys:userAgent, @"UserAgent", nil];
+        [[NSUserDefaults standardUserDefaults] registerDefaults:uaDefault];
+        [uaDefault release];
     }
     else
     {
@@ -550,7 +574,7 @@ static NSString *const iPhoneUserAgent = @"Mozilla/5.0 (iPhone; U; CPU iPhone OS
 
     [customInterface release];
     [myBackgroundView release];
-    [originalUserAgent release];
+    [originalCustomUserAgent release];
     [myWebView release];
     [infoBar release];
 

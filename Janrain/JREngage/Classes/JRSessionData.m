@@ -400,6 +400,7 @@ static NSString* applicationBundleDisplayName()
 - (void)setPropertiesForWebViewOptions:(NSDictionary *)options
 {
     self.customUserAgentString = [options objectForKey:@"user_agent"];
+    self.usesPhoneUserAgentString = [[options objectForKey:@"uses_iphone_user_agent"] boolValue];
 }
 
 - (void)encodeWithCoder:(NSCoder *)coder
@@ -455,6 +456,7 @@ static NSString* applicationBundleDisplayName()
     [_socialSharingProperties release];
     [_cookieDomains release];
     [customUserAgentString release];
+    [_usesPhoneUserAgentString release];
     [super dealloc];
 }
 @end
