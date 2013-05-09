@@ -44,6 +44,8 @@
 #import "JRWebViewController.h"
 #import "JRPublishActivityController.h"
 
+#define MODAL_SIZE_FRAME (CGRectMake(0, 0, 320, 548))
+
 static void handleCustomInterfaceException(NSException* exception, NSString* kJRKeyString)
 {
     NSLog (@"*** Exception thrown. Problem is most likely with jrEngage custom interface object %@ : Caught %@ : %@",
@@ -57,13 +59,6 @@ static void handleCustomInterfaceException(NSException* exception, NSString* kJR
     NSLog (@"*** Ignoring value and using defaults if possible.");
 #endif
 }
-
-#define IS_IPAD ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad))
-#define IOS6_OR_ABOVE ([[[UIDevice currentDevice] systemVersion] compare:@"6.0" options:NSNumericSearch] >= NSOrderedSame)
-#define IOS5_OR_ABOVE ([[[UIDevice currentDevice] systemVersion] compare:@"5.0" options:NSNumericSearch] >= NSOrderedSame)
-#define IOS4_OR_ABOVE ([[[UIDevice currentDevice] systemVersion] compare:@"4.0" options:NSNumericSearch] >= NSOrderedSame)
-#define IS_PORTRAIT (UIDeviceOrientationIsPortrait([UIDevice currentDevice].orientation))
-#define IS_LANDSCAPE (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
 
 static CATransform3D normalizedCATransform3D(CATransform3D d);
 
@@ -229,7 +224,8 @@ static NSString *describeCATransform3D(CATransform3D *t)
 @end
 
 @implementation CustomAnimationController
-@synthesize jrPresentingViewController, jrChildViewController;
+@synthesize jrPresentingViewController;
+@synthesize jrChildViewController;
 @synthesize animating = _animating;
 @synthesize delayedRotationWhileAnimating = _delayedRotationWhileAnimating;
 @synthesize havePerformedFirstAnimation = _havePerformedFirstAnimation;
@@ -240,7 +236,7 @@ static NSString *describeCATransform3D(CATransform3D *t)
 
 - (void)loadView
 {
-    [self setView:[[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)] autorelease]];
+    [self setView:[[[UIView alloc] initWithFrame:MODAL_SIZE_FRAME] autorelease]];
     self.view.backgroundColor = jrChildViewController.view.backgroundColor;
 }
 
@@ -259,7 +255,7 @@ static NSString *describeCATransform3D(CATransform3D *t)
     // related to this SO q:
     // http://stackoverflow.com/questions/2457947/how-to-resize-a-uipresentationformsheet/4271364#4271364
 
-    self.dropShadow.bounds = CGRectMake(0, 0, 320, 460);
+    self.dropShadow.bounds = MODAL_SIZE_FRAME;
     self.dropShadow.layer.zPosition = 500;
 
     centerViewChain(self.view);
@@ -279,15 +275,19 @@ static NSString *describeCATransform3D(CATransform3D *t)
     self.animating = YES;
     self.originalTransform = self.dropShadow.layer.transform;
 
-    CGRect origRect = CGRectMake(-160, -230, 320, 460);
-    CGPoint smushedP1 = CGPointMake(-160, -50);
-    CGPoint smushedP2 = CGPointMake(160, -50);
-    CGPoint smushedP3 = CGPointMake(-140, 50);
-    CGPoint smushedP4 = CGPointMake(140, 50);
-    CGPoint unsmushedP1 = CGPointMake(-160, -230);
-    CGPoint unsmushedP2 = CGPointMake(160, -230);
-    CGPoint unsmushedP3 = CGPointMake(-160, 230);
-    CGPoint unsmushedP4 = CGPointMake(160, 230);
+    CGFloat height = MODAL_SIZE_FRAME.size.height + 20;
+    CGFloat halfHeight = height / 2;
+    CGFloat width = MODAL_SIZE_FRAME.size.height + 20;
+    CGFloat halfWidth = width / 2;
+    CGRect origRect = CGRectMake(-halfWidth, -halfHeight, width, height);
+    CGPoint smushedP1 = CGPointMake(-halfWidth, -50);
+    CGPoint smushedP2 = CGPointMake(halfWidth, -50);
+    CGPoint smushedP3 = CGPointMake(-(halfWidth - 20), 50);
+    CGPoint smushedP4 = CGPointMake(halfWidth - 20, 50);
+    CGPoint unsmushedP1 = CGPointMake(-halfWidth, -halfHeight);
+    CGPoint unsmushedP2 = CGPointMake(halfWidth, -halfHeight);
+    CGPoint unsmushedP3 = CGPointMake(-halfWidth, halfHeight);
+    CGPoint unsmushedP4 = CGPointMake(halfWidth, halfHeight);
     // calculate a smush transform that's like oglFlip
     CATransform3D smushed = computeTransformMatrix(origRect, smushedP1, smushedP2, smushedP3, smushedP4);
     // for some reason animating back to the original transform does some unwanted flips and rotations, so we make
@@ -304,7 +304,7 @@ static NSString *describeCATransform3D(CATransform3D *t)
     self.windowDimmingView.backgroundColor = [UIColor clearColor];
 
     // dim the modal
-    self.modalDimmingView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)] autorelease];
+    self.modalDimmingView = [[[UIView alloc] initWithFrame:MODAL_SIZE_FRAME] autorelease];
     self.modalDimmingView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     self.modalDimmingView.backgroundColor = self.originalDimmingViewColor;
     [self.dropShadow addSubview:self.modalDimmingView];
@@ -451,6 +451,8 @@ static NSString *describeCATransform3D(CATransform3D *t)
 {
     [_modalDimmingView release];
     [_originalDimmingViewColor release];
+    [jrPresentingViewController release];
+    [jrChildViewController release];
     [super dealloc];
 }
 
@@ -570,6 +572,7 @@ static NSString *describeCATransform3D(CATransform3D *t)
     {
         // Do it the old, hack way
         [getWindow() addSubview:self.view];
+        vcToPresentFrom = self;
     }
     animationController.jrPresentingViewController = vcToPresentFrom;
 
@@ -928,7 +931,7 @@ static JRUserInterfaceMaestro* singleton = nil;
     navigationController.view.autoresizingMask =
             UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin
             | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
-    navigationController.view.bounds = CGRectMake(0, 0, 320, 460);
+    navigationController.view.bounds = MODAL_SIZE_FRAME;
 
     return navigationController;
 }
@@ -942,7 +945,7 @@ static JRUserInterfaceMaestro* singleton = nil;
 
     if (popoverController)
     {
-        popoverController.popoverContentSize = CGSizeMake(320, 460);
+        popoverController.popoverContentSize = MODAL_SIZE_FRAME.size;
         popoverController.delegate = self;
     }
 
@@ -1000,7 +1003,7 @@ static JRUserInterfaceMaestro* singleton = nil;
         jrModalViewController.myNavigationController.view.autoresizingMask =
                 UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin
                 | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
-        jrModalViewController.myNavigationController.view.bounds = CGRectMake(0, 0, 320, 460);
+        jrModalViewController.myNavigationController.view.bounds = MODAL_SIZE_FRAME;
         [jrModalViewController.myNavigationController pushViewController:rootViewController animated:NO];
     }
     else

@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
     <key>default-config</key>
-    <string>test</string>
+    <string>prod-demo</string>
 
-    <key>test</key>
+    <key>prod-demo</key>
     <dict>
         <key>engageAppId</key>
         <string>appcfamhnpkagijaeinl</string>
@@ -26,7 +26,7 @@
         <key>captureAppId</key>
         <string>rz47skmnm48jpcv3bh4eguv4b8</string>
         <key>bpBusUrlString</key>
-        <string></string>
+        <string>https://backplane1.janrainbackplane.com/v1.2/bus/nathan-janrain</string>
         <key>liveFyreNetwork</key>
         <string></string>
         <key>liveFyreSiteId</key>
