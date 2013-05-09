@@ -4,7 +4,8 @@ This library provides a native iOS API to the Janrain user management platform.
 
 It supports:
  * Authentication with Janrain Engage
- * User management with Janrain Capture
+ * Sign-in to, and user session management with, Janrain Capture
+ * Social two-step and traditional registration with Janrain Capture
  * Broadcast sharing via Engage
 
 See also:
