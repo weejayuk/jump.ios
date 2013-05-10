@@ -178,7 +178,6 @@ static JRCaptureData *singleton = nil;
                     @"response_type" : @"token",
                     @"redirect_uri" : redirectUri,
                     @"thin_registration" : thinReg,
-                    //@"use_deprecated_attributes": @"true"
             }];
 
     if (captureData.captureFlowName) [urlArgs setObject:captureData.captureFlowName forKey:@"flow_name"];
