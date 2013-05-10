@@ -178,7 +178,7 @@ typedef enum CaptureInterfaceStatEnum
     if (flowName) [params setObject:flowName forKey:@"flow_name"];
     if (mergeToken) [params setObject:mergeToken forKey:@"merge_token"];
 
-    NSString *const signInEndpoint = [NSString stringWithFormat:@"%@/oauth/auth_native_traditional.json",
+    NSString *const signInEndpoint = [NSString stringWithFormat:@"%@/oauth/auth_native_traditional",
                                                                 [[JRCaptureData sharedCaptureData] captureBaseUrl]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:signInEndpoint]];
 

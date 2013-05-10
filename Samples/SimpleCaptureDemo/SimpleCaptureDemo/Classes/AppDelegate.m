@@ -139,7 +139,6 @@ AppDelegate *appDelegate = nil;
 {
     // See assets folder in Resources project group for janrain-config-default.plist
     // Copy to janrain-config.plist and change it to your details
-
     NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"assets/janrain-config" ofType:@"plist"];
     if (!plistPath)
     {
@@ -147,6 +146,7 @@ AppDelegate *appDelegate = nil;
     }
     NSDictionary *cfgPlist = [NSDictionary dictionaryWithContentsOfFile:plistPath];
     NSString *configKeyName = [cfgPlist objectForKey:@"default-config"];
+    self.captureEnableThinRegistration = YES;
     [self parseConfigNamed:configKeyName fromConfigPlist:cfgPlist];
 }
 
@@ -157,22 +157,36 @@ AppDelegate *appDelegate = nil;
     NSString *parentConfig = [cfg objectForKey:@"parentConfig"];
     if (parentConfig) [self parseConfigNamed:parentConfig fromConfigPlist:cfgPlist];
 
-    self.captureClientId = [cfg objectForKey:@"captureClientId"];
-    self.captureDomain = [cfg objectForKey:@"captureDomain"];
-    self.captureLocale = [cfg objectForKey:@"captureLocale"];
-    self.captureSignInFormName = [cfg objectForKey:@"captureSignInFormName"];
-    self.captureFlowName = [cfg objectForKey:@"captureFlowName"];
-    self.captureEnableThinRegistration = [cfg objectForKey:@"captureEnableThinRegistration"] ?
-            [[cfg objectForKey:@"captureEnableThinRegistration"] boolValue] : YES;
-    self.captureFlowVersion = [cfg objectForKey:@"captureFlowVersion"];
-    self.captureRegistrationFormName = [cfg objectForKey:@"captureRegistrationFormName"];
-    self.captureAppId = [cfg objectForKey:@"captureAppId"];
-    self.engageAppId = [cfg objectForKey:@"engageAppId"];
-    self.bpBusUrlString = [cfg objectForKey:@"bpBusUrlString"];
-    self.bpChannelUrl = [cfg objectForKey:@"bpChannelUrl"];
-    self.liveFyreNetwork = [cfg objectForKey:@"liveFyreNetwork"];
-    self.liveFyreSiteId = [cfg objectForKey:@"liveFyreSiteId"];
-    self.liveFyreArticleId = [cfg objectForKey:@"liveFyreArticleId"];
+    if ([cfg objectForKey:@"captureClientId"])
+        self.captureClientId = [cfg objectForKey:@"captureClientId"];
+    if ([cfg objectForKey:@"captureDomain"])
+        self.captureDomain = [cfg objectForKey:@"captureDomain"];
+    if ([cfg objectForKey:@"captureLocale"])
+        self.captureLocale = [cfg objectForKey:@"captureLocale"];
+    if ([cfg objectForKey:@"captureSignInFormName"])
+        self.captureSignInFormName = [cfg objectForKey:@"captureSignInFormName"];
+    if ([cfg objectForKey:@"captureFlowName"])
+        self.captureFlowName = [cfg objectForKey:@"captureFlowName"];
+    if ([cfg objectForKey:@"captureEnableThinRegistration"])
+        self.captureEnableThinRegistration = [[cfg objectForKey:@"captureEnableThinRegistration"] boolValue];
+    if ([cfg objectForKey:@"captureFlowVersion"])
+        self.captureFlowVersion = [cfg objectForKey:@"captureFlowVersion"];
+    if ([cfg objectForKey:@"captureRegistrationFormName"])
+        self.captureRegistrationFormName = [cfg objectForKey:@"captureRegistrationFormName"];
+    if ([cfg objectForKey:@"captureAppId"])
+        self.captureAppId = [cfg objectForKey:@"captureAppId"];
+    if ([cfg objectForKey:@"engageAppId"])
+        self.engageAppId = [cfg objectForKey:@"engageAppId"];
+    if ([cfg objectForKey:@"bpBusUrlString"])
+        self.bpBusUrlString = [cfg objectForKey:@"bpBusUrlString"];
+    if ([cfg objectForKey:@"bpChannelUrl"])
+        self.bpChannelUrl = [cfg objectForKey:@"bpChannelUrl"];
+    if ([cfg objectForKey:@"liveFyreNetwork"])
+        self.liveFyreNetwork = [cfg objectForKey:@"liveFyreNetwork"];
+    if ([cfg objectForKey:@"liveFyreSiteId"])
+        self.liveFyreSiteId = [cfg objectForKey:@"liveFyreSiteId"];
+    if ([cfg objectForKey:@"liveFyreArticleId"])
+        self.liveFyreArticleId = [cfg objectForKey:@"liveFyreArticleId"];
 }
 
 - (void)saveCaptureUser

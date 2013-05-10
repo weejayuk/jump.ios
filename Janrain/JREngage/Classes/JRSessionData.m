@@ -35,6 +35,7 @@
 #import "debug_log.h"
 #import "JRSessionData.h"
 #import "JREngageError.h"
+#import "JRUserInterfaceMaestro.h"
 
 #pragma mark consts
 static NSString * const serverUrl = @"https://rpxnow.com";
@@ -84,6 +85,7 @@ static NSString *const CONFIG_KEY_SHARING_PROVIDERS = @"social_providers";
 #define cJRProviderRequiresInput            @"jrengage.provider.requiresInput"
 #define cJRProviderSocialSharingProperties  @"jrengage.provider.socialSharingProperties"
 #define cJRProviderCookieDomains            @"jrengage.provider.cookieDomains"
+#define cJRProviderCustomUserAgentString    @"jrengage.provider.customUserAgentString"
 
 #define cJRProviderUserInput     @"jrengage.provider.%@.userInput"
 #define cJRProviderForceReauth   @"jrengage.provider.%@.forceReauth"
@@ -269,6 +271,7 @@ static NSString* appBundleDisplayName()
 @synthesize socialSharingProperties = _socialSharingProperties;
 @synthesize social                  = _social;
 @synthesize cookieDomains           = _cookieDomains;
+@synthesize customUserAgentString;
 
 - (NSString*)userInput { return _userInput; }
 - (void)setUserInput:(NSString*)userInput
@@ -299,7 +302,7 @@ static NSString* appBundleDisplayName()
                        boolForKey:[NSString stringWithFormat:cJRProviderForceReauth, _name]];
 }
 
-- (JRProvider*)initWithName:(NSString*)name andDictionary:(NSDictionary*)dictionary
+- (JRProvider *)initWithName:(NSString *)name andDictionary:(NSDictionary *)dictionary
 {
     if (name == nil || name.length == 0 || dictionary == nil)
     {
@@ -316,6 +319,14 @@ static NSString* appBundleDisplayName()
         _openIdentifier  = [[dictionary objectForKey:@"openid_identifier"] retain];
         _url             = [[dictionary objectForKey:@"url"] retain];
         _cookieDomains   = [[dictionary objectForKey:@"cookie_domains"] retain];
+        if (IS_IPAD && [dictionary objectForKey:@"ipad_webview_options"])
+        {
+            [self setPropertiesForWebViewOptions:[dictionary objectForKey:@"ipad_webview_options"]];
+        }
+        else if (IS_IPHONE && [dictionary objectForKey:@"iphone_webview_options"])
+        {
+            [self setPropertiesForWebViewOptions:[dictionary objectForKey:@"iphone_webview_options"]];
+        }
 
         if ([[dictionary objectForKey:@"requires_input"] isEqualToString:@"YES"])
             _requiresInput = YES;
@@ -346,7 +357,13 @@ static NSString* appBundleDisplayName()
     return self;
 }
 
-- (void)encodeWithCoder:(NSCoder*)coder
+- (void)setPropertiesForWebViewOptions:(NSDictionary *)options
+{
+    self.customUserAgentString = [options objectForKey:@"user_agent"];
+    self.usesPhoneUserAgentString = [[options objectForKey:@"uses_iphone_user_agent"] boolValue];
+}
+
+- (void)encodeWithCoder:(NSCoder *)coder
 {
     [coder encodeObject:_name                    forKey:cJRProviderName];
     [coder encodeObject:_friendlyName            forKey:cJRProviderFriendlyName];
@@ -357,9 +374,10 @@ static NSString* appBundleDisplayName()
     [coder encodeBool:_requiresInput             forKey:cJRProviderRequiresInput];
     [coder encodeObject:_socialSharingProperties forKey:cJRProviderSocialSharingProperties];
     [coder encodeObject:_cookieDomains           forKey:cJRProviderCookieDomains];
+    [coder encodeObject:self.customUserAgentString forKey:cJRProviderCustomUserAgentString];
 }
 
-- (id)initWithCoder:(NSCoder*)coder
+- (id)initWithCoder:(NSCoder *)coder
 {
     if (self != nil)
     {
@@ -372,6 +390,7 @@ static NSString* appBundleDisplayName()
         _requiresInput           =  [coder decodeBoolForKey:  cJRProviderRequiresInput];
         _socialSharingProperties = [[coder decodeObjectForKey:cJRProviderSocialSharingProperties] retain];
         _cookieDomains           = [[coder decodeObjectForKey:cJRProviderCookieDomains] retain];
+        self.customUserAgentString = [coder decodeObjectForKey:cJRProviderCustomUserAgentString];
     }
     [self loadLocalConfig];
 
@@ -396,7 +415,8 @@ static NSString* appBundleDisplayName()
     [_userInput release];
     [_socialSharingProperties release];
     [_cookieDomains release];
-
+    [customUserAgentString release];
+    [_usesPhoneUserAgentString release];
     [super dealloc];
 }
 @end

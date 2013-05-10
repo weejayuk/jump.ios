@@ -57,7 +57,7 @@ static NSString *const MEU_CONNECTION_TAG = @"rpx_result";
 }
 @property (nonatomic, retain) IBOutlet UIView    *myBackgroundView;
 @property (nonatomic, retain) IBOutlet UIWebView *myWebView;
-@property (nonatomic, retain) NSString *originalUserAgent;
+@property (nonatomic, retain) NSString *originalCustomUserAgent;
 
 - (id)initWithNibName:(NSString*)nibNameOrNil bundle:(NSBundle*)nibBundleOrNil andCustomInterface:(NSDictionary*)theCustomInterface;
 @end
