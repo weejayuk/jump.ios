@@ -1,3 +1,38 @@
+# JUMP for iOS Capture Integration Guide
+
+##
+
+1. Gather your configuration details
+2. Generate the Capture User Model
+3. [Add the JUMP for iOS SDK to your Xcode project](http://developers.janrain.com/documentation/mobile-libraries/jump-for-ios/adding-to-xcode/).
+4.
+
+## Gather your Configuration Details
+
+1. Sign in to your Engage Dashboard - https://rpxnow.com
+    1. Configure the providers you wish to use for authentication ("Deployment" drop down menu -> "Engage for
+       iOS").
+    2. Retrieve your 20-character Application ID from the Engage Dashboard (In the right column of the "Home"
+       page on the dashboard.)
+2. Ask your deployment engineer or account manager for your Capture domain.
+3. Create a new Capture API client for you iOS app:
+    1. Sign in to the Capture dashboard and provision a new API client for your mobile app.
+    2. Use the [set_features API](http://developers.janrain.com/documentation/api-methods/capture/clients/set_features/)
+       to add the "login_client" feature to your new API client.
+    3. Use the [setAccessSchema API](http://developers.janrain.com/documentation/api-methods/capture/entitytype/setaccessschema/)
+       to set the subset of the schema you wish your mobile app to be able to update.
+       **Warning** If you do not include the attributes your client will write to in the its write access
+       schema you will receive missing attribute errors when attempting to update attributes.
+4. Configure your flow settings:
+    1. Ask your deployment engineer or account manager which "flow" you should use.
+    2. Ask for the appropriate values for default_flow_name and default_flow_version.
+    3. Set those settings for your new API client.
+5. Coordinate with your deployment engineer or account manager for the correct value for your "flow locale."
+   The commonly used value for US English is en-US.
+6. Ask your deployment engineer or account manager for the name of the sign-in form in your flow.
+
+Note: You _must_ create a new API client with the correct login_client feature for operation of the JUMP for iOS SDK.
+
 ## Generating the Capture User Model
 
 Get the [JUMP for iOS library](http://developers.janrain.com/documentation/mobile-libraries/ios-v2/getting-the-library/) and
@@ -426,3 +461,10 @@ Likewise, load the saved user record state when your application launches. For e
 
 **Note**: While your application is responsible for saving and restoring the user record, the Capture library will
 automatically save and restore the session token.
+
+## Troubleshooting
+
+`code: 223 error: unknown_attribute description: attribute does not exist: /your_attr_name`
+
+Use [entityType.setAccessSchema](http://developers.janrain.com/documentation/api-methods/capture/entitytype/setaccessschema)
+to add write-access to this attribute to your native API client.
