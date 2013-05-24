@@ -519,7 +519,6 @@ static NSString *applicationBundleDisplayName()
 @implementation JRSessionData
 @synthesize appId;
 @synthesize tokenUrl;
-@synthesize authenticationProviders;
 @synthesize sharingProviders;
 @synthesize currentProvider;
 @synthesize returningSharingProvider;
@@ -564,16 +563,6 @@ static JRSessionData *singleton = nil;
 - (id)autorelease           { return self; }
 
 #pragma mark accessors
-//- (NSString *)returningAuthenticationProvider
-//{
-//// /* This is here so that when a calling application sets skipReturningUserLandingPage, the dialog always opens
-////    to the providers list, and never opens to the returning user landing page. */
-////    if (skipReturningUserLandingPage)
-////        return nil;
-//
-//    return returningAuthenticationProvider;
-//}
-//
 - (BOOL)dialogIsShowing
 {
     return dialogIsShowing;
@@ -663,7 +652,8 @@ static JRSessionData *singleton = nil;
         }
 
         /* Load the list of basic providers */
-        authenticationProviders = [[[NSUserDefaults standardUserDefaults] objectForKey:cJRAuthenticationProviders] retain];
+        authenticationProviders =
+                [[[NSUserDefaults standardUserDefaults] objectForKey:cJRAuthenticationProviders] retain];
 
         /* Load the list of social providers */
         sharingProviders = [[[NSUserDefaults standardUserDefaults] objectForKey:cJRSharingProviders] retain];
@@ -1060,6 +1050,11 @@ static JRSessionData *singleton = nil;
     [result addEntriesFromDictionary:engageProviders];
     [result addEntriesFromDictionary:self.customProviders];
     return result;
+}
+
+- (NSArray *)authenticationProviders
+{
+    return [authenticationProviders arrayByAddingObjectsFromArray:[_customProviders allKeys]];
 }
 
 - (void)forgetAllAuthenticatedUsers
