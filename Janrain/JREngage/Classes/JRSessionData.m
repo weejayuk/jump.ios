@@ -1220,7 +1220,7 @@ static JRSessionData *singleton = nil;
     }
     else if (provider.samlName)
     {
-        extraParamString = [@"saml_provider=" stringByAppendingString:provider.samlName];
+        extraParamString = [NSString stringWithFormat:@"saml_provider=%@&", provider.samlName];
     }
 
     BOOL forceReauth = (alwaysForceReauth ||
