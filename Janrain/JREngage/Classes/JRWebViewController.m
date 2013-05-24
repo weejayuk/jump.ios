@@ -39,15 +39,6 @@
 #import "JRUserInterfaceMaestro.h"
 #import "debug_log.h"
 
-
-#ifdef DEBUG
-#define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-#else
-#define DLog(...)
-#endif
-
-#define ALog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-
 static NSString *const iPhoneUserAgent = @"Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3_3 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8J2 Safari/6533.18.5";
 
 @interface JREngageError (JREngageError_setError)
@@ -87,20 +78,6 @@ static NSString *const iPhoneUserAgent = @"Mozilla/5.0 (iPhone; U; CPU iPhone OS
     self.navigationItem.backBarButtonItem.target = sessionData;
     self.navigationItem.backBarButtonItem.action = @selector(triggerAuthenticationDidStartOver:);
 
-    if (!infoBar)
-    {
-        CGRect frame = CGRectMake(0, self.view.frame.size.height - 30, self.view.frame.size.width, 30);
-        infoBar = [[JRInfoBar alloc] initWithFrame:frame andStyle:(JRInfoBarStyle) [sessionData hidePoweredBy]];
-
-        if ([sessionData hidePoweredBy] == JRInfoBarStyleShowPoweredBy)
-            [myWebView setFrame:CGRectMake(myWebView.frame.origin.x,
-                                           myWebView.frame.origin.y,
-                                           myWebView.frame.size.width,
-                                           myWebView.frame.size.height - infoBar.frame.size.height)];
-
-        [self.view addSubview:infoBar];
-    }
-
     // TODO: This test is here for the case where the sign-in flow opens straight to the webview (auth on just one
     // provider),
     // but it seems to be evaluating to 'true' when we are sharing as well... Why!?
@@ -133,6 +110,20 @@ static NSString *const iPhoneUserAgent = @"Mozilla/5.0 (iPhone; U; CPU iPhone OS
     self.contentSizeForViewInPopover = CGSizeMake(320, 416);
 
     self.title = (sessionData.currentProvider) ? sessionData.currentProvider.friendlyName : @"Loading";
+
+    if (!infoBar)
+    {
+        CGRect infoFrame = CGRectMake(0, self.view.frame.size.height - 30, self.view.frame.size.width, 30);
+        infoBar = [[JRInfoBar alloc] initWithFrame:infoFrame andStyle:(JRInfoBarStyle) [sessionData hidePoweredBy]];
+
+        if ([sessionData hidePoweredBy] == JRInfoBarStyleShowPoweredBy)
+            [myWebView setFrame:CGRectMake(myWebView.frame.origin.x,
+                                           myWebView.frame.origin.y,
+                                           myWebView.frame.size.width,
+                                           myWebView.frame.size.height - infoBar.frame.size.height)];
+
+        [self.view addSubview:infoBar];
+    }
 }
 
 + (NSString *)getCustomUa

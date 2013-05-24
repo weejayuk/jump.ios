@@ -38,7 +38,7 @@
 #import "JRUserInterfaceMaestro.h"
 #import "JREngage+CustomInterface.h"
 
-static NSString *const serverUrl = @"https://rpxnow.com";
+static NSString *serverUrl = @"https://rpxnow.com";
 
 #pragma mark consts
 /* Lists of the standard names for providers' logo and icons */
@@ -2052,41 +2052,6 @@ CALL_DELEGATE_SELECTOR:
     return result;
 }
 
-//- (NSDictionary *)customProvidersFromConfigurationDictionary:(NSDictionary *)customInterface
-//{
-//    NSMutableDictionary *result = [NSMutableDictionary dictionary];
-//
-//    NSObject *customOpenIdProviderId = [customInterface objectForKey:kJRCustomOpenIdProviderId];
-//    if ([customOpenIdProviderId isKindOfClass:[NSString class]]) {
-//        NSString *customOpenIdProviderId_ = (NSString *) customOpenIdProviderId;
-//        [result setObject:[self customOpenIdProviderWithId:customOpenIdProviderId_ andDict:customInterface]
-//                   forKey:customOpenIdProviderId_];
-//    } else if ([customOpenIdProviderId isKindOfClass:[NSArray class]]) {
-//        for (NSString *customOpenIdProviderId_ in (NSArray *) customOpenIdProviderId) {
-//            NSDictionary *providerDict = [self sliceProviderKeys:kJRCustomOpenIdProviderKeys fromDict:customInterface
-//                                                     forProvider:customOpenIdProviderId_];
-//            [result setObject:[self customOpenIdProviderWithId:customOpenIdProviderId_ andDict:providerDict]
-//                       forKey:customOpenIdProviderId_];
-//        }
-//    }
-//
-//    NSObject *customSamlProviderId = [customInterface objectForKey:kJRCustomSamlProviderId];
-//    if ([customSamlProviderId isKindOfClass:[NSString class]]) {
-//        NSString *customSamlProviderId_ = (NSString *) customSamlProviderId;
-//        [result setObject:[self customSamlProviderWithId:customSamlProviderId_ andDict:customInterface]
-//                   forKey:customSamlProviderId_];
-//    } else if ([customSamlProviderId isKindOfClass:[NSArray class]]) {
-//        for (NSString *customSamlProviderId_ in (NSArray *) customSamlProviderId) {
-//            NSDictionary *providerDict = [self sliceProviderKeys:kJRCustomSamlProviderKeys fromDict:customInterface
-//                                                     forProvider:customSamlProviderId_];
-//            [result setObject:[self customSamlProviderWithId:customSamlProviderId_ andDict:providerDict]
-//                       forKey:customSamlProviderId_];
-//        }
-//    }
-//
-//    return result;
-//}
-
 - (JRProvider *)customSamlProviderWithId:(NSString *)providerId andDict:(NSDictionary *)dict
 {
     NSMutableDictionary *dict_ = [NSMutableDictionary dictionaryWithDictionary:dict];
@@ -2097,20 +2062,6 @@ CALL_DELEGATE_SELECTOR:
 
     return [[[JRProvider alloc] initWithName:providerId andDictionary:dict_] autorelease];
 }
-
-//- (NSDictionary *)sliceProviderKeys:(NSArray *)array fromDict:(NSDictionary *)compoundDict
-//                        forProvider:(NSString *)provider
-//{
-//    NSMutableDictionary *result = [NSMutableDictionary dictionary];
-//
-//    for (NSString *field in array) {
-//        NSDictionary *fieldDefns = [compoundDict objectForKey:field];
-//        NSString *val = [fieldDefns objectForKey:provider];
-//        if (val) [result setObject:val forKey:field];
-//    }
-//
-//    return result;
-//}
 
 - (JRProvider *)customOpenIdProviderWithId:(NSString *)providerId andDict:(NSDictionary *)dict
 {
@@ -2150,5 +2101,14 @@ CALL_DELEGATE_SELECTOR:
     [gitCommit release];
     [savedConfigurationBlock release];
     [super dealloc];
+}
+@end
+
+@implementation JRSessionData (Internal)
++ (void)setServerUrl:(NSString *)serverUrl_
+{
+    NSString *oldServerUrl = serverUrl;
+    serverUrl = [serverUrl_ retain];
+    [oldServerUrl release];
 }
 @end
