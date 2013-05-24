@@ -548,8 +548,8 @@
 /*@{*/
 //#define kJRCustomOpenId @"kJRCustomOpenId"
 #define kJRCustomOpenIdProviderId @"kJRCustomOpenidProviderId"
-#define kJRCustomOpenIdProviderName @"openid_friendly_name"
-#define kJRCustomOpenIdIdentifier @"custom_openid_identifier"
+#define kJRCustomOpenIdProviderName @"friendly_name"
+#define kJRCustomOpenIdIdentifier @"openid_identifier"
 #define kJRCustomOpenIdOpxblob @"opx_blob"
 
 // reserved
@@ -562,7 +562,8 @@ kJRCustomOpenIdLargeIcon, kJRCustomOpenIdLargeIcon, kJRCustomOpenIdIdentifier, k
 
 //#define kJRCustomSaml @"kJRCustomSaml"
 #define kJRCustomSamlProviderId @"kJRCustomSamlProviderId"
-#define kJRCustomSamlProviderName @"saml_friendly_name"
+#define kJRCustomSamlProviderSamlName @"saml_provider"
+#define kJRCustomSamlProviderName @"friendly_name"
 
 // reserved
 #define kJRCustomSamlProviderColor @"kJRCustomSamlProviderColor"

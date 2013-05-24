@@ -261,7 +261,7 @@ static NSString *applicationBundleDisplayName()
 #pragma mark JRProvider
 @interface JRProvider ()
 @property (readonly) BOOL      social;
-@property (readonly) NSString *openIdIdentifier;
+@property (readonly) NSString *openIdIdentifier; // already URL encoded
 @property (readonly) NSString *relativeUrl;
 - (JRProvider *)initWithName:(NSString *)name andDictionary:(NSDictionary *)dictionary;
 @end
@@ -270,7 +270,7 @@ static NSString *applicationBundleDisplayName()
 @synthesize name                    = _name;
 @synthesize friendlyName            = _friendlyName;
 @synthesize placeholderText         = _placeholderText;
-@synthesize openIdIdentifier = _openIdIdentifier;
+@synthesize openIdIdentifier = _openIdIdentifier; // already URL encoded
 @synthesize relativeUrl = _relativeUrl;
 @synthesize requiresInput           = _requiresInput;
 @synthesize shortText               = _shortText;
@@ -328,13 +328,12 @@ static NSString *applicationBundleDisplayName()
     if ((self = [super init]))
     {
         _name = [name retain];
-
         _friendlyName    = [[dictionary objectForKey:@"friendly_name"] retain];
         _placeholderText = [[dictionary objectForKey:@"input_prompt"] retain];
         _openIdIdentifier = [[dictionary objectForKey:@"openid_identifier"] retain];
         _relativeUrl = [[dictionary objectForKey:@"url"] retain];
-        self.samlName = [dictionary objectForKey:@"saml_name"];
-        self.opxBlob = [dictionary objectForKey:@"opx_blob"];
+        self.samlName = [dictionary objectForKey:kJRCustomSamlProviderSamlName];
+        self.opxBlob = [dictionary objectForKey:kJRCustomOpenIdOpxblob];
         _cookieDomains   = [[dictionary objectForKey:@"cookie_domains"] retain];
         if (IS_IPAD && [dictionary objectForKey:@"ipad_webview_options"])
         {
@@ -539,7 +538,7 @@ static JRSessionData *singleton = nil;
 
 - (void)setCustomProvidersWithDictionary:(NSDictionary *)customProviders
 {
-    self.customProviders = [self customProvidersFromCustomInterface:customProviders];
+    self.customProviders = [self customProvidersFromConfigurationDictionary:customProviders];
 }
 
 + (JRSessionData *)jrSessionData
@@ -2030,75 +2029,101 @@ CALL_DELEGATE_SELECTOR:
     [self startRecordActivitySharedBy:@"sms"];
 }
 
-- (NSDictionary *)customProvidersFromCustomInterface:(NSDictionary *)customInterface
+- (NSDictionary *)customProvidersFromConfigurationDictionary:(NSDictionary *)configDict
 {
     NSMutableDictionary *result = [NSMutableDictionary dictionary];
-
-    NSObject *customOpenIdProviderId = [customInterface objectForKey:kJRCustomOpenIdProviderId];
-    if ([customOpenIdProviderId isKindOfClass:[NSString class]]) {
-        NSString *customOpenIdProviderId_ = (NSString *) customOpenIdProviderId;
-        [result setObject:[self customOpenIdProviderWithId:customOpenIdProviderId_ andDict:customInterface]
-                   forKey:customOpenIdProviderId_];
-    } else if ([customOpenIdProviderId isKindOfClass:[NSArray class]]) {
-        for (NSString *customOpenIdProviderId_ in (NSArray *) customOpenIdProviderId) {
-            NSDictionary *providerDict = [self sliceProviderKeys:kJRCustomOpenIdProviderKeys fromDict:customInterface
-                                                     forProvider:customOpenIdProviderId_];
-            [result setObject:[self customOpenIdProviderWithId:customOpenIdProviderId_ andDict:providerDict]
-                       forKey:customOpenIdProviderId_];
+    for (NSString *providerId in [configDict allKeys])
+    {
+        NSDictionary *providerDict = [configDict objectForKey:providerId];
+        if ([providerDict objectForKey:kJRCustomSamlProviderSamlName])
+        {
+            [result setObject:[self customSamlProviderWithId:providerId andDict:providerDict] forKey:providerId];
         }
-    }
-
-    NSObject *customSamlProviderId = [customInterface objectForKey:kJRCustomSamlProviderId];
-    if ([customSamlProviderId isKindOfClass:[NSString class]]) {
-        NSString *customSamlProviderId_ = (NSString *) customSamlProviderId;
-        [result setObject:[self customSamlProviderWithId:customSamlProviderId_ andDict:customInterface]
-                   forKey:customSamlProviderId_];
-    } else if ([customSamlProviderId isKindOfClass:[NSArray class]]) {
-        for (NSString *customSamlProviderId_ in (NSArray *) customSamlProviderId) {
-            NSDictionary *providerDict = [self sliceProviderKeys:kJRCustomSamlProviderKeys fromDict:customInterface
-                                                     forProvider:customSamlProviderId_];
-            [result setObject:[self customSamlProviderWithId:customSamlProviderId_ andDict:providerDict]
-                       forKey:customSamlProviderId_];
+        else if ([providerDict objectForKey:kJRCustomOpenIdIdentifier])
+        {
+            [result setObject:[self customOpenIdProviderWithId:providerId andDict:providerDict] forKey:providerId];
         }
+        else
+        {
+            ALog(@"Error: unrecognized entry in custom provider configuration dictionary: %@",
+                [providerDict description]);
+        };
     }
-
     return result;
 }
 
+//- (NSDictionary *)customProvidersFromConfigurationDictionary:(NSDictionary *)customInterface
+//{
+//    NSMutableDictionary *result = [NSMutableDictionary dictionary];
+//
+//    NSObject *customOpenIdProviderId = [customInterface objectForKey:kJRCustomOpenIdProviderId];
+//    if ([customOpenIdProviderId isKindOfClass:[NSString class]]) {
+//        NSString *customOpenIdProviderId_ = (NSString *) customOpenIdProviderId;
+//        [result setObject:[self customOpenIdProviderWithId:customOpenIdProviderId_ andDict:customInterface]
+//                   forKey:customOpenIdProviderId_];
+//    } else if ([customOpenIdProviderId isKindOfClass:[NSArray class]]) {
+//        for (NSString *customOpenIdProviderId_ in (NSArray *) customOpenIdProviderId) {
+//            NSDictionary *providerDict = [self sliceProviderKeys:kJRCustomOpenIdProviderKeys fromDict:customInterface
+//                                                     forProvider:customOpenIdProviderId_];
+//            [result setObject:[self customOpenIdProviderWithId:customOpenIdProviderId_ andDict:providerDict]
+//                       forKey:customOpenIdProviderId_];
+//        }
+//    }
+//
+//    NSObject *customSamlProviderId = [customInterface objectForKey:kJRCustomSamlProviderId];
+//    if ([customSamlProviderId isKindOfClass:[NSString class]]) {
+//        NSString *customSamlProviderId_ = (NSString *) customSamlProviderId;
+//        [result setObject:[self customSamlProviderWithId:customSamlProviderId_ andDict:customInterface]
+//                   forKey:customSamlProviderId_];
+//    } else if ([customSamlProviderId isKindOfClass:[NSArray class]]) {
+//        for (NSString *customSamlProviderId_ in (NSArray *) customSamlProviderId) {
+//            NSDictionary *providerDict = [self sliceProviderKeys:kJRCustomSamlProviderKeys fromDict:customInterface
+//                                                     forProvider:customSamlProviderId_];
+//            [result setObject:[self customSamlProviderWithId:customSamlProviderId_ andDict:providerDict]
+//                       forKey:customSamlProviderId_];
+//        }
+//    }
+//
+//    return result;
+//}
+
 - (JRProvider *)customSamlProviderWithId:(NSString *)providerId andDict:(NSDictionary *)dict
 {
-    NSMutableDictionary *dict_ = [NSMutableDictionary dictionaryWithDictionary:@{
-            @"url": @"/saml2/sso/start",
-            @"friendly_name": [dict objectForKey:@"saml_friendly_name"],
-            @"saml_name": providerId
+    NSMutableDictionary *dict_ = [NSMutableDictionary dictionaryWithDictionary:dict];
+    [dict_ addEntriesFromDictionary:@{
+            @"url" : @"/saml2/sso/start",
+            @"saml_provider" : [[dict objectForKey:kJRCustomSamlProviderSamlName] stringByAddingUrlPercentEscapes]
     }];
-    [dict_ addEntriesFromDictionary:dict];
 
     return [[[JRProvider alloc] initWithName:providerId andDictionary:dict_] autorelease];
 }
 
-- (NSDictionary *)sliceProviderKeys:(NSArray *)array fromDict:(NSDictionary *)compoundDict
-                        forProvider:(NSString *)provider
-{
-    NSMutableDictionary *result = [NSMutableDictionary dictionary];
-
-    for (NSString *field in array) {
-        NSDictionary *fieldDefns = [compoundDict objectForKey:field];
-        NSString *val = [fieldDefns objectForKey:provider];
-        if (val) [result setObject:val forKey:field];
-    }
-
-    return result;
-}
+//- (NSDictionary *)sliceProviderKeys:(NSArray *)array fromDict:(NSDictionary *)compoundDict
+//                        forProvider:(NSString *)provider
+//{
+//    NSMutableDictionary *result = [NSMutableDictionary dictionary];
+//
+//    for (NSString *field in array) {
+//        NSDictionary *fieldDefns = [compoundDict objectForKey:field];
+//        NSString *val = [fieldDefns objectForKey:provider];
+//        if (val) [result setObject:val forKey:field];
+//    }
+//
+//    return result;
+//}
 
 - (JRProvider *)customOpenIdProviderWithId:(NSString *)providerId andDict:(NSDictionary *)dict
 {
-    NSMutableDictionary *dict_ = [NSMutableDictionary dictionaryWithDictionary:@{
-            @"url": @"/openid/start",
-            @"friendly_name": [dict objectForKey:kJRCustomOpenIdProviderName],
-            @"openid_identifier": [[dict objectForKey:kJRCustomOpenIdIdentifier] stringByAddingUrlPercentEscapes]
+    NSMutableDictionary *dict_ = [NSMutableDictionary dictionaryWithDictionary:dict];
+    [dict_ addEntriesFromDictionary:@{
+            @"url" : @"/openid/start",
+            @"openid_identifier" : [[dict objectForKey:kJRCustomOpenIdIdentifier] stringByAddingUrlPercentEscapes]
     }];
-    [dict_ addEntriesFromDictionary:dict];
+    NSString *opxBlob;
+    if ((opxBlob = [dict objectForKey:kJRCustomOpenIdOpxblob]))
+    {
+        [dict_ setObject:[opxBlob stringByAddingUrlPercentEscapes] forKey:kJRCustomOpenIdOpxblob];
+    }
 
     return [[[JRProvider alloc] initWithName:providerId andDictionary:dict_] autorelease];
 }

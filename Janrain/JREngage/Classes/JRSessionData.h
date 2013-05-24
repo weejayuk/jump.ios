@@ -79,7 +79,7 @@
     NSString *_shortText;
     BOOL      _requiresInput;
 
-    NSString *_openIdIdentifier;
+    NSString *_openIdIdentifier; // already URL encoded
     NSString *_relativeUrl;
     BOOL      _forceReauth;
 
@@ -104,7 +104,7 @@
 @property(nonatomic) BOOL usesPhoneUserAgentString;
 @property(nonatomic, retain) NSString *samlName;
 
-@property(nonatomic, retain) NSString *opxBlob;
+@property(nonatomic, retain) NSString *opxBlob; // already URL encoded
 
 - (BOOL)isEqualToReturningProvider:(NSString*)returningProvider;
 @end

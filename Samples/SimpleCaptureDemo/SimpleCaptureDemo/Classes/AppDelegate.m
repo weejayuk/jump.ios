@@ -71,20 +71,24 @@ AppDelegate *appDelegate = nil;
     [self loadConfigFromPlist];
     NSDictionary *customProviders =
             @{
-                    //kJRCustomOpenId : [NSNumber numberWithBool:YES],
-                    //kJRCustomOpenIdFlow : [NSNull null],
-                    kJRCustomOpenIdProviderName : @"test open id",
-                    //kJRCustomOpenIdProviderColor : @"#888888",
-                    kJRCustomOpenIdProviderId : @"test_custom_open_id",
-                    kJRCustomOpenIdIdentifier : @"https://test.custom-open-id.com",
-                    kJRCustomOpenIdOpxblob : @"{\"origin\":\"a.sjcrh.info\",\"otherParam\":\"other cool value\"}",
-                    //kJRCustomOpenIdLargeIcon : [UIImage imageWithContentsOfFile:@"custom_open_id.png"],
-
-                    //kJRCustomSaml : [NSNumber numberWithBool:YES],
-                    kJRCustomSamlProviderId : @"test_custom_saml",
-                    kJRCustomSamlProviderName : @"test saml",
-                    kJRCustomSamlProviderColor : @"#888888",
-                    //kJRCustomSamlLargeIcon : [UIImage imageWithContentsOfFile:@"custom_open_id.png"],
+                @"test_custom_openid" :
+                    @{
+                            //kJRCustomOpenId : [NSNumber numberWithBool:YES],
+                            //kJRCustomOpenIdFlow : [NSNull null],
+                            //kJRCustomOpenIdProviderColor : @"#888888",
+                            kJRCustomOpenIdProviderName : @"Test Custom OpenID",
+                            kJRCustomOpenIdIdentifier : @"https://www.google.com/accounts/o8/id",
+                            kJRCustomOpenIdOpxblob : @"{\"origin\":\"a.sjcrh.info\",\"otherParam\":\"other cool value\"}",
+                            //kJRCustomOpenIdLargeIcon : [UIImage imageWithContentsOfFile:@"custom_open_id.png"],
+                    },
+                @"test_custom_saml" :
+                    @{
+                            //kJRCustomSaml : [NSNumber numberWithBool:YES],
+                            kJRCustomSamlProviderName : @"Test Custom SAML",
+                            kJRCustomSamlProviderSamlName : @"saml_test",
+                            //kJRCustomSamlProviderColor : @"#888888",
+                            //kJRCustomSamlLargeIcon : [UIImage imageWithContentsOfFile:@"custom_open_id.png"],
+                    }
             };
 
     [JRCapture setEngageAppId:engageAppId captureDomain:captureDomain
