@@ -112,7 +112,7 @@
  * is based on the possibility that your application may preemptively configure JREngage, but never actually
  * use it. If that is the case, then you won't get any error.
  **/
-- (void)engageDialogDidFailToShowWithError:(NSError*)error;
+- (void)engageDialogDidFailToShowWithError:(NSError *)error;
 /*@}*/
 
 /**
@@ -139,7 +139,7 @@
  *
  * @param provider
  *   The name of the provider on which the user authenticated. For a list of possible strings,
- *   please see the \ref basicProviders "List of Providers"
+ *   please see the \ref authenticationProviders "List of Providers"
  *
  * @par Example:
  *   The structure of the auth_info dictionary (represented here in json) should look something like
@@ -164,7 +164,7 @@
  * <a href="http://developers.janrain.com/documentation/api/auth_info/">auth_info response</a>
  * section of the Janrain Engage API documentation.
  **/
-- (void)authenticationDidSucceedForUser:(NSDictionary*)authInfo forProvider:(NSString*)provider;
+- (void)authenticationDidSucceedForUser:(NSDictionary *)authInfo forProvider:(NSString *)provider;
 
 /**
  * Sent when authentication failed and could not be recovered by the library.
@@ -175,13 +175,13 @@
  *
  * @param provider
  *   The name of the provider on which the user tried to authenticate. For a list of possible strings,
- *   please see the \ref basicProviders "List of Providers"
+ *   please see the \ref authenticationProviders "List of Providers"
  *
  * @note
  * This message is not sent if authentication was canceled. To be notified of a canceled authentication,
  * see authenticationDidNotComplete().
  **/
-- (void)authenticationDidFailWithError:(NSError*)error forProvider:(NSString*)provider;
+- (void)authenticationDidFailWithError:(NSError *)error forProvider:(NSString *)provider;
 
 /**
  * Sent after JREngage has successfully posted the token to your application's tokenUrl, containing
@@ -198,9 +198,9 @@
  *
  * @param provider
  *   The name of the provider on which the user authenticated. For a list of possible strings,
- *   please see the \ref basicProviders "List of Providers"
+ *   please see the \ref authenticationProviders "List of Providers"
  **/
-- (void)authenticationDidReachTokenUrl:(NSString*)tokenUrl withResponse:(NSURLResponse*)response andPayload:(NSData*)tokenUrlPayload forProvider:(NSString*)provider;
+- (void)authenticationDidReachTokenUrl:(NSString *)tokenUrl withResponse:(NSURLResponse *)response andPayload:(NSData *)tokenUrlPayload forProvider:(NSString *)provider;
 
 /**
  * Sent when the call to the token URL has failed.
@@ -214,9 +214,9 @@
  *
  * @param provider
  *   The name of the provider on which the user authenticated. For a list of possible strings,
- *   please see the \ref basicProviders "List of Providers"
+ *   please see the \ref authenticationProviders "List of Providers"
  **/
-- (void)authenticationCallToTokenUrl:(NSString*)tokenUrl didFailWithError:(NSError*)error forProvider:(NSString*)provider;
+- (void)authenticationCallToTokenUrl:(NSString *)tokenUrl didFailWithError:(NSError *)error forProvider:(NSString *)provider;
 /*@}*/
 @end
 
@@ -262,9 +262,9 @@
  *
  * @param provider
  *   The name of the provider on which the user published the activity. For a list of possible strings,
- *   please see the \ref socialProviders "List of Social Providers"
+ *   please see the \ref sharingProviders "List of Social Providers"
  **/
-- (void)sharingDidSucceedForActivity:(JRActivityObject*)activity forProvider:(NSString*)provider;
+- (void)sharingDidSucceedForActivity:(JRActivityObject *)activity forProvider:(NSString *)provider;
 
 /**
  * Sent when sharing an activity failed and could not be recovered by the library.
@@ -278,9 +278,9 @@
  *
  * @param provider
  *   The name of the provider on which the user attempted to publish the activity. For a list of possible strings,
- *   please see the \ref socialProviders "List of Social Providers"
+ *   please see the \ref sharingProviders "List of Social Providers"
  **/
-- (void)sharingDidFailForActivity:(JRActivityObject*)activity withError:(NSError*)error forProvider:(NSString*)provider;
+- (void)sharingDidFailForActivity:(JRActivityObject *)activity withError:(NSError *)error forProvider:(NSString *)provider;
 /*@}*/
 @end
 
@@ -324,7 +324,7 @@
  *   The delegate object that implements the JREngageSigninDelegate or JREngageSharingDelegate protocol
  *
  **/
-+ (void)setEngageAppId:(NSString*)appId tokenUrl:(NSString*)tokenUrl andDelegate:(id<JREngageSigninDelegate>)delegate;
++ (void)setEngageAppId:(NSString *)appId tokenUrl:(NSString *)tokenUrl andDelegate:(id<JREngageSigninDelegate>)delegate;
 /*@}*/
 
 /**
@@ -338,7 +338,7 @@
  * @param delegate
  *   The object that implements the JREngageSigninDelegate or JREngageSharingDelegate protocol
  **/
-+ (void)addDelegate:(id<JREngageSigninDelegate>)delegate;
++ (void)addDelegate:(id<JREngageSigninDelegate>)delegate __unused;
 
 /**
  * Remove a JREngageSigninDelegate or JREngageSharingDelegate from the JREngage library.
@@ -346,7 +346,7 @@
  * @param delegate
  *   The object that implements the JREngageSigninDelegate or JREngageSharingDelegate protocol
  **/
-+ (void)removeDelegate:(id<JREngageSigninDelegate>)delegate;
++ (void)removeDelegate:(id<JREngageSigninDelegate>)delegate __unused;
 /*@}*/
 
 /**
@@ -367,9 +367,9 @@
  *
  * @param provider
  *   The name of the provider on which the user will authenticate. For a list of possible strings,
- *   please see the \ref basicProviders "List of Providers"
+ *   please see the \ref authenticationProviders "List of Providers"
  **/
-+ (void)showAuthenticationDialogForProvider:(NSString*)provider;
++ (void)showAuthenticationDialogForProvider:(NSString *)provider __unused;
 
 /**
  * Use this function to begin authentication. The JREngage library will pop up a modal dialog,
@@ -385,7 +385,7 @@
  * Any values specified in the \e customInterfaceOverrides dictionary will override the corresponding
  * values specified the dictionary passed into the setCustomInterfaceDefaults:() method.
  **/
-+ (void)showAuthenticationDialogWithCustomInterfaceOverrides:(NSDictionary*)customInterfaceOverrides;
++ (void)showAuthenticationDialogWithCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides;
 
 /**
 * Use this function to begin authentication. The JREngage library will pop up a modal dialog, configured
@@ -394,7 +394,7 @@
 *
 * @param provider
 *   The name of the provider on which the user will authenticate. For a list of possible strings,
-*   please see the \ref basicProviders "List of Providers"
+*   please see the \ref authenticationProviders "List of Providers"
 *
 * @param customInterfaceOverrides
 *   A dictionary of objects and properties, indexed by the set of
@@ -406,8 +406,8 @@
 * Any values specified in the \e customInterfaceOverrides dictionary will override the corresponding
 * values specified the dictionary passed into the setCustomInterfaceDefaults:() method.
 **/
-+ (void)showAuthenticationDialogForProvider:(NSString*)provider
-               withCustomInterfaceOverrides:(NSDictionary*)customInterfaceOverrides;
++ (void)showAuthenticationDialogForProvider:(NSString *)provider
+               withCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides;
 
 /**
  * Use this function to begin social sharing. The JREngage library will pop up a modal dialog and
@@ -416,7 +416,7 @@
  * @param activity
  *   The activity you wish to share
  **/
-+ (void)showSharingDialogWithActivity:(JRActivityObject*)activity;
++ (void)showSharingDialogWithActivity:(JRActivityObject *)activity;
 
 /**
  * Use this function to begin social sharing. The JREngage library will pop up a modal dialog,
@@ -436,7 +436,7 @@
  * Any values specified in the \e customInterfaceOverrides dictionary will override the corresponding
  * values specified the dictionary passed into the setCustomInterfaceDefaults:() method.
  **/
-+ (void)showSharingDialogWithActivity:(JRActivityObject*)activity withCustomInterfaceOverrides:(NSDictionary*)customInterfaceOverrides;
++ (void)showSharingDialogWithActivity:(JRActivityObject *)activity withCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides;
 
 /*@}*/
 
@@ -450,15 +450,15 @@
  *
  * @param provider
  *   The name of the provider on which the user authenticated. For a list of possible strings,
- *   please see the \ref socialProviders "List of Social Providers"
+ *   please see the \ref sharingProviders "List of Social Providers"
  **/
-+ (void)clearSharingCredentialsForProvider:(NSString*)provider;
++ (void)clearSharingCredentialsForProvider:(NSString *)provider __unused;
 
 /**
- * Tell JREngage to the sharing credentials for all the \ref socialProviders "Social Providers" that the
+ * Tell JREngage to the sharing credentials for all the \ref sharingProviders "Social Providers" that the
  * user is signed in with
  **/
-+ (void)clearSharingCredentialsForAllProviders;
++ (void)clearSharingCredentialsForAllProviders __unused;
 
 /**
  * Use this function to toggle whether or not the library should force the user to reauthenticate for all providers.
@@ -467,7 +467,7 @@
  *   \c YES if the library should force reauthentication for all providers or \c NO if the library should
  *   perform the default behavior
  **/
-+ (void)alwaysForceReauthentication:(BOOL)force;
++ (void)alwaysForceReauthentication:(BOOL)force __unused;
 /*@}*/
 
 /**
@@ -478,12 +478,12 @@
 /**
  * Use this functions if you need to cancel authentication for any reason.
  **/
-+ (void)cancelAuthentication;
++ (void)cancelAuthentication __unused;
 
 /**
  * Use this functions if you need to cancel sharing for any reason.
  **/
-+ (void)cancelSharing;
++ (void)cancelSharing __unused;
 /*@}*/
 
 /**
@@ -500,7 +500,7 @@
  * @param tokenUrl
  *   The valid URL on your web server where the library will \e POST the authentication token
  **/
-+ (void)updateTokenUrl:(NSString*)tokenUrl;
++ (void)updateTokenUrl:(NSString *)tokenUrl;
 
 /**
  * Returns the currently configured token URL (or nil if none is configured)
@@ -527,15 +527,50 @@
  *
  * @note
  * Any values specified in the \e customizationInterfaceOverrides dictionary of the
- * showAuthenticationDialogWithCustomInterfaceOverrides:(NSDictionary*) or
+ * showAuthenticationDialogWithCustomInterfaceOverrides:(NSDictionary *) or
  * showSharingDialogWithActivity:withCustomInterfaceOverrides:()
  * methods, will override the corresponding values specified in the dictionary passed into
  * the setCustomInterfaceDefaults:() method.
  **/
-+ (void)setCustomInterfaceDefaults:(NSMutableDictionary*)customInterfaceDefaults;
++ (void)setCustomInterfaceDefaults:(NSDictionary *)customInterfaceDefaults __unused;
 /*@}*/
++ (void)setCustomProviders:(NSDictionary *)customProviders;
 @end
 
+/**
+ * @name Custom Providers
+ *
+ * Custom Open ID and custom SAML identity provider configuration.
+ *
+ * See http://developers.janrain.com/documentation/widgets/social-sign-in-widget/users-guide/custom-provider-button/
+ * for documentation
+ **/
+/*@{*/
+//#define kJRCustomOpenId @"kJRCustomOpenId"
+#define kJRCustomOpenIdProviderId @"kJRCustomOpenidProviderId"
+#define kJRCustomOpenIdProviderName @"openid_friendly_name"
+#define kJRCustomOpenIdIdentifier @"custom_openid_identifier"
+#define kJRCustomOpenIdOpxblob @"opx_blob"
+
+// reserved
+#define kJRCustomOpenIdProviderColor @"kJRCustomOpenIdProviderColor"
+#define kJRCustomOpenIdLargeIcon @"kJRCustomOpenidLargeIcon"
+#define kJRCustomOpenIdFlow @"kJRCustomOpenIdFlow"
+
+#define kJRCustomOpenIdProviderKeys @[kJRCustomOpenIdProviderId, kJRCustomOpenIdProviderName, kJRCustomOpenIdProviderColor,\
+kJRCustomOpenIdLargeIcon, kJRCustomOpenIdLargeIcon, kJRCustomOpenIdIdentifier, kJRCustomOpenIdOpxblob, kJRCustomOpenIdFlow]
+
+//#define kJRCustomSaml @"kJRCustomSaml"
+#define kJRCustomSamlProviderId @"kJRCustomSamlProviderId"
+#define kJRCustomSamlProviderName @"saml_friendly_name"
+
+// reserved
+#define kJRCustomSamlProviderColor @"kJRCustomSamlProviderColor"
+#define kJRCustomSamlLargeIcon @"kJRCustomSamlLargeIcon"
+
+#define kJRCustomSamlProviderKeys @[kJRCustomSamlProviderId, kJRCustomSamlProviderName, kJRCustomSamlProviderColor,\
+kJRCustomSamlLargeIcon]
+/*@}*/
 
 /**
  * @page Providers
@@ -555,7 +590,7 @@
 </script>
 @endhtmlonly
 
-@anchor basicProviders
+@anchor authenticationProviders
 @htmlonly
 <!-- Redundant attributes to force scrolling to work across multiple browsers -->
 <iframe id="basic" src="https://rpxnow.com/docs/mobile_providers?list=basic&device=iphone" width="100%" height="100%"
@@ -565,7 +600,7 @@
 </iframe></p>
 @endhtmlonly
 
-@anchor socialProviders
+@anchor sharingProviders
 @htmlonly
 <iframe id="social" src="https://rpxnow.com/docs/mobile_providers?list=social&device=iphone" width="100%" height="100%"
     style="border:none; overflow:hidden;" frameborder="0" scrolling="no">

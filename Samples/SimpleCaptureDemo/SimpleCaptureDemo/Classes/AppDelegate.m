@@ -32,6 +32,7 @@
 #import "JRCapture.h"
 #import "BackplaneUtils.h"
 #import "debug_log.h"
+#import "JREngage.h"
 
 AppDelegate *appDelegate = nil;
 
@@ -68,10 +69,28 @@ AppDelegate *appDelegate = nil;
     appDelegate = self;
 
     [self loadConfigFromPlist];
+    NSDictionary *customProviders =
+            @{
+                    //kJRCustomOpenId : [NSNumber numberWithBool:YES],
+                    //kJRCustomOpenIdFlow : [NSNull null],
+                    kJRCustomOpenIdProviderName : @"test open id",
+                    //kJRCustomOpenIdProviderColor : @"#888888",
+                    kJRCustomOpenIdProviderId : @"test_custom_open_id",
+                    kJRCustomOpenIdIdentifier : @"https://test.custom-open-id.com",
+                    kJRCustomOpenIdOpxblob : @"{\"origin\":\"a.sjcrh.info\",\"otherParam\":\"other cool value\"}",
+                    //kJRCustomOpenIdLargeIcon : [UIImage imageWithContentsOfFile:@"custom_open_id.png"],
+
+                    //kJRCustomSaml : [NSNumber numberWithBool:YES],
+                    kJRCustomSamlProviderId : @"test_custom_saml",
+                    kJRCustomSamlProviderName : @"test saml",
+                    kJRCustomSamlProviderColor : @"#888888",
+                    //kJRCustomSamlLargeIcon : [UIImage imageWithContentsOfFile:@"custom_open_id.png"],
+            };
+
     [JRCapture setEngageAppId:engageAppId captureDomain:captureDomain
               captureClientId:captureClientId captureLocale:captureLocale
               captureFlowName:captureFlowName captureFormName:captureFormName
- captureTraditionalSignInType:JRConventionalSigninEmailPassword];
+ captureTraditionalSignInType:JRConventionalSigninEmailPassword customIdentityProviders:customProviders];
 
     [BackplaneUtils asyncFetchNewBackplaneChannelWithBus:bpBusUrlString
                                               completion:^(NSString *newChannel, NSError *error)

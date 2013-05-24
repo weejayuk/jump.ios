@@ -33,9 +33,9 @@
 #import "JRConventionalSignInViewController.h"
 
 @interface JREngageWrapper : NSObject <JREngageSigninDelegate>
-+ (void)configureEngageWithCaptureMobileEndpointUrlAndAppId:(NSString *)appId;
++ (void)configureEngageWithAppId:(NSString *)appId customIdentityProviders:(NSDictionary *)customProviders;
 
-+ (void)startAuthenticationDialogWithConventionalSignIn:(JRConventionalSigninType)nativeSigninType
++ (void)startAuthenticationDialogWithConventionalSignIn:(JRConventionalSigninType)nativeSignInType
                             andCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
                                             forDelegate:(id<JRCaptureSigninDelegate>)delegate;
 

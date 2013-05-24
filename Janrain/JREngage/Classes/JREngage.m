@@ -38,7 +38,7 @@
 #import "JREngageError.h"
 
 @interface JREngageError (JREngageError_setError)
-+ (NSError*)setError:(NSString*)message withCode:(NSInteger)code;
++ (NSError *)setError:(NSString *)message withCode:(NSInteger)code;
 @end
 
 @interface JREngage () <JRSessionDelegate>
@@ -71,14 +71,9 @@ static JREngage* singleton = nil;
 + (JREngage *)singletonInstance
 {
     if (singleton == nil) {
-        singleton = [((JREngage*)[super allocWithZone:NULL]) init];
+        singleton = [((JREngage *)[super allocWithZone:NULL]) init];
     }
 
-    return singleton;
-}
-
-+ (JREngage*)jrEngage
-{
     return singleton;
 }
 
@@ -87,7 +82,7 @@ static JREngage* singleton = nil;
     return [[self singletonInstance] retain];
 }
 
-- (void)setEngageAppID:(NSString*)appId tokenUrl:(NSString*)tokenUrl andDelegate:(id<JREngageSigninDelegate>)delegate
+- (void)setEngageAppID:(NSString *)appId tokenUrl:(NSString *)tokenUrl andDelegate:(id<JREngageSigninDelegate>)delegate
 {
     ALog (@"Initialize JREngage library with appID: %@, and tokenUrl: %@", appId, tokenUrl);
 
@@ -105,54 +100,12 @@ static JREngage* singleton = nil;
         interfaceMaestro = [JRUserInterfaceMaestro jrUserInterfaceMaestroWithSessionData:sessionData];
 }
 
-+ (void)setEngageAppId:(NSString*)appId tokenUrl:(NSString*)tokenUrl andDelegate:(id<JREngageSigninDelegate>)delegate
++ (void)setEngageAppId:(NSString *)appId tokenUrl:(NSString *)tokenUrl andDelegate:(id<JREngageSigninDelegate>)delegate
 {
     [[JREngage singletonInstance] setEngageAppID:appId tokenUrl:tokenUrl andDelegate:delegate];
 }
 
-- (id)reconfigureWithAppID:(NSString*)appId andTokenUrl:(NSString*)tokenUrl
-                  delegate:(id<JREngageSigninDelegate>)delegate
-{
-    [delegates removeAllObjects];
-    [delegates addObject:delegate];
-
-    [sessionData reconfigureWithAppId:appId tokenUrl:tokenUrl];
-
-    return self;
-}
-
-// TODO: Should we fail right away if appId is null?
-- (id)initWithAppID:(NSString*)appId andTokenUrl:(NSString*)tokenUrl delegate:(id<JREngageSigninDelegate>)delegate
-{
-    ALog (@"Initialize JREngage library with appID: %@, and tokenUrl: %@", appId, tokenUrl);
-
-    if ((self = [super init]))
-    {
-        singleton = self;
-
-        self.delegates = [NSMutableArray arrayWithObjects:delegate, nil];
-
-        sessionData = [JRSessionData jrSessionDataWithAppId:appId tokenUrl:tokenUrl andDelegate:self];
-        interfaceMaestro = [JRUserInterfaceMaestro jrUserInterfaceMaestroWithSessionData:sessionData];
-    }
-
-    return self;
-}
-
-+ (id)jrEngageWithAppId:(NSString*)appId andTokenUrl:(NSString*)tokenUrl delegate:(id<JREngageSigninDelegate>)delegate
-{
-    if (appId == nil || appId.length == 0)
-        return nil;
-
-    if (singleton)
-        return [singleton reconfigureWithAppID:appId andTokenUrl:tokenUrl delegate:delegate];
-
-    // autoreleasing to stop IDE warnings; does nothing for singleton objects.
-    return [[((JREngage *)[super allocWithZone:nil])
-             initWithAppID:appId andTokenUrl:tokenUrl delegate:delegate] autorelease];
-}
-
-- (id)copyWithZone:(__unused NSZone *)zone
+- (id)copyWithZone:(__unused NSZone *)zone __unused
 {
     return self;
 }
@@ -195,7 +148,7 @@ static JREngage* singleton = nil;
     [[JREngage singletonInstance] removeDelegate:delegate];
 }
 
-- (void)engageDidFailWithError:(NSError*)error
+- (void)engageDidFailWithError:(NSError *)error
 {
     ALog (@"JREngage failed to load with error: %@", [error localizedDescription]);
 
@@ -207,8 +160,8 @@ static JREngage* singleton = nil;
     }
 }
 
-- (void)showAuthenticationDialogWithCustomInterfaceOverrides:(NSDictionary*)customInterfaceOverrides
-                          orAuthenticatingOnJustThisProvider:(NSString*)provider
+- (void)showAuthenticationDialogWithCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
+                          orAuthenticatingOnJustThisProvider:(NSString *)provider
 {
     ALog (@"");
 
@@ -249,52 +202,51 @@ static JREngage* singleton = nil;
 
     if (provider && ![sessionData.allProviders objectForKey:provider])
     {
-        [self engageDidFailWithError:
-              [JREngageError setError:@"You tried to authenticate on a specific provider, but this provider has not yet been configured."
-                             withCode:JRProviderNotConfiguredError]];
+        NSString *message =
+                @"You tried to authenticate on a specific provider, but this provider has not yet been configured.";
+        [self engageDidFailWithError:[JREngageError setError:message withCode:JRProviderNotConfiguredError]];
         return;
     }
 
     if (provider)
         interfaceMaestro.directProvider = provider;
 
-//  [sessionData setSkipReturningUserLandingPage:skipReturningUserLandingPage];
     [interfaceMaestro showAuthenticationDialogWithCustomInterface:customInterfaceOverrides];
 }
 
-- (void)showAuthenticationDialogForProvider:(NSString*)provider
-               withCustomInterfaceOverrides:(NSDictionary*)customInterfaceOverrides
-{
-    [self showAuthenticationDialogWithCustomInterfaceOverrides:customInterfaceOverrides
-                            orAuthenticatingOnJustThisProvider:provider];
-}
+//- (void)showAuthenticationDialogForProvider:(NSString *)provider
+//               withCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
+//{
+//    [self showAuthenticationDialogWithCustomInterfaceOverrides:customInterfaceOverrides
+//                            orAuthenticatingOnJustThisProvider:provider];
+//}
 
-+ (void)showAuthenticationDialogForProvider:(NSString*)provider
-               withCustomInterfaceOverrides:(NSDictionary*)customInterfaceOverrides
++ (void)showAuthenticationDialogForProvider:(NSString *)provider
+               withCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
 {
     [[JREngage singletonInstance] showAuthenticationDialogWithCustomInterfaceOverrides:customInterfaceOverrides
                             orAuthenticatingOnJustThisProvider:provider];
 }
 
-- (void)showAuthenticationDialogWithCustomInterfaceOverrides:(NSDictionary*)customInterfaceOverrides
-{
-    [self showAuthenticationDialogWithCustomInterfaceOverrides:customInterfaceOverrides
-                            orAuthenticatingOnJustThisProvider:nil];
-}
+//- (void)showAuthenticationDialogWithCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
+//{
+//    [self showAuthenticationDialogWithCustomInterfaceOverrides:customInterfaceOverrides
+//                            orAuthenticatingOnJustThisProvider:nil];
+//}
 
-+ (void)showAuthenticationDialogWithCustomInterfaceOverrides:(NSDictionary*)customInterfaceOverrides
++ (void)showAuthenticationDialogWithCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
 {
     [[JREngage singletonInstance] showAuthenticationDialogWithCustomInterfaceOverrides:customInterfaceOverrides 
                             orAuthenticatingOnJustThisProvider:nil];
 }
 
-- (void)showAuthenticationDialogForProvider:(NSString*)provider
-{
-    [self showAuthenticationDialogWithCustomInterfaceOverrides:nil
-                            orAuthenticatingOnJustThisProvider:provider];
-}
+//- (void)showAuthenticationDialogForProvider:(NSString *)provider
+//{
+//    [self showAuthenticationDialogWithCustomInterfaceOverrides:nil
+//                            orAuthenticatingOnJustThisProvider:provider];
+//}
 
-+ (void)showAuthenticationDialogForProvider:(NSString*)provider
++ (void)showAuthenticationDialogForProvider:(NSString *)provider
 {
     [[JREngage singletonInstance] showAuthenticationDialogWithCustomInterfaceOverrides:nil
                             orAuthenticatingOnJustThisProvider:provider];
@@ -312,8 +264,8 @@ static JREngage* singleton = nil;
                                                     orAuthenticatingOnJustThisProvider:nil];
 }
 
-- (void)showSharingDialogWithActivity:(JRActivityObject*)activity 
-         withCustomInterfaceOverrides:(NSDictionary*)customInterfaceOverrides
+- (void)showSharingDialogWithActivity:(JRActivityObject *)activity
+         withCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
 {
     ALog (@"");
 
@@ -363,25 +315,25 @@ static JREngage* singleton = nil;
     [interfaceMaestro showPublishingDialogForActivityWithCustomInterface:customInterfaceOverrides];
 }
 
-- (void)showSocialPublishingDialogWithActivity:(JRActivityObject*)activity 
-                   andCustomInterfaceOverrides:(NSDictionary*)customInterfaceOverrides
-{
-    [self showSharingDialogWithActivity:activity withCustomInterfaceOverrides:customInterfaceOverrides];
-}
+//- (void)showSocialPublishingDialogWithActivity:(JRActivityObject *)activity
+//                   andCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
+//{
+//    [self showSharingDialogWithActivity:activity withCustomInterfaceOverrides:customInterfaceOverrides];
+//}
 
-+ (void)showSharingDialogWithActivity:(JRActivityObject*)activity 
-         withCustomInterfaceOverrides:(NSDictionary*)customInterfaceOverrides
++ (void)showSharingDialogWithActivity:(JRActivityObject *)activity
+         withCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
 {
     [[JREngage singletonInstance] showSharingDialogWithActivity:activity 
                                    withCustomInterfaceOverrides:customInterfaceOverrides];
 }
 
-- (void)showSharingDialogWithActivity:(JRActivityObject*)activity
+- (void)showSharingDialogWithActivity:(JRActivityObject *)activity
 {
     [self showSharingDialogWithActivity:activity withCustomInterfaceOverrides:nil];
 }
 
-+ (void)showSharingDialogWithActivity:(JRActivityObject*)activity
++ (void)showSharingDialogWithActivity:(JRActivityObject *)activity
 {
     [[JREngage singletonInstance] showSharingDialogWithActivity:activity withCustomInterfaceOverrides:nil];
 }
@@ -406,7 +358,7 @@ static JREngage* singleton = nil;
     [interfaceMaestro authenticationCanceled];
 }
 
-- (void)authenticationDidCompleteForUser:(NSDictionary*)profile forProvider:(NSString*)provider
+- (void)authenticationDidCompleteForUser:(NSDictionary *)profile forProvider:(NSString *)provider
 {
     ALog (@"Signing complete for %@", provider);
 
@@ -420,7 +372,7 @@ static JREngage* singleton = nil;
     [interfaceMaestro authenticationCompleted];
 }
 
-- (void)authenticationDidFailWithError:(NSError*)error forProvider:(NSString*)provider
+- (void)authenticationDidFailWithError:(NSError *)error forProvider:(NSString *)provider
 {
     ALog (@"Signing failed for %@", provider);
 
@@ -434,8 +386,8 @@ static JREngage* singleton = nil;
     [interfaceMaestro authenticationFailed];
 }
 
-- (void)authenticationDidReachTokenUrl:(NSString*)tokenUrl withResponse:(NSURLResponse*)response 
-                            andPayload:(NSData*)tokenUrlPayload forProvider:(NSString*)provider;
+- (void)authenticationDidReachTokenUrl:(NSString *)tokenUrl withResponse:(NSURLResponse *)response
+                            andPayload:(NSData *)tokenUrlPayload forProvider:(NSString *)provider;
 {
     ALog (@"Token URL reached for %@: %@", provider, tokenUrl);
 
@@ -449,8 +401,8 @@ static JREngage* singleton = nil;
     }
 }
 
-- (void)authenticationCallToTokenUrl:(NSString*)tokenUrl didFailWithError:(NSError*)error
-                         forProvider:(NSString*)provider
+- (void)authenticationCallToTokenUrl:(NSString *)tokenUrl didFailWithError:(NSError *)error
+                         forProvider:(NSString *)provider
 {
     ALog (@"Token URL failed for %@: %@", provider, tokenUrl);
 
@@ -496,7 +448,7 @@ static JREngage* singleton = nil;
     [interfaceMaestro publishingCompleted];
 }
 
-- (void)publishingActivityDidSucceed:(JRActivityObject*)activity forProvider:(NSString*)provider
+- (void)publishingActivityDidSucceed:(JRActivityObject *)activity forProvider:(NSString *)provider
 {
     ALog (@"Activity shared on %@", provider);
 
@@ -508,7 +460,7 @@ static JREngage* singleton = nil;
     }
 }
 
-- (void)publishingActivity:(JRActivityObject*)activity didFailWithError:(NSError*)error forProvider:(NSString*)provider
+- (void)publishingActivity:(JRActivityObject *)activity didFailWithError:(NSError *)error forProvider:(NSString *)provider
 {
     ALog (@"Sharing activity failed for %@", provider);
 
@@ -520,13 +472,13 @@ static JREngage* singleton = nil;
     }
 }
 
-- (void)clearSharingCredentialsForProvider:(NSString*)provider
+- (void)clearSharingCredentialsForProvider:(NSString *)provider
 {
     DLog(@"");
     [sessionData forgetAuthenticatedUserForProvider:provider];
 }
 
-+ (void)clearSharingCredentialsForProvider:(NSString*)provider
++ (void)clearSharingCredentialsForProvider:(NSString *)provider
 {
     [[JREngage singletonInstance] clearSharingCredentialsForProvider:provider];
 }
@@ -574,7 +526,7 @@ static JREngage* singleton = nil;
     [[JREngage singletonInstance] cancelSharing];
 }
 
-- (void)updateTokenUrl:(NSString*)newTokenUrl
+- (void)updateTokenUrl:(NSString *)newTokenUrl
 {
     DLog(@"new token URL: %@", newTokenUrl);
     [sessionData setTokenUrl:newTokenUrl];
@@ -585,18 +537,32 @@ static JREngage* singleton = nil;
     return [JREngage singletonInstance].sessionData.tokenUrl;
 }
 
-+ (void)updateTokenUrl:(NSString*)newTokenUrl
++ (void)updateTokenUrl:(NSString *)newTokenUrl
 {
     [[JREngage singletonInstance] updateTokenUrl:newTokenUrl];
 }
 
-- (void)setCustomInterfaceDefaults:(NSMutableDictionary*)customInterfaceDefaults
+- (void)setCustomInterfaceDefaults:(NSMutableDictionary *)customInterfaceDefaults
 {
     [interfaceMaestro setCustomInterfaceDefaults:customInterfaceDefaults];
 }
 
-+ (void)setCustomInterfaceDefaults:(NSMutableDictionary*)customInterfaceDefaults
+- (void)dealloc
 {
-    [[JREngage singletonInstance] setCustomInterfaceDefaults:customInterfaceDefaults];
+    [interfaceMaestro release];
+    [sessionData release];
+    [delegates release];
+    [super dealloc];
+}
+
++ (void)setCustomInterfaceDefaults:(NSDictionary *)customInterfaceDefaults
+{
+    NSMutableDictionary *mutable = [NSMutableDictionary dictionaryWithDictionary:customInterfaceDefaults];
+    [[JREngage singletonInstance] setCustomInterfaceDefaults:mutable];
+}
+
++ (void)setCustomProviders:(NSDictionary *)customProviders
+{
+    [[JREngage singletonInstance].sessionData setCustomProvidersWithDictionary:customProviders];
 }
 @end

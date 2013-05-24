@@ -50,5 +50,5 @@
 @property (weak) IBOutlet UIButton *captureWidgetButton;
 @property (weak) IBOutlet UIButton *signInButton;
 @property (weak) IBOutlet UIButton *signOutButton;
-@property(nonatomic, strong) NSMutableDictionary *customUi;
+@property(nonatomic, strong) NSDictionary *customUi;
 @end

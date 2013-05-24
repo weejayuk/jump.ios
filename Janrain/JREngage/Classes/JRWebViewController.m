@@ -135,19 +135,6 @@ static NSString *const iPhoneUserAgent = @"Mozilla/5.0 (iPhone; U; CPU iPhone OS
     self.title = (sessionData.currentProvider) ? sessionData.currentProvider.friendlyName : @"Loading";
 }
 
-//+ (void)configureUserAgent
-//{
-//    NSString *customUa = nil;
-//    NSString *origCustomUa = [[NSUserDefaults standardUserDefaults] stringForKey:@"UserAgent"];
-//    customUa = [self getCustomUa];
-//
-//    if (customUa)
-//    {
-//        //self.originalCustomUserAgent = origCustomUa;
-//        [JRWebViewController setUserAgentDefault:customUa];
-//    }
-//}
-
 + (NSString *)getCustomUa
 {
     NSString *customUa = nil;
