@@ -41,5 +41,21 @@
             <!--</dict>-->
         <!--</dict>-->
     </dict>
+
+    <key>apitest-rpxtesting</key>
+    <dict>
+        <key>engageAppId</key>
+        <string>gifpkeongnkpdhdlejno</string>
+        <key>rpxDomain</key>
+        <string>rpxtesting.com</string>
+        <key>customProviders</key>
+        <dict>
+            <key>saml_test</key>
+            <dict>
+                <key>saml_provider</key>
+                <string>samltest</string>
+            </dict>
+        </dict>
+    </dict>
 </dict>
 </plist>
