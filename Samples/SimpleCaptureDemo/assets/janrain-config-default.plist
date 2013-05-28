@@ -27,6 +27,19 @@
         <string></string>
         <key>liveFyreArticleId</key>
         <string></string>
+
+        <!--<key>customProviders</key>-->
+        <!--<dict>-->
+            <!--<key>test_custom_openid</key>-->
+            <!--<dict>-->
+                <!--<key>friendly_name</key>-->
+                <!--<string>Test Custom OpenID</string>-->
+                <!--<key>openid_identifier</key>-->
+                <!--<string>https://www.google.com/accounts/o8/id</string>-->
+                <!--<key>opx_blob</key>-->
+                <!--<string>{"origin":"a.sjcrh.info","otherParam":"other cool value"}</string>-->
+            <!--</dict>-->
+        <!--</dict>-->
     </dict>
 </dict>
 </plist>
