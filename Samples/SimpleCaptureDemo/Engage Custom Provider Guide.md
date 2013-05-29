@@ -57,8 +57,8 @@ Construct an NSDictionary similar to this example NSDictionary literal:
 
 ## Icons
 
-You can add a 30x30 provider icon for you custom providers by naming the icon icon_provider-id-here_30x30.png and
-including the icon file in your iOS app's Resources project group.
+You can add a 30x30 provider icon for you custom providers by naming the icon `icon_your-provider-id-here_30x30.png`
+and including the icon file in your iOS app's Resources project group.
 
 ## Initialize the Library with the Dictionary
 
