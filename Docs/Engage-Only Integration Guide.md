@@ -16,8 +16,6 @@ platform see `JUMP Integration Guide.md`.
 4. Begin authentication or sharing by calling one of the "show...Dialog" methods.
 5. Receive your token URL's response in `-authenticationDidReachTokenUrl:withResponse:andPayload:forProvider:`.
 
-[Download](/documentation/mobile-libraries/jump-for-ios/prerequisites/#get-the-library) the JUMP for iOS library and [add it to Xcode](/documentation/mobile-libraries/jump-for-ios/adding-to-xcode/ "Adding to Xcode").
-
 ## Gather Configuration Details
 
 ### Configure Identity Providers on the Engage Dashoard

@@ -225,6 +225,7 @@
 		C1424D9427DA599B0C9E17E1 /* JREngagePhonegapPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424E9B09E4A2E5DA70FBE6 /* JREngagePhonegapPlugin.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C1424DA806C966265CE45E4F /* JRConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424B55E1561AB88BDC29A3 /* JRConnectionManager.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C1424DB9A2CFD9886FFC667B /* icon_livejournal_30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424AA276D10327B9122B97 /* icon_livejournal_30x30.png */; };
+		C1424DD31F440EE166BA615C /* Engage Custom Provider Guide.md in Resources */ = {isa = PBXBuildFile; fileRef = C142473F18BCA13264FD9519 /* Engage Custom Provider Guide.md */; };
 		C1424DDC2F02BF97C36A1BAD /* icon_netlog_30x30@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424A80F4760645E0067F65 /* icon_netlog_30x30@2x.png */; };
 		C1424DEB50A148543762EF48 /* icon_flickr_30x30@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424185AB915D99F67221BD /* icon_flickr_30x30@2x.png */; };
 		C1424DEDC0E25BC9738E4025 /* button_linkedin_280x40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C14246008067B9FA8B0CB5CF /* button_linkedin_280x40@2x.png */; };
@@ -447,6 +448,7 @@
 		C142471D8AF6B44E51EF5BFD /* button_twitter_135x40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button_twitter_135x40@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/buttons/button_twitter_135x40@2x.png"; sourceTree = "<group>"; };
 		C142472FD8A853442360A5AE /* button_iosblue_135x40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button_iosblue_135x40@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/buttons/button_iosblue_135x40@2x.png"; sourceTree = "<group>"; };
 		C1424734F496FB4C4BBB0EDD /* JRCaptureObject+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "JRCaptureObject+Internal.h"; path = "../../Janrain/JRCapture/Classes/JRCaptureObject+Internal.h"; sourceTree = "<group>"; };
+		C142473F18BCA13264FD9519 /* Engage Custom Provider Guide.md */ = {isa = PBXFileReference; lastKnownFileType = file.md; path = "Engage Custom Provider Guide.md"; sourceTree = "<group>"; };
 		C14247470DAADFD1C1038C2B /* JRCurrentLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCurrentLocation.h; sourceTree = "<group>"; };
 		C142474CF67B29AAD7184D6F /* JRPluralLevelOneElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRPluralLevelOneElement.m; sourceTree = "<group>"; };
 		C142475447C1783CC2A03E88 /* icon_foursquare_30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_foursquare_30x30.png; path = ../../Janrain/JREngage/Resources/images/icons/icon_foursquare_30x30.png; sourceTree = "<group>"; };
@@ -1113,6 +1115,7 @@
 			children = (
 				C1424E7B60B494FE93B6A787 /* JUMP Integration Guide.md */,
 				C14243C601FCF1CE886F6601 /* Engage-Only Integration Guide.md */,
+				C142473F18BCA13264FD9519 /* Engage Custom Provider Guide.md */,
 			);
 			name = Docs;
 			sourceTree = "<group>";
@@ -1525,6 +1528,7 @@
 				C1424C2310E295E5506D8FF8 /* Default-568h@2x.png in Resources */,
 				C1424A37EB80FEE72C4968A5 /* icon_test_custom_openid_30x30.png in Resources */,
 				C1424B7A2AA378C83029471A /* Engage-Only Integration Guide.md in Resources */,
+				C1424DD31F440EE166BA615C /* Engage Custom Provider Guide.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
