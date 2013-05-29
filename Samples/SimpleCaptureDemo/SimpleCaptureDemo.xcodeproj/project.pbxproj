@@ -132,6 +132,7 @@
 		C14246C4CCB6EA40FDE815B1 /* icon_aol_30x30@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C14245068A7120E57C37321E /* icon_aol_30x30@2x.png */; };
 		C14246E279634DE91BD032BB /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = C14245646994EA0DA27DEEE7 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C142470E335B0E4163895256 /* JRCaptureUser+Extras.m in Sources */ = {isa = PBXBuildFile; fileRef = C142406C2445886C62A3438C /* JRCaptureUser+Extras.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		C1424717CBF5F3B8D008C31F /* Engage Custom Provider Guide.md in Resources */ = {isa = PBXBuildFile; fileRef = C1424B8796DFCE92BF0EF072 /* Engage Custom Provider Guide.md */; };
 		C14247599E61BCAED7BE6687 /* logo_yahoo_280x65@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C14240AD403CB62FF3144D28 /* logo_yahoo_280x65@2x.png */; };
 		C14247622895DB7D42A06708 /* logo_salesforce_280x65.png in Resources */ = {isa = PBXBuildFile; fileRef = C14246975FDB992B2BFBBEEC /* logo_salesforce_280x65.png */; };
 		C1424762ECC22906B989A83D /* JRInfoBar.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424DE50904AA1B49BD3899 /* JRInfoBar.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -225,7 +226,6 @@
 		C1424D9427DA599B0C9E17E1 /* JREngagePhonegapPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424E9B09E4A2E5DA70FBE6 /* JREngagePhonegapPlugin.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C1424DA806C966265CE45E4F /* JRConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424B55E1561AB88BDC29A3 /* JRConnectionManager.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C1424DB9A2CFD9886FFC667B /* icon_livejournal_30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424AA276D10327B9122B97 /* icon_livejournal_30x30.png */; };
-		C1424DD31F440EE166BA615C /* Engage Custom Provider Guide.md in Resources */ = {isa = PBXBuildFile; fileRef = C142473F18BCA13264FD9519 /* Engage Custom Provider Guide.md */; };
 		C1424DDC2F02BF97C36A1BAD /* icon_netlog_30x30@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424A80F4760645E0067F65 /* icon_netlog_30x30@2x.png */; };
 		C1424DEB50A148543762EF48 /* icon_flickr_30x30@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424185AB915D99F67221BD /* icon_flickr_30x30@2x.png */; };
 		C1424DEDC0E25BC9738E4025 /* button_linkedin_280x40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C14246008067B9FA8B0CB5CF /* button_linkedin_280x40@2x.png */; };
@@ -448,7 +448,6 @@
 		C142471D8AF6B44E51EF5BFD /* button_twitter_135x40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button_twitter_135x40@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/buttons/button_twitter_135x40@2x.png"; sourceTree = "<group>"; };
 		C142472FD8A853442360A5AE /* button_iosblue_135x40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button_iosblue_135x40@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/buttons/button_iosblue_135x40@2x.png"; sourceTree = "<group>"; };
 		C1424734F496FB4C4BBB0EDD /* JRCaptureObject+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "JRCaptureObject+Internal.h"; path = "../../Janrain/JRCapture/Classes/JRCaptureObject+Internal.h"; sourceTree = "<group>"; };
-		C142473F18BCA13264FD9519 /* Engage Custom Provider Guide.md */ = {isa = PBXFileReference; lastKnownFileType = file.md; path = "Engage Custom Provider Guide.md"; sourceTree = "<group>"; };
 		C14247470DAADFD1C1038C2B /* JRCurrentLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCurrentLocation.h; sourceTree = "<group>"; };
 		C142474CF67B29AAD7184D6F /* JRPluralLevelOneElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRPluralLevelOneElement.m; sourceTree = "<group>"; };
 		C142475447C1783CC2A03E88 /* icon_foursquare_30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_foursquare_30x30.png; path = ../../Janrain/JREngage/Resources/images/icons/icon_foursquare_30x30.png; sourceTree = "<group>"; };
@@ -535,6 +534,7 @@
 		C1424B7614E4241C4B0281A9 /* button_janrain_280x40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = button_janrain_280x40.png; path = ../../Janrain/JREngage/Resources/images/buttons/button_janrain_280x40.png; sourceTree = "<group>"; };
 		C1424B7FDCF7AC3EF4F8AE10 /* JROnipLevelOneElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JROnipLevelOneElement.h; sourceTree = "<group>"; };
 		C1424B814A52DF511182D7C1 /* logo_myspace_280x65.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo_myspace_280x65.png; path = ../../Janrain/JREngage/Resources/images/logos/logo_myspace_280x65.png; sourceTree = "<group>"; };
+		C1424B8796DFCE92BF0EF072 /* Engage Custom Provider Guide.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.md; path = "Engage Custom Provider Guide.md"; sourceTree = "<group>"; };
 		C1424B8BBA034C130EDF81CD /* logo_twitter_280x65@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "logo_twitter_280x65@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/logos/logo_twitter_280x65@2x.png"; sourceTree = "<group>"; };
 		C1424B99517E925515349892 /* JREmailsElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JREmailsElement.m; sourceTree = "<group>"; };
 		C1424BA14B666E827EEBB45B /* logo_facebook_280x65.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo_facebook_280x65.png; path = ../../Janrain/JREngage/Resources/images/logos/logo_facebook_280x65.png; sourceTree = "<group>"; };
@@ -1115,7 +1115,7 @@
 			children = (
 				C1424E7B60B494FE93B6A787 /* JUMP Integration Guide.md */,
 				C14243C601FCF1CE886F6601 /* Engage-Only Integration Guide.md */,
-				C142473F18BCA13264FD9519 /* Engage Custom Provider Guide.md */,
+				C1424B8796DFCE92BF0EF072 /* Engage Custom Provider Guide.md */,
 			);
 			name = Docs;
 			sourceTree = "<group>";
@@ -1528,7 +1528,7 @@
 				C1424C2310E295E5506D8FF8 /* Default-568h@2x.png in Resources */,
 				C1424A37EB80FEE72C4968A5 /* icon_test_custom_openid_30x30.png in Resources */,
 				C1424B7A2AA378C83029471A /* Engage-Only Integration Guide.md in Resources */,
-				C1424DD31F440EE166BA615C /* Engage Custom Provider Guide.md in Resources */,
+				C1424717CBF5F3B8D008C31F /* Engage Custom Provider Guide.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
