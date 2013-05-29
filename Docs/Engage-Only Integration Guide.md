@@ -1,0 +1,184 @@
+# Engage-Only Integration Guide
+
+This guide describes integrating Engage-only into your iOS App. For a description of integration steps for the JUMP
+platform see `JUMP Integration Guide.md`.
+
+## 10,000' View
+
+1. Gather configuration details.
+2. Add the library to your Xcode project.
+3. Initialize the library with your Engage application’s application ID, your web server’s token URL, and your delegate
+   object (which conforms to the the
+   [JREngageSigninDelegate](http://janrain.github.com/jump.ios/gh_docs/engage/html/protocol_j_r_engage_signin_delegate-p.html)
+   and/or the
+   [JREngageSharingDelegate](http://janrain.github.com/jump.ios/gh_docs/engage/html/protocol_j_r_engage_sharing_delegate-p.html)
+   protocols.)
+4. Begin authentication or sharing by calling one of the "show...Dialog" methods.
+5. Receive your token URL's response in `-authenticationDidReachTokenUrl:withResponse:andPayload:forProvider:`.
+
+[Download](/documentation/mobile-libraries/jump-for-ios/prerequisites/#get-the-library) the JUMP for iOS library and [add it to Xcode](/documentation/mobile-libraries/jump-for-ios/adding-to-xcode/ "Adding to Xcode").
+
+## Gather Configuration Details
+
+### Configure Identity Providers on the Engage Dashoard
+
+Make sure your desired set of providers is configured in the Engage Dashboard. Sign-in to Engage and
+[configure the providers](http://developers.janrain.com/documentation/widgets/social-sign-in-widget/social-sign-in-widget-users-guide/configure-the-widget/provider-setup-guide/).
+
+(Configuring the providers themselves is a separate step from configuring which providers are enabled for the Engage
+iOS SDK.)
+
+### Configure the Providers Used in the iOS Library
+
+While signed in to the Engage dashboard go to the Engage for iOS configuration wizard (in the drop-down menus, under
+Deployment -> Engage for iOS). Follow the wizard, use it to configure the providers to use for authentication and
+social sharing from the iOS library.
+
+### Retrieve your Engage Application ID
+
+You will also need your 20-character Application ID from the Engage Dashboard. Click the `Home` link int the Engage
+dashboard and you will find your app ID in the right-most column towards the bottom of the colum under the "Application
+Info" header.
+
+## Add the Engage Library to the Xcode Project
+
+1. Follow the steps JUMP for iOS Xcode setup instructions here, but skip generating the Capture User Model:
+   [Adding to Xcode](http://developers.janrain.com/documentation/mobile-libraries/jump-for-ios/adding-to-xcode/)
+2. Remove the JRCapture project group from your project.
+
+## Choose an Engage Delegate Class and Initialize the Library
+
+Select the class you will use to receive callbacks from the Engage library. This is called your Engage delegate.
+The delegate should be persistant (will not be dealloced during the course of your app's lifetime) and it should be a
+singleton. Your app's AppDelegate is a good choice to start with.
+
+In the interface of your chosen Engage delegate class import the Engage header: `#import "JREngage.h"`, and conform to
+the `JREngageSigninDelegate` and `JREngageSharingDelegate` protocols:
+
+   @interface AppDelegate : UIResponder <UIApplicationDelegate, JREngageSigninDelegate>
+
+In your delegate's implementation, during its initialization, (or from elsewhere in your app's initialization), call
+the JREngage initialization method, for example from from your AppDelegate's
+`-application:didFinishLaunchingWithOptions:`:
+
+    [JREngage setEngageAppId:@"<your app id>" tokenUrl:@"<your_token_url>" andDelegate:yourEngageDelegate];
+
+Stub out these two delegate message implementations in your delegate:
+
+    - (void)authenticationDidReachTokenUrl:(NSString *)tokenUrl withResponse:(NSURLResponse *)response
+                                andPayload:(NSData *)tokenUrlPayload forProvider:(NSString *)provider
+    {
+        NSLog(@"%@", [response description]);
+    }
+
+    - (void)authenticationDidSucceedForUser:(NSDictionary *)authInfo forProvider:(NSString *)provider
+    {
+        NSLog(@"%@", [authInfo description]);
+    }
+
+## Social Sign-In
+
+In the section of code where you wish to launch the library’s authentication process, send the
+[showAuthenticationDialog](http://janrain.github.com/jump.ios/gh_docs/engage/html/interface_j_r_engage.html#a0de1aa16e951a1b62e2ef459b1596e83)
+message to the `JREngage` class:
+
+    [JREngage showAuthenticationDialog];
+
+To receive the user’s profile data, respond to the
+[authenticationDidSucceedForUser:forProvider:](http://janrain.github.com/engage.android/docs/html/interfacecom_1_1janrain_1_1android_1_1engage_1_1_j_r_engage_delegate.html#a589d849b42af1061bac4697ab9982bba "authenticationDidSucceedForUser") method from the [JREngageSigninDelegate](http://janrain.github.com/jump.ios/gh_docs/engage/html/protocol_j_r_engage_signin_delegate-p.html) message:
+
+    - (void)authenticationDidSucceedForUser:(NSDictionary*)authInfo forProvider:(NSString*)provider
+    {
+        NSString *preferredUserName = [[authInfo objectForKey:@"profile"]
+                                                 objectForKey:@"preferredUsername"];
+
+        UIAlertView *alert = [[[UIAlertView alloc]
+                                initWithTitle:[NSString stringWithFormat:
+                                                @"Hello, %@!", preferredUserName]
+                                      message:[NSString stringWithFormat:
+                                                @"You have successfully authenticated with %@! Your auth_info token is
+                                                currently being posted to the token URL.",
+                                                provider]
+                                     delegate:self
+                            cancelButtonTitle:@"OK"
+                            otherButtonTitles:nil] autorelease];
+        [alert show];
+    }
+
+### UI Customization
+
+To customize the look and feel of the sign-in experience, please see the
+[Custom Interface Guide for iOS](http://developers.janrain.com/documentation/mobile-libraries/advanced-topics/custom-ui-for-ios/).
+
+## Social Sharing
+
+If you want to share an activity, first
+[create an instance](http://janrain.github.com/jump.ios/gh_docs/engage/html/interface_j_r_activity_object.html#a853261b333e02bbd096a8e1d2092195d)
+of the [JRActivityObject](http://janrain.github.com/jump.ios/gh_docs/engage/html/interface_j_r_activity_object.html)
+and populate the activity object’s fields:
+
+    JRActivityObject *activity =
+        [JRActivityObject activityObjectWithAction:@"added JREngage to her iPhone application!"
+                                            andUrl:@"http://janrain.com"];[/sourcecode]
+
+Then pass the activity to the
+[showSharingDialogWithActivity:](http://janrain.github.com/jump.ios/gh_docs/engage/html/interface_j_r_engage.html#adbbf64bfffdd179fe593145f16ab4b5f)
+message:
+
+    [JREngage showSharingDialogWithActivity:activity];
+
+Your user may choose to sign in with additional social providers in order to share. If they do, your delegate will
+receive the
+[authenticationDidSucceedForUser:forProvider:](http://janrain.github.com/jump.ios/gh_docs/engage/html/protocol_j_r_engage_signin_delegate-p.html#a9803676f3066c7eae7127d57a193f38f "authenticationDidSucceedForUser") and [authenticationDidReachTokenUrl:withResponse:andPayload:forProvider:](http://janrain.github.com/jump.ios/gh_docs/engage/html/protocol_j_r_engage_signin_delegate-p.html#abb576f76e23750d0fbc90409f60ab250 "authenticationDidSucceedForUser") messages. If you don’t want new authentications posted to your token URL, you can remove the token URL with the [updateTokenUrl:](http://janrain.github.com/jump.ios/gh_docs/engage/html/interface_j_r_engage.html#a5af5ed8a0bcaf58a31656d4ed81b7b40)
+message.
+
+Additionally, as your users shares their activity on the different providers, you will receive
+[sharingDidSucceedForActivity:forProvider:](http://janrain.github.com/jump.ios/gh_docs/engage/html/protocol_j_r_engage_sharing_delegate-p.html#afe0da35cf96f23421abfa12d497c0132 "sharingDidSucceedForActivity:forProvider:") messages on your [JREngageSharingDelegate](http://janrain.github.com/jump.ios/gh_docs/engage/html/protocol_j_r_engage_sharing_delegate-p.html "JREngageSharingDelegate") delegate. Finally, the [JREngageSharingDelegate](http://janrain.github.com/jump.ios/gh_docs/engage/html/protocol_j_r_engage_sharing_delegate-p.html "JREngageSharingDelegate") delegate will receive a [sharingDidComplete](http://janrain.github.com/jump.ios/gh_docs/engage/html/protocol_j_r_engage_sharing_delegate-p.html#abfd122aa4da3befaa402a8c528ab67ef "SharingDidComplete") message once the user finishes sharing. If the user cancels sharing before the activity was posted to any provider, the delegate will receive the [sharingDidNotComplete](http://janrain.github.com/jump.ios/gh_docs/engage/html/protocol_j_r_engage_sharing_delegate-p.html#abfd122aa4da3befaa402a8c528ab67ef)
+message.
+
+### More
+
+For information on sharing through email or SMS, please see
+[Email, SMS, and Shortening URLs](http://developers.janrain.com/documentation/mobile-libraries/advanced-topics/email-sms-and-urls/).
+
+## Good to Know
+
+The first time your application uses `JREngage` on any device, the library contacts the Engage servers to retrieve your
+application’s configuration information. After downloading, the library caches this information. The library updates
+the cache only when the information changes (for example, when you add or remove a provider). The Library checks for
+updates after it initializes.
+
+While you can initialize the `JREngage` library immediately before you call one of the `show...` methods, understand
+that your users may encounter our loading screen while the library contacts the Engage servers.
+
+## Web Server Sign-In
+
+Implement a server endpoint to which the `JREngage` library will `POST` the
+[auth_info](http://developers.janrain.com/documentation/api/auth_info/) token.
+
+In the server code:
+
+  1.  Extract the token parameter.
+  2.  Call `auth_info` with the token and your application’s 40-character Application Key.
+  3.  Parse the profile data returned from the call to `auth_info`, and sign your user in to your web
+      application, and create session cookie or other session token.
+
+Respond to the HTTP request with session setup information (such as a session cookie set-cookie header, or a session
+token in the body of the HTTP request response.)
+
+To use your token URL, pass it into the
+[setEngageAppId:tokenUrl:andDelegate:](http://janrain.github.com/jump.ios/gh_docs/engage/html/interface_j_r_engage.html#a1cc8219fd86da3f11e164f4dfff33ef0)
+method when initializing the library:
+
+    static NSString *appId = @"<your_app_id>";
+    static NSString *tokenUrl = @"https://<your_token_url>";
+
+    // ...
+
+    [JREngage setEngageAppId:appId tokenUrl:tokenUrl andDelegate:self];
+
+You can also change the token URL at any time using the
+[updateTokenUrl:](http://janrain.github.com/jump.ios/gh_docs/engage/html/interface_j_r_engage.html#a5af5ed8a0bcaf58a31656d4ed81b7b40)
+method.
+
+**Important**: Your iOS application **must not** contain your Engage API key.
