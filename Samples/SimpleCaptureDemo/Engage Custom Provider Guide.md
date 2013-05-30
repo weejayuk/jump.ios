@@ -15,45 +15,47 @@ This guide assumes you have already completed either the `Engage-Only Integratio
 
 For each custom provider you wish to configure gather the following configuration details:
 
-* Provider ID -- a short string which will be used to refer to the custom provider. E.g. the provider ID for Facebook
-  is "facebook".
-* Friendly name -- you will need a string representing the user-facing name of the provider.
+* Provider ID -- a short string which will be used to refer to the custom provider. E.g. the provider ID for Yahoo!
+  is "yoo". This is used only in the context of the iOS app, and can be any arbitrary value you choose.
+* Friendly name -- a string representing the user-facing name of the provider. E.g. the friendly name for Yahoo! is
+  "Yahoo!".
 
 ### Custom Open ID
 
 In addition to the configuration details above you will need:
 
 * The OpenID identifier of your custom OpenID provider.
-* You may optionally specify a custom "opx_blob" parameter for use with Janrain Identity Services' OpenID providers.
+* Optionally, a custom "opx_blob" parameter for use with Janrain Identity Services' OpenID providers.
 
 ### Custom SAML
 
-In addition to the configuration details aboce you will need:
+In addition to the configuration details above you will need:
 
 * The name of the SAML implementation in Engage for your custom SAML provider.
 
 ## Build the Custom-Providers Configuration Dictionary
 
-Construct an NSDictionary similar to this example NSDictionary literal:
+Construct an NSDictionary similar to this example. The field names in the inner dictionaries are important. (I.e.
+the field for friendly name must be "friendly_name".):
 
     NSDictionary *customProviders =
         @{
-            @"my_custom_saml_provider":
+            @"my_custom_saml_provider": // this is the "provider ID".
                 @{
                     @"friendly_name": @"Example Custom SAML Provider",
                     @"saml_provider": @"the_name_of_the_engage_implementation_of_the_saml_provider"
-                @},
+                },
 
             @"my_custom_openid_provider":
                 @{
                     @"friendly_name": @"Example Custom OpenID Provider",
                     @"openid_identifier": @"https://my-custom-openid-provider.com/example-openid-identifier",
                     @"opx_blob": @"some_blob_for_opx" // This is an optional field
-                @},
+                },
 
             // You can define more custom SAML or custom OpenID providers below. They just need to have different
             // "provider IDs"
-        @};
+        };
 
 ## Icons
 
@@ -68,7 +70,7 @@ The configuration of the custom providers varies slightly between Engage-only an
 
 Call:
 
-   +[JRCapture setEngageAppId:captureDomain:captureClientId:captureLocale:captureFlowName:captureFormName:captureTraditionalSignInType:customIdentityProviders:]
+    +[JRCapture setEngageAppId:captureDomain:captureClientId:captureLocale:captureFlowName:captureFormName:captureTraditionalSignInType:customIdentityProviders:]
 
 ... passing in the custom provider configuration dictionary you defined for the `customIdentityProviders:` parameter.
 
@@ -84,6 +86,6 @@ appear in the stock authentication provider list UI. You can skip the stock prov
 directly on any provider, including your custom providers:
 
 For whole-JUMP integrations use: `+[JRCapture startEngageSigninDialogOnProvider:forDelegate:]`.
-For Engage-only integrations use: `+[JREngage showAuthenticationDialogForProvider:`.
+For Engage-only integrations use: `+[JREngage showAuthenticationDialogForProvider:]`.
 
 (There are also other variants of those methods which accept a provider ID parameter.)
