@@ -47,6 +47,7 @@
 		C1424128974960854A58FAB3 /* logo_salesforce_280x65@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424C41A574F6CD6F35E991 /* logo_salesforce_280x65@2x.png */; };
 		C1424142764DFF3F9D694907 /* icon_myspace_30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424EBCBFB5CE1C2C7A5A42 /* icon_myspace_30x30.png */; };
 		C14241481A5B62DDA2E21F41 /* icon_bw_mail_sms_30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = C14249473DE45F645A744EE2 /* icon_bw_mail_sms_30x30.png */; };
+		C1424157A9016E7CABB81462 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = C14241F497DEAD8C4832CB9E /* README.md */; };
 		C142416812A51AE692FADE02 /* logo_verisign_280x65.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424C4573533FAA266A51B3 /* logo_verisign_280x65.png */; };
 		C142417775F6B153D363CECE /* icon_openid_30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424E4F6720D4D136539857 /* icon_openid_30x30.png */; };
 		C142418AEF0CEDF0E571259C /* button_janrain_280x40.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424B7614E4241C4B0281A9 /* button_janrain_280x40.png */; };
@@ -357,6 +358,7 @@
 		C14241C700BFA34B059F5F02 /* logo_aol_280x65@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "logo_aol_280x65@2x.png"; path = "../../Janrain/JREngage/Resources/images-2x/logos/logo_aol_280x65@2x.png"; sourceTree = "<group>"; };
 		C14241D8995CD0F3DD28C324 /* button_twitter_135x40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = button_twitter_135x40.png; path = ../../Janrain/JREngage/Resources/images/buttons/button_twitter_135x40.png; sourceTree = "<group>"; };
 		C14241F1FB16BE3DA1C74C7E /* icon_bw_twitter_30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_bw_twitter_30x30.png; path = ../../Janrain/JREngage/Resources/images/icons_bw/icon_bw_twitter_30x30.png; sourceTree = "<group>"; };
+		C14241F497DEAD8C4832CB9E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = file.md; name = README.md; path = ../../../jump.ios/README.md; sourceTree = "<group>"; };
 		C14241F54F36F55540419DBC /* JRInfoBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRInfoBar.h; path = ../../Janrain/JREngage/Classes/JRInfoBar.h; sourceTree = "<group>"; };
 		C14241FA9DB52CFF47AC6945 /* JRPublishActivityController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRPublishActivityController.h; path = ../../Janrain/JREngage/Classes/JRPublishActivityController.h; sourceTree = "<group>"; };
 		C1424203B4DC59ACED063AA7 /* NSDictionary+QueryParams.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+QueryParams.m"; path = "../../Janrain/JRCapture/Classes/NSDictionary+QueryParams.m"; sourceTree = "<group>"; };
@@ -657,6 +659,7 @@
 				C1424BA527F0C8DC376F6AA1 /* Janrain */,
 				C1424A69565805943D42F115 /* JRCapture */,
 				C1424A8BB874F02EEE6D8982 /* Docs */,
+				C14241F497DEAD8C4832CB9E /* README.md */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1529,6 +1532,7 @@
 				C1424A37EB80FEE72C4968A5 /* icon_test_custom_openid_30x30.png in Resources */,
 				C1424B7A2AA378C83029471A /* Engage-Only Integration Guide.md in Resources */,
 				C1424717CBF5F3B8D008C31F /* Engage Custom Provider Guide.md in Resources */,
+				C1424157A9016E7CABB81462 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
