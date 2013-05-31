@@ -1,4 +1,4 @@
-# JUMP for iOS
+# JUMP for iOS Capture Integration Guide
 
 ## Features
 
@@ -13,7 +13,7 @@
     * "Thin" social registration -- automatic account creation for social sign-in users without a registration form.
 * Capture account record updates
 
-In the pipeline:
+### In the Pipeline
 
 * Profile updates (including password and email address updates)
 * In app password reset initiation
@@ -30,19 +30,22 @@ In the pipeline:
 4. Update the local user record model
 5. Call `-[JRCaptureUser updateOnCaptureForDelegate:context:]` to update the Capture server
 
-Before you begin integrating you will need configuration details:
+## Gather your Configuration Details
 
 1. Sign in to your Engage Dashboard - https://rpxnow.com
     1. Configure the providers you wish to use for authentication ("Deployment" drop down menu -> "Engage for
-       Android").
+       iOS").
     2. Retrieve your 20-character Application ID from the Engage Dashboard (In the right column of the "Home"
        page on the dashboard.)
 2. Ask your deployment engineer or account manager for your Capture domain.
-3. Sign in to the Capture dashboard and provision a new API client for your mobile app.
-    1. Use the [set_features API](http://developers.janrain.com/documentation/api-methods/capture/clients/set_features/)
+3. Create a new Capture API client for you iOS app:
+    1. Sign in to the Capture dashboard and provision a new API client for your mobile app.
+    2. Use the [set_features API](http://developers.janrain.com/documentation/api-methods/capture/clients/set_features/)
        to add the "login_client" feature to your new API client.
-    2. Use the [setAccessSchema API](http://developers.janrain.com/documentation/api-methods/capture/entitytype/setaccessschema/)
+    3. Use the [setAccessSchema API](http://developers.janrain.com/documentation/api-methods/capture/entitytype/setaccessschema/)
        to set the subset of the schema you wish your mobile app to be able to update.
+       **Warning** If you do not include the attributes your client will write to in the its write access
+       schema you will receive missing attribute errors when attempting to update attributes.
 4. Configure your flow settings:
     1. Ask your deployment engineer or account manager which "flow" you should use.
     2. Ask for the appropriate values for default_flow_name and default_flow_version.
@@ -51,7 +54,7 @@ Before you begin integrating you will need configuration details:
    The commonly used value for US English is en-US.
 6. Ask your deployment engineer or account manager for the name of the sign-in form in your flow.
 
-Note: You _must_ create a new API client with the correct feature for proper operation of the JUMP for iOS SDK.
+Note: You _must_ create a new API client with the correct login_client feature for operation of the JUMP for iOS SDK.
 
 ## Generating the Capture User Model
 
@@ -448,36 +451,4 @@ For example:
 
 **Warning**: The `NSArray` properties used to model plurals are copy-on-set. This means that to modify the array you
 must create a new mutable array with the existing array, then modify the mutable array, then assign the mutable array
-to the property. (Because the property is copy-on-set further modifications to the copied array will not change the
-property.) See the above example for an example of this technique.
-
-## Storing the Capture User Record
-
-When your application terminates, you should save your active user record to local storage. For example, from your
-[UIApplicationDelegate](http://developer.apple.com/library/ios/#DOCUMENTATION/UIKit/Reference/UIApplicationDelegate_Protocol/Reference/Reference.html):
-
-    #define cJRCaptureUser @"jr_capture_user"
-    
-    - (void)applicationWillTerminate:(UIApplication *)application
-    {
-        // Store the Capture user record for use when your app restarts;
-        // JRCaptureUser objects conform to NSCoding so you can serialize them with the
-        // rest of your app state
-        NSUserDefaults *myPreferences = [NSUserDefaults standardUserDefaults];
-        [myPreferences setObject:[NSKeyedArchiver archivedDataWithRootObject:captureUser]
-                          forKey:cJRCaptureUser];
-    }
-
-Likewise, load the saved user record state when your application launches. For example, from the
-`UIApplicationDelegate`:
-
-    - (BOOL)          application:(UIApplication *)application
-    didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-    {
-        NSUserDefaults *myPreferences = [NSUserDefaults standardUserDefaults];
-        NSData *encodedUser = [myPreferences objectForKey:cJRCaptureUser];
-        self.captureUser = [NSKeyedUnarchiver unarchiveObjectWithData:encodedUser];
-    }
-
-**Note**: While your application is responsible for saving and restoring the user record, the Capture library will
-automatically save and restore the session token.
+to the property. (Because the property is c
