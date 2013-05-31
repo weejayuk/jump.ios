@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6706F45BA754C1C6C9E2278C /* Engage Custom Provider Guide.md in Resources */ = {isa = PBXBuildFile; fileRef = 6706F415A25202D7A4BDE118 /* Engage Custom Provider Guide.md */; };
 		90C36B6B7717AA0C893E08EA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90C36B6B7717AA0C893E08E9 /* UIKit.framework */; };
 		90C36B6B7717AA0C893E08EC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90C36B6B7717AA0C893E08EB /* Foundation.framework */; };
 		90C36B6B7717AA0C893E08EE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90C36B6B7717AA0C893E08ED /* CoreGraphics.framework */; };
@@ -281,6 +282,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6706F415A25202D7A4BDE118 /* Engage Custom Provider Guide.md */ = {isa = PBXFileReference; lastKnownFileType = file.md; name = "Engage Custom Provider Guide.md"; path = "../../../jump.ios/Docs/Engage Custom Provider Guide.md"; sourceTree = "<group>"; };
 		90C36B6B7717AA0C893E08E0 /* SimpleCaptureDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleCaptureDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		90C36B6B7717AA0C893E08E9 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		90C36B6B7717AA0C893E08EB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -1116,6 +1118,7 @@
 			children = (
 				C1424E7B60B494FE93B6A787 /* JUMP Integration Guide.md */,
 				C14243C601FCF1CE886F6601 /* Engage-Only Integration Guide.md */,
+				6706F415A25202D7A4BDE118 /* Engage Custom Provider Guide.md */,
 			);
 			name = Docs;
 			sourceTree = "<group>";
@@ -1529,6 +1532,7 @@
 				C1424A37EB80FEE72C4968A5 /* icon_test_custom_openid_30x30.png in Resources */,
 				C1424B7A2AA378C83029471A /* Engage-Only Integration Guide.md in Resources */,
 				C1424157A9016E7CABB81462 /* README.md in Resources */,
+				6706F45BA754C1C6C9E2278C /* Engage Custom Provider Guide.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
