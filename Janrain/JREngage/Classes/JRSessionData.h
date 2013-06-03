@@ -79,8 +79,8 @@
     NSString *_shortText;
     BOOL      _requiresInput;
 
-    NSString *_openIdentifier;
-    NSString *_url;
+    NSString *_openIdIdentifier; // already URL encoded
+    NSString *_relativeUrl;
     BOOL      _forceReauth;
 
     NSString *_userInput;
@@ -102,6 +102,9 @@
 @property (readonly) NSArray      *cookieDomains;
 @property(nonatomic, retain) NSString *customUserAgentString;
 @property(nonatomic) BOOL usesPhoneUserAgentString;
+@property(nonatomic, retain) NSString *samlName;
+
+@property(nonatomic, retain) NSString *opxBlob; // already URL encoded
 
 - (BOOL)isEqualToReturningProvider:(NSString*)returningProvider;
 @end
@@ -132,51 +135,13 @@
 @class JRActivityObject;
 
 @interface JRSessionData : NSObject <JRConnectionManagerDelegate>
-{
-    NSMutableArray *delegates;
-
-    JRProvider *currentProvider;
-    NSString   *returningBasicProvider;
-    NSString   *returningSocialProvider;
-
-    NSMutableDictionary *allProviders;
-    NSArray             *basicProviders;
-    NSArray             *socialProviders;
-    NSMutableDictionary *authenticatedUsersByProvider;
-
-    NSMutableSet        *providersWithIcons;
-    NSMutableDictionary *iconsStillNeeded;
-
-    JRActivityObject *activity;
-
-    NSString *tokenUrl;
-    NSString *baseUrl;
-    NSString *appId;
-    NSString *device;
-
-    BOOL hidePoweredBy;
-
-    // Question to self: What is the behavior of this (i.e., how does it affect social publishing?)
-    // when selected during a basic authentication call?
-    BOOL authenticatingDirectlyOnThisProvider;
-    BOOL alwaysForceReauth;
-    BOOL forceReauthJustThisTime;
-
-    BOOL canRotate;
-
-    BOOL socialSharing;
-    BOOL dialogIsShowing;
-    BOOL stillNeedToShortenUrls;
-
-    NSError  *error;
-}
 @property (retain)   JRProvider *currentProvider;
-@property (readonly) NSString   *returningBasicProvider;
-@property (readonly) NSString   *returningSocialProvider;
+@property (readonly) NSString   *returningAuthenticationProvider;
+@property (readonly) NSString   *returningSharingProvider;
 
-@property (readonly) NSMutableDictionary *allProviders;
-@property (readonly) NSArray             *basicProviders;
-@property (readonly) NSArray             *socialProviders;
+@property (readonly) NSMutableDictionary *engageProviders;
+@property (readonly) NSArray             *authenticationProviders;
+@property (readonly) NSArray             *sharingProviders;
 
 @property (copy)     JRActivityObject *activity;
 
@@ -205,19 +170,17 @@
 - (void)removeDelegate:(id<JRSessionDelegate>)delegateToRemove;
 
 - (NSURL*)startUrlForCurrentProvider;
-
-- (void)setReturningBasicProviderToNil;
-- (JRProvider*)getBasicProviderAtIndex:(NSUInteger)index;
-- (JRProvider*)getSocialProviderAtIndex:(NSUInteger)index;
 - (JRProvider*)getProviderNamed:(NSString*)name;
-
-- (BOOL)weShouldBeFirstResponder;
 
 - (JRAuthenticatedUser*)authenticatedUserForProvider:(JRProvider*)provider;
 - (JRAuthenticatedUser*)authenticatedUserForProviderNamed:(NSString*)provider;
-
 - (void)forgetAuthenticatedUserForProvider:(NSString*)providerName;
+
+- (NSDictionary *)allProviders;
+
 - (void)forgetAllAuthenticatedUsers;
+
+- (BOOL)weShouldBeFirstResponder;
 
 - (void)shareActivityForUser:(JRAuthenticatedUser*)user;
 - (void)setStatusForUser:(JRAuthenticatedUser*)user;
@@ -229,7 +192,6 @@
 - (void)triggerAuthenticationDidTimeOutConfiguration;
 - (void)triggerAuthenticationDidFailWithError:(NSError*)theError;
 
-- (void)triggerPublishingDidStartOver:(id)sender;
 - (void)triggerPublishingDidCancel;
 - (void)triggerPublishingDidCancel:(id)sender;
 - (void)triggerPublishingDidTimeOutConfiguration;
@@ -237,5 +199,7 @@
 
 - (void)triggerEmailSharingDidComplete;
 - (void)triggerSmsSharingDidComplete;
+
+- (void)setCustomProvidersWithDictionary:(NSDictionary *)customProviders;
 @end
 

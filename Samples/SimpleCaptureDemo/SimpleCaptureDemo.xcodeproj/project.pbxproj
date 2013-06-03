@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6706F04CB24F25B6607F53A5 /* Authentication-Token-URL.md in Resources */ = {isa = PBXBuildFile; fileRef = 6706FFEFEE62C8F93EAA251B /* Authentication-Token-URL.md */; };
+		6706F0DA7F5FA9A15B437997 /* Engage-Only Integration Guide.md in Resources */ = {isa = PBXBuildFile; fileRef = 6706F243FF1B1D4DBFCE6B5D /* Engage-Only Integration Guide.md */; };
+		6706F18263DF25C5CAEA8F6C /* Engage Custom Provider Guide.md in Resources */ = {isa = PBXBuildFile; fileRef = 6706F619E4BB76864B478610 /* Engage Custom Provider Guide.md */; };
+		6706F2F5D380E2BE1B74B0C3 /* JUMP Integration Guide.md in Resources */ = {isa = PBXBuildFile; fileRef = 6706FDE35290E73F4513572D /* JUMP Integration Guide.md */; };
 		90C36B6B7717AA0C893E08EA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90C36B6B7717AA0C893E08E9 /* UIKit.framework */; };
 		90C36B6B7717AA0C893E08EC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90C36B6B7717AA0C893E08EB /* Foundation.framework */; };
 		90C36B6B7717AA0C893E08EE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90C36B6B7717AA0C893E08ED /* CoreGraphics.framework */; };
@@ -35,7 +39,6 @@
 		C1424221EF003C4A217BE9F5 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = C142449C40B6A93FF4E64950 /* Default.png */; };
 		C14242372F43ECBE4FC3B913 /* JRPluralLevelThreeElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424580A96FA450B14016EA /* JRPluralLevelThreeElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C142424E43DA098E32674AE7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C142401A5A8AAAFC251E5853 /* QuartzCore.framework */; };
-		C14242ACBA6293AC3DC42128 /* setup.py in Resources */ = {isa = PBXBuildFile; fileRef = C14245FED2A76B7E148FD52D /* setup.py */; };
 		C1424328018E0D26EB12D589 /* JRName.m in Sources */ = {isa = PBXBuildFile; fileRef = C14242B75343FD75920D56E4 /* JRName.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C1424348AA5C311E306A242D /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C14249B9A86322CE1634EA23 /* MessageUI.framework */; };
 		C142437C81E8238B9093B74D /* JRTournamentsPlayedElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C14242300A50D35712FFE73C /* JRTournamentsPlayedElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -43,57 +46,34 @@
 		C14243C8ABEC0F7AEA754D0E /* JRObjectLevelThree.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424BAB9EBE3E94B18F01FF /* JRObjectLevelThree.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C14243E0897EA7034B5CF388 /* JRPluralLevelOneElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C142474CF67B29AAD7184D6F /* JRPluralLevelOneElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C14243F5868AE72713CFEB39 /* JROnipLevelTwo.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424C5D86D5E45ACF27960A /* JROnipLevelTwo.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		C1424497B2B2C8AC2EAAD862 /* doxycomment.py in Resources */ = {isa = PBXBuildFile; fileRef = C142495A04F2C0954DA78A1C /* doxycomment.py */; };
-		C14244B0B84D32A5E1269DBF /* DoxygenLayout.xml in Resources */ = {isa = PBXBuildFile; fileRef = C1424C4F463DC9531C07EBD9 /* DoxygenLayout.xml */; };
 		C142456F0C50A0C0655FA135 /* JRGamesElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424A85D1F57A461D300A4E /* JRGamesElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		C142459B3B80B4AF003C7C84 /* footer.html in Resources */ = {isa = PBXBuildFile; fileRef = C1424BD6613FF3E8362C18D8 /* footer.html */; };
-		C14245C2383AA3B93AF465ED /* Doxyfile in Resources */ = {isa = PBXBuildFile; fileRef = C1424CAFA5A48370915C4422 /* Doxyfile */; };
-		C14245DDAB3E23F39BFE2B40 /* header.html in Resources */ = {isa = PBXBuildFile; fileRef = C1424F18133CA55D39D2DBEF /* header.html */; };
 		C14245E695DE25DFADE60FF2 /* JRPhotosElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C142414E858492E358637081 /* JRPhotosElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C14245EB6DB26259A478A2D4 /* CaptureRegistrationForm.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424D6CCEC2655D90E77A75 /* CaptureRegistrationForm.m */; };
-		C142462490AAE690C036EA7B /* error_handler.py in Resources */ = {isa = PBXBuildFile; fileRef = C14248EE2F8D8C0ADD0D0B28 /* error_handler.py */; };
 		C14246446BA8F4CFB0000354 /* JRObjectLevelOne.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424A15A5D0B0B0C299B0FF /* JRObjectLevelOne.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C142464E6400856B090FF8FD /* JROnipLevelThree.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424291B49E5600AC8E83D1 /* JROnipLevelThree.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C14246938BE8C8B01ED849DA /* JRObjectLevelTwo.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424820BB3D15DC3A2181F6 /* JRObjectLevelTwo.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C142469726764B17967FDD71 /* JRImsElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C14247EEEB36676C7556608E /* JRImsElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C14246B979FA26858E828B21 /* JRAccountsElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424CECB9CFE1FC1F934420 /* JRAccountsElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		C142472DD87092892F6D64F8 /* statemachine.py in Resources */ = {isa = PBXBuildFile; fileRef = C1424DC53EE6F761A86B3BAC /* statemachine.py */; };
 		C14247A2A61A413139D8CEA8 /* JRPluralLevelTwoElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424FD90D1DBB8C115B8826 /* JRPluralLevelTwoElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		C1424836341750C8BE7AC8AA /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = C14243136AB00031127FB128 /* Utils.m */; };
 		C14248491BFA9DCD646AF94A /* JRProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424361C4A4257D86155B10 /* JRProfile.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		C142484A42B9AFC6D5D601D1 /* PickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424F585B481C5D49BD59CE /* PickerViewController.m */; };
 		C142487456C256F4E8A6B8F6 /* JREmailsElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424B99517E925515349892 /* JREmailsElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C142488316311B5D3BBDB087 /* JRLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = C14241770AABEA63C283F326 /* JRLocation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		C14248A810139DE32425BB39 /* header.html in Resources */ = {isa = PBXBuildFile; fileRef = C142447EEE7E28B2CC631E46 /* header.html */; };
-		C142491925832C54B6ECBF33 /* Capture Integration Guide.md in Resources */ = {isa = PBXBuildFile; fileRef = C1424E7B60B494FE93B6A787 /* Capture Integration Guide.md */; };
-		C14249441E2D1F139DE3A0E7 /* doxygen_preprocessor.py in Resources */ = {isa = PBXBuildFile; fileRef = C1424F6BB2BD905EE2B6B0E3 /* doxygen_preprocessor.py */; };
 		C142494BA3A9BF2BE9DB63E7 /* JROnipLevelOneElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424280FC0D8147B2F3F632 /* JROnipLevelOneElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		C1424993DA251ACA3249A9E3 /* filterprocessor.py in Resources */ = {isa = PBXBuildFile; fileRef = C1424BFE52B5A71D2D823C4B /* filterprocessor.py */; };
 		C14249A701577A202A265659 /* JRUrlsElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C14240C14E4B336479AE4D7E /* JRUrlsElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C14249AA066B38E4A1001CA1 /* JRPrimaryAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = C14246DA76FD685A4A0D23EB /* JRPrimaryAddress.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C1424A8BB07F4A722F10E7A4 /* JRPinoLevelThreeElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424F2F1B46A605E1784AA0 /* JRPinoLevelThreeElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		C1424B28F2E76F3FA204C7CC /* DoxygenLayout.xml in Resources */ = {isa = PBXBuildFile; fileRef = C1424E64C0E35DC2511C3DA2 /* DoxygenLayout.xml */; };
-		C1424B34EBD57E1CB3AEB482 /* customdoxygen.css in Resources */ = {isa = PBXBuildFile; fileRef = C14247107B4C9ED2DD755B66 /* customdoxygen.css */; };
 		C1424B35DE88DD0747EA1318 /* JRBodyType.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424617E557E4728BF4DC56 /* JRBodyType.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C1424B404C1D5306B1DDD2DE /* JRCaptureUser.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424CC6362D87877B218CC9 /* JRCaptureUser.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C1424BE68E9D62FF40F0C529 /* JRPinoLevelOne.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424EB91544FC0C5A9AB0BA /* JRPinoLevelOne.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C1424C2310E295E5506D8FF8 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C1424D0430EBA3E484299DD2 /* Default-568h@2x.png */; };
-		C1424C27D8887C79A8084B40 /* GHPagesDoxyfile in Resources */ = {isa = PBXBuildFile; fileRef = C14245BE965372516F43A9DF /* GHPagesDoxyfile */; };
 		C1424C2C2DBA90B1864CE44B /* JROrganizationsElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C14240A47CC507EA303462A1 /* JROrganizationsElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C1424CF48E32855470D14691 /* JRPhoneNumbersElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424A814250D940D84AC7E9 /* JRPhoneNumbersElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		C1424D3F88711AFE6B0D165F /* GHPagesDoxyfile in Resources */ = {isa = PBXBuildFile; fileRef = C1424582890F476D34AFBE20 /* GHPagesDoxyfile */; };
 		C1424D8C0D3CAA6BD49936BF /* JRBestHand.m in Sources */ = {isa = PBXBuildFile; fileRef = C14248B63A1E7AD3B10A0458 /* JRBestHand.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		C1424D9244CD65065ED2809C /* enhancedtable.py in Resources */ = {isa = PBXBuildFile; fileRef = C1424E7FC07EC40BBFF0D039 /* enhancedtable.py */; };
 		C1424DF78FB8D1A62BF0BB44 /* JRProfilesElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C142467F8016EFC1FF106D0B /* JRProfilesElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C1424E3B144EDDE0ABA1E0E7 /* AlertViewWithBlocks.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424FEDA9B53C3B9EE9AB6E /* AlertViewWithBlocks.m */; };
-		C1424E5689AD0F1CCEC09D3C /* customdoxygen.css in Resources */ = {isa = PBXBuildFile; fileRef = C1424071B60EABD163F01EE7 /* customdoxygen.css */; };
 		C1424EB77794146F54D14F63 /* JRProfilePhotosElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C14244EE0EAD078905BF24CD /* JRProfilePhotosElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		C1424ECE25FD3845B28DF00F /* project_config.vim in Resources */ = {isa = PBXBuildFile; fileRef = C1424EC7A86108254FD80FE7 /* project_config.vim */; };
 		C1424ED02A2490D5B54FBE8D /* JRStatusesElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C14249352079D33F2A4F8ED3 /* JRStatusesElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C1424EE3FA47A4163FC6BB09 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1424E26376A97DCC6454072 /* Security.framework */; };
-		C1424F2CCAF318352927247D /* footer.html in Resources */ = {isa = PBXBuildFile; fileRef = C14243266D692F01B6C47DAA /* footer.html */; };
-		C1424F638368A482DFD0E5BA /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = C1424A87A1F14D7E657E8A5B /* Makefile */; };
-		C1424FA7DB8DB396C51523E9 /* Doxyfile in Resources */ = {isa = PBXBuildFile; fileRef = C1424D6CB84E8CC193E9DF1E /* Doxyfile */; };
 		C1424FB0FC907D384EFFAB75 /* JRPinoLevelTwo.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424F6B40DA73E6114C4084 /* JRPinoLevelTwo.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D806D1B616A7638E008EEF96 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = D806D1B516A7638E008EEF96 /* assets */; };
 		D8A24B2B172738EC00310669 /* JRBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = D8A24A13172738EC00310669 /* JRBase64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -333,6 +313,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6706F243FF1B1D4DBFCE6B5D /* Engage-Only Integration Guide.md */ = {isa = PBXFileReference; lastKnownFileType = file.md; name = "Engage-Only Integration Guide.md"; path = "../../../jump.ios/Docs/Engage-Only Integration Guide.md"; sourceTree = "<group>"; };
+		6706F619E4BB76864B478610 /* Engage Custom Provider Guide.md */ = {isa = PBXFileReference; lastKnownFileType = file.md; name = "Engage Custom Provider Guide.md"; path = "../../../jump.ios/Docs/Engage Custom Provider Guide.md"; sourceTree = "<group>"; };
+		6706FDE35290E73F4513572D /* JUMP Integration Guide.md */ = {isa = PBXFileReference; lastKnownFileType = file.md; name = "JUMP Integration Guide.md"; path = "../../../jump.ios/Docs/JUMP Integration Guide.md"; sourceTree = "<group>"; };
+		6706FFEFEE62C8F93EAA251B /* Authentication-Token-URL.md */ = {isa = PBXFileReference; lastKnownFileType = file.md; name = "Authentication-Token-URL.md"; path = "../../../jump.ios/Docs/Authentication-Token-URL.md"; sourceTree = "<group>"; };
 		90C36B6B7717AA0C893E08E0 /* SimpleCaptureDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleCaptureDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		90C36B6B7717AA0C893E08E9 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		90C36B6B7717AA0C893E08EB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -374,7 +358,6 @@
 		C14240251E4400698918475F /* JRObjectLevelOne.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRObjectLevelOne.h; sourceTree = "<group>"; };
 		C142405B980E0915FF271995 /* JRPinoLevelTwo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRPinoLevelTwo.h; sourceTree = "<group>"; };
 		C142405CFE00AF36E95A00C5 /* JRBestHand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRBestHand.h; sourceTree = "<group>"; };
-		C1424071B60EABD163F01EE7 /* customdoxygen.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = customdoxygen.css; path = ../../Docs/Doxygen/JRCapture/customdoxygen.css; sourceTree = "<group>"; };
 		C142408A315646B089CF7CCE /* JRImsElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRImsElement.h; sourceTree = "<group>"; };
 		C14240982598BE236DBEE9EE /* JRTournamentsPlayedElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRTournamentsPlayedElement.h; sourceTree = "<group>"; };
 		C14240A47CC507EA303462A1 /* JROrganizationsElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JROrganizationsElement.m; sourceTree = "<group>"; };
@@ -390,25 +373,18 @@
 		C1424280FC0D8147B2F3F632 /* JROnipLevelOneElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JROnipLevelOneElement.m; sourceTree = "<group>"; };
 		C1424291B49E5600AC8E83D1 /* JROnipLevelThree.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JROnipLevelThree.m; sourceTree = "<group>"; };
 		C14242B75343FD75920D56E4 /* JRName.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRName.m; sourceTree = "<group>"; };
-		C14243136AB00031127FB128 /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utils.m; sourceTree = "<group>"; };
 		C142431CC36D9929516BAD70 /* JRPhoneNumbersElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRPhoneNumbersElement.h; sourceTree = "<group>"; };
-		C14243266D692F01B6C47DAA /* footer.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = footer.html; path = ../../Docs/Doxygen/JREngage/footer.html; sourceTree = "<group>"; };
 		C1424361C4A4257D86155B10 /* JRProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRProfile.m; sourceTree = "<group>"; };
-		C142447EEE7E28B2CC631E46 /* header.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = header.html; path = ../../Docs/Doxygen/JREngage/header.html; sourceTree = "<group>"; };
 		C142449C40B6A93FF4E64950 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = SOURCE_ROOT; };
 		C14244EE0EAD078905BF24CD /* JRProfilePhotosElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRProfilePhotosElement.m; sourceTree = "<group>"; };
 		C142450693B52DF7FC3FF1B9 /* JRAddressesElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRAddressesElement.m; sourceTree = "<group>"; };
 		C1424580A96FA450B14016EA /* JRPluralLevelThreeElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRPluralLevelThreeElement.m; sourceTree = "<group>"; };
-		C1424582890F476D34AFBE20 /* GHPagesDoxyfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = GHPagesDoxyfile; path = ../../Docs/Doxygen/JREngage/GHPagesDoxyfile; sourceTree = "<group>"; };
-		C14245BE965372516F43A9DF /* GHPagesDoxyfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = GHPagesDoxyfile; path = ../../Docs/Doxygen/JRCapture/GHPagesDoxyfile; sourceTree = "<group>"; };
 		C14245C3951CF02145544E9E /* JRPluralLevelTwoElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRPluralLevelTwoElement.h; sourceTree = "<group>"; };
-		C14245FED2A76B7E148FD52D /* setup.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = setup.py; path = "../../Docs/Doxygen/JRCapture/doxygen_preprocessor-r30/setup.py"; sourceTree = "<group>"; };
 		C1424617E557E4728BF4DC56 /* JRBodyType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRBodyType.m; sourceTree = "<group>"; };
 		C142467F8016EFC1FF106D0B /* JRProfilesElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRProfilesElement.m; sourceTree = "<group>"; };
 		C142468F037422034F48FBE8 /* JRPluralLevelOneElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRPluralLevelOneElement.h; sourceTree = "<group>"; };
 		C14246C66C938C1D21417B7B /* JRProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRProfile.h; sourceTree = "<group>"; };
 		C14246DA76FD685A4A0D23EB /* JRPrimaryAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRPrimaryAddress.m; sourceTree = "<group>"; };
-		C14247107B4C9ED2DD755B66 /* customdoxygen.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = customdoxygen.css; path = ../../Docs/Doxygen/JREngage/customdoxygen.css; sourceTree = "<group>"; };
 		C14247470DAADFD1C1038C2B /* JRCurrentLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCurrentLocation.h; sourceTree = "<group>"; };
 		C142474CF67B29AAD7184D6F /* JRPluralLevelOneElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRPluralLevelOneElement.m; sourceTree = "<group>"; };
 		C14247AF1691137BCB05D19F /* JRName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRName.h; sourceTree = "<group>"; };
@@ -416,10 +392,8 @@
 		C1424820BB3D15DC3A2181F6 /* JRObjectLevelTwo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRObjectLevelTwo.m; sourceTree = "<group>"; };
 		C14248B63A1E7AD3B10A0458 /* JRBestHand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRBestHand.m; sourceTree = "<group>"; };
 		C14248C574CFEBC65C9F98CA /* JRGamesElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRGamesElement.h; sourceTree = "<group>"; };
-		C14248EE2F8D8C0ADD0D0B28 /* error_handler.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = error_handler.py; path = "../../Docs/Doxygen/JRCapture/doxygen_preprocessor-r30/error_handler.py"; sourceTree = "<group>"; };
 		C14248EFE00221900673E886 /* JRCurrentLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRCurrentLocation.m; sourceTree = "<group>"; };
 		C14249352079D33F2A4F8ED3 /* JRStatusesElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRStatusesElement.m; sourceTree = "<group>"; };
-		C142495A04F2C0954DA78A1C /* doxycomment.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = doxycomment.py; path = "../../Docs/Doxygen/JRCapture/doxygen_preprocessor-r30/doxycomment.py"; sourceTree = "<group>"; };
 		C1424969307CDB4C8BD8B17E /* JRPinoLevelOne.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRPinoLevelOne.h; sourceTree = "<group>"; };
 		C142497BAC5C83591463065E /* JRObjectLevelTwo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRObjectLevelTwo.h; sourceTree = "<group>"; };
 		C14249B9A86322CE1634EA23 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -428,44 +402,28 @@
 		C1424A4F9A63C7BD1C90EBC0 /* AlertViewWithBlocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlertViewWithBlocks.h; path = Classes/AlertViewWithBlocks.h; sourceTree = "<group>"; };
 		C1424A814250D940D84AC7E9 /* JRPhoneNumbersElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRPhoneNumbersElement.m; sourceTree = "<group>"; };
 		C1424A85D1F57A461D300A4E /* JRGamesElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRGamesElement.m; sourceTree = "<group>"; };
-		C1424A87A1F14D7E657E8A5B /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; name = Makefile; path = "../../Docs/Doxygen/JRCapture/doxygen_preprocessor-r30/Makefile"; sourceTree = "<group>"; };
 		C1424B34EEB5C7B290ABCA09 /* JRBodyType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRBodyType.h; sourceTree = "<group>"; };
 		C1424B7FDCF7AC3EF4F8AE10 /* JROnipLevelOneElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JROnipLevelOneElement.h; sourceTree = "<group>"; };
-		C1424B87BAEE593965503D2C /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 		C1424B99517E925515349892 /* JREmailsElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JREmailsElement.m; sourceTree = "<group>"; };
 		C1424BAB9EBE3E94B18F01FF /* JRObjectLevelThree.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRObjectLevelThree.m; sourceTree = "<group>"; };
-		C1424BD6613FF3E8362C18D8 /* footer.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = footer.html; path = ../../Docs/Doxygen/JRCapture/footer.html; sourceTree = "<group>"; };
-		C1424BFE52B5A71D2D823C4B /* filterprocessor.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = filterprocessor.py; path = "../../Docs/Doxygen/JRCapture/doxygen_preprocessor-r30/filterprocessor.py"; sourceTree = "<group>"; };
-		C1424C4F463DC9531C07EBD9 /* DoxygenLayout.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = DoxygenLayout.xml; path = ../../Docs/Doxygen/JRCapture/DoxygenLayout.xml; sourceTree = "<group>"; };
 		C1424C5D86D5E45ACF27960A /* JROnipLevelTwo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JROnipLevelTwo.m; sourceTree = "<group>"; };
-		C1424CAFA5A48370915C4422 /* Doxyfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Doxyfile; path = ../../Docs/Doxygen/JRCapture/Doxyfile; sourceTree = "<group>"; };
 		C1424CC6362D87877B218CC9 /* JRCaptureUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRCaptureUser.m; sourceTree = "<group>"; };
 		C1424CECB9CFE1FC1F934420 /* JRAccountsElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRAccountsElement.m; sourceTree = "<group>"; };
 		C1424D0430EBA3E484299DD2 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = SOURCE_ROOT; };
 		C1424D191585D5D77ADCB097 /* JRProfilePhotosElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRProfilePhotosElement.h; sourceTree = "<group>"; };
 		C1424D244F9BABCA2B224DE1 /* JRPhotosElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRPhotosElement.h; sourceTree = "<group>"; };
-		C1424D6CB84E8CC193E9DF1E /* Doxyfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Doxyfile; path = ../../Docs/Doxygen/JREngage/Doxyfile; sourceTree = "<group>"; };
 		C1424D6CCEC2655D90E77A75 /* CaptureRegistrationForm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CaptureRegistrationForm.m; sourceTree = "<group>"; };
 		C1424D7ECB9C03332297E44E /* JROnipLevelTwo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JROnipLevelTwo.h; sourceTree = "<group>"; };
-		C1424DC53EE6F761A86B3BAC /* statemachine.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = statemachine.py; path = "../../Docs/Doxygen/JRCapture/doxygen_preprocessor-r30/statemachine.py"; sourceTree = "<group>"; };
 		C1424E19E09A12A3CD840B88 /* JROrganizationsElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JROrganizationsElement.h; sourceTree = "<group>"; };
 		C1424E26376A97DCC6454072 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		C1424E64C0E35DC2511C3DA2 /* DoxygenLayout.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = DoxygenLayout.xml; path = ../../Docs/Doxygen/JREngage/DoxygenLayout.xml; sourceTree = "<group>"; };
-		C1424E75D6BC0B600C577C8F /* PickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickerViewController.h; sourceTree = "<group>"; };
-		C1424E7B60B494FE93B6A787 /* Capture Integration Guide.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.md; name = "Capture Integration Guide.md"; path = "../../Docs/Capture Integration Guide.md"; sourceTree = "<group>"; };
-		C1424E7FC07EC40BBFF0D039 /* enhancedtable.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = enhancedtable.py; path = "../../Docs/Doxygen/JRCapture/doxygen_preprocessor-r30/enhancedtable.py"; sourceTree = "<group>"; };
 		C1424EB91544FC0C5A9AB0BA /* JRPinoLevelOne.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRPinoLevelOne.m; sourceTree = "<group>"; };
-		C1424EC7A86108254FD80FE7 /* project_config.vim */ = {isa = PBXFileReference; lastKnownFileType = file.vim; name = project_config.vim; path = "../../Docs/Doxygen/JRCapture/doxygen_preprocessor-r30/Vim/project_config.vim"; sourceTree = "<group>"; };
 		C1424EE0316404161563B921 /* JRAccountsElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRAccountsElement.h; sourceTree = "<group>"; };
 		C1424F0B285311C5951C9F26 /* JRPrimaryAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRPrimaryAddress.h; sourceTree = "<group>"; };
-		C1424F18133CA55D39D2DBEF /* header.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = header.html; path = ../../Docs/Doxygen/JRCapture/header.html; sourceTree = "<group>"; };
 		C1424F23CB7C9BD6A494B361 /* JRPinoLevelThreeElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRPinoLevelThreeElement.h; sourceTree = "<group>"; };
 		C1424F2F1B46A605E1784AA0 /* JRPinoLevelThreeElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRPinoLevelThreeElement.m; sourceTree = "<group>"; };
 		C1424F43C04501CDB84C229D /* JROnipLevelThree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JROnipLevelThree.h; sourceTree = "<group>"; };
 		C1424F50237D7AC7AB6D3CA4 /* JRPluralLevelThreeElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRPluralLevelThreeElement.h; sourceTree = "<group>"; };
-		C1424F585B481C5D49BD59CE /* PickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickerViewController.m; sourceTree = "<group>"; };
 		C1424F6B40DA73E6114C4084 /* JRPinoLevelTwo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRPinoLevelTwo.m; sourceTree = "<group>"; };
-		C1424F6BB2BD905EE2B6B0E3 /* doxygen_preprocessor.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = doxygen_preprocessor.py; path = "../../Docs/Doxygen/JRCapture/doxygen_preprocessor-r30/doxygen_preprocessor.py"; sourceTree = "<group>"; };
 		C1424F9D9E28612C0F0D8E32 /* JRProfilesElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRProfilesElement.h; sourceTree = "<group>"; };
 		C1424FD90D1DBB8C115B8826 /* JRPluralLevelTwoElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRPluralLevelTwoElement.m; sourceTree = "<group>"; };
 		C1424FEDA9B53C3B9EE9AB6E /* AlertViewWithBlocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlertViewWithBlocks.m; path = Classes/AlertViewWithBlocks.m; sourceTree = "<group>"; };
@@ -847,10 +805,6 @@
 				9F7B6A8E15336480002BF452 /* BackplaneUtils.m */,
 				9F7B6A9115336480002BF452 /* RootViewController.h */,
 				9F7B6A9215336480002BF452 /* RootViewController.m */,
-				C1424F585B481C5D49BD59CE /* PickerViewController.m */,
-				C1424E75D6BC0B600C577C8F /* PickerViewController.h */,
-				C14243136AB00031127FB128 /* Utils.m */,
-				C1424B87BAEE593965503D2C /* Utils.h */,
 				C1424FEDA9B53C3B9EE9AB6E /* AlertViewWithBlocks.m */,
 				C1424A4F9A63C7BD1C90EBC0 /* AlertViewWithBlocks.h */,
 				C1424D6CCEC2655D90E77A75 /* CaptureRegistrationForm.m */,
@@ -901,37 +855,6 @@
 			);
 			name = "images-2x";
 			path = "Resources/images-2x";
-			sourceTree = "<group>";
-		};
-		C142416922480FDEA49F57B1 /* JRCapture */ = {
-			isa = PBXGroup;
-			children = (
-				C1424071B60EABD163F01EE7 /* customdoxygen.css */,
-				C1424CAFA5A48370915C4422 /* Doxyfile */,
-				C1424DA00F0CFADE55659464 /* doxygen_preprocessor-r30 */,
-				C1424C4F463DC9531C07EBD9 /* DoxygenLayout.xml */,
-				C1424BD6613FF3E8362C18D8 /* footer.html */,
-				C14245BE965372516F43A9DF /* GHPagesDoxyfile */,
-				C1424F18133CA55D39D2DBEF /* header.html */,
-			);
-			name = JRCapture;
-			sourceTree = "<group>";
-		};
-		C142438118E1128F1DD35B08 /* Doxygen */ = {
-			isa = PBXGroup;
-			children = (
-				C142416922480FDEA49F57B1 /* JRCapture */,
-				C14248B9E8566F4DF89F3CCC /* JREngage */,
-			);
-			name = Doxygen;
-			sourceTree = "<group>";
-		};
-		C142460C4A6593AD7E0B0584 /* Vim */ = {
-			isa = PBXGroup;
-			children = (
-				C1424EC7A86108254FD80FE7 /* project_config.vim */,
-			);
-			name = Vim;
 			sourceTree = "<group>";
 		};
 		C14246C38627EFC7D701358C /* Generated */ = {
@@ -1007,19 +930,6 @@
 			path = Generated;
 			sourceTree = "<group>";
 		};
-		C14248B9E8566F4DF89F3CCC /* JREngage */ = {
-			isa = PBXGroup;
-			children = (
-				C14247107B4C9ED2DD755B66 /* customdoxygen.css */,
-				C1424D6CB84E8CC193E9DF1E /* Doxyfile */,
-				C1424E64C0E35DC2511C3DA2 /* DoxygenLayout.xml */,
-				C14243266D692F01B6C47DAA /* footer.html */,
-				C1424582890F476D34AFBE20 /* GHPagesDoxyfile */,
-				C142447EEE7E28B2CC631E46 /* header.html */,
-			);
-			name = JREngage;
-			sourceTree = "<group>";
-		};
 		C1424A69565805943D42F115 /* JRCapture */ = {
 			isa = PBXGroup;
 			children = (
@@ -1031,26 +941,12 @@
 		C1424A8BB874F02EEE6D8982 /* Docs */ = {
 			isa = PBXGroup;
 			children = (
-				C1424E7B60B494FE93B6A787 /* Capture Integration Guide.md */,
-				C142438118E1128F1DD35B08 /* Doxygen */,
+				6706FFEFEE62C8F93EAA251B /* Authentication-Token-URL.md */,
+				6706F619E4BB76864B478610 /* Engage Custom Provider Guide.md */,
+				6706F243FF1B1D4DBFCE6B5D /* Engage-Only Integration Guide.md */,
+				6706FDE35290E73F4513572D /* JUMP Integration Guide.md */,
 			);
 			name = Docs;
-			sourceTree = "<group>";
-		};
-		C1424DA00F0CFADE55659464 /* doxygen_preprocessor-r30 */ = {
-			isa = PBXGroup;
-			children = (
-				C142495A04F2C0954DA78A1C /* doxycomment.py */,
-				C1424F6BB2BD905EE2B6B0E3 /* doxygen_preprocessor.py */,
-				C1424E7FC07EC40BBFF0D039 /* enhancedtable.py */,
-				C14248EE2F8D8C0ADD0D0B28 /* error_handler.py */,
-				C1424BFE52B5A71D2D823C4B /* filterprocessor.py */,
-				C1424A87A1F14D7E657E8A5B /* Makefile */,
-				C14245FED2A76B7E148FD52D /* setup.py */,
-				C1424DC53EE6F761A86B3BAC /* statemachine.py */,
-				C142460C4A6593AD7E0B0584 /* Vim */,
-			);
-			name = "doxygen_preprocessor-r30";
 			sourceTree = "<group>";
 		};
 		D8A24A10172738EC00310669 /* Janrain */ = {
@@ -1610,27 +1506,6 @@
 				9F7B6AB01533648C002BF452 /* background.png in Resources */,
 				9F5792AC1595141500478D15 /* StringArrayDrillDownViewController.xib in Resources */,
 				D806D1B616A7638E008EEF96 /* assets in Resources */,
-				C142491925832C54B6ECBF33 /* Capture Integration Guide.md in Resources */,
-				C1424E5689AD0F1CCEC09D3C /* customdoxygen.css in Resources */,
-				C14245C2383AA3B93AF465ED /* Doxyfile in Resources */,
-				C1424497B2B2C8AC2EAAD862 /* doxycomment.py in Resources */,
-				C14249441E2D1F139DE3A0E7 /* doxygen_preprocessor.py in Resources */,
-				C1424D9244CD65065ED2809C /* enhancedtable.py in Resources */,
-				C142462490AAE690C036EA7B /* error_handler.py in Resources */,
-				C1424993DA251ACA3249A9E3 /* filterprocessor.py in Resources */,
-				C14242ACBA6293AC3DC42128 /* setup.py in Resources */,
-				C142472DD87092892F6D64F8 /* statemachine.py in Resources */,
-				C1424ECE25FD3845B28DF00F /* project_config.vim in Resources */,
-				C14244B0B84D32A5E1269DBF /* DoxygenLayout.xml in Resources */,
-				C142459B3B80B4AF003C7C84 /* footer.html in Resources */,
-				C1424C27D8887C79A8084B40 /* GHPagesDoxyfile in Resources */,
-				C14245DDAB3E23F39BFE2B40 /* header.html in Resources */,
-				C1424B34EBD57E1CB3AEB482 /* customdoxygen.css in Resources */,
-				C1424FA7DB8DB396C51523E9 /* Doxyfile in Resources */,
-				C1424B28F2E76F3FA204C7CC /* DoxygenLayout.xml in Resources */,
-				C1424F2CCAF318352927247D /* footer.html in Resources */,
-				C1424D3F88711AFE6B0D165F /* GHPagesDoxyfile in Resources */,
-				C14248A810139DE32425BB39 /* header.html in Resources */,
 				C1424221EF003C4A217BE9F5 /* Default.png in Resources */,
 				C1424C2310E295E5506D8FF8 /* Default-568h@2x.png in Resources */,
 				D8A24B2C172738EC00310669 /* .gitignore in Resources */,
@@ -1829,6 +1704,10 @@
 				D8A24C06172738EC00310669 /* JRPublishActivityController.xib in Resources */,
 				D8A24C07172738EC00310669 /* JRUserLandingController.xib in Resources */,
 				D8A24C08172738EC00310669 /* JRWebViewController.xib in Resources */,
+				6706F04CB24F25B6607F53A5 /* Authentication-Token-URL.md in Resources */,
+				6706F18263DF25C5CAEA8F6C /* Engage Custom Provider Guide.md in Resources */,
+				6706F0DA7F5FA9A15B437997 /* Engage-Only Integration Guide.md in Resources */,
+				6706F2F5D380E2BE1B74B0C3 /* JUMP Integration Guide.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1871,8 +1750,6 @@
 				9F7B6A9715336480002BF452 /* BackplaneUtils.m in Sources */,
 				9F7B6A9915336480002BF452 /* RootViewController.m in Sources */,
 				9FD2B6C114F8387B00053EA4 /* StringArrayDrillDownViewController.m in Sources */,
-				C142484A42B9AFC6D5D601D1 /* PickerViewController.m in Sources */,
-				C1424836341750C8BE7AC8AA /* Utils.m in Sources */,
 				C14246B979FA26858E828B21 /* JRAccountsElement.m in Sources */,
 				C142406513994C5536A1DD76 /* JRAddressesElement.m in Sources */,
 				C1424B35DE88DD0747EA1318 /* JRBodyType.m in Sources */,
@@ -1907,7 +1784,6 @@
 				C14247A2A61A413139D8CEA8 /* JRPluralLevelTwoElement.m in Sources */,
 				C142437C81E8238B9093B74D /* JRTournamentsPlayedElement.m in Sources */,
 				C1424E3B144EDDE0ABA1E0E7 /* AlertViewWithBlocks.m in Sources */,
-				C1424F638368A482DFD0E5BA /* Makefile in Sources */,
 				C14245EB6DB26259A478A2D4 /* CaptureRegistrationForm.m in Sources */,
 				D8A24B2B172738EC00310669 /* JRBase64.m in Sources */,
 				D8A24B35172738EC00310669 /* JRCapture.m in Sources */,

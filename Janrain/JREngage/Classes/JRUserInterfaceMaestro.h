@@ -71,13 +71,13 @@ typedef enum
 
 @interface JRUserInterfaceMaestro : NSObject <UIPopoverControllerDelegate>
 
-+ (JRUserInterfaceMaestro*)jrUserInterfaceMaestroWithSessionData:(JRSessionData*)newSessionData;
-+ (JRUserInterfaceMaestro*)sharedMaestro;
++ (JRUserInterfaceMaestro *)jrUserInterfaceMaestroWithSessionData:(JRSessionData *)newSessionData;
++ (JRUserInterfaceMaestro *)sharedMaestro;
 
 - (void)loadModalNavigationControllerWithViewController:(UIViewController *)rootViewController;
 - (void)loadApplicationNavigationControllerWithViewController:(UIViewController *)rootViewController;
-- (void)showAuthenticationDialogWithCustomInterface:(NSDictionary*)customizations;
-- (void)showPublishingDialogForActivityWithCustomInterface:(NSDictionary*)customizations;
+- (void)showAuthenticationDialogWithCustomInterface:(NSDictionary *)customizations __unused;
+- (void)showPublishingDialogForActivityWithCustomInterface:(NSDictionary *)customizations __unused;
 - (void)unloadUserInterfaceWithTransitionStyle:(UIModalTransitionStyle)style;
 
 - (void)authenticationRestarted;

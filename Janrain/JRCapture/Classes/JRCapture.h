@@ -221,7 +221,7 @@ typedef enum
  *
  * @param provider
  *   The name of the provider on which the user authenticated. For a list of possible strings,
- *   please see the \ref basicProviders "List of Providers"
+ *   please see the \ref authenticationProviders "List of Providers"
  *
  * @par Example:
  *   The structure of the auth_info dictionary (represented here in json) should look something like
@@ -297,7 +297,7 @@ typedef enum
  *
  * @param provider
  *   The name of the provider on which the user tried to authenticate. For a list of possible strings,
- *   please see the \ref basicProviders "List of Providers"
+ *   please see the \ref authenticationProviders "List of Providers"
  *
  * @note
  * This message is not sent if authentication was canceled. To be notified of a canceled authentication,
@@ -376,7 +376,8 @@ typedef enum
 captureEnableThinRegistration:(BOOL)enableThinRegistration
  captureTraditionalSignInType:(JRConventionalSigninType)captureTraditionalSignInType
            captureFlowVersion:(NSString *)captureFlowVersion
-  captureRegistrationFormName:(NSString *)captureRegistrationFormName captureAppId:(NSString *)captureAppId;
+  captureRegistrationFormName:(NSString *)captureRegistrationFormName captureAppId:(NSString *)captureAppId
+      customIdentityProviders:(NSDictionary *)customProviders;
 
 /**
  * Set the Capture access token for an authenticated user
@@ -417,7 +418,7 @@ captureEnableThinRegistration:(BOOL)enableThinRegistration
  *
  * @param provider
  *   The name of the provider on which the user will authenticate. For a list of possible strings,
- *   please see the \ref basicProviders "List of Providers"
+ *   please see the \ref authenticationProviders "List of Providers"
  **/
 + (void)startEngageSigninDialogOnProvider:(NSString *)provider
                               forDelegate:(id<JRCaptureSigninDelegate>)delegate __unused;
@@ -441,7 +442,7 @@ captureEnableThinRegistration:(BOOL)enableThinRegistration
  *
  * @param provider
  *   The name of the provider on which the user will authenticate. For a list of possible strings,
- *   please see the \ref basicProviders "List of Providers"
+ *   please see the \ref authenticationProviders "List of Providers"
  *
  * @param customInterfaceOverrides
  *   A dictionary of objects and properties, indexed by the set of
@@ -460,7 +461,7 @@ captureEnableThinRegistration:(BOOL)enableThinRegistration
  *
  * @param provider
  *   The name of the provider on which the user will authenticate. For a list of possible strings,
- *   please see the \ref basicProviders "List of Providers"
+ *   please see the \ref authenticationProviders "List of Providers"
  *
  * @param customInterfaceOverrides
  *   A dictionary of objects and properties, indexed by the set of
@@ -597,7 +598,7 @@ captureEnableThinRegistration:(BOOL)enableThinRegistration
 </script>
 @endhtmlonly
 
-@anchor basicProviders
+@anchor authenticationProviders
 @htmlonly
 <!-- Redundant attributes to force scrolling to work across multiple browsers -->
 <iframe id="basic" src="https://rpxnow.com/docs/mobile_providers?list=basic&device=iphone" width="100%" height="100%"
@@ -607,7 +608,7 @@ captureEnableThinRegistration:(BOOL)enableThinRegistration
 </iframe></p>
 @endhtmlonly
 
-@anchor socialProviders
+@anchor sharingProviders
 @htmlonly
 <iframe id="social" src="https://rpxnow.com/docs/mobile_providers?list=social&device=iphone" width="100%" height="100%"
     style="border:none; overflow:hidden;" frameborder="0" scrolling="no">

@@ -32,8 +32,17 @@
 #import "JRCapture.h"
 #import "BackplaneUtils.h"
 #import "debug_log.h"
+#import "JRSessionData.h"
+
+@interface JRSessionData (Internal)
++ (void)setServerUrl:(NSString *)serverUrl_;
+@end
 
 AppDelegate *appDelegate = nil;
+
+@interface AppDelegate ()
+@property(nonatomic, strong) NSDictionary *customProviders;
+@end
 
 @implementation AppDelegate
 @synthesize window;
@@ -187,6 +196,8 @@ AppDelegate *appDelegate = nil;
         self.liveFyreSiteId = [cfg objectForKey:@"liveFyreSiteId"];
     if ([cfg objectForKey:@"liveFyreArticleId"])
         self.liveFyreArticleId = [cfg objectForKey:@"liveFyreArticleId"];
+    if ([cfg objectForKey:@"rpxDomain"])
+        [JRSessionData setServerUrl:[NSString stringWithFormat:@"https://%@", [cfg objectForKey:@"rpxDomain"]]];
 }
 
 - (void)saveCaptureUser

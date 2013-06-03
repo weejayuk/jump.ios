@@ -695,7 +695,7 @@ static JRUserInterfaceMaestro* singleton = nil;
     return [[self sharedMaestro] retain];
 }
 
-- (id)copyWithZone:(__unused NSZone *)zone
+- (id)copyWithZone:(__unused NSZone *)zone __unused
 {
     return self;
 }
@@ -747,7 +747,7 @@ static JRUserInterfaceMaestro* singleton = nil;
     return self;
 }
 
-+ (id)jrUserInterfaceMaestroWithSessionData:(JRSessionData*)newSessionData
++ (id)jrUserInterfaceMaestroWithSessionData:(JRSessionData *)newSessionData
 {
     if(singleton)
         return singleton;
@@ -755,10 +755,10 @@ static JRUserInterfaceMaestro* singleton = nil;
     if (newSessionData == nil)
         return nil;
 
-    return [[((JRUserInterfaceMaestro*)[super allocWithZone:nil]) initWithSessionData:newSessionData] autorelease];
+    return [[((JRUserInterfaceMaestro *)[super allocWithZone:nil]) initWithSessionData:newSessionData] autorelease];
 }
 
-- (void)buildCustomInterface:(NSDictionary*)customizations
+- (void)buildCustomInterface:(NSDictionary *)customizations
 {
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
 
@@ -855,7 +855,7 @@ static JRUserInterfaceMaestro* singleton = nil;
         // We do this here, because sometimes we pop straight to the user landing controller and we need the
         // back-button's title to be correct
         if ([customInterface objectForKey:kJRProviderTableTitleString] &&
-            ((NSString*)[customInterface objectForKey:kJRProviderTableTitleString]).length)
+            ((NSString *)[customInterface objectForKey:kJRProviderTableTitleString]).length)
             myProvidersController.title = [customInterface objectForKey:kJRProviderTableTitleString];
         else
             myProvidersController.title = @"Providers";
@@ -921,7 +921,7 @@ static JRUserInterfaceMaestro* singleton = nil;
         [sessionData removeDelegate:myPublishActivityController];
 }
 
-- (UINavigationController*)createDefaultNavigationControllerWithRootViewController:(UIViewController *)root
+- (UINavigationController *)createDefaultNavigationControllerWithRootViewController:(UIViewController *)root
 {
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:root];
     [navigationController autorelease];
@@ -936,7 +936,7 @@ static JRUserInterfaceMaestro* singleton = nil;
     return navigationController;
 }
 
-- (UIPopoverController*)createPopoverControllerWithNavigationController:(UINavigationController*)navigationController
+- (UIPopoverController *)createPopoverControllerWithNavigationController:(UINavigationController *)navigationController
 {
     // Allocating UIPopoverController with class string allocation so that it compiles for iPhone OS versions < v3.2
     UIPopoverController *popoverController =
@@ -975,22 +975,22 @@ static JRUserInterfaceMaestro* singleton = nil;
     * log in again.  If the RP's configuration has changed and their last-used provider has been dropped, but the
     * configuration call hasn't returned from the server yet, then this case may fall through the cracks (although
     * this case is very unlikely to happen). */
-    if (sessionData.returningBasicProvider                                                      /* a */
-        && [sessionData authenticatedUserForProviderNamed:sessionData.returningBasicProvider]   /* b */
+    if (sessionData.returningAuthenticationProvider                                                      /* a */
+        && [sessionData authenticatedUserForProviderNamed:sessionData.returningAuthenticationProvider]   /* b */
         && !sessionData.currentProvider                                                         /* c */
         && !sessionData.alwaysForceReauth                                                       /* d */
-        && ![sessionData getProviderNamed:sessionData.returningBasicProvider].forceReauth       /* e */
+        && ![sessionData getProviderNamed:sessionData.returningAuthenticationProvider].forceReauth       /* e */
         && !sessionData.socialSharing                                                           /* f */
         && !sessionData.captureWidget
-        && [sessionData.basicProviders containsObject:sessionData.returningBasicProvider]       /* g */
-        && ![((NSArray*)[customInterface objectForKey:kJRRemoveProvidersFromAuthentication])    /* h */
-                    containsObject:sessionData.returningBasicProvider])
+        && [sessionData.authenticationProviders containsObject:sessionData.returningAuthenticationProvider]       /* g */
+        && ![((NSArray *)[customInterface objectForKey:kJRRemoveProvidersFromAuthentication])    /* h */
+                    containsObject:sessionData.returningAuthenticationProvider])
         return YES;
 
     return NO;
 }
 
-- (void)loadModalNavigationControllerWithViewController:(UIViewController*)rootViewController
+- (void)loadModalNavigationControllerWithViewController:(UIViewController *)rootViewController
 {
     DLog(@"");
 
@@ -1017,7 +1017,7 @@ static JRUserInterfaceMaestro* singleton = nil;
             [self createPopoverControllerWithNavigationController:jrModalViewController.myNavigationController];
 
     /* If the code is used by a universal application and is compiled for versions of iOS that don't
-       support popovercontrollers (i.e., iOS < v3.2), this will return nil;  If it does, fall back
+       support UIPopoverControllers (i.e., iOS < v3.2), this will return nil;  If it does, fall back
        to modal dialog presentation. This might never happen, because the above code wouldn't be called
        on the iPhone anyway... */
     if (!jrModalViewController.myPopoverController)
@@ -1032,7 +1032,7 @@ static JRUserInterfaceMaestro* singleton = nil;
 
     if ([self shouldOpenToUserLandingPage])
     {
-        [sessionData setCurrentProvider:[sessionData getProviderNamed:sessionData.returningBasicProvider]];
+        [sessionData setCurrentProvider:[sessionData getProviderNamed:sessionData.returningAuthenticationProvider]];
         [jrModalViewController.myNavigationController pushViewController:myUserLandingController animated:NO];
     }
 
@@ -1050,7 +1050,7 @@ static JRUserInterfaceMaestro* singleton = nil;
         [jrModalViewController presentModalNavigationController];
 }
 
-- (void)loadApplicationNavigationControllerWithViewController:(UIViewController*)rootViewController
+- (void)loadApplicationNavigationControllerWithViewController:(UIViewController *)rootViewController
 {
     DLog(@"");
     if (!viewControllerToPopTo)
@@ -1058,7 +1058,7 @@ static JRUserInterfaceMaestro* singleton = nil;
 
     if ([self shouldOpenToUserLandingPage])
     {
-        [sessionData setCurrentProvider:[sessionData getProviderNamed:sessionData.returningBasicProvider]];
+        [sessionData setCurrentProvider:[sessionData getProviderNamed:sessionData.returningAuthenticationProvider]];
         [applicationNavigationController pushViewController:rootViewController animated:NO];
         [applicationNavigationController pushViewController:myUserLandingController animated:YES];
     }
@@ -1068,25 +1068,18 @@ static JRUserInterfaceMaestro* singleton = nil;
     }
 }
 
-
-// TODO: Document this function
-- (JRProvider*)weAreOnlyAuthenticatingOnThisProvider
+- (JRProvider *)weAreOnlyAuthenticatingOnThisProvider
 {
     sessionData.authenticatingDirectlyOnThisProvider = YES;
 
     if (directProvider)
         return [sessionData getProviderNamed:directProvider];
 
-//    NSMutableArray *providers = [NSMutableArray arrayWithArray:sessionData.basicProviders];
-//    [providers removeObjectsInArray:[customInterface objectForKey:kJRRemoveProvidersFromAuthentication]];
-//    if ([providers count] == 1)
-//        return [sessionData getProviderNamed:[providers objectAtIndex:0]];
-
     sessionData.authenticatingDirectlyOnThisProvider = NO;
     return nil;
 }
 
-- (void)showAuthenticationDialogWithCustomInterface:(NSDictionary*)customizations
+- (void)showAuthenticationDialogWithCustomInterface:(NSDictionary *)customizations __unused
 {
     DLog(@"");
     [self buildCustomInterface:customizations];
@@ -1105,7 +1098,7 @@ static JRUserInterfaceMaestro* singleton = nil;
         [self loadModalNavigationControllerWithViewController:dialogVcToPresent];
 }
 
-- (void)showPublishingDialogForActivityWithCustomInterface:(NSDictionary*)customizations
+- (void)showPublishingDialogForActivityWithCustomInterface:(NSDictionary *)customizations __unused
 {
     DLog(@"");
     [self buildCustomInterface:customizations];
@@ -1238,6 +1231,11 @@ static JRUserInterfaceMaestro* singleton = nil;
 - (void)dealloc
 {
     [delegates release];
+    [myProvidersController release];
+    [myUserLandingController release];
+    [myWebViewController release];
+    [myPublishActivityController release];
+    [viewControllerToPopTo release];
     [super dealloc];
 }
 @end

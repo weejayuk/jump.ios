@@ -64,7 +64,7 @@ static JREngageWrapper *singleton = nil;
 + (JREngageWrapper *)singletonInstance
 {
     if (singleton == nil) {
-        singleton = [((JREngageWrapper*)[super allocWithZone:NULL]) init];
+        singleton = [((JREngageWrapper *)[super allocWithZone:NULL]) init];
     }
 
     return singleton;
@@ -75,7 +75,7 @@ static JREngageWrapper *singleton = nil;
     return [[self singletonInstance] retain];
 }
 
-- (id)copyWithZone:(__unused NSZone *)zone
+- (id)copyWithZone:(__unused NSZone *)zone __unused
 {
     return self;
 }
@@ -97,12 +97,13 @@ static JREngageWrapper *singleton = nil;
     return self;
 }
 
-+ (void)configureEngageWithCaptureMobileEndpointUrlAndAppId:(NSString *)appId
++ (void)configureEngageWithAppId:(NSString *)appId customIdentityProviders:(NSDictionary *)customProviders
 {
     [JREngage setEngageAppId:appId tokenUrl:nil andDelegate:[JREngageWrapper singletonInstance]];
+    JREngage.customProviders = customProviders;
 }
 
-+ (void)startAuthenticationDialogWithConventionalSignIn:(JRConventionalSigninType)nativeSigninType
++ (void)startAuthenticationDialogWithConventionalSignIn:(JRConventionalSigninType)nativeSignInType
                             andCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
                                             forDelegate:(id <JRCaptureSigninDelegate>)delegate
 {
@@ -115,9 +116,9 @@ static JREngageWrapper *singleton = nil;
     NSMutableDictionary *expandedCustomInterfaceOverrides =
             [NSMutableDictionary dictionaryWithDictionary:customInterfaceOverrides];
 
-    if (nativeSigninType != JRConventionalSigninNone)
+    if (nativeSignInType != JRConventionalSigninNone)
     {
-        [self configureTradSignIn:nativeSigninType expandedCustomInterfaceOverrides:expandedCustomInterfaceOverrides];
+        [self configureTradSignIn:nativeSignInType expandedCustomInterfaceOverrides:expandedCustomInterfaceOverrides];
     }
 
     [JREngage showAuthenticationDialogWithCustomInterfaceOverrides:expandedCustomInterfaceOverrides];

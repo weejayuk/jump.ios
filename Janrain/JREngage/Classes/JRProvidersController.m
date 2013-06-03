@@ -35,35 +35,37 @@
 #import "debug_log.h"
 #import "JRProvidersController.h"
 #import "JREngage+CustomInterface.h"
-#import "JRUserLandingController.h"
-#import "JRWebViewController.h"
 #import "JRInfoBar.h"
 
-@interface UITableViewCellProviders : UITableViewCell { }
+@interface UITableViewCellProviders : UITableViewCell
+{
+}
 @end
 
 @implementation UITableViewCellProviders
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
-    if ((self = [super initWithStyle:style reuseIdentifier:reuseIdentifier])) { }
+    if ((self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]))
+    {}
 
     return self;
 }
 
-- (void) layoutSubviews
+- (void)layoutSubviews
 {
     [super layoutSubviews];
 
     self.imageView.frame = CGRectMake(10, 10, 30, 30);
-    self.textLabel.frame = CGRectMake(50, 15, 100, 22);
+    self.textLabel.frame = CGRectMake(50, 15, 200, 22);
 }
 @end
 
 @interface JRProvidersController ()
-- (void)createConventionalSigninLoadingView;
-@property (retain) NSMutableArray *providers;
-@property (retain) UIView *myConventionalSigninLoadingView;
+- (void)createConventionalSignInLoadingView;
+
+@property(retain) NSMutableArray *providers;
+@property(retain) UIView *myConventionalSignInLoadingView;
 @end
 
 @implementation JRProvidersController
@@ -73,14 +75,14 @@
 @synthesize myTableView;
 @synthesize myLoadingLabel;
 @synthesize myActivitySpinner;
-@synthesize myConventionalSigninLoadingView;
+@synthesize myConventionalSignInLoadingView;
 
-- (id)initWithNibName:(NSString*)nibNameOrNil bundle:(NSBundle*)nibBundleOrNil
-   andCustomInterface:(NSDictionary*)theCustomInterface
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+   andCustomInterface:(NSDictionary *)theCustomInterface
 {
     if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]))
     {
-        sessionData     = [JRSessionData jrSessionData];
+        sessionData = [JRSessionData jrSessionData];
         customInterface = [theCustomInterface retain];
 
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
@@ -126,15 +128,15 @@
     }
 
     self.navigationItem.titleView = titleView;
-    myTableView.tableHeaderView   = [customInterface objectForKey:kJRProviderTableHeaderView];
-    myTableView.tableFooterView   = [customInterface objectForKey:kJRProviderTableFooterView];
+    myTableView.tableHeaderView = [customInterface objectForKey:kJRProviderTableHeaderView];
+    myTableView.tableFooterView = [customInterface objectForKey:kJRProviderTableFooterView];
 
-    id const maybeCaptureSigninVc = [customInterface objectForKey:kJRCaptureConventionalSigninViewController];
-    if ([maybeCaptureSigninVc isKindOfClass:NSClassFromString(@"JRConventionalSignInViewController")])
+    id const maybeCaptureSignInVc = [customInterface objectForKey:kJRCaptureConventionalSigninViewController];
+    if ([maybeCaptureSignInVc isKindOfClass:NSClassFromString(@"JRConventionalSignInViewController")])
     {
-        [maybeCaptureSigninVc performSelector:NSSelectorFromString(@"setDelegate:") withObject:self];
+        [maybeCaptureSignInVc performSelector:NSSelectorFromString(@"setDelegate:") withObject:self];
 
-        [self createConventionalSigninLoadingView];
+        [self createConventionalSignInLoadingView];
     }
 
     if (!hidesCancelButton)
@@ -145,9 +147,9 @@
                                              target:sessionData
                                              action:@selector(triggerAuthenticationDidCancel:)] autorelease];
 
-        self.navigationItem.leftBarButtonItem         = cancelButton;
+        self.navigationItem.leftBarButtonItem = cancelButton;
         self.navigationItem.leftBarButtonItem.enabled = YES;
-        self.navigationItem.leftBarButtonItem.style   = UIBarButtonItemStyleBordered;
+        self.navigationItem.leftBarButtonItem.style = UIBarButtonItemStyleBordered;
     }
 
     if (!infoBar)
@@ -184,27 +186,27 @@
         DLog ("self.frame: %f %f", self.view.frame.size.width, self.view.frame.size.height);
 
         CGFloat loadingLabelAndSpinnerVerticalOffset =
-                        ((self.view.frame.size.height - tableAndSectionHeaderHeight) / 2) + tableAndSectionHeaderHeight;
+                ((self.view.frame.size.height - tableAndSectionHeaderHeight) / 2) + tableAndSectionHeaderHeight;
 
         [myLoadingLabel setFrame:
-                CGRectMake(myLoadingLabel.frame.origin.x,
-                           loadingLabelAndSpinnerVerticalOffset - 40,
-                           myLoadingLabel.frame.size.width,
-                           myLoadingLabel.frame.size.height)];
+                                CGRectMake(myLoadingLabel.frame.origin.x,
+                                        loadingLabelAndSpinnerVerticalOffset - 40,
+                                        myLoadingLabel.frame.size.width,
+                                        myLoadingLabel.frame.size.height)];
         [myActivitySpinner setFrame:
-                CGRectMake(myActivitySpinner.frame.origin.x,
-                           loadingLabelAndSpinnerVerticalOffset,
-                           myActivitySpinner.frame.size.width,
-                           myActivitySpinner.frame.size.height)];
+                                   CGRectMake(myActivitySpinner.frame.origin.x,
+                                           loadingLabelAndSpinnerVerticalOffset,
+                                           myActivitySpinner.frame.size.width,
+                                           myActivitySpinner.frame.size.height)];
 
         DLog ("label.frame: %f, %f", myLoadingLabel.frame.origin.x, myLoadingLabel.frame.origin.y);
     }
 
-    if ([[sessionData basicProviders] count] > 0)
+    if ([sessionData.authenticationProviders count] > 0)
     {
-        [self setProviders:[NSMutableArray arrayWithArray:sessionData.basicProviders]];
+        self.providers = [NSMutableArray arrayWithArray:sessionData.authenticationProviders];
         [providers removeObjectsInArray:[customInterface objectForKey:kJRRemoveProvidersFromAuthentication]];
-
+        // the new providers are not strings they are JRProvider instances
         [myActivitySpinner stopAnimating];
         [myActivitySpinner setHidden:YES];
         [myLoadingLabel setHidden:YES];
@@ -214,7 +216,7 @@
     }
     else
     {
-        DLog(@"prov count = %d", [[sessionData basicProviders] count]);
+        DLog(@"prov count = %d", [sessionData.authenticationProviders count]);
 
         // If the user calls the library before the session data object is done initializing -
         // because either the requests for the base URL or provider list haven't returned -
@@ -250,7 +252,7 @@
    because either the requests for the base URL or provider list haven't returned -
    keep polling every few milliseconds, for about 16 seconds,
    until the provider list is loaded or we time out. */
-- (void)checkSessionDataAndProviders:(NSTimer*)theTimer
+- (void)checkSessionDataAndProviders:(NSTimer *)theTimer
 {
     DLog(@"");
     static NSTimeInterval interval = 0.5;
@@ -258,13 +260,13 @@
 
     timer = nil;
 
-    DLog(@"prov count = %d", [[sessionData basicProviders] count]);
+    DLog(@"prov count = %d", [sessionData.authenticationProviders count]);
     DLog(@"interval = %f", interval);
 
     // If we have our list of providers, stop the progress indicators and load the table.
-    if ([[sessionData basicProviders] count] > 0)
+    if ([sessionData.authenticationProviders count] > 0)
     {
-        [self setProviders:[NSMutableArray arrayWithArray:sessionData.basicProviders]];
+        [self setProviders:[NSMutableArray arrayWithArray:sessionData.authenticationProviders]];
         [providers removeObjectsInArray:[customInterface objectForKey:kJRRemoveProvidersFromAuthentication]];
 
         [myActivitySpinner stopAnimating];
@@ -285,15 +287,15 @@
         [myLoadingLabel setHidden:YES];
         [myActivitySpinner stopAnimating];
 
-        UIApplication* app = [UIApplication sharedApplication];
+        UIApplication *app = [UIApplication sharedApplication];
         app.networkActivityIndicatorVisible = YES;
 
         NSString *message = @"There are no available providers. Either there is a problem connecting or no providers "
                 "have been configured. Please try again later.";
         UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"No Available Providers" message:message
-                                                                                          delegate:self
-                                                                                 cancelButtonTitle:@"OK"
-                                                                                 otherButtonTitles:nil] autorelease];
+                                                        delegate:self
+                                               cancelButtonTitle:@"OK"
+                                               otherButtonTitles:nil] autorelease];
         [alert show];
         return;
     }
@@ -324,38 +326,38 @@
 - (void)showLoading
 {
     UIActivityIndicatorView *myConventionalSigninLoadingSpinner =
-            (UIActivityIndicatorView *) [myConventionalSigninLoadingView viewWithTag:LOADING_VIEW_SPINNER_TAG];
+            (UIActivityIndicatorView *) [myConventionalSignInLoadingView viewWithTag:LOADING_VIEW_SPINNER_TAG];
 
-    [myConventionalSigninLoadingView setHidden:NO];
+    [myConventionalSignInLoadingView setHidden:NO];
     [myConventionalSigninLoadingSpinner startAnimating];
 
     [UIView beginAnimations:@"fade" context:nil];
     [UIView setAnimationDuration:0.2];
     [UIView setAnimationDelay:0.0];
-    myConventionalSigninLoadingView.alpha = 0.8;
+    myConventionalSignInLoadingView.alpha = 0.8;
     [UIView commitAnimations];
 }
 
 - (void)hideLoading
 {
     UIActivityIndicatorView *myConventionalSigninLoadingSpinner =
-            (UIActivityIndicatorView *) [myConventionalSigninLoadingView viewWithTag:LOADING_VIEW_SPINNER_TAG];
+            (UIActivityIndicatorView *) [myConventionalSignInLoadingView viewWithTag:LOADING_VIEW_SPINNER_TAG];
 
     [UIView beginAnimations:@"fade" context:nil];
     [UIView setAnimationDuration:0.2];
     [UIView setAnimationDelay:0.0];
-    myConventionalSigninLoadingView.alpha = 0.0;
+    myConventionalSignInLoadingView.alpha = 0.0;
     [UIView commitAnimations];
 
-    [myConventionalSigninLoadingView setHidden:YES];
+    [myConventionalSignInLoadingView setHidden:YES];
     [myConventionalSigninLoadingSpinner stopAnimating];
 }
 
-- (void)createConventionalSigninLoadingView
+- (void)createConventionalSignInLoadingView
 {
-    self.myConventionalSigninLoadingView = [[[UIView alloc] initWithFrame:self.view.frame] autorelease];
+    self.myConventionalSignInLoadingView = [[[UIView alloc] initWithFrame:self.view.frame] autorelease];
 
-    [self.myConventionalSigninLoadingView setBackgroundColor:[UIColor blackColor]];
+    [self.myConventionalSignInLoadingView setBackgroundColor:[UIColor blackColor]];
 
     UILabel *loadingLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 180, 320, 30)] autorelease];
 
@@ -365,33 +367,33 @@
     [loadingLabel setTextColor:[UIColor whiteColor]];
     [loadingLabel setBackgroundColor:[UIColor clearColor]];
     [loadingLabel setAutoresizingMask:UIViewAutoresizingNone |
-                                      UIViewAutoresizingFlexibleTopMargin |
-                                      UIViewAutoresizingFlexibleBottomMargin |
-                                      UIViewAutoresizingFlexibleRightMargin |
-                                      UIViewAutoresizingFlexibleLeftMargin];
+            UIViewAutoresizingFlexibleTopMargin |
+            UIViewAutoresizingFlexibleBottomMargin |
+            UIViewAutoresizingFlexibleRightMargin |
+            UIViewAutoresizingFlexibleLeftMargin];
 
     UIActivityIndicatorView *loadingSpinner =
             [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     [loadingSpinner autorelease];
 
-    [loadingSpinner setFrame:CGRectMake(142, self.view.frame.size.height/2 - 16, 37, 37)];
+    [loadingSpinner setFrame:CGRectMake(142, self.view.frame.size.height / 2 - 16, 37, 37)];
     [loadingLabel setAutoresizingMask:UIViewAutoresizingNone |
-                                          UIViewAutoresizingFlexibleTopMargin |
-                                          UIViewAutoresizingFlexibleBottomMargin |
-                                          UIViewAutoresizingFlexibleRightMargin |
-                                          UIViewAutoresizingFlexibleLeftMargin];
+            UIViewAutoresizingFlexibleTopMargin |
+            UIViewAutoresizingFlexibleBottomMargin |
+            UIViewAutoresizingFlexibleRightMargin |
+            UIViewAutoresizingFlexibleLeftMargin];
 
     [loadingLabel setTag:LOADING_VIEW_LABEL_TAG];
     [loadingSpinner setTag:LOADING_VIEW_SPINNER_TAG];
 
-    [myConventionalSigninLoadingView addSubview:loadingLabel];
-    [myConventionalSigninLoadingView addSubview:loadingSpinner];
+    [myConventionalSignInLoadingView addSubview:loadingLabel];
+    [myConventionalSignInLoadingView addSubview:loadingSpinner];
 
-    [myConventionalSigninLoadingView setTag:LOADING_VIEW_TAG];
-    [myConventionalSigninLoadingView setHidden:YES];
-    [myConventionalSigninLoadingView setAlpha:0.0];
+    [myConventionalSignInLoadingView setTag:LOADING_VIEW_TAG];
+    [myConventionalSignInLoadingView setHidden:YES];
+    [myConventionalSignInLoadingView setAlpha:0.0];
 
-    [self.view addSubview:myConventionalSigninLoadingView];
+    [self.view addSubview:myConventionalSignInLoadingView];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -413,7 +415,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     if ([customInterface objectForKey:kJRProviderTableSectionHeaderView])
-        return ((UIView*)[customInterface objectForKey:kJRProviderTableSectionHeaderView]).frame.size.height;
+        return ((UIView *) [customInterface objectForKey:kJRProviderTableSectionHeaderView]).frame.size.height;
     else if ([customInterface objectForKey:kJRProviderTableSectionHeaderTitleString])
         return 35;
 
@@ -435,7 +437,7 @@
     CGFloat infoBarHeight = sessionData.hidePoweredBy ? 0.0 : infoBar.frame.size.height;
 
     if ([customInterface objectForKey:kJRProviderTableSectionFooterView])
-        return ((UIView*)[customInterface objectForKey:kJRProviderTableSectionFooterView]).frame.size.height +
+        return ((UIView *) [customInterface objectForKey:kJRProviderTableSectionFooterView]).frame.size.height +
                 infoBarHeight;
     else if ([customInterface objectForKey:kJRProviderTableSectionFooterTitleString])
         return 35 + infoBarHeight;
@@ -445,7 +447,8 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
-    if ([customInterface objectForKey:kJRProviderTableSectionFooterView]){
+    if ([customInterface objectForKey:kJRProviderTableSectionFooterView])
+    {
         return [customInterface objectForKey:kJRProviderTableSectionFooterView];
     }
     else if (![customInterface objectForKey:kJRProviderTableSectionFooterTitleString])
@@ -453,7 +456,8 @@
         CGRect frame = CGRectMake(0, 0, myTableView.frame.size.width, infoBar.frame.size.height);
         return [[[UIView alloc] initWithFrame:frame] autorelease];
     }
-    else {
+    else
+    {
         return nil;
     }
 }
@@ -476,13 +480,13 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCellProviders *cell =
-        (UITableViewCellProviders*)[tableView dequeueReusableCellWithIdentifier:@"cachedCell"];
+            (UITableViewCellProviders *) [tableView dequeueReusableCellWithIdentifier:@"cachedCell"];
 
     if (cell == nil)
         cell = [[[UITableViewCellProviders alloc]
-                 initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cachedCell"] autorelease];
+                initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cachedCell"] autorelease];
 
-    JRProvider* provider = [sessionData getProviderNamed:[providers objectAtIndex:(NSUInteger) indexPath.row]];
+    JRProvider *provider = [sessionData getProviderNamed:[providers objectAtIndex:(NSUInteger) indexPath.row]];
 
     if (!provider)
         return cell;
@@ -511,7 +515,7 @@
 
     // TODO: Change me (comment)!
     if (provider.requiresInput || ([sessionData authenticatedUserForProvider:provider]
-                && !(provider.forceReauth || sessionData.alwaysForceReauth)))
+            && !(provider.forceReauth || sessionData.alwaysForceReauth)))
     {
         // If the selected provider requires input from the user, to the user landing view.
         // Or if the user started on the user landing page, went back to the list of providers, then selected
@@ -556,7 +560,9 @@
     [timer invalidate];
 }
 
-- (void)userInterfaceDidClose { }
+- (void)userInterfaceDidClose
+{
+}
 
 - (void)dealloc
 {
@@ -569,7 +575,7 @@
     [myActivitySpinner release];
     [infoBar release];
     [providers release];
-
+    [myConventionalSignInLoadingView release];
     [super dealloc];
 }
 @end

@@ -38,7 +38,6 @@
 #import "JRInfoBar.h"
 #import "JREngageError.h"
 #import "JRUserInterfaceMaestro.h"
-#import "debug_log.h"
 
 static NSString *const iPhoneUserAgent = @"Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3_3 like Mac OS X; en-us) "
         "AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8J2 Safari/6533.18.5";
@@ -80,27 +79,8 @@ static NSString *const iPhoneUserAgent = @"Mozilla/5.0 (iPhone; U; CPU iPhone OS
     self.navigationItem.backBarButtonItem.target = sessionData;
     self.navigationItem.backBarButtonItem.action = @selector(triggerAuthenticationDidStartOver:);
 
-    if (!infoBar)
-    {
-        CGRect frame = CGRectMake(0, self.view.frame.size.height - 30, self.view.frame.size.width, 30);
-        infoBar = [[JRInfoBar alloc] initWithFrame:frame andStyle:(JRInfoBarStyle) [sessionData hidePoweredBy]];
-
-        if ([sessionData hidePoweredBy] == JRInfoBarStyleShowPoweredBy)
-            [myWebView setFrame:CGRectMake(myWebView.frame.origin.x,
-                                           myWebView.frame.origin.y,
-                                           myWebView.frame.size.width,
-                                           myWebView.frame.size.height - infoBar.frame.size.height)];
-
-        [self.view addSubview:infoBar];
-    }
-
-    // TODO: This test is here for the case where the sign-in flow opens straight to the webview (auth on just one
-    // provider),
-    // but it seems to be evaluating to 'true' when we are sharing as well... Why!?
-    // Will this always be a reliable test?
     if (!self.navigationController.navigationBar.backItem && !sessionData.socialSharing)
     {
-        DLog(@"no back button");
         UIBarButtonItem *cancelButton =
                 [[[UIBarButtonItem alloc]
                         initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
@@ -111,35 +91,31 @@ static NSString *const iPhoneUserAgent = @"Mozilla/5.0 (iPhone; U; CPU iPhone OS
         self.navigationItem.rightBarButtonItem.enabled = YES;
         self.navigationItem.rightBarButtonItem.style   = UIBarButtonItemStyleBordered;
     }
-    else
-    {
-        DLog(@"back button");
-    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     DLog(@"");
-
     [super viewWillAppear:animated];
 
     self.contentSizeForViewInPopover = CGSizeMake(320, 416);
 
     self.title = (sessionData.currentProvider) ? sessionData.currentProvider.friendlyName : @"Loading";
-}
 
-//+ (void)configureUserAgent
-//{
-//    NSString *customUa = nil;
-//    NSString *origCustomUa = [[NSUserDefaults standardUserDefaults] stringForKey:@"UserAgent"];
-//    customUa = [self getCustomUa];
-//
-//    if (customUa)
-//    {
-//        //self.originalCustomUserAgent = origCustomUa;
-//        [JRWebViewController setUserAgentDefault:customUa];
-//    }
-//}
+    if (!infoBar)
+    {
+        CGRect infoFrame = CGRectMake(0, self.view.frame.size.height - 30, self.view.frame.size.width, 30);
+        infoBar = [[JRInfoBar alloc] initWithFrame:infoFrame andStyle:(JRInfoBarStyle) [sessionData hidePoweredBy]];
+
+        if ([sessionData hidePoweredBy] == JRInfoBarStyleShowPoweredBy)
+            [myWebView setFrame:CGRectMake(myWebView.frame.origin.x,
+                                           myWebView.frame.origin.y,
+                                           myWebView.frame.size.width,
+                                           myWebView.frame.size.height - infoBar.frame.size.height)];
+
+        [self.view addSubview:infoBar];
+    }
+}
 
 + (NSString *)getCustomUa
 {
@@ -167,7 +143,6 @@ static NSString *const iPhoneUserAgent = @"Mozilla/5.0 (iPhone; U; CPU iPhone OS
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    DLog(@"");
     DLog(@"%@", [myWebView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"]);
     [super viewDidAppear:animated];
 
@@ -209,13 +184,12 @@ static NSString *const iPhoneUserAgent = @"Mozilla/5.0 (iPhone; U; CPU iPhone OS
 - (void)viewWillDisappear:(BOOL)animated
 {
     DLog(@"");
-
     [myWebView stopLoading];
 
     [JRConnectionManager stopConnectionsForDelegate:self];
     [self stopProgress];
 
-    // The webview disappears when authentication completes successfully or fails or if the user cancels by hitting
+    // The WebView disappears when authentication completes successfully or fails or if the user cancels by hitting
     // the "back" button or the "cancel" button.  We don't know when a user hits the back button, but we do
     // know when all the other events occur, so we keep track of those events by changing the "userHitTheBackButton"
     // variable to "NO".
@@ -246,28 +220,7 @@ static NSString *const iPhoneUserAgent = @"Mozilla/5.0 (iPhone; U; CPU iPhone OS
     [super viewDidDisappear:animated];
 }
 
-- (void)viewDidUnload
-{
-    DLog(@"");
-    [super viewDidUnload];
-}
-
 #pragma mark custom implementation
-
-//+ (void)setUserAgentDefault:(NSString *)userAgent
-//{
-//    DLog(@"UA: %@", userAgent);
-//    if (userAgent)
-//    {
-//        NSDictionary *uaDefault = [[NSDictionary alloc] initWithObjectsAndKeys:userAgent, @"UserAgent", nil];
-//        [[NSUserDefaults standardUserDefaults] registerDefaults:uaDefault];
-//        [uaDefault release];
-//    }
-//    else
-//    {
-//        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"UserAgent"];
-//    }
-//}
 
 - (void)fixPadWindowSize
 {
@@ -469,25 +422,6 @@ static NSString *const iPhoneUserAgent = @"Mozilla/5.0 (iPhone; U; CPU iPhone OS
 
 - (void)connectionWasStoppedWithTag:(id)userdata { }
 
-//#define SKIP_THIS_WORK_AROUND 0
-//#define WEBVIEW_SHOULD_NOT_LOAD 0
-//- (BOOL)shouldWebViewNotLoadRequestDueToTheWindowsLiveBug:(NSURLRequest *)request
-//{
-//    if (![[sessionData currentProvider].name isEqualToString:@"live_id"])
-//        return SKIP_THIS_WORK_AROUND;
-//
-//    if (connectionDataAlreadyDownloadedThis)
-//    {
-//        connectionDataAlreadyDownloadedThis = NO;
-//        return SKIP_THIS_WORK_AROUND;
-//    }
-//
-//    DLog("Sending request to connection manager: %@", request);
-//
-//    [JRConnectionManager createConnectionFromRequest:request forDelegate:self withTag:WINDOWS_LIVE_LOAD];
-//    return YES;
-//}
-
 #pragma mark UIWebViewDelegate implementation
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request
@@ -513,9 +447,6 @@ static NSString *const iPhoneUserAgent = @"Mozilla/5.0 (iPhone; U; CPU iPhone OS
         keepProgress = YES;
         return NO;
     }
-
-    //if ([self shouldWebViewNotLoadRequestDueToTheWindowsLiveBug:request])
-    //    return WEBVIEW_SHOULD_NOT_LOAD;
 
     return YES;
 }

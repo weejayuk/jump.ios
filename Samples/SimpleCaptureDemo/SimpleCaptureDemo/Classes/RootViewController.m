@@ -40,7 +40,6 @@
 #import "AppDelegate.h"
 #import "CaptureRegistrationForm.h"
 
-
 @interface RootViewController ()
 @property(nonatomic, copy) void (^viewDidAppearContinuation)();
 @property(nonatomic) BOOL viewIsApparent;
@@ -65,8 +64,13 @@
 {
     [super viewDidLoad];
 
-    self.customUi = [NSMutableDictionary dictionaryWithObject:self.navigationController
-                                                       forKey:kJRApplicationNavigationController];
+    self.customUi =  @{kJRApplicationNavigationController : self.navigationController};
+    [self configureUserLabelAndIcon];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self configureButtons];
 }
 
 - (void)configureButtons
