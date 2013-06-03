@@ -60,6 +60,7 @@ AppDelegate *appDelegate = nil;
 @synthesize captureEnableThinRegistration;
 @synthesize captureRegistrationFormName;
 @synthesize captureAppId;
+@synthesize customProviders;
 
 // Backplane / LiveFyre stuff:
 @synthesize bpChannelUrl;
@@ -84,7 +85,8 @@ AppDelegate *appDelegate = nil;
                 captureLocale:captureLocale captureFlowName:captureFlowName
         captureSignInFormName:captureSignInFormName captureEnableThinRegistration:captureEnableThinRegistration
  captureTraditionalSignInType:JRConventionalSigninEmailPassword captureFlowVersion:captureFlowVersion
-  captureRegistrationFormName:captureRegistrationFormName captureAppId:captureAppId];
+  captureRegistrationFormName:captureRegistrationFormName captureAppId:captureAppId
+      customIdentityProviders:customProviders];
 
     [BackplaneUtils asyncFetchNewBackplaneChannelWithBus:bpBusUrlString
                                               completion:^(NSString *newChannel, NSError *error)

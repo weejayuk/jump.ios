@@ -11,6 +11,8 @@
 		6706F0DA7F5FA9A15B437997 /* Engage-Only Integration Guide.md in Resources */ = {isa = PBXBuildFile; fileRef = 6706F243FF1B1D4DBFCE6B5D /* Engage-Only Integration Guide.md */; };
 		6706F18263DF25C5CAEA8F6C /* Engage Custom Provider Guide.md in Resources */ = {isa = PBXBuildFile; fileRef = 6706F619E4BB76864B478610 /* Engage Custom Provider Guide.md */; };
 		6706F2F5D380E2BE1B74B0C3 /* JUMP Integration Guide.md in Resources */ = {isa = PBXBuildFile; fileRef = 6706FDE35290E73F4513572D /* JUMP Integration Guide.md */; };
+		6706FCE93985E90E4040B262 /* PickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706F8DC7856E86A423C2108 /* PickerViewController.m */; };
+		6706FFA2D57FB31818D60F25 /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706F1A44624C7575D0E75DA /* Utils.m */; };
 		90C36B6B7717AA0C893E08EA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90C36B6B7717AA0C893E08E9 /* UIKit.framework */; };
 		90C36B6B7717AA0C893E08EC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90C36B6B7717AA0C893E08EB /* Foundation.framework */; };
 		90C36B6B7717AA0C893E08EE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90C36B6B7717AA0C893E08ED /* CoreGraphics.framework */; };
@@ -313,9 +315,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6706F1A44624C7575D0E75DA /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Utils.m; path = ../../../../jump.ios/Samples/SimpleCaptureDemo/SimpleCaptureDemo/Classes/Utils.m; sourceTree = "<group>"; };
 		6706F243FF1B1D4DBFCE6B5D /* Engage-Only Integration Guide.md */ = {isa = PBXFileReference; lastKnownFileType = file.md; name = "Engage-Only Integration Guide.md"; path = "../../../jump.ios/Docs/Engage-Only Integration Guide.md"; sourceTree = "<group>"; };
+		6706F4723D28D385805BF6B3 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Utils.h; path = ../../../../jump.ios/Samples/SimpleCaptureDemo/SimpleCaptureDemo/Classes/Utils.h; sourceTree = "<group>"; };
 		6706F619E4BB76864B478610 /* Engage Custom Provider Guide.md */ = {isa = PBXFileReference; lastKnownFileType = file.md; name = "Engage Custom Provider Guide.md"; path = "../../../jump.ios/Docs/Engage Custom Provider Guide.md"; sourceTree = "<group>"; };
+		6706F8DC7856E86A423C2108 /* PickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PickerViewController.m; path = ../../../../jump.ios/Samples/SimpleCaptureDemo/SimpleCaptureDemo/Classes/PickerViewController.m; sourceTree = "<group>"; };
 		6706FDE35290E73F4513572D /* JUMP Integration Guide.md */ = {isa = PBXFileReference; lastKnownFileType = file.md; name = "JUMP Integration Guide.md"; path = "../../../jump.ios/Docs/JUMP Integration Guide.md"; sourceTree = "<group>"; };
+		6706FE4C14414AE4B30F1878 /* PickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PickerViewController.h; path = ../../../../jump.ios/Samples/SimpleCaptureDemo/SimpleCaptureDemo/Classes/PickerViewController.h; sourceTree = "<group>"; };
 		6706FFEFEE62C8F93EAA251B /* Authentication-Token-URL.md */ = {isa = PBXFileReference; lastKnownFileType = file.md; name = "Authentication-Token-URL.md"; path = "../../../jump.ios/Docs/Authentication-Token-URL.md"; sourceTree = "<group>"; };
 		90C36B6B7717AA0C893E08E0 /* SimpleCaptureDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleCaptureDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		90C36B6B7717AA0C893E08E9 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -368,7 +374,6 @@
 		C142414E858492E358637081 /* JRPhotosElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRPhotosElement.m; sourceTree = "<group>"; };
 		C142416F020666E1FC6484CE /* JRAddressesElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRAddressesElement.h; sourceTree = "<group>"; };
 		C14241770AABEA63C283F326 /* JRLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRLocation.m; sourceTree = "<group>"; };
-		C14241924614D79EBA00AB21 /* CaptureRegistrationForm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaptureRegistrationForm.h; sourceTree = "<group>"; };
 		C14242300A50D35712FFE73C /* JRTournamentsPlayedElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRTournamentsPlayedElement.m; sourceTree = "<group>"; };
 		C1424280FC0D8147B2F3F632 /* JROnipLevelOneElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JROnipLevelOneElement.m; sourceTree = "<group>"; };
 		C1424291B49E5600AC8E83D1 /* JROnipLevelThree.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JROnipLevelThree.m; sourceTree = "<group>"; };
@@ -808,7 +813,10 @@
 				C1424FEDA9B53C3B9EE9AB6E /* AlertViewWithBlocks.m */,
 				C1424A4F9A63C7BD1C90EBC0 /* AlertViewWithBlocks.h */,
 				C1424D6CCEC2655D90E77A75 /* CaptureRegistrationForm.m */,
-				C14241924614D79EBA00AB21 /* CaptureRegistrationForm.h */,
+				6706FE4C14414AE4B30F1878 /* PickerViewController.h */,
+				6706F8DC7856E86A423C2108 /* PickerViewController.m */,
+				6706F4723D28D385805BF6B3 /* Utils.h */,
+				6706F1A44624C7575D0E75DA /* Utils.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -1813,6 +1821,8 @@
 				D8A24B66172738EC00310669 /* JREngagePlugin.js in Sources */,
 				D8A24C09172738EC00310669 /* JSONKit.m in Sources */,
 				D8A24C0A172738EC00310669 /* SFHFKeychainUtils.m in Sources */,
+				6706FCE93985E90E4040B262 /* PickerViewController.m in Sources */,
+				6706FFA2D57FB31818D60F25 /* Utils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
