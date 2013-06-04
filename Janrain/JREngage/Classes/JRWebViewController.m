@@ -168,7 +168,7 @@ static NSString *const iPhoneUserAgent = @"Mozilla/5.0 (iPhone; U; CPU iPhone OS
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     BOOL b;
-    if (sessionData.canRotate)
+    if ([JRUserInterfaceMaestro sharedMaestro].canRotate)
         b = interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
     else
         b = interfaceOrientation == UIInterfaceOrientationPortrait;

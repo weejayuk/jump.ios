@@ -817,8 +817,11 @@ static JRUserInterfaceMaestro* singleton = nil;
         @catch (NSException *exception)
         { handleCustomInterfaceException(exception, @"kJRUseApplicationNavigationController"); }
     }
+}
 
-    sessionData.canRotate = usingAppNav || IS_IPAD || [getWindow() hasRvc];
+- (BOOL)canRotate
+{
+    return usingAppNav || IS_IPAD || [getWindow() hasRvc]
 }
 
 - (void)tearDownDialogPresentation

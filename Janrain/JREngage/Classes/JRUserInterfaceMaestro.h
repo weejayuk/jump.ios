@@ -101,4 +101,5 @@ typedef enum
 - (void)setUpDialogPresentation;
 
 
+- (BOOL)canRotate;
 @end

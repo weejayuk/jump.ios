@@ -139,6 +139,10 @@
 @property (readonly) NSString   *returningAuthenticationProvider;
 @property (readonly) NSString   *returningSharingProvider;
 
+/** engageProviders is a dictionary of JRProviders, where each JRProvider contains the information specific to that
+    provider. authenticationProviders and sharingProviders are arrays of NSStrings, each string being the primary key
+    in engageProviders for that provider, representing the list of providers to be used in authentication and social
+    publishing. The arrays are in the order configured by the RP on http://rpxnow.com. */
 @property (readonly) NSMutableDictionary *engageProviders;
 @property (readonly) NSArray             *authenticationProviders;
 @property (readonly) NSArray             *sharingProviders;
@@ -154,10 +158,7 @@
 @property            BOOL authenticatingDirectlyOnThisProvider;
 @property            BOOL socialSharing;
 @property            BOOL dialogIsShowing;
-@property            BOOL canRotate;
 @property (retain, readonly) NSError *error;
-
-@property(nonatomic) BOOL captureWidget;
 
 + (id)jrSessionData;
 + (id)jrSessionDataWithAppId:(NSString*)newAppId tokenUrl:(NSString*)newTokenUrl

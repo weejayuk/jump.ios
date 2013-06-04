@@ -442,17 +442,10 @@ static NSString *applicationBundleDisplayName()
     NSString   *returningAuthenticationProvider;
     NSString   *returningSharingProvider;
 
-/*  engageProviders is a dictionary of JRProviders, where each JRProvider contains the information specific to that
-    provider. authenticationProviders and sharingProviders are arrays of NSStrings, each string being the primary key
-    in engageProviders for that provider, representing the list of providers to be used in authentication and social
-    publishing. The arrays are in the order configured by the RP on http://rpxnow.com. */
-    NSMutableDictionary *engageProviders;
-    NSArray             *authenticationProviders;
-    NSArray             *sharingProviders;
 }
 
-@property (retain) NSString *appId;
 @property (retain) NSError  *error;
+@property (retain) NSString *appId;
 @property (retain) NSString *updatedEtag;
 @property (retain) NSDictionary *savedConfigurationBlock;
 //@property (retain) NSString *gitCommit;
@@ -465,19 +458,24 @@ static NSString *applicationBundleDisplayName()
 @implementation JRSessionData
 @synthesize appId;
 @synthesize tokenUrl;
-@synthesize sharingProviders;
-@synthesize currentProvider;
-@synthesize returningSharingProvider;
 @synthesize baseUrl;
-@synthesize authenticatingDirectlyOnThisProvider;
-@synthesize alwaysForceReauth;
-@synthesize forceReauthJustThisTime;
-@synthesize socialSharing;
-@synthesize hidePoweredBy;
+
 @synthesize error;
 @synthesize updatedEtag;
 @synthesize savedConfigurationBlock;
-@synthesize canRotate;
+
+@synthesize engageProviders;
+@synthesize sharingProviders;
+
+@synthesize returningSharingProvider;
+@synthesize returningAuthenticationProvider;
+@synthesize currentProvider;
+@synthesize authenticatingDirectlyOnThisProvider;
+@synthesize forceReauthJustThisTime;
+@synthesize socialSharing;
+
+@synthesize alwaysForceReauth;
+@synthesize hidePoweredBy;
 
 #pragma mark singleton_methods
 static JRSessionData *singleton = nil;
@@ -915,7 +913,7 @@ static JRSessionData *singleton = nil;
     DLog (@"");
 
     /* If you are explicitly signing out a user for a provider, you should explicitly force reauthentication. */
-    JRProvider* provider = [[self allProviders] objectForKey:providerName];
+    JRProvider* provider = [self.allProviders objectForKey:providerName];
     provider.forceReauth = YES;
 
     [authenticatedUsersByProvider removeObjectForKey:providerName];

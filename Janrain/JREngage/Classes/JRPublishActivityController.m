@@ -1913,7 +1913,7 @@ Please try again later."
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     BOOL b;
-    if (sessionData.canRotate)
+    if ([JRUserInterfaceMaestro sharedMaestro].canRotate)
         b = interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
     else
         b = interfaceOrientation == UIInterfaceOrientationPortrait;
