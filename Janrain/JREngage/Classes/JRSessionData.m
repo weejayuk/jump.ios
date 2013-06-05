@@ -622,15 +622,15 @@ static JRSessionData *singleton = nil;
     return self;
 }
 
-+ (id)jrSessionDataWithAppId:(NSString*)newAppId tokenUrl:(NSString*)newTokenUrl
-                 andDelegate:(id<JRSessionDelegate>)newDelegate
++ (id)jrSessionDataWithAppId:(NSString *)newAppId tokenUrl:(NSString *)newTokenUrl
+                 andDelegate:(id <JRSessionDelegate>)newDelegate
 {
-    if(singleton)
+    if (singleton)
         return [singleton reconfigureWithAppId:newAppId tokenUrl:newTokenUrl];
 
-    return [[((JRSessionData *)[super allocWithZone:nil]) initWithAppId:newAppId
-                                                               tokenUrl:newTokenUrl 
-                                                            andDelegate:newDelegate] autorelease];
+    return [[((JRSessionData *) [super allocWithZone:nil]) initWithAppId:newAppId
+                                                                tokenUrl:newTokenUrl
+                                                             andDelegate:newDelegate] autorelease];
 }
 
 - (void)tryToReconfigureLibrary
@@ -696,8 +696,7 @@ static JRSessionData *singleton = nil;
     [[NSUserDefaults standardUserDefaults] setValue:baseUrl forKey:cJRBaseUrl];
     NSDictionary *providerInfo = [configDict objectForKey:CONFIG_KEY_PROVIDER_INFO];
 
-    [engageProviders release];
-    engageProviders = [NSMutableDictionary dictionary];
+    self.engageProviders = [NSMutableDictionary dictionary];
 
     for (NSString *name in [providerInfo allKeys])
     {
@@ -707,7 +706,7 @@ static JRSessionData *singleton = nil;
         //              forProvider:name];
 
         /* and finally add the object to our dictionary of providers. */
-        [engageProviders setObject:provider forKey:name];
+        [self.engageProviders setObject:provider forKey:name];
     }
 
     [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:iconsStillNeeded]
@@ -716,21 +715,21 @@ static JRSessionData *singleton = nil;
                                               forKey:cJRProvidersWithIcons];
 
     [engageAuthenticationProviders release];
-    [sharingProviders release];
+    [self.sharingProviders release];
 
     engageAuthenticationProviders =
             [[NSArray arrayWithArray:[configDict objectForKey:CONFIG_KEY_SIGNIN_PROVIDERS]] retain];
-    sharingProviders = [[NSArray arrayWithArray:[configDict objectForKey:CONFIG_KEY_SHARING_PROVIDERS]] retain];
+    self.sharingProviders = [NSArray arrayWithArray:[configDict objectForKey:CONFIG_KEY_SHARING_PROVIDERS]];
 
     [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:engageProviders]
                                               forKey:cJREngageProviders];
     [[NSUserDefaults standardUserDefaults] setObject:engageAuthenticationProviders forKey:cJRAuthenticationProviders];
-    [[NSUserDefaults standardUserDefaults] setObject:sharingProviders forKey:cJRSharingProviders];
+    [[NSUserDefaults standardUserDefaults] setObject:self.sharingProviders forKey:cJRSharingProviders];
 
     hidePoweredBy = ([[configDict objectForKey:@"hide_tagline"] isEqualToString:@"YES"]) ? YES : NO;
     [[NSUserDefaults standardUserDefaults] setBool:hidePoweredBy forKey:cJRHidePoweredBy];
 
-    [[NSUserDefaults standardUserDefaults] setValue:updatedEtag forKey:PREFS_KEY_ETAG];
+    [[NSUserDefaults standardUserDefaults] setValue:self.updatedEtag forKey:PREFS_KEY_ETAG];
     [[NSUserDefaults standardUserDefaults] synchronize];
 
     //[self downloadNeededIcons:iconsStillNeeded];
@@ -844,7 +843,7 @@ static JRSessionData *singleton = nil;
 - (NSDictionary *)allProviders
 {
     NSMutableDictionary *result = [NSMutableDictionary dictionary];
-    [result addEntriesFromDictionary:engageProviders];
+    [result addEntriesFromDictionary:self.engageProviders];
     [result addEntriesFromDictionary:self.customProviders];
     return result;
 }
@@ -1822,6 +1821,7 @@ CALL_DELEGATE_SELECTOR:
 
 - (void)dealloc
 {
+    DLog();
     [sharingProviders release];
     [returningSharingProvider release];
     [returningAuthenticationProvider release];
