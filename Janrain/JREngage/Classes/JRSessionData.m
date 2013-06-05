@@ -422,32 +422,26 @@ static NSString *applicationBundleDisplayName()
     NSString *tokenUrl;
     NSString *baseUrl;
     NSString *appId;
-    NSString *device;
 
     BOOL hidePoweredBy;
-
-    // Question to self: What is the behavior of this (i.e., how does it affect social publishing?)
-    // when selected during a basic authentication call?
     BOOL authenticatingDirectlyOnThisProvider;
     BOOL alwaysForceReauth;
-    BOOL forceReauthJustThisTime;
-
-    BOOL canRotate;
+    //BOOL forceReauthJustThisTime;
 
     BOOL socialSharing;
     BOOL dialogIsShowing;
     BOOL stillNeedToShortenUrls;
 
-    NSError  *error;
-    NSString   *returningAuthenticationProvider;
-    NSString   *returningSharingProvider;
-
+    NSError *error;
+    NSArray *engageAuthenticationProviders;
 }
 
-@property (retain) NSError  *error;
-@property (retain) NSString *appId;
-@property (retain) NSString *updatedEtag;
-@property (retain) NSDictionary *savedConfigurationBlock;
+@property NSString *returningAuthenticationProvider;
+@property NSString *returningSharingProvider;
+@property(retain) NSError *error;
+@property(retain) NSString *appId;
+@property(retain) NSString *updatedEtag;
+@property(retain) NSDictionary *savedConfigurationBlock;
 //@property (retain) NSString *gitCommit;
 @property(nonatomic, retain) NSDictionary *customProviders;
 
@@ -470,8 +464,8 @@ static NSString *applicationBundleDisplayName()
 @synthesize returningSharingProvider;
 @synthesize returningAuthenticationProvider;
 @synthesize currentProvider;
-@synthesize authenticatingDirectlyOnThisProvider;
-@synthesize forceReauthJustThisTime;
+//@synthesize authenticatingDirectlyOnThisProvider;
+//@synthesize forceReauthJustThisTime;
 @synthesize socialSharing;
 
 @synthesize alwaysForceReauth;
@@ -480,7 +474,7 @@ static NSString *applicationBundleDisplayName()
 #pragma mark singleton_methods
 static JRSessionData *singleton = nil;
 
-- (void)setCustomProvidersWithDictionary:(NSDictionary *)customProviders
+- (void)setCustomProvidersWithDictionary:(NSDictionary *)customProviders __unused
 {
     self.customProviders = [self customProvidersFromConfigurationDictionary:customProviders];
 }
@@ -553,6 +547,11 @@ static JRSessionData *singleton = nil;
     return self;
 }
 
+- (NSString *)device
+{
+    return UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? @"ipad" : @"iphone";
+}
+
 - (id)initWithAppId:(NSString *)newAppId tokenUrl:(NSString *)newTokenUrl andDelegate:(id<JRSessionDelegate>)newDelegate
 {
     DLog (@"");
@@ -564,8 +563,6 @@ static JRSessionData *singleton = nil;
         delegates     = [[NSMutableArray alloc] initWithObjects:newDelegate, nil];
         self.appId    = newAppId;
         self.tokenUrl = newTokenUrl;
-
-        device = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? @"ipad" : @"iphone";
 
         NSData *archivedUsers = [[NSUserDefaults standardUserDefaults] objectForKey:cJRAuthenticatedUsersByProvider];
         if (archivedUsers != nil)
@@ -586,7 +583,7 @@ static JRSessionData *singleton = nil;
                 engageProviders = [[NSMutableDictionary alloc] initWithDictionary:unarchivedProviders];
         }
 
-        authenticationProviders =
+        engageAuthenticationProviders =
                 [[[NSUserDefaults standardUserDefaults] objectForKey:cJRAuthenticationProviders] retain];
         sharingProviders = [[[NSUserDefaults standardUserDefaults] objectForKey:cJRSharingProviders] retain];
 
@@ -636,94 +633,9 @@ static JRSessionData *singleton = nil;
     self.error = [self startGetConfiguration];
 }
 
-#pragma mark dynamic_icon_handling
-//- (void)finishDownloadPicture:(NSData*)picture named:(NSString*)pictureName forProvider:(NSString*)provider
-//{
-//    DLog (@"Downloaded %@ for %@", pictureName, provider);
-//
-//    NSFileManager *fileManager = [NSFileManager defaultManager];
-//    NSString *path = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:pictureName];
-//    [fileManager createFileAtPath:path contents:picture attributes:nil];
-//
-//    NSMutableSet *iconsForProvider = [iconsStillNeeded objectForKey:provider];
-//    [iconsForProvider removeObject:pictureName];
-//
-//    if ([iconsForProvider count] == 0)
-//    {
-//        [iconsStillNeeded removeObjectForKey:provider];
-//        [providersWithIcons addObject:provider];
-//    }
-//
-//    [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:iconsStillNeeded]
-//                                              forKey:cJRIconsStillNeeded];
-//    [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:providersWithIcons]
-//                                              forKey:cJRProvidersWithIcons];
-//    [[NSUserDefaults standardUserDefaults] synchronize];
-//}
-
-//- (void)startDownloadPicture:(NSString*)picture forProvider:(NSString*)provider
-//{
-//    NSString *urlString = [NSString stringWithFormat:
-//                           @"%@/cdn/images/mobile_icons/%@/%@",
-//                           serverUrl, device, picture];
-//
-//    DLog (@"Attempting to download icon for %@: %@", provider, urlString);
-//
-//    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-//
-//    NSDictionary *tag = [NSDictionary dictionaryWithObjectsAndKeys:
-//                                              picture, @"pictureName",
-//                                              provider, @"providerName",
-//                                              @"downloadPicture", @"action", nil];
-//
-//    [JRConnectionManager createConnectionFromRequest:request forDelegate:self returnFullResponse:YES withTag:tag];
-//}
-
-//- (void)downloadNeededIcons:(NSMutableDictionary *)neededIcons
-//{
-//    for (NSString *provider in [neededIcons allKeys])
-//    {
-//        NSMutableSet *icons = [neededIcons objectForKey:provider];
-//        for (NSString *icon in [icons allObjects])
-//        {
-//            [self startDownloadPicture:icon forProvider:provider];
-//        }
-//    }
-//}
-
-//- (void)checkForNeededIcons:(NSString **)icons forProvider:(NSString*)providerName
-//{
-//    /* If we've already found this provider's icons, they should be in this list; just return. */
-//    if ([providersWithIcons containsObject:providerName])
-//        return;
-//
-//    /* If the provider isn't in the list, either the provider's icons need to be downloaded or this is the first time
-//       this code was run (and no providers have been added to providersWithIcons yet). If it's the latter, both these
-//       saved lists will probably be nil, so init them. */
-//    if (!providersWithIcons)
-//        providersWithIcons = [[NSMutableSet alloc] initWithCapacity:4];
-//
-//    if (!iconsStillNeeded)
-//        iconsStillNeeded = [[NSMutableDictionary alloc] initWithCapacity:4];
-//
-//    NSMutableSet *iconsNeeded = [NSMutableSet setWithCapacity:4];
-//
-//    for (int i = 0; icons[i]; i++)
-//    {
-//        if (![UIImage imageNamed:[NSString stringWithFormat:icons[i], providerName]])
-//            [iconsNeeded addObject:[NSString stringWithFormat:icons[i], providerName]];
-//    }
-//
-//    if ([iconsNeeded count])
-//        [iconsStillNeeded setObject:iconsNeeded forKey:providerName];
-//    else
-//        [providersWithIcons addObject:providerName];
-//}
-
 #pragma mark configuration
 - (NSString*)appNameAndVersion
 {
-    // TODO: Redo this
     NSDictionary *infoPlist = [[NSBundle mainBundle] infoDictionary];
     NSString     *name      = [[[infoPlist objectForKey:@"CFBundleDisplayName"]
                                 stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
@@ -740,15 +652,14 @@ static JRSessionData *singleton = nil;
                                 stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
                                 stringByAddingUrlPercentEscapes];
 
-    return [NSString stringWithFormat:@"appName=%@.%@3&version=%@_%@", name, bundle, device, version];
+    return [NSString stringWithFormat:@"appName=%@.%@3&version=%@_%@", name, bundle, self.device, version];
 }
 
 - (NSError *)startGetConfiguration
 {
-    NSString *nameAndVersion = [self appNameAndVersion];
     NSString *urlString = [NSString stringWithFormat:
-                           @"%@/openid/mobile_config_and_baseurl?device=%@&appId=%@&%@",
-                           serverUrl, device, appId, nameAndVersion];
+                                            @"%@/openid/mobile_config_and_baseurl?device=%@&appId=%@&%@",
+                                            serverUrl, self.device, self.appId, self.appNameAndVersion];
     ALog (@"Getting configuration for RP: %@", urlString);
 
     NSMutableURLRequest *configRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
@@ -797,15 +708,16 @@ static JRSessionData *singleton = nil;
     [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:providersWithIcons]
                                               forKey:cJRProvidersWithIcons];
 
-    [authenticationProviders release];
+    [engageAuthenticationProviders release];
     [sharingProviders release];
 
-    authenticationProviders = [[NSArray arrayWithArray:[configDict objectForKey:@"enabled_providers"]] retain];
-    sharingProviders = [[NSArray arrayWithArray:[configDict objectForKey:@"social_providers"]] retain];
+    engageAuthenticationProviders =
+            [[NSArray arrayWithArray:[configDict objectForKey:CONFIG_KEY_SIGNIN_PROVIDERS]] retain];
+    sharingProviders = [[NSArray arrayWithArray:[configDict objectForKey:CONFIG_KEY_SHARING_PROVIDERS]] retain];
 
     [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:engageProviders]
                                               forKey:cJREngageProviders];
-    [[NSUserDefaults standardUserDefaults] setObject:authenticationProviders forKey:cJRAuthenticationProviders];
+    [[NSUserDefaults standardUserDefaults] setObject:engageAuthenticationProviders forKey:cJRAuthenticationProviders];
     [[NSUserDefaults standardUserDefaults] setObject:sharingProviders forKey:cJRSharingProviders];
 
     hidePoweredBy = ([[configDict objectForKey:@"hide_tagline"] isEqualToString:@"YES"]) ? YES : NO;
@@ -855,7 +767,7 @@ static JRSessionData *singleton = nil;
     update the configuration information here, too. The dialogs won't try and do anything until we're done updating
     the lists. */
     if (!dialogIsShowing
-            || ([authenticationProviders count] == 0 && !socialSharing)
+            || ([engageAuthenticationProviders count] == 0 && !socialSharing)
             || ([sharingProviders count] == 0 && socialSharing))
     {
         return [self updateConfig:configDict];
@@ -932,7 +844,7 @@ static JRSessionData *singleton = nil;
 
 - (NSArray *)authenticationProviders
 {
-    return [authenticationProviders arrayByAddingObjectsFromArray:[_customProviders allKeys]];
+    return [engageAuthenticationProviders arrayByAddingObjectsFromArray:[_customProviders allKeys]];
 }
 
 - (void)forgetAllAuthenticatedUsers
@@ -1070,7 +982,7 @@ static JRSessionData *singleton = nil;
 
     NSString *urlString = [NSString stringWithFormat:@"%@%@?%@%@device=%@&extended=true",
                                                      baseUrl, provider.relativeUrl, extraParamString,
-                                                     forceReauth ? @"force_reauth=true&" : @"", device];
+                                                     forceReauth ? @"force_reauth=true&" : @"", [self device]];
 
     provider.forceReauth = NO;
 
@@ -1103,7 +1015,7 @@ static JRSessionData *singleton = nil;
     [body appendData:[[NSString stringWithFormat:@"&device_token=%@",
                                                  deviceToken] dataUsingEncoding:NSUTF8StringEncoding]];
     [body appendData:[[NSString stringWithFormat:@"&url_shortening=true"] dataUsingEncoding:NSUTF8StringEncoding]];
-    [body appendData:[[NSString stringWithFormat:@"&device=%@", device] dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[[NSString stringWithFormat:@"&device=%@", [self device]] dataUsingEncoding:NSUTF8StringEncoding]];
     [body appendData:[[NSString stringWithFormat:@"&provider=%@",
                                                  currentProvider.name] dataUsingEncoding:NSUTF8StringEncoding]];
     [body appendData:[[NSString stringWithFormat:@"&app_name=%@",
@@ -1142,7 +1054,7 @@ static JRSessionData *singleton = nil;
     [body appendData:[[NSString stringWithFormat:@"status=%@", status] dataUsingEncoding:NSUTF8StringEncoding]];
     [body appendData:[[NSString stringWithFormat:@"&device_token=%@",
                                                  deviceToken] dataUsingEncoding:NSUTF8StringEncoding]];
-    [body appendData:[[NSString stringWithFormat:@"&device=%@", device] dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[[NSString stringWithFormat:@"&device=%@", [self device]] dataUsingEncoding:NSUTF8StringEncoding]];
     [body appendData:[[NSString stringWithFormat:@"&app_name=%@",
                                                  applicationBundleDisplayName()] dataUsingEncoding:NSUTF8StringEncoding]];
     [body appendData:[[NSString stringWithFormat:@"&provider=%@",
@@ -1356,7 +1268,7 @@ static JRSessionData *singleton = nil;
 {
     ALog (@"");
     NSMutableData* body = [NSMutableData data];
-    [body appendData:[[NSString stringWithFormat:@"device=%@", device] dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[[NSString stringWithFormat:@"device=%@", [self device]] dataUsingEncoding:NSUTF8StringEncoding]];
     [body appendData:[[NSString stringWithFormat:@"&method=%@", method] dataUsingEncoding:NSUTF8StringEncoding]];
 
     NSString *urlString = [NSString stringWithFormat:
@@ -1399,7 +1311,7 @@ static JRSessionData *singleton = nil;
 
     NSString *urlString = [NSString stringWithFormat:@"%@/openid/get_urls?urls=%@&app_name=%@&device=%@",
                            baseUrl, [[urls JSONString]/*JSONRepresentation]*/ stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],
-                            [self appNameAndVersion], device];
+                            [self appNameAndVersion], [self device]];
 
     DLog (@"Getting shortened URLs: %@", urlString);
 
@@ -1903,7 +1815,6 @@ CALL_DELEGATE_SELECTOR:
 
 - (void)dealloc
 {
-    [authenticationProviders release];
     [sharingProviders release];
     [returningSharingProvider release];
     [returningAuthenticationProvider release];
@@ -1920,7 +1831,13 @@ CALL_DELEGATE_SELECTOR:
     [error release];
     [updatedEtag release];
     [savedConfigurationBlock release];
+    [engageAuthenticationProviders release];
     [super dealloc];
+}
+
+- (void)clearReturningAuthenticationProvider
+{
+    returningAuthenticationProvider = nil;
 }
 @end
 

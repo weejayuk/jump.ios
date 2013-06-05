@@ -90,7 +90,7 @@
         loadingLabel.backgroundColor = [UIColor clearColor];
         loadingLabel.font = [UIFont systemFontOfSize:(iPad) ? 30.0 : 13.0];
         loadingLabel.textColor = [UIColor whiteColor];
-        loadingLabel.textAlignment = UITextAlignmentLeft;
+        loadingLabel.textAlignment = JR_TEXT_ALIGN_LEFT;
         loadingLabel.autoresizingMask = UIViewAutoresizingNone | UIViewAutoresizingFlexibleRightMargin;
         loadingLabel.text = @"Loading...";
 

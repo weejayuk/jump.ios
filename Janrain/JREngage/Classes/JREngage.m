@@ -222,7 +222,7 @@ static JREngage* singleton = nil;
 //}
 
 + (void)showAuthenticationDialogForProvider:(NSString *)provider
-               withCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
+               withCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides __unused
 {
     [[JREngage singletonInstance] showAuthenticationDialogWithCustomInterfaceOverrides:customInterfaceOverrides
                             orAuthenticatingOnJustThisProvider:provider];
@@ -234,7 +234,7 @@ static JREngage* singleton = nil;
 //                            orAuthenticatingOnJustThisProvider:nil];
 //}
 
-+ (void)showAuthenticationDialogWithCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
++ (void)showAuthenticationDialogWithCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides __unused
 {
     [[JREngage singletonInstance] showAuthenticationDialogWithCustomInterfaceOverrides:customInterfaceOverrides 
                             orAuthenticatingOnJustThisProvider:nil];
@@ -258,10 +258,9 @@ static JREngage* singleton = nil;
                             orAuthenticatingOnJustThisProvider:nil];
 }
 
-+ (void)showAuthenticationDialog
++ (void)showAuthenticationDialog __unused
 {
-    [[JREngage singletonInstance] showAuthenticationDialogWithCustomInterfaceOverrides:nil
-                                                    orAuthenticatingOnJustThisProvider:nil];
+    [[JREngage singletonInstance] showAuthenticationDialog];
 }
 
 - (void)showSharingDialogWithActivity:(JRActivityObject *)activity
@@ -322,7 +321,7 @@ static JREngage* singleton = nil;
 //}
 
 + (void)showSharingDialogWithActivity:(JRActivityObject *)activity
-         withCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
+         withCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides __unused
 {
     [[JREngage singletonInstance] showSharingDialogWithActivity:activity 
                                    withCustomInterfaceOverrides:customInterfaceOverrides];
@@ -333,9 +332,9 @@ static JREngage* singleton = nil;
     [self showSharingDialogWithActivity:activity withCustomInterfaceOverrides:nil];
 }
 
-+ (void)showSharingDialogWithActivity:(JRActivityObject *)activity
++ (void)showSharingDialogWithActivity:(JRActivityObject *)activity __unused
 {
-    [[JREngage singletonInstance] showSharingDialogWithActivity:activity withCustomInterfaceOverrides:nil];
+    [[JREngage singletonInstance] showSharingDialogWithActivity:activity];
 }
 
 - (void)authenticationDidRestart
@@ -414,11 +413,11 @@ static JREngage* singleton = nil;
     }
 }
 
-- (void)publishingDidRestart
-{
-    DLog (@"");
-    [interfaceMaestro publishingRestarted];
-}
+//- (void)publishingDidRestart
+//{
+//    DLog (@"");
+//    [interfaceMaestro publishingRestarted];
+//}
 
 - (void)publishingDidCancel
 {
@@ -483,7 +482,7 @@ static JREngage* singleton = nil;
     [[JREngage singletonInstance] clearSharingCredentialsForProvider:provider];
 }
 
-- (void)clearSharingCredentialsForAllProviders
+- (void)clearSharingCredentialsForAllProviders __unused
 {
     DLog(@"");
     [sessionData forgetAllAuthenticatedUsers];
@@ -537,7 +536,7 @@ static JREngage* singleton = nil;
     return [JREngage singletonInstance].sessionData.tokenUrl;
 }
 
-+ (void)updateTokenUrl:(NSString *)newTokenUrl
++ (void)updateTokenUrl:(NSString *)newTokenUrl __unused
 {
     [[JREngage singletonInstance] updateTokenUrl:newTokenUrl];
 }
@@ -561,7 +560,7 @@ static JREngage* singleton = nil;
     [[JREngage singletonInstance] setCustomInterfaceDefaults:mutable];
 }
 
-+ (void)setCustomProviders:(NSDictionary *)customProviders
++ (void)setCustomProviders:(NSDictionary *)customProviders __unused
 {
     [[JREngage singletonInstance].sessionData setCustomProvidersWithDictionary:customProviders];
 }

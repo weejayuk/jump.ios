@@ -76,7 +76,6 @@
 #endif
 
 #import <Foundation/Foundation.h>
-
 @class JRActivityObject;
 
 /**
@@ -324,7 +323,8 @@
  *   The delegate object that implements the JREngageSigninDelegate or JREngageSharingDelegate protocol
  *
  **/
-+ (void)setEngageAppId:(NSString *)appId tokenUrl:(NSString *)tokenUrl andDelegate:(id<JREngageSigninDelegate>)delegate;
++ (void)setEngageAppId:(NSString *)appId tokenUrl:(NSString *)tokenUrl
+           andDelegate:(id <JREngageSigninDelegate>)delegate;
 /*@}*/
 
 /**
@@ -358,7 +358,7 @@
  * Use this function to begin authentication. The JREngage library will
  * pop up a modal dialog and take the user through the sign-in process.
  **/
-+ (void)showAuthenticationDialog;
++ (void)showAuthenticationDialog __unused;
 
 /**
  * Use this function to begin authentication for one specific provider. The JREngage library will
@@ -385,7 +385,7 @@
  * Any values specified in the \e customInterfaceOverrides dictionary will override the corresponding
  * values specified the dictionary passed into the setCustomInterfaceDefaults:() method.
  **/
-+ (void)showAuthenticationDialogWithCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides;
++ (void)showAuthenticationDialogWithCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides __unused;
 
 /**
 * Use this function to begin authentication. The JREngage library will pop up a modal dialog, configured
@@ -407,7 +407,7 @@
 * values specified the dictionary passed into the setCustomInterfaceDefaults:() method.
 **/
 + (void)showAuthenticationDialogForProvider:(NSString *)provider
-               withCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides;
+               withCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides __unused;
 
 /**
  * Use this function to begin social sharing. The JREngage library will pop up a modal dialog and
@@ -416,7 +416,7 @@
  * @param activity
  *   The activity you wish to share
  **/
-+ (void)showSharingDialogWithActivity:(JRActivityObject *)activity;
++ (void)showSharingDialogWithActivity:(JRActivityObject *)activity __unused;
 
 /**
  * Use this function to begin social sharing. The JREngage library will pop up a modal dialog,
@@ -437,7 +437,7 @@
  * values specified the dictionary passed into the setCustomInterfaceDefaults:() method.
  **/
 + (void)showSharingDialogWithActivity:(JRActivityObject*)activity
-         withCustomInterfaceOverrides:(NSDictionary*)customInterfaceOverrides;
+         withCustomInterfaceOverrides:(NSDictionary*)customInterfaceOverrides __unused;
 /*@}*/
 
 /**
@@ -500,12 +500,12 @@
  * @param tokenUrl
  *   The valid URL on your web server where the library will \e POST the authentication token
  **/
-+ (void)updateTokenUrl:(NSString *)tokenUrl;
++ (void)updateTokenUrl:(NSString *)tokenUrl __unused;
 
 /**
  * Returns the currently configured token URL (or nil if none is configured)
  */
-+ (NSString *)tokenUrl;
++ (NSString *)tokenUrl __unused;
 /*@}*/
 
 
@@ -534,7 +534,7 @@
  **/
 + (void)setCustomInterfaceDefaults:(NSDictionary *)customInterfaceDefaults __unused;
 /*@}*/
-+ (void)setCustomProviders:(NSDictionary *)customProviders;
++ (void)setCustomProviders:(NSDictionary *)customProviders __unused;
 @end
 
 /**
@@ -547,30 +547,30 @@
  **/
 /*@{*/
 //#define kJRCustomOpenId @"kJRCustomOpenId"
-#define kJRCustomOpenIdProviderId @"kJRCustomOpenidProviderId"
-#define kJRCustomOpenIdProviderName @"friendly_name"
+//#define kJRCustomOpenIdProviderId @"kJRCustomOpenidProviderId"
+//#define kJRCustomOpenIdProviderName @"friendly_name"
 #define kJRCustomOpenIdIdentifier @"openid_identifier"
 #define kJRCustomOpenIdOpxblob @"opx_blob"
 
 // reserved
-#define kJRCustomOpenIdProviderColor @"kJRCustomOpenIdProviderColor"
-#define kJRCustomOpenIdLargeIcon @"kJRCustomOpenidLargeIcon"
-#define kJRCustomOpenIdFlow @"kJRCustomOpenIdFlow"
+//#define kJRCustomOpenIdProviderColor @"kJRCustomOpenIdProviderColor"
+//#define kJRCustomOpenIdLargeIcon @"kJRCustomOpenidLargeIcon"
+//#define kJRCustomOpenIdFlow @"kJRCustomOpenIdFlow"
 
-#define kJRCustomOpenIdProviderKeys @[kJRCustomOpenIdProviderId, kJRCustomOpenIdProviderName, kJRCustomOpenIdProviderColor,\
-kJRCustomOpenIdLargeIcon, kJRCustomOpenIdLargeIcon, kJRCustomOpenIdIdentifier, kJRCustomOpenIdOpxblob, kJRCustomOpenIdFlow]
+//#define kJRCustomOpenIdProviderKeys @[kJRCustomOpenIdProviderId, kJRCustomOpenIdProviderName, kJRCustomOpenIdProviderColor,\
+//kJRCustomOpenIdLargeIcon, kJRCustomOpenIdLargeIcon, kJRCustomOpenIdIdentifier, kJRCustomOpenIdOpxblob, kJRCustomOpenIdFlow]
 
 //#define kJRCustomSaml @"kJRCustomSaml"
-#define kJRCustomSamlProviderId @"kJRCustomSamlProviderId"
+//#define kJRCustomSamlProviderId @"kJRCustomSamlProviderId"
 #define kJRCustomSamlProviderSamlName @"saml_provider"
-#define kJRCustomSamlProviderName @"friendly_name"
+//#define kJRCustomSamlProviderName @"friendly_name"
 
 // reserved
-#define kJRCustomSamlProviderColor @"kJRCustomSamlProviderColor"
-#define kJRCustomSamlLargeIcon @"kJRCustomSamlLargeIcon"
+//#define kJRCustomSamlProviderColor @"kJRCustomSamlProviderColor"
+//#define kJRCustomSamlLargeIcon @"kJRCustomSamlLargeIcon"
 
-#define kJRCustomSamlProviderKeys @[kJRCustomSamlProviderId, kJRCustomSamlProviderName, kJRCustomSamlProviderColor,\
-kJRCustomSamlLargeIcon]
+//#define kJRCustomSamlProviderKeys @[kJRCustomSamlProviderId, kJRCustomSamlProviderName, kJRCustomSamlProviderColor,\
+//kJRCustomSamlLargeIcon]
 /*@}*/
 
 /**

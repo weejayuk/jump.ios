@@ -33,10 +33,8 @@
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #import <UIKit/UIKit.h>
-
-@class JRWebViewController;
-@class JRSessionData;
-@class JRInfoBar;
+#import "JRSessionData.h"
+#import "JRInfoBar.h"
 
 @interface JRUserLandingController : UIViewController <UINavigationBarDelegate, UITableViewDelegate,
                                                         UITableViewDataSource, UIAlertViewDelegate, UITextFieldDelegate>
@@ -54,5 +52,7 @@
 }
 @property (nonatomic, retain) IBOutlet UIView      *myBackgroundView;
 @property (nonatomic, retain) IBOutlet UITableView *myTableView;
-- (id)initWithNibName:(NSString*)nibNameOrNil bundle:(NSBundle*)nibBundleOrNil andCustomInterface:(NSDictionary*)theCustomInterface;
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+   andCustomInterface:(NSDictionary *)theCustomInterface;
 @end

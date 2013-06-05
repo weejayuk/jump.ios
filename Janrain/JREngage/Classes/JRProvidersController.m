@@ -33,9 +33,13 @@
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #import "debug_log.h"
-#import "JRProvidersController.h"
+#import "JRSessionData.h"
+#import "JRUserInterfaceMaestro.h"
 #import "JREngage+CustomInterface.h"
+#import "JRProvidersController.h"
 #import "JRInfoBar.h"
+#import "JRUserLandingController.h"
+#import "JRWebViewController.h"
 
 @interface UITableViewCellProviders : UITableViewCell
 {
@@ -69,6 +73,26 @@
 @end
 
 @implementation JRProvidersController
+{
+    JRSessionData   *sessionData;
+    NSDictionary    *customInterface;
+
+    //BOOL iPad;
+    //BOOL hidesCancelButton;
+    //BOOL userHitTheBackButton;
+
+    UIView      *titleView;
+    //UIView      *myBackgroundView;
+    UITableView *myTableView;
+
+    /* Activity Spinner and Label displayed while the list of configured providers is empty */
+    NSTimer *timer;
+    UILabel                 *myLoadingLabel;
+    //UIActivityIndicatorView *myActivitySpinner;
+
+    JRInfoBar   *infoBar;
+}
+
 @synthesize providers;
 @synthesize hidesCancelButton;
 @synthesize myBackgroundView;
@@ -85,10 +109,10 @@
         sessionData = [JRSessionData jrSessionData];
         customInterface = [theCustomInterface retain];
 
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-            iPad = YES;
-        else
-            iPad = NO;
+        //if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        //    iPad = YES;
+        //else
+        //    iPad = NO;
     }
 
     return self;
@@ -116,13 +140,12 @@
         titleLabel.backgroundColor = [UIColor clearColor];
         titleLabel.font = [UIFont boldSystemFontOfSize:20.0];
         titleLabel.shadowColor = [UIColor colorWithWhite:0.0 alpha:0.5];
-        titleLabel.textAlignment = UITextAlignmentCenter;
+        titleLabel.textAlignment = JR_TEXT_ALIGN_CENTER;
         titleLabel.textColor = [UIColor whiteColor];
 
-        if ([customInterface objectForKey:kJRProviderTableTitleString])
-            titleLabel.text = NSLocalizedString([customInterface objectForKey:kJRProviderTableTitleString], @"");
-        else
-            titleLabel.text = NSLocalizedString(@"Sign in with...", @"");
+        NSString *l10n = ([customInterface objectForKey:kJRProviderTableTitleString]) ?
+            [customInterface objectForKey:kJRProviderTableTitleString] : @"Sign in with...";
+        titleLabel.text = NSLocalizedString(l10n, @"");
 
         titleView = titleLabel;
     }
@@ -266,7 +289,7 @@
     // If we have our list of providers, stop the progress indicators and load the table.
     if ([sessionData.authenticationProviders count] > 0)
     {
-        [self setProviders:[NSMutableArray arrayWithArray:sessionData.authenticationProviders]];
+        self.providers = [NSMutableArray arrayWithArray:sessionData.authenticationProviders];
         [providers removeObjectsInArray:[customInterface objectForKey:kJRRemoveProvidersFromAuthentication]];
 
         [myActivitySpinner stopAnimating];
@@ -313,15 +336,15 @@
     [sessionData triggerAuthenticationDidCancel];
 }
 
-- (void)authenticationDidCancel
-{
-
-}
-
-- (void)authenticationDidFail
-{
-
-}
+//- (void)authenticationDidCancel
+//{
+//
+//}
+//
+//- (void)authenticationDidFail
+//{
+//
+//}
 
 - (void)showLoading
 {
@@ -363,7 +386,7 @@
 
     [loadingLabel setText:@"Completing Sign-In..."];
     [loadingLabel setFont:[UIFont systemFontOfSize:20.0]];
-    [loadingLabel setTextAlignment:UITextAlignmentCenter];
+    [loadingLabel setTextAlignment:JR_TEXT_ALIGN_CENTER];
     [loadingLabel setTextColor:[UIColor whiteColor]];
     [loadingLabel setBackgroundColor:[UIColor clearColor]];
     [loadingLabel setAutoresizingMask:UIViewAutoresizingNone |
@@ -530,29 +553,6 @@
                                                animated:YES];
     }
 
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    DLog(@"");
-    [super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    DLog(@"");
-    [super viewDidDisappear:animated];
-}
-
-- (void)viewDidUnload
-{
-    DLog(@"");
-    [super viewDidUnload];
 }
 
 - (void)userInterfaceWillClose

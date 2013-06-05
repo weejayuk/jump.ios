@@ -150,15 +150,15 @@ typedef enum
 typedef enum
 {
 /**
- * Indicates that the user had an existing Capture record and that record has been retrieved.
- * Your application should update its state to reflect the user being signed-in
+ * Indicates that this is a new user and that a new Capture record has already been
+ * automatically created. Your application may wish to collect additional new-user information and push that
+ * information back to the Capture server
  **/
  JRCaptureRecordNewlyCreated,          /* now it exists, and it is new */
 
 /**
- * Indicates that this is a new user and that a new Capture record has already been
- * automatically created. Your application may wish to collect additional new-user information and push that
- * information back to the Capture server
+ * Indicates that the user had an existing Capture record and that record has been retrieved.
+ * Your application should update its state to reflect the user being signed-in
  **/
  JRCaptureRecordExists,                /* already created, not new */
 } JRCaptureRecordStatus;
@@ -472,7 +472,7 @@ captureEnableThinRegistration:(BOOL)enableThinRegistration
  *   The merge token, retrieved from the merge flow error instance.
  **/
 + (void)startEngageSigninDialogOnProvider:(NSString *)provider
-             withCustomInterfaceOverrides:(NSMutableDictionary *)customInterfaceOverrides
+             withCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
                                mergeToken:(NSString *)mergeToken
                               forDelegate:(id <JRCaptureSigninDelegate>)delegate;
 

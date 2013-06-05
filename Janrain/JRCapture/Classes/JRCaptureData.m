@@ -264,9 +264,9 @@ captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType
 
 - (void)downloadFlow
 {
-    NSString *testing = @"dlzjvycct5xka";
+    //NSString *testing = @"dlzjvycct5xka";
     NSString *production = @"d1lqe9temigv1p";
-    [self downloadFlowForCdnRealm:testing];
+    [self downloadFlowForCdnRealm:production];
 }
 
 - (void)downloadFlowForCdnRealm:(NSString *)cdnRealm

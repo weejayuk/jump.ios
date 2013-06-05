@@ -51,6 +51,21 @@ static NSString *const iPhoneUserAgent = @"Mozilla/5.0 (iPhone; U; CPU iPhone OS
 @end
 
 @implementation JRWebViewController
+{
+    JRSessionData   *sessionData;
+    NSDictionary    *customInterface;
+
+    UIView    *titleView;
+    UIView    *myBackgroundView;
+    UIWebView *myWebView;
+
+    JRInfoBar   *infoBar;
+
+    BOOL keepProgress;
+    BOOL userHitTheBackButton;
+    BOOL connectionDataAlreadyDownloadedThis;
+}
+
 @synthesize myBackgroundView;
 @synthesize myWebView;
 @synthesize originalCustomUserAgent;

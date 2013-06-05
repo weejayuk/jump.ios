@@ -175,15 +175,15 @@ static CATransform3D normalizedCATransform3D(CATransform3D d)
     return r;
 }
 
-static NSString *describeCATransform3D(CATransform3D *t)
-{
-    return [NSString stringWithFormat:@"[%f %f %f %f, %f %f %f %f, %f %f %f %f, %f %f %f %f]",
-            t->m11, t->m12, t->m13, t->m14,
-            t->m21, t->m22, t->m23, t->m24,
-            t->m31, t->m32, t->m33, t->m34,
-            t->m41, t->m42, t->m43, t->m44
-    ];
-}
+//static NSString *describeCATransform3D(CATransform3D *t)
+//{
+//    return [NSString stringWithFormat:@"[%f %f %f %f, %f %f %f %f, %f %f %f %f, %f %f %f %f]",
+//            t->m11, t->m12, t->m13, t->m14,
+//            t->m21, t->m22, t->m23, t->m24,
+//            t->m31, t->m32, t->m33, t->m34,
+//            t->m41, t->m42, t->m43, t->m44
+//    ];
+//}
 
 @interface UIWindow (JRUtils)
 -(BOOL)hasRvc;
@@ -383,7 +383,7 @@ static NSString *describeCATransform3D(CATransform3D *t)
     DLog(@"canceling");
     if (!_animating) return;
     self.animating = NO;
-    CATransform3D zeros;
+    CATransform3D zeros = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     self.dropShadow.layer.transform = zeros;
     self.windowDimmingView.backgroundColor = [UIColor whiteColor];
     self.modalDimmingView.backgroundColor = [UIColor whiteColor];
@@ -479,13 +479,15 @@ static NSString *describeCATransform3D(CATransform3D *t)
 @end
 
 @implementation JRModalViewController
-@synthesize myPopoverController, myNavigationController, animationController;
+@synthesize myPopoverController;
+@synthesize myNavigationController;
+@synthesize animationController;
 @synthesize vcToPresent;
 
-- (CustomAnimationController *)getAnimationController
-{
-    return animationController;
-}
+//- (CustomAnimationController *)getAnimationController
+//{
+//    return animationController;
+//}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -632,6 +634,8 @@ static NSString *describeCATransform3D(CATransform3D *t)
     DLog (@"");
     [myNavigationController release];
     [myPopoverController release];
+    [animationController release];
+    [vcToPresent release];
     [super dealloc];
 }
 @end
@@ -639,7 +643,7 @@ static NSString *describeCATransform3D(CATransform3D *t)
 @implementation JRUserInterfaceMaestro
 {
     // This is an invisible container VC used to present the modal and popover dialogs
-    JRModalViewController *jrModalViewController;
+    //JRModalViewController *jrModalViewController;
     JRSessionData *sessionData;
     NSMutableArray *delegates;
 
@@ -650,23 +654,23 @@ static NSString *describeCATransform3D(CATransform3D *t)
     BOOL usingCustomNav;
 
     // The provider to direct-auth on
-    NSString *directProvider;
+    //NSString *directProvider;
 
     // An app supplied UINavigationController to present, and then push dialogs onto, passed via custom interface dict
-    UINavigationController *customModalNavigationController;
-    // The host app's UINavigationController, optionally passed via custom interface dict
-    UINavigationController *applicationNavigationController;
-    UINavigationController *savedNavigationController;
+    //UINavigationController *customModalNavigationController;
+    // The host application's UINavigationController, optionally passed via custom interface dict
+    //UINavigationController *applicationNavigationController;
+    //UINavigationController *savedNavigationController;
     UIViewController *viewControllerToPopTo;
 
     // The JUMP VCs
-    JRProvidersController *myProvidersController;
-    JRUserLandingController *myUserLandingController;
-    JRWebViewController *myWebViewController;
-    JRPublishActivityController *myPublishActivityController;
+    //JRProvidersController *myProvidersController;
+    //JRUserLandingController *myUserLandingController;
+    //JRWebViewController *myWebViewController;
+    //JRPublishActivityController *myPublishActivityController;
 
-    NSDictionary *janrainInterfaceDefaults;
-    NSMutableDictionary *customInterfaceDefaults;
+    //NSDictionary *janrainInterfaceDefaults;
+    //NSMutableDictionary *customInterfaceDefaults;
     NSDictionary *customInterface;
 }
 @synthesize myProvidersController;
@@ -821,7 +825,7 @@ static JRUserInterfaceMaestro* singleton = nil;
 
 - (BOOL)canRotate
 {
-    return usingAppNav || IS_IPAD || [getWindow() hasRvc]
+    return usingAppNav || IS_IPAD || [getWindow() hasRvc];
 }
 
 - (void)tearDownDialogPresentation
@@ -984,7 +988,6 @@ static JRUserInterfaceMaestro* singleton = nil;
         && !sessionData.alwaysForceReauth                                                       /* d */
         && ![sessionData getProviderNamed:sessionData.returningAuthenticationProvider].forceReauth       /* e */
         && !sessionData.socialSharing                                                           /* f */
-        && !sessionData.captureWidget
         && [sessionData.authenticationProviders containsObject:sessionData.returningAuthenticationProvider]       /* g */
         && ![((NSArray *)[customInterface objectForKey:kJRRemoveProvidersFromAuthentication])    /* h */
                     containsObject:sessionData.returningAuthenticationProvider])
@@ -1073,16 +1076,16 @@ static JRUserInterfaceMaestro* singleton = nil;
 
 - (JRProvider *)weAreOnlyAuthenticatingOnThisProvider
 {
-    sessionData.authenticatingDirectlyOnThisProvider = YES;
+    //sessionData.authenticatingDirectlyOnThisProvider = YES;
 
     if (directProvider)
         return [sessionData getProviderNamed:directProvider];
 
-    sessionData.authenticatingDirectlyOnThisProvider = NO;
+    //sessionData.authenticatingDirectlyOnThisProvider = NO;
     return nil;
 }
 
-- (void)showAuthenticationDialogWithCustomInterface:(NSDictionary *)customizations __unused
+- (void)showAuthenticationDialogWithCustomInterface:(NSDictionary *)customizations
 {
     DLog(@"");
     [self buildCustomInterface:customizations];
@@ -1101,7 +1104,7 @@ static JRUserInterfaceMaestro* singleton = nil;
         [self loadModalNavigationControllerWithViewController:dialogVcToPresent];
 }
 
-- (void)showPublishingDialogForActivityWithCustomInterface:(NSDictionary *)customizations __unused
+- (void)showPublishingDialogForActivityWithCustomInterface:(NSDictionary *)customizations
 {
     DLog(@"");
     [self buildCustomInterface:customizations];
@@ -1203,11 +1206,11 @@ static JRUserInterfaceMaestro* singleton = nil;
     [self unloadUserInterfaceWithTransitionStyle:UIModalTransitionStyleCoverVertical];
 }
 
-- (void)publishingRestarted
-{
-    DLog(@"");
-    [self popToOriginalRootViewController];
-}
+//- (void)publishingRestarted
+//{
+//    DLog(@"");
+//    [self popToOriginalRootViewController];
+//}
 
 - (void)publishingCompleted
 {
@@ -1221,15 +1224,15 @@ static JRUserInterfaceMaestro* singleton = nil;
     [self unloadUserInterfaceWithTransitionStyle:UIModalTransitionStyleCoverVertical];
 }
 
-- (void)publishingFailed
-{
-    DLog(@"");
-}
+//- (void)publishingFailed
+//{
+//    DLog(@"");
+//}
 
-- (JRModalViewController *)getJrModalViewController
-{
-    return jrModalViewController;
-}
+//- (JRModalViewController *)getJrModalViewController
+//{
+//    return jrModalViewController;
+//}
 
 - (void)dealloc
 {
@@ -1239,6 +1242,14 @@ static JRUserInterfaceMaestro* singleton = nil;
     [myWebViewController release];
     [myPublishActivityController release];
     [viewControllerToPopTo release];
+    [janrainInterfaceDefaults release];
+    [jrModalViewController release];
+    [customModalNavigationController release];
+    [applicationNavigationController release];
+    [savedNavigationController release];
+    [customInterfaceDefaults release];
+    [directProvider release];
+    [customInterface release];
     [super dealloc];
 }
 @end

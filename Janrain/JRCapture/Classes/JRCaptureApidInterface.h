@@ -66,10 +66,6 @@ typedef enum
 /**
  * @internal
  */
-
-/**
- * @internal
- */
 @interface JRCaptureApidInterface : NSObject <JRConnectionManagerDelegate>
 + (void)signinCaptureUserWithCredentials:(NSDictionary *)credentials
                                   ofType:(NSString *)signInType
@@ -103,5 +99,6 @@ typedef enum
                  forDelegate:(id <JRCaptureInterfaceDelegate>)delegate
                  withContext:(NSObject *)context;
 
-+ (FinishSignInError)finishSignInWithPayload:(NSDictionary *)payloadDict forDelegate:(id<JRCaptureSigninDelegate>)delegate;
++ (FinishSignInError)finishSignInWithPayload:(NSDictionary *)payloadDict
+                                 forDelegate:(id <JRCaptureSigninDelegate>)delegate;
 @end

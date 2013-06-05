@@ -92,7 +92,7 @@
     //ensure wrapWidth is a multiple of 4
     wrapWidth = (wrapWidth / 4) * 4;
     
-    unsigned char *lookup = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    unsigned char *lookup = (unsigned char *) "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
     
     NSUInteger inputLength = [self length];
     const unsigned char *inputBytes = [self bytes];

@@ -141,7 +141,7 @@ captureEnableThinRegistration:(BOOL)enableThinRegistration
 }
 
 + (void)startEngageSigninDialogOnProvider:(NSString *)provider
-             withCustomInterfaceOverrides:(NSMutableDictionary *)customInterfaceOverrides
+             withCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
                                mergeToken:(NSString *)mergeToken
                               forDelegate:(id <JRCaptureSigninDelegate>)delegate
 {
@@ -364,15 +364,15 @@ captureEnableThinRegistration:(BOOL)enableThinRegistration
     [self maybeDispatch:successMsg forDelegate:delegate withArg:newUser_];
 }
 
-+ (void)maybeDispatch:(SEL)pSelector forDelegate:(id <JRCaptureSigninDelegate>)delegate withArg:(id)arg1
-              withArg:(id)arg2
-{
-    if ([delegate respondsToSelector:pSelector])
-    {
-        [delegate performSelector:pSelector withObject:arg1 withObject:arg2];
-        [delegate performSelector:pSelector withObject:arg1];
-    }
-}
+//+ (void)maybeDispatch:(SEL)pSelector forDelegate:(id <JRCaptureSigninDelegate>)delegate withArg:(id)arg1
+//              withArg:(id)arg2
+//{
+//    if ([delegate respondsToSelector:pSelector])
+//    {
+//        [delegate performSelector:pSelector withObject:arg1 withObject:arg2];
+//        [delegate performSelector:pSelector withObject:arg1];
+//    }
+//}
 
 + (void)maybeDispatch:(SEL)pSelector forDelegate:(id <JRCaptureSigninDelegate>)delegate withArg:(id)arg
 {

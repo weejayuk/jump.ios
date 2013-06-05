@@ -122,7 +122,7 @@
 - (void)authenticationCallToTokenUrl:(NSString*)tokenUrl didFailWithError:(NSError*)error
                          forProvider:(NSString*)provider;
 
-- (void)publishingDidRestart;
+//- (void)publishingDidRestart;
 - (void)publishingDidCancel;
 - (void)publishingDidComplete;
 
@@ -154,8 +154,8 @@
 
 @property (readonly) BOOL hidePoweredBy;
 @property            BOOL alwaysForceReauth;
-@property            BOOL forceReauthJustThisTime;
-@property            BOOL authenticatingDirectlyOnThisProvider;
+//@property            BOOL forceReauthJustThisTime;
+//@property            BOOL authenticatingDirectlyOnThisProvider;
 @property            BOOL socialSharing;
 @property            BOOL dialogIsShowing;
 @property (retain, readonly) NSError *error;
@@ -201,6 +201,8 @@
 - (void)triggerEmailSharingDidComplete;
 - (void)triggerSmsSharingDidComplete;
 
-- (void)setCustomProvidersWithDictionary:(NSDictionary *)customProviders;
+- (void)setCustomProvidersWithDictionary:(NSDictionary *)customProviders __unused;
+
+- (void)clearReturningAuthenticationProvider;
 @end
 

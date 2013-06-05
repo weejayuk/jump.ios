@@ -52,6 +52,19 @@
 //#define IS_PORTRAIT (UIDeviceOrientationIsPortrait([UIDevice currentDevice].orientation))
 //#define IS_LANDSCAPE (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
 
+#if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_6_0
+#  define JR_TEXT_ALIGN_CENTER (NSTextAlignmentCenter)
+#  define JR_TEXT_ALIGN_LEFT (NSTextAlignmentLeft)
+#  define JR_LINE_BREAK_MODE_TAIL_TRUNCATION (NSLineBreakByTruncatingTail)
+#  define JR_LINE_BREAK_MODE_WORD_WRAP (NSLineBreakByWordWrapping)
+#else
+#  define JR_TEXT_ALIGN_CENTER (UITextAlignmentCenter)
+#  define JR_TEXT_ALIGN_LEFT (UITextAlignmentLeft)
+#  define JR_LINE_BREAK_MODE_TAIL_TRUNCATION (UILineBreakModeTailTruncation)
+#  define JR_LINE_BREAK_MODE_WORD_WRAP (UILineBreakModeWordWrap)
+#endif
+
+
 typedef enum
 {
     PadPopoverModeNone,
@@ -63,8 +76,8 @@ typedef enum
 @protocol JRExternalDialogControllerDelegate <NSObject>
 @optional
 - (void)authenticationDidComplete;
-- (void)authenticationDidCancel;
-- (void)authenticationDidFail;
+//- (void)authenticationDidCancel;
+//- (void)authenticationDidFail;
 - (void)showLoading;
 - (void)hideLoading;
 @end
@@ -76,18 +89,18 @@ typedef enum
 
 - (void)loadModalNavigationControllerWithViewController:(UIViewController *)rootViewController;
 - (void)loadApplicationNavigationControllerWithViewController:(UIViewController *)rootViewController;
-- (void)showAuthenticationDialogWithCustomInterface:(NSDictionary *)customizations __unused;
-- (void)showPublishingDialogForActivityWithCustomInterface:(NSDictionary *)customizations __unused;
+- (void)showAuthenticationDialogWithCustomInterface:(NSDictionary *)customizations;
+- (void)showPublishingDialogForActivityWithCustomInterface:(NSDictionary *)customizations;
 - (void)unloadUserInterfaceWithTransitionStyle:(UIModalTransitionStyle)style;
 
 - (void)authenticationRestarted;
 - (void)authenticationCompleted;
 - (void)authenticationFailed;
 - (void)authenticationCanceled;
-- (void)publishingRestarted;
+//- (void)publishingRestarted;
 - (void)publishingCompleted;
 - (void)publishingCanceled;
-- (void)publishingFailed;
+//- (void)publishingFailed;
 
 @property(copy) NSMutableDictionary *customInterfaceDefaults;
 @property(readonly) JRProvidersController *myProvidersController;

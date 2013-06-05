@@ -33,21 +33,47 @@
  Date:   Tuesday, August 24, 2010
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#ifdef DEBUG
-#define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-#else
-#define DLog(...)
-#endif
-
-#define ALog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-
+#import "debug_log.h"
+#import "JRSessionData.h"
 #import "JRPublishActivityController.h"
+#import "JRWebViewController.h"
 #import "JREngage+CustomInterface.h"
 #import "JREngageError.h"
 #import "JRUserInterfaceMaestro.h"
 #import "JRUserLandingController.h"
-#import "JRWebViewController.h"
-#import "JRInfoBar.h"
+
+#define JRR_OUTER_STROKE_COLOR    [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1.0]
+#define JRR_INNER_STROKE_COLOR    JANRAIN_BLUE
+#define JRR_OUTER_FILL_COLOR      [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1.0]
+#define JRR_INNER_FILL_COLOR      [UIColor clearColor]
+#define JRR_OUTER_STROKE_WIDTH    0.1
+#define JRR_INNER_STROKE_WIDTH    0.5
+#define JRR_OUTER_CORNER_RADIUS   10.0
+#define JRR_INNER_CORNER_RADIUS   9.0
+#define JRR_INNER_RECT_INSET      6
+
+@interface JRRoundedRect : UIView
+//{
+//    UIColor *outerStrokeColor;
+//    UIColor *innerStrokeColor;
+//    UIColor *outerFillColor;
+//    UIColor *innerFillColor;
+//    CGFloat  outerStrokeWidth;
+//    CGFloat  innerStrokeWidth;
+//    CGFloat  outerCornerRadius;
+//    CGFloat  innerCornerRadius;
+//    BOOL     drawInnerRect;
+//}
+@property (nonatomic, retain) UIColor *outerStrokeColor;
+@property (nonatomic, retain) UIColor *innerStrokeColor;
+@property (nonatomic, retain) UIColor *outerFillColor;
+@property (nonatomic, retain) UIColor *innerFillColor;
+@property CGFloat outerStrokeWidth;
+@property CGFloat innerStrokeWidth;
+@property CGFloat outerCornerRadius;
+@property CGFloat innerCornerRadius;
+@property BOOL    drawInnerRect;
+@end
 
 @interface JRProvider (JRProvider_SocialSharingProperties)
 - (BOOL)willThunkPublishToStatusForActivity:(JRActivityObject*)activity;
@@ -59,10 +85,10 @@
 @end
 
 @implementation JRProvider (JRProvider_SocialSharingProperties)
-/* Right now, LinkedIn and Yahoo! */
 - (BOOL)willThunkPublishToStatusForActivity:(JRActivityObject*)activity
 {
- /* If the activity url is nil (or empty) certain providers will thunk from publish activity to set_status */
+    /* Right now, LinkedIn and Yahoo! */
+    /* If the activity url is nil (or empty) certain providers will thunk from publish activity to set_status */
     return ((![activity url] || [[activity url] isEqualToString:@""]) &&
             [[self.socialSharingProperties objectForKey:@"uses_set_status_if_no_url"] isEqualToString:@"YES"]);
 }
@@ -222,6 +248,42 @@ or opacity of our rounded rectangle. */
 @end
 
 @interface JRPublishActivityController ()
+@property (nonatomic, retain) IBOutlet UIView                  *myBackgroundView;
+@property (nonatomic, retain) IBOutlet UITabBar                *myTabBar;
+@property (nonatomic, retain) IBOutlet UILabel                 *myLoadingLabel;
+@property (nonatomic, retain) IBOutlet UIActivityIndicatorView *myLoadingActivitySpinner;
+@property (nonatomic, retain) IBOutlet UIView                  *myLoadingGrayView;
+@property (nonatomic, retain) IBOutlet UIView                  *myPadGrayEditingViewTop;
+@property (nonatomic, retain) IBOutlet UIView                  *myPadGrayEditingViewMiddle;
+@property (nonatomic, retain) IBOutlet UIView                  *myPadGrayEditingViewBottom;
+@property (nonatomic, retain) IBOutlet UIView                  *myContentView;
+@property (nonatomic, retain) IBOutlet UIScrollView            *myScrollView;
+@property (nonatomic, retain) IBOutlet UITextView              *myUserCommentTextView;
+@property (nonatomic, retain) IBOutlet JRRoundedRect           *myUserCommentBoundingBox;
+@property (nonatomic, retain) IBOutlet UILabel                 *myRemainingCharactersLabel;
+@property (nonatomic, retain) IBOutlet UIView                  *myEntirePreviewContainer;
+@property (nonatomic, retain) IBOutlet JRRoundedRect           *myPreviewContainerRoundedRect;
+@property (nonatomic, retain) IBOutlet JRPreviewLabel          *myPreviewOfTheUserCommentLabel;
+@property (nonatomic, retain) IBOutlet JRRoundedRect           *myRichDataContainer;
+@property (nonatomic, retain) IBOutlet UIButton                *myMediaThumbnailView;
+@property (nonatomic, retain) IBOutlet UIActivityIndicatorView *myMediaThumbnailActivityIndicator;
+@property (nonatomic, retain) IBOutlet UILabel                 *myTitleLabel;
+@property (nonatomic, retain) IBOutlet UILabel                 *myDescriptionLabel;
+@property (nonatomic, retain) IBOutlet UIButton                *myInfoButton;
+@property (nonatomic, retain) IBOutlet UILabel                 *myPoweredByLabel;
+@property (nonatomic, retain) IBOutlet UIImageView             *myProviderIcon;
+@property (nonatomic, retain) IBOutlet UIView                  *myShareToView;
+@property (nonatomic, retain) IBOutlet UIImageView             *myTriangleIcon;
+@property (nonatomic, retain) IBOutlet UIButton                *myConnectAndShareButton;
+@property (nonatomic, retain) IBOutlet UIButton                *myJustShareButton;
+@property (nonatomic, retain) IBOutlet UIButton                *myProfilePic;
+@property (nonatomic, retain) IBOutlet UIActivityIndicatorView *myProfilePicActivityIndicator;
+@property (nonatomic, retain) IBOutlet UILabel                 *myUserName;
+@property (nonatomic, retain) IBOutlet UIButton                *mySignOutButton;
+@property (nonatomic, retain) IBOutlet UIImageView             *mySharedCheckMark;
+@property (nonatomic, retain) IBOutlet UILabel                 *mySharedLabel;
+@property (retain) JRProvider *selectedProvider;
+//@property (retain) JRAuthenticatedUser *loggedInUser;
 - (void)addProvidersToTabBar;
 - (void)determineIfWeCanShareViaEmailAndOrSMS;
 - (void)loadActivityToViewForFirstTime;
@@ -231,14 +293,92 @@ or opacity of our rounded rectangle. */
 - (void)setProfilePicToDefaultPic;
 - (void)fetchProfilePicFromUrl:(NSString*)profilePicUrl forProvider:(NSString*)providerName;
 - (void)setButtonImage:(UIButton*)button toData:(NSData*)data andSetLoading:(UIActivityIndicatorView*)actIndicator toLoading:(BOOL)loading;
-@property (retain) JRProvider *selectedProvider;
-@property (retain) JRAuthenticatedUser *loggedInUser;
 @end
 
 @implementation JRPublishActivityController
-@synthesize hidesCancelButton;
+{
+    JRSessionData    *sessionData;
+    JRActivityObject *currentActivity;
+
+    JRProvider          *selectedProvider;
+    JRAuthenticatedUser *loggedInUser;
+
+    //BOOL hidesCancelButton;
+    //BOOL hasCoreText;
+
+    EmailOrSms emailAndOrSmsIndex;
+    NSUInteger selectedTab;
+
+    NSString *shortenedActivityUrl;
+    NSInteger maxCharacters;
+
+    NSMutableDictionary *cachedProfilePics;
+    NSMutableSet        *alreadyShared;
+
+    BOOL weAreStillWaitingOnSocialProviders;
+    BOOL weHaveJustAuthenticated;
+    BOOL weAreCurrentlyPostingSomething;
+    BOOL weAreCurrentlyEditing;
+    BOOL hasEditedUserContentForActivityAlready;
+    BOOL userIsAttemptingToSignOut;
+    BOOL mediaThumbnailFailedToDownload;
+    BOOL activityHasRichData;
+
+    CGFloat previewLabelHeight;
+    CGFloat mediaBoxHeight;
+
+    NSDictionary *customInterface;
+    NSDictionary *colorsDictionary;
+    UIView       *titleView;
+
+    UIView     *myBackgroundView;
+    UITabBar   *myTabBar;
+
+    /* Activity Spinner and Label displayed while the list of configured providers is empty */
+    NSTimer *timer;
+    UILabel                 *myLoadingLabel;
+    UIActivityIndicatorView *myLoadingActivitySpinner;
+    UIView                  *myLoadingGrayView;
+
+    UIView *myPadGrayEditingViewTop;
+    UIView *myPadGrayEditingViewMiddle;
+    UIView *myPadGrayEditingViewBottom;
+
+    UIView       *myContentView;
+    UIScrollView *myScrollView;
+
+    UITextView      *myUserCommentTextView;
+    JRRoundedRect   *myUserCommentBoundingBox;
+
+    UILabel *myRemainingCharactersLabel;
+
+    UIView                  *myEntirePreviewContainer;
+    JRRoundedRect           *myPreviewContainerRoundedRect;
+    JRPreviewLabel          *myPreviewOfTheUserCommentLabel;
+    JRRoundedRect           *myRichDataContainer;
+    UIButton                *myMediaThumbnailView;
+    UIActivityIndicatorView *myMediaThumbnailActivityIndicator;
+    UILabel                 *myTitleLabel;
+    UILabel                 *myDescriptionLabel;
+
+    UIButton    *myInfoButton;
+    UILabel     *myPoweredByLabel;
+    UIImageView *myProviderIcon;
+
+    UIView                  *myShareToView;
+    UIImageView             *myTriangleIcon;
+    UIButton                *myConnectAndShareButton;
+    UIButton                *myJustShareButton;
+    UIButton                *myProfilePic;
+    UIActivityIndicatorView *myProfilePicActivityIndicator;
+    UILabel                 *myUserName;
+    UIButton                *mySignOutButton;
+    UIImageView             *mySharedCheckMark;
+    UILabel                 *mySharedLabel;
+}
+//@synthesize hidesCancelButton;
 @synthesize selectedProvider;
-@synthesize loggedInUser;
+//@synthesize loggedInUser;
 @synthesize myBackgroundView, myTabBar, myLoadingLabel, myLoadingActivitySpinner, myLoadingGrayView,
             myPadGrayEditingViewTop, myPadGrayEditingViewMiddle, myPadGrayEditingViewBottom, myContentView, myScrollView,
             myUserCommentTextView, myUserCommentBoundingBox, myRemainingCharactersLabel, myEntirePreviewContainer,
@@ -247,7 +387,8 @@ or opacity of our rounded rectangle. */
             myProviderIcon, myShareToView, myTriangleIcon, myConnectAndShareButton, myJustShareButton, myProfilePic,
             myProfilePicActivityIndicator, myUserName, mySignOutButton, mySharedCheckMark, mySharedLabel;
 
-- (id)initWithNibName:(NSString*)nibNameOrNil bundle:(NSBundle*)nibBundleOrNil andCustomInterface:(NSDictionary*)theCustomInterface
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+   andCustomInterface:(NSDictionary *)theCustomInterface
 {
     DLog(@"");
     if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]))
@@ -256,11 +397,6 @@ or opacity of our rounded rectangle. */
         sessionData     = [JRSessionData jrSessionData];
         currentActivity = [[sessionData activity] retain];
         customInterface = [theCustomInterface retain];
-
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-            iPad = YES;
-        else
-            iPad = NO;
     }
 
     return self;
@@ -272,32 +408,30 @@ or opacity of our rounded rectangle. */
 
     [super viewDidLoad];
 
-    alreadyShared     = [[NSMutableSet alloc] initWithCapacity:[[sessionData socialProviders] count]];
-    cachedProfilePics = [[NSMutableDictionary alloc] initWithCapacity:[[sessionData socialProviders] count]];
+    alreadyShared     = [[NSMutableSet alloc] initWithCapacity:[sessionData.sharingProviders count]];
+    cachedProfilePics = [[NSMutableDictionary alloc] initWithCapacity:[sessionData.sharingProviders count]];
 
     if ([[customInterface objectForKey:kJRSocialSharingTitleString] isKindOfClass:[NSString class]])
         self.title = NSLocalizedString([customInterface objectForKey:kJRSocialSharingTitleString], @"");
     else
         self.title = NSLocalizedString(@"Share", @"");
 
- /* Load the custom background view, if there is one. */
+    /* Load the custom background view, if there is one. */
     if ([customInterface objectForKey:kJRSocialSharingBackgroundImageView])
         [myBackgroundView addSubview:[customInterface objectForKey:kJRSocialSharingBackgroundImageView]];
 
     [myBackgroundView setAlpha:0.3];
 
- /* If there is a UIColor object set for the background color, use this */
+    /* If there is a UIColor object set for the background color, use this */
     if ([customInterface objectForKey:kJRSocialSharingBackgroundColor])
         myBackgroundView.backgroundColor = [customInterface objectForKey:kJRSocialSharingBackgroundColor];
-
-//    myContentView.backgroundColor = [UIColor clearColor];
 
     titleView = [[customInterface objectForKey:kJRSocialSharingTitleView] retain];
 
     if (titleView)
         self.navigationItem.titleView = titleView;
 
-    if (!hidesCancelButton)
+    if (!self.hidesCancelButton)
     {
         UIBarButtonItem *cancelButton = [[[UIBarButtonItem alloc]
                                 initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
@@ -326,10 +460,7 @@ or opacity of our rounded rectangle. */
         [myInfoButton setHidden:YES];
     }
 
-//    [myPadGrayEditingViewTop setBackgroundColor:[UIColor redColor]];
-//    [myPadGrayEditingViewBottom setBackgroundColor:[UIColor blueColor]];
-
- /* Set RoundedRect defaults */
+    /* Set RoundedRect defaults */
     [myPreviewContainerRoundedRect setOuterFillColor:[UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1.0]];
     [myPreviewContainerRoundedRect setDrawInnerRect:YES];
     [myRichDataContainer setOuterFillColor:[UIColor lightGrayColor]];
@@ -343,17 +474,15 @@ or opacity of our rounded rectangle. */
     [myRichDataContainer setNeedsDisplay];
     [myUserCommentBoundingBox setNeedsDisplay];
 
-    //[myScrollView setContentSize:CGSizeMake(320, 264)];
-
     [self determineIfWeCanShareViaEmailAndOrSMS];
     [self loadActivityToViewForFirstTime];
 
- /* If the user calls the library before the session data object is done initializing -
+    /* If the user calls the library before the session data object is done initializing -
     because either the requests for the base URL or provider list haven't returned -
     display the "Loading Providers" label and activity spinner.
     sessionData = nil when the call to get the base URL hasn't returned
     [sessionData.configuredProviders count] = 0 when the provider list hasn't returned */
-    if ([[sessionData socialProviders] count] == 0)
+    if ([sessionData.sharingProviders count] == 0)
     {
         DLog(@"[[sessionData socialProviders] count] == 0");
         weAreStillWaitingOnSocialProviders = YES;
@@ -361,11 +490,11 @@ or opacity of our rounded rectangle. */
         myLoadingLabel.font = [UIFont systemFontOfSize:18.0];
         myLoadingLabel.text = NSLocalizedString(@"Loading providers. Please wait...", @"");
 
-     /* Since the method showViewIsLoading will disable the "Cancel" button, re-enable it for this case */
+        /* Since the method showViewIsLoading will disable the "Cancel" button, re-enable it for this case */
         [self showViewIsLoading:YES];
         self.navigationItem.leftBarButtonItem.enabled = YES;
 
-     /* Now poll every few milliseconds, for about 16 seconds, until the provider list is loaded or we time out. */
+        /* Now poll every few milliseconds, for about 16 seconds, until the provider list is loaded or we time out. */
         timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(checkSessionDataAndProviders:) userInfo:nil repeats:NO];
     }
     else
@@ -382,20 +511,13 @@ or opacity of our rounded rectangle. */
     [super viewWillAppear:animated];
 
     self.contentSizeForViewInPopover = CGSizeMake(320, 416);
-
-// /* We need to figure out if the user canceled authentication by hitting the back button or the cancel button,
-//    or if it stopped because it failed or completed successfully on its own.  Assume that the user did hit the
-//    back button until told otherwise. */
-//  userHitTheBackButton = YES;
-
-    // Question to self: Why is this in viewWillAppear and not above in viewDidLoad??
     if (!titleView)
     {
         UILabel *titleLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 44)] autorelease];
         titleLabel.backgroundColor           = [UIColor clearColor];
         titleLabel.font                      = [UIFont boldSystemFontOfSize:20.0];
         titleLabel.shadowColor               = [UIColor colorWithWhite:0.0 alpha:0.5];
-        titleLabel.textAlignment             = UITextAlignmentCenter;
+        titleLabel.textAlignment             = JR_TEXT_ALIGN_CENTER;
         titleLabel.textColor                 = [UIColor whiteColor];
         titleLabel.adjustsFontSizeToFitWidth = YES;
         titleLabel.minimumFontSize           = 18.0;
@@ -411,9 +533,6 @@ or opacity of our rounded rectangle. */
         titleView = [titleLabel retain];
         self.navigationItem.titleView = titleView;
     }
-
-//    if (!weAreStillWaitingOnSocialProviders)
-//        [self adjustRichDataContainer];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -444,10 +563,10 @@ or opacity of our rounded rectangle. */
 
     timer = nil;
 
-    DLog (@"Social Providers so far: %d", [[sessionData socialProviders] count]);
+    DLog (@"Social Providers so far: %d", [sessionData.sharingProviders count]);
 
- /* If we have our list of providers, stop the progress indicators and load the table. */
-    if ([[sessionData socialProviders] count] > 0)
+    /* If we have our list of providers, stop the progress indicators and load the table. */
+    if ([sessionData.sharingProviders count] > 0)
     {
         weAreStillWaitingOnSocialProviders = NO;
 
@@ -462,7 +581,7 @@ or opacity of our rounded rectangle. */
         return;
     }
 
- /* Otherwise, keep polling until we've timed out. */
+    /* Otherwise, keep polling until we've timed out. */
     if (interval >= CONFIGURATION_TIMEOUT)
     {
         DLog(@"No Available Providers");
@@ -482,7 +601,8 @@ Please try again later."
         return;
     }
 
-    timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(checkSessionDataAndProviders:) userInfo:nil repeats:NO];
+    timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(checkSessionDataAndProviders:)
+                                           userInfo:nil repeats:NO];
 }
 
 /* That is, cover the view with a transparent gray box and a large white activity indicator. */
@@ -554,7 +674,7 @@ Please try again later."
             ([myTriangleIcon superview].frame.size.width - 90) :
             ([myTriangleIcon superview].frame.size.width / 2) - 9), 0, 18, 18)];
 
-    if (!hidesCancelButton)
+    if (!self.hidesCancelButton)
     {
         UIBarButtonItem *barButton;
         if (shared)
@@ -591,7 +711,7 @@ Please try again later."
                                 [currentActivity action];
 
     [myPreviewOfTheUserCommentLabel setUsername:username];
-    [myPreviewOfTheUserCommentLabel setUsertext:text];
+    [myPreviewOfTheUserCommentLabel setUserText:text];
 
     if ([selectedProvider isActivityUrlPartOfUserContent])
     { /* Twitter/MySpace -> true */
@@ -613,7 +733,7 @@ Please try again later."
     NSString *text     = currentActivity.action;
 
     [myPreviewOfTheUserCommentLabel setUsername:username];
-    [myPreviewOfTheUserCommentLabel setUsertext:text];
+    myPreviewOfTheUserCommentLabel.userText = text;
     [myPreviewOfTheUserCommentLabel setUrl:nil];
 }
 
@@ -694,10 +814,10 @@ Please try again later."
     CGFloat scrollViewContentHeight = myEntirePreviewContainer.frame.origin.y +
                                       myEntirePreviewContainer.frame.size.height + 10;
 
-    if (iPad && (scrollViewContentHeight < myScrollView.frame.size.height))
+    if (IS_IPAD && (scrollViewContentHeight < myScrollView.frame.size.height))
         scrollViewContentHeight = myScrollView.frame.size.height;
 
-    if (iPad)
+    if (IS_IPAD)
     {
         [myPadGrayEditingViewTop setFrame:
                 CGRectMake(myPadGrayEditingViewTop.frame.origin.x,
@@ -759,7 +879,7 @@ Please try again later."
     DLog(@"");
 
 #if JRENGAGE_INCLUDE_EMAIL_SMS
-    if (item.tag == [[sessionData socialProviders] count])
+    if (item.tag == [sessionData.sharingProviders count])
     {
         UIActionSheet *action;
         switch (emailAndOrSmsIndex)
@@ -786,12 +906,13 @@ Please try again later."
     else
 #endif
     {
-        self.selectedProvider = [sessionData getSocialProviderAtIndex:item.tag];
+        id key = [sessionData.sharingProviders objectAtIndex:(NSUInteger) item.tag];
+        self.selectedProvider = [[sessionData allProviders] objectForKey:key];
         [sessionData setCurrentProvider:selectedProvider];
 
-        self.loggedInUser = [sessionData authenticatedUserForProvider:selectedProvider];
+        //self.loggedInUser = [sessionData authenticatedUserForProvider:selectedProvider];
 
-        selectedTab = item.tag;
+        selectedTab = (NSUInteger) item.tag;
 
         NSArray *colorArray = [selectedProvider.socialSharingProperties objectForKey:@"color_values"];
         if ([colorArray count] == 4)
@@ -828,7 +949,6 @@ Please try again later."
                                           NSLocalizedString(@"Share on", @""),
                                           selectedProvider.friendlyName];
 
-        // Question to self: Here because you can switch tabs while editing on the iPad, yes??
         currentActivity.userGeneratedContent = myUserCommentTextView.text;
 
         if (loggedInUser)
@@ -846,7 +966,6 @@ Please try again later."
         else
             maxCharacters = [selectedProvider maxCharactersForPublishActivity];
 
-        //        NSUInteger foo = (weAreCurrentlyEditing ? PREVIEW_BOX_EDITING_Y_ORIGIN : PREVIEW_BOX_DEFAULT_Y_ORIGIN);
         if ([self shouldHideRemainingCharacterCount])
         {
             [myRemainingCharactersLabel setHidden:YES];
@@ -881,9 +1000,6 @@ Please try again later."
 - (void)doneButtonPressed:(id)sender
 {
     [myUserCommentTextView resignFirstResponder];
-
-//    if (myUserContentTextView.text.length > 0)
-//        [myUserContentTextView scrollRangeToVisible:NSMakeRange(0, 1)];
 }
 
 - (void)editButtonPressed:(id)sender
@@ -940,7 +1056,7 @@ Please try again later."
     CGFloat scrollViewContentHeight = myEntirePreviewContainer.frame.origin.y +
                                       myEntirePreviewContainer.frame.size.height + 10;
 
-    if (iPad && (scrollViewContentHeight < myScrollView.frame.size.height))
+    if (IS_IPAD && (scrollViewContentHeight < myScrollView.frame.size.height))
         scrollViewContentHeight = myScrollView.frame.size.height;
 
     [myPadGrayEditingViewTop setFrame:
@@ -953,17 +1069,8 @@ Please try again later."
 
     DLog(@"scrollViewContentHeight: %f", scrollViewContentHeight);
 
-    if (!iPad)
+    if (!IS_IPAD)
     {
-        //if (UIInterfaceOrientationIsPortrait(self.interfaceOrientation))
-        //    [myScrollView setFrame:
-        //        CGRectMake(myScrollView.frame.origin.x, myScrollView.frame.origin.y,
-        //                   myScrollView.frame.size.width, SCROLL_VIEW_EDITING_HEIGHT_PORTRAIT)];
-        //else
-        //    [myScrollView setFrame:
-        //        CGRectMake(myScrollView.frame.origin.x, myScrollView.frame.origin.y,
-        //                   myScrollView.frame.size.width, SCROLL_VIEW_EDITING_HEIGHT_LANDSCAPE)];
-
         [UIView commitAnimations];
     }
     else
@@ -994,7 +1101,7 @@ Please try again later."
 
     weAreCurrentlyEditing = NO;
 
- /* If the user started to enter something, but didn't end up keeping anything, set
+    /* If the user started to enter something, but didn't end up keeping anything, set
     the text back to what the activity's action was. (Aside: We could also set
     hasEditedUserContentForActivityAlready to "NO", clearing the action the next time
     they go to edit.  Currently, on second edit, the action stays, which I kinda like) */
@@ -1033,7 +1140,7 @@ Please try again later."
     CGFloat scrollViewContentHeight = myEntirePreviewContainer.frame.origin.y +
                                       myEntirePreviewContainer.frame.size.height + 10;
 
-    if (iPad && (scrollViewContentHeight < myScrollView.frame.size.height))
+    if (IS_IPAD && (scrollViewContentHeight < myScrollView.frame.size.height))
         scrollViewContentHeight = myScrollView.frame.size.height;
 
     DLog(@"scrollViewContentHeight: %f", scrollViewContentHeight);
@@ -1046,17 +1153,8 @@ Please try again later."
 
     [myScrollView setContentSize:CGSizeMake(myScrollView.frame.size.width, scrollViewContentHeight)];
 
-    if (!iPad)
+    if (!IS_IPAD)
     {
-        //if (UIInterfaceOrientationIsPortrait(self.interfaceOrientation))
-        //    [myScrollView setFrame:
-        //        CGRectMake(myScrollView.frame.origin.x, myScrollView.frame.origin.y,
-        //                   myScrollView.frame.size.width, SCROLL_VIEW_DEFAULT_HEIGHT_PORTRAIT)];
-        //else
-        //    [myScrollView setFrame:
-        //        CGRectMake(myScrollView.frame.origin.x, myScrollView.frame.origin.y,
-        //                   myScrollView.frame.size.width, SCROLL_VIEW_DEFAULT_HEIGHT_LANDSCAPE)];
-
         [UIView commitAnimations];
     }
     else
@@ -1090,7 +1188,8 @@ Please try again later."
 
 - (void)textViewDidChange:(UITextView *)textView
 {
-    if ([selectedProvider doesContentReplaceAction] || [selectedProvider willThunkPublishToStatusForActivity:currentActivity])
+    if ([selectedProvider doesContentReplaceAction] ||
+            [selectedProvider willThunkPublishToStatusForActivity:currentActivity])
         [self updatePreviewTextWhenContentReplacesAction];
     else
         [self updatePreviewTextWhenContentDoesNotReplaceAction];
@@ -1372,7 +1471,7 @@ Please try again later."
         CGSize shouldBeTitleSize =
                        [myTitleLabel.text sizeWithFont:myTitleLabel.font                        // TODO: Verify change made below
                                      constrainedToSize:CGSizeMake(title_w, MBC_MAX_HEIGHT)//([currentActivity.media count] > 0 && !mediaThumbnailFailedToDownload) ? 224 : 262, 73)
-                                         lineBreakMode:UILineBreakModeTailTruncation];
+                                         lineBreakMode:JR_LINE_BREAK_MODE_TAIL_TRUNCATION];
         shouldBeTitleHeight = shouldBeTitleSize.height;
     }
 
@@ -1386,7 +1485,7 @@ Please try again later."
         CGSize shouldBeDescriptionSize =
                        [myDescriptionLabel.text sizeWithFont:myDescriptionLabel.font
                                            constrainedToSize:CGSizeMake(descr_w, MBC_MAX_HEIGHT)//([currentActivity.media count] > 0 && !mediaThumbnailFailedToDownload) ? 224 : 262, 73)
-                                               lineBreakMode:UILineBreakModeTailTruncation];
+                                               lineBreakMode:JR_LINE_BREAK_MODE_TAIL_TRUNCATION];
         shouldBeDescriptionHeight = shouldBeDescriptionSize.height;
     }
 
@@ -1410,8 +1509,8 @@ Please try again later."
             descr_h = 70.0; /* The height of 5 lines of 11.0 pt. font, which is the most we can fit when we
                                don't have a title */
 
-        /* If the descr label is taller than our media thumbnail, or if we don't have a media thumbnail, set the media
-        box height to the descr label plus padding */
+        /* If the description label is taller than our media thumbnail, or if we don't have a media thumbnail, set the
+        media box height to the description label plus padding */
         if ((descr_h > 38.0) || ([currentActivity.media count] == 0))
             mediaBoxHeight = descr_h + MBC_EXTERIOR_PADDING; /* The padding above and below the title/description */
 
@@ -1438,38 +1537,44 @@ Please try again later."
     /* There is a title and a description*/
     else /* if (shouldBeDescriptionHeight != 0 && shouldBeTitleHeight !=0 ) */
     {
-        /* If both the title and descr labels fit into the media box content height */
+        /* If both the title and description labels fit into the media box content height */
         if (shouldBeTitleHeight + shouldBeDescriptionHeight + MBC_INTERIOR_PADDING < MBC_MAX_HEIGHT) //71)
         {
-          /* Let them keep their heights, and position the descr label */
+          /* Let them keep their heights, and position the description label */
             title_h = shouldBeTitleHeight;
             descr_h = shouldBeDescriptionHeight;
             descr_y = shouldBeTitleHeight + 7.0; /* Title height + top padding + interior padding */
 
-         /* If the title label and descr labels are together taller than our media thumbnail, or if we don't
-            have a media thumbnail, set the media box height to the title label height plus the descr label
+         /* If the title label and description labels are together taller than our media thumbnail, or if we don't
+            have a media thumbnail, set the media box height to the title label height plus the description label
             height plus padding */
             if ((shouldBeTitleHeight + shouldBeDescriptionHeight > 38.0) || ([currentActivity.media count] == 0))
-                mediaBoxHeight = shouldBeTitleHeight + shouldBeDescriptionHeight + MBC_EXTERIOR_PADDING + MBC_INTERIOR_PADDING;
+                mediaBoxHeight = shouldBeTitleHeight + shouldBeDescriptionHeight + MBC_EXTERIOR_PADDING +
+                        MBC_INTERIOR_PADDING;
         }
 
-        /* If both the title and descr labels DON'T fit into the media box content height */
+        /* If both the title and description labels DON'T fit into the media box content height */
         else if (shouldBeTitleHeight + shouldBeDescriptionHeight + MBC_INTERIOR_PADDING >= MBC_MAX_HEIGHT)
         {
-         /* If the title height is taller than one line of text and the descr height is taller than four lines... */
+         /* If the title height is taller than one line of text and the description height is taller than four
+         lines... */
             if (shouldBeTitleHeight >= 15 && shouldBeDescriptionHeight >= 56)
             {
                 /* ... then keep things as they are (i.e., 1 line and 4 lines) */
             }
 
-         /* If the title height is taller than one line of text and the descr height is SHORTER than four lines... */
+         /* If the title height is taller than one line of text and the description height is SHORTER than four
+         lines... */
             else if (shouldBeTitleHeight >= 15 && shouldBeDescriptionHeight < 56)
             {
-                /* ... then make the descr as tall as it needs to be and adjust the title to fit (e.g., 2 lines and 3 lines) */
+                /* ... then make the description as tall as it needs to be and adjust the title to fit (e.g., 2 lines
+                and 3 lines) */
+                CGSize titleSize =
+                        CGSizeMake(title_w, MBC_MAX_HEIGHT - MBC_INTERIOR_PADDING - shouldBeDescriptionHeight);
                 CGSize shouldBeTitleSize =
                                [myTitleLabel.text sizeWithFont:myTitleLabel.font
-                                             constrainedToSize:CGSizeMake(title_w, MBC_MAX_HEIGHT - MBC_INTERIOR_PADDING - shouldBeDescriptionHeight)//([currentActivity.media count] > 0 && !mediaThumbnailFailedToDownload) ? 224 : 262, 71 - shouldBeDescriptionHeight)
-                                                 lineBreakMode:UILineBreakModeTailTruncation];
+                                             constrainedToSize:titleSize
+                                                 lineBreakMode:JR_LINE_BREAK_MODE_TAIL_TRUNCATION];
                 shouldBeTitleHeight = shouldBeTitleSize.height;
 
                 title_h = shouldBeTitleHeight;
@@ -1490,7 +1595,7 @@ Please try again later."
         }
     }
 
- /* Now actually set the frames */
+    /* Now actually set the frames */
     [myTitleLabel setFrame:CGRectMake(title_x, title_y, title_w, title_h)];
     [myDescriptionLabel setFrame:CGRectMake(descr_x, descr_y, descr_w, descr_h)];
     [myRichDataContainer setFrame:CGRectMake(myRichDataContainer.frame.origin.x,
@@ -1510,7 +1615,7 @@ Please try again later."
 {
     DLog(@"");
 
-    NSUInteger numberOfTabs = [[sessionData socialProviders] count];
+    NSUInteger numberOfTabs = [sessionData.sharingProviders count];
     NSUInteger indexOfLastUsedProvider = 0;
     BOOL weShouldAddTabForEmailAndOrSms = (BOOL)emailAndOrSmsIndex;
 
@@ -1519,9 +1624,9 @@ Please try again later."
 
     NSMutableArray *providerTabArr = [[NSMutableArray alloc] initWithCapacity:numberOfTabs];
 
-    for (NSUInteger i = 0; i < [[sessionData socialProviders] count]; i++)
+    for (NSUInteger i = 0; i < [sessionData.sharingProviders count]; i++)
     {
-        JRProvider *provider = [[sessionData getSocialProviderAtIndex:i] retain];
+        JRProvider *provider = [sessionData.allProviders objectForKey:[sessionData.sharingProviders objectAtIndex:i]];
 
         if (!provider)
             break;
@@ -1533,10 +1638,8 @@ Please try again later."
 
         [providerTabArr insertObject:providerTab atIndex:[providerTabArr count]];
 
-        if ([provider isEqualToReturningProvider:[sessionData returningSocialProvider]])
+        if ([provider isEqualToReturningProvider:[sessionData returningSharingProvider]])
             indexOfLastUsedProvider = i;
-
-        [provider release];
     }
 
     if (weShouldAddTabForEmailAndOrSms)
@@ -1758,7 +1861,7 @@ Please try again later."
     weHaveJustAuthenticated = NO;
 }
 
-- (void)publishingDidRestart  { weAreCurrentlyPostingSomething = NO; }
+//- (void)publishingDidRestart  { weAreCurrentlyPostingSomething = NO; }
 - (void)publishingDidCancel   { weAreCurrentlyPostingSomething = NO; }
 - (void)publishingDidComplete { weAreCurrentlyPostingSomething = NO; }
 
@@ -1876,7 +1979,8 @@ Please try again later."
     [self dismissModalViewControllerAnimated:YES];
 }
 
-- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller
+                 didFinishWithResult:(MessageComposeResult)result
 {
     UIAlertView *alert;
     switch (result)
@@ -1950,20 +2054,6 @@ Please try again later."
 {
     DLog(@"");
     [super viewDidDisappear:animated];
-
-//    if (hidesCancelButton && userHitTheBackButton)
-//        [sessionData triggerPublishingDidCancel];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-}
-
-- (void)viewDidUnload
-{
-    DLog(@"");
-    [super viewDidUnload];
 }
 
 - (void)userInterfaceWillClose
@@ -1973,7 +2063,6 @@ Please try again later."
     [self showViewIsLoading:NO];
     [timer invalidate];
 
-    // TODO: Make this empty the activity!!!
     [self loadActivityToViewForFirstTime];
 }
 

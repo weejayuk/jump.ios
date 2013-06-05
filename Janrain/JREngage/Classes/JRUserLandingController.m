@@ -34,26 +34,17 @@
 
 #import "JRUserLandingController.h"
 #import "JREngage+CustomInterface.h"
-#import "JRSessionData.h"
-#import "JRInfoBar.h"
 #import "JREngageError.h"
 #import "JRUserInterfaceMaestro.h"
 #import "JRWebViewController.h"
+#import "debug_log.h"
 
-#ifdef DEBUG
-#define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-#else
-#define DLog(...)
-#endif
-
-#define ALog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-
-#define frame_x(a) a.frame.origin.x
-#define frame_y(a) a.frame.origin.y
+//#define frame_x(a) a.frame.origin.x
+//#define frame_y(a) a.frame.origin.y
 #define frame_w(a) a.frame.size.width
 #define frame_h(a) a.frame.size.height
 
-#define frame_a(a) frame_x(a), frame_y(a), frame_w(a), frame_h(a)
+//#define frame_a(a) frame_x(a), frame_y(a), frame_w(a), frame_h(a)
 
 @interface JREngageError (JREngageError_setError)
 + (NSError*)setError:(NSString*)message withCode:(NSInteger)code;
@@ -163,7 +154,7 @@
         titleView.backgroundColor = [UIColor clearColor];
         titleView.font            = [UIFont boldSystemFontOfSize:20.0];
         titleView.shadowColor     = [UIColor colorWithWhite:0.0 alpha:0.5];
-        titleView.textAlignment   = UITextAlignmentCenter;
+        titleView.textAlignment   = JR_TEXT_ALIGN_CENTER;
         titleView.textColor       = [UIColor whiteColor];
     }
 
@@ -198,18 +189,6 @@
 {
     DLog(@"");
     [super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    DLog(@"");
-    [super viewDidDisappear:animated];
-}
-
-- (void)viewDidUnload
-{
-    DLog(@"");
-    [super viewDidUnload];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex { }
@@ -598,7 +577,7 @@ enum
     sessionData.currentProvider.forceReauth = YES;
 
     [sessionData setCurrentProvider:nil];
-    [sessionData setReturningBasicProviderToNil];
+    [sessionData clearReturningAuthenticationProvider];
 
     [[self navigationController] popViewControllerAnimated:YES];
 }
@@ -609,8 +588,8 @@ enum
     [self callWebView:[self getTextField:[self getTableCell]]];
 }
 
-- (void)userInterfaceWillClose { }
-- (void)userInterfaceDidClose  { }
+//- (void)userInterfaceWillClose { }
+//- (void)userInterfaceDidClose  { }
 
 - (void)dealloc
 {
