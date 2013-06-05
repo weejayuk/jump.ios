@@ -1139,7 +1139,7 @@ static JRUserInterfaceMaestro* singleton = nil;
     if ([sessionData socialSharing])
         [self tearDownSocialPublishing];
 
-    for (id<JRUserInterfaceDelegate> delegate in delegates)
+    for (id <JRUserInterfaceDelegate> delegate in delegates)
         [delegate userInterfaceWillClose];
 
     if (usingAppNav)

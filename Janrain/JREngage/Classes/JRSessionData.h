@@ -143,9 +143,9 @@
     provider. authenticationProviders and sharingProviders are arrays of NSStrings, each string being the primary key
     in engageProviders for that provider, representing the list of providers to be used in authentication and social
     publishing. The arrays are in the order configured by the RP on http://rpxnow.com. */
-@property (readonly) NSMutableDictionary *engageProviders;
-@property (readonly) NSArray             *authenticationProviders;
-@property (readonly) NSArray             *sharingProviders;
+@property (readonly, retain) NSMutableDictionary *engageProviders;
+@property (readonly, retain) NSArray             *authenticationProviders;
+@property (readonly, retain) NSArray             *sharingProviders;
 
 @property (copy)     JRActivityObject *activity;
 

@@ -445,6 +445,13 @@ static NSString *applicationBundleDisplayName()
 //@property (retain) NSString *gitCommit;
 @property(nonatomic, retain) NSDictionary *customProviders;
 
+/** engageProviders is a dictionary of JRProviders, where each JRProvider contains the information specific to that
+    provider. authenticationProviders and sharingProviders are arrays of NSStrings, each string being the primary key
+    in engageProviders for that provider, representing the list of providers to be used in authentication and social
+    publishing. The arrays are in the order configured by the RP on http://rpxnow.com. */
+@property (readwrite, retain) NSMutableDictionary *engageProviders;
+@property (readwrite, retain) NSArray             *sharingProviders;
+
 - (NSError *)startGetConfiguration;
 - (void)startGetShortenedUrlsForActivity:(JRActivityObject *)theActivity;
 @end
@@ -580,12 +587,12 @@ static JRSessionData *singleton = nil;
         {
             NSDictionary *unarchivedProviders = [NSKeyedUnarchiver unarchiveObjectWithData:archivedProviders];
             if (unarchivedProviders != nil)
-                engageProviders = [[NSMutableDictionary alloc] initWithDictionary:unarchivedProviders];
+                self.engageProviders = [NSMutableDictionary dictionaryWithDictionary:unarchivedProviders];
         }
 
         engageAuthenticationProviders =
                 [[[NSUserDefaults standardUserDefaults] objectForKey:cJRAuthenticationProviders] retain];
-        sharingProviders = [[[NSUserDefaults standardUserDefaults] objectForKey:cJRSharingProviders] retain];
+        self.sharingProviders = [[NSUserDefaults standardUserDefaults] objectForKey:cJRSharingProviders];
 
         NSData *archivedIconsStillNeeded = [[NSUserDefaults standardUserDefaults] objectForKey:cJRIconsStillNeeded];
         if (archivedIconsStillNeeded != nil)
@@ -1603,14 +1610,14 @@ CALL_DELEGATE_SELECTOR:
         // TODO: There could be some kind of error initializing the user!
     }
 
-    if ([[self authenticationProviders] containsObject:currentProvider.name] && !socialSharing)
+    if ([self.authenticationProviders containsObject:currentProvider.name] && !socialSharing)
         [self saveLastUsedAuthenticationProvider:currentProvider.name];
 
-    if ([[self sharingProviders] containsObject:currentProvider.name])
+    if ([self.sharingProviders containsObject:currentProvider.name])
         [self saveLastUsedSharingProvider:currentProvider.name];
 
     NSArray *delegatesCopy = [NSArray arrayWithArray:delegates];
-    for (id<JRSessionDelegate> delegate in delegatesCopy)
+    for (id <JRSessionDelegate> delegate in delegatesCopy)
     {
         if ([delegate respondsToSelector:@selector(authenticationDidCompleteForUser:forProvider:)])
             [delegate authenticationDidCompleteForUser:auth_info forProvider:currentProvider.name];

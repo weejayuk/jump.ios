@@ -34,7 +34,7 @@
 
 #import "debug_log.h"
 #import "JRWebViewController.h"
-#import "JRSessionData.h"
+//#import "JRSessionData.h"
 #import "JRInfoBar.h"
 #import "JREngageError.h"
 #import "JRUserInterfaceMaestro.h"
@@ -55,7 +55,7 @@ static NSString *const iPhoneUserAgent = @"Mozilla/5.0 (iPhone; U; CPU iPhone OS
     JRSessionData   *sessionData;
     NSDictionary    *customInterface;
 
-    UIView    *titleView;
+    //UIView    *titleView;
     UIView    *myBackgroundView;
     UIWebView *myWebView;
 
@@ -63,7 +63,7 @@ static NSString *const iPhoneUserAgent = @"Mozilla/5.0 (iPhone; U; CPU iPhone OS
 
     BOOL keepProgress;
     BOOL userHitTheBackButton;
-    BOOL connectionDataAlreadyDownloadedThis;
+    //BOOL connectionDataAlreadyDownloadedThis;
 }
 
 @synthesize myBackgroundView;
@@ -269,11 +269,11 @@ static NSString *const iPhoneUserAgent = @"Mozilla/5.0 (iPhone; U; CPU iPhone OS
             (int) myWebView.frame.size.height]];
 }
 
-- (void)cancelButtonPressed:(id)sender
-{
-    userHitTheBackButton = NO;
-    [sessionData triggerAuthenticationDidStartOver:sender];
-}
+//- (void)cancelButtonPressed:(id)sender
+//{
+//    userHitTheBackButton = NO;
+//    [sessionData triggerAuthenticationDidStartOver:sender];
+//}
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex { }
 
@@ -410,7 +410,7 @@ static NSString *const iPhoneUserAgent = @"Mozilla/5.0 (iPhone; U; CPU iPhone OS
     }
     else if ([tag isEqualToString:WINDOWS_LIVE_LOAD])
     {
-        connectionDataAlreadyDownloadedThis = YES;
+        //connectionDataAlreadyDownloadedThis = YES;
         [myWebView loadHTMLString:payload baseURL:[request URL]];
     }
 }

@@ -85,11 +85,11 @@
 
     myTableView.backgroundColor = [UIColor clearColor];
 
- /* If there is a UIColor object set for the background color, use this */
+    /* If there is a UIColor object set for the background color, use this */
     if ([customInterface objectForKey:kJRAuthenticationBackgroundColor])
         myBackgroundView.backgroundColor = [customInterface objectForKey:kJRAuthenticationBackgroundColor];
 
- /* Weird hack necessary on the iPad, as the iPad table views have some background view that is always gray */
+    /* Weird hack necessary on the iPad, as the iPad table views have some background view that is always gray */
     if ([myTableView respondsToSelector:@selector(setBackgroundView:)])
         [myTableView setBackgroundView:nil];
 
@@ -242,14 +242,13 @@ enum
 
     logo.autoresizingMask = UIViewAutoresizingFlexibleRightMargin |
                             UIViewAutoresizingFlexibleLeftMargin;
-//    logo.contentMode      = UIViewContentModeCenter;
 
     logo.tag = LOGO_TAG;
 
     return logo;
 }
 
-- (UILabel*)getWelcomeLabel:(UITableViewCell*)cell
+- (UILabel *)getWelcomeLabel:(UITableViewCell *)cell
 {
     if (cell)
         return (UILabel*)[cell.contentView viewWithTag:WELCOME_LABEL_TAG];
@@ -269,7 +268,7 @@ enum
     return welcomeLabel;
 }
 
-- (UITextField*)getTextField:(UITableViewCell*)cell
+- (UITextField *)getTextField:(UITableViewCell *)cell
 {
     if (cell)
         return (UITextField*)[cell.contentView viewWithTag:TEXT_FIELD_TAG];
@@ -300,7 +299,7 @@ enum
     return textField;
 }
 
-- (UIButton*)getSignInButton:(UITableViewCell*)cell
+- (UIButton *)getSignInButton:(UITableViewCell *)cell
 {
     if (cell)
         return (UIButton*)[cell.contentView viewWithTag:SIGN_IN_BUTTON_TAG];
@@ -328,7 +327,7 @@ enum
     return signInButton;
 }
 
-- (UIButton*)getBackToProvidersButton:(UITableViewCell*)cell
+- (UIButton *)getBackToProvidersButton:(UITableViewCell *)cell
 {
     if (cell)
         return (UIButton*)[cell.contentView viewWithTag:BACK_TO_PROVIDERS_BUTTON_TAG];
@@ -356,7 +355,7 @@ enum
     return backToProvidersButton;
 }
 
-- (UIButton*)getBigSignInButton:(UITableViewCell*)cell
+- (UIButton *)getBigSignInButton:(UITableViewCell *)cell
 {
     if (cell)
         return (UIButton*)[cell.contentView viewWithTag:BIG_SIGN_IN_BUTTON_TAG];
@@ -425,7 +424,8 @@ enum
     UIButton    *bigSignInButton = [self getBigSignInButton:cell];
     UILabel     *welcomeLabel    = [self getWelcomeLabel:cell];
 
- /* If the provider requires input, we need to enable the textField, and set the text/placeholder text to the appropriate string */
+    /* If the provider requires input, we need to enable the textField, and set the text/placeholder text to the
+    appropriate string */
     if (sessionData.currentProvider.requiresInput)
     {
         DLog(@"current provider requires input");
@@ -447,8 +447,10 @@ enum
         [welcomeLabel setHidden:YES];
         [bigSignInButton setHidden:NO];
     }
-    else /* If the provider doesn't require input, then we are here because this is the return experience screen and only for basic providers */
+    else
     {
+        /* If the provider doesn't require input, then we are here because this is the return experience screen and
+        only for basic providers */
         DLog(@"current provider does not require input");
 
         [textField setHidden:YES];
@@ -475,7 +477,7 @@ enum
 
 #define TABLE_VIEW_FRAME_LANDSCAPE_SMALL    0,  0,  self.view.frame.size.width,  120
 #define TABLE_VIEW_FRAME_LANDSCAPE_BIG      0,  0,  self.view.frame.size.width,  268
-// TABLE_VIEW_FRAME_PORTRAIT seems OK on 4" iPhone despite screen specifc 416px spec
+// TABLE_VIEW_FRAME_PORTRAIT seems OK on 4" iPhone despite screen specific 416px spec
 #define TABLE_VIEW_FRAME_PORTRAIT           0,  0,  self.view.frame.size.width,  416
 
 - (void)shrinkTableViewLandscape
@@ -573,7 +575,7 @@ enum
 {
     DLog(@"");
 
- /* This should work, because this button will only be visible during the return experience of a basic provider */
+    /* This should work, because this button will only be visible during the return experience of a basic provider */
     sessionData.currentProvider.forceReauth = YES;
 
     [sessionData setCurrentProvider:nil];
@@ -588,8 +590,8 @@ enum
     [self callWebView:[self getTextField:[self getTableCell]]];
 }
 
-//- (void)userInterfaceWillClose { }
-//- (void)userInterfaceDidClose  { }
+- (void)userInterfaceWillClose { }
+- (void)userInterfaceDidClose  { }
 
 - (void)dealloc
 {

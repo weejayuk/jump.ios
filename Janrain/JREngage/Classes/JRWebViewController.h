@@ -34,11 +34,13 @@
 
 #import <UIKit/UIKit.h>
 #import "JRConnectionManager.h"
+#import "JRSessionData.h"
 
 static NSString *const WINDOWS_LIVE_LOAD = @"request";
 static NSString *const MEU_CONNECTION_TAG = @"rpx_result";
 
-@interface JRWebViewController : UIViewController <UINavigationBarDelegate, UIWebViewDelegate, JRConnectionManagerDelegate>
+@interface JRWebViewController : UIViewController <UINavigationBarDelegate, UIWebViewDelegate,
+        JRConnectionManagerDelegate, JRUserInterfaceDelegate, UIAlertViewDelegate>
 @property(nonatomic, retain) IBOutlet UIView *myBackgroundView;
 @property(nonatomic, retain) IBOutlet UIWebView *myWebView;
 @property(nonatomic, retain) NSString *originalCustomUserAgent;

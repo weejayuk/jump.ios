@@ -108,11 +108,6 @@
     {
         sessionData = [JRSessionData jrSessionData];
         customInterface = [theCustomInterface retain];
-
-        //if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-        //    iPad = YES;
-        //else
-        //    iPad = NO;
     }
 
     return self;
