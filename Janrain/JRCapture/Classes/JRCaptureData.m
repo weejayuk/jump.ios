@@ -83,7 +83,7 @@ static NSString *const FLOW_KEY = @"JR_capture_flow";
 @property(nonatomic, retain) NSString *captureSignInFormName;
 @property(nonatomic, retain) NSString *captureRegistrationFormName;
 
-@property(nonatomic) JRConventionalSigninType captureTradSignInType;
+//@property(nonatomic) JRConventionalSigninType captureTradSignInType;
 @property(nonatomic) BOOL captureEnableThinRegistration;
 
 @property(nonatomic, retain) NSDictionary *captureFlow;
@@ -99,7 +99,7 @@ static JRCaptureData *singleton = nil;
 @synthesize bpChannelUrl;
 @synthesize captureLocale;
 @synthesize captureSignInFormName;
-@synthesize captureTradSignInType;
+//@synthesize captureTradSignInType;
 @synthesize captureFlowName;
 @synthesize captureRegistrationFormName;
 @synthesize captureFlowVersion;
@@ -236,7 +236,7 @@ static JRCaptureData *singleton = nil;
 +     (void)setCaptureDomain:(NSString *)captureDomain captureClientId:(NSString *)clientId
                captureLocale:(NSString *)captureLocale captureSignInFormName:(NSString *)captureSignInFormName
              captureFlowName:(NSString *)captureFlowName captureEnableThinRegistration:(BOOL)enableThinRegistration
-captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType
+//captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType
  captureRegistrationFormName:(NSString *)captureRegistrationFormName captureFlowVersion:(NSString *)captureFlowVersion
                 captureAppId:(NSString *)captureAppId
 {
@@ -248,7 +248,7 @@ captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType
     captureDataInstance.captureSignInFormName = captureSignInFormName;
     captureDataInstance.captureFlowName = captureFlowName;
     captureDataInstance.captureEnableThinRegistration = enableThinRegistration;
-    captureDataInstance.captureTradSignInType = tradSignInType;
+    //captureDataInstance.captureTradSignInType = tradSignInType;
     captureDataInstance.captureRegistrationFormName = captureRegistrationFormName;
     captureDataInstance.captureFlowVersion = captureFlowVersion;
     captureDataInstance.captureAppId = captureAppId;

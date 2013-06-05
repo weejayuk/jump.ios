@@ -374,7 +374,7 @@ typedef enum
               captureClientId:(NSString *)clientId captureLocale:(NSString *)captureLocale
               captureFlowName:(NSString *)captureFlowName captureSignInFormName:(NSString *)captureSignInFormName
 captureEnableThinRegistration:(BOOL)enableThinRegistration
- captureTraditionalSignInType:(JRConventionalSigninType)captureTraditionalSignInType
+ captureTraditionalSignInType:(__unused JRConventionalSigninType)captureTraditionalSignInType
            captureFlowVersion:(NSString *)captureFlowVersion
   captureRegistrationFormName:(NSString *)captureRegistrationFormName captureAppId:(NSString *)captureAppId
       customIdentityProviders:(NSDictionary *)customProviders;

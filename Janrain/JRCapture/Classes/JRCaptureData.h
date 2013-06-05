@@ -43,7 +43,7 @@
 @property(nonatomic, readonly, retain) NSString *captureLocale;
 @property(nonatomic, readonly, retain) NSString *captureSignInFormName;
 @property(nonatomic, readonly, retain) NSString *captureFlowName;
-@property(nonatomic, readonly) JRConventionalSigninType captureTradSignInType;
+//@property(nonatomic, readonly) JRConventionalSigninType captureTradSignInType;
 @property(nonatomic, readonly, retain) NSString *captureRegistrationFormName;
 @property(nonatomic, readonly, retain) NSString *captureFlowVersion;
 @property(nonatomic, readonly, retain) NSString *captureAppId;
@@ -56,7 +56,7 @@
 +     (void)setCaptureDomain:(NSString *)captureDomain captureClientId:(NSString *)clientId
                captureLocale:(NSString *)captureLocale captureSignInFormName:(NSString *)captureSignInFormName
              captureFlowName:(NSString *)captureFlowName captureEnableThinRegistration:(BOOL)enableThinRegistration
-captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType
+//captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType
  captureRegistrationFormName:(NSString *)captureRegistrationFormName captureFlowVersion:(NSString *)captureFlowVersion
                 captureAppId:(NSString *)captureAppId;
 
