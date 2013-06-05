@@ -33,6 +33,7 @@
 #import "BackplaneUtils.h"
 #import "debug_log.h"
 #import "JRSessionData.h"
+#import "JRCaptureData.h"
 
 @interface JRSessionData (Internal)
 + (void)setServerUrl:(NSString *)serverUrl_;
@@ -200,6 +201,11 @@ AppDelegate *appDelegate = nil;
         self.liveFyreArticleId = [cfg objectForKey:@"liveFyreArticleId"];
     if ([cfg objectForKey:@"rpxDomain"])
         [JRSessionData setServerUrl:[NSString stringWithFormat:@"https://%@", [cfg objectForKey:@"rpxDomain"]]];
+    if ([cfg objectForKey:@"flowUsesTestingCdn"])
+    {
+        BOOL useTestingCdn = [[cfg objectForKey:@"flowUsesTestingCdn"] boolValue];
+        [JRCaptureData sharedCaptureData].flowUsesTestingCdn = useTestingCdn;
+    }
 }
 
 - (void)saveCaptureUser

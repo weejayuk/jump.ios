@@ -48,6 +48,7 @@
 @property(nonatomic, readonly, retain) NSString *captureFlowVersion;
 @property(nonatomic, readonly, retain) NSString *captureAppId;
 @property(nonatomic, readonly, retain) NSDictionary *captureFlow;
+@property(nonatomic) BOOL flowUsesTestingCdn;
 
 + (void)setAccessToken:(NSString *)token;
 
