@@ -45,6 +45,7 @@
 		6706FC9C2F4B301A8BC7F04A /* JRProfilePhotosElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706FC800BF093E3EF0EBB6E /* JRProfilePhotosElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6706FCE93985E90E4040B262 /* PickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706F8DC7856E86A423C2108 /* PickerViewController.m */; };
 		6706FDC1EF1CA1AF0C5B5A02 /* JRUrlsElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706FAA335A0ED6A8D9F1A8E /* JRUrlsElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		6706FDFF6209500B70A5CFFC /* Xcode Project Setup.md in Resources */ = {isa = PBXBuildFile; fileRef = 6706FA6C5C02B18DD67416C4 /* Xcode Project Setup.md */; };
 		6706FEB3546DDC64145F85BD /* JROnipLevelOneElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706F5A485C883A6BE20BF64 /* JROnipLevelOneElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6706FFA2D57FB31818D60F25 /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706F1A44624C7575D0E75DA /* Utils.m */; };
 		90C36B6B7717AA0C893E08EA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90C36B6B7717AA0C893E08E9 /* UIKit.framework */; };
@@ -373,6 +374,7 @@
 		6706F9DFA7DB9FB63A900826 /* JRAccountsElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRAccountsElement.m; sourceTree = "<group>"; };
 		6706F9F00E2522E7E182F8EF /* JRUrlsElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRUrlsElement.h; sourceTree = "<group>"; };
 		6706FA5DB533D33F2328C498 /* JRBodyType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRBodyType.h; sourceTree = "<group>"; };
+		6706FA6C5C02B18DD67416C4 /* Xcode Project Setup.md */ = {isa = PBXFileReference; lastKnownFileType = file.md; name = "Xcode Project Setup.md"; path = "../../Docs/Xcode Project Setup.md"; sourceTree = "<group>"; };
 		6706FA85ED839616B3A3BCEC /* JREmailsElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JREmailsElement.m; sourceTree = "<group>"; };
 		6706FAA335A0ED6A8D9F1A8E /* JRUrlsElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRUrlsElement.m; sourceTree = "<group>"; };
 		6706FB802CFDF34EBFAF44F3 /* JRObjectLevelThree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRObjectLevelThree.h; sourceTree = "<group>"; };
@@ -955,6 +957,7 @@
 				6706F619E4BB76864B478610 /* Engage Custom Provider Guide.md */,
 				6706F243FF1B1D4DBFCE6B5D /* Engage-Only Integration Guide.md */,
 				6706FDE35290E73F4513572D /* JUMP Integration Guide.md */,
+				6706FA6C5C02B18DD67416C4 /* Xcode Project Setup.md */,
 			);
 			name = Docs;
 			sourceTree = "<group>";
@@ -1718,6 +1721,7 @@
 				DFB68A67175E8E6C006DFC92 /* JRPublishActivityController.xib in Resources */,
 				DFB68A68175E8E6C006DFC92 /* JRUserLandingController.xib in Resources */,
 				DFB68A69175E8E6C006DFC92 /* JRWebViewController.xib in Resources */,
+				6706FDFF6209500B70A5CFFC /* Xcode Project Setup.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
