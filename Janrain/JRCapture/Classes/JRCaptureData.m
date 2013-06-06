@@ -252,8 +252,12 @@ static JRCaptureData *singleton = nil;
     captureDataInstance.captureRegistrationFormName = captureRegistrationFormName;
     captureDataInstance.captureFlowVersion = captureFlowVersion;
     captureDataInstance.captureAppId = captureAppId;
-    [captureDataInstance loadFlow];
-    [captureDataInstance downloadFlow];
+    if ([captureDataInstance.captureLocale length] &&
+            [captureDataInstance.captureFlowName length] && [captureDataInstance.captureAppId length])
+    {
+        [captureDataInstance loadFlow];
+        [captureDataInstance downloadFlow];
+    }
 }
 
 - (void)loadFlow
