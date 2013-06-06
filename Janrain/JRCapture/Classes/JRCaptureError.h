@@ -115,6 +115,7 @@ typedef enum
     JRCaptureApidErrorMissingRequiredAttribute = JRCaptureApidErrorGeneric + 362, /**< Error returned when an attribute with the required constraint was either missing or set to null */
     JRCaptureApidErrorLengthViolation          = JRCaptureApidErrorGeneric + 363, /**< Error returned when a string value violated an attribute’s length constraint */
     JRCaptureApidErrorEmailAddressInUse        = JRCaptureApidErrorGeneric + 380, /**< Error returned when thin registration fails because the email address is already in use */
+    JRCaptureApidErrorFormValidation           = JRCaptureApidErrorGeneric + 390, /**< Error returned when thin registration fails because the email address is already in use */
     JRCaptureApidErrorInvalidClientCredentials = JRCaptureApidErrorGeneric + 402, /**< Error returned when the client id does not exist or the client secret was wrong */
     JRCaptureApidErrorClientPermissionError    = JRCaptureApidErrorGeneric + 403, /**< Error returned when the client does not have permission to perform the action; needs a feature */
     JRCaptureApidErrorAccessTokenExpired       = JRCaptureApidErrorGeneric + 414, /**< Error returned when the supplied \c access_token has expired */
@@ -154,6 +155,10 @@ typedef enum
 - (NSString *)conflictedProvider;
 
 - (NSString *)mergeToken;
+
+- (BOOL)isFormValidationError;
+
+- (id)validationFailureMessages;
 @end
 /** @}*/
 
@@ -186,10 +191,13 @@ typedef enum
 @interface NSError (JRCaptureError_Extensions)
 - (BOOL)isJRMergeFlowError;
 - (BOOL)isJRTwoStepRegFlowError;
+- (BOOL)isJRFormValidationError;
 - (NSString *)JRMergeFlowConflictedProvider __unused;
 - (NSString *)JRMergeFlowExistingProvider;
 - (NSString *)JRMergeToken;
 - (JRCaptureUser *)JRPreregistrationRecord;
 
 - (NSString *)JRRegistrationToken;
+
+- (NSDictionary *)JRValidationFailureMessages;
 @end

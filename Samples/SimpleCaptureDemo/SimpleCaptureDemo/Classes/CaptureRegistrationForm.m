@@ -1,10 +1,3 @@
-//
-// Created by Nathan on 4/17/13.
-//
-// To change the template use AppCode | Preferences | File Templates.
-//
-
-
 #import "CaptureRegistrationForm.h"
 #import "AppDelegate.h"
 #import "Utils.h"
@@ -35,6 +28,7 @@ static NSMutableDictionary *identifierMap = nil;
     //"password_confirm"
     [self addTitleLabel:@"Traditional Registration"];
     [self addTextFieldFormLabeled:@"Email" forAttrName:@"email"];
+    [self addTextFieldFormLabeled:@"Display Name" forAttrName:@"displayName"];
     [self addTextFieldFormLabeled:@"First" forAttrName:@"givenName"];
     [self addTextFieldFormLabeled:@"Last" forAttrName:@"familyName"];
     [self addTextFieldFormLabeled:@"Password" forAttrName:@"password"];
@@ -74,7 +68,18 @@ static NSMutableDictionary *identifierMap = nil;
 
 - (void)registerUserDidFailWithError:(NSError *)error
 {
-    [Utils handleFailureWithTitle:@"Registration Failed" message:[error localizedDescription]];
+    [error isJRMergeFlowError];
+    if ([error isJRFormValidationError])
+    {
+        NSDictionary *invalidFieldLocalizedFailureMessages = [error JRValidationFailureMessages];
+        [Utils handleFailureWithTitle:@"Invalid Form Submission"
+                              message:[invalidFieldLocalizedFailureMessages description]];
+
+    }
+    else
+    {
+        [Utils handleFailureWithTitle:@"Registration Failed" message:[error localizedDescription]];
+    }
 }
 
 - (void)addTitleLabel:(NSString *)titleText

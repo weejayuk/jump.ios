@@ -551,7 +551,10 @@ captureEnableThinRegistration:(BOOL)enableThinRegistration
                                withSigninType:(JRConventionalSigninType)conventionalSignInType
                                   forDelegate:(id <JRCaptureSigninDelegate>)delegate __unused;
 
-+ (void)refreshAccessTokenWithCallback:(void (^)(BOOL, NSError *))callback;
+/**
+ * Refreshes the signed-in user's access token
+ */
++ (void)refreshAccessTokenWithCallback:(void (^)(BOOL, NSError *))callback __unused;
 
 /**
  * Registers a new user.

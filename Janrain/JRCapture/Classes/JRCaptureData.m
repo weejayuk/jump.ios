@@ -214,6 +214,7 @@ static JRCaptureData *singleton = nil;
 
     NSMutableString *buffer = [NSMutableString string];
     for (int i=0; i<RANDOM_BYTES; i++) [buffer appendFormat:@"%02hhx", refreshSecret_[i]];
+    [buffer replaceCharactersInRange:NSMakeRange(0, 1) withString:@"a"];
 
     [JRCaptureData saveNewToken:[NSString stringWithString:buffer] ofType:JRTokenTypeRefresh];
     return [JRCaptureData sharedCaptureData].refreshSecret;

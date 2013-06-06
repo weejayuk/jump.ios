@@ -185,7 +185,7 @@ captureEnableThinRegistration:(BOOL)enableThinRegistration
                                      mergeToken:nil forDelegate:delegate];
 }
 
-+ (void)refreshAccessTokenWithCallback:(void(^)(BOOL success, NSError *e))callback
++ (void)refreshAccessTokenWithCallback:(void (^)(BOOL, NSError *))callback __unused
 {
     NSString *date = [self utcTimeString];
     NSString *accessToken = [JRCaptureData sharedCaptureData].accessToken;
@@ -333,8 +333,7 @@ captureEnableThinRegistration:(BOOL)enableThinRegistration
     NSString *stat = [parsedResponse_ objectForKey:@"stat"];
     if (![stat isEqual:@"ok"])
     {
-        NSDictionary *errDict = [JRCaptureError invalidStatErrorDictForResult:parsedResponse_];
-        e = [JRCaptureError errorFromResult:errDict onProvider:nil engageToken:nil];
+        e = [JRCaptureError errorFromResult:parsedResponse_ onProvider:nil engageToken:nil];
         ALog(@"%@", e);
         [self maybeDispatch:failMsg forDelegate:delegate withArg:e];
         return;

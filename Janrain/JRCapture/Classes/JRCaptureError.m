@@ -92,11 +92,24 @@ static NSString *const ENGAGE_TOKEN_KEY = @"merge_token";
 
 - (NSString *)localizedDescription
 {
+    NSString *errorDescription = [self.userInfo objectForKey:@"error_description"];
+    if (errorDescription) return errorDescription;
+
     NSString *message = [self.userInfo objectForKey:@"message"];
     if (message) return message;
+
     return [super localizedDescription];
 }
 
+- (BOOL)isFormValidationError
+{
+    return self.code == JRCaptureApidErrorFormValidation;
+}
+
+- (NSDictionary *)validationFailureMessages
+{
+    return [self.userInfo objectForKey:@"invalid_fields"];
+}
 @end
 
 @implementation JRCaptureError (JRCaptureError_Builders)
@@ -159,10 +172,10 @@ static NSString *const ENGAGE_TOKEN_KEY = @"merge_token";
     NSString *errorString = [result objectForKey:@"error"];
     NSNumber *code = [result objectForKey:@"code"];
     NSString *rawResponse = [result objectForKey:@"raw_response"];
-    NSMutableDictionary *extraFields = [NSMutableDictionary dictionaryWithObjectsAndKeys:onProvider, @"provider",
-                                                                                         mergeToken, ENGAGE_TOKEN_KEY,
-                                                                                         rawResponse, @"raw_response",
-                                                                                         nil];
+    NSMutableDictionary *extraFields = [[@{} mutableCopy] autorelease];
+    if (onProvider) [extraFields setObject:onProvider forKey:@"provider"];
+    if (mergeToken) [extraFields setObject:mergeToken forKey:ENGAGE_TOKEN_KEY];
+    if (rawResponse) [extraFields setObject:rawResponse forKey:@"raw_response"];
 
     if (between([code integerValue], GENERIC_ERROR_RANGE, LOCAL_APID_ERROR_RANGE))
         return [self errorWithErrorString:errorString code:[code integerValue] description:errorDescription
@@ -212,6 +225,10 @@ static NSString *const ENGAGE_TOKEN_KEY = @"merge_token";
 
         case 380:
             [self maybeCopyEntry:@"existing_provider" from:result to:extraFields];
+            break;
+
+        case 390:
+            [self maybeCopyEntry:@"invalid_fields" from:result to:extraFields];
             break;
 
         case 420: /* 'redirect_uri_mismatch' The redirectUri did not match. Occurs in the oauth/token API call with the authorization_code grant type. Extra fields: 'expected_value', 'supplied_value' */
@@ -311,6 +328,12 @@ static NSString *const ENGAGE_TOKEN_KEY = @"merge_token";
     return [self isKindOfClass:[JRCaptureError class]] && [((JRCaptureError *) self) isTwoStepRegFlowError];
 }
 
+- (BOOL)isJRFormValidationError
+{
+    return [self isKindOfClass:[JRCaptureError class]] && [((JRCaptureError *) self) isFormValidationError];
+}
+
+
 - (NSString *)JRMergeFlowConflictedProvider __unused
 {
     if (![self isKindOfClass:[JRCaptureError class]] || ![self isJRMergeFlowError]) return nil;
@@ -339,5 +362,10 @@ static NSString *const ENGAGE_TOKEN_KEY = @"merge_token";
 {
     if (![self isKindOfClass:[JRCaptureError class]] || ![self isJRTwoStepRegFlowError]) return nil;
     return [((JRCaptureError *) self) registrationToken];
+}
+
+- (NSDictionary *)JRValidationFailureMessages
+{
+    return [((JRCaptureError *) self) validationFailureMessages];
 }
 @end
