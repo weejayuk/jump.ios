@@ -53,7 +53,7 @@ singleton. Your app's AppDelegate is a good choice to start with.
 In the interface of your chosen Engage delegate class import the Engage header: `#import "JREngage.h"`, and conform to
 the `JREngageSigninDelegate` and `JREngageSharingDelegate` protocols:
 
-   @interface AppDelegate : UIResponder <UIApplicationDelegate, JREngageSigninDelegate>
+    @interface AppDelegate : UIResponder <UIApplicationDelegate, JREngageSigninDelegate>
 
 In your delegate's implementation, during its initialization, (or from elsewhere in your app's initialization), call
 the JREngage initialization method, for example from from your AppDelegate's
