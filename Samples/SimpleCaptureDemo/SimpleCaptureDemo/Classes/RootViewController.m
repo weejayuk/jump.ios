@@ -150,15 +150,15 @@
 
 - (IBAction)thirdButtonPressed:(id)sender
 {
-    [BackplaneUtils asyncFetchNewLiveFyreUserTokenWithArticleId:appDelegate.liveFyreArticleId
-                                                        network:appDelegate.liveFyreNetwork
-                                                         siteId:appDelegate.liveFyreSiteId
-                                               backplaneChannel:appDelegate.bpChannelUrl
-                                                     completion:^(NSString *string, NSError *err)
-                                                     //{
+    //[BackplaneUtils asyncFetchNewLiveFyreUserTokenWithArticleId:appDelegate.liveFyreArticleId
+    //                                                     network:appDelegate.liveFyreNetwork
+    //                                                     siteId:appDelegate.liveFyreSiteId
+    //                                           backplaneChannel:appDelegate.bpChannelUrl
+    //                                                 completion:^(NSString *string, NSError *err)
+    //                                                 //{
                                                      //
                                                      //}];
-    //[JRCapture refreshAccessTokenWithCallback:^(BOOL success, NSError *err)
+    [JRCapture refreshAccessTokenWithCallback:^(BOOL success, NSError *err)
     {
         if (err)
         {
@@ -169,7 +169,7 @@
         }
         else
         {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Success" message:string delegate:nil
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Success" message:nil delegate:nil
                                                       cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
             [alertView show];
 

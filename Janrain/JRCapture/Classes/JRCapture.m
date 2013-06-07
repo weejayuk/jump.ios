@@ -339,17 +339,7 @@ captureEnableThinRegistration:(BOOL)enableThinRegistration
         return;
     }
 
-    NSDictionary *userResultDict = [parsedResponse_ objectForKey:@"capture_user"];
-    if (!userResultDict)
-    {
-        NSDictionary *errDict = [JRCaptureError invalidDataErrorDictForResult:parsedResponse_];
-        e = [JRCaptureError errorFromResult:errDict onProvider:nil engageToken:nil];
-        ALog(@"%@", e);
-        [self maybeDispatch:failMsg forDelegate:delegate withArg:e];
-        return;
-    }
-
-    NSDictionary *newUserDict = [userResultDict objectForKey:@"result"];
+    NSDictionary *newUserDict = [parsedResponse_ objectForKey:@"capture_user"];
     if (!newUserDict)
     {
         NSDictionary *errDict = [JRCaptureError invalidDataErrorDictForResult:parsedResponse_];
