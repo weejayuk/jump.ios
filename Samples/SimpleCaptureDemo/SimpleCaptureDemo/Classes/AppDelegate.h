@@ -46,8 +46,7 @@ AppDelegate *appDelegate;
 @property(strong) JRCaptureUser *captureUser;
 @property BOOL isNotYetCreated;
 @property(strong) NSString *currentProvider;
-@property BOOL engageSignInWasCanceled;
-@property(nonatomic) NSString *lfToken;
+//@property BOOL engageSignInWasCanceled;
 @property(nonatomic, strong) NSString *captureClientId;
 @property(nonatomic, strong) NSString *captureDomain;
 @property(nonatomic, strong) NSString *captureLocale;
@@ -55,10 +54,13 @@ AppDelegate *appDelegate;
 @property(nonatomic, strong) NSString *captureSignInFormName;
 @property(nonatomic) BOOL captureEnableThinRegistration;
 @property(nonatomic, strong) NSString *captureFlowVersion;
-@property(nonatomic, strong) NSString *captureRegistrationFormName;
+@property(nonatomic, strong) NSString *captureTraditionalRegistrationFormName;
+@property(nonatomic, strong) NSString *captureSocialRegistrationFormName;
 @property(nonatomic, strong) NSString *captureAppId;
 @property(nonatomic, strong) NSString *engageAppId;
 @property(nonatomic, strong) NSString *bpBusUrlString;
+
+@property(nonatomic, strong) NSString *lfToken;
 @property(nonatomic, strong) NSString *bpChannelUrl;
 @property(nonatomic, strong) NSString *liveFyreNetwork;
 @property(nonatomic, strong) NSString *liveFyreSiteId;
@@ -66,6 +68,8 @@ AppDelegate *appDelegate;
 
 
 @property(nonatomic, retain) NSString *registrationToken;
+
+@property(nonatomic, strong) NSDictionary *customProviders;
 
 - (void)saveCaptureUser;
 @end

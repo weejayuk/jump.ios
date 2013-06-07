@@ -19,7 +19,7 @@
         <string>signinForm</string>
         <key>captureLocale</key>
         <string>en-US</string>
-        <key>captureRegistrationFormName</key>
+        <key>captureTraditionalRegistrationFormName</key>
         <string>registrationForm</string>
         <key>captureFlowVersion</key>
         <string>HEAD</string>

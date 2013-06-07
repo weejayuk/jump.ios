@@ -132,7 +132,7 @@
 {
     if (appDelegate.captureUser)
     {
-        [self showProfileForm];
+        [RootViewController showProfileForm:self.navigationController];
     }
     else
     {
@@ -158,23 +158,23 @@
     //                                                 //{
                                                      //
                                                      //}];
-    [JRCapture refreshAccessTokenWithCallback:^(BOOL success, NSError *err)
-    {
-        if (err)
-        {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:[err description]
-                                                               delegate:nil cancelButtonTitle:@"Dismiss"
-                                                      otherButtonTitles:nil];
-            [alertView show];
-        }
-        else
-        {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Success" message:nil delegate:nil
-                                                      cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
-            [alertView show];
-
-        }
-    }];
+    //[JRCapture refreshAccessTokenWithCallback:^(BOOL success, NSError *err)
+    //{
+    //    if (err)
+    //    {
+    //        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:[err description]
+    //                                                           delegate:nil cancelButtonTitle:@"Dismiss"
+    //                                                  otherButtonTitles:nil];
+    //        [alertView show];
+    //    }
+    //    else
+    //    {
+    //        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Success" message:nil delegate:nil
+    //                                                  cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
+    //        [alertView show];
+    //
+    //    }
+    //}];
 }
 
 - (IBAction)signInButtonPressed:(id)sender
@@ -303,22 +303,18 @@
     appDelegate.captureUser = [error JRPreregistrationRecord];
     appDelegate.registrationToken = [error JRRegistrationToken];
 
+    UINavigationController *controller = self.navigationController;
     if (self.viewIsApparent)
     {
-        [self showProfileForm];
+        [RootViewController showProfileForm:controller];
     }
     else
     {
         self.viewDidAppearContinuation = ^()
         {
-            [self showProfileForm];
+            [RootViewController showProfileForm:controller];
         };
     }
-}
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
 }
 
 - (void)signOutCurrentUser
@@ -331,7 +327,7 @@
     [appDelegate.prefs setObject:nil forKey:cJRCurrentProvider];
     [appDelegate.prefs setObject:nil forKey:cJRCaptureUser];
 
-    appDelegate.engageSignInWasCanceled = NO;
+    //appDelegate.engageSignInWasCanceled = NO;
 
     [JRCapture clearSignInState];
 }
@@ -339,7 +335,7 @@
 - (void)engageSigninDidNotComplete
 {
     DLog(@"");
-    appDelegate.engageSignInWasCanceled = YES;
+    //appDelegate.engageSignInWasCanceled = YES;
 }
 
 - (void)engageSigninDialogDidFailToShowWithError:(NSError *)error
@@ -414,18 +410,18 @@
 
     if (captureRecordStatus == JRCaptureRecordNewlyCreated)
     {
-        [self showProfileForm];
+        [RootViewController showProfileForm:self.navigationController];
     }
 
-    appDelegate.engageSignInWasCanceled = NO;
+    //appDelegate.engageSignInWasCanceled = NO;
 }
 
-- (void)showProfileForm
++ (void)showProfileForm:(UINavigationController *)controller
 {
     CaptureProfileViewController *viewController = [[CaptureProfileViewController alloc]
             initWithNibName:@"CaptureProfileViewController" bundle:[NSBundle mainBundle]];
 
-    [self.navigationController pushViewController:viewController animated:YES];
+    [controller pushViewController:viewController animated:YES];
 }
 
 @end

@@ -41,10 +41,6 @@
 
 AppDelegate *appDelegate = nil;
 
-@interface AppDelegate ()
-@property(nonatomic, strong) NSDictionary *customProviders;
-@end
-
 @implementation AppDelegate
 @synthesize window;
 @synthesize prefs;
@@ -59,7 +55,8 @@ AppDelegate *appDelegate = nil;
 @synthesize engageAppId;
 @synthesize captureFlowVersion;
 @synthesize captureEnableThinRegistration;
-@synthesize captureRegistrationFormName;
+@synthesize captureTraditionalRegistrationFormName;
+@synthesize captureSocialRegistrationFormName;
 @synthesize captureAppId;
 @synthesize customProviders;
 
@@ -74,7 +71,7 @@ AppDelegate *appDelegate = nil;
 // Demo state machine stuff:
 @synthesize currentProvider;
 @synthesize isNotYetCreated;
-@synthesize engageSignInWasCanceled;
+//@synthesize engageSignInWasCanceled;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -85,9 +82,10 @@ AppDelegate *appDelegate = nil;
     [JRCapture setEngageAppId:engageAppId captureDomain:captureDomain captureClientId:captureClientId
                 captureLocale:captureLocale captureFlowName:captureFlowName
         captureSignInFormName:captureSignInFormName captureEnableThinRegistration:captureEnableThinRegistration
- captureTraditionalSignInType:JRConventionalSigninEmailPassword captureFlowVersion:captureFlowVersion
-  captureRegistrationFormName:captureRegistrationFormName captureAppId:captureAppId
-      customIdentityProviders:customProviders];
+          captureTraditionalSignInType:JRConventionalSigninEmailPassword captureFlowVersion:captureFlowVersion
+captureTraditionalRegistrationFormName:captureTraditionalRegistrationFormName
+     captureSocialRegistrationFormName:captureSocialRegistrationFormName captureAppId:captureAppId
+               customIdentityProviders:customProviders];
 
     [BackplaneUtils asyncFetchNewBackplaneChannelWithBus:bpBusUrlString
                                               completion:^(NSString *newChannel, NSError *error)
@@ -183,8 +181,10 @@ AppDelegate *appDelegate = nil;
         self.captureEnableThinRegistration = [[cfg objectForKey:@"captureEnableThinRegistration"] boolValue];
     if ([cfg objectForKey:@"captureFlowVersion"])
         self.captureFlowVersion = [cfg objectForKey:@"captureFlowVersion"];
-    if ([cfg objectForKey:@"captureRegistrationFormName"])
-        self.captureRegistrationFormName = [cfg objectForKey:@"captureRegistrationFormName"];
+    if ([cfg objectForKey:@"captureTraditionalRegistrationFormName"])
+        self.captureTraditionalRegistrationFormName = [cfg objectForKey:@"captureTraditionalRegistrationFormName"];
+    if ([cfg objectForKey:@"captureSocialRegistrationFormName"])
+        self.captureSocialRegistrationFormName = [cfg objectForKey:@"captureSocialRegistrationFormName"];
     if ([cfg objectForKey:@"captureAppId"])
         self.captureAppId = [cfg objectForKey:@"captureAppId"];
     if ([cfg objectForKey:@"engageAppId"])

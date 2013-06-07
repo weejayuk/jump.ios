@@ -81,7 +81,8 @@ static NSString *const FLOW_KEY = @"JR_capture_flow";
 @property(nonatomic, retain) NSString *captureFlowVersion;
 @property(nonatomic, retain) NSString *captureLocale;
 @property(nonatomic, retain) NSString *captureSignInFormName;
-@property(nonatomic, retain) NSString *captureRegistrationFormName;
+@property(nonatomic, retain) NSString *captureTraditionalRegistrationFormName;
+@property(nonatomic, retain) NSString *captureSocialRegistrationFormName;
 
 //@property(nonatomic) JRConventionalSigninType captureTradSignInType;
 @property(nonatomic) BOOL captureEnableThinRegistration;
@@ -101,7 +102,8 @@ static JRCaptureData *singleton = nil;
 @synthesize captureSignInFormName;
 //@synthesize captureTradSignInType;
 @synthesize captureFlowName;
-@synthesize captureRegistrationFormName;
+@synthesize captureTraditionalRegistrationFormName;
+@synthesize captureSocialRegistrationFormName;
 @synthesize captureFlowVersion;
 @synthesize captureAppId;
 @synthesize captureFlow;
@@ -193,8 +195,10 @@ static JRCaptureData *singleton = nil;
         [urlArgs setObject:[captureData downloadedFlowVersion] forKey:@"flow_version"];
     if (captureData.bpChannelUrl) [urlArgs setObject:captureData.bpChannelUrl forKey:@"bp_channel"];
     if (mergeToken) [urlArgs setObject:mergeToken forKey:@"merge_token"];
-    if (captureData.captureRegistrationFormName) [urlArgs setObject:captureData.captureRegistrationFormName
-                                                             forKey:@"registration_form"];
+    if (captureData.captureSocialRegistrationFormName)
+    {
+        [urlArgs setObject:captureData.captureSocialRegistrationFormName forKey:@"registration_form"];
+    }
 
     NSString *getParams = [urlArgs asJRURLParamString];
     return [NSString stringWithFormat:@"%@/oauth/auth_native?%@", captureData.captureBaseUrl, getParams];
@@ -234,12 +238,13 @@ static JRCaptureData *singleton = nil;
     return [NSString stringWithFormat:@"%@/cmeu", singleton.captureBaseUrl];
 }
 
-+     (void)setCaptureDomain:(NSString *)captureDomain captureClientId:(NSString *)clientId
-               captureLocale:(NSString *)captureLocale captureSignInFormName:(NSString *)captureSignInFormName
-             captureFlowName:(NSString *)captureFlowName captureEnableThinRegistration:(BOOL)enableThinRegistration
-//captureTraditionalSignInType:(JRConventionalSigninType)tradSignInType
- captureRegistrationFormName:(NSString *)captureRegistrationFormName captureFlowVersion:(NSString *)captureFlowVersion
-                captureAppId:(NSString *)captureAppId
++ (void)setCaptureDomain:(NSString *)captureDomain captureClientId:(NSString *)clientId
+           captureLocale:(NSString *)captureLocale captureSignInFormName:(NSString *)captureSignInFormName
+                       captureFlowName:(NSString *)captureFlowName
+         captureEnableThinRegistration:(BOOL)enableThinRegistration
+captureTraditionalRegistrationFormName:(NSString *)captureTraditionalRegistrationFormName
+     captureSocialRegistrationFormName:(NSString *)captureSocialRegistrationFormName
+                    captureFlowVersion:(NSString *)captureFlowVersion captureAppId:(NSString *)captureAppId
 {
     JRCaptureData *captureDataInstance = [JRCaptureData sharedCaptureData];
 
@@ -250,9 +255,11 @@ static JRCaptureData *singleton = nil;
     captureDataInstance.captureFlowName = captureFlowName;
     captureDataInstance.captureEnableThinRegistration = enableThinRegistration;
     //captureDataInstance.captureTradSignInType = tradSignInType;
-    captureDataInstance.captureRegistrationFormName = captureRegistrationFormName;
+    captureDataInstance.captureTraditionalRegistrationFormName = captureTraditionalRegistrationFormName;
     captureDataInstance.captureFlowVersion = captureFlowVersion;
     captureDataInstance.captureAppId = captureAppId;
+    captureDataInstance.captureSocialRegistrationFormName = captureSocialRegistrationFormName;
+    
     if ([captureDataInstance.captureLocale length] &&
             [captureDataInstance.captureFlowName length] && [captureDataInstance.captureAppId length])
     {
@@ -397,15 +404,16 @@ static JRCaptureData *singleton = nil;
     [captureLocale release];
     [captureSignInFormName release];
     [bpChannelUrl release];
-    [captureRegistrationFormName release];
+    [captureTraditionalRegistrationFormName release];
     [captureFlowVersion release];
-    [captureRegistrationFormName release];
+    [captureTraditionalRegistrationFormName release];
     [captureFlowVersion release];
     [captureAppId release];
     [captureAppId release];
     [captureFlow release];
     [refreshSecret release];
     [captureRedirectUri release];
+    [captureSocialRegistrationFormName release];
     [super dealloc];
 }
 

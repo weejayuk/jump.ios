@@ -370,14 +370,15 @@ typedef enum
  * @param captureTraditionalSignInType
  *   The type of traditional sign-in your end-users will sign-in with.
  **/
-+        (void)setEngageAppId:(NSString *)engageAppId captureDomain:(NSString *)captureDomain
-              captureClientId:(NSString *)clientId captureLocale:(NSString *)captureLocale
++ (void)setEngageAppId:(NSString *)engageAppId captureDomain:(NSString *)captureDomain
+       captureClientId:(NSString *)clientId captureLocale:(NSString *)captureLocale
               captureFlowName:(NSString *)captureFlowName captureSignInFormName:(NSString *)captureSignInFormName
 captureEnableThinRegistration:(BOOL)enableThinRegistration
  captureTraditionalSignInType:(__unused JRConventionalSigninType)captureTraditionalSignInType
-           captureFlowVersion:(NSString *)captureFlowVersion
-  captureRegistrationFormName:(NSString *)captureRegistrationFormName captureAppId:(NSString *)captureAppId
-      customIdentityProviders:(NSDictionary *)customProviders;
+                    captureFlowVersion:(NSString *)captureFlowVersion
+captureTraditionalRegistrationFormName:(NSString *)captureRegistrationFormName
+     captureSocialRegistrationFormName:(NSString *)captureSocialRegistrationFormName
+                          captureAppId:(NSString *)captureAppId customIdentityProviders:(NSDictionary *)customProviders;
 
 /**
  * Set the Capture access token for an authenticated user
@@ -551,10 +552,10 @@ captureEnableThinRegistration:(BOOL)enableThinRegistration
                                withSigninType:(JRConventionalSigninType)conventionalSignInType
                                   forDelegate:(id <JRCaptureSigninDelegate>)delegate __unused;
 
-/**
- * Refreshes the signed-in user's access token
- */
-+ (void)refreshAccessTokenWithCallback:(void (^)(BOOL, NSError *))callback __unused;
+///**
+// * Refreshes the signed-in user's access token
+// */
+//+ (void)refreshAccessTokenWithCallback:(void (^)(BOOL, NSError *))callback __unused;
 
 /**
  * Registers a new user.

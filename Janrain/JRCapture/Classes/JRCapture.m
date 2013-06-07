@@ -51,21 +51,22 @@
     [JRCaptureData sharedCaptureData].bpChannelUrl = backplaneChannelUrl;
 }
 
-+        (void)setEngageAppId:(NSString *)engageAppId captureDomain:(NSString *)captureDomain
-              captureClientId:(NSString *)clientId captureLocale:(NSString *)captureLocale
++ (void)setEngageAppId:(NSString *)engageAppId captureDomain:(NSString *)captureDomain
+       captureClientId:(NSString *)clientId captureLocale:(NSString *)captureLocale
               captureFlowName:(NSString *)captureFlowName captureSignInFormName:(NSString *)captureSignInFormName
 captureEnableThinRegistration:(BOOL)enableThinRegistration
- captureTraditionalSignInType:(__unused JRConventionalSigninType)tradSignInType
-           captureFlowVersion:(NSString *)captureFlowVersion
-  captureRegistrationFormName:(NSString *)captureRegistrationFormName captureAppId:(NSString *)captureAppId
-      customIdentityProviders:(NSDictionary *)customProviders
+          captureTraditionalSignInType:(__unused JRConventionalSigninType)tradSignInType
+                    captureFlowVersion:(NSString *)captureFlowVersion
+captureTraditionalRegistrationFormName:(NSString *)captureRegistrationFormName
+     captureSocialRegistrationFormName:(NSString *)captureSocialRegistrationFormName
+                          captureAppId:(NSString *)captureAppId customIdentityProviders:(NSDictionary *)customProviders
 {
     [JRCaptureData setCaptureDomain:captureDomain captureClientId:clientId captureLocale:captureLocale
               captureSignInFormName:captureSignInFormName captureFlowName:captureFlowName
-      captureEnableThinRegistration:enableThinRegistration
-       //captureTraditionalSignInType:tradSignInType
-        captureRegistrationFormName:captureRegistrationFormName captureFlowVersion:captureFlowVersion
-                       captureAppId:captureAppId];
+         captureEnableThinRegistration:enableThinRegistration
+captureTraditionalRegistrationFormName:captureRegistrationFormName
+     captureSocialRegistrationFormName:captureSocialRegistrationFormName
+                    captureFlowVersion:captureFlowVersion captureAppId:captureAppId];
 
     [JREngageWrapper configureEngageWithAppId:engageAppId customIdentityProviders:customProviders];
 }
@@ -266,7 +267,9 @@ captureEnableThinRegistration:(BOOL)enableThinRegistration
     }
 
     JRCaptureData *config = [JRCaptureData sharedCaptureData];
-    NSString *registrationForm = config.captureRegistrationFormName;
+    NSString *registrationForm =
+            socialRegistrationToken ? config.captureSocialRegistrationFormName
+                    : config.captureTraditionalRegistrationFormName;
     NSDictionary *flow = config.captureFlow;
     NSMutableDictionary *params = [newUser toFormFieldsForForm:registrationForm withFlow:flow];
     NSString *refreshSecret = [JRCaptureData generateAndStoreRefreshSecret];
@@ -285,7 +288,7 @@ captureEnableThinRegistration:(BOOL)enableThinRegistration
             @"response_type" : @"token",
             @"redirect_uri" : [config redirectUri],
             @"flow_name" : config.captureFlowName,
-            @"form" : config.captureRegistrationFormName,
+            @"form" : registrationForm,
             @"refresh_secret" : refreshSecret,
     }];
 
