@@ -256,10 +256,10 @@ captureTraditionalRegistrationFormName:(NSString *)captureTraditionalRegistratio
     captureDataInstance.captureEnableThinRegistration = enableThinRegistration;
     //captureDataInstance.captureTradSignInType = tradSignInType;
     captureDataInstance.captureTraditionalRegistrationFormName = captureTraditionalRegistrationFormName;
+    captureDataInstance.captureSocialRegistrationFormName = captureSocialRegistrationFormName;
     captureDataInstance.captureFlowVersion = captureFlowVersion;
     captureDataInstance.captureAppId = captureAppId;
-    captureDataInstance.captureSocialRegistrationFormName = captureSocialRegistrationFormName;
-    
+
     if ([captureDataInstance.captureLocale length] &&
             [captureDataInstance.captureFlowName length] && [captureDataInstance.captureAppId length])
     {

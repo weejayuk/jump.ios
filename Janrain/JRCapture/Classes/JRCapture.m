@@ -57,14 +57,14 @@
 captureEnableThinRegistration:(BOOL)enableThinRegistration
           captureTraditionalSignInType:(__unused JRConventionalSigninType)tradSignInType
                     captureFlowVersion:(NSString *)captureFlowVersion
-captureTraditionalRegistrationFormName:(NSString *)captureRegistrationFormName
+captureTraditionalRegistrationFormName:(NSString *)captureTraditionalRegistrationFormName
      captureSocialRegistrationFormName:(NSString *)captureSocialRegistrationFormName
                           captureAppId:(NSString *)captureAppId customIdentityProviders:(NSDictionary *)customProviders
 {
     [JRCaptureData setCaptureDomain:captureDomain captureClientId:clientId captureLocale:captureLocale
               captureSignInFormName:captureSignInFormName captureFlowName:captureFlowName
          captureEnableThinRegistration:enableThinRegistration
-captureTraditionalRegistrationFormName:captureRegistrationFormName
+captureTraditionalRegistrationFormName:captureTraditionalRegistrationFormName
      captureSocialRegistrationFormName:captureSocialRegistrationFormName
                     captureFlowVersion:captureFlowVersion captureAppId:captureAppId];
 
