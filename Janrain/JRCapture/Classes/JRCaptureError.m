@@ -365,6 +365,28 @@ static NSString *const ENGAGE_TOKEN_KEY = @"merge_token";
     return [((JRCaptureError *) self) registrationToken];
 }
 
+/**
+ * This message is receivable if this error responds YES to isJRFormValidationError.
+ *
+ * Returns the Janrain form validation failure messages in a dictionary with structure like this:
+ * {
+ *    "field_name1" : ["Error message one", "Error message two", ... ],
+ *    ...
+ * }
+ *
+ * So, for example:
+ * {
+ *     "password" : [
+ *         "Password must contain one letter one number one punctuation mark",
+ *         "Password must be at least 10 characters long",
+ *         "Password must contain at least one insightful philosophical remark"
+ *     ],
+ *     "displayName" : ["Display name must be 'Bob'"]
+ * }
+ *
+ * Note that for each field with validation error messages, the messages are contained in an NSArray with one or more
+ * message.
+ */
 - (NSDictionary *)JRValidationFailureMessages
 {
     return [((JRCaptureError *) self) validationFailureMessages];

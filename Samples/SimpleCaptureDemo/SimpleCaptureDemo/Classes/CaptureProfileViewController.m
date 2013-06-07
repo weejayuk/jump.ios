@@ -243,7 +243,18 @@
 
 - (void)registerUserDidFailWithError:(NSError *)error
 {
-    [Utils handleFailureWithTitle:@"Registration Failed" message:[error localizedDescription]];
+    [error isJRMergeFlowError];
+    if ([error isJRFormValidationError])
+    {
+        NSDictionary *invalidFieldLocalizedFailureMessages = [error JRValidationFailureMessages];
+        [Utils handleFailureWithTitle:@"Invalid Form Submission"
+                              message:[invalidFieldLocalizedFailureMessages description]];
+
+    }
+    else
+    {
+        [Utils handleFailureWithTitle:@"Registration Failed" message:[error localizedDescription]];
+    }
 }
 
 @end
