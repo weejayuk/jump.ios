@@ -16,7 +16,7 @@ This guide assumes you have already completed either the `Engage-Only Integratio
 For each custom provider you wish to configure gather the following configuration details:
 
 * Provider ID -- a short string which will be used to refer to the custom provider. E.g. the provider ID for Yahoo!
-  is "yoo". This is used only in the context of the iOS app, and can be any arbitrary value you choose.
+  is "yahoo". This is used only in the context of the iOS app, and can be any arbitrary value you choose.
 * Friendly name -- a string representing the user-facing name of the provider. E.g. the friendly name for Yahoo! is
   "Yahoo!".
 
@@ -45,14 +45,12 @@ the field for friendly name must be "friendly_name".):
                     @"friendly_name": @"Example Custom SAML Provider",
                     @"saml_provider": @"the_name_of_the_engage_implementation_of_the_saml_provider"
                 },
-
             @"my_custom_openid_provider":
                 @{
                     @"friendly_name": @"Example Custom OpenID Provider",
                     @"openid_identifier": @"https://my-custom-openid-provider.com/example-openid-identifier",
                     @"opx_blob": @"some_blob_for_opx" // This is an optional field
                 },
-
             // You can define more custom SAML or custom OpenID providers below. They just need to have different
             // "provider IDs"
         };

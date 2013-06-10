@@ -4,6 +4,18 @@
     <content url="file://$USER_HOME$/Library/Caches/appCode10/DerivedData/SimpleCaptureDemo-616ab049/Build/Products/Debug-iphonesimulator/SimpleCaptureDemo.app">
       <sourceFolder url="file://$USER_HOME$/Library/Caches/appCode10/DerivedData/SimpleCaptureDemo-616ab049/Build/Products/Debug-iphonesimulator/SimpleCaptureDemo.app" isTestSource="false" />
     </content>
+    <content url="file://$MODULE_DIR$/../../../facebook-ios-sdk/build/FacebookSDK.framework/Versions/A/Resources/FBUserSettingsViewResources.bundle/Contents/Resources/en.lproj/Localizable.strings">
+      <sourceFolder url="file://$MODULE_DIR$/../../../facebook-ios-sdk/build/FacebookSDK.framework/Versions/A/Resources/FBUserSettingsViewResources.bundle/Contents/Resources/en.lproj/Localizable.strings" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../../facebook-ios-sdk/build/FacebookSDK.framework/Versions/A/Resources/FBUserSettingsViewResources.bundle/Contents/Resources/he.lproj/Localizable.strings">
+      <sourceFolder url="file://$MODULE_DIR$/../../../facebook-ios-sdk/build/FacebookSDK.framework/Versions/A/Resources/FBUserSettingsViewResources.bundle/Contents/Resources/he.lproj/Localizable.strings" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../../facebook-ios-sdk/build/FacebookSDK.framework/Versions/A/Resources/FacebookSDKResources.bundle/Contents/Resources/en.lproj/Localizable.strings">
+      <sourceFolder url="file://$MODULE_DIR$/../../../facebook-ios-sdk/build/FacebookSDK.framework/Versions/A/Resources/FacebookSDKResources.bundle/Contents/Resources/en.lproj/Localizable.strings" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../../facebook-ios-sdk/build/FacebookSDK.framework/Versions/A/Resources/FacebookSDKResources.bundle/Contents/Resources/he.lproj/Localizable.strings">
+      <sourceFolder url="file://$MODULE_DIR$/../../../facebook-ios-sdk/build/FacebookSDK.framework/Versions/A/Resources/FacebookSDKResources.bundle/Contents/Resources/he.lproj/Localizable.strings" isTestSource="false" />
+    </content>
     <content url="file://$MODULE_DIR$/../../Docs/Doxygen/JRCapture/Doxyfile">
       <sourceFolder url="file://$MODULE_DIR$/../../Docs/Doxygen/JRCapture/Doxyfile" isTestSource="false" />
     </content>
@@ -633,18 +645,6 @@
     </content>
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$" isTestSource="false" />
-    </content>
-    <content url="file://$MODULE_DIR$/../../../facebook-ios-sdk/build/FacebookSDK.framework/Versions/A/Resources/FBUserSettingsViewResources.bundle/Contents/Resources/en.lproj/Localizable.strings">
-      <sourceFolder url="file://$MODULE_DIR$/../../../facebook-ios-sdk/build/FacebookSDK.framework/Versions/A/Resources/FBUserSettingsViewResources.bundle/Contents/Resources/en.lproj/Localizable.strings" isTestSource="false" />
-    </content>
-    <content url="file://$MODULE_DIR$/../../../facebook-ios-sdk/build/FacebookSDK.framework/Versions/A/Resources/FBUserSettingsViewResources.bundle/Contents/Resources/he.lproj/Localizable.strings">
-      <sourceFolder url="file://$MODULE_DIR$/../../../facebook-ios-sdk/build/FacebookSDK.framework/Versions/A/Resources/FBUserSettingsViewResources.bundle/Contents/Resources/he.lproj/Localizable.strings" isTestSource="false" />
-    </content>
-    <content url="file://$MODULE_DIR$/../../../facebook-ios-sdk/build/FacebookSDK.framework/Versions/A/Resources/FacebookSDKResources.bundle/Contents/Resources/en.lproj/Localizable.strings">
-      <sourceFolder url="file://$MODULE_DIR$/../../../facebook-ios-sdk/build/FacebookSDK.framework/Versions/A/Resources/FacebookSDKResources.bundle/Contents/Resources/en.lproj/Localizable.strings" isTestSource="false" />
-    </content>
-    <content url="file://$MODULE_DIR$/../../../facebook-ios-sdk/build/FacebookSDK.framework/Versions/A/Resources/FacebookSDKResources.bundle/Contents/Resources/he.lproj/Localizable.strings">
-      <sourceFolder url="file://$MODULE_DIR$/../../../facebook-ios-sdk/build/FacebookSDK.framework/Versions/A/Resources/FacebookSDKResources.bundle/Contents/Resources/he.lproj/Localizable.strings" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
