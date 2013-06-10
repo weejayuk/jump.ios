@@ -34,6 +34,7 @@
 #import "debug_log.h"
 #import "JRSessionData.h"
 #import "JRCaptureData.h"
+#import "JREngage.h"
 
 @interface JRSessionData (Internal)
 + (void)setServerUrl:(NSString *)serverUrl_;

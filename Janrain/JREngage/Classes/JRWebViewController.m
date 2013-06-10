@@ -39,8 +39,8 @@
 #import "JREngageError.h"
 #import "JRUserInterfaceMaestro.h"
 
-static NSString *const iPhoneUserAgent = @"Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3_3 like Mac OS X; en-us) "
-        "AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8J2 Safari/6533.18.5";
+//static NSString *const iPhoneUserAgent = @"Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3_3 like Mac OS X; en-us) "
+//        "AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8J2 Safari/6533.18.5";
 
 @interface JREngageError (JREngageError_setError)
 + (NSError*)setError:(NSString*)message withCode:(NSInteger)code;
@@ -136,16 +136,14 @@ static NSString *const iPhoneUserAgent = @"Mozilla/5.0 (iPhone; U; CPU iPhone OS
 {
     NSString *customUa = nil;
     JRSessionData *sessionData = [JRSessionData jrSessionData];
-    if ([sessionData.currentProvider.name isEqualToString:@"yahoo"])
-    {
-        customUa = iPhoneUserAgent;
-    }
-    else if (sessionData.currentProvider.customUserAgentString)
+    if (sessionData.currentProvider.customUserAgentString)
     {
         customUa = sessionData.currentProvider.customUserAgentString;
     }
     else if (IS_IPAD && (sessionData.currentProvider.usesPhoneUserAgentString ||
-            [sessionData.currentProvider.name isEqualToString:@"facebook"]))
+            [sessionData.currentProvider.name isEqualToString:@"facebook"] ||
+            [sessionData.currentProvider.name isEqualToString:@"yahoo"]
+    ))
     {
         UIWebView *dummy = [[[UIWebView alloc] initWithFrame:CGRectMake(0,0,0,0)] autorelease];
         NSString *padUa = [dummy stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
