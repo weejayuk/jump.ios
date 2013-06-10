@@ -1,3 +1,6 @@
+v3.0.9
+ - Bug fix to throttle back overzealous force-reauth flags which were triggering double-password-entry
+   Facebook authentications
 v3.0.8
  - Bug fix to tweak the UIWebView properties when rendering sign-in pages for Facebook on iPad
    This fix also sets the default modal dialog size to that of an iPhone 5, where it used to be

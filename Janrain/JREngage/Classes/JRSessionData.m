@@ -993,7 +993,9 @@ static JRSessionData* singleton = nil;
     DLog (@"");
 
  /* If you are explicitly signing out a user for a provider, you should explicitly force reauthentication. */
+    if (!providerName) return;
     JRProvider* provider = [allProviders objectForKey:providerName];
+    if (!provider) return;
     //provider.forceReauth = YES;
     [self deleteWebviewCookiesForDomains:[provider cookieDomains]];
 
@@ -1104,6 +1106,7 @@ static JRSessionData* singleton = nil;
 
 - (void)deleteWebviewCookiesForDomains:(NSArray*)domains
 {
+    if (!domains) return;
     NSHTTPCookieStorage* cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage];
 
     NSArray* cookiesWithDomain;
