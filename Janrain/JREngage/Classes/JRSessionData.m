@@ -994,7 +994,8 @@ static JRSessionData* singleton = nil;
 
  /* If you are explicitly signing out a user for a provider, you should explicitly force reauthentication. */
     JRProvider* provider = [allProviders objectForKey:providerName];
-    provider.forceReauth = YES;
+    //provider.forceReauth = YES;
+    [self deleteWebviewCookiesForDomains:[provider cookieDomains]];
 
     [authenticatedUsersByProvider removeObjectForKey:providerName];
     [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:authenticatedUsersByProvider]
@@ -1008,8 +1009,7 @@ static JRSessionData* singleton = nil;
 
     for (NSString *providerName in [allProviders allKeys])
     {
-        JRProvider *provider = [allProviders objectForKey:providerName];
-        provider.forceReauth = YES;
+        [self forgetAuthenticatedUserForProvider:providerName];
     }
 
     [authenticatedUsersByProvider removeAllObjects];
@@ -1168,11 +1168,7 @@ static JRSessionData* singleton = nil;
 
     NSString *str = nil;
 
-    BOOL weNeedToForceReauth = (alwaysForceReauth ||
-                                currentProvider.forceReauth ||
-                                authenticatingDirectlyOnThisProvider ||
-                                ![self authenticatedUserForProvider:currentProvider])
-    ? YES : NO;
+    BOOL weNeedToForceReauth = (alwaysForceReauth || currentProvider.forceReauth) ? YES : NO;
 
     // TODO: currentProvider => currentlyAuthenticatingProvider
     if (weNeedToForceReauth)
