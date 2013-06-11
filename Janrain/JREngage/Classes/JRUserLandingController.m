@@ -560,8 +560,8 @@ enum
         }
     }
 
-    [[self navigationController] pushViewController:[JRUserInterfaceMaestro sharedMaestro].myWebViewController
-                                           animated:YES];
+    JRWebViewController *webViewController = [JRUserInterfaceMaestro sharedMaestro].myWebViewController;
+    [[self navigationController] pushViewController:webViewController animated:YES];
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
@@ -576,7 +576,8 @@ enum
     DLog(@"");
 
     /* This should work, because this button will only be visible during the return experience of a basic provider */
-    sessionData.currentProvider.forceReauth = YES;
+    //sessionData.currentProvider.forceReauth = YES;
+    [sessionData forgetAuthenticatedUserForProvider:sessionData.currentProvider.name];
 
     [sessionData setCurrentProvider:nil];
     [sessionData clearReturningAuthenticationProvider];

@@ -424,7 +424,7 @@ static NSString *applicationBundleDisplayName()
     NSString *appId;
 
     BOOL hidePoweredBy;
-    BOOL authenticatingDirectlyOnThisProvider;
+    //BOOL authenticatingDirectlyOnThisProvider;
     BOOL alwaysForceReauth;
     //BOOL forceReauthJustThisTime;
 
@@ -830,9 +830,11 @@ static JRSessionData *singleton = nil;
 {
     DLog (@"");
 
-    /* If you are explicitly signing out a user for a provider, you should explicitly force reauthentication. */
-    JRProvider* provider = [self.allProviders objectForKey:providerName];
-    provider.forceReauth = YES;
+    if (!providerName) return;
+    JRProvider* provider = [engageProviders objectForKey:providerName];
+    if (!provider) return;
+    //provider.forceReauth = YES;
+    [self deleteWebViewCookiesForDomains:[provider cookieDomains]];
 
     [authenticatedUsersByProvider removeObjectForKey:providerName];
     NSData *usersData = [NSKeyedArchiver archivedDataWithRootObject:authenticatedUsersByProvider];
@@ -859,8 +861,7 @@ static JRSessionData *singleton = nil;
 
     for (NSString *providerName in [[self allProviders] allKeys])
     {
-        JRProvider *provider = [[self allProviders] objectForKey:providerName];
-        provider.forceReauth = YES;
+        [self forgetAuthenticatedUserForProvider:providerName];
     }
 
     [authenticatedUsersByProvider removeAllObjects];
@@ -926,6 +927,7 @@ static JRSessionData *singleton = nil;
 
 - (void)deleteWebViewCookiesForDomains:(NSArray *)domains
 {
+    if (!domains) return;
     NSHTTPCookieStorage* cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage];
 
     NSArray* cookiesWithDomain;
@@ -977,11 +979,7 @@ static JRSessionData *singleton = nil;
         extraParamString = [NSString stringWithFormat:@"saml_provider=%@&", provider.samlName];
     }
 
-    BOOL forceReauth = (alwaysForceReauth ||
-            provider.forceReauth ||
-            authenticatingDirectlyOnThisProvider ||
-            ![self authenticatedUserForProvider:provider])
-            ? YES : NO;
+    BOOL forceReauth = (alwaysForceReauth || currentProvider.forceReauth) ? YES : NO;
 
     if (forceReauth)
         [self deleteWebViewCookiesForDomains:provider.cookieDomains];

@@ -373,7 +373,7 @@ static JREngage* singleton = nil;
 
 - (void)authenticationDidFailWithError:(NSError *)error forProvider:(NSString *)provider
 {
-    ALog (@"Sign in failed for %@", provider);
+    ALog (@"Sign in failed for %@ with error: %@", provider, [error localizedDescription]);
 
     NSArray *delegatesCopy = [NSArray arrayWithArray:delegates];
     for (id<JREngageSigninDelegate> delegate in delegatesCopy)
