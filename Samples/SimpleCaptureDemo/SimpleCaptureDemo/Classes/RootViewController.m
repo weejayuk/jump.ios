@@ -60,8 +60,7 @@
 {
     [super viewDidLoad];
 
-    self.customUi = [NSMutableDictionary dictionaryWithObject:self.navigationController
-                                                       forKey:kJRApplicationNavigationController];
+    self.customUi =  @{kJRApplicationNavigationController : self.navigationController};
     [self configureUserLabelAndIcon];
 }
 

@@ -32,8 +32,17 @@
 #import "JRCapture.h"
 #import "BackplaneUtils.h"
 #import "debug_log.h"
+#import "JRSessionData.h"
+
+@interface JRSessionData (Internal)
++ (void)setServerUrl:(NSString *)serverUrl_;
+@end
 
 AppDelegate *appDelegate = nil;
+
+@interface AppDelegate ()
+@property(nonatomic, strong) NSDictionary *customProviders;
+@end
 
 @implementation AppDelegate
 
@@ -66,12 +75,12 @@ AppDelegate *appDelegate = nil;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     appDelegate = self;
-
     [self loadConfigFromPlist];
+
     [JRCapture setEngageAppId:engageAppId captureDomain:captureDomain
               captureClientId:captureClientId captureLocale:captureLocale
               captureFlowName:captureFlowName captureFormName:captureFormName
- captureTraditionalSignInType:JRConventionalSigninEmailPassword];
+ captureTraditionalSignInType:JRConventionalSigninEmailPassword customIdentityProviders:self.customProviders];
 
     [BackplaneUtils asyncFetchNewBackplaneChannelWithBus:bpBusUrlString
                                               completion:^(NSString *newChannel, NSError *error)
@@ -156,6 +165,11 @@ AppDelegate *appDelegate = nil;
     self.liveFyreNetwork = [cfg objectForKey:@"liveFyreNetwork"];
     self.liveFyreSiteId = [cfg objectForKey:@"liveFyreSiteId"];
     self.liveFyreArticleId = [cfg objectForKey:@"liveFyreArticleId"];
+    self.customProviders = [cfg objectForKey:@"customProviders"];
+    if ([cfg objectForKey:@"rpxDomain"])
+    {
+        [JRSessionData setServerUrl:[NSString stringWithFormat:@"https://%@", [cfg objectForKey:@"rpxDomain"]]];
+    }
 }
 
 - (void)saveCaptureUser

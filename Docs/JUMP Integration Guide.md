@@ -1,11 +1,17 @@
-# JUMP for iOS Capture Integration Guide
+# JUMP for iOS Integration Guide
 
-##
+This guide describes integrating the Janrain User Management Platform into your iOS app. For Engage-only
+integrations
+
+## 10,000' View
 
 1. Gather your configuration details
-2. Generate the Capture User Model
+2. Generate the Objective-C Capture User Model source code
 3. [Add the JUMP for iOS SDK to your Xcode project](http://developers.janrain.com/documentation/mobile-libraries/jump-for-ios/adding-to-xcode/).
-4.
+4. Initialize the library
+5. Start a sign-in
+6. Modify the profile
+7. Push the update
 
 ## Gather your Configuration Details
 
@@ -57,7 +63,7 @@ After you have generated the user record model, you can
 **Note**: If you've already added the library to Xcode, see
 [Adding the Generated User Model](http://developers.janrain.com/documentation/mobile-libraries/jump-for-ios/adding-to-xcode/#adding-the-generated-capture-user-model).
 
-## Using the Capture Library
+## Import the Library and Declare a Record Reference
 
 In your application, decide where you want to manage the authenticated Capture user object. You will want to implement
 your Capture library interface code in an object that won't go away, such as the `AppDelegate` or a singleton object
@@ -82,7 +88,7 @@ that manages your application's data model.
 
    `@synthesize captureUser;`
 
-### Configure the Capture SDK
+## Initialize the Library
 
 To configure the library, pass your:
 
@@ -321,9 +327,9 @@ Example:
                                   otherButtonTitles:@"Sign-in", nil] show];
     }
 
-**Note**: This example makes use of the `AlertViewWithBlocks` subclass of `UIAlertView` (which, as its name
-indicates, provides an interface to `UIAlertView` with a block handler, as opposed to a delegate object handler.) See
-the SimpleCaptureDemo project in the Samples directory of the SDK for the source.
+**Note**: This example makes use of the `AlertViewWithBlocks` subclass of `UIAlertView` (which provides an interface
+to `UIAlertView` with a block handler, as opposed to a delegate object handler.) See the SimpleCaptureDemo project in
+the Samples directory of the SDK for source code.
 
 This example checks for the merge-flow error, it prompts the user to merge, and it start authentication.
 
@@ -359,7 +365,7 @@ you must replace the plural. For example, `JRName` (the user's name) is an objec
 part of their name, but `JRInterests` (a plural of strings holding the user's interests) must be replaced if the user
 adds or removes an interest.
 
-### Updating Objects (Non-plurals)
+### Updating Record Entities (Non-plurals)
 
 Conform to the
 [JRCaptureObjectDelegate](http://janrain.github.com/jump.ios/gh_docs/capture/html/protocol_j_r_capture_object_delegate-p.html)
@@ -431,7 +437,7 @@ must create a new mutable array with the existing array, then modify the mutable
 to the property. (Because the property is copy-on-set further modifications to the copied array will not change the
 property.) See the above example for an example of this technique.
 
-## Storing the Capture User Record
+## Persisting the Capture User Record
 
 When your application terminates, you should save your active user record to local storage. For example, from your
 [UIApplicationDelegate](http://developer.apple.com/library/ios/#DOCUMENTATION/UIKit/Reference/UIApplicationDelegate_Protocol/Reference/Reference.html):
@@ -463,6 +469,12 @@ Likewise, load the saved user record state when your application launches. For e
 automatically save and restore the session token.
 
 ## Troubleshooting
+
+Sign-ins fail with an error message indicating that the client doesn't have the necessary permissions.
+
+Ensure that the API client ID you are using is for an API client with the "login_client" API client feature. To
+configure this see the clients/set_features Capture API and also the clients/list Capture API to get the set of
+configured API client features.
 
 `code: 223 error: unknown_attribute description: attribute does not exist: /your_attr_name`
 

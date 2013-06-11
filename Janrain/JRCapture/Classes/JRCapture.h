@@ -239,7 +239,7 @@ typedef enum
  *
  * @param provider
  *   The name of the provider on which the user authenticated. For a list of possible strings,
- *   please see the \ref basicProviders "List of Providers"
+ *   please see the \ref authenticationProviders "List of Providers"
  *
  * @par Example:
  *   The structure of the auth_info dictionary (represented here in json) should look something like
@@ -315,7 +315,7 @@ typedef enum
  *
  * @param provider
  *   The name of the provider on which the user tried to authenticate. For a list of possible strings,
- *   please see the \ref basicProviders "List of Providers"
+ *   please see the \ref authenticationProviders "List of Providers"
  *
  * @note
  * This message is not sent if authentication was canceled. To be notified of a canceled authentication,
@@ -384,11 +384,11 @@ typedef enum
  * @param captureTraditionalSignInType
  *   The type of traditional sign-in your end-users will sign-in with.
  **/
-+ (void)      setEngageAppId:(NSString *)engageAppId captureDomain:(NSString *)captureDomain
-             captureClientId:(NSString *)clientId captureLocale:(NSString *)captureLocale
-             captureFlowName:(NSString *)captureFlowName
-             captureFormName:(NSString *)captureFormName
-captureTraditionalSignInType:(JRConventionalSigninType)captureTraditionalSignInType;
++ (void)setEngageAppId:(NSString *)engageAppId captureDomain:(NSString *)captureDomain
+       captureClientId:(NSString *)clientId captureLocale:(NSString *)captureLocale
+             captureFlowName:(NSString *)captureFlowName captureFormName:(NSString *)captureFormName
+captureTraditionalSignInType:(JRConventionalSigninType)captureTraditionalSignInType
+     customIdentityProviders:(NSDictionary *)customProviders;
 
 + (void)clearSignInState;
 
@@ -424,7 +424,7 @@ captureTraditionalSignInType:(JRConventionalSigninType)captureTraditionalSignInT
  *
  * @param provider
  *   The name of the provider on which the user will authenticate. For a list of possible strings,
- *   please see the \ref basicProviders "List of Providers"
+ *   please see the \ref authenticationProviders "List of Providers"
  **/
 + (void)startEngageSigninDialogOnProvider:(NSString*)provider
                               forDelegate:(id<JRCaptureSigninDelegate>)delegate __unused;
@@ -448,7 +448,7 @@ captureTraditionalSignInType:(JRConventionalSigninType)captureTraditionalSignInT
  *
  * @param provider
  *   The name of the provider on which the user will authenticate. For a list of possible strings,
- *   please see the \ref basicProviders "List of Providers"
+ *   please see the \ref authenticationProviders "List of Providers"
  *
  * @param customInterfaceOverrides
  *   A dictionary of objects and properties, indexed by the set of
@@ -467,7 +467,7 @@ captureTraditionalSignInType:(JRConventionalSigninType)captureTraditionalSignInT
  *
  * @param provider
  *   The name of the provider on which the user will authenticate. For a list of possible strings,
- *   please see the \ref basicProviders "List of Providers"
+ *   please see the \ref authenticationProviders "List of Providers"
  *
  * @param customInterfaceOverrides
  *   A dictionary of objects and properties, indexed by the set of
@@ -577,7 +577,7 @@ captureTraditionalSignInType:(JRConventionalSigninType)captureTraditionalSignInT
 </script>
 @endhtmlonly
 
-@anchor basicProviders
+@anchor authenticationProviders
 @htmlonly
 <!-- Redundant attributes to force scrolling to work across multiple browsers -->
 <iframe id="basic" src="https://rpxnow.com/docs/mobile_providers?list=basic&device=iphone" width="100%" height="100%"
@@ -587,7 +587,7 @@ captureTraditionalSignInType:(JRConventionalSigninType)captureTraditionalSignInT
 </iframe></p>
 @endhtmlonly
 
-@anchor socialProviders
+@anchor sharingProviders
 @htmlonly
 <iframe id="social" src="https://rpxnow.com/docs/mobile_providers?list=social&device=iphone" width="100%" height="100%"
     style="border:none; overflow:hidden;" frameborder="0" scrolling="no">
