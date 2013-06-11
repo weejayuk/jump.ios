@@ -1,3 +1,5 @@
+v3.1.0
+ - Adds support for configuration of custom OpenID and Engage-supported SAML providers
 v3.0.9
  - Bug fix to throttle back overzealous force-reauth flags which were triggering double-password-entry
    Facebook authentications
