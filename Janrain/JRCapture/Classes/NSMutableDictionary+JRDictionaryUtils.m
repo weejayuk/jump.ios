@@ -9,7 +9,7 @@
 
 
 @implementation NSMutableDictionary (JRDictionaryUtils)
-- (void)JRmaybeSetObject:(id)o forKey:(id <NSCopying>)key
+- (void)JR_maybeSetObject:(id)o forKey:(id <NSCopying>)key
 {
     if (o) [self setObject:o forKey:key];
 

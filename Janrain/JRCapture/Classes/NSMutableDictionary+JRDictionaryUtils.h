@@ -8,5 +8,5 @@
 #import <Foundation/Foundation.h>
 
 @interface NSMutableDictionary (JRDictionaryUtils)
-- (void)JRmaybeSetObject:(id)o forKey:(id <NSCopying>)key;
+- (void)JR_maybeSetObject:(id)o forKey:(id <NSCopying>)key;
 @end

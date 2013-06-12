@@ -165,9 +165,9 @@ typedef enum CaptureInterfaceStatEnum
             @"refresh_secret" : refreshSecret
     } mutableCopy] autorelease];
 
-    [signInParams JRmaybeSetObject:[JRCaptureData sharedCaptureData].bpChannelUrl forKey:@"bp_channel"];
-    [signInParams JRmaybeSetObject:[JRCaptureData sharedCaptureData].captureFlowName forKey:@"flow_name"];
-    [signInParams JRmaybeSetObject:[credentials objectForKey:@"token"] forKey:@"merge_token"];
+    [signInParams JR_maybeSetObject:[JRCaptureData sharedCaptureData].bpChannelUrl forKey:@"bp_channel"];
+    [signInParams JR_maybeSetObject:[JRCaptureData sharedCaptureData].captureFlowName forKey:@"flow_name"];
+    [signInParams JR_maybeSetObject:[credentials objectForKey:@"token"] forKey:@"merge_token"];
 
     NSMutableURLRequest *request = [JRCaptureData requestWithPath:@"/oauth/auth_native_traditional"];
     [request JR_addParams:signInParams];
@@ -201,9 +201,8 @@ typedef enum CaptureInterfaceStatEnum
 - (void)getCaptureUserWithToken:(NSString *)token forDelegate:(id <JRCaptureInterfaceDelegate>)delegate
                     withContext:(NSObject *)context
 {
-    NSMutableURLRequest *request = [JRCaptureData requestWithPath:@"/entity"];
-    [request JR_addParams:@{@"access_token" : token}];
-    
+    NSMutableURLRequest *request = [self entityRequestForPath:nil token:token];
+
     NSDictionary *newTag = @{cTagAction : cGetUser, @"delegate" : delegate, @"context" : context,};
     if (![JRConnectionManager createConnectionFromRequest:request forDelegate:self withTag:newTag])
     {
@@ -237,37 +236,12 @@ typedef enum CaptureInterfaceStatEnum
     }
 }
 
-- (void)startGetCaptureObjectAtPath:(NSString *)entityPath withToken:(NSString *)token
-                        forDelegate:(id <JRCaptureInterfaceDelegate>)delegate withContext:(NSObject *)context
+- (void)getCaptureObjectAtPath:(NSString *)entityPath withToken:(NSString *)token
+                   forDelegate:(id <JRCaptureInterfaceDelegate>)delegate withContext:(NSObject *)context
 {
-    DLog(@"");
+    NSMutableURLRequest *request = [self entityRequestForPath:entityPath token:token];
 
-    NSMutableData *body = [NSMutableData data];
-    [body appendData:[[NSString stringWithFormat:@"&access_token=%@", token] dataUsingEncoding:NSUTF8StringEncoding]];
-
-    if (!entityPath || [entityPath isEqualToString:@""])
-    {
-        ;
-    }
-    else
-    {
-        NSString *argString = [NSString stringWithFormat:@"&attribute_name=%@", entityPath];
-        [body appendData:[argString dataUsingEncoding:NSUTF8StringEncoding]];
-    }
-
-    NSString *entityUrl = [NSString stringWithFormat:@"%@/entity", [JRCaptureData sharedCaptureData].captureBaseUrl];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:entityUrl]];
-
-    [request setHTTPMethod:@"POST"];
-    [request setHTTPBody:body];
-
-    NSDictionary *tag = @{
-            cTagAction : cGetObject,
-            @"delegate" : delegate,
-            @"context" : context,
-    };
-    DLog(@"%@ access_token=%@ attribute_name=%@", [[request URL] absoluteString], token, entityPath);
-
+    NSDictionary *tag = @{cTagAction : cGetObject, @"delegate" : delegate, @"context" : context,};
     if (![JRConnectionManager createConnectionFromRequest:request forDelegate:self withTag:tag])
     {
         NSString *errDesc = [NSString stringWithFormat:@"Could not create a connection to %@",
@@ -281,6 +255,18 @@ typedef enum CaptureInterfaceStatEnum
         };
         [self finishGetObjectWithStat:StatFail andResult:result forDelegate:delegate withContext:context];
     }
+}
+
+- (NSMutableURLRequest *)entityRequestForPath:(NSString *)entityPath token:(NSString *)token
+{
+    NSMutableDictionary *params = [[@{@"access_token" : token} mutableCopy] autorelease];
+
+    if (entityPath && ![entityPath isEqualToString:@""])
+        [params setObject:entityPath forKey:@"attribute_name"];
+
+    NSMutableURLRequest *request = [JRCaptureData requestWithPath:@"/entity"];
+    [request JR_addParams:params];
+    return request;
 }
 
 - (void)finishUpdateObjectWithStat:(CaptureInterfaceStat)stat andResult:(NSDictionary *)result
@@ -300,9 +286,9 @@ typedef enum CaptureInterfaceStatEnum
     }
 }
 
-- (void)startUpdateObject:(NSDictionary *)captureObject atPath:(NSString *)entityPath
-                withToken:(NSString *)token forDelegate:(id <JRCaptureInterfaceDelegate>)delegate
-              withContext:(NSObject *)context
+- (void)updateObject:(NSDictionary *)captureObject atPath:(NSString *)entityPath
+           withToken:(NSString *)token forDelegate:(id <JRCaptureInterfaceDelegate>)delegate
+         withContext:(NSObject *)context
 {
     DLog(@"");
 
@@ -369,9 +355,9 @@ typedef enum CaptureInterfaceStatEnum
     }
 }
 
-- (void)startReplaceObject:(NSDictionary *)captureObject atPath:(NSString *)entityPath
-                 withToken:(NSString *)token forDelegate:(id <JRCaptureInterfaceDelegate>)delegate
-               withContext:(NSObject *)context
+- (void)replaceObject:(NSDictionary *)captureObject atPath:(NSString *)entityPath
+            withToken:(NSString *)token forDelegate:(id <JRCaptureInterfaceDelegate>)delegate
+          withContext:(NSObject *)context
 {
     DLog(@"");
 
@@ -437,9 +423,9 @@ typedef enum CaptureInterfaceStatEnum
     }
 }
 
-- (void)startReplaceArray:(NSArray *)captureArray atPath:(NSString *)entityPath
-                withToken:(NSString *)token forDelegate:(id <JRCaptureInterfaceDelegate>)delegate 
-              withContext:(NSObject *)context
+- (void)replaceArray:(NSArray *)captureArray atPath:(NSString *)entityPath
+           withToken:(NSString *)token forDelegate:(id <JRCaptureInterfaceDelegate>)delegate
+         withContext:(NSObject *)context
 {
     DLog(@"");
 
@@ -509,30 +495,29 @@ typedef enum CaptureInterfaceStatEnum
                    forDelegate:(id <JRCaptureInterfaceDelegate>)delegate withContext:(NSObject *)context __unused
 {
     [[JRCaptureApidInterface captureInterfaceInstance]
-            startGetCaptureObjectAtPath:entityPath withToken:token forDelegate:delegate withContext:context];
+            getCaptureObjectAtPath:entityPath withToken:token forDelegate:delegate withContext:context];
 }
 
 + (void)updateCaptureObject:(NSDictionary *)captureObject atPath:(NSString *)entityPath withToken:(NSString *)token
                 forDelegate:(id <JRCaptureInterfaceDelegate>)delegate withContext:(NSObject *)context
 {
-    DLog(@"");
     [[JRCaptureApidInterface captureInterfaceInstance]
-            startUpdateObject:captureObject atPath:entityPath withToken:token forDelegate:delegate withContext:context];
+            updateObject:captureObject atPath:entityPath withToken:token forDelegate:delegate withContext:context];
 }
 
 + (void)replaceCaptureObject:(NSDictionary *)captureObject atPath:(NSString *)entityPath withToken:(NSString *)token
                  forDelegate:(id <JRCaptureInterfaceDelegate>)delegate withContext:(NSObject *)context
 {
     [[JRCaptureApidInterface captureInterfaceInstance]
-            startReplaceObject:captureObject atPath:entityPath withToken:token forDelegate:delegate 
-                   withContext:context];
+            replaceObject:captureObject atPath:entityPath withToken:token forDelegate:delegate
+              withContext:context];
 }
 
 + (void)replaceCaptureArray:(NSArray *)captureArray atPath:(NSString *)entityPath withToken:(NSString *)token
                 forDelegate:(id <JRCaptureInterfaceDelegate>)delegate withContext:(NSObject *)context
 {
     [[JRCaptureApidInterface captureInterfaceInstance]
-            startReplaceArray:captureArray atPath:entityPath withToken:token forDelegate:delegate withContext:context];
+            replaceArray:captureArray atPath:entityPath withToken:token forDelegate:delegate withContext:context];
 }
 
 - (void)connectionDidFinishLoadingWithPayload:(NSString *)payload request:(NSURLRequest*)request andTag:(id)userData

@@ -219,12 +219,11 @@ static JRConnectionManager *singleton = nil;
                  returnFullResponse:(BOOL)returnFullResponse
                             withTag:(id)userData
 {
-    //DLog(@"request: %@", [[request URL] absoluteString]);
+    NSString *body = [[[NSString alloc] initWithData:[request HTTPBody] encoding:kCFStringEncodingUTF8] autorelease];
+    DLog(@"request to '%@' with body: '%@'", [[request URL] absoluteString], body);
 
     JRConnectionManager *connectionManager = [JRConnectionManager getJRConnectionManager];
     CFMutableDictionaryRef connectionBuffers = connectionManager.connectionBuffers;
-
-    //request = [JRConnectionManager aCopyOfTheRequestWithANonCrashingUserAgent:request];
 
     if (![NSURLConnection canHandleRequest:request])
         return NO;
@@ -262,8 +261,6 @@ static JRConnectionManager *singleton = nil;
 
 + (void)stopConnectionsForDelegate:(id <JRConnectionManagerDelegate>)delegate
 {
-    //DLog(@"");
-
     JRConnectionManager *connectionManager = [JRConnectionManager getJRConnectionManager];
     CFMutableDictionaryRef connectionBuffers = connectionManager.connectionBuffers;
     ConnectionData *connectionData = nil;
