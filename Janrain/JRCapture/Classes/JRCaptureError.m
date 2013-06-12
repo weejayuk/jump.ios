@@ -31,6 +31,8 @@
 #import "JRCaptureError.h"
 #import "JRCaptureUser+Extras.h"
 #import "JRCaptureData.h"
+#import "JRConnectionManager.h"
+#import "debug_log.h"
 
 #define between(a, b, c) ((a >= b && a < c) ? YES : NO)
 
@@ -52,6 +54,23 @@ static NSString *const ENGAGE_TOKEN_KEY = @"merge_token";
 - (BOOL)isTwoStepRegFlowError
 {
     return self.code == JRCaptureApidErrorRecordNotFound;
+}
+
++ (JRCaptureError *)connectionCreationErr:(NSURLRequest *)request 
+                              forDelegate:(id <JRConnectionManagerDelegate>)delegate
+                                  withTag:(id)tag
+{
+    NSString *descFmt = @"Could not create a connection for request %@ for delegate %@ with tag %@";
+    NSString *desc = [NSString stringWithFormat:descFmt, request, delegate, tag];
+    ALog("%@", desc);
+    NSNumber *code = [NSNumber numberWithInteger:JRCaptureLocalApidErrorUrlConnection];
+    NSDictionary *errDict = @{
+            @"stat" : @"error",
+            @"error" : @"url_connection",
+            @"error_description" : desc,
+            @"code" : code,
+    };
+    return [JRCaptureError errorFromResult:errDict onProvider:nil engageToken:nil];
 }
 
 - (NSString *)existingProvider

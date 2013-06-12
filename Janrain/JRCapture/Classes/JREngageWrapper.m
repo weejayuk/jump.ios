@@ -42,7 +42,7 @@ typedef enum
 @interface JREngageWrapper ()
 @property(retain) NSString *engageToken;
 @property(retain) JRConventionalSignInViewController *nativeSigninViewController;
-@property(retain) id <JRCaptureSigninDelegate> delegate;
+@property(retain) id <JRCaptureSignInDelegate> delegate;
 @property JREngageDialogState dialogState;
 @end
 
@@ -105,7 +105,7 @@ static JREngageWrapper *singleton = nil;
 
 + (void)startAuthenticationDialogWithConventionalSignIn:(JRConventionalSigninType)nativeSignInType
                             andCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
-                                            forDelegate:(id <JRCaptureSigninDelegate>)delegate
+                                            forDelegate:(id <JRCaptureSignInDelegate>)delegate
 {
     [JREngage updateTokenUrl:[JRCaptureData captureTokenUrlWithMergeToken:nil]];
 
@@ -157,7 +157,7 @@ expandedCustomInterfaceOverrides:(NSMutableDictionary *)expandedCustomInterfaceO
 + (void)startAuthenticationDialogOnProvider:(NSString *)provider
                withCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
                                  mergeToken:(NSString *)mergeToken
-                                forDelegate:(id <JRCaptureSigninDelegate>)delegate
+                                forDelegate:(id <JRCaptureSignInDelegate>)delegate
 {
     [JREngage updateTokenUrl:[JRCaptureData captureTokenUrlWithMergeToken:mergeToken]];
 

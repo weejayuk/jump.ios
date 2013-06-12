@@ -32,11 +32,13 @@
  Date:   Thursday, January 26, 2012
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+#import "JRCapture.h"
 #import "debug_log.h"
 #import "JRCaptureApidInterface.h"
 #import "JRCaptureData.h"
 #import "JSONKit.h"
-#import "NSDictionary+JRQueryParams.h"
+#import "NSMutableDictionary+JRDictionaryUtils.h"
+#import "NSMutableURLRequest+JRRequestUtils.h"
 
 static NSString *const cSignInUser = @"signinUser";
 static NSString *const cGetUser = @"getUser";
@@ -102,21 +104,20 @@ typedef enum CaptureInterfaceStatEnum
 - (void)finishSignInFailureWithError:(JRCaptureError *)error forDelegate:(id)delegate
                          withContext:(NSObject *)context
 {
-    if ([delegate conformsToProtocol:@protocol(JRCaptureSigninDelegate)] &&
+    if ([delegate conformsToProtocol:@protocol(JRCaptureSignInDelegate)] &&
             [delegate respondsToSelector:@selector(captureAuthenticationDidFailWithError:)])
     {
         [delegate captureAuthenticationDidFailWithError:error];
     }
 
     if ([delegate conformsToProtocol:@protocol(JRCaptureInterfaceDelegate)] &&
-            [delegate respondsToSelector:@selector(signinCaptureUserDidFailWithResult:context:)])
-        [delegate signinCaptureUserDidFailWithResult:error context:context];
+            [delegate respondsToSelector:@selector(signInCaptureUserDidFailWithResult:context:)])
+        [delegate signInCaptureUserDidFailWithResult:error context:context];
 }
 
-- (void)finishSignInSuccessWithResult:(NSString *)result forDelegate:(id)delegate
-                          withContext:(NSObject *)context
+- (void)finishSignInSuccessWithResult:(NSString *)result forDelegate:(id)delegate withContext:(NSObject *)context
 {
-    if ([delegate conformsToProtocol:@protocol(JRCaptureSigninDelegate)] &&
+    if ([delegate conformsToProtocol:@protocol(JRCaptureSignInDelegate)] &&
             [delegate respondsToSelector:@selector(captureAuthenticationDidSucceedForUser:status:)])
     {
         BOOL respondsToFail = [delegate respondsToSelector:@selector(captureAuthenticationDidFailWithError:)];
@@ -134,77 +135,49 @@ typedef enum CaptureInterfaceStatEnum
     }
 
     if ([delegate conformsToProtocol:@protocol(JRCaptureInterfaceDelegate)] &&
-            [delegate respondsToSelector:@selector(signinCaptureUserDidSucceedWithResult:context:)])
-        [delegate signinCaptureUserDidSucceedWithResult:result context:context];
+            [delegate respondsToSelector:@selector(signInCaptureUserDidSucceedWithResult:context:)])
+        [delegate signInCaptureUserDidSucceedWithResult:result context:context];
 }
 
 
-- (void)startSigninCaptureUserWithCredentials:(NSDictionary *)credentials ofType:(NSString *)signInFieldName
+- (void)startSignInCaptureUserWithCredentials:(NSDictionary *)credentials ofType:(NSString *)signInFieldName
                                   forDelegate:(id)delegate withContext:(NSObject *)context
 {
     DLog(@"");
-    NSString *signInName = [credentials objectForKey:signInFieldName];
-    NSString *password = [credentials objectForKey:@"password"];
-    NSString *mergeToken = [credentials objectForKey:@"token"];
-    NSString *clientId = [JRCaptureData sharedCaptureData].clientId;
-    NSString *locale = [JRCaptureData sharedCaptureData].captureLocale;
-    NSString *formName = [JRCaptureData sharedCaptureData].captureSignInFormName;
-    NSString *flowName = [JRCaptureData sharedCaptureData].captureFlowName;
-    NSString *redirectUri = [[JRCaptureData sharedCaptureData] redirectUri];
     NSString *refreshSecret = [JRCaptureData generateAndStoreRefreshSecret];
-    NSString *bpChannelUrl = [JRCaptureData sharedCaptureData].bpChannelUrl;
 
     if (!refreshSecret)
     {
-        JRCaptureError *error = [JRCaptureError invalidInternalStateErrorWithDescription:@"unable to generate secure "
-                "random refresh secret"];
-        [self finishSignInFailureWithError:error forDelegate:delegate withContext:context];
+        NSString *errMsg = @"unable to generate secure random refresh secret";
+        [self finishSignInFailureWithError:[JRCaptureError invalidInternalStateErrorWithDescription:errMsg]
+                               forDelegate:delegate withContext:context];
         return;
     }
 
-    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithDictionary:
-                                                               @{
-                                                                       signInFieldName : signInName,
-                                                                       @"password" : password,
-                                                                       @"client_id" : clientId,
-                                                                       @"locale" : locale,
-                                                                       @"form" : formName,
-                                                                       @"redirect_uri" : redirectUri,
-                                                                       @"response_type" : @"token",
-                                                                       @"refresh_secret" : refreshSecret
-                                                               }];
+    NSMutableDictionary *signInParams = [[@{
+            signInFieldName : [credentials objectForKey:signInFieldName],
+            @"password" : [credentials objectForKey:@"password"],
+            @"client_id" : [JRCaptureData sharedCaptureData].clientId,
+            @"locale" : [JRCaptureData sharedCaptureData].captureLocale,
+            @"form" : [JRCaptureData sharedCaptureData].captureSignInFormName,
+            @"redirect_uri" : [[JRCaptureData sharedCaptureData] redirectUri],
+            @"response_type" : @"token",
+            @"refresh_secret" : refreshSecret
+    } mutableCopy] autorelease];
 
-    if (bpChannelUrl) [params setObject:bpChannelUrl forKey:@"bp_channel"];
-    if (flowName) [params setObject:flowName forKey:@"flow_name"];
-    if (mergeToken) [params setObject:mergeToken forKey:@"merge_token"];
+    [signInParams JRmaybeSetObject:[JRCaptureData sharedCaptureData].bpChannelUrl forKey:@"bp_channel"];
+    [signInParams JRmaybeSetObject:[JRCaptureData sharedCaptureData].captureFlowName forKey:@"flow_name"];
+    [signInParams JRmaybeSetObject:[credentials objectForKey:@"token"] forKey:@"merge_token"];
 
-    NSString *const signInEndpoint = [NSString stringWithFormat:@"%@/oauth/auth_native_traditional",
-                                                                [[JRCaptureData sharedCaptureData] captureBaseUrl]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:signInEndpoint]];
+    NSMutableURLRequest *request = [JRCaptureData requestWithPath:@"/oauth/auth_native_traditional"];
+    [request JR_addParams:signInParams];
+    [request JR_addParams:signInParams];
 
-    [request setHTTPMethod:@"POST"];
-    [request setHTTPBody:[[params asJRURLParamString] dataUsingEncoding:NSUTF8StringEncoding]];
-
-    NSDictionary *tag = [NSDictionary dictionaryWithObjectsAndKeys:
-                                              cSignInUser, cTagAction,
-                                              delegate, @"delegate",
-                                              context, @"context", nil];
-
-    NSString *urlString = [[request URL] absoluteString];
-    DLog(@"%@ %@=%@", urlString, signInFieldName, signInName);
-
+    NSDictionary *tag = @{cTagAction : cSignInUser, @"delegate" : delegate, @"context" : context };
     if (![JRConnectionManager createConnectionFromRequest:request forDelegate:self withTag:tag])
     {
-        NSString *desc = [NSString stringWithFormat:@"Could not create a connection to %@", urlString];
-        NSNumber *code = [NSNumber numberWithInteger:JRCaptureLocalApidErrorUrlConnection];
-        NSDictionary *errDict = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                      @"error", @"stat",
-                                                      @"url_connection", @"error",
-                                                      desc, @"error_description",
-                                                      code, @"code",
-                                                      nil];
-        JRCaptureError *error = [JRCaptureError errorFromResult:errDict onProvider:nil engageToken:nil];
-        [self finishSignInFailureWithError:error forDelegate:delegate withContext:context];
+        JRCaptureError *err = [JRCaptureError connectionCreationErr:request forDelegate:self withTag:tag];
+        [self finishSignInFailureWithError:err forDelegate:delegate withContext:context];
     }
 }
 
@@ -225,38 +198,24 @@ typedef enum CaptureInterfaceStatEnum
     }
 }
 
-- (void)startGetCaptureUserWithToken:(NSString *)token forDelegate:(id <JRCaptureInterfaceDelegate>)delegate
-                         withContext:(NSObject *)context
+- (void)getCaptureUserWithToken:(NSString *)token forDelegate:(id <JRCaptureInterfaceDelegate>)delegate
+                    withContext:(NSObject *)context
 {
-    DLog(@"");
-
-    NSMutableData *body = [NSMutableData data];
-
-    [body appendData:[[NSString stringWithFormat:@"&access_token=%@", token] dataUsingEncoding:NSUTF8StringEncoding]];
-
-    NSString *entityUrl = [NSString stringWithFormat:@"%@/entity", [JRCaptureData sharedCaptureData].captureBaseUrl];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:entityUrl]];
+    NSMutableURLRequest *request = [JRCaptureData requestWithPath:@"/entity"];
+    [request JR_addParams:@{@"access_token" : token}];
     
-    [request setHTTPMethod:@"POST"];
-    [request setHTTPBody:body];
-
-    NSDictionary *newTag = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                 cGetUser, cTagAction,
-                                                 delegate, @"delegate",
-                                                 context, @"context", nil];
-
-    DLog(@"%@ access_token=%@", [[request URL] absoluteString], token);
-
+    NSDictionary *newTag = @{cTagAction : cGetUser, @"delegate" : delegate, @"context" : context,};
     if (![JRConnectionManager createConnectionFromRequest:request forDelegate:self withTag:newTag])
     {
         NSString *errDesc = [NSString stringWithFormat:@"Could not create a connection to %@",
                                                        [[request URL] absoluteString]];
         NSNumber *errCode = [NSNumber numberWithInteger:JRCaptureLocalApidErrorUrlConnection];
-        NSDictionary *result = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                     @"error", @"stat",
-                                                     @"url_connection", @"error",
-                                                     errDesc, @"error_description",
-                                                     errCode, @"code", nil];
+        NSDictionary *result = @{
+                @"stat" : @"error",
+                @"error" : @"url_connection",
+                @"error_description" : errDesc,
+                @"code" : errCode,
+        };
         [self finishGetCaptureUserWithStat:StatFail andResult:result forDelegate:delegate withContext:context];
     }
 }
@@ -302,11 +261,11 @@ typedef enum CaptureInterfaceStatEnum
     [request setHTTPMethod:@"POST"];
     [request setHTTPBody:body];
 
-    NSDictionary *tag = [NSDictionary dictionaryWithObjectsAndKeys:
-                                              cGetObject, cTagAction,
-                                              delegate, @"delegate",
-                                              context, @"context", nil];
-
+    NSDictionary *tag = @{
+            cTagAction : cGetObject,
+            @"delegate" : delegate,
+            @"context" : context,
+    };
     DLog(@"%@ access_token=%@ attribute_name=%@", [[request URL] absoluteString], token, entityPath);
 
     if (![JRConnectionManager createConnectionFromRequest:request forDelegate:self withTag:tag])
@@ -314,11 +273,12 @@ typedef enum CaptureInterfaceStatEnum
         NSString *errDesc = [NSString stringWithFormat:@"Could not create a connection to %@",
                                                        [[request URL] absoluteString]];
         NSNumber *errCode = [NSNumber numberWithInteger:JRCaptureLocalApidErrorUrlConnection];
-        NSDictionary *result = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                     @"error", @"stat",
-                                                     @"url_connection", @"error",
-                                                     errDesc, @"error_description",
-                                                     errCode, @"code", nil];
+        NSDictionary *result = @{
+                @"stat" : @"error",
+                @"error" : @"url_connection",
+                @"error_description" : errDesc,
+                @"code" : errCode 
+        };
         [self finishGetObjectWithStat:StatFail andResult:result forDelegate:delegate withContext:context];
     }
 }
@@ -371,24 +331,23 @@ typedef enum CaptureInterfaceStatEnum
     [request setHTTPMethod:@"POST"];
     [request setHTTPBody:body];
 
-    NSDictionary *tag = [NSDictionary dictionaryWithObjectsAndKeys:
-                                              cUpdateObject, cTagAction,
-                                        delegate, @"delegate",
-                                        context, @"context", nil];
-
-    DLog(@"%@ attributes=%@ access_token=%@ attribute_name=%@", [[request URL] absoluteString], attributes, token, 
-        entityPath);
+    NSDictionary *tag = @{
+            cTagAction : cUpdateObject,
+            @"delegate" : delegate,
+            @"context" : context,
+    };
 
     if (![JRConnectionManager createConnectionFromRequest:request forDelegate:self withTag:tag])
     {
         NSString *errDesc = [NSString stringWithFormat:@"Could not create a connection to %@",
                                                        [[request URL] absoluteString]];
         NSNumber *errCode = [NSNumber numberWithInteger:JRCaptureLocalApidErrorUrlConnection];
-        NSDictionary *result = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                     @"error", @"stat",
-                                                     @"url_connection", @"error",
-                                                     errDesc, @"error_description",
-                                                     errCode, @"code", nil];
+        NSDictionary *result = @{
+                @"stat" : @"error",
+                @"error" : @"url_connection",
+                @"error_description" : errDesc,
+                @"code" : errCode,
+        };
         [self finishUpdateObjectWithStat:StatFail andResult:result forDelegate:delegate withContext:context];
     }
 
@@ -440,24 +399,23 @@ typedef enum CaptureInterfaceStatEnum
     [request setHTTPMethod:@"POST"];
     [request setHTTPBody:body];
 
-    NSDictionary *tag = [NSDictionary dictionaryWithObjectsAndKeys:
-                                              cReplaceObject, cTagAction,
-                                        delegate, @"delegate",
-                                        context, @"context", nil];
-
-    DLog(@"%@ attributes=%@ access_token=%@ attribute_name=%@", [[request URL] absoluteString], attributes, token, 
-    entityPath);
+    NSDictionary *tag = @{
+            cTagAction : cReplaceObject,
+            @"delegate" : delegate,
+            @"context" : context,
+    };
 
     if (![JRConnectionManager createConnectionFromRequest:request forDelegate:self withTag:tag])
     {
         NSString *errDesc = [NSString stringWithFormat:@"Could not create a connection to %@",
                                                       [[request URL] absoluteString]];
         NSNumber *errCode = [NSNumber numberWithInteger:JRCaptureLocalApidErrorUrlConnection];
-        NSDictionary *result = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                     @"error", @"stat",
-                                                     @"url_connection", @"error",
-                                                     errDesc, @"error_description",
-                                                     errCode, @"code", nil];
+        NSDictionary *result = @{
+                @"stat" : @"error",
+                @"error" : @"url_connection",
+                @"error_description" : errDesc,
+                @"code" : errCode,
+        };
         [self finishReplaceObjectWithStat:StatFail andResult:result forDelegate:delegate withContext:context];
     }
 
@@ -493,11 +451,7 @@ typedef enum CaptureInterfaceStatEnum
     [body appendData:[[NSString stringWithFormat:@"&access_token=%@", token] dataUsingEncoding:NSUTF8StringEncoding]];
     [body appendData:[@"&include_record=true" dataUsingEncoding:NSUTF8StringEncoding]];
 
-    if (!entityPath || [entityPath isEqualToString:@""]) 
-    {
-        ;
-    }
-    else
+    if (entityPath && ![entityPath isEqualToString:@""])
     {
         NSString *argString = [NSString stringWithFormat:@"&attribute_name=%@", entityPath];
         [body appendData:[argString dataUsingEncoding:NSUTF8StringEncoding]];
@@ -510,10 +464,11 @@ typedef enum CaptureInterfaceStatEnum
     [request setHTTPMethod:@"POST"];
     [request setHTTPBody:body];
 
-    NSDictionary *tag = [NSDictionary dictionaryWithObjectsAndKeys:
-                                              cReplaceArray, cTagAction,
-                                              delegate, @"delegate",
-                                              context, @"context", nil];
+    NSDictionary *tag = @{
+            cTagAction : cReplaceArray,
+            @"delegate" : delegate,
+            @"context" : context,
+    };
 
     DLog(@"%@ attributes=%@ access_token=%@ attribute_name=%@", [[request URL] absoluteString], attributes, token, 
         entityPath);
@@ -522,32 +477,32 @@ typedef enum CaptureInterfaceStatEnum
     if (![JRConnectionManager createConnectionFromRequest:request forDelegate:self withTag:tag]) 
     {
         NSString *errDesc = [NSString stringWithFormat:@"Could not create a connection to %@",
-                                                      [[request URL] absoluteString]];
+                                                       [[request URL] absoluteString]];
         NSNumber *code = [NSNumber numberWithInteger:JRCaptureLocalApidErrorUrlConnection];
-        NSDictionary *result = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                     @"error", @"stat",
-                                                     @"url_connection", @"error",
-                                                     errDesc, @"error_description",
-                                                     code, @"code", nil];
+        NSDictionary *result = @{
+                @"stat" : @"error",
+                @"error" : @"url_connection",
+                @"error_description" : errDesc,
+                @"code" : code,
+        };
         [self finishReplaceArrayWithStat:StatFail andResult:result forDelegate:delegate withContext:context];
     }
 
 }
 
-+ (void)signinCaptureUserWithCredentials:(NSDictionary *)credentials ofType:(NSString *)signInType
++ (void)signInCaptureUserWithCredentials:(NSDictionary *)credentials ofType:(NSString *)signInType
                              forDelegate:(id)delegate withContext:(NSObject *)context
 {
     [[JRCaptureApidInterface captureInterfaceInstance]
-            startSigninCaptureUserWithCredentials:credentials ofType:signInType forDelegate:delegate
+            startSignInCaptureUserWithCredentials:credentials ofType:signInType forDelegate:delegate
                                       withContext:context];
-
 }
 
 + (void)getCaptureUserWithToken:(NSString *)token
                     forDelegate:(id <JRCaptureInterfaceDelegate>)delegate withContext:(NSObject *)context
 {
     [[JRCaptureApidInterface captureInterfaceInstance]
-            startGetCaptureUserWithToken:token forDelegate:delegate withContext:context];
+            getCaptureUserWithToken:token forDelegate:delegate withContext:context];
 }
 
 + (void)getCaptureObjectAtPath:(NSString *)entityPath withToken:(NSString *)token
@@ -643,13 +598,13 @@ typedef enum CaptureInterfaceStatEnum
     NSObject     *context   = [tag objectForKey:@"context"];
     id<JRCaptureInterfaceDelegate> delegate = [tag objectForKey:@"delegate"];
 
-    NSDictionary *errDict = [NSDictionary dictionaryWithObjectsAndKeys:
-                                    @"error", @"stat",
-                                    [error localizedDescription], @"error",
-                                    [error localizedFailureReason], @"error_description",
-                                    [NSNumber numberWithInteger:JRCaptureLocalApidErrorConnectionDidFail], @"code",
-                                    error, @"wrapped_error",
-                                    nil];
+    NSDictionary *errDict = @{
+            @"stat" : @"error",
+            @"error" : [error localizedDescription],
+            @"error_description" : [error localizedFailureReason],
+            @"code" : [NSNumber numberWithInteger:JRCaptureLocalApidErrorConnectionDidFail],
+            @"wrapped_error" : error,
+    };
 
     JRCaptureError *wrappingError = [JRCaptureError errorFromResult:errDict onProvider:nil engageToken:nil];
 
@@ -680,7 +635,7 @@ typedef enum CaptureInterfaceStatEnum
 }
 
 + (FinishSignInError)finishSignInWithPayload:(NSDictionary *)payloadDict
-                                 forDelegate:(id<JRCaptureSigninDelegate>)delegate
+                                 forDelegate:(id<JRCaptureSignInDelegate>)delegate
 {
     NSString *accessToken   = [payloadDict objectForKey:@"access_token"];
     BOOL      isNew         = [(NSNumber*)[payloadDict objectForKey:@"is_new"] boolValue];
@@ -709,6 +664,49 @@ typedef enum CaptureInterfaceStatEnum
         [delegate captureAuthenticationDidSucceedForUser:captureUser status:recordStatus];
 
     return cJRNoError;
+}
+
++ (void)maybeDispatch:(SEL)pSelector forDelegate:(id <JRCaptureSignInDelegate>)delegate withArg:(id)arg
+{
+    if ([delegate respondsToSelector:pSelector])
+    {
+        [delegate performSelector:pSelector withObject:arg];
+    }
+}
+
++ (void)jsonRequestToUrl:(NSString *)url params:(NSDictionary *)params
+     completionHandler:(void(^)(id parsedResponse, NSError *e))handler
+{
+    NSMutableURLRequest *registrationRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
+    [registrationRequest JR_addParams:params];
+    [NSURLConnection sendAsynchronousRequest:registrationRequest queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *r, NSData *d, NSError *e)
+                           {
+                               if (e)
+                               {
+                                   ALog(@"Error fetching JSON: %@", e);
+                                   handler(nil, e);
+                               }
+                               else
+                               {
+                                   NSString *bodyString =
+                                           [[[NSString alloc] initWithData:d
+                                                                  encoding:NSUTF8StringEncoding] autorelease];
+                                   ALog(@"Fetching expected JSON: %@", bodyString);
+                                   NSError *err;
+                                   id parsedJson = [NSJSONSerialization JSONObjectWithData:d
+                                                                                   options:(NSJSONReadingOptions) 0
+                                                                                     error:&err];
+                                   if (err)
+                                   {
+                                       handler(nil, e);
+                                   }
+                                   else
+                                   {
+                                       handler(parsedJson, nil);
+                                   }
+                               }
+                           }];
 }
 
 - (void)connectionWasStoppedWithTag:(id)userData { }

@@ -239,7 +239,7 @@
                                                       nameOrEmail, signInTypeString,
                                                       password, @"password", nil];
 
-    [JRCaptureApidInterface signinCaptureUserWithCredentials:credentials
+    [JRCaptureApidInterface signInCaptureUserWithCredentials:credentials
                                                       ofType:signInTypeString
                                                  forDelegate:self
                                                  withContext:nil];
@@ -250,7 +250,7 @@
     [delegate showLoading];
 }
 
-- (void)signinCaptureUserDidSucceedWithResult:(NSString *)result context:(NSObject *)context
+- (void)signInCaptureUserDidSucceedWithResult:(NSString *)result context:(NSObject *)context
 {
     [delegate hideLoading];
 
@@ -260,7 +260,7 @@
     [delegate authenticationDidComplete];
 }
 
-- (void)signinCaptureUserDidFailWithResult:(NSError *)error context:(NSObject *)context
+- (void)signInCaptureUserDidFailWithResult:(NSError *)error context:(NSObject *)context
 {
     DLog(@"error: %@", [error description]);
     NSString const *type = self.signInType == JRConventionalSigninEmailPassword ? @"Email" : @"Username";

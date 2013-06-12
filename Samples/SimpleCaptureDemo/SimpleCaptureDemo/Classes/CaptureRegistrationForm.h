@@ -8,5 +8,5 @@
 #import <Foundation/Foundation.h>
 #import "JRCapture.h"
 
-@interface CaptureRegistrationForm : UIViewController <UITextFieldDelegate, JRCaptureSigninDelegate>
+@interface CaptureRegistrationForm : UIViewController <UITextFieldDelegate, JRCaptureSignInDelegate>
 @end

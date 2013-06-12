@@ -425,6 +425,17 @@ captureTraditionalRegistrationFormName:(NSString *)captureTraditionalRegistratio
     [JRCaptureData sharedCaptureData].refreshSecret = nil;
 }
 
++ (NSMutableURLRequest *)requestWithPath:(NSString *)path
+{
+    return [[JRCaptureData sharedCaptureData] urlForPath:path];
+}
+
+- (NSMutableURLRequest *)urlForPath:(NSString *)path
+{
+    NSString *urlString = [[self captureBaseUrl] stringByAppendingString:path];
+    return [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+}
+
 + (void)setBackplaneChannelUrl:(NSString *)bpChannelUrl __unused
 {
     [JRCaptureData sharedCaptureData].bpChannelUrl = bpChannelUrl;

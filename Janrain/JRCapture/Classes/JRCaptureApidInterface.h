@@ -35,7 +35,7 @@
 #import <Foundation/Foundation.h>
 #import "JRConnectionManager.h"
 
-@protocol JRCaptureSigninDelegate;
+@protocol JRCaptureSignInDelegate;
 
 typedef enum
 {
@@ -49,8 +49,8 @@ typedef enum
  */
 @protocol JRCaptureInterfaceDelegate <NSObject>
 @optional
-- (void)signinCaptureUserDidSucceedWithResult:(NSString *)result context:(NSObject *)context;
-- (void)signinCaptureUserDidFailWithResult:(NSError *)error context:(NSObject *)context;
+- (void)signInCaptureUserDidSucceedWithResult:(NSString *)result context:(NSObject *)context;
+- (void)signInCaptureUserDidFailWithResult:(NSError *)error context:(NSObject *)context;
 - (void)getCaptureUserDidSucceedWithResult:(NSObject *)result context:(NSObject *)context;
 - (void)getCaptureUserDidFailWithResult:(NSDictionary *)result context:(NSObject *)context;
 - (void)getCaptureObjectDidSucceedWithResult:(NSObject *)result context:(NSObject *)context;
@@ -67,7 +67,7 @@ typedef enum
  * @internal
  */
 @interface JRCaptureApidInterface : NSObject <JRConnectionManagerDelegate>
-+ (void)signinCaptureUserWithCredentials:(NSDictionary *)credentials
++ (void)signInCaptureUserWithCredentials:(NSDictionary *)credentials
                                   ofType:(NSString *)signInType
                              forDelegate:(id)delegate
                              withContext:(NSObject *)context;
@@ -100,5 +100,10 @@ typedef enum
                  withContext:(NSObject *)context;
 
 + (FinishSignInError)finishSignInWithPayload:(NSDictionary *)payloadDict
-                                 forDelegate:(id <JRCaptureSigninDelegate>)delegate;
+                                 forDelegate:(id <JRCaptureSignInDelegate>)delegate;
+
++ (void)maybeDispatch:(SEL)pSelector forDelegate:(id <JRCaptureSignInDelegate>)delegate withArg:(id)arg;
+
++ (void)jsonRequestToUrl:(NSString *)url params:(NSDictionary *)params
+                              completionHandler:(void (^)(id, NSError *))handler;
 @end

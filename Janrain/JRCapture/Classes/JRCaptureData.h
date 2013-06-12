@@ -71,10 +71,13 @@ captureTraditionalRegistrationFormName:(NSString *)captureTraditionalRegistratio
 
 + (NSString *)generateAndStoreRefreshSecret;
 
++ (NSMutableURLRequest *)requestWithPath:(NSString *)path;
+
 - (NSString *)downloadedFlowVersion;
 
 - (NSString *)redirectUri;
 
 - (void)loadFlow;
 
+- (NSMutableURLRequest *)urlForPath:(NSString *)path;
 @end

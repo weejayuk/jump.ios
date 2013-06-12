@@ -37,10 +37,10 @@
 
 + (void)startAuthenticationDialogWithConventionalSignIn:(JRConventionalSigninType)nativeSignInType
                             andCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
-                                            forDelegate:(id<JRCaptureSigninDelegate>)delegate;
+                                            forDelegate:(id<JRCaptureSignInDelegate>)delegate;
 
 + (void)startAuthenticationDialogOnProvider:(NSString *)provider
                withCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
                                  mergeToken:(NSString *)mergeToken
-                                forDelegate:(id <JRCaptureSigninDelegate>)delegate;
+                                forDelegate:(id <JRCaptureSignInDelegate>)delegate;
 @end
