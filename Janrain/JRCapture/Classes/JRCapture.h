@@ -552,10 +552,10 @@ captureTraditionalRegistrationFormName:(NSString *)captureTraditionalRegistratio
                                withSigninType:(JRConventionalSigninType)conventionalSignInType
                                   forDelegate:(id <JRCaptureSignInDelegate>)delegate __unused;
 
-///**
-// * Refreshes the signed-in user's access token
-// */
-//+ (void)refreshAccessTokenWithCallback:(void (^)(BOOL, NSError *))callback __unused;
+/**
+* Refreshes the signed-in user's access token
+*/
++ (void)refreshAccessTokenWithCallback:(void (^)(BOOL, NSError *))callback __unused;
 
 /**
  * Registers a new user.
