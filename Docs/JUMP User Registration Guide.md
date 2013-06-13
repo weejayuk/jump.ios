@@ -12,9 +12,9 @@ There are three types of user registration:
 * "Thin" social registration. This is automatic registration based on social identities. It is only used in the
   context of a social identity authentication (i.e. a social sign-in.) No form is presented to the user. The user's
   social identity is used to populate the fields of the new user record.
-* "Two-step" social registration. This is a registration form with prepopulated values from the user's social identity.
-  (The first step is "the user authenticates with a social identity, but no user record is found so a prepopulated form
-  is returned to the user." The second step is "the user submits the registration form.")
+* "Two-step" social registration. This is a registration form with pre-populated values from the user's social
+  identity. (The first step is "the user authenticates with a social identity, but no user record is found so a
+  pre-populated form is returned to the user." The second step is "the user submits the registration form.")
 
 ## Thin Registration
 

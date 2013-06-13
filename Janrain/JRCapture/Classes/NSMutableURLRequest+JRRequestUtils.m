@@ -10,7 +10,7 @@
 #import "debug_log.h"
 
 @implementation NSMutableURLRequest (JRRequestUtils)
-- (void)JR_addParams:(NSDictionary *)dictionary
+- (void)JR_setBodyWithParams:(NSDictionary *)dictionary
 {
     [self setHTTPMethod:@"POST"];
     NSString *paramString = [dictionary asJRURLParamString];

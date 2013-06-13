@@ -8,5 +8,5 @@
 #import <Foundation/Foundation.h>
 
 @interface NSMutableURLRequest (JRRequestUtils)
-- (void)JR_addParams:(NSDictionary *)dictionary;
+- (void)JR_setBodyWithParams:(NSDictionary *)dictionary;
 @end

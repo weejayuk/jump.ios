@@ -193,21 +193,23 @@ captureTraditionalRegistrationFormName:captureTraditionalRegistrationFormName
     NSString *refreshSecret = [JRCaptureData sharedCaptureData].refreshSecret;
     NSString *domain = [JRCaptureData sharedCaptureData].captureBaseUrl;
     NSString *refreshUrl = [NSString stringWithFormat:@"%@/oauth/refresh_access_token", domain];
-    NSString *signature = [[self signatureForRefreshWithDate:date refreshSecret:refreshSecret
-                                                  accessToken:accessToken] stringByAddingUrlPercentEscapes];
-    if (!signature)
+    NSString *signature = [self base64SignatureForRefreshWithDate:date refreshSecret:refreshSecret
+                                                      accessToken:accessToken];
+
+    if (!signature || !accessToken || !date)
     {
-        callback(NO, [JRCaptureError invalidInternalStateErrorWithDescription:@"missing refresh secret"]);
+        callback(NO, [JRCaptureError invalidInternalStateErrorWithDescription:@"unable to generate signature"]);
         return;
     }
 
-    NSDictionary *params =
-            @{
-                    @"access_token" : accessToken,
-                    @"signature" : signature,
-                    @"date" : [date stringByAddingUrlPercentEscapes]
-            };
-    DLog(@"refreshing access token");
+    NSDictionary *params = @{
+            @"access_token" : accessToken,
+            @"signature" : signature,
+            @"date" : date,
+
+            @"client_id" : [JRCaptureData sharedCaptureData].clientId,
+            @"locale" : [JRCaptureData sharedCaptureData].captureLocale,
+    };
 
     [JRCaptureApidInterface jsonRequestToUrl:refreshUrl params:params completionHandler:^(id r, NSError *e)
     {
@@ -240,8 +242,8 @@ captureTraditionalRegistrationFormName:captureTraditionalRegistrationFormName
     return dateString;
 }
 
-+ (NSString *)signatureForRefreshWithDate:(NSString *)dateString refreshSecret:(NSString *)refreshSecret
-                              accessToken:(NSString *)accessToken
++ (NSString *)base64SignatureForRefreshWithDate:(NSString *)dateString refreshSecret:(NSString *)refreshSecret
+                                    accessToken:(NSString *)accessToken
 {
     if (!refreshSecret) return nil;
     NSString *stringToSign = [NSString stringWithFormat:@"refresh_access_token\n%@\n%@\n", dateString, accessToken];

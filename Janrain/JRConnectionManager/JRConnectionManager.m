@@ -219,7 +219,7 @@ static JRConnectionManager *singleton = nil;
                  returnFullResponse:(BOOL)returnFullResponse
                             withTag:(id)userData
 {
-    NSString *body = [[[NSString alloc] initWithData:[request HTTPBody] encoding:kCFStringEncodingUTF8] autorelease];
+    NSString *body = [[[NSString alloc] initWithData:[request HTTPBody] encoding:NSUTF8StringEncoding] autorelease];
     DLog(@"request to '%@' with body: '%@'", [[request URL] absoluteString], body);
 
     JRConnectionManager *connectionManager = [JRConnectionManager getJRConnectionManager];

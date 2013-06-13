@@ -170,7 +170,7 @@ typedef enum CaptureInterfaceStatEnum
     [signInParams JR_maybeSetObject:[credentials objectForKey:@"token"] forKey:@"merge_token"];
 
     NSMutableURLRequest *request = [JRCaptureData requestWithPath:@"/oauth/auth_native_traditional"];
-    [request JR_addParams:signInParams];
+    [request JR_setBodyWithParams:signInParams];
 
     NSDictionary *tag = @{cTagAction : cSignInUser, @"delegate" : delegate, @"context" : context };
     if (![JRConnectionManager createConnectionFromRequest:request forDelegate:self withTag:tag])
@@ -264,7 +264,7 @@ typedef enum CaptureInterfaceStatEnum
         [params setObject:entityPath forKey:@"attribute_name"];
 
     NSMutableURLRequest *request = [JRCaptureData requestWithPath:@"/entity"];
-    [request JR_addParams:params];
+    [request JR_setBodyWithParams:params];
     return request;
 }
 
@@ -655,9 +655,11 @@ typedef enum CaptureInterfaceStatEnum
 + (void)jsonRequestToUrl:(NSString *)url params:(NSDictionary *)params
      completionHandler:(void(^)(id parsedResponse, NSError *e))handler
 {
-    NSMutableURLRequest *registrationRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
-    [registrationRequest JR_addParams:params];
-    [NSURLConnection sendAsynchronousRequest:registrationRequest queue:[NSOperationQueue mainQueue]
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
+    [request JR_setBodyWithParams:params];
+    NSString *p = [[[NSString alloc] initWithData:[request HTTPBody] encoding:NSUTF8StringEncoding] autorelease];
+    DLog(@"URL: \"%@\" params: \"%@\"", url, p);
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue]
                            completionHandler:^(NSURLResponse *r, NSData *d, NSError *e)
                            {
                                if (e)
@@ -670,13 +672,14 @@ typedef enum CaptureInterfaceStatEnum
                                    NSString *bodyString =
                                            [[[NSString alloc] initWithData:d
                                                                   encoding:NSUTF8StringEncoding] autorelease];
-                                   ALog(@"Fetching expected JSON: %@", bodyString);
                                    NSError *err;
                                    id parsedJson = [NSJSONSerialization JSONObjectWithData:d
                                                                                    options:(NSJSONReadingOptions) 0
                                                                                      error:&err];
+                                   ALog(@"Fetched: \"%@\"", bodyString);
                                    if (err)
                                    {
+                                       ALog(@"Parse err: \"%@\"", err);
                                        handler(nil, e);
                                    }
                                    else
