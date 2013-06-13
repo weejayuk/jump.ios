@@ -256,7 +256,7 @@ captureTraditionalRegistrationFormName:captureTraditionalRegistrationFormName
     return [[[[NSData alloc] initWithBytes:cHMAC length:sizeof(cHMAC)] autorelease] JRBase64EncodedString];
 }
 
-+ (void)registerNewUser:(JRCaptureUser *)newUser withSocialRegistrationToken:(NSString *)socialRegistrationToken
++ (void)registerNewUser:(JRCaptureUser *)newUser socialRegistrationToken:(NSString *)socialRegistrationToken
             forDelegate:(id <JRCaptureSignInDelegate>)delegate
 {
     if (!newUser)

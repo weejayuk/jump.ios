@@ -378,7 +378,7 @@ static NSString *const ENGAGE_TOKEN_KEY = @"merge_token";
     return [((JRCaptureError *) self) preRegistrationRecord];
 }
 
-- (NSString *)JRRegistrationToken
+- (NSString *)JRSocialRegistrationToken
 {
     if (![self isKindOfClass:[JRCaptureError class]] || ![self isJRTwoStepRegFlowError]) return nil;
     return [((JRCaptureError *) self) registrationToken];

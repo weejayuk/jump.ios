@@ -168,7 +168,7 @@
 
     if (appDelegate.isNotYetCreated)
     {
-        [JRCapture registerNewUser:appDelegate.captureUser withSocialRegistrationToken:appDelegate.registrationToken
+        [JRCapture registerNewUser:appDelegate.captureUser socialRegistrationToken:appDelegate.registrationToken
                        forDelegate:self];
     }
     else

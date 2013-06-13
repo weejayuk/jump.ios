@@ -31,6 +31,7 @@
 
 #import <Foundation/Foundation.h>
 #import "JRCaptureUser.h"
+#import "JRConnectionManager.h"
 
 /**
  * @file
@@ -200,7 +201,7 @@ typedef enum
 - (NSString *)JRMergeToken;
 - (JRCaptureUser *)JRPreregistrationRecord;
 
-- (NSString *)JRRegistrationToken;
+- (NSString *)JRSocialRegistrationToken;
 
 - (NSDictionary *)JRValidationFailureMessages;
 @end

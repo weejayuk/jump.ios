@@ -574,7 +574,7 @@ captureTraditionalRegistrationFormName:(NSString *)captureTraditionalRegistratio
  *  Your JRCaptureSignInDelegate. This delegate will receive callbacks regarding the success or failure of sign-in
  *  events. (A successful registration is considered a sign-in, and results in a valid client-server session.)
  */
-+ (void)registerNewUser:(JRCaptureUser *)newUser withSocialRegistrationToken:(NSString *)socialRegistrationToken
++ (void)registerNewUser:(JRCaptureUser *)newUser socialRegistrationToken:(NSString *)socialRegistrationToken
             forDelegate:(id <JRCaptureSignInDelegate>)delegate;
 
 /**

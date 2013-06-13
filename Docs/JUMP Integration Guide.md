@@ -19,53 +19,85 @@ integrations see `Engage-Only Integration Guide.md`
 ### In the Pipeline
 
 * Profile updates (including password and email address updates)
-* In app password reset initiation
+* In app forgot-password-flow initiation
 * Social account linking (like the "merge account" sign-in flow, but after a user is signed in.)
 * Session refreshing.
 
 ## 10,000' View
 
-1. Gather your configuration details
-2. Generate the Objective-C Capture User Model source code
-3. [Add the JUMP for iOS SDK to your Xcode project](http://developers.janrain.com/documentation/mobile-libraries/jump-for-ios/adding-to-xcode/).
-4. Initialize the library
-5. Start a sign-in
-6. Modify the profile
-7. Push the update
+Basic usage flow:
+    1. Gather your configuration details
+    2. Generate the Objective-C Capture User Model source code
+    3. [Add the JUMP for iOS SDK to your Xcode project](http://developers.janrain.com/documentation/mobile-libraries/jump-for-ios/adding-to-xcode/).
+    4. Initialize the library
+    5. Start a sign-in
+    6. Modify the profile
+    7. Send record updates
+    8. Persist the local user object
 
 ## Gather your Configuration Details
 
 1. Sign in to your Engage Dashboard - https://rpxnow.com
-    1. Configure the providers you wish to use for authentication ("Deployment" drop down menu -> "Engage for
+    1. Configure the social providers you wish to use for authentication ("Deployment" drop down menu -> "Engage for
        iOS").
-    2. Retrieve your 20-character Application ID from the Engage Dashboard (In the right column of the "Home"
-       page on the dashboard.)
+    2. Retrieve your 20-character Engage application ID from the Engage Dashboard (In the right column of the "Home"
+       page on the Engage dashboard.)
 2. Ask your deployment engineer or account manager for your Capture domain.
-3. Create a new Capture API client for you iOS app:
-    1. Sign in to the Capture dashboard and provision a new API client for your mobile app.
+3. Create a new Capture API client for your mobile app:
+    1. Sign in to the Capture dashboard and provision a new API client for your mobile app (https://janraincapture.com)
+       (Copy down the new API client's client ID, you will need this.)
     2. Use the [set_features API](http://developers.janrain.com/documentation/api-methods/capture/clients/set_features/)
        to add the "login_client" feature to your new API client.
-    3. Use the [setAccessSchema API](http://developers.janrain.com/documentation/api-methods/capture/entitytype/setaccessschema/)
-       to set the subset of the schema you wish your mobile app to be able to update.
-       **Warning** If you do not include the attributes your client will write to in the its write access
-       schema you will receive missing attribute errors when attempting to update attributes.
-4. Configure your flow settings:
-    1. Ask your deployment engineer or account manager which "flow" you should use.
-    2. Ask for the appropriate values for default_flow_name and default_flow_version.
-    3. Set those settings for your new API client.
-5. Coordinate with your deployment engineer or account manager for the correct value for your "flow locale."
-   The commonly used value for US English is en-US.
-6. Ask your deployment engineer or account manager for the name of the sign-in form in your flow.
 
-Note: You _must_ create a new API client with the correct login_client feature for operation of the JUMP for iOS SDK.
+       **Warning** `login_client` is mutually exclusive with all other API client features, which means only login
+       clients can be used to sign users in, and only non-login-clients can perform client_id and client_secret
+       authenticated Capture API calls. This means that you cannot use the owner client as a login client.
+    3. Use the
+       [setAccessSchema API](http://developers.janrain.com/documentation/api-methods/capture/entitytype/setaccessschema/)
+       API to set the subset of the schema you wish your mobile app to be able to update.
+       You must use the "write_with_token" schema type.
+
+       **Warning** Do not use the "write" schema type with login clients, use "write_with_token"
+
+       **Warning** If you do set the write_with_token access schema for your API client to include the attributes your
+       client will write to in the its write access schema you will receive `missing attribute` errors when attempting
+       to update attributes.
+4. Discover your flow settings:
+    Ask your deployment engineer for:
+        * The name of the Capture "flow" you should use
+        * The name of the flow's traditional sign-in form
+        * The name of the flow's social registration form
+        * The name of the flow's traditional registration form
+        * The name of the "locale" in the flow your app should use
+          The commonly used value for US English is "en-US".
+5. Determine whether your app should use "Thin" social registration, or "two-step" social registration.
+6. Determine the name of the traditional sign-in key attribute (e.g. `email` or `username`)
+
+**Note** The flow version setting is not required. The Capture library will automatically use the latest (`HEAD`)
+version of the flow if it is not initialized with a flow version.
+
+**Warning** You _must_ create a new API client with the correct login_client feature for operation of the JUMP for iOS
+SDK.
 
 ## Generating the Capture User Model
 
-Get the [JUMP for iOS library](http://developers.janrain.com/documentation/mobile-libraries/ios-v2/getting-the-library/) and
-the required [JSON-2.53+](http://search.cpan.org/~makamaka/JSON-2.53/lib/JSON.pm) perl module.
+1. Make sure that perl is installed on your system. If it is not, consider using MacPorts or Homebrew to install perl.
+2. With perl installed, install cpanm `sudo cpan App::cpanminus`
+   Or, by following these instructions: http://www.cpan.org/modules/INSTALL.html
+3. Install the JSON perl module by running `sudo cpanm Module::JSON`
+
+With the JSON perl module is installed, download the schema:
+
+1. Go to the https://janraincapture.com dashboard, and sign-in
+2. Use the "App" drop-down menu to select your Capture app.
+3. Click the "Schema" tab.
+4. Use the "Entity Types" drop-down menu to select the correct schema. If you selected a new schema, wait for the page
+   to reload. (If you are already on the correct schema, the page will not reload.)
+5. Click download schema.
+
+With the schema downloaded, generate the user model:
 
 1. Change into the script directory: `$ cd jump.ios/Janrain/JRCapture/Script`
-
 2. Run the `CaptureSchemaParser.pl` script, passing in your Capture schema as an argument with the `-f` flag, and the
    path to your Xcode project with the `-o` flag:
 
@@ -77,83 +109,81 @@ The script outputs to:
 
 That directory contains the Janrain Capture user record model for your iOS application.
 
-After you have generated the user record model, you can
-[add the library to Xcode](http://developers.janrain.com/documentation/mobile-libraries/jump-for-ios/adding-to-xcode/).
+After you have generated the user record model,
+[add the model to your Xcode project](http://developers.janrain.com/documentation/mobile-libraries/jump-for-ios/adding-to-xcode/#adding-the-generated-capture-user-model).
 
-**Note**: If you've already added the library to Xcode, see
+**Note** If you've already added the library to Xcode, see
 [Adding the Generated User Model](http://developers.janrain.com/documentation/mobile-libraries/jump-for-ios/adding-to-xcode/#adding-the-generated-capture-user-model).
 
-## Import the Library and Declare a Record Reference
+## Import the Library and Declare a JRCaptureUser Property
 
-In your application, decide where you want to manage the authenticated Capture user object. You will want to implement
-your Capture library interface code in an object that won't go away, such as the `AppDelegate` or a singleton object
-that manages your application's data model.
+In your application, determine where you want to manage the authenticated Capture user object. You will want to
+implement your Capture library interface code in an object that won't go away, such as the `AppDelegate` or a singleton
+object that manages your application's state model.
 
-1. Import the Capture header:
-    
-   `#import "JRCapture.h"`
+1. In the chosen class's header, import the Capture library header:
 
-2. Modify your class to conform to
-   [JRCaptureSigninDelegate](http://janrain.github.com/jump.ios/gh_docs/capture/html/protocol_j_r_capture_signin_delegate-p.html),
-   by adding it to the list of delegates. (All the messages of the protocol are optional.)
+    #import "JRCapture.h"
 
-   `@interface MyDataModel : NSObject <JRCaptureSigninDelegate>`
+2. Modify your class's interface declaration to declare conformation to the
+   [JRCaptureSigninDelegate](http://janrain.github.com/jump.ios/gh_docs/capture/html/protocol_j_r_capture_signin_delegate-p.html)
+   protocol. (All of the messages of the protocol are optional.)
 
-3. Add a captureUser property to your delegate's header (see
+    @interface MyDataModel : NSObject <JRCaptureSigninDelegate>
+
+3. Add a `JRCaptureUser *` property to your class's interface declaration (see
    [JRCaptureUser](http://janrain.github.com/jump.ios/gh_docs/capture/html/interface_j_r_capture_user.html)):
 
-   `@property (retain, nonatomic) JRCaptureUser *captureUser;`
+    @property (retain, nonatomic) JRCaptureUser *captureUser;
 
-4. And synthesize that property in your application delegate's implementation:
+4. In your class's implementation synthesize that property:
 
-   `@synthesize captureUser;`
+    @synthesize captureUser;
 
 ## Initialize the Library
 
-To configure the library, pass your:
+To configure the library, pass your configuration settings to:
 
-- Engage Application ID,
-- Capture domain,
-- Capture Client ID,
-- Capture Flow Locale,
-- Capture Flow Name (optional),
-- Capture Flow Form Name and
-- Capture Traditional Sign-In Type
+    +[JRCapture setEngageAppId:captureDomain:captureClientId:captureLocale:captureFlowName:captureSignInFormName:captureEnableThinRegistration:captureTraditionalSignInType:captureFlowVersion:captureTraditionalRegistrationFormName:captureSocialRegistrationFormName:captureAppId:customIdentityProviders:]
 
-... to the class method:
+(You can copy and paste this block to get started:
 
-`+[JRCapture setEngageAppId:captureDomain:captureClientId:captureLocale:captureFlowName:captureSignInFormName:captureTraditionalSignInType:]`
-        
-... of the `JRCapture` class. For example:
+        ... // Your existing initialization logic here
 
-    ... // Your existing initialization logic here
-    
-    NSString *engageAppId = @"your_engage_app_id";
-    NSString *captureDomain = @"your_capture_ui_base_url";
-    NSString *captureClientId = @"your_capture_client_id";
-    NSString *captureLocale = @"en-US"; // e.g.
-    NSString *captureFlowName = nil; // e.g.
-    NSString *captureSignInFormName = @"signinForm"; // e.g.
-    JRConventionalSigninType captureTraditionalSignInType =
-        JRConventionalSigninEmailPassword; // e.g.    
+        NSString *engageAppId = @"your_engage_app_id";
+        NSString *captureDomain = @"your_capture_ui_base_url";
+        NSString *captureClientId = @"your_capture_client_id";
+        NSString *captureLocale = @"en-US"; // e.g.
+        NSString *captureFlowName = nil; // e.g.
+        NSString *captureSignInFormName = @"signinForm"; // e.g.
+        BOOL captureEnableThinRegistration = YES;
+        NSString *captureFlowVersion = nil;
+        NSString *captureTraditionalRegistrationFormName = @"registrationForm"; // e.g.
+        NSString *captureSocialRegistrationFormName = @"socialRegistrationForm"; // e.g.
+        NSString *captureAppId = @"your_capture_app_id";
 
-       [JRCapture setEngageAppId:engageAppId captureDomain:captureDomain
-                 captureClientId:captureClientId captureLocale:captureLocale
-                 captureFlowName:captureFlowName captureSignInFormName:captureSignInFormName
-    captureTraditionalSignInType:captureTraditionalSignInType];
+        JRConventionalSigninType captureTraditionalSignInType =
+            JRConventionalSigninEmailPassword; // e.g.
 
-**Note**: See the Capture API doc for [`/oauth/auth_native`](http://developers.janrain.com/documentation/api-methods/capture/oauth/auth_native/)
-for more information on the default Capture flow name, and default flow version. Contact your Janrain Deployment
-Engineer or Janrain Support for help configuring the flow parameters.
+        [JRCapture setEngageAppId:engageAppId captureDomain:captureDomain captureClientId:captureClientId
+                    captureLocale:captureLocale captureFlowName:captureFlowName
+            captureSignInFormName:captureSignInFormName captureEnableThinRegistration:captureEnableThinRegistration
+              captureTraditionalSignInType:captureTraditionalSignInType captureFlowVersion:captureFlowVersion
+    captureTraditionalRegistrationFormName:captureTraditionalRegistrationFormName
+         captureSocialRegistrationFormName:captureSocialRegistrationFormName captureAppId:captureAppId
+                   customIdentityProviders:nil];
+
+...)
 
 ## Start the User Sign-In Flow
 
-To start the authentication and sign-in flow, send the `startEngageSigninForDelegate:` message to the `JRCapture` class:
+To start the authentication and sign-in flow, send the `startEngageSigninForDelegate:` message to the `JRCapture`
+class:
 
     [JRCapture startEngageSigninForDelegate:self];
 
 This starts the Engage user authentication flow, the result of which is used to sign-in to Capture. Once a user is
-signed in, the library instantiates a user record model (which is an instance of
+signed in, the library instantiates a user model object (an instance of
 [JRCaptureUser](http://janrain.github.com/jump.ios/gh_docs/capture/html/interface_j_r_capture_user.html).)
 
 The [JRCaptureSigninDelegate](http://janrain.github.com/jump.ios/gh_docs/capture/html/protocol_j_r_capture_signin_delegate-p.html)
@@ -234,8 +264,8 @@ push that information back to Capture.
 
 ### Traditional Sign-In and Social Sign-In
 
-The Capture part of the SDK supports both social sign-in via Engage (e.g. Facebook) as well as traditional sign-in (i.e.
-username and password or email and password sign-in.) There are four main ways to start sign-in:
+The Capture part of the SDK supports both social sign-in via Engage (e.g. Facebook) as well as traditional sign-in
+(i.e. username and password or email and password sign-in.) There are four main ways to start sign-in:
 
 - `+[JRCapture startEngageSigninDialogForDelegate:]`: Starts the Engage social sign-in process for all currently
   configured social sign-in providers, displaying a list of them initially, and guiding the user through the
@@ -270,15 +300,15 @@ which Capture uses to merge the identity from the first (failed) sign-in into th
 
 Capture SDK time-line for Merge Account Flow:
 
- 1. User attempts to sign-in with social identity provider, A.
- 2. Capture sign-in fails because there is an existing Capture record sharing some protected attributes with identity A,
-    e.g. the same email address.
+ 1. User attempts to sign-in with a social identity, "identity A".
+ 2. Capture sign-in fails because there is an existing Capture record connected to "identity B", which shares some
+    constrained attributes with "identity A". E.g. the two identities have the same email address.
  3. The `-[JRCaptureSigninDelegate captureAuthenticationDidFailWithError:]` delegate message is sent with an error
     representing this state. This state is to be discerned via the `-[NSError isJRMergeFlowError]` class category
     message.
  4. The host application (your iOS app) notifies the user of the conflict and advises the user to merge the accounts
  5. The user elects to take action
- 6. the merge sign-in is started by invoking either
+ 6. The merge sign-in is started by invoking either
     `+[JRCapture startEngageSigninDialogOnProvider:withCustomInterfaceOverrides:mergeToken:forDelegate:]` or
     `+[JRCapture startCaptureConventionalSigninForUser:withPassword:withSigninType:mergeToken:forDelegate:]` depending
     on the existing identity provider for the record.
@@ -347,13 +377,13 @@ Example:
                                   otherButtonTitles:@"Sign-in", nil] show];
     }
 
-**Note**: This example makes use of the `AlertViewWithBlocks` subclass of `UIAlertView` (which provides an interface
+**Note** This example makes use of the `AlertViewWithBlocks` subclass of `UIAlertView` (which provides an interface
 to `UIAlertView` with a block handler, as opposed to a delegate object handler.) See the SimpleCaptureDemo project in
 the Samples directory of the SDK for source code.
 
 This example checks for the merge-flow error, it prompts the user to merge, and it start authentication.
 
-**Note**: That the "existing provider" of the merge flow can be Capture itself. This happens when the merge-failure was
+**Note** That the "existing provider" of the merge flow can be Capture itself. This happens when the merge-failure was
 a conflict with an existing record created with traditional sign-in. This case is handled in the `handleTradMerge:`
 method.
 
@@ -400,7 +430,7 @@ message. For example:
     captureUser.aboutMe = @"Hello. My name is Inigo Montoya.";
     [captureUser updateOnCaptureForDelegate:self context:nil];
 
-**Note**: Context arguments are used across most of the asynchronous Capture methods to facilitate correlation of the
+**Note** Context arguments are used across most of the asynchronous Capture methods to facilitate correlation of the
 response messages with the calling code. Use of the context is entirely optional. You can use any object which conforms
 to `<NSObject>`.
 
@@ -423,7 +453,7 @@ You can send the `updateOnCaptureForDelegate:context:` message to the top-level 
 [JRCaptureUser](http://janrain.github.com/jump.ios/gh_docs/capture/html/interface_j_r_capture_user.html)
 instance), or a sub-object of that object.
 
-**Warning**: When you update an object, the update _does not_ affect plurals inside of that object.
+**Warning** When you update an object, the update _does not_ affect plurals inside of that object.
 
 ### Replacing Plurals
 
@@ -452,7 +482,7 @@ For example:
     // ... And update Capture:
     [captureUser replacePhotosArrayOnCaptureForDelegate:self context:nil];
 
-**Warning**: The `NSArray` properties used to model plurals are copy-on-set. This means that to modify the array you
+**Warning** The `NSArray` properties used to model plurals are copy-on-set. This means that to modify the array you
 must create a new mutable array with the existing array, then modify the mutable array, then assign the mutable array
 to the property. (Because the property is copy-on-set further modifications to the copied array will not change the
 property.) See the above example for an example of this technique.
@@ -485,7 +515,7 @@ Likewise, load the saved user record state when your application launches. For e
         self.captureUser = [NSKeyedUnarchiver unarchiveObjectWithData:encodedUser];
     }
 
-**Note**: While your application is responsible for saving and restoring the user record, the Capture library will
+**Note** While your application is responsible for saving and restoring the user record, the Capture library will
 automatically save and restore the session token.
 
 ## Troubleshooting

@@ -140,8 +140,8 @@ typedef enum CaptureInterfaceStatEnum
 }
 
 
-- (void)startSignInCaptureUserWithCredentials:(NSDictionary *)credentials ofType:(NSString *)signInFieldName
-                                  forDelegate:(id)delegate withContext:(NSObject *)context
+- (void)signInCaptureUserWithCredentials:(NSDictionary *)credentials ofType:(NSString *)signInFieldName
+                             forDelegate:(id)delegate withContext:(NSObject *)context
 {
     DLog(@"");
     NSString *refreshSecret = [JRCaptureData generateAndStoreRefreshSecret];
@@ -170,7 +170,6 @@ typedef enum CaptureInterfaceStatEnum
     [signInParams JR_maybeSetObject:[credentials objectForKey:@"token"] forKey:@"merge_token"];
 
     NSMutableURLRequest *request = [JRCaptureData requestWithPath:@"/oauth/auth_native_traditional"];
-    [request JR_addParams:signInParams];
     [request JR_addParams:signInParams];
 
     NSDictionary *tag = @{cTagAction : cSignInUser, @"delegate" : delegate, @"context" : context };
@@ -480,8 +479,8 @@ typedef enum CaptureInterfaceStatEnum
                              forDelegate:(id)delegate withContext:(NSObject *)context
 {
     [[JRCaptureApidInterface captureInterfaceInstance]
-            startSignInCaptureUserWithCredentials:credentials ofType:signInType forDelegate:delegate
-                                      withContext:context];
+            signInCaptureUserWithCredentials:credentials ofType:signInType forDelegate:delegate
+                                 withContext:context];
 }
 
 + (void)getCaptureUserWithToken:(NSString *)token
@@ -560,7 +559,7 @@ typedef enum CaptureInterfaceStatEnum
 }
 
 - (void)finishSignInUserWithPayload:(NSString *)payload context:(NSObject *)context response:(NSDictionary *)response
-                               stat:(CaptureInterfaceStat)stat delegate:(id <JRCaptureInterfaceDelegate>)delegate
+                               stat:(CaptureInterfaceStat)stat delegate:(id)delegate
 {
     if (stat == StatOk)
         [self finishSignInSuccessWithResult:payload forDelegate:delegate withContext:context];
@@ -625,25 +624,19 @@ typedef enum CaptureInterfaceStatEnum
     NSString *accessToken   = [payloadDict objectForKey:@"access_token"];
     BOOL      isNew         = [(NSNumber*)[payloadDict objectForKey:@"is_new"] boolValue];
 
-    NSDictionary *captureProfile = [payloadDict objectForKey:@"capture_user"];
+    NSDictionary *captureRecord = [payloadDict objectForKey:@"capture_user"];
 
-    if (!captureProfile || !(accessToken)) return cJRInvalidResponse;
+    if (!captureRecord || !accessToken) return cJRInvalidResponse;
 
-    JRCaptureUser *captureUser = [JRCaptureUser captureUserObjectFromDictionary:captureProfile];
+    JRCaptureUser *captureUser = [JRCaptureUser captureUserObjectFromDictionary:captureRecord];
 
     if (!captureUser) return cJRInvalidCaptureUser;
 
-    if (accessToken)
-        [JRCaptureData setAccessToken:accessToken];
+    [JRCaptureData setAccessToken:accessToken];
 
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 
-    JRCaptureRecordStatus recordStatus;
-
-    if (isNew)
-        recordStatus = JRCaptureRecordNewlyCreated;
-    else
-        recordStatus = JRCaptureRecordExists;
+    JRCaptureRecordStatus recordStatus = isNew ? JRCaptureRecordNewlyCreated : JRCaptureRecordExists;
 
     if ([delegate respondsToSelector:@selector(captureAuthenticationDidSucceedForUser:status:)])
         [delegate captureAuthenticationDidSucceedForUser:captureUser status:recordStatus];

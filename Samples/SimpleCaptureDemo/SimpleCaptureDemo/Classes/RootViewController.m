@@ -38,13 +38,17 @@
 #import "ObjectDrillDownViewController.h"
 #import "AlertViewWithBlocks.h"
 #import "AppDelegate.h"
-#import "CaptureRegistrationForm.h"
+#import "CaptureDynamicForm.h"
 
 @interface RootViewController ()
 @property(nonatomic, copy) void (^viewDidAppearContinuation)();
 @property(nonatomic) BOOL viewIsApparent;
 
 - (void)configureButtons;
+@end
+
+@interface JRCapture (BetaAPIs)
++ (void)refreshAccessTokenWithCallback:(void (^)(BOOL, NSError *))callback;
 @end
 
 @implementation RootViewController
@@ -58,7 +62,6 @@
 @synthesize signOutButton;
 @synthesize shareWidgetButton;
 @synthesize customUi;
-
 
 - (void)viewDidLoad
 {
@@ -142,7 +145,7 @@
 
 - (void)showRegistrationForm
 {
-    CaptureRegistrationForm *viewController = [[CaptureRegistrationForm alloc] initWithNibName:nil
+    CaptureDynamicForm *viewController = [[CaptureDynamicForm alloc] initWithNibName:nil
                                                                                         bundle:[NSBundle mainBundle]];
 
     [self.navigationController pushViewController:viewController animated:YES];
@@ -158,23 +161,23 @@
     //                                                 //{
                                                      //
                                                      //}];
-    //[JRCapture refreshAccessTokenWithCallback:^(BOOL success, NSError *err)
-    //{
-    //    if (err)
-    //    {
-    //        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:[err description]
-    //                                                           delegate:nil cancelButtonTitle:@"Dismiss"
-    //                                                  otherButtonTitles:nil];
-    //        [alertView show];
-    //    }
-    //    else
-    //    {
-    //        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Success" message:nil delegate:nil
-    //                                                  cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
-    //        [alertView show];
-    //
-    //    }
-    //}];
+    [JRCapture refreshAccessTokenWithCallback:^(BOOL success, NSError *err)
+    {
+        if (err)
+        {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:[err description]
+                                                               delegate:nil cancelButtonTitle:@"Dismiss"
+                                                      otherButtonTitles:nil];
+            [alertView show];
+        }
+        else
+        {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Success" message:nil delegate:nil
+                                                      cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
+            [alertView show];
+
+        }
+    }];
 }
 
 - (IBAction)signInButtonPressed:(id)sender
@@ -184,8 +187,7 @@
     [self signOutCurrentUser];
 
     [JRCapture startEngageSigninDialogWithConventionalSignin:JRConventionalSigninEmailPassword
-                                 andCustomInterfaceOverrides:self.customUi
-                                                 forDelegate:self];
+                                 andCustomInterfaceOverrides:self.customUi forDelegate:self];
 }
 
 - (IBAction)signOutButtonPressed:(id)sender
@@ -301,7 +303,7 @@
 {
     appDelegate.isNotYetCreated = YES;
     appDelegate.captureUser = [error JRPreregistrationRecord];
-    appDelegate.registrationToken = [error JRRegistrationToken];
+    appDelegate.registrationToken = [error JRSocialRegistrationToken];
 
     UINavigationController *controller = self.navigationController;
     if (self.viewIsApparent)

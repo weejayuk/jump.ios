@@ -1,14 +1,14 @@
-#import "CaptureRegistrationForm.h"
+#import "CaptureDynamicForm.h"
 #import "AppDelegate.h"
 #import "Utils.h"
 
 static NSMutableDictionary *identifierMap = nil;
 
-@interface CaptureRegistrationForm ()
+@interface CaptureDynamicForm ()
 @property(nonatomic, strong) JRCaptureUser *captureUser;
 @end
 
-@implementation CaptureRegistrationForm
+@implementation CaptureDynamicForm
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -57,7 +57,7 @@ static NSMutableDictionary *identifierMap = nil;
 
 - (void)registerUser
 {
-    [JRCapture registerNewUser:self.captureUser withSocialRegistrationToken:nil forDelegate:self];
+    [JRCapture registerNewUser:self.captureUser socialRegistrationToken:nil forDelegate:self];
 }
 
 - (void)registerUserDidSucceed:(JRCaptureUser *)registeredUser
