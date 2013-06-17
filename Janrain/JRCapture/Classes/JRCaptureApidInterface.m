@@ -51,6 +51,9 @@ static NSString *const cReplaceObject = @"replaceObject";
 static NSString *const cReplaceArray = @"replaceArray";
 static NSString *const cTagAction = @"action";
 
+@interface JRCaptureApidInterface ()  <JRConnectionManagerDelegate>
+@end
+
 @implementation JRCaptureApidInterface
 static JRCaptureApidInterface *singleton = nil;
 

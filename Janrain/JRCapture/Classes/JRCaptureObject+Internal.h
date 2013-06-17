@@ -29,6 +29,7 @@
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #import <Foundation/Foundation.h>
+#import "JRCaptureObject.h"
 
 #define cJREncodedCaptureUser @"jrcapture.encodedCaptureUser"
 

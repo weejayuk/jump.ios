@@ -1,6 +1,8 @@
 #import "CaptureDynamicForm.h"
 #import "AppDelegate.h"
 #import "Utils.h"
+#import "JRCaptureError.h"
+#import "JRCaptureUser+Extras.h"
 
 static NSMutableDictionary *identifierMap = nil;
 

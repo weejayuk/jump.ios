@@ -38,6 +38,7 @@
 #import "AppDelegate.h"
 #import "JRCapture.h"
 #import "Utils.h"
+#import "JRCaptureError.h"
 
 @interface CaptureProfileViewController () <JRCaptureDelegate>
 @property(nonatomic, retain) id firstResponder;

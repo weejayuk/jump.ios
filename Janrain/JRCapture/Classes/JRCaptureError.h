@@ -32,6 +32,7 @@
 #import <Foundation/Foundation.h>
 
 @protocol JRConnectionManagerDelegate;
+@class JRCaptureUser;
 
 /**
  * @file

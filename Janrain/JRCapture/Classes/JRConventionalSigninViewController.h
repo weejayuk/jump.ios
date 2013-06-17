@@ -32,6 +32,7 @@
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #import <UIKit/UIKit.h>
+#import "JRCaptureTypes.h"
 
 @class JREngageWrapper;
 @protocol JRExternalDialogControllerDelegate, JRCaptureInternalDelegate;

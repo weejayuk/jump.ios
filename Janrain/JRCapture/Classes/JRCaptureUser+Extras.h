@@ -29,6 +29,7 @@
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #import <Foundation/Foundation.h>
+#import "JRCaptureUser.h"
 
 @interface JRCaptureUser (JRCaptureUser_Internal)
 + (id)captureUserObjectFromDictionary:(NSDictionary *)dictionary withPath:(NSString *)capturePath;

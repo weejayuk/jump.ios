@@ -33,9 +33,9 @@
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #import "debug_log.h"
-#import "JRConnectionManager.h"
 #import "JRCaptureApidInterface.h"
 #import "JRConventionalSignInViewController.h"
+#import "JREngage.h"
 #import "JREngageWrapper.h"
 #import "JRUserInterfaceMaestro.h"
 #import "JRCaptureData.h"

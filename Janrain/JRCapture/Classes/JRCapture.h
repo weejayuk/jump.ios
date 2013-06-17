@@ -34,6 +34,7 @@
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #import "JRCaptureTypes.h"
+@class JRCaptureUser;
 
 #define engageSigninDialogDidFailToShowWithError engageAuthenticationDialogDidFailToShowWithError
 #define engageSigninDidNotComplete engageAuthenticationDidCancel
@@ -143,7 +144,7 @@
  *
  * @note
  * This message is only sent if your application tries to show a Engage for iOS dialog, and not necessarily
- * when an error occurs, if, say, the error occurred during the library's configuration. The raison d'etre
+ * when an error occurs, if, say, the error occurred during the library's configuration. The reason
  * is based on the possibility that your application may preemptively configure Capture and Engage, but never
  * actually use it. If that is the case, then you won't get any error.
  **/
@@ -255,7 +256,7 @@
  * * If your Capture instance does not require information such as an email address, this scenario should not occur.
  **/
 - (void)captureSignInDidSucceedForUser:(JRCaptureUser *)captureUser
-                                        status:(JRCaptureRecordStatus)captureRecordStatus;
+                                status:(JRCaptureRecordStatus)captureRecordStatus;
 
 /**
  * Sent when the call to the Capture server has failed.
