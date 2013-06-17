@@ -59,13 +59,13 @@
 
 + (void)setEngageAppId:(NSString *)engageAppId captureDomain:(NSString *)captureDomain
        captureClientId:(NSString *)clientId captureLocale:(NSString *)captureLocale
-              captureFlowName:(NSString *)captureFlowName captureSignInFormName:(NSString *)captureSignInFormName
-captureEnableThinRegistration:(BOOL)enableThinRegistration
-          captureTraditionalSignInType:(__unused JRConventionalSignInType)tradSignInType
+             captureFlowName:(NSString *)captureFlowName captureSignInFormName:(NSString *)captureSignInFormName
+ captureTraditionalSignInType:(__unused JRConventionalSignInType) tradSignInType
+captureEnableThinRegistration:(BOOL)enableThinRegistration customIdentityProviders:(NSDictionary *)customProviders
                     captureFlowVersion:(NSString *)captureFlowVersion
 captureTraditionalRegistrationFormName:(NSString *)captureTraditionalRegistrationFormName
      captureSocialRegistrationFormName:(NSString *)captureSocialRegistrationFormName
-                          captureAppId:(NSString *)captureAppId customIdentityProviders:(NSDictionary *)customProviders
+                          captureAppId:(NSString *)captureAppId
 {
     [JRCaptureData setCaptureDomain:captureDomain captureClientId:clientId captureLocale:captureLocale
               captureSignInFormName:captureSignInFormName captureFlowName:captureFlowName

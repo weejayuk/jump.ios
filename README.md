@@ -3,6 +3,7 @@
 This library provides a native iOS API to the Janrain user management platform.
 
 It supports:
+
  * Authentication with Janrain Engage
  * Sign-in to, and user session management with, Janrain Capture
  * Social two-step and traditional registration with Janrain Capture
@@ -11,6 +12,7 @@ It supports:
 See also:
 
  * ./Docs/Capture Integration Guide.md - an integration guide
+ * ./Docs/Upgrade Guide.md - a guide to upgrading between versions of the library
  * http://developers.janrain.com/documentation/mobile-libraries - 
    documentation and guides at the Janrain developers portal
  * RELEASE_NOTES - for information on changes, bugfixes, and new features

@@ -82,11 +82,11 @@ AppDelegate *appDelegate = nil;
 
     [JRCapture setEngageAppId:engageAppId captureDomain:captureDomain captureClientId:captureClientId
                 captureLocale:captureLocale captureFlowName:captureFlowName
-        captureSignInFormName:captureSignInFormName captureEnableThinRegistration:captureEnableThinRegistration
-          captureTraditionalSignInType:JRConventionalSignInEmailPassword captureFlowVersion:captureFlowVersion
+        captureSignInFormName:captureSignInFormName captureTraditionalSignInType:JRConventionalSignInEmailPassword
+captureEnableThinRegistration:captureEnableThinRegistration customIdentityProviders:customProviders
+                    captureFlowVersion:captureFlowVersion
 captureTraditionalRegistrationFormName:captureTraditionalRegistrationFormName
-     captureSocialRegistrationFormName:captureSocialRegistrationFormName captureAppId:captureAppId
-               customIdentityProviders:customProviders];
+     captureSocialRegistrationFormName:captureSocialRegistrationFormName captureAppId:captureAppId];
 
     [BackplaneUtils asyncFetchNewBackplaneChannelWithBus:bpBusUrlString
                                               completion:^(NSString *newChannel, NSError *error)

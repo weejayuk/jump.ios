@@ -349,16 +349,38 @@
  *
  * @param captureTraditionalSignInType
  *   The type of traditional sign-in your end-users will sign-in with.
+ *
+ * @param captureEnableThinRegistration
+ *   Controls whether or not a social sign-in may result in a thin registration.
+ *
+ * @param customIdentityProviders
+ *   Describes the configuration of custom identity providers. See `Engage Custom Provider Guide.md` for details
+ *   configuring custom providers.
+ *
+ * @param captureFlowVersion
+ *   Overrides the flow version loaded by the library. Use `nil` to have the library fetch the latest version of the
+ *   flow.
+ *
+ * @param captureTraditionalRegistrationFormName
+ *   The name of the form (from your flow) used for traditional registration.
+ *
+ * @param captureSocialRegistrationFormName
+ *   The name of the form (from your flow) used for social registration.
+ *
+ * @param captureAppId
+ *   The application ID of your Capture app. This value can be retrieved from the "Settings" section of your Capture
+ *   application's dashboard.
+ *
  **/
 + (void)setEngageAppId:(NSString *)engageAppId captureDomain:(NSString *)captureDomain
        captureClientId:(NSString *)clientId captureLocale:(NSString *)captureLocale
-              captureFlowName:(NSString *)captureFlowName captureSignInFormName:(NSString *)captureSignInFormName
-captureEnableThinRegistration:(BOOL)enableThinRegistration
+             captureFlowName:(NSString *)captureFlowName captureSignInFormName:(NSString *)captureSignInFormName
  captureTraditionalSignInType:(__unused JRConventionalSignInType)captureTraditionalSignInType
+captureEnableThinRegistration:(BOOL)enableThinRegistration customIdentityProviders:(NSDictionary *)customProviders
                     captureFlowVersion:(NSString *)captureFlowVersion
 captureTraditionalRegistrationFormName:(NSString *)captureTraditionalRegistrationFormName
      captureSocialRegistrationFormName:(NSString *)captureSocialRegistrationFormName
-                          captureAppId:(NSString *)captureAppId customIdentityProviders:(NSDictionary *)customProviders;
+                          captureAppId:(NSString *)captureAppId;
 
 /**
  * Set the Capture access token for an authenticated user
