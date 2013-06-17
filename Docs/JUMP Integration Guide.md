@@ -1,7 +1,8 @@
 # JUMP for iOS Integration Guide
 
-This guide describes integrating the Janrain User Management Platform into your iOS app. For Engage-only
-integrations see `Engage-Only Integration Guide.md`
+This guide describes integrating the Janrain User Management Platform into your iOS app. This includes the Capture
+user registration system. For Engage-only (i.e. social-authentication-only) integrations see
+`Engage-Only Integration Guide.md`
 
 ## Features
 
@@ -123,20 +124,24 @@ object that manages your application's state model.
 
 1. In the chosen class's header, import the Capture library header:
 
+
     #import "JRCapture.h"
 
 2. Modify your class's interface declaration to declare conformation to the
-   [JRCaptureSigninDelegate](http://janrain.github.com/jump.ios/gh_docs/capture/html/protocol_j_r_capture_signin_delegate-p.html)
+   [JRCaptureDelegate](http://janrain.github.com/jump.ios/gh_docs/capture/html/protocol_j_r_capture_signin_delegate-p.html)
    protocol. (All of the messages of the protocol are optional.)
 
-    @interface MyDataModel : NSObject <JRCaptureSigninDelegate>
+
+    @interface AppDelegate : NSObject <JRCaptureSigninDelegate>
 
 3. Add a `JRCaptureUser *` property to your class's interface declaration (see
    [JRCaptureUser](http://janrain.github.com/jump.ios/gh_docs/capture/html/interface_j_r_capture_user.html)):
 
+
     @property (retain, nonatomic) JRCaptureUser *captureUser;
 
 4. In your class's implementation synthesize that property:
+
 
     @synthesize captureUser;
 
@@ -520,8 +525,8 @@ automatically save and restore the session token.
 
 ### Refreshing the User's Access Token
 
-Call `+[JRCapture refreshAccessTokenWithCallback:]` to refresh the signed-in-user's access token. Access token last one
-hour by default.
+Call `+[JRCapture refreshAccessTokenForDelegate:context:]` to refresh the signed-in-user's access token. Access tokens
+last one hour.
 
 ## Troubleshooting
 
