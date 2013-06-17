@@ -113,27 +113,27 @@ captureTraditionalRegistrationFormName:captureTraditionalRegistrationFormName
     return [JRCaptureData sharedCaptureData].accessToken;
 }
 
-+ (void)startEngageSigninDialogForDelegate:(id <JRCaptureDelegate>)delegate __unused
++ (void)startEngageSignInDialogForDelegate:(id <JRCaptureDelegate>)delegate __unused
 {
     [JREngageWrapper startAuthenticationDialogWithConventionalSignIn:JRConventionalSignInNone
                                          andCustomInterfaceOverrides:nil forDelegate:delegate];
 }
 
-+ (void)startEngageSigninDialogWithConventionalSignin:(JRConventionalSignInType)conventionalSignInType
++ (void)startEngageSignInDialogWithConventionalSignIn:(JRConventionalSignInType)conventionalSignInType
                                           forDelegate:(id <JRCaptureDelegate>)delegate __unused
 {
     [JREngageWrapper startAuthenticationDialogWithConventionalSignIn:conventionalSignInType
                                          andCustomInterfaceOverrides:nil forDelegate:delegate];
 }
 
-+ (void)startEngageSigninDialogOnProvider:(NSString *)provider
++ (void)startEngageSignInDialogOnProvider:(NSString *)provider
                               forDelegate:(id <JRCaptureDelegate>)delegate __unused
 {
     [JREngageWrapper startAuthenticationDialogOnProvider:provider withCustomInterfaceOverrides:nil mergeToken:nil
                                              forDelegate:delegate];
 }
 
-+ (void)startEngageSigninDialogWithCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
++ (void)startEngageSignInDialogWithCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
                                                 forDelegate:(id <JRCaptureDelegate>)delegate __unused
 {
     [JREngageWrapper startAuthenticationDialogWithConventionalSignIn:JRConventionalSignInNone
@@ -141,15 +141,15 @@ captureTraditionalRegistrationFormName:captureTraditionalRegistrationFormName
                                                          forDelegate:delegate];
 }
 
-+ (void)startEngageSigninDialogWithConventionalSignin:(JRConventionalSignInType)conventionalSignInType
-                      andCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
-                                      forDelegate:(id <JRCaptureDelegate>)delegate
++ (void)startEngageSignInDialogWithConventionalSignIn:(JRConventionalSignInType)conventionalSignInType
+                          andCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
+                                          forDelegate:(id <JRCaptureDelegate>)delegate
 {
     [JREngageWrapper startAuthenticationDialogWithConventionalSignIn:conventionalSignInType
                                          andCustomInterfaceOverrides:customInterfaceOverrides forDelegate:delegate];
 }
 
-+ (void)startEngageSigninDialogOnProvider:(NSString *)provider
++ (void)startEngageSignInDialogOnProvider:(NSString *)provider
              withCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
                                mergeToken:(NSString *)mergeToken
                               forDelegate:(id <JRCaptureDelegate>)delegate
@@ -159,7 +159,7 @@ captureTraditionalRegistrationFormName:captureTraditionalRegistrationFormName
                                              forDelegate:delegate];
 }
 
-+ (void)startEngageSigninDialogOnProvider:(NSString *)provider
++ (void)startEngageSignInDialogOnProvider:(NSString *)provider
                withCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
                                 forDelegate:(id <JRCaptureDelegate>)delegate __unused
 {
@@ -168,8 +168,8 @@ captureTraditionalRegistrationFormName:captureTraditionalRegistrationFormName
                                              forDelegate:delegate];
 }
 
-+ (void)startCaptureConventionalSigninForUser:(NSString *)user withPassword:(NSString *)password
-                               withSigninType:(JRConventionalSignInType)conventionalSignInType
++ (void)startCaptureConventionalSignInForUser:(NSString *)user withPassword:(NSString *)password
+                               withSignInType:(JRConventionalSignInType)conventionalSignInType
                                    mergeToken:(NSString *)mergeToken forDelegate:(id <JRCaptureDelegate>)delegate
 {
     NSString *attrName = conventionalSignInType == JRConventionalSignInEmailPassword ? @"email" :
@@ -185,11 +185,11 @@ captureTraditionalRegistrationFormName:captureTraditionalRegistrationFormName
                                                  withContext:nil];
 }
 
-+ (void)startCaptureConventionalSigninForUser:(NSString *)user withPassword:(NSString *)password
-                               withSigninType:(JRConventionalSignInType)conventionalSignInType
++ (void)startCaptureConventionalSignInForUser:(NSString *)user withPassword:(NSString *)password
+                               withSignInType:(JRConventionalSignInType)conventionalSignInType
                                   forDelegate:(id <JRCaptureDelegate>)delegate __unused
 {
-    [self startCaptureConventionalSigninForUser:user withPassword:password withSigninType:conventionalSignInType
+    [self startCaptureConventionalSignInForUser:user withPassword:password withSignInType:conventionalSignInType
                                      mergeToken:nil forDelegate:delegate];
 }
 

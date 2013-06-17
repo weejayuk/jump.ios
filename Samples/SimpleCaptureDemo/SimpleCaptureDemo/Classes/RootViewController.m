@@ -186,7 +186,7 @@
 
     [self signOutCurrentUser];
 
-    [JRCapture startEngageSigninDialogWithConventionalSignin:JRConventionalSignInEmailPassword
+    [JRCapture startEngageSignInDialogWithConventionalSignIn:JRConventionalSignInEmailPassword
                                  andCustomInterfaceOverrides:self.customUi forDelegate:self];
 }
 
@@ -250,10 +250,10 @@
                 else
                 {
                     // Social sign-in required:
-                    [JRCapture startEngageSigninDialogOnProvider:existingAccountProvider
-                                    withCustomInterfaceOverrides:self.customUi
-                                                      mergeToken:[error JRMergeToken]
-                                                     forDelegate:self];
+                    [JRCapture startEngageSignInDialogOnProvider:existingAccountProvider
+                                                                withCustomInterfaceOverrides:self.customUi
+                                                                                  mergeToken:[error JRMergeToken]
+                                                                                 forDelegate:self];
                 }
             };
 
@@ -269,8 +269,8 @@
                 if (cancelled_) return;
                 NSString *user = [[alertView_ textFieldAtIndex:0] text];
                 NSString *password = [[alertView_ textFieldAtIndex:1] text];
-                [JRCapture startCaptureConventionalSigninForUser:user withPassword:password
-                                                  withSigninType:JRConventionalSignInEmailPassword
+                [JRCapture startCaptureConventionalSignInForUser:user withPassword:password
+                                                  withSignInType:JRConventionalSignInEmailPassword
                                                       mergeToken:[error JRMergeToken]
                                                      forDelegate:self];
             };

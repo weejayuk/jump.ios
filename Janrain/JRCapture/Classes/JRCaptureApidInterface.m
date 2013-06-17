@@ -40,6 +40,7 @@
 #import "NSMutableDictionary+JRDictionaryUtils.h"
 #import "NSMutableURLRequest+JRRequestUtils.h"
 #import "JRCaptureError.h"
+#import "JRCaptureUser+Extras.h"
 
 static NSString *const cSignInUser = @"signinUser";
 static NSString *const cGetUser = @"getUser";

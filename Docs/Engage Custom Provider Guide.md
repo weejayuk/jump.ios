@@ -83,7 +83,7 @@ Start authentication as you normally would (or as described in the integration g
 appear in the stock authentication provider list UI. You can skip the stock provider-list UI and start authentication
 directly on any provider, including your custom providers:
 
-For whole-JUMP integrations use: `+[JRCapture startEngageSigninDialogOnProvider:forDelegate:]`.
+For whole-JUMP integrations use: `+[JRCapture startEngageSignInDialogOnProvider:forDelegate:]`.
 For Engage-only integrations use: `+[JREngage showAuthenticationDialogForProvider:]`.
 
 (There are also other variants of those methods which accept a provider ID parameter.)

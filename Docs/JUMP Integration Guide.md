@@ -270,7 +270,7 @@ The Capture part of the SDK supports both social sign-in via Engage (e.g. Facebo
 - `+[JRCapture startEngageSigninDialogForDelegate:]`: Starts the Engage social sign-in process for all currently
   configured social sign-in providers, displaying a list of them initially, and guiding the user through the
   authentication.
-- `+[JRCapture startEngageSigninDialogOnProvider:withCustomInterfaceOverrides:mergeToken:forDelegate:]`: Starts the
+- `+[JRCapture startEngageSignInDialogOnProvider:withCustomInterfaceOverrides:mergeToken:forDelegate:]`: Starts the
    Engage social sign-in process beginning directly with the specified social sign-in identity provider (skipping the
    list of configured social sign-in providers)
 - `+[JRCapture startEngageSigninDialogWithConventionalSignin:forDelegate:]`: Start the Engage social sign-in process
@@ -309,7 +309,7 @@ Capture SDK time-line for Merge Account Flow:
  4. The host application (your iOS app) notifies the user of the conflict and advises the user to merge the accounts
  5. The user elects to take action
  6. The merge sign-in is started by invoking either
-    `+[JRCapture startEngageSigninDialogOnProvider:withCustomInterfaceOverrides:mergeToken:forDelegate:]` or
+    `+[JRCapture startEngageSignInDialogOnProvider:withCustomInterfaceOverrides:mergeToken:forDelegate:]` or
     `+[JRCapture startCaptureConventionalSigninForUser:withPassword:withSigninType:mergeToken:forDelegate:]` depending
     on the existing identity provider for the record.
 
@@ -346,7 +346,7 @@ Example:
                     else
                     {
                         // Social sign-in required:
-                        [JRCapture startEngageSigninDialogOnProvider:existingAccountProvider
+                        [JRCapture startEngageSignInDialogOnProvider:existingAccountProvider
                                         withCustomInterfaceOverrides:self.customUi
                                                           mergeToken:[error JRMergeToken]
                                                          forDelegate:self];
