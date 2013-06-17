@@ -105,9 +105,7 @@ static NSString *const ENGAGE_TOKEN_KEY = @"merge_token";
     NSDictionary *preregFields = [self.userInfo objectForKey:@"prereg_fields"];
     if (!preregFields) return nil;
     JRCaptureData *cfg = [JRCaptureData sharedCaptureData];
-    return [JRCaptureUser captureUserObjectWithPrefilledFields:preregFields
-                                                       forForm:cfg.captureSocialRegistrationFormName
-                                                          flow:cfg.captureFlow];
+    return [JRCaptureUser captureUserObjectWithPrefilledFields:preregFields flow:cfg.captureFlow];
 }
 
 - (NSString *)localizedDescription

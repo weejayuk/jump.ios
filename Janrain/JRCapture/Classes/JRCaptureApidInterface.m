@@ -39,6 +39,7 @@
 #import "JSONKit.h"
 #import "NSMutableDictionary+JRDictionaryUtils.h"
 #import "NSMutableURLRequest+JRRequestUtils.h"
+#import "JRCaptureError.h"
 
 static NSString *const cSignInUser = @"signinUser";
 static NSString *const cGetUser = @"getUser";
@@ -48,6 +49,9 @@ static NSString *const cReplaceObject = @"replaceObject";
 static NSString *const cReplaceArray = @"replaceArray";
 static NSString *const cTagAction = @"action";
 
+
+@interface JRCaptureApidInterface ()
+@end
 
 @implementation JRCaptureApidInterface
 static JRCaptureApidInterface *singleton = nil;
@@ -104,23 +108,23 @@ typedef enum CaptureInterfaceStatEnum
 - (void)finishSignInFailureWithError:(JRCaptureError *)error forDelegate:(id)delegate
                          withContext:(NSObject *)context
 {
-    if ([delegate conformsToProtocol:@protocol(JRCaptureSignInDelegate)] &&
-            [delegate respondsToSelector:@selector(captureAuthenticationDidFailWithError:)])
+    if ([delegate conformsToProtocol:@protocol(JRCaptureDelegate)] &&
+            [delegate respondsToSelector:@selector(captureSignInDidFailWithError:)])
     {
-        [delegate captureAuthenticationDidFailWithError:error];
+        [delegate captureSignInDidFailWithError:error];
     }
 
-    if ([delegate conformsToProtocol:@protocol(JRCaptureInterfaceDelegate)] &&
+    if ([delegate conformsToProtocol:@protocol(JRCaptureInternalDelegate)] &&
             [delegate respondsToSelector:@selector(signInCaptureUserDidFailWithResult:context:)])
         [delegate signInCaptureUserDidFailWithResult:error context:context];
 }
 
 - (void)finishSignInSuccessWithResult:(NSString *)result forDelegate:(id)delegate withContext:(NSObject *)context
 {
-    if ([delegate conformsToProtocol:@protocol(JRCaptureSignInDelegate)] &&
-            [delegate respondsToSelector:@selector(captureAuthenticationDidSucceedForUser:status:)])
+    if ([delegate conformsToProtocol:@protocol(JRCaptureDelegate)] &&
+            [delegate respondsToSelector:@selector(captureSignInDidSucceedForUser:status:)])
     {
-        BOOL respondsToFail = [delegate respondsToSelector:@selector(captureAuthenticationDidFailWithError:)];
+        BOOL respondsToFail = [delegate respondsToSelector:@selector(captureSignInDidFailWithError:)];
         NSData *jsonData = [result dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary *resultDict = [NSJSONSerialization JSONObjectWithData:jsonData options:(NSJSONReadingOptions) 0
                                                                      error:nil];
@@ -129,12 +133,12 @@ typedef enum CaptureInterfaceStatEnum
 
         if ((err == cJRInvalidResponse || err == cJRInvalidCaptureUser) && respondsToFail)
         {
-            [delegate captureAuthenticationDidFailWithError:[JRCaptureError invalidApiResponseErrorWithString:result]];
+            [delegate captureSignInDidFailWithError:[JRCaptureError invalidApiResponseErrorWithString:result]];
             return;
         }
     }
 
-    if ([delegate conformsToProtocol:@protocol(JRCaptureInterfaceDelegate)] &&
+    if ([delegate conformsToProtocol:@protocol(JRCaptureInternalDelegate)] &&
             [delegate respondsToSelector:@selector(signInCaptureUserDidSucceedWithResult:context:)])
         [delegate signInCaptureUserDidSucceedWithResult:result context:context];
 }
@@ -181,7 +185,7 @@ typedef enum CaptureInterfaceStatEnum
 }
 
 - (void)finishGetCaptureUserWithStat:(CaptureInterfaceStat)stat andResult:(NSDictionary *)result
-                         forDelegate:(id <JRCaptureInterfaceDelegate>)delegate withContext:(NSObject *)context
+                         forDelegate:(id <JRCaptureInternalDelegate>)delegate withContext:(NSObject *)context
 {
     DLog(@"");
 
@@ -197,7 +201,7 @@ typedef enum CaptureInterfaceStatEnum
     }
 }
 
-- (void)getCaptureUserWithToken:(NSString *)token forDelegate:(id <JRCaptureInterfaceDelegate>)delegate
+- (void)getCaptureUserWithToken:(NSString *)token forDelegate:(id <JRCaptureInternalDelegate>)delegate
                     withContext:(NSObject *)context
 {
     NSMutableURLRequest *request = [self entityRequestForPath:nil token:token];
@@ -219,7 +223,7 @@ typedef enum CaptureInterfaceStatEnum
 }
 
 - (void)finishGetObjectWithStat:(CaptureInterfaceStat)stat andResult:(NSDictionary *)result
-                    forDelegate:(id <JRCaptureInterfaceDelegate>)delegate withContext:(NSObject *)context
+                    forDelegate:(id <JRCaptureInternalDelegate>)delegate withContext:(NSObject *)context
 {
     DLog(@"");
 
@@ -236,7 +240,7 @@ typedef enum CaptureInterfaceStatEnum
 }
 
 - (void)getCaptureObjectAtPath:(NSString *)entityPath withToken:(NSString *)token
-                   forDelegate:(id <JRCaptureInterfaceDelegate>)delegate withContext:(NSObject *)context
+                   forDelegate:(id <JRCaptureInternalDelegate>)delegate withContext:(NSObject *)context
 {
     NSMutableURLRequest *request = [self entityRequestForPath:entityPath token:token];
 
@@ -269,7 +273,7 @@ typedef enum CaptureInterfaceStatEnum
 }
 
 - (void)finishUpdateObjectWithStat:(CaptureInterfaceStat)stat andResult:(NSDictionary *)result
-                       forDelegate:(id <JRCaptureInterfaceDelegate>)delegate withContext:(NSObject *)context
+                       forDelegate:(id <JRCaptureInternalDelegate>)delegate withContext:(NSObject *)context
 {
     DLog(@"");
 
@@ -286,7 +290,7 @@ typedef enum CaptureInterfaceStatEnum
 }
 
 - (void)updateObject:(NSDictionary *)captureObject atPath:(NSString *)entityPath
-           withToken:(NSString *)token forDelegate:(id <JRCaptureInterfaceDelegate>)delegate
+           withToken:(NSString *)token forDelegate:(id <JRCaptureInternalDelegate>)delegate
          withContext:(NSObject *)context
 {
     DLog(@"");
@@ -339,7 +343,7 @@ typedef enum CaptureInterfaceStatEnum
 }
 
 - (void)finishReplaceObjectWithStat:(CaptureInterfaceStat)stat andResult:(NSDictionary *)result
-                        forDelegate:(id <JRCaptureInterfaceDelegate>)delegate withContext:(NSObject *)context
+                        forDelegate:(id <JRCaptureInternalDelegate>)delegate withContext:(NSObject *)context
 {
     DLog(@"");
     if (stat == StatOk)
@@ -355,7 +359,7 @@ typedef enum CaptureInterfaceStatEnum
 }
 
 - (void)replaceObject:(NSDictionary *)captureObject atPath:(NSString *)entityPath
-            withToken:(NSString *)token forDelegate:(id <JRCaptureInterfaceDelegate>)delegate
+            withToken:(NSString *)token forDelegate:(id <JRCaptureInternalDelegate>)delegate
           withContext:(NSObject *)context
 {
     DLog(@"");
@@ -407,7 +411,7 @@ typedef enum CaptureInterfaceStatEnum
 }
 
 - (void)finishReplaceArrayWithStat:(CaptureInterfaceStat)stat andResult:(NSDictionary *)result
-                       forDelegate:(id <JRCaptureInterfaceDelegate>)delegate withContext:(NSObject *)context
+                       forDelegate:(id <JRCaptureInternalDelegate>)delegate withContext:(NSObject *)context
 {
     DLog(@"");
     if (stat == StatOk)
@@ -423,7 +427,7 @@ typedef enum CaptureInterfaceStatEnum
 }
 
 - (void)replaceArray:(NSArray *)captureArray atPath:(NSString *)entityPath
-           withToken:(NSString *)token forDelegate:(id <JRCaptureInterfaceDelegate>)delegate
+           withToken:(NSString *)token forDelegate:(id <JRCaptureInternalDelegate>)delegate
          withContext:(NSObject *)context
 {
     DLog(@"");
@@ -484,28 +488,28 @@ typedef enum CaptureInterfaceStatEnum
 }
 
 + (void)getCaptureUserWithToken:(NSString *)token
-                    forDelegate:(id <JRCaptureInterfaceDelegate>)delegate withContext:(NSObject *)context
+                    forDelegate:(id <JRCaptureInternalDelegate>)delegate withContext:(NSObject *)context
 {
     [[JRCaptureApidInterface captureInterfaceInstance]
             getCaptureUserWithToken:token forDelegate:delegate withContext:context];
 }
 
 + (void)getCaptureObjectAtPath:(NSString *)entityPath withToken:(NSString *)token
-                   forDelegate:(id <JRCaptureInterfaceDelegate>)delegate withContext:(NSObject *)context __unused
+                   forDelegate:(id <JRCaptureInternalDelegate>)delegate withContext:(NSObject *)context __unused
 {
     [[JRCaptureApidInterface captureInterfaceInstance]
             getCaptureObjectAtPath:entityPath withToken:token forDelegate:delegate withContext:context];
 }
 
 + (void)updateCaptureObject:(NSDictionary *)captureObject atPath:(NSString *)entityPath withToken:(NSString *)token
-                forDelegate:(id <JRCaptureInterfaceDelegate>)delegate withContext:(NSObject *)context
+                forDelegate:(id <JRCaptureInternalDelegate>)delegate withContext:(NSObject *)context
 {
     [[JRCaptureApidInterface captureInterfaceInstance]
             updateObject:captureObject atPath:entityPath withToken:token forDelegate:delegate withContext:context];
 }
 
 + (void)replaceCaptureObject:(NSDictionary *)captureObject atPath:(NSString *)entityPath withToken:(NSString *)token
-                 forDelegate:(id <JRCaptureInterfaceDelegate>)delegate withContext:(NSObject *)context
+                 forDelegate:(id <JRCaptureInternalDelegate>)delegate withContext:(NSObject *)context
 {
     [[JRCaptureApidInterface captureInterfaceInstance]
             replaceObject:captureObject atPath:entityPath withToken:token forDelegate:delegate
@@ -513,7 +517,7 @@ typedef enum CaptureInterfaceStatEnum
 }
 
 + (void)replaceCaptureArray:(NSArray *)captureArray atPath:(NSString *)entityPath withToken:(NSString *)token
-                forDelegate:(id <JRCaptureInterfaceDelegate>)delegate withContext:(NSObject *)context
+                forDelegate:(id <JRCaptureInternalDelegate>)delegate withContext:(NSObject *)context
 {
     [[JRCaptureApidInterface captureInterfaceInstance]
             replaceArray:captureArray atPath:entityPath withToken:token forDelegate:delegate withContext:context];
@@ -530,7 +534,7 @@ typedef enum CaptureInterfaceStatEnum
     NSDictionary *response    = [payload objectFromJSONString];
     CaptureInterfaceStat stat = [[response objectForKey:@"stat"] isEqualToString:@"ok"] ? StatOk : StatFail;
 
-    id<JRCaptureInterfaceDelegate> delegate = [tag objectForKey:@"delegate"];
+    id<JRCaptureInternalDelegate> delegate = [tag objectForKey:@"delegate"];
 
     if ([action isEqualToString:cSignInUser])
     {
@@ -580,7 +584,7 @@ typedef enum CaptureInterfaceStatEnum
     NSDictionary *tag       = (NSDictionary*) userData;
     NSString     *action    = [tag objectForKey:cTagAction];
     NSObject     *context   = [tag objectForKey:@"context"];
-    id<JRCaptureInterfaceDelegate> delegate = [tag objectForKey:@"delegate"];
+    id<JRCaptureInternalDelegate> delegate = [tag objectForKey:@"delegate"];
 
     NSDictionary *errDict = @{
             @"stat" : @"error",
@@ -619,7 +623,7 @@ typedef enum CaptureInterfaceStatEnum
 }
 
 + (FinishSignInError)finishSignInWithPayload:(NSDictionary *)payloadDict
-                                 forDelegate:(id<JRCaptureSignInDelegate>)delegate
+                                 forDelegate:(id<JRCaptureDelegate>)delegate
 {
     NSString *accessToken   = [payloadDict objectForKey:@"access_token"];
     BOOL      isNew         = [(NSNumber*)[payloadDict objectForKey:@"is_new"] boolValue];
@@ -638,18 +642,10 @@ typedef enum CaptureInterfaceStatEnum
 
     JRCaptureRecordStatus recordStatus = isNew ? JRCaptureRecordNewlyCreated : JRCaptureRecordExists;
 
-    if ([delegate respondsToSelector:@selector(captureAuthenticationDidSucceedForUser:status:)])
-        [delegate captureAuthenticationDidSucceedForUser:captureUser status:recordStatus];
+    if ([delegate respondsToSelector:@selector(captureSignInDidSucceedForUser:status:)])
+        [delegate captureSignInDidSucceedForUser:captureUser status:recordStatus];
 
     return cJRNoError;
-}
-
-+ (void)maybeDispatch:(SEL)pSelector forDelegate:(id <JRCaptureSignInDelegate>)delegate withArg:(id)arg
-{
-    if ([delegate respondsToSelector:pSelector])
-    {
-        [delegate performSelector:pSelector withObject:arg];
-    }
 }
 
 + (void)jsonRequestToUrl:(NSString *)url params:(NSDictionary *)params

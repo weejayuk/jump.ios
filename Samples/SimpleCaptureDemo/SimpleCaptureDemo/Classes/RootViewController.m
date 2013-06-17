@@ -39,6 +39,7 @@
 #import "AlertViewWithBlocks.h"
 #import "AppDelegate.h"
 #import "CaptureDynamicForm.h"
+#import "JRCaptureError.h"
 
 @interface RootViewController ()
 @property(nonatomic, copy) void (^viewDidAppearContinuation)();
@@ -48,7 +49,7 @@
 @end
 
 @interface JRCapture (BetaAPIs)
-+ (void)refreshAccessTokenWithCallback:(void (^)(BOOL, NSError *))callback;
++ (void)refreshAccessTokenForDelegate:(id <JRCaptureDelegate>)delegate context:(id <NSObject>)context;
 @end
 
 @implementation RootViewController
@@ -161,23 +162,22 @@
     //                                                 //{
                                                      //
                                                      //}];
-    [JRCapture refreshAccessTokenWithCallback:^(BOOL success, NSError *err)
-    {
-        if (err)
-        {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:[err description]
+    [JRCapture refreshAccessTokenForDelegate:self context:nil];
+}
+
+- (void)refreshAccessTokenDidFailWithError:(NSError *)error context:(id <NSObject>)context
+{
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:[error description]
                                                                delegate:nil cancelButtonTitle:@"Dismiss"
                                                       otherButtonTitles:nil];
             [alertView show];
-        }
-        else
-        {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Success" message:nil delegate:nil
-                                                      cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
-            [alertView show];
+}
 
-        }
-    }];
+- (void)refreshAccessTokenDidSucceedWithContext:(id <NSObject>)context
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Success" message:nil delegate:nil
+                                              cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
+    [alertView show];
 }
 
 - (IBAction)signInButtonPressed:(id)sender
@@ -186,7 +186,7 @@
 
     [self signOutCurrentUser];
 
-    [JRCapture startEngageSigninDialogWithConventionalSignin:JRConventionalSigninEmailPassword
+    [JRCapture startEngageSigninDialogWithConventionalSignin:JRConventionalSignInEmailPassword
                                  andCustomInterfaceOverrides:self.customUi forDelegate:self];
 }
 
@@ -270,7 +270,7 @@
                 NSString *user = [[alertView_ textFieldAtIndex:0] text];
                 NSString *password = [[alertView_ textFieldAtIndex:1] text];
                 [JRCapture startCaptureConventionalSigninForUser:user withPassword:password
-                                                  withSigninType:JRConventionalSigninEmailPassword
+                                                  withSigninType:JRConventionalSignInEmailPassword
                                                       mergeToken:[error JRMergeToken]
                                                      forDelegate:self];
             };
@@ -334,13 +334,13 @@
     [JRCapture clearSignInState];
 }
 
-- (void)engageSigninDidNotComplete
+- (void)engageAuthenticationDidCancel
 {
     DLog(@"");
     //appDelegate.engageSignInWasCanceled = YES;
 }
 
-- (void)engageSigninDialogDidFailToShowWithError:(NSError *)error
+- (void)engageAuthenticationDialogDidFailToShowWithError:(NSError *)error
 {
     DLog(@"error: %@", [error description]);
     [self engageSignInDidFailWithError:error];
@@ -353,7 +353,7 @@
     [self engageSignInDidFailWithError:error];
 }
 
-- (void)captureAuthenticationDidFailWithError:(NSError *)error
+- (void)captureSignInDidFailWithError:(NSError *)error
 {
     [self setProviderAndConfigureIcon:nil];
 
@@ -381,7 +381,7 @@
     }
 }
 
-- (void)engageSigninDidSucceedForUser:(NSDictionary *)engageAuthInfo forProvider:(NSString *)provider
+- (void)engageAuthenticationDidSucceedForUser:(NSDictionary *)engageAuthInfo forProvider:(NSString *)provider
 {
     [self setProviderAndConfigureIcon:provider];
 
@@ -397,7 +397,7 @@
     [self configureProviderIcon];
 }
 
-- (void)captureAuthenticationDidSucceedForUser:(JRCaptureUser *)newCaptureUser
+- (void)captureSignInDidSucceedForUser:(JRCaptureUser *)newCaptureUser
                                         status:(JRCaptureRecordStatus)captureRecordStatus
 {
     DLog(@"");

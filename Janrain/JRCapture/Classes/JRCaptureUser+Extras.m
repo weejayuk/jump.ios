@@ -33,8 +33,9 @@
 #import "JRCaptureApidInterface.h"
 #import "JSONKit.h"
 #import "JRCaptureObject+Internal.h"
+#import "JRCaptureError.h"
 
-@interface JRCaptureUserApidHandler : NSObject <JRCaptureInterfaceDelegate>
+@interface JRCaptureUserApidHandler : NSObject <JRCaptureInternalDelegate>
 @end
 
 @implementation JRCaptureUserApidHandler
@@ -210,8 +211,7 @@
         }
 }
 
-+ (JRCaptureUser *)captureUserObjectWithPrefilledFields:(NSDictionary *)prefilledFields forForm:(NSString *)form
-                                                   flow:(NSDictionary *)flow
++ (JRCaptureUser *)captureUserObjectWithPrefilledFields:(NSDictionary *)prefilledFields flow:(NSDictionary *)flow
 {
     NSMutableDictionary *preregAttributes = [NSMutableDictionary dictionary];
     for (id key in prefilledFields)

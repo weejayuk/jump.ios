@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6706F04CB24F25B6607F53A5 /* Authentication-Token-URL.md in Resources */ = {isa = PBXBuildFile; fileRef = 6706FFEFEE62C8F93EAA251B /* Authentication-Token-URL.md */; };
+		6706F04CB24F25B6607F53A5 /* Engage Authentication Token URL.md in Resources */ = {isa = PBXBuildFile; fileRef = 6706FFEFEE62C8F93EAA251B /* Engage Authentication Token URL.md */; };
 		6706F0548CC1DBB6CEC0407D /* JRCurrentLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706F48794E72EF1AAA12F65 /* JRCurrentLocation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6706F0D47F845F7ECCBE860F /* JUMP User Registration Guide.md in Resources */ = {isa = PBXBuildFile; fileRef = 6706FA6D8456656D3E398437 /* JUMP User Registration Guide.md */; };
 		6706F0DA7F5FA9A15B437997 /* Engage-Only Integration Guide.md in Resources */ = {isa = PBXBuildFile; fileRef = 6706F243FF1B1D4DBFCE6B5D /* Engage-Only Integration Guide.md */; };
@@ -400,7 +400,7 @@
 		6706FF3CCE2C8CFDA5DDE468 /* JRStatusesElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRStatusesElement.m; sourceTree = "<group>"; };
 		6706FF8865088BF34694C04E /* JRCaptureUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCaptureUser.h; sourceTree = "<group>"; };
 		6706FF9C81BDFA4719F9572F /* JRProfilesElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRProfilesElement.m; sourceTree = "<group>"; };
-		6706FFEFEE62C8F93EAA251B /* Authentication-Token-URL.md */ = {isa = PBXFileReference; lastKnownFileType = file.md; name = "Authentication-Token-URL.md"; path = "../../../jump.ios/Docs/Authentication-Token-URL.md"; sourceTree = "<group>"; };
+		6706FFEFEE62C8F93EAA251B /* Engage Authentication Token URL.md */ = {isa = PBXFileReference; lastKnownFileType = file.md; name = "Engage Authentication Token URL.md"; path = "../../Docs/Engage Authentication Token URL.md"; sourceTree = "<group>"; };
 		90C36B6B7717AA0C893E08E0 /* SimpleCaptureDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleCaptureDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		90C36B6B7717AA0C893E08E9 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		90C36B6B7717AA0C893E08EB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -961,7 +961,7 @@
 		C1424A8BB874F02EEE6D8982 /* Docs */ = {
 			isa = PBXGroup;
 			children = (
-				6706FFEFEE62C8F93EAA251B /* Authentication-Token-URL.md */,
+				6706FFEFEE62C8F93EAA251B /* Engage Authentication Token URL.md */,
 				6706F619E4BB76864B478610 /* Engage Custom Provider Guide.md */,
 				6706F243FF1B1D4DBFCE6B5D /* Engage-Only Integration Guide.md */,
 				6706FDE35290E73F4513572D /* JUMP Integration Guide.md */,
@@ -1534,7 +1534,7 @@
 				D806D1B616A7638E008EEF96 /* assets in Resources */,
 				C1424221EF003C4A217BE9F5 /* Default.png in Resources */,
 				C1424C2310E295E5506D8FF8 /* Default-568h@2x.png in Resources */,
-				6706F04CB24F25B6607F53A5 /* Authentication-Token-URL.md in Resources */,
+				6706F04CB24F25B6607F53A5 /* Engage Authentication Token URL.md in Resources */,
 				6706F18263DF25C5CAEA8F6C /* Engage Custom Provider Guide.md in Resources */,
 				6706F0DA7F5FA9A15B437997 /* Engage-Only Integration Guide.md in Resources */,
 				6706F2F5D380E2BE1B74B0C3 /* JUMP Integration Guide.md in Resources */,

@@ -83,7 +83,7 @@ AppDelegate *appDelegate = nil;
     [JRCapture setEngageAppId:engageAppId captureDomain:captureDomain captureClientId:captureClientId
                 captureLocale:captureLocale captureFlowName:captureFlowName
         captureSignInFormName:captureSignInFormName captureEnableThinRegistration:captureEnableThinRegistration
-          captureTraditionalSignInType:JRConventionalSigninEmailPassword captureFlowVersion:captureFlowVersion
+          captureTraditionalSignInType:JRConventionalSignInEmailPassword captureFlowVersion:captureFlowVersion
 captureTraditionalRegistrationFormName:captureTraditionalRegistrationFormName
      captureSocialRegistrationFormName:captureSocialRegistrationFormName captureAppId:captureAppId
                customIdentityProviders:customProviders];

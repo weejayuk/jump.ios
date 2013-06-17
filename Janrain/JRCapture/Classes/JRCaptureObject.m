@@ -56,7 +56,7 @@
 }
 @end
 
-@interface JRCaptureObjectApidHandler : NSObject <JRCaptureInterfaceDelegate>
+@interface JRCaptureObjectApidHandler : NSObject <JRCaptureInternalDelegate>
 @end
 
 @implementation JRCaptureObjectApidHandler

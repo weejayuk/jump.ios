@@ -35,12 +35,12 @@
 @interface JREngageWrapper : NSObject <JREngageSigninDelegate>
 + (void)configureEngageWithAppId:(NSString *)appId customIdentityProviders:(NSDictionary *)customProviders;
 
-+ (void)startAuthenticationDialogWithConventionalSignIn:(JRConventionalSigninType)nativeSignInType
++ (void)startAuthenticationDialogWithConventionalSignIn:(JRConventionalSignInType)nativeSignInType
                             andCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
-                                            forDelegate:(id<JRCaptureSignInDelegate>)delegate;
+                                            forDelegate:(id<JRCaptureDelegate>)delegate;
 
 + (void)startAuthenticationDialogOnProvider:(NSString *)provider
                withCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
                                  mergeToken:(NSString *)mergeToken
-                                forDelegate:(id <JRCaptureSignInDelegate>)delegate;
+                                forDelegate:(id <JRCaptureDelegate>)delegate;
 @end

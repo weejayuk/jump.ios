@@ -35,8 +35,11 @@
 #import <Foundation/Foundation.h>
 #import "JRConnectionManager.h"
 
-@protocol JRCaptureSignInDelegate;
+@protocol JRCaptureDelegate;
 
+/**
+ * @internal
+ */
 typedef enum
 {
     cJRNoError,
@@ -47,7 +50,7 @@ typedef enum
 /**
  * @internal
  */
-@protocol JRCaptureInterfaceDelegate <NSObject>
+@protocol JRCaptureInternalDelegate <NSObject>
 @optional
 - (void)signInCaptureUserDidSucceedWithResult:(NSString *)result context:(NSObject *)context;
 - (void)signInCaptureUserDidFailWithResult:(NSError *)error context:(NSObject *)context;
@@ -73,36 +76,34 @@ typedef enum
                              withContext:(NSObject *)context;
 
 + (void)getCaptureUserWithToken:(NSString *)token
-                    forDelegate:(id<JRCaptureInterfaceDelegate>)delegate
+                    forDelegate:(id<JRCaptureInternalDelegate>)delegate
                     withContext:(NSObject *)context;
 
 + (void)getCaptureObjectAtPath:(NSString *)entityPath
                      withToken:(NSString *)token
-                   forDelegate:(id <JRCaptureInterfaceDelegate>)delegate
+                   forDelegate:(id <JRCaptureInternalDelegate>)delegate
                    withContext:(NSObject *)context __unused;
 
 + (void)updateCaptureObject:(NSDictionary *)captureObject
                      atPath:(NSString *)entityPath
                   withToken:(NSString *)token
-                forDelegate:(id<JRCaptureInterfaceDelegate>)delegate
+                forDelegate:(id<JRCaptureInternalDelegate>)delegate
                 withContext:(NSObject *)context;
 
 + (void)replaceCaptureObject:(NSDictionary *)captureObject
                       atPath:(NSString *)entityPath
                    withToken:(NSString *)token
-                 forDelegate:(id<JRCaptureInterfaceDelegate>)delegate
+                 forDelegate:(id<JRCaptureInternalDelegate>)delegate
                  withContext:(NSObject *)context;
 
 + (void)replaceCaptureArray:(NSArray *)captureArray
                      atPath:(NSString *)entityPath
                   withToken:(NSString *)token
-                 forDelegate:(id <JRCaptureInterfaceDelegate>)delegate
+                 forDelegate:(id <JRCaptureInternalDelegate>)delegate
                  withContext:(NSObject *)context;
 
 + (FinishSignInError)finishSignInWithPayload:(NSDictionary *)payloadDict
-                                 forDelegate:(id <JRCaptureSignInDelegate>)delegate;
-
-+ (void)maybeDispatch:(SEL)pSelector forDelegate:(id <JRCaptureSignInDelegate>)delegate withArg:(id)arg;
+                                 forDelegate:(id <JRCaptureDelegate>)delegate;
 
 + (void)jsonRequestToUrl:(NSString *)url params:(NSDictionary *)params
                               completionHandler:(void (^)(id, NSError *))handler;

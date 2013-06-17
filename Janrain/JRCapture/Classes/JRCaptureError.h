@@ -38,7 +38,7 @@
  * @defgroup captureErrors Capture Errors
  *
  * Capture-related error codes and explanations that you may receive through the delegate methods of the
- * JRCaptureObjectDelegate, JRCaptureUserDelegate, and JRCaptureSignInDelegate protocols.
+ * JRCaptureObjectDelegate, JRCaptureUserDelegate, and JRCaptureDelegate protocols.
  *
  * @{
  **/
@@ -60,7 +60,7 @@ typedef enum
 } JRCaptureGenericError;
 
 /**
- * Errors received from the JRCaptureObjectDelegate, JRCaptureUserDelegate, and JRCaptureSignInDelegate protocols
+ * Errors received from the JRCaptureObjectDelegate, JRCaptureUserDelegate, and JRCaptureDelegate protocols
  * when they fail locally
  **/
 typedef enum
@@ -87,7 +87,7 @@ typedef enum
 } JRCaptureLocalError;
 
 /**
- * Errors received from the JRCaptureObjectDelegate, JRCaptureUserDelegate, and JRCaptureSignInDelegate protocols
+ * Errors received from the JRCaptureObjectDelegate, JRCaptureUserDelegate, and JRCaptureDelegate protocols
  * when they fail on the Capture server. These errors correspond to the errors listed on the
  * <a href="http://developers.janrain.com/documentation/capture/api-use-and-error-codes/">
  *     Capture RESTful API Documentation Page</a>
@@ -130,7 +130,7 @@ typedef enum
 } JRCaptureApidError;
 
 /**
- * Generic errors received from the JRCaptureSignInDelegate protocols when sign-in through Engage fails
+ * Generic errors received from the JRCaptureDelegate protocols when sign-in through Engage fails
  **/
 typedef enum
 {

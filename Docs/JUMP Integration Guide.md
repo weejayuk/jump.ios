@@ -162,8 +162,8 @@ To configure the library, pass your configuration settings to:
         NSString *captureSocialRegistrationFormName = @"socialRegistrationForm"; // e.g.
         NSString *captureAppId = @"your_capture_app_id";
 
-        JRConventionalSigninType captureTraditionalSignInType =
-            JRConventionalSigninEmailPassword; // e.g.
+        JRConventionalSignInType captureTraditionalSignInType =
+            JRConventionalSignInEmailPassword; // e.g.
 
         [JRCapture setEngageAppId:engageAppId captureDomain:captureDomain captureClientId:captureClientId
                     captureLocale:captureLocale captureFlowName:captureFlowName
@@ -366,7 +366,7 @@ Example:
                     NSString *user = [[alertView_ textFieldAtIndex:0] text];
                     NSString *password = [[alertView_ textFieldAtIndex:1] text];
                     [JRCapture startCaptureConventionalSigninForUser:user withPassword:password
-                                                      withSigninType:JRConventionalSigninEmailPassword
+                                                      withSigninType:JRConventionalSignInEmailPassword
                                                           mergeToken:[error JRMergeToken]
                                                          forDelegate:self];
                 };

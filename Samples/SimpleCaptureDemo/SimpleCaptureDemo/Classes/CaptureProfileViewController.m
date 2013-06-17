@@ -39,7 +39,7 @@
 #import "JRCapture.h"
 #import "Utils.h"
 
-@interface CaptureProfileViewController () <JRCaptureSignInDelegate>
+@interface CaptureProfileViewController () <JRCaptureDelegate>
 @property(nonatomic, retain) id firstResponder;
 @property(nonatomic, retain) NSDate *myBirthdate;
 @end

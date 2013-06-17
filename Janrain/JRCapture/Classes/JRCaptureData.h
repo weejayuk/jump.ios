@@ -43,7 +43,7 @@
 @property(nonatomic, readonly, retain) NSString *captureLocale;
 @property(nonatomic, readonly, retain) NSString *captureSignInFormName;
 @property(nonatomic, readonly, retain) NSString *captureFlowName;
-//@property(nonatomic, readonly) JRConventionalSigninType captureTradSignInType;
+//@property(nonatomic, readonly) JRConventionalSignInType captureTradSignInType;
 @property(nonatomic, readonly, retain) NSString *captureTraditionalRegistrationFormName;
 @property(nonatomic, readonly, retain) NSString *captureSocialRegistrationFormName;
 @property(nonatomic, readonly, retain) NSString *captureFlowVersion;

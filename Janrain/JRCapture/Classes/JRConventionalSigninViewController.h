@@ -38,17 +38,17 @@
 @class JREngageWrapper;
 @protocol JRExternalDialogControllerDelegate;
 @interface JRConventionalSignInViewController : UIViewController <UITableViewDelegate, UITableViewDataSource,
-        UITextFieldDelegate, JRCaptureInterfaceDelegate>
+        UITextFieldDelegate, JRCaptureInternalDelegate>
 {
     UITableView *myTableView;
 }
 @property(nonatomic, retain) id<JRExternalDialogControllerDelegate> delegate;
 @property(nonatomic, strong) UITextField *firstResponder;
 
-- (id)initWithConventionalSignInType:(JRConventionalSigninType)theSignInType titleString:(NSString *)theTitleString
+- (id)initWithConventionalSignInType:(JRConventionalSignInType)theSignInType titleString:(NSString *)theTitleString
                            titleView:(UIView *)theTitleView engageWrapper:(JREngageWrapper *)theWrapper;
 
-+ (id)conventionalSignInViewController:(JRConventionalSigninType)theSignInType titleString:(NSString *)theTitleString
++ (id)conventionalSignInViewController:(JRConventionalSignInType)theSignInType titleString:(NSString *)theTitleString
                              titleView:(UIView *)theTitleView
                          engageWrapper:(JREngageWrapper *)theWrapper;
 @end

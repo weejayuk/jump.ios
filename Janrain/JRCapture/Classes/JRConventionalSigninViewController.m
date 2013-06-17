@@ -45,7 +45,7 @@
 @interface JRConventionalSignInViewController ()
 @property (retain) NSString *titleString;
 @property (retain) UIView   *titleView;
-@property JRConventionalSigninType signInType;
+@property JRConventionalSignInType signInType;
 @property (retain) JREngageWrapper *wrapper;
 @end
 
@@ -57,7 +57,7 @@
 @synthesize delegate;
 @synthesize firstResponder;
 
-- (id)initWithConventionalSignInType:(JRConventionalSigninType)theSignInType titleString:(NSString *)theTitleString
+- (id)initWithConventionalSignInType:(JRConventionalSignInType)theSignInType titleString:(NSString *)theTitleString
                                                                                titleView:(UIView *)theTitleView
                                                                            engageWrapper:(JREngageWrapper *)theWrapper
 {
@@ -72,7 +72,7 @@
     return self;
 }
 
-+ (id)conventionalSignInViewController:(JRConventionalSigninType)theSignInType titleString:(NSString *)theTitleString
++ (id)conventionalSignInViewController:(JRConventionalSignInType)theSignInType titleString:(NSString *)theTitleString
                              titleView:(UIView *)theTitleView engageWrapper:(JREngageWrapper *)theWrapper
 {
     return [[[JRConventionalSignInViewController alloc]
@@ -186,7 +186,7 @@
 
         if (indexPath.row == 0)
         {
-            NSString *const placedHolder = self.signInType == JRConventionalSigninEmailPassword ?
+            NSString *const placedHolder = self.signInType == JRConventionalSignInEmailPassword ?
                     @"Enter your email" :
                     @"Enter your username";
             textField.placeholder = placedHolder;
@@ -234,7 +234,7 @@
     if (!nameOrEmail) nameOrEmail = @"";
     if (!password) password = @"";
 
-    NSString *const signInTypeString = (self.signInType == JRConventionalSigninEmailPassword) ? @"email" : @"username";
+    NSString *const signInTypeString = (self.signInType == JRConventionalSignInEmailPassword) ? @"email" : @"username";
     NSDictionary *credentials = [NSDictionary dictionaryWithObjectsAndKeys:
                                                       nameOrEmail, signInTypeString,
                                                       password, @"password", nil];
@@ -263,7 +263,7 @@
 - (void)signInCaptureUserDidFailWithResult:(NSError *)error context:(NSObject *)context
 {
     DLog(@"error: %@", [error description]);
-    NSString const *type = self.signInType == JRConventionalSigninEmailPassword ? @"Email" : @"Username";
+    NSString const *type = self.signInType == JRConventionalSignInEmailPassword ? @"Email" : @"Username";
     NSString *title = [NSString stringWithFormat:@"Incorrect %@ or Password", type];
     //NSString *const message = [result objectForKey:@"error"];
     UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:title
