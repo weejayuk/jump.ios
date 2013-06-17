@@ -27,6 +27,7 @@ user registration system. For Engage-only (i.e. social-authentication-only) inte
 ## 10,000' View
 
 Basic usage flow:
+
     1. Gather your configuration details
     2. Generate the Objective-C Capture User Model source code
     3. [Add the JUMP for iOS SDK to your Xcode project](http://developers.janrain.com/documentation/mobile-libraries/jump-for-ios/adding-to-xcode/).
