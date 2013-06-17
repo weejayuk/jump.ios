@@ -33,7 +33,7 @@
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #import <Foundation/Foundation.h>
-#import "JRConnectionManager.h"
+//#import "JRConnectionManager.h"
 
 @protocol JRCaptureDelegate;
 
@@ -65,6 +65,8 @@ typedef enum
 - (void)replaceCaptureArrayDidSucceedWithResult:(NSObject *)result context:(NSObject *)context;
 - (void)replaceCaptureArrayDidFailWithResult:(NSDictionary *)result context:(NSObject *)context;
 @end
+
+@protocol JRConnectionManagerDelegate;
 
 /**
  * @internal

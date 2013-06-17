@@ -33,6 +33,7 @@
  Date:   Tuesday, January 31, 2012
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+#import "JRCaptureTypes.h"
 
 #define engageSigninDialogDidFailToShowWithError engageAuthenticationDialogDidFailToShowWithError
 #define engageSigninDidNotComplete engageAuthenticationDidCancel
@@ -114,65 +115,6 @@
  * If you wish to include third party authentication <!--and sharing--> in your iPhone or iPad
  * applications, you can use the JRCapture class to achieve this.
  **/
-
-/**
- * Indicates the kind of conventional sign-in to be used.
- **/
-typedef enum
-{
-/**
- * No conventional login dialog added
- **/
- JRConventionalSignInNone = 0,
-
-/**
- * Conventional login dialog added prompting the user for their username and
- * password combination. Use this if your Capture instance is set up to accept a \c username argument when signing in
- * directly to your server
- **/
- JRConventionalSignInUsernamePassword,
-
-/**
- * Conventional login dialog added prompting the user for their email and password
- * combination. Use this if your Capture instance is set up to accept a \c email argument when signing in
- * directly to your server
- **/
- JRConventionalSignInEmailPassword
-} JRConventionalSignInType;
-
-/**
- * Indicates the type of the user record as an argument to your
- * JRCaptureDelegate#captureAuthenticationDidSucceedForUser:status: delegate method.
- *
- * There are three possible values for \c captureRecordStatus, indicating the creation state of the record.
- *
- * During Capture authentication, if authenticating through the Engage for iOS portion of the library, the library
- * automatically posts the authentication token to the Capture server. Capture will attempt to sign the user in,
- * using the rich data available from the social identity provider.  One of three results will occur:
- *     - Returning User — The user’s record already exists on the Capture server. The record is retrieved from the
- *       Capture server and passed back to your application.
- *     - New User, Record Automatically Created — The user’s record does not already exist on the Capture server, but
- *       it is automatically created and passed back to your application.  Your application may wish to collect
- *       additional information about the user and push that information back to the Capture server.
- *     - New User, Record Not Automatically Created* — The user’s record was not automatically created, either because
- *       required information was not available in the data returned by the social identity provider, or because auto-
- *       creation was disabled.
- **/
-typedef enum
-{
-/**
- * Indicates that this is a new user and that a new Capture record has already been
- * automatically created. Your application may wish to collect additional new-user information and push that
- * information back to the Capture server
- **/
- JRCaptureRecordNewlyCreated,          /* now it exists, and it is new */
-
-/**
- * Indicates that the user had an existing Capture record and that record has been retrieved.
- * Your application should update its state to reflect the user being signed-in
- **/
- JRCaptureRecordExists,                /* already created, not new */
-} JRCaptureRecordStatus;
 
 @class JRActivityObject;
 

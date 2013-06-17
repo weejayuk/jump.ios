@@ -29,7 +29,6 @@
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #import "debug_log.h"
-
 #import "JRCaptureData.h"
 #import "SFHFKeychainUtils.h"
 #import "NSDictionary+JRQueryParams.h"

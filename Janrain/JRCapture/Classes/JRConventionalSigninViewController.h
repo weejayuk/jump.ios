@@ -32,17 +32,16 @@
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #import <UIKit/UIKit.h>
-#import "JRCapture.h"
-#import "JRCaptureApidInterface.h"
 
 @class JREngageWrapper;
-@protocol JRExternalDialogControllerDelegate;
+@protocol JRExternalDialogControllerDelegate, JRCaptureInternalDelegate;
+
 @interface JRConventionalSignInViewController : UIViewController <UITableViewDelegate, UITableViewDataSource,
         UITextFieldDelegate, JRCaptureInternalDelegate>
 {
     UITableView *myTableView;
 }
-@property(nonatomic, retain) id<JRExternalDialogControllerDelegate> delegate;
+@property(nonatomic, retain) id <JRExternalDialogControllerDelegate> delegate;
 @property(nonatomic, strong) UITextField *firstResponder;
 
 - (id)initWithConventionalSignInType:(JRConventionalSignInType)theSignInType titleString:(NSString *)theTitleString

@@ -47,11 +47,10 @@
 
     NSDate *date = nil;
     NSString *ISO8601String = [[NSString stringWithString:dateString] uppercaseString];
-    if (!date) /* 1983-03-12 */
-    {
-        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-        date = [dateFormatter dateFromString:ISO8601String];
-    }
+    /* Try e.g. 1983-03-12 */
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    date = [dateFormatter dateFromString:ISO8601String];
+
     if (!date) /* 19830312 */
     {
         [dateFormatter setDateFormat:@"yyyyMMdd"];
@@ -74,13 +73,12 @@
         [dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
     }
 
-    NSDate *date = nil;
     NSString *ISO8601String = [[NSString stringWithString:dateTimeString] uppercaseString];
-    if (!date) /* Full ISO8601; e.g., 2012-02-02 01:33:20.122198 +0000 */
-    {
-        [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss.SSSSSS ZZZ"];
-        date = [dateFormatter dateFromString:ISO8601String];
-    }
+    NSDate *date = nil;
+    /* Try full ISO8601; e.g., 2012-02-02 01:33:20.122198 +0000 */
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss.SSSSSS ZZZ"];
+    date = [dateFormatter dateFromString:ISO8601String];
+
     if (!date) /* With a 'T'; e.g., 2012-02-02T01:33:20.122198 +0000 */
     {
         [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSSSS ZZZ"];

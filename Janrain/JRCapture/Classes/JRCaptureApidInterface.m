@@ -34,6 +34,7 @@
 
 #import "JRCapture.h"
 #import "debug_log.h"
+#import "JRConnectionManager.h"
 #import "JRCaptureApidInterface.h"
 #import "JRCaptureData.h"
 #import "JSONKit.h"
@@ -49,10 +50,6 @@ static NSString *const cUpdateObject = @"updateObject";
 static NSString *const cReplaceObject = @"replaceObject";
 static NSString *const cReplaceArray = @"replaceArray";
 static NSString *const cTagAction = @"action";
-
-
-@interface JRCaptureApidInterface ()
-@end
 
 @implementation JRCaptureApidInterface
 static JRCaptureApidInterface *singleton = nil;

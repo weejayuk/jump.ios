@@ -4,10 +4,8 @@
 // To change the template use AppCode | Preferences | File Templates.
 //
 
-
 #import "NSDictionary+JRQueryParams.h"
 #import "JRConnectionManager.h"
-
 
 @implementation NSDictionary (JRQueryParams)
 - (NSString *)asJRURLParamString

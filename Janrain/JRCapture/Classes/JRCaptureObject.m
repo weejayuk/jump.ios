@@ -30,10 +30,13 @@
 
 #import "debug_log.h"
 #import "JRCaptureObject.h"
+#import "JRCaptureUser+Extras.h"
 #import "JRCaptureObject+Internal.h"
+#import "JRConnectionManager.h"
 #import "JRCaptureApidInterface.h"
 #import "JRCaptureData.h"
 #import "JSONKit.h"
+#import "JRCaptureError.h"
 
 @implementation NSArray (JRArray_StringArray)
 // TODO: Test this!
@@ -395,49 +398,49 @@
 {
     [NSException raise:NSInternalInconsistencyException
                 format:@"You must override %@ in a subclass", NSStringFromSelector(_cmd)];
-    return nil;
+    //return nil;
 }
 
 - (NSDictionary *)toUpdateDictionary
 {
     [NSException raise:NSInternalInconsistencyException
                 format:@"You must override %@ in a subclass", NSStringFromSelector(_cmd)];
-    return nil;
+    //return nil;
 }
 
 - (NSDictionary *)toReplaceDictionary
 {
     [NSException raise:NSInternalInconsistencyException
                 format:@"You must override %@ in a subclass", NSStringFromSelector(_cmd)];
-    return nil;
+    //return nil;
 }
 
 - (NSDictionary*)objectProperties
 {
     [NSException raise:NSInternalInconsistencyException
                 format:@"You must override %@ in a subclass", NSStringFromSelector(_cmd)];
-    return nil;
+    //return nil;
 }
 
 - (NSSet *)setOfAllUpdatableProperties __unused
 {
     [NSException raise:NSInternalInconsistencyException
                 format:@"You must override %@ in a subclass", NSStringFromSelector(_cmd)];
-    return nil;
+    //return nil;
 }
 
 - (BOOL)needsUpdate
 {
     [NSException raise:NSInternalInconsistencyException
                 format:@"You must override %@ in a subclass", NSStringFromSelector(_cmd)];
-    return nil;
+    //return nil;
 }
 
 - (NSSet *)updatablePropertySet
 {
     [NSException raise:NSInternalInconsistencyException
                 format:@"You must override %@ in a subclass", NSStringFromSelector(_cmd)];
-    return nil;
+    //return nil;
 }
 
 - (void)setAllPropertiesToDirty
@@ -450,7 +453,7 @@
 {
     [NSException raise:NSInternalInconsistencyException
                 format:@"You must override %@ in a subclass", NSStringFromSelector(_cmd)];
-    return nil;
+    //return nil;
 }
 
 

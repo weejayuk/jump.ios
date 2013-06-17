@@ -29,11 +29,16 @@
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #import "debug_log.h"
+#import "JREngage.h"
 #import "JREngageWrapper.h"
 #import "JRCaptureData.h"
 #import "JREngage+CustomInterface.h"
 #import "JSONKit.h"
 #import "JRCaptureError.h"
+#import "JRConnectionManager.h"
+#import "JRCaptureApidInterface.h"
+#import "JRConventionalSigninViewController.h"
+#import "JRCapture.h"
 
 typedef enum
 {
@@ -42,13 +47,13 @@ typedef enum
 
 @interface JREngageWrapper ()
 @property(retain) NSString *engageToken;
-@property(retain) JRConventionalSignInViewController *nativeSigninViewController;
+@property(retain) JRConventionalSignInViewController *nativeSignInViewController;
 @property(retain) id <JRCaptureDelegate> delegate;
 @property JREngageDialogState dialogState;
 @end
 
 @implementation JREngageWrapper
-@synthesize nativeSigninViewController;
+@synthesize nativeSignInViewController;
 @synthesize delegate;
 @synthesize dialogState;
 @synthesize engageToken;
@@ -145,12 +150,12 @@ expandedCustomInterfaceOverrides:(NSMutableDictionary *)expandedCustomInterfaceO
                                                                      titleString:nativeSignInTitleString
                                                                        titleView:titleView
                                                                    engageWrapper:singleton];
-    singleton.nativeSigninViewController = controller;
+    singleton.nativeSignInViewController = controller;
 
-    [expandedCustomInterfaceOverrides setObject:[singleton nativeSigninViewController].view
+    [expandedCustomInterfaceOverrides setObject:[singleton nativeSignInViewController].view
                                          forKey:kJRProviderTableHeaderView];
 
-    [expandedCustomInterfaceOverrides setObject:[singleton nativeSigninViewController]
+    [expandedCustomInterfaceOverrides setObject:[singleton nativeSignInViewController]
                                          forKey:kJRCaptureConventionalSigninViewController];
 }
 
@@ -172,7 +177,7 @@ expandedCustomInterfaceOverrides:(NSMutableDictionary *)expandedCustomInterfaceO
 {
     [JREngage updateTokenUrl:nil];
     self.delegate = nil;
-    self.nativeSigninViewController = nil;
+    self.nativeSignInViewController = nil;
     self.engageToken = nil;
 }
 
@@ -261,7 +266,7 @@ expandedCustomInterfaceOverrides:(NSMutableDictionary *)expandedCustomInterfaceO
 {
     [delegate release];
 
-    [nativeSigninViewController release];
+    [nativeSignInViewController release];
     [engageToken release];
     [super dealloc];
 }

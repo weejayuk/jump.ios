@@ -28,16 +28,17 @@
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#import "JRCapture.h"
-#import "JREngage.h"
-#import "JRConventionalSignInViewController.h"
+#import "JRCaptureTypes.h"
+
+@protocol JREngageSigninDelegate;
+@protocol JRCaptureDelegate;
 
 @interface JREngageWrapper : NSObject <JREngageSigninDelegate>
 + (void)configureEngageWithAppId:(NSString *)appId customIdentityProviders:(NSDictionary *)customProviders;
 
 + (void)startAuthenticationDialogWithConventionalSignIn:(JRConventionalSignInType)nativeSignInType
                             andCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
-                                            forDelegate:(id<JRCaptureDelegate>)delegate;
+                                            forDelegate:(id <JRCaptureDelegate>)delegate;
 
 + (void)startAuthenticationDialogOnProvider:(NSString *)provider
                withCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides

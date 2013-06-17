@@ -30,10 +30,14 @@
 
 #import "debug_log.h"
 #import "JRCaptureData.h"
+#import "JRConnectionManager.h"
 #import "JRCaptureApidInterface.h"
 #import "JSONKit.h"
-#import "JRCaptureObject+Internal.h"
+#import "JRCaptureObject.h"
+#import "JRCaptureUser+Extras.h"
 #import "JRCaptureError.h"
+#import "JRCaptureUser.h"
+#import "JRCaptureObject+Internal.h"
 
 @interface JRCaptureUserApidHandler : NSObject <JRCaptureInternalDelegate>
 @end

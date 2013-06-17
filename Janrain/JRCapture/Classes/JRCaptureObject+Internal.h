@@ -29,8 +29,6 @@
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #import <Foundation/Foundation.h>
-#import "JRCaptureObject.h"
-#import "JRCaptureUser+Extras.h"
 
 #define cJREncodedCaptureUser @"jrcapture.encodedCaptureUser"
 
@@ -64,6 +62,8 @@ didSucceedWithResult:(NSString *)result context:(NSObject *)context;
 - (void)replaceDidSucceedForObject:(JRCaptureObject *)object context:(NSObject *)context;
 - (void)replaceDidFailForObject:(JRCaptureObject *)object withError:(NSError *)error context:(NSObject *)context;
 @end
+
+@protocol JRCaptureUserDelegate;
 
 @protocol JRCaptureUserTesterDelegate <JRCaptureUserDelegate>
 @optional

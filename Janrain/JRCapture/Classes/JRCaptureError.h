@@ -30,8 +30,8 @@
 
 
 #import <Foundation/Foundation.h>
-#import "JRCaptureUser.h"
-#import "JRConnectionManager.h"
+
+@protocol JRConnectionManagerDelegate;
 
 /**
  * @file
@@ -69,7 +69,7 @@ typedef enum
     JRCaptureLocalApidErrorInvalidArrayElement  = JRCaptureLocalApidErrorGeneric + 101, /**< Error returned when an object or its parent is an element of an array, and the array needs to be replaced on Capture first. @sa JRCaptureObject#canBeUpdatedOnCapture */
     JRCaptureLocalApidErrorUrlConnection        = JRCaptureLocalApidErrorGeneric + 201, /**< Error returned when a URL connection could not be established */
     JRCaptureLocalApidErrorConnectionDidFail    = JRCaptureLocalApidErrorGeneric + 202, /**< Error returned when a URL connection failed */
-    JRCaptureLocalApidErrorInvalidArgument = JRCaptureLocalApidErrorGeneric + 203, /**< Error returned when an invalid parameter has been passed to a Capture method */
+    JRCaptureLocalApidErrorInvalidArgument      = JRCaptureLocalApidErrorGeneric + 203, /**< Error returned when an invalid parameter has been passed to a Capture method */
     JRCaptureLocalApidErrorInvalidResultClass   = JRCaptureLocalApidErrorGeneric + 301, /**< Error returned when the JSON returned by Capture wasn't the expected structure (e.g., a string when expecting a plural) */
     JRCaptureLocalApidErrorInvalidResultStat    = JRCaptureLocalApidErrorGeneric + 302, /**< Error returned when the stat returned by Capture is missing or something unexpected */
     JRCaptureLocalApidErrorInvalidResultData    = JRCaptureLocalApidErrorGeneric + 303, /**< Error returned when the data returned by Capture was unexpected or incorrect */
