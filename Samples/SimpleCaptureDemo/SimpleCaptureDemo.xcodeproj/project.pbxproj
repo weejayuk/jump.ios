@@ -10,7 +10,7 @@
 		6706F04035DB1BCCDCDF58CF /* Upgrade Guide.md in Resources */ = {isa = PBXBuildFile; fileRef = 6706FCAB908800A9FF445D4B /* Upgrade Guide.md */; };
 		6706F04CB24F25B6607F53A5 /* Engage Authentication Token URL.md in Resources */ = {isa = PBXBuildFile; fileRef = 6706FFEFEE62C8F93EAA251B /* Engage Authentication Token URL.md */; };
 		6706F0548CC1DBB6CEC0407D /* JRCurrentLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706F48794E72EF1AAA12F65 /* JRCurrentLocation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		6706F0D47F845F7ECCBE860F /* JUMP User Registration Guide.md in Resources */ = {isa = PBXBuildFile; fileRef = 6706FA6D8456656D3E398437 /* JUMP User Registration Guide.md */; };
+		6706F0D47F845F7ECCBE860F /* User Registration Guide.md in Resources */ = {isa = PBXBuildFile; fileRef = 6706FA6D8456656D3E398437 /* User Registration Guide.md */; };
 		6706F0DA7F5FA9A15B437997 /* Engage-Only Integration Guide.md in Resources */ = {isa = PBXBuildFile; fileRef = 6706F243FF1B1D4DBFCE6B5D /* Engage-Only Integration Guide.md */; };
 		6706F18263DF25C5CAEA8F6C /* Engage Custom Provider Guide.md in Resources */ = {isa = PBXBuildFile; fileRef = 6706F619E4BB76864B478610 /* Engage Custom Provider Guide.md */; };
 		6706F1DA670157008AB97AE9 /* JREmailsElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706FA85ED839616B3A3BCEC /* JREmailsElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -384,7 +384,7 @@
 		6706F9F00E2522E7E182F8EF /* JRUrlsElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRUrlsElement.h; sourceTree = "<group>"; };
 		6706FA5DB533D33F2328C498 /* JRBodyType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRBodyType.h; sourceTree = "<group>"; };
 		6706FA6C5C02B18DD67416C4 /* Xcode Project Setup.md */ = {isa = PBXFileReference; lastKnownFileType = file.md; name = "Xcode Project Setup.md"; path = "../../Docs/Xcode Project Setup.md"; sourceTree = "<group>"; };
-		6706FA6D8456656D3E398437 /* JUMP User Registration Guide.md */ = {isa = PBXFileReference; lastKnownFileType = file.md; name = "JUMP User Registration Guide.md"; path = "../../Docs/JUMP User Registration Guide.md"; sourceTree = "<group>"; };
+		6706FA6D8456656D3E398437 /* User Registration Guide.md */ = {isa = PBXFileReference; lastKnownFileType = file.md; name = "User Registration Guide.md"; path = "../../Docs/User Registration Guide.md"; sourceTree = "<group>"; };
 		6706FA85ED839616B3A3BCEC /* JREmailsElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JREmailsElement.m; sourceTree = "<group>"; };
 		6706FAA335A0ED6A8D9F1A8E /* JRUrlsElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRUrlsElement.m; sourceTree = "<group>"; };
 		6706FB16669AD7166E82DB51 /* RELEASE_NOTES */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = RELEASE_NOTES; path = ../../RELEASE_NOTES; sourceTree = "<group>"; };
@@ -972,7 +972,7 @@
 				6706F243FF1B1D4DBFCE6B5D /* Engage-Only Integration Guide.md */,
 				6706FDE35290E73F4513572D /* JUMP Integration Guide.md */,
 				6706FA6C5C02B18DD67416C4 /* Xcode Project Setup.md */,
-				6706FA6D8456656D3E398437 /* JUMP User Registration Guide.md */,
+				6706FA6D8456656D3E398437 /* User Registration Guide.md */,
 				6706FE4A749862BF082D2831 /* README.md */,
 				6706FB16669AD7166E82DB51 /* RELEASE_NOTES */,
 				6706FCAB908800A9FF445D4B /* Upgrade Guide.md */,
@@ -1744,7 +1744,7 @@
 				DFB68A68175E8E6C006DFC92 /* JRUserLandingController.xib in Resources */,
 				DFB68A69175E8E6C006DFC92 /* JRWebViewController.xib in Resources */,
 				6706FDFF6209500B70A5CFFC /* Xcode Project Setup.md in Resources */,
-				6706F0D47F845F7ECCBE860F /* JUMP User Registration Guide.md in Resources */,
+				6706F0D47F845F7ECCBE860F /* User Registration Guide.md in Resources */,
 				6706FF134EDA24E912D2FB82 /* README.md in Resources */,
 				6706FC2F6046C3C77964CF99 /* RELEASE_NOTES in Resources */,
 				6706F04035DB1BCCDCDF58CF /* Upgrade Guide.md in Resources */,

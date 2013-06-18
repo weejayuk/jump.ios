@@ -26,7 +26,7 @@ user registration system. For Engage-only (i.e. social-authentication-only) inte
 
 ## 10,000' View
 
-Basic usage flow:
+Basic use flow:
 
 1. Gather your configuration details
 2. Generate the Objective-C Capture User Model source code
@@ -528,6 +528,11 @@ automatically save and restore the session token.
 
 Call `+[JRCapture refreshAccessTokenForDelegate:context:]` to refresh the signed-in-user's access token. Access tokens
 last one hour.
+
+## Next: Registration
+
+Once you have sign-in and record updates working, see the `User Registration Guide.md` for a guide to new user
+registration.
 
 ## Troubleshooting
 
