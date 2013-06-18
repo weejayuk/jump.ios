@@ -272,8 +272,8 @@ or opacity of our rounded rectangle. */
 
     [super viewDidLoad];
 
-    alreadyShared     = [[NSMutableSet alloc] initWithCapacity:[[sessionData socialProviders] count]];
-    cachedProfilePics = [[NSMutableDictionary alloc] initWithCapacity:[[sessionData socialProviders] count]];
+    alreadyShared     = [[NSMutableSet alloc] initWithCapacity:[[sessionData sharingProviders] count]];
+    cachedProfilePics = [[NSMutableDictionary alloc] initWithCapacity:[[sessionData sharingProviders] count]];
 
     if ([[customInterface objectForKey:kJRSocialSharingTitleString] isKindOfClass:[NSString class]])
         self.title = NSLocalizedString([customInterface objectForKey:kJRSocialSharingTitleString], @"");
@@ -353,7 +353,7 @@ or opacity of our rounded rectangle. */
     display the "Loading Providers" label and activity spinner.
     sessionData = nil when the call to get the base URL hasn't returned
     [sessionData.configuredProviders count] = 0 when the provider list hasn't returned */
-    if ([[sessionData socialProviders] count] == 0)
+    if ([[sessionData sharingProviders] count] == 0)
     {
         DLog(@"[[sessionData socialProviders] count] == 0");
         weAreStillWaitingOnSocialProviders = YES;
@@ -444,10 +444,10 @@ or opacity of our rounded rectangle. */
 
     timer = nil;
 
-    DLog (@"Social Providers so far: %d", [[sessionData socialProviders] count]);
+    DLog (@"Social Providers so far: %d", [[sessionData sharingProviders] count]);
 
  /* If we have our list of providers, stop the progress indicators and load the table. */
-    if ([[sessionData socialProviders] count] > 0)
+    if ([[sessionData sharingProviders] count] > 0)
     {
         weAreStillWaitingOnSocialProviders = NO;
 
@@ -759,7 +759,7 @@ Please try again later."
     DLog(@"");
 
 #if JRENGAGE_INCLUDE_EMAIL_SMS
-    if (item.tag == [[sessionData socialProviders] count])
+    if (item.tag == [[sessionData sharingProviders] count])
     {
         UIActionSheet *action;
         switch (emailAndOrSmsIndex)
@@ -786,7 +786,7 @@ Please try again later."
     else
 #endif
     {
-        self.selectedProvider = [sessionData getSocialProviderAtIndex:item.tag];
+        self.selectedProvider = [sessionData getSharingProviderAtIndex:item.tag];
         [sessionData setCurrentProvider:selectedProvider];
 
         self.loggedInUser = [sessionData authenticatedUserForProvider:selectedProvider];
@@ -1510,7 +1510,7 @@ Please try again later."
 {
     DLog(@"");
 
-    NSUInteger numberOfTabs = [[sessionData socialProviders] count];
+    NSUInteger numberOfTabs = [[sessionData sharingProviders] count];
     NSUInteger indexOfLastUsedProvider = 0;
     BOOL weShouldAddTabForEmailAndOrSms = (BOOL)emailAndOrSmsIndex;
 
@@ -1519,9 +1519,9 @@ Please try again later."
 
     NSMutableArray *providerTabArr = [[NSMutableArray alloc] initWithCapacity:numberOfTabs];
 
-    for (NSUInteger i = 0; i < [[sessionData socialProviders] count]; i++)
+    for (NSUInteger i = 0; i < [[sessionData sharingProviders] count]; i++)
     {
-        JRProvider *provider = [[sessionData getSocialProviderAtIndex:i] retain];
+        JRProvider *provider = [[sessionData getSharingProviderAtIndex:i] retain];
 
         if (!provider)
             break;
@@ -1533,7 +1533,7 @@ Please try again later."
 
         [providerTabArr insertObject:providerTab atIndex:[providerTabArr count]];
 
-        if ([provider isEqualToReturningProvider:[sessionData returningSocialProvider]])
+        if ([provider isEqualToReturningProvider:[sessionData returningSharingProvider]])
             indexOfLastUsedProvider = i;
 
         [provider release];
