@@ -52,11 +52,10 @@
 
 + (void)setEngageAppId:(NSString *)engageAppId captureDomain:(NSString *)captureDomain
        captureClientId:(NSString *)clientId captureLocale:(NSString *)captureLocale
-                                          captureFlowName:(NSString *)captureFlowName
-                         captureTraditionalSignInFormName:(NSString *)captureSignInFormName
-                            captureEnableThinRegistration:(BOOL)enableThinRegistration
-                             captureTraditionalSignInType:(__unused JRConventionalSigninType)tradSignInType
-                    captureFlowVersion:(NSString *)captureFlowVersion
+                 captureFlowName:(NSString *)captureFlowName captureFlowVersion:(NSString *)captureFlowVersion
+captureTraditionalSignInFormName:(NSString *)captureSignInFormName
+   captureEnableThinRegistration:(BOOL)enableThinRegistration
+          captureTraditionalSignInType:(__unused JRConventionalSigninType)tradSignInType
 captureTraditionalRegistrationFormName:(NSString *)captureTraditionalRegistrationFormName
      captureSocialRegistrationFormName:(NSString *)captureSocialRegistrationFormName
                           captureAppId:(NSString *)captureAppId customIdentityProviders:(NSDictionary *)customProviders
@@ -70,6 +69,26 @@ captureTraditionalRegistrationFormName:captureTraditionalRegistrationFormName
 
     [JREngageWrapper configureEngageWithAppId:engageAppId customIdentityProviders:customProviders];
 }
+
++ (void)setEngageAppId:(NSString *)engageAppId captureDomain:(NSString *)captureDomain
+       captureClientId:(NSString *)clientId captureLocale:(NSString *)captureLocale
+                 captureFlowName:(NSString *)captureFlowName captureFlowVersion:(NSString *)captureFlowVersion
+captureTraditionalSignInFormName:(NSString *)captureSignInFormName
+    captureTraditionalSignInType:(JRConventionalSigninType)captureTraditionalSignInType
+                    captureAppId:(NSString *)captureAppId customIdentityProviders:(NSDictionary *)customProviders
+{
+    [JRCapture setEngageAppId:engageAppId captureDomain:captureDomain
+           captureClientId:clientId captureLocale:captureLocale
+                     captureFlowName:captureFlowName captureFlowVersion:captureFlowVersion
+    captureTraditionalSignInFormName:captureSignInFormName
+       captureEnableThinRegistration:YES
+              captureTraditionalSignInType:captureTraditionalSignInType
+    captureTraditionalRegistrationFormName:nil
+         captureSocialRegistrationFormName:nil
+                              captureAppId:captureAppId 
+                   customIdentityProviders:customProviders]; 
+}
+
 
 + (NSString *)captureMobileEndpointUrl __unused
 {

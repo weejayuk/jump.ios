@@ -372,14 +372,42 @@ typedef enum
  **/
 + (void)setEngageAppId:(NSString *)engageAppId captureDomain:(NSString *)captureDomain
        captureClientId:(NSString *)clientId captureLocale:(NSString *)captureLocale
-                                          captureFlowName:(NSString *)captureFlowName
-                         captureTraditionalSignInFormName:(NSString *)captureSignInFormName
-                            captureEnableThinRegistration:(BOOL)enableThinRegistration
-                             captureTraditionalSignInType:(__unused JRConventionalSigninType)captureTraditionalSignInType
-                    captureFlowVersion:(NSString *)captureFlowVersion
+                 captureFlowName:(NSString *)captureFlowName captureFlowVersion:(NSString *)captureFlowVersion
+captureTraditionalSignInFormName:(NSString *)captureSignInFormName
+   captureEnableThinRegistration:(BOOL)enableThinRegistration
+          captureTraditionalSignInType:(__unused JRConventionalSigninType)captureTraditionalSignInType
 captureTraditionalRegistrationFormName:(NSString *)captureTraditionalRegistrationFormName
      captureSocialRegistrationFormName:(NSString *)captureSocialRegistrationFormName
                           captureAppId:(NSString *)captureAppId customIdentityProviders:(NSDictionary *)customProviders;
+
+/**
+ * @deprecated
+ */
++ (void)setEngageAppId:(NSString *)engageAppId captureDomain:(NSString *)captureDomain
+       captureClientId:(NSString *)clientId captureLocale:(NSString *)captureLocale
+       captureFlowName:(NSString *)captureFlowName
+              captureFlowVersion:(NSString *)captureFlowVersion
+captureTraditionalSignInFormName:(NSString *)captureSignInFormName
+    captureTraditionalSignInType:(__unused JRConventionalSigninType)captureTraditionalSignInType
+                    captureAppId:(NSString *)captureAppId customIdentityProviders:(NSDictionary *)customProviders;
+
+/**
+ * @deprecated
+ */
++ (void)setEngageAppId:(NSString *)engageAppId captureDomain:(NSString *)captureDomain
+       captureClientId:(NSString *)clientId captureLocale:(NSString *)captureLocale
+       captureFlowName:(NSString *)captureFlowName
+             captureFormName:(NSString *)captureFormName
+captureTraditionalSignInType:(JRConventionalSigninType)captureTraditionalSignInType;
+
+/**
+ * @deprecated
+ */
++ (void)setEngageAppId:(NSString *)engageAppId captureDomain:(NSString *)captureDomain
+       captureClientId:(NSString *)clientId captureLocale:(NSString *)captureLocale
+             captureFlowName:(NSString *)captureFlowName captureFormName:(NSString *)captureFormName
+captureTraditionalSignInType:(JRConventionalSigninType)captureTraditionalSignInType
+     customIdentityProviders:(NSDictionary *)customProviders;
 
 /**
  * Set the Capture access token for an authenticated user

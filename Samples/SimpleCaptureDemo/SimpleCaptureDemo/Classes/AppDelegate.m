@@ -81,10 +81,10 @@ AppDelegate *appDelegate = nil;
     [self loadDemoConfigFromPlist];
 
     [JRCapture setEngageAppId:engageAppId captureDomain:captureDomain captureClientId:captureClientId
-                   captureLocale:captureLocale captureFlowName:captureFlowName
-captureTraditionalSignInFormName:captureTraditionalSignInFormName
-   captureEnableThinRegistration:captureEnableThinRegistration
-          captureTraditionalSignInType:JRConventionalSigninEmailPassword captureFlowVersion:captureFlowVersion
+                captureLocale:captureLocale captureFlowName:captureFlowName
+           captureFlowVersion:captureFlowVersioncaptureTraditionalSignInFormName :captureTraditionalSignInFormName
+captureEnableThinRegistration:captureEnableThinRegistration
+          captureTraditionalSignInType:JRConventionalSigninEmailPassword
 captureTraditionalRegistrationFormName:captureTraditionalRegistrationFormName
      captureSocialRegistrationFormName:captureSocialRegistrationFormName captureAppId:captureAppId
                customIdentityProviders:customProviders];
