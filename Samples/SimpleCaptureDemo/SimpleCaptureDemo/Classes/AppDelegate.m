@@ -51,7 +51,7 @@ AppDelegate *appDelegate = nil;
 @synthesize captureClientId;
 @synthesize captureDomain;
 @synthesize captureLocale;
-@synthesize captureSignInFormName;
+@synthesize captureTraditionalSignInFormName;
 @synthesize captureFlowName;
 @synthesize engageAppId;
 @synthesize captureFlowVersion;
@@ -81,8 +81,9 @@ AppDelegate *appDelegate = nil;
     [self loadDemoConfigFromPlist];
 
     [JRCapture setEngageAppId:engageAppId captureDomain:captureDomain captureClientId:captureClientId
-                captureLocale:captureLocale captureFlowName:captureFlowName
-        captureSignInFormName:captureSignInFormName captureEnableThinRegistration:captureEnableThinRegistration
+                   captureLocale:captureLocale captureFlowName:captureFlowName
+captureTraditionalSignInFormName:captureTraditionalSignInFormName
+   captureEnableThinRegistration:captureEnableThinRegistration
           captureTraditionalSignInType:JRConventionalSigninEmailPassword captureFlowVersion:captureFlowVersion
 captureTraditionalRegistrationFormName:captureTraditionalRegistrationFormName
      captureSocialRegistrationFormName:captureSocialRegistrationFormName captureAppId:captureAppId
@@ -174,8 +175,8 @@ captureTraditionalRegistrationFormName:captureTraditionalRegistrationFormName
         self.captureDomain = [cfg objectForKey:@"captureDomain"];
     if ([cfg objectForKey:@"captureLocale"])
         self.captureLocale = [cfg objectForKey:@"captureLocale"];
-    if ([cfg objectForKey:@"captureSignInFormName"])
-        self.captureSignInFormName = [cfg objectForKey:@"captureSignInFormName"];
+    if ([cfg objectForKey:@"captureTraditionalSignInFormName"])
+        self.captureTraditionalSignInFormName = [cfg objectForKey:@"captureTraditionalSignInFormName"];
     if ([cfg objectForKey:@"captureFlowName"])
         self.captureFlowName = [cfg objectForKey:@"captureFlowName"];
     if ([cfg objectForKey:@"captureEnableThinRegistration"])
