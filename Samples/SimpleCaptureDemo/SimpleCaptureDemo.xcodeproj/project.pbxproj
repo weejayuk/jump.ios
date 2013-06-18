@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		6706F04CB24F25B6607F53A5 /* Authentication-Token-URL.md in Resources */ = {isa = PBXBuildFile; fileRef = 6706FFEFEE62C8F93EAA251B /* Authentication-Token-URL.md */; };
 		6706F0548CC1DBB6CEC0407D /* JRCurrentLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706F48794E72EF1AAA12F65 /* JRCurrentLocation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		6706F0D47F845F7ECCBE860F /* JUMP User Registration Guide.md in Resources */ = {isa = PBXBuildFile; fileRef = 6706FA6D8456656D3E398437 /* JUMP User Registration Guide.md */; };
 		6706F0DA7F5FA9A15B437997 /* Engage-Only Integration Guide.md in Resources */ = {isa = PBXBuildFile; fileRef = 6706F243FF1B1D4DBFCE6B5D /* Engage-Only Integration Guide.md */; };
 		6706F18263DF25C5CAEA8F6C /* Engage Custom Provider Guide.md in Resources */ = {isa = PBXBuildFile; fileRef = 6706F619E4BB76864B478610 /* Engage Custom Provider Guide.md */; };
 		6706F1DA670157008AB97AE9 /* JREmailsElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706FA85ED839616B3A3BCEC /* JREmailsElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -21,7 +20,6 @@
 		6706F446D8EB217902A2C066 /* JRName.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706F4BDF9449AE3353A78B2 /* JRName.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6706F47BAAA33176C30137E4 /* JRBodyType.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706F48EF1DDDD75A9A55C71 /* JRBodyType.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6706F4B1D897BABAF4E420F4 /* JRObjectLevelThree.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706F3299EC3D64CF869984F /* JRObjectLevelThree.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		6706F51EE167DE5FFF64E224 /* CaptureDynamicForm.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706F39D56CA252D2415997F /* CaptureDynamicForm.m */; };
 		6706F5400059D77BC34C4715 /* JRBestHand.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706F1D869841D7DDAD98738 /* JRBestHand.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6706F5FBFB18FFEC70EE819A /* JRProfilesElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706FF9C81BDFA4719F9572F /* JRProfilesElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6706F619362F907CF818FB72 /* JRAddressesElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706F639039C6875E7613160 /* JRAddressesElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -326,7 +324,6 @@
 		6706F0B859D457B27C961482 /* JROrganizationsElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JROrganizationsElement.m; sourceTree = "<group>"; };
 		6706F0F2E34793CE47A59E50 /* JROnipLevelThree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JROnipLevelThree.h; sourceTree = "<group>"; };
 		6706F14EBCBB93C923B336B4 /* JRLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRLocation.m; sourceTree = "<group>"; };
-		6706F177967F38CF7CA5D0FC /* CaptureDynamicForm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CaptureDynamicForm.h; path = ../../../../jump.ios/Samples/SimpleCaptureDemo/SimpleCaptureDemo/Classes/CaptureDynamicForm.h; sourceTree = "<group>"; };
 		6706F1A44624C7575D0E75DA /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Utils.m; path = ../../../../jump.ios/Samples/SimpleCaptureDemo/SimpleCaptureDemo/Classes/Utils.m; sourceTree = "<group>"; };
 		6706F1D869841D7DDAD98738 /* JRBestHand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRBestHand.m; sourceTree = "<group>"; };
 		6706F1FB3600926EFC36AB15 /* JRPinoLevelOne.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRPinoLevelOne.h; sourceTree = "<group>"; };
@@ -339,7 +336,6 @@
 		6706F30EA0F737DBFDF9E837 /* JRProfilesElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRProfilesElement.h; sourceTree = "<group>"; };
 		6706F3299EC3D64CF869984F /* JRObjectLevelThree.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRObjectLevelThree.m; sourceTree = "<group>"; };
 		6706F34BD9C908B2B6137E62 /* JRPinoLevelThreeElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRPinoLevelThreeElement.m; sourceTree = "<group>"; };
-		6706F39D56CA252D2415997F /* CaptureDynamicForm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CaptureDynamicForm.m; path = ../../../../jump.ios/Samples/SimpleCaptureDemo/SimpleCaptureDemo/Classes/CaptureDynamicForm.m; sourceTree = "<group>"; };
 		6706F40DA995CA1DAA080E39 /* JRGamesElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRGamesElement.h; sourceTree = "<group>"; };
 		6706F42689C7837218A338C5 /* JRPluralLevelOneElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRPluralLevelOneElement.h; sourceTree = "<group>"; };
 		6706F4723D28D385805BF6B3 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Utils.h; path = ../../../../jump.ios/Samples/SimpleCaptureDemo/SimpleCaptureDemo/Classes/Utils.h; sourceTree = "<group>"; };
@@ -381,7 +377,6 @@
 		6706F9F00E2522E7E182F8EF /* JRUrlsElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRUrlsElement.h; sourceTree = "<group>"; };
 		6706FA5DB533D33F2328C498 /* JRBodyType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRBodyType.h; sourceTree = "<group>"; };
 		6706FA6C5C02B18DD67416C4 /* Xcode Project Setup.md */ = {isa = PBXFileReference; lastKnownFileType = file.md; name = "Xcode Project Setup.md"; path = "../../Docs/Xcode Project Setup.md"; sourceTree = "<group>"; };
-		6706FA6D8456656D3E398437 /* JUMP User Registration Guide.md */ = {isa = PBXFileReference; lastKnownFileType = file.md; name = "JUMP User Registration Guide.md"; path = "../../Docs/JUMP User Registration Guide.md"; sourceTree = "<group>"; };
 		6706FA85ED839616B3A3BCEC /* JREmailsElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JREmailsElement.m; sourceTree = "<group>"; };
 		6706FAA335A0ED6A8D9F1A8E /* JRUrlsElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRUrlsElement.m; sourceTree = "<group>"; };
 		6706FB26B563C1F9DB0F0D47 /* NSMutableDictionary+JRDictionaryUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+JRDictionaryUtils.m"; sourceTree = "<group>"; };
@@ -908,8 +903,6 @@
 				6706F8DC7856E86A423C2108 /* PickerViewController.m */,
 				6706F4723D28D385805BF6B3 /* Utils.h */,
 				6706F1A44624C7575D0E75DA /* Utils.m */,
-				6706F177967F38CF7CA5D0FC /* CaptureDynamicForm.h */,
-				6706F39D56CA252D2415997F /* CaptureDynamicForm.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -966,7 +959,6 @@
 				6706F243FF1B1D4DBFCE6B5D /* Engage-Only Integration Guide.md */,
 				6706FDE35290E73F4513572D /* JUMP Integration Guide.md */,
 				6706FA6C5C02B18DD67416C4 /* Xcode Project Setup.md */,
-				6706FA6D8456656D3E398437 /* JUMP User Registration Guide.md */,
 			);
 			name = Docs;
 			sourceTree = "<group>";
@@ -1735,7 +1727,6 @@
 				DFB68A68175E8E6C006DFC92 /* JRUserLandingController.xib in Resources */,
 				DFB68A69175E8E6C006DFC92 /* JRWebViewController.xib in Resources */,
 				6706FDFF6209500B70A5CFFC /* Xcode Project Setup.md in Resources */,
-				6706F0D47F845F7ECCBE860F /* JUMP User Registration Guide.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1781,7 +1772,6 @@
 				C1424E3B144EDDE0ABA1E0E7 /* AlertViewWithBlocks.m in Sources */,
 				6706FCE93985E90E4040B262 /* PickerViewController.m in Sources */,
 				6706FFA2D57FB31818D60F25 /* Utils.m in Sources */,
-				6706F51EE167DE5FFF64E224 /* CaptureDynamicForm.m in Sources */,
 				DFB6898C175E8E6C006DFC92 /* JRBase64.m in Sources */,
 				DFB68996175E8E6C006DFC92 /* JRCapture.m in Sources */,
 				DFB68997175E8E6C006DFC92 /* JRCaptureApidInterface.m in Sources */,

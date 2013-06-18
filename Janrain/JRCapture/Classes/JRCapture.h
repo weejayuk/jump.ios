@@ -314,9 +314,6 @@ typedef enum
  **/
 - (void)captureAuthenticationDidFailWithError:(NSError*)error;
 
-- (void)registerUserDidSucceed:(JRCaptureUser *)registeredUser;
-
-- (void)registerUserDidFailWithError:(NSError *)error;
 @end
 
 /**
@@ -372,14 +369,29 @@ typedef enum
  **/
 + (void)setEngageAppId:(NSString *)engageAppId captureDomain:(NSString *)captureDomain
        captureClientId:(NSString *)clientId captureLocale:(NSString *)captureLocale
-                                          captureFlowName:(NSString *)captureFlowName
-                         captureTraditionalSignInFormName:(NSString *)captureSignInFormName
-                            captureEnableThinRegistration:(BOOL)enableThinRegistration
-                             captureTraditionalSignInType:(__unused JRConventionalSigninType)captureTraditionalSignInType
-                    captureFlowVersion:(NSString *)captureFlowVersion
-captureTraditionalRegistrationFormName:(NSString *)captureTraditionalRegistrationFormName
-     captureSocialRegistrationFormName:(NSString *)captureSocialRegistrationFormName
-                          captureAppId:(NSString *)captureAppId customIdentityProviders:(NSDictionary *)customProviders;
+       captureFlowName:(NSString *)captureFlowName
+              captureFlowVersion:(NSString *)captureFlowVersion
+captureTraditionalSignInFormName:(NSString *)captureSignInFormName
+    captureTraditionalSignInType:(__unused JRConventionalSigninType)captureTraditionalSignInType
+                    captureAppId:(NSString *)captureAppId customIdentityProviders:(NSDictionary *)customProviders;
+
+/**
+ * @deprecated
+ */
++ (void)setEngageAppId:(NSString *)engageAppId captureDomain:(NSString *)captureDomain
+       captureClientId:(NSString *)clientId captureLocale:(NSString *)captureLocale
+       captureFlowName:(NSString *)captureFlowName
+             captureFormName:(NSString *)captureFormName
+captureTraditionalSignInType:(JRConventionalSigninType)captureTraditionalSignInType;
+
+/**
+ * @deprecated
+ */
++ (void)setEngageAppId:(NSString *)engageAppId captureDomain:(NSString *)captureDomain
+       captureClientId:(NSString *)clientId captureLocale:(NSString *)captureLocale
+             captureFlowName:(NSString *)captureFlowName captureFormName:(NSString *)captureFormName
+captureTraditionalSignInType:(JRConventionalSigninType)captureTraditionalSignInType
+     customIdentityProviders:(NSDictionary *)customProviders;
 
 /**
  * Set the Capture access token for an authenticated user
@@ -552,31 +564,6 @@ captureTraditionalRegistrationFormName:(NSString *)captureTraditionalRegistratio
 + (void)startCaptureConventionalSigninForUser:(NSString *)user withPassword:(NSString *)password
                                withSigninType:(JRConventionalSigninType)conventionalSignInType
                                   forDelegate:(id <JRCaptureSignInDelegate>)delegate __unused;
-
-///**
-// * Refreshes the signed-in user's access token
-// */
-//+ (void)refreshAccessTokenWithCallback:(void (^)(BOOL, NSError *))callback __unused;
-
-/**
- * Registers a new user.
- *
- * WARNING: Only attributes that are part of the registration form configured in your Capture flow file are set in the
- *          new user's record. Any other attributes (those that are not part of the registration form) will not be set.
- *
- * @param newUser
- *  The user record with which (and in conjunction with your registration form in accordance with the above warning,)
- *  the new user's Capture record will be created.
- * @param socialRegistrationToken
- *  The registration token, used for two-step social registration. The token may be retrieved from the initial (failed)
- *  social sign-in by retrieving it from the JRCaptureError object returned on the event of that same failure.
- *  If nil then a traditional registration is performed, not a social registration.
- * @param delegate
- *  Your JRCaptureSignInDelegate. This delegate will receive callbacks regarding the success or failure of sign-in
- *  events. (A successful registration is considered a sign-in, and results in a valid client-server session.)
- */
-+ (void)registerNewUser:(JRCaptureUser *)newUser socialRegistrationToken:(NSString *)socialRegistrationToken
-            forDelegate:(id <JRCaptureSignInDelegate>)delegate;
 
 /**
  * Signs the currently-signed-in user, if any, out.

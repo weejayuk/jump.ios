@@ -1,5 +1,5 @@
-v3.2.0
- - Adds new two-step social registration and tradtional registration support
+v3.1.1
+ - Fixes social sharing dialog, social sharing demo
 v3.1.0
  - Adds support for configuration of custom OpenID and Engage-supported SAML providers
 v3.0.9

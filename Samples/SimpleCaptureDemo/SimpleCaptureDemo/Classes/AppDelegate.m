@@ -55,9 +55,6 @@ AppDelegate *appDelegate = nil;
 @synthesize captureFlowName;
 @synthesize engageAppId;
 @synthesize captureFlowVersion;
-@synthesize captureEnableThinRegistration;
-@synthesize captureTraditionalRegistrationFormName;
-@synthesize captureSocialRegistrationFormName;
 @synthesize captureAppId;
 @synthesize customProviders;
 
@@ -80,14 +77,13 @@ AppDelegate *appDelegate = nil;
 
     [self loadDemoConfigFromPlist];
 
-    [JRCapture setEngageAppId:engageAppId captureDomain:captureDomain captureClientId:captureClientId
-                   captureLocale:captureLocale captureFlowName:captureFlowName
+    [JRCapture setEngageAppId:engageAppId captureDomain:captureDomain
+              captureClientId:captureClientId captureLocale:captureLocale
+                 captureFlowName:captureFlowName captureFlowVersion:captureFlowVersion
 captureTraditionalSignInFormName:captureTraditionalSignInFormName
-   captureEnableThinRegistration:captureEnableThinRegistration
-          captureTraditionalSignInType:JRConventionalSigninEmailPassword captureFlowVersion:captureFlowVersion
-captureTraditionalRegistrationFormName:captureTraditionalRegistrationFormName
-     captureSocialRegistrationFormName:captureSocialRegistrationFormName captureAppId:captureAppId
-               customIdentityProviders:customProviders];
+    captureTraditionalSignInType:JRConventionalSigninEmailPassword
+                    captureAppId:captureAppId
+         customIdentityProviders:customProviders];
 
     [BackplaneUtils asyncFetchNewBackplaneChannelWithBus:bpBusUrlString
                                               completion:^(NSString *newChannel, NSError *error)
@@ -158,7 +154,6 @@ captureTraditionalRegistrationFormName:captureTraditionalRegistrationFormName
     }
     NSDictionary *cfgPlist = [NSDictionary dictionaryWithContentsOfFile:plistPath];
     NSString *configKeyName = [cfgPlist objectForKey:@"default-config"];
-    self.captureEnableThinRegistration = YES;
     [self parseConfigNamed:configKeyName fromConfigPlist:cfgPlist];
 }
 
@@ -179,14 +174,8 @@ captureTraditionalRegistrationFormName:captureTraditionalRegistrationFormName
         self.captureTraditionalSignInFormName = [cfg objectForKey:@"captureTraditionalSignInFormName"];
     if ([cfg objectForKey:@"captureFlowName"])
         self.captureFlowName = [cfg objectForKey:@"captureFlowName"];
-    if ([cfg objectForKey:@"captureEnableThinRegistration"])
-        self.captureEnableThinRegistration = [[cfg objectForKey:@"captureEnableThinRegistration"] boolValue];
     if ([cfg objectForKey:@"captureFlowVersion"])
         self.captureFlowVersion = [cfg objectForKey:@"captureFlowVersion"];
-    if ([cfg objectForKey:@"captureTraditionalRegistrationFormName"])
-        self.captureTraditionalRegistrationFormName = [cfg objectForKey:@"captureTraditionalRegistrationFormName"];
-    if ([cfg objectForKey:@"captureSocialRegistrationFormName"])
-        self.captureSocialRegistrationFormName = [cfg objectForKey:@"captureSocialRegistrationFormName"];
     if ([cfg objectForKey:@"captureAppId"])
         self.captureAppId = [cfg objectForKey:@"captureAppId"];
     if ([cfg objectForKey:@"engageAppId"])
