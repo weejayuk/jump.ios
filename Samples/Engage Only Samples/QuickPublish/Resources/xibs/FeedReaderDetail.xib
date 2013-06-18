@@ -187,13 +187,13 @@
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">webview</string>
+						<string key="NS.key.0">webView</string>
 						<string key="NS.object.0">UIWebView</string>
 					</object>
 					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">webview</string>
+						<string key="NS.key.0">webView</string>
 						<object class="IBToOneOutletInfo" key="NS.object.0">
-							<string key="name">webview</string>
+							<string key="name">webView</string>
 							<string key="candidateClassName">UIWebView</string>
 						</object>
 					</object>
