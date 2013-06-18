@@ -32,14 +32,7 @@
  Date:	 Tuesday, August 24, 2010
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#ifdef DEBUG
-#define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-#else
-#define DLog(...)
-#endif
-
-#define ALog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-
+#import "debug_log.h"
 #import "FeedReaderDetail.h"
 #import "JREngage+CustomInterface.h"
 
@@ -153,7 +146,7 @@ a:active  { color:#7AC143; }";
     self.title = @"Article";
 
     webViewContent = [[NSString stringWithFormat:
-                        @"<html>                                       \
+                                        @"<html>                                       \
                             <head>                                     \
                                 <style type=\"text/css\">              \
                                     %@                                 \
@@ -170,12 +163,12 @@ a:active  { color:#7AC143; }";
                                 </div>                                 \
                             </body>                                    \
                         </html>",
-                        iPad ? iPadStyle : iPhoneStyle,
-                        commonStyle,
-                        story.title,
-                        story.author,
-                        story.pubDate,
-                        story.htmlText] retain];
+                                        iPad ? iPadStyle : iPhoneStyle,
+                                        commonStyle,
+                                        story.title,
+                                        story.author,
+                                        story.pubDate,
+                                        story.htmlText] retain];
 
 //    DLog("%@", webViewContent);
 
@@ -186,10 +179,10 @@ a:active  { color:#7AC143; }";
                                                                     target:self
                                                                     action:@selector(shareButtonPressed:)] autorelease];
 
-	self.navigationItem.rightBarButtonItem         = shareButton;
-	self.navigationItem.rightBarButtonItem.enabled = YES;
+    self.navigationItem.rightBarButtonItem = shareButton;
+    self.navigationItem.rightBarButtonItem.enabled = YES;
 
-	self.navigationItem.rightBarButtonItem.style = UIBarButtonItemStyleDone;
+    self.navigationItem.rightBarButtonItem.style = UIBarButtonItemStyleDone;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -222,31 +215,38 @@ a:active  { color:#7AC143; }";
     return YES;
 }
 
-- (void)webViewDidStartLoad:(UIWebView *)webView { }
+- (void)webViewDidStartLoad:(UIWebView *)webView
+{
+}
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView { }
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+}
 
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error { }
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+{
+}
 
 - (IBAction)shareButtonPressed:(id)sender
 {
     weAreSharing = YES;
     JRActivityObject *activity = [[[JRActivityObject alloc]
-                                  initWithAction:@"shared an article from the Janrain Blog."
-                                  andUrl:story.link] autorelease];
+            initWithAction:@"shared an article from the Janrain Blog."
+                    andUrl:story.link] autorelease];
 
     activity.resourceTitle = story.title;
 
     NSUInteger trunk = /*(iPad)*/ 0 ? 300 : 350;//256;
-    activity.resourceDescription = [story.plainText substringToIndex:
-                                        ((story.plainText.length < trunk) ? story.plainText.length : trunk)];
+    NSUInteger endIndex = (story.plainText.length < trunk) ? story.plainText.length : trunk;
+    activity.resourceDescription = [story.plainText substringToIndex:endIndex];
 
     if ([story.storyImages count] > 0)
     {
         StoryImage *storyImage = [story.storyImages objectAtIndex:0];
 
         // TODO: Shouldn't I be setting the preview in the library?
-        JRImageMediaObject *image = [[[JRImageMediaObject alloc] initWithSrc:storyImage.src andHref:story.feedUrl] autorelease];
+        JRImageMediaObject *image = [[[JRImageMediaObject alloc] initWithSrc:storyImage.src
+                                                                     andHref:story.feedUrl] autorelease];
         [image setPreview:storyImage.image];
 
         activity.media = [NSArray arrayWithObject:image];
@@ -258,10 +258,11 @@ a:active  { color:#7AC143; }";
                                                             and I thought you might be interested! \
                                                             <br /><a href=\"%@\">Click here to read it.</a><br /> \
                                                             <br /></body></html>%@",
-                                                            story.link, webViewContent]
+                                                                                      story.link, webViewContent]
                                                     isHtml:YES
                                       andUrlsToBeShortened:[NSArray arrayWithObjects:story.link, nil]];
-    activity.sms = [JRSmsObject smsObjectWithMessage:[NSString stringWithFormat:@"Check out this article from the Janrain Blog!\n\n%@", story.link]
+    activity.sms = [JRSmsObject smsObjectWithMessage:[NSString stringWithFormat:@"Check out this article from the Janrain Blog!\n\n%@",
+                                                                                story.link]
                                 andUrlsToBeShortened:[NSArray arrayWithObjects:story.link, nil]];
 
     if (iPad)
@@ -271,9 +272,9 @@ a:active  { color:#7AC143; }";
     }
 
     NSDictionary *custom = [NSDictionary dictionaryWithObjectsAndKeys:
-                            self.navigationItem.rightBarButtonItem, kJRPopoverPresentationBarButtonItem,
-                            self.navigationController, kJRApplicationNavigationController,
-                            nil];
+                                                 self.navigationItem.rightBarButtonItem, kJRPopoverPresentationBarButtonItem,
+                                                 self.navigationController, kJRApplicationNavigationController,
+                                                 nil];
 
     [JREngage showSharingDialogWithActivity:activity withCustomInterfaceOverrides:custom];
 }
@@ -298,7 +299,7 @@ a:active  { color:#7AC143; }";
         [JREngage cancelSharing];
 
     [webview stopLoading];
-	[webview loadHTMLString:@"" baseURL:[NSURL URLWithString:@"/"]];
+    [webview loadHTMLString:@"" baseURL:[NSURL URLWithString:@"/"]];
 }
 
 - (void)didReceiveMemoryWarning

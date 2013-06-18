@@ -32,19 +32,15 @@
  Date:	 Tuesday, August 24, 2010
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#ifdef DEBUG
-#define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-#else
-#define DLog(...)
-#endif
-
-#define ALog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-
+//#import "debug_log.h"
 #import "FeedReaderWebView.h"
 
+@interface FeedReaderWebView () <UIWebViewDelegate>
+@end
+
 @implementation FeedReaderWebView
-@synthesize urlRequest;
-@synthesize webview;
+//@synthesize urlRequest;
+@synthesize webView;
 
 /*
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
@@ -65,7 +61,7 @@
 {
     [super viewWillAppear:YES];
 
-    [webview loadRequest:urlRequest];
+    [webView loadRequest:urlRequest];
 }
 
 - (void)startProgress
@@ -80,17 +76,17 @@
     app.networkActivityIndicatorVisible = NO;
 }
 
-- (void)webViewDidStartLoad:(UIWebView *)webView
+- (void)webViewDidStartLoad:(UIWebView *)webView_
 {
 	[self startProgress];
 }
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView
+- (void)webViewDidFinishLoad:(UIWebView *)webView_
 {
     [self stopProgress];
 }
 
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+- (void)webView:(UIWebView *)webView_ didFailLoadWithError:(NSError *)error
 {
     [self stopProgress];
 }
@@ -99,7 +95,7 @@
 {
     [super viewWillDisappear:animated];
 
-    [webview loadHTMLString:@"" baseURL:[NSURL URLWithString:@"/"]];
+    [webView loadHTMLString:@"" baseURL:[NSURL URLWithString:@"/"]];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
@@ -119,7 +115,7 @@
 
 - (void)dealloc
 {
-    [webview release];
+    [webView release];
     [urlRequest release];
 
     [super dealloc];

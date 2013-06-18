@@ -36,9 +36,9 @@
 
 @interface FeedReaderWebView : UIViewController 
 {
-    UIWebView    *webview;
+    UIWebView    *webView;
     NSURLRequest *urlRequest;
 }
-@property (retain) NSURLRequest *urlRequest;
-@property (nonatomic, retain) IBOutlet UIWebView *webview;
+//@property (retain) NSURLRequest *urlRequest;
+@property (nonatomic, retain) IBOutlet UIWebView *webView;
 @end

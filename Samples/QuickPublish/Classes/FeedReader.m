@@ -32,22 +32,11 @@
  Date:   Tuesday, August 24, 2010
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#ifdef DEBUG
-#define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-#else
-#define DLog(...)
-#endif
-
-#define ALog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-
+#import "debug_log.h"
 #import "FeedReader.h"
-
-#import "Quick_PublishAppDelegate.h"
 #import "RegexKitLite.h"
 #import "NSString+HTML.h"
 #import "NSDate+InternetDateTime.h"
-
-#import "JREngage+CustomInterface.h"
 #import "JRActivityObject.h"
 
 
@@ -61,7 +50,7 @@
 #define QUICK_PUBLISH_STORY_AUTHOR              @"quickpublish.story.author"
 #define QUICK_PUBLISH_STORY_PUBDATE             @"quickpublish.story.pubdate"
 #define QUICK_PUBLISH_STORY_PLAINTEXT           @"quickpublish.story.plaintext"
-#define QUICK_PUBLISH_STORY_STORYIMAGEURLS      @"quickpublish.story.storyimageurls"
+//#define QUICK_PUBLISH_STORY_STORYIMAGEURLS      @"quickpublish.story.storyimageurls"
 #define QUICK_PUBLISH_STORY_FEEDURL             @"quickpublish.story.feedurl"
 #define QUICK_PUBLISH_STORY_IMAGES              @"quickpublish.story.images"
 

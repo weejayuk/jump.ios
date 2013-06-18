@@ -32,14 +32,7 @@
  Date:	 Tuesday, August 24, 2010
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#ifdef DEBUG
-#define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-#else
-#define DLog(...)
-#endif
-
-#define ALog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-
+#import "debug_log.h"
 #import "FeedReaderSummary.h"
 
 @interface FeedReaderSummary ()
@@ -89,12 +82,12 @@
     titleLabel.backgroundColor = [UIColor clearColor];
     titleLabel.font = [UIFont boldSystemFontOfSize:20.0];
     titleLabel.shadowColor = [UIColor colorWithWhite:0.0 alpha:0.5];
-    titleLabel.textAlignment = UITextAlignmentCenter;
+    titleLabel.textAlignment = (NSTextAlignment) UITextAlignmentCenter;
     titleLabel.textColor = [UIColor whiteColor];
 
     self.navigationItem.titleView = titleLabel;
 
-    titleLabel.text = NSLocalizedString(@"Janrain Blog", @"");
+    titleLabel.text = @"Janrain Blog";
 
     myTable.backgroundColor = [UIColor colorWithRed:0.93 green:0.93 blue:0.93 alpha:1.0];
     refreshHeader.backgroundColor = [UIColor colorWithRed:0.93 green:0.93 blue:0.93 alpha:1.0];
@@ -151,9 +144,9 @@
         leftCrop = 10;//((image.size.width - 72) / 2) - 36;
 
     if (image.size.height < 180)
-        topCrop = ((image.size.height - 72) / 4);//2);
+        topCrop = (NSInteger) ((image.size.height - 72) / 4);//2);
     else
-        topCrop = ((image.size.height - 72) / 4) - 18;//2) - 36;
+        topCrop = (NSInteger) (((image.size.height - 72) / 4) - 18);//2) - 36;
 
     CGRect croppedRect = CGRectMake(leftCrop, topCrop, 72, 72);
 
@@ -224,7 +217,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Story *story = [stories objectAtIndex:indexPath.section];
+    Story *story = [stories objectAtIndex:(NSUInteger) indexPath.section];
 
     UIImageView *documentImage       = nil;
     UIActivityIndicatorView *spinner = nil;
@@ -302,7 +295,7 @@
 
             documentDate.font = [UIFont systemFontOfSize:11.0];
             documentDate.textColor = [UIColor darkGrayColor];
-            documentDate.textAlignment = iPad ? UITextAlignmentRight : UITextAlignmentLeft;
+            documentDate.textAlignment = (NSTextAlignment) (iPad ? UITextAlignmentRight : UITextAlignmentLeft);
             documentDate.backgroundColor = [UIColor clearColor];
             if (iPad)
                 [documentDate setAutoresizingMask:UIViewAutoresizingNone | UIViewAutoresizingFlexibleLeftMargin];
@@ -337,7 +330,7 @@
     If there are less than 2 storyImages (0 or 1), only check the first or don't check at all. */
     for (int i = 0; i < (([story.storyImages count] > 2) ? 2 : [story.storyImages count]); i++)
     {
-        StoryImage *storyImage = [story.storyImages objectAtIndex:i];
+        StoryImage *storyImage = [story.storyImages objectAtIndex:(NSUInteger) i];
         imageAvailable = YES;
 
         /* If an image has already downloaded, set the image and break. */
@@ -458,7 +451,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    reader.selectedStory = [stories objectAtIndex:indexPath.section];
+    reader.selectedStory = [stories objectAtIndex:(NSUInteger) indexPath.section];
 
     if (!detailViewController)
     {

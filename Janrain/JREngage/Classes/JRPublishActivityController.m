@@ -1816,8 +1816,8 @@ Please try again later."
 
  /* OK, if this gets called right after authentication succeeds, then the navigation controller won't be done
     animating back to this view.  If this view isn't loaded yet, and we call shareButtonPressed, then the library
-    will end up trying to push the webview controller onto the navigation controller while the navigation controller
-    is still trying to pop the webview.  This creates craziness, hence we check for [self isViewLoaded].
+    will end up trying to push the webView controller onto the navigation controller while the navigation controller
+    is still trying to pop the webView.  This creates craziness, hence we check for [self isViewLoaded].
     Also, this prevents an infinite loop of reauthing-failed publishing-reauthing-failed publishing.
     So, only try and reauthenticate is the publishing activity view is already loaded, which will only happen if we didn't
     JUST try and authorize, or if sharing took longer than the time it takes to pop the view controller. */
