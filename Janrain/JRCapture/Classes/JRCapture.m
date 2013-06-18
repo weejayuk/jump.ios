@@ -78,15 +78,50 @@ captureTraditionalSignInFormName:(NSString *)captureSignInFormName
                     captureAppId:(NSString *)captureAppId customIdentityProviders:(NSDictionary *)customProviders
 {
     [JRCapture setEngageAppId:engageAppId captureDomain:captureDomain
-           captureClientId:clientId captureLocale:captureLocale
-                     captureFlowName:captureFlowName captureFlowVersion:captureFlowVersion
-    captureTraditionalSignInFormName:captureSignInFormName
-       captureEnableThinRegistration:YES
-              captureTraditionalSignInType:captureTraditionalSignInType
-    captureTraditionalRegistrationFormName:nil
-         captureSocialRegistrationFormName:nil
-                              captureAppId:captureAppId 
-                   customIdentityProviders:customProviders]; 
+              captureClientId:clientId captureLocale:captureLocale
+                 captureFlowName:captureFlowName captureFlowVersion:captureFlowVersion
+captureTraditionalSignInFormName:captureSignInFormName
+   captureEnableThinRegistration:YES
+          captureTraditionalSignInType:captureTraditionalSignInType
+captureTraditionalRegistrationFormName:nil
+     captureSocialRegistrationFormName:nil
+                          captureAppId:captureAppId
+               customIdentityProviders:customProviders];
+}
+
++ (void)setEngageAppId:(NSString *)engageAppId captureDomain:(NSString *)captureDomain
+       captureClientId:(NSString *)clientId captureLocale:(NSString *)captureLocale
+             captureFlowName:(NSString *)captureFlowName captureFormName:(NSString *)captureFormName
+captureTraditionalSignInType:(JRConventionalSigninType)captureTraditionalSignInType
+{
+    [JRCapture setEngageAppId:engageAppId captureDomain:captureDomain
+              captureClientId:clientId captureLocale:captureLocale
+                 captureFlowName:captureFlowName captureFlowVersion:nil
+captureTraditionalSignInFormName:captureFormName
+   captureEnableThinRegistration:YES
+          captureTraditionalSignInType:captureTraditionalSignInType
+captureTraditionalRegistrationFormName:nil
+     captureSocialRegistrationFormName:nil
+                          captureAppId:nil
+               customIdentityProviders:nil];
+}
+
++ (void)setEngageAppId:(NSString *)engageAppId captureDomain:(NSString *)captureDomain
+       captureClientId:(NSString *)clientId captureLocale:(NSString *)captureLocale
+             captureFlowName:(NSString *)captureFlowName captureFormName:(NSString *)captureFormName
+captureTraditionalSignInType:(JRConventionalSigninType)captureTraditionalSignInType
+     customIdentityProviders:(NSDictionary *)customProviders
+{
+    [JRCapture setEngageAppId:engageAppId captureDomain:captureDomain
+              captureClientId:clientId captureLocale:captureLocale
+                 captureFlowName:captureFlowName captureFlowVersion:nil
+captureTraditionalSignInFormName:captureFormName
+   captureEnableThinRegistration:YES
+          captureTraditionalSignInType:captureTraditionalSignInType
+captureTraditionalRegistrationFormName:nil
+     captureSocialRegistrationFormName:nil
+                          captureAppId:nil
+               customIdentityProviders:customProviders];
 }
 
 

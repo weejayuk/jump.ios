@@ -34,7 +34,6 @@
 #import "debug_log.h"
 #import "JRSessionData.h"
 #import "JRCaptureData.h"
-#import "JREngage.h"
 
 @interface JRSessionData (Internal)
 + (void)setServerUrl:(NSString *)serverUrl_;
@@ -82,8 +81,9 @@ AppDelegate *appDelegate = nil;
 
     [JRCapture setEngageAppId:engageAppId captureDomain:captureDomain captureClientId:captureClientId
                 captureLocale:captureLocale captureFlowName:captureFlowName
-           captureFlowVersion:captureFlowVersioncaptureTraditionalSignInFormName :captureTraditionalSignInFormName
-captureEnableThinRegistration:captureEnableThinRegistration
+              captureFlowVersion:captureFlowVersion
+captureTraditionalSignInFormName:captureTraditionalSignInFormName
+   captureEnableThinRegistration:captureEnableThinRegistration
           captureTraditionalSignInType:JRConventionalSigninEmailPassword
 captureTraditionalRegistrationFormName:captureTraditionalRegistrationFormName
      captureSocialRegistrationFormName:captureSocialRegistrationFormName captureAppId:captureAppId

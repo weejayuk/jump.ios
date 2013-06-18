@@ -23,6 +23,8 @@
         <false/>
         <key>captureTraditionalRegistrationFormName</key>
         <string>registrationForm</string>
+        <key>captureSocialRegistrationFormName</key>
+        <string>socialRegistrationForm</string>
         <key>captureFlowVersion</key>
         <string>HEAD</string>
         <key>captureAppId</key>
