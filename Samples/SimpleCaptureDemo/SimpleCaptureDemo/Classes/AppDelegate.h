@@ -51,7 +51,7 @@ AppDelegate *appDelegate;
 @property(nonatomic, strong) NSString *captureDomain;
 @property(nonatomic, strong) NSString *captureLocale;
 @property(nonatomic, strong) NSString *captureFlowName;
-@property(nonatomic, strong) NSString *captureSignInFormName;
+@property(nonatomic, strong) NSString *captureTraditionalSignInFormName;
 @property(nonatomic) BOOL captureEnableThinRegistration;
 @property(nonatomic, strong) NSString *captureFlowVersion;
 @property(nonatomic, strong) NSString *captureTraditionalRegistrationFormName;

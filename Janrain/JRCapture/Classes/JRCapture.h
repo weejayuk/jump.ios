@@ -344,7 +344,7 @@
  *   The name of the Capture sign-in flow your users will sign-in with. Optional. Pass nil to have Capture use the
  *   flow specified by the default_flow_name setting for your Capture app, specified in the Capture dashboard.
  *
- * @param captureSignInFormName
+ * @param captureTraditionalSignInFormName
  *   The name of the sign-in form in the Capture flow your users will sign-in with. Required. Likely to be "signinForm"
  *
  * @param captureTraditionalSignInType
@@ -374,13 +374,56 @@
  **/
 + (void)setEngageAppId:(NSString *)engageAppId captureDomain:(NSString *)captureDomain
        captureClientId:(NSString *)clientId captureLocale:(NSString *)captureLocale
-             captureFlowName:(NSString *)captureFlowName captureSignInFormName:(NSString *)captureSignInFormName
- captureTraditionalSignInType:(__unused JRConventionalSignInType)captureTraditionalSignInType
-captureEnableThinRegistration:(BOOL)enableThinRegistration customIdentityProviders:(NSDictionary *)customProviders
+                                          captureFlowName:(NSString *)captureFlowName
+                         captureTraditionalSignInFormName:(NSString *)captureSignInFormName
+                             captureTraditionalSignInType:(__unused JRConventionalSignInType)captureTraditionalSignInType
+                            captureEnableThinRegistration:(BOOL)enableThinRegistration customIdentityProviders:(NSDictionary *)customProviders
                     captureFlowVersion:(NSString *)captureFlowVersion
 captureTraditionalRegistrationFormName:(NSString *)captureTraditionalRegistrationFormName
      captureSocialRegistrationFormName:(NSString *)captureSocialRegistrationFormName
                           captureAppId:(NSString *)captureAppId;
+
+/**
+ * @deprecated
+ */
++ (void)setEngageAppId:(NSString *)engageAppId captureDomain:(NSString *)captureDomain
+       captureClientId:(NSString *)clientId captureLocale:(NSString *)captureLocale
+                 captureFlowName:(NSString *)captureFlowName captureFlowVersion:(NSString *)captureFlowVersion
+captureTraditionalSignInFormName:(NSString *)captureSignInFormName
+   captureEnableThinRegistration:(BOOL)enableThinRegistration
+          captureTraditionalSignInType:(__unused JRConventionalSignInType)captureTraditionalSignInType
+captureTraditionalRegistrationFormName:(NSString *)captureTraditionalRegistrationFormName
+     captureSocialRegistrationFormName:(NSString *)captureSocialRegistrationFormName
+                          captureAppId:(NSString *)captureAppId;
+
+/**
+ * @deprecated
+ */
++ (void)setEngageAppId:(NSString *)engageAppId captureDomain:(NSString *)captureDomain
+       captureClientId:(NSString *)clientId captureLocale:(NSString *)captureLocale
+       captureFlowName:(NSString *)captureFlowName
+              captureFlowVersion:(NSString *)captureFlowVersion
+captureTraditionalSignInFormName:(NSString *)captureSignInFormName
+    captureTraditionalSignInType:(__unused JRConventionalSignInType)captureTraditionalSignInType
+                    captureAppId:(NSString *)captureAppId customIdentityProviders:(NSDictionary *)customProviders;
+
+/**
+ * @deprecated
+ */
++ (void)setEngageAppId:(NSString *)engageAppId captureDomain:(NSString *)captureDomain
+       captureClientId:(NSString *)clientId captureLocale:(NSString *)captureLocale
+       captureFlowName:(NSString *)captureFlowName
+             captureFormName:(NSString *)captureFormName
+captureTraditionalSignInType:(JRConventionalSignInType)captureTraditionalSignInType;
+
+/**
+ * @deprecated
+ */
++ (void)setEngageAppId:(NSString *)engageAppId captureDomain:(NSString *)captureDomain
+       captureClientId:(NSString *)clientId captureLocale:(NSString *)captureLocale
+             captureFlowName:(NSString *)captureFlowName captureFormName:(NSString *)captureFormName
+captureTraditionalSignInType:(JRConventionalSignInType)captureTraditionalSignInType
+     customIdentityProviders:(NSDictionary *)customProviders;
 
 /**
  * Set the Capture access token for an authenticated user

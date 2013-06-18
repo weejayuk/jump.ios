@@ -238,8 +238,8 @@ static JRCaptureData *singleton = nil;
 }
 
 + (void)setCaptureDomain:(NSString *)captureDomain captureClientId:(NSString *)clientId
-           captureLocale:(NSString *)captureLocale captureSignInFormName:(NSString *)captureSignInFormName
-                       captureFlowName:(NSString *)captureFlowName
+           captureLocale:(NSString *)captureLocale captureTraditionalSignInFormName:(NSString *)captureSignInFormName
+                                                                    captureFlowName:(NSString *)captureFlowName
          captureEnableThinRegistration:(BOOL)enableThinRegistration
 captureTraditionalRegistrationFormName:(NSString *)captureTraditionalRegistrationFormName
      captureSocialRegistrationFormName:(NSString *)captureSocialRegistrationFormName

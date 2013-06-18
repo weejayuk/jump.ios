@@ -13,14 +13,18 @@
         <string>mobile-dev.janraincapture.com</string>
         <key>captureClientId</key>
         <string>9vt2ej43mxyftkf68c3xthkm2rtweg8w</string>
-        <!--<key>captureFlowName</key>-->
-        <!--<string></string>-->
-        <key>captureSignInFormName</key>
+        <key>captureFlowName</key>
+        <string>native_flow</string>
+        <key>captureTraditionalSignInFormName</key>
         <string>signinForm</string>
         <key>captureLocale</key>
         <string>en-US</string>
+        <key>captureEnableThinRegistration</key>
+        <false/>
         <key>captureTraditionalRegistrationFormName</key>
         <string>registrationForm</string>
+        <key>captureSocialRegistrationFormName</key>
+        <string>socialRegistrationForm</string>
         <key>captureFlowVersion</key>
         <string>HEAD</string>
         <key>captureAppId</key>
@@ -33,7 +37,7 @@
         <string></string>
         <key>liveFyreArticleId</key>
         <string></string>
-
+        
         <!--<key>customProviders</key>-->
         <!--<dict>-->
             <!--<key>test_custom_openid</key>-->

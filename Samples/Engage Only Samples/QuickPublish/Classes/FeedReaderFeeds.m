@@ -32,14 +32,7 @@
  Date:	 Tuesday, August 24, 2010
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#ifdef DEBUG
-#define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-#else
-#define DLog(...)
-#endif
-
-#define ALog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-
+#import "debug_log.h"
 #import "FeedReaderFeeds.h"
 
 @implementation FeedReaderFeeds
@@ -87,12 +80,12 @@
     titleLabel.backgroundColor = [UIColor clearColor];
     titleLabel.font = [UIFont boldSystemFontOfSize:20.0];
     titleLabel.shadowColor = [UIColor colorWithWhite:0.0 alpha:0.5];
-    titleLabel.textAlignment = UITextAlignmentCenter;
+    titleLabel.textAlignment = (NSTextAlignment) UITextAlignmentCenter;
     titleLabel.textColor = [UIColor whiteColor];
 
     self.navigationItem.titleView = titleLabel;
 
-    titleLabel.text = NSLocalizedString(@"Quick Publish!", @"");
+    titleLabel.text = @"Quick Publish!";
 
     janrainLink.titleLabel.textColor = [UIColor colorWithRed:0.05 green:0.19 blue:0.27 alpha:1.0];
 }
@@ -215,6 +208,7 @@
     [summaryViewController release];
     [feedButton release];
 
+    [layoutView release];
     [super dealloc];
 }
 @end
