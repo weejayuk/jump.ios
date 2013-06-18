@@ -185,6 +185,7 @@ typedef enum
 + (NSDictionary *)invalidClassErrorDictForResult:(NSObject *)result;
 + (NSDictionary *)invalidStatErrorDictForResult:(NSObject *)result;
 + (NSDictionary *)invalidDataErrorDictForResult:(NSObject *)result;
+
 + (NSDictionary *)invalidParameterErrorDictWithParam:(NSString *)param;
 @end
 
@@ -193,9 +194,14 @@ typedef enum
 */
 @interface NSError (JRCaptureError_Extensions)
 - (BOOL)isJRMergeFlowError;
+- (BOOL)isJRTwoStepRegFlowError;
 - (BOOL)isJRFormValidationError;
 - (NSString *)JRMergeFlowConflictedProvider __unused;
 - (NSString *)JRMergeFlowExistingProvider;
 - (NSString *)JRMergeToken;
+- (JRCaptureUser *)JRPreregistrationRecord;
+
+- (NSString *)JRSocialRegistrationToken;
+
 - (NSDictionary *)JRValidationFailureMessages;
 @end

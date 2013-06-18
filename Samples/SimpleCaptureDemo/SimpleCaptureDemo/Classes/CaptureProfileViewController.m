@@ -83,7 +83,14 @@
         [self pickerChanged];
     }
 
-    self.myDoneButton.title = @"Update";
+    if (appDelegate.isNotYetCreated || !appDelegate.captureUser)
+    {
+        self.myDoneButton.title = @"Register";
+    }
+    else
+    {
+        self.myDoneButton.title = @"Update";
+    }
 }
 
 - (BOOL)isFemaleGender:(NSString *)gender
@@ -159,7 +166,15 @@
     else if (myGenderIdentitySegControl.selectedSegmentIndex == 1)
         appDelegate.captureUser.gender = @"male";
 
-    [appDelegate.captureUser updateOnCaptureForDelegate:self context:nil];
+    if (appDelegate.isNotYetCreated)
+    {
+        [JRCapture registerNewUser:appDelegate.captureUser socialRegistrationToken:appDelegate.registrationToken
+                       forDelegate:self];
+    }
+    else
+    {
+        [appDelegate.captureUser updateOnCaptureForDelegate:self context:nil];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -169,6 +184,7 @@
     {
         appDelegate.isNotYetCreated = NO;
         appDelegate.captureUser = nil;
+        appDelegate.registrationToken = nil;
     }
 }
 
@@ -215,6 +231,30 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+- (void)registerUserDidSucceed:(JRCaptureUser *)registeredUser
+{
+    appDelegate.isNotYetCreated = NO;
+    appDelegate.captureUser = registeredUser;
+    appDelegate.registrationToken = nil;
+    [Utils handleSuccessWithTitle:@"Registration Complete" message:nil forVc:self];
+}
+
+- (void)registerUserDidFailWithError:(NSError *)error
+{
+    [error isJRMergeFlowError];
+    if ([error isJRFormValidationError])
+    {
+        NSDictionary *invalidFieldLocalizedFailureMessages = [error JRValidationFailureMessages];
+        [Utils handleFailureWithTitle:@"Invalid Form Submission"
+                              message:[invalidFieldLocalizedFailureMessages description]];
+
+    }
+    else
+    {
+        [Utils handleFailureWithTitle:@"Registration Failed" message:[error localizedDescription]];
+    }
 }
 
 @end

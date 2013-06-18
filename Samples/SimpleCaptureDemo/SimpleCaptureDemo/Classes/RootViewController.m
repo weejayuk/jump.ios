@@ -38,6 +38,7 @@
 #import "ObjectDrillDownViewController.h"
 #import "AlertViewWithBlocks.h"
 #import "AppDelegate.h"
+#import "CaptureDynamicForm.h"
 
 @interface RootViewController ()
 @property(nonatomic, copy) void (^viewDidAppearContinuation)();
@@ -77,9 +78,10 @@
 
 - (void)configureButtons
 {
+    [thirdButton setTitle:@"Refresh Access Token" forState:UIControlStateNormal];
     if (appDelegate.captureUser)
     {
-        thirdButton.hidden = YES;
+        thirdButton.hidden = NO;
         signInButton.hidden = YES;
         signOutButton.hidden = NO;
         [formButton setTitle:@"Update" forState:UIControlStateNormal];
@@ -92,6 +94,7 @@
         signInButton.hidden = NO;
         [signInButton setTitle:@"Sign In" forState:UIControlStateNormal];
         signOutButton.hidden = YES;
+        [formButton setTitle:@"Traditional Registration" forState:UIControlStateNormal];
         browseButton.enabled = NO;
         browseButton.alpha = 0.5;
     }
@@ -134,10 +137,47 @@
     {
         [RootViewController showProfileForm:self.navigationController];
     }
+    else
+    {
+        [self showRegistrationForm];
+    }
+}
+
+- (void)showRegistrationForm
+{
+    CaptureDynamicForm *viewController = [[CaptureDynamicForm alloc] initWithNibName:nil
+                                                                                        bundle:[NSBundle mainBundle]];
+
+    [self.navigationController pushViewController:viewController animated:YES];
 }
 
 - (IBAction)thirdButtonPressed:(id)sender
 {
+    //[BackplaneUtils asyncFetchNewLiveFyreUserTokenWithArticleId:appDelegate.liveFyreArticleId
+    //                                                     network:appDelegate.liveFyreNetwork
+    //                                                     siteId:appDelegate.liveFyreSiteId
+    //                                           backplaneChannel:appDelegate.bpChannelUrl
+    //                                                 completion:^(NSString *string, NSError *err)
+    //                                                 //{
+                                                     //
+                                                     //}];
+    [JRCapture refreshAccessTokenWithCallback:^(BOOL success, NSError *err)
+    {
+        if (err)
+        {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:[err description]
+                                                               delegate:nil cancelButtonTitle:@"Dismiss"
+                                                      otherButtonTitles:nil];
+            [alertView show];
+        }
+        else
+        {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Success" message:nil delegate:nil
+                                                      cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
+            [alertView show];
+
+        }
+    }];
 }
 
 - (IBAction)signInButtonPressed:(id)sender
@@ -259,6 +299,26 @@
                               otherButtonTitles:@"Merge", nil] show];
 }
 
+- (void)handleTwoStepRegFlowError:(NSError *)error
+{
+    appDelegate.isNotYetCreated = YES;
+    appDelegate.captureUser = [error JRPreregistrationRecord];
+    appDelegate.registrationToken = [error JRSocialRegistrationToken];
+
+    UINavigationController *controller = self.navigationController;
+    if (self.viewIsApparent)
+    {
+        [RootViewController showProfileForm:controller];
+    }
+    else
+    {
+        self.viewDidAppearContinuation = ^()
+        {
+            [RootViewController showProfileForm:controller];
+        };
+    }
+}
+
 - (void)signOutCurrentUser
 {
     appDelegate.currentProvider  = nil;
@@ -305,6 +365,10 @@
     else if ([error isJRMergeFlowError])
     {
         [self handleMergeFlowError:error];
+    }
+    else if ([error isJRTwoStepRegFlowError])
+    {
+        [self handleTwoStepRegFlowError:error];
     }
     else
     {

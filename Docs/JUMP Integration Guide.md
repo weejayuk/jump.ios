@@ -10,6 +10,10 @@ integrations see `Engage-Only Integration Guide.md`
     * Either via Engage social sign-in or via traditional username/password sign-in
     * Including the Capture "merge account flow" (which links two social accounts by verified email address at sign-in
       time)
+* Register new Capture accounts
+    * Traditional accounts (e.g. authenticated via password)
+    * Social accounts (with pre-populated registration forms.)
+    * "Thin" social registration -- automatic account creation for social sign-in users without a registration form.
 * Capture account record updates
 
 ### In the Pipeline
@@ -62,8 +66,11 @@ Basic usage flow:
     Ask your deployment engineer for:
         * The name of the Capture "flow" you should use
         * The name of the flow's traditional sign-in form
+        * The name of the flow's social registration form
+        * The name of the flow's traditional registration form
         * The name of the "locale" in the flow your app should use
           The commonly used value for US English is "en-US".
+5. Determine whether your app should use "Thin" social registration, or "two-step" social registration.
 6. Determine the name of the traditional sign-in key attribute (e.g. `email` or `username`)
 
 **Note** The flow version setting is not required. The Capture library will automatically use the latest (`HEAD`)
@@ -137,7 +144,7 @@ object that manages your application's state model.
 
 To configure the library, pass your configuration settings to:
 
-    +[JRCapture setEngageAppId:captureDomain:captureClientId:captureLocale:captureFlowName:captureFlowVersion:captureTraditionalSignInFormName:captureTraditionalSignInType:captureAppId:customIdentityProviders:]
+    +[JRCapture setEngageAppId:captureDomain:captureClientId:captureLocale:captureFlowName:captureSignInFormName:captureEnableThinRegistration:captureTraditionalSignInType:captureFlowVersion:captureTraditionalRegistrationFormName:captureSocialRegistrationFormName:captureAppId:customIdentityProviders:]
 
 (You can copy and paste this block to get started:
 
@@ -149,18 +156,22 @@ To configure the library, pass your configuration settings to:
         NSString *captureLocale = @"en-US"; // e.g.
         NSString *captureFlowName = nil; // e.g.
         NSString *captureSignInFormName = @"signinForm"; // e.g.
+        BOOL captureEnableThinRegistration = YES;
         NSString *captureFlowVersion = nil;
+        NSString *captureTraditionalRegistrationFormName = @"registrationForm"; // e.g.
+        NSString *captureSocialRegistrationFormName = @"socialRegistrationForm"; // e.g.
         NSString *captureAppId = @"your_capture_app_id";
 
-        JRConventionalSigninType captureTraditionalSignInType = JRConventionalSigninEmailPassword; // e.g.
+        JRConventionalSigninType captureTraditionalSignInType =
+            JRConventionalSigninEmailPassword; // e.g.
 
-        [JRCapture setEngageAppId:engageAppId captureDomain:captureDomain
-                  captureClientId:captureClientId captureLocale:captureLocale
-                     captureFlowName:captureFlowName captureFlowVersion:captureFlowVersion
-    captureTraditionalSignInFormName:captureTraditionalSignInFormName
-        captureTraditionalSignInType:captureTraditionalSignInType
-                        captureAppId:captureAppId
-             customIdentityProviders:customProviders];
+        [JRCapture setEngageAppId:engageAppId captureDomain:captureDomain captureClientId:captureClientId
+                    captureLocale:captureLocale captureFlowName:captureFlowName
+            captureSignInFormName:captureSignInFormName captureEnableThinRegistration:captureEnableThinRegistration
+              captureTraditionalSignInType:captureTraditionalSignInType captureFlowVersion:captureFlowVersion
+    captureTraditionalRegistrationFormName:captureTraditionalRegistrationFormName
+         captureSocialRegistrationFormName:captureSocialRegistrationFormName captureAppId:captureAppId
+                   customIdentityProviders:nil];
 
 ...)
 

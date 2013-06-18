@@ -52,7 +52,10 @@ AppDelegate *appDelegate;
 @property(nonatomic, strong) NSString *captureLocale;
 @property(nonatomic, strong) NSString *captureFlowName;
 @property(nonatomic, strong) NSString *captureTraditionalSignInFormName;
+@property(nonatomic) BOOL captureEnableThinRegistration;
 @property(nonatomic, strong) NSString *captureFlowVersion;
+@property(nonatomic, strong) NSString *captureTraditionalRegistrationFormName;
+@property(nonatomic, strong) NSString *captureSocialRegistrationFormName;
 @property(nonatomic, strong) NSString *captureAppId;
 @property(nonatomic, strong) NSString *engageAppId;
 @property(nonatomic, strong) NSString *bpBusUrlString;
@@ -62,6 +65,9 @@ AppDelegate *appDelegate;
 @property(nonatomic, strong) NSString *liveFyreNetwork;
 @property(nonatomic, strong) NSString *liveFyreSiteId;
 @property(nonatomic, strong) NSString *liveFyreArticleId;
+
+
+@property(nonatomic, retain) NSString *registrationToken;
 
 @property(nonatomic, strong) NSDictionary *customProviders;
 
