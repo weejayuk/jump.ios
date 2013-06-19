@@ -140,4 +140,33 @@
     [NSURLConnection sendAsynchronousRequest:req queue:[NSOperationQueue mainQueue] completionHandler:urlHandler];
 }
 
+-(id)asjkdf
+{
+        NSString *engageAppId = @"your_engage_app_id";
+        NSString *captureDomain = @"your_capture_ui_base_url";
+        NSString *captureClientId = @"your_capture_client_id";
+        NSString *captureLocale = @"en-US"; // e.g.
+        NSString *captureFlowName = @"your_flow_name";
+        NSString *captureTraditionalSignInFormName = @"signinForm"; // e.g.
+        BOOL captureEnableThinRegistration = NO;
+        NSString *captureFlowVersion = nil; // use nil to fetch the latest version
+        NSString *captureTraditionalRegistrationFormName = @"registrationForm"; // e.g.
+        NSString *captureSocialRegistrationFormName = @"socialRegistrationForm"; // e.g.
+        NSString *captureAppId = @"your_capture_app_id";
+        NSDictionary *customProviders = nil; // e.g.
+
+        JRConventionalSignInType captureTraditionalSignInType =
+                JRConventionalSignInEmailPassword; // e.g.
+
+        [JRCapture setEngageAppId:engageAppId captureDomain:captureDomain captureClientId:captureClientId
+                    captureLocale:captureLocale captureFlowName:captureFlowName
+               captureFlowVersion:captureFlowVersion captureTraditionalSignInFormName:captureTraditionalSignInFormName
+     captureTraditionalSignInType:captureTraditionalSignInType
+    captureEnableThinRegistration:captureEnableThinRegistration
+                   customIdentityProviders:customProviders
+    captureTraditionalRegistrationFormName:captureTraditionalRegistrationFormName
+         captureSocialRegistrationFormName:captureSocialRegistrationFormName
+                              captureAppId:captureAppId];
+}
+
 @end

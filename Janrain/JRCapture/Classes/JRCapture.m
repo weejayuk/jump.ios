@@ -59,11 +59,11 @@
 
 + (void)setEngageAppId:(NSString *)engageAppId captureDomain:(NSString *)captureDomain
        captureClientId:(NSString *)clientId captureLocale:(NSString *)captureLocale
-                                          captureFlowName:(NSString *)captureFlowName
-                         captureTraditionalSignInFormName:(NSString *)captureSignInFormName
-                             captureTraditionalSignInType:(__unused JRConventionalSignInType)tradSignInType
-                            captureEnableThinRegistration:(BOOL)enableThinRegistration customIdentityProviders:(NSDictionary *)customProviders
-                    captureFlowVersion:(NSString *)captureFlowVersion
+                 captureFlowName:(NSString *)captureFlowName captureFlowVersion:(NSString *)captureFlowVersion
+captureTraditionalSignInFormName:(NSString *)captureSignInFormName
+    captureTraditionalSignInType:(__unused JRConventionalSignInType) tradSignInType
+         captureEnableThinRegistration:(BOOL)enableThinRegistration
+               customIdentityProviders:(NSDictionary *)customProviders
 captureTraditionalRegistrationFormName:(NSString *)captureTraditionalRegistrationFormName
      captureSocialRegistrationFormName:(NSString *)captureSocialRegistrationFormName
                           captureAppId:(NSString *)captureAppId
@@ -89,12 +89,11 @@ captureTraditionalRegistrationFormName:(NSString *)captureTraditionalRegistratio
                           captureAppId:(NSString *)captureAppId
                customIdentityProviders:customProviders
 {
-    [JRCapture setEngageAppId:engageAppId captureDomain:captureDomain
-              captureClientId:clientId captureLocale:captureLocale
-              captureFlowName:captureFlowName captureTraditionalSignInFormName:captureSignInFormName
- captureTraditionalSignInType:captureTraditionalSignInType
-captureEnableThinRegistration:enableThinRegistration customIdentityProviders:customProviders
-                    captureFlowVersion:captureFlowVersion
+    [JRCapture setEngageAppId:engageAppId captureDomain:captureDomain captureClientId:clientId
+                captureLocale:captureLocale captureFlowName:captureFlowName
+           captureFlowVersion:captureFlowVersioncaptureTraditionalSignInFormName :captureSignInFormName
+ captureTraditionalSignInType:captureTraditionalSignInType captureEnableThinRegistration:enableThinRegistration
+               customIdentityProviders:customProviders
 captureTraditionalRegistrationFormName:captureTraditionalRegistrationFormName
      captureSocialRegistrationFormName:captureSocialRegistrationFormName
                           captureAppId:captureAppId];
@@ -110,15 +109,13 @@ captureTraditionalRegistrationFormName:(NSString *)captureTraditionalRegistratio
      captureSocialRegistrationFormName:(NSString *)captureSocialRegistrationFormName
                           captureAppId:(NSString *)captureAppId
 {
-    [JRCapture setEngageAppId:engageAppId captureDomain:captureDomain
-              captureClientId:clientId captureLocale:captureLocale
-              captureFlowName:captureFlowName captureTraditionalSignInFormName:captureSignInFormName
- captureTraditionalSignInType:captureTraditionalSignInType
-captureEnableThinRegistration:enableThinRegistration customIdentityProviders:nil
-                    captureFlowVersion:captureFlowVersion
-captureTraditionalRegistrationFormName:captureTraditionalRegistrationFormName
-     captureSocialRegistrationFormName:captureSocialRegistrationFormName
-                          captureAppId:captureAppId];
+    [JRCapture setEngageAppId:engageAppId captureDomain:captureDomain captureClientId:clientId
+                captureLocale:captureLocale captureFlowName:captureFlowName
+           captureFlowVersion:captureFlowVersioncaptureTraditionalSignInFormName :captureSignInFormName
+ captureTraditionalSignInType:captureTraditionalSignInType captureEnableThinRegistration:enableThinRegistration
+          customIdentityProviders:nil captureTraditionalRegistrationFormName:captureTraditionalRegistrationFormName
+captureSocialRegistrationFormName:captureSocialRegistrationFormName
+                     captureAppId:captureAppId];
 
 }
 

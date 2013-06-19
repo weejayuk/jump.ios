@@ -1,25 +1,26 @@
 # JUMP User Registration Guide
 
-This guide describes use of the user registration feature in the JUMP SDK. This guide is an addendum to
-`JUMP Integration Guide.md`, which describes the basics of the integration process.
+This guide describes use of the user registration feature in the JUMP SDK. This guide is a follow-on to
+`JUMP Integration Guide.md`, which describes the fundamentals of the integration process.
 
 ## Registration Types
 
 There are three types of user registration:
 
-* "Traditional" registration. This is registration as-you-already-know-it. The user fills out a form, and the fields
-  of the form are submitted via a JUMP platform API.
+* "Traditional" registration. This is registration as traditionally implemented. The user fills out a form, and the
+  fields of the form are submitted via a JUMP platform API, which registers the user.
 * "Thin" social registration. This is automatic registration based on social identities. It is only used in the
-  context of a social identity authentication (i.e. a social sign-in.) No form is presented to the user. The user's
-  social identity is used to populate the fields of the new user record.
+  context of a authentication with a social identity. No form is presented to the user. The user's social identity is
+  used to populate the fields of a new user record if one does not already exist for their social identity identifier
+  URL.
 * "Two-step" social registration. This is a registration form with pre-populated values from the user's social
-  identity. (The first step is "the user authenticates with a social identity, but no user record is found so a
-  pre-populated form is returned to the user." The second step is "the user submits the registration form.")
+  identity. The first step is "the user authenticates with a social identity, but no user record is found so a
+  pre-populated form is returned to the user." The second step is "the user submits the registration form."
 
 ## Thin Registration
 
 Thin registration is enabled or disabled at the time that you configure the Capture library, via the
-`captureEnableThinRegistration:` part of the configuration selector. Pass `YES` to enable thin registration, no
+`captureEnableThinRegistration:` part of the configuration selector. Pass `YES` to enable thin registration. No
 further configuration is required. When thin registration is possible it will be performed by Capture automatically
 and the user will be signed in simultaneously.
 
@@ -29,13 +30,13 @@ For thin registration to succeed all Capture schema constraints and rules must b
 (See http://developers.janrain.com/documentation/api-methods/capture/entitytype/setattributeconstraints/
 and http://developers.janrain.com/documentation/api-methods/capture/entitytype/rules/ ) If a constraint or rule cannot
 be met then thin registration will not occur, and the JUMP for iOS library will return an error code 3310,
-`JRCaptureApidErrorRecordNotFound`. For example, if there is a schema constraint, `required` on the `/email` attribute
-of your schema then users attempting to sign-in with Twitter (which does not profile an email address in it's social
+`JRCaptureApidErrorRecordNotFound`. For example, if there is the schema constraint `required` on the `/email` attribute
+of your schema, then users attempting to sign-in with Twitter (which does not profile an email address in it's social
 profiles) will not be able to thin-register.
 
 ### Detecting Thin Registrations
 
-If thin registration is enabled and succeeds form a user then the `captureAuthenticationDidSucceedForUser:...` message
+If thin registration is enabled and succeeds for a user then the `captureAuthenticationDidSucceedForUser:...` message
 will be sent to the `JRCaptureSigninDelegate` designated to receive responses from the sign-in process (i.e. the
 delegate parameter passed to one of the `startEngageSigninDialogForDelegate:` or its variants, or to
 `startCaptureConventionalSigninForUser`.
@@ -48,9 +49,9 @@ parameter will be `JRCaptureRecordNewlyCreated`.
 To perform traditional registration first instantiate an empty Capture user object,
 `JRCaptureUser *registeringUser = [JRCaptureUser captureUser]`.
 
-Then, present a registration form of your creation to the user, allow them to fill in values. There should be a text
-field for each of the fields in your traditional registration form, as defined in your flow file. (You can look in your
-flow directly, or ask your deployment engineer for a list of these fields.)
+Then, present a registration form of your own creation to the user, allow them to fill in values. There should be a
+field in your form for each of the fields in your traditional registration form in your flow. (You can look in
+your flow directly, or ask your deployment engineer for a list of these fields.)
 
 For example, for the default Capture schema and the standard user registration flow, display 5 text fields, one each,
 for the following attributes in the default Capture schema:

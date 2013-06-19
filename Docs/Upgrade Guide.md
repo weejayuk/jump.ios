@@ -2,12 +2,6 @@
 
 This guide describes the steps required to upgrade from different versions of the library.
 
-## Generalized Process
-
-1. Remove existing Janrain project groups
-2. Remove generated Capture user model project groups
-3. Follow the process described JUMP Integration Guide
-
 ## 3.0.x -> 3.1
 
 The signature to the JRCapture initialization method added a new parameter to its selector, `customIdentityProviders:`,
@@ -18,3 +12,11 @@ details.
 
 The signature to the JRCapture initialization method added several new parameters to its selector.  See the selector
 in `JRCapture.h` which begins "setEngageAppId:" for the current list of parameters.
+
+## Generalized Process
+
+A less desirable but more reliable and more general upgrade strategy:
+
+1. Remove existing Janrain project groups
+2. Remove generated Capture user model project groups
+3. Follow the process described JUMP Integration Guide

@@ -130,7 +130,7 @@ object that manages your application's state model.
    protocol. (All of the messages of the protocol are optional.)
 
 
-    @interface AppDelegate : NSObject <JRCaptureSigninDelegate>
+    @interface AppDelegate : NSObject <JRCaptureDelegate>
 
 3. Add a `JRCaptureUser *` property to your class's interface declaration (see
    [JRCaptureUser](http://janrain.github.com/jump.ios/gh_docs/capture/html/interface_j_r_capture_user.html)):
@@ -147,7 +147,7 @@ object that manages your application's state model.
 
 To configure the library, pass your configuration settings to:
 
-    +[JRCapture setEngageAppId:captureDomain:captureClientId:captureLocale:captureFlowName:captureSignInFormName:captureEnableThinRegistration:captureTraditionalSignInType:captureFlowVersion:captureTraditionalRegistrationFormName:captureSocialRegistrationFormName:captureAppId:customIdentityProviders:]
+    +[JRCapture setEngageAppId:captureDomain:captureClientId:captureLocale:captureFlowName:captureFlowVersion:captureTraditionalSignInFormName:captureTraditionalSignInType:captureEnableThinRegistration:customIdentityProviders:captureTraditionalRegistrationFormName:captureSocialRegistrationFormName:captureAppId:]
 
 (You can copy and paste this block to get started:
 
@@ -157,24 +157,27 @@ To configure the library, pass your configuration settings to:
         NSString *captureDomain = @"your_capture_ui_base_url";
         NSString *captureClientId = @"your_capture_client_id";
         NSString *captureLocale = @"en-US"; // e.g.
-        NSString *captureFlowName = nil; // e.g.
-        NSString *captureSignInFormName = @"signinForm"; // e.g.
-        BOOL captureEnableThinRegistration = YES;
-        NSString *captureFlowVersion = nil;
+        NSString *captureFlowName = @"your_flow_name";
+        NSString *captureTraditionalSignInFormName = @"signinForm"; // e.g.
+        BOOL captureEnableThinRegistration = NO;
+        NSString *captureFlowVersion = nil; // use nil to fetch the latest version
         NSString *captureTraditionalRegistrationFormName = @"registrationForm"; // e.g.
         NSString *captureSocialRegistrationFormName = @"socialRegistrationForm"; // e.g.
         NSString *captureAppId = @"your_capture_app_id";
+        NSDictionary *customProviders = nil; // e.g.
 
         JRConventionalSignInType captureTraditionalSignInType =
-            JRConventionalSignInEmailPassword; // e.g.
+                JRConventionalSignInEmailPassword; // e.g.
 
         [JRCapture setEngageAppId:engageAppId captureDomain:captureDomain captureClientId:captureClientId
                     captureLocale:captureLocale captureFlowName:captureFlowName
-            captureSignInFormName:captureSignInFormName captureEnableThinRegistration:captureEnableThinRegistration
-              captureTraditionalSignInType:captureTraditionalSignInType captureFlowVersion:captureFlowVersion
+               captureFlowVersion:captureFlowVersion captureTraditionalSignInFormName:captureTraditionalSignInFormName
+     captureTraditionalSignInType:captureTraditionalSignInType
+    captureEnableThinRegistration:captureEnableThinRegistration
+                   customIdentityProviders:customProviders
     captureTraditionalRegistrationFormName:captureTraditionalRegistrationFormName
-         captureSocialRegistrationFormName:captureSocialRegistrationFormName captureAppId:captureAppId
-                   customIdentityProviders:nil];
+         captureSocialRegistrationFormName:captureSocialRegistrationFormName
+                              captureAppId:captureAppId];
 
 ...)
 

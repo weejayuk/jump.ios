@@ -344,6 +344,10 @@
  *   The name of the Capture sign-in flow your users will sign-in with. Optional. Pass nil to have Capture use the
  *   flow specified by the default_flow_name setting for your Capture app, specified in the Capture dashboard.
  *
+ * @param captureFlowVersion
+ *   Overrides the flow version loaded by the library. Use `nil` to have the library fetch the latest version of the
+ *   flow.
+ *
  * @param captureTraditionalSignInFormName
  *   The name of the sign-in form in the Capture flow your users will sign-in with. Required. Likely to be "signinForm"
  *
@@ -356,10 +360,6 @@
  * @param customIdentityProviders
  *   Describes the configuration of custom identity providers. See `Engage Custom Provider Guide.md` for details
  *   configuring custom providers.
- *
- * @param captureFlowVersion
- *   Overrides the flow version loaded by the library. Use `nil` to have the library fetch the latest version of the
- *   flow.
  *
  * @param captureTraditionalRegistrationFormName
  *   The name of the form (from your flow) used for traditional registration.
@@ -374,11 +374,11 @@
  **/
 + (void)setEngageAppId:(NSString *)engageAppId captureDomain:(NSString *)captureDomain
        captureClientId:(NSString *)clientId captureLocale:(NSString *)captureLocale
-                                          captureFlowName:(NSString *)captureFlowName
-                         captureTraditionalSignInFormName:(NSString *)captureSignInFormName
-                             captureTraditionalSignInType:(__unused JRConventionalSignInType)captureTraditionalSignInType
-                            captureEnableThinRegistration:(BOOL)enableThinRegistration customIdentityProviders:(NSDictionary *)customProviders
-                    captureFlowVersion:(NSString *)captureFlowVersion
+                 captureFlowName:(NSString *)captureFlowName captureFlowVersion:(NSString *)captureFlowVersion
+captureTraditionalSignInFormName:(NSString *)captureSignInFormName
+    captureTraditionalSignInType:(__unused JRConventionalSignInType)captureTraditionalSignInType
+         captureEnableThinRegistration:(BOOL)enableThinRegistration
+               customIdentityProviders:(NSDictionary *)customProviders
 captureTraditionalRegistrationFormName:(NSString *)captureTraditionalRegistrationFormName
      captureSocialRegistrationFormName:(NSString *)captureSocialRegistrationFormName
                           captureAppId:(NSString *)captureAppId;
