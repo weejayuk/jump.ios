@@ -38,6 +38,7 @@
 #import "ObjectDrillDownViewController.h"
 #import "AlertViewWithBlocks.h"
 #import "AppDelegate.h"
+#import "JRActivityObject.h"
 
 @interface RootViewController ()
 @property(nonatomic, copy) void (^viewDidAppearContinuation)();
@@ -95,6 +96,9 @@
         browseButton.enabled = NO;
         browseButton.alpha = 0.5;
     }
+
+    //thirdButton.hidden = NO;
+    //[thirdButton setTitle:@"Share" forState:UIControlStateNormal];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -138,6 +142,11 @@
 
 - (IBAction)thirdButtonPressed:(id)sender
 {
+    //JRActivityObject *t = [JRActivityObject activityObjectWithAction:@"tested"];
+    //t.sms = [JRSmsObject smsObjectWithMessage:@"test" andUrlsToBeShortened:nil];
+    //t.email = [JREmailObject emailObjectWithSubject:@"test" andMessageBody:@"test"
+    //                                         isHtml:NO andUrlsToBeShortened:nil];
+    //[JREngage showSharingDialogWithActivity:t];
 }
 
 - (IBAction)signInButtonPressed:(id)sender

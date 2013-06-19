@@ -219,6 +219,7 @@ static CATransform3D normalizedCATransform3D(CATransform3D d)
 @property(nonatomic, retain) UIView *modalDimmingView;
 @property(nonatomic) CATransform3D originalTransform;
 @property(nonatomic, retain) UIColor *originalDimmingViewColor;
+@property(nonatomic) CGFloat originalZPosition;
 @end
 
 @implementation CustomAnimationController
@@ -254,7 +255,6 @@ static CATransform3D normalizedCATransform3D(CATransform3D d)
     // http://stackoverflow.com/questions/2457947/how-to-resize-a-uipresentationformsheet/4271364#4271364
 
     self.dropShadow.bounds = MODAL_SIZE_FRAME;
-    self.dropShadow.layer.zPosition = 500;
 
     centerViewChain(self.view);
 
@@ -272,6 +272,7 @@ static CATransform3D normalizedCATransform3D(CATransform3D d)
     DLog(@"");
     self.animating = YES;
     self.originalTransform = self.dropShadow.layer.transform;
+    self.originalZPosition = self.dropShadow.layer.zPosition;
 
     CGFloat height = MODAL_SIZE_FRAME.size.height + 20;
     CGFloat halfHeight = height / 2;
@@ -294,10 +295,13 @@ static CATransform3D normalizedCATransform3D(CATransform3D d)
     unsmushed = CATransform3DConcat(normalizedCATransform3D(unsmushed), self.originalTransform);
     smushed = CATransform3DConcat(normalizedCATransform3D(smushed), self.originalTransform);
 
+    // push it out in front of things
+    self.dropShadow.layer.zPosition = 500;
+
     // smush
     self.dropShadow.layer.transform = smushed;
 
-    // undim the background
+    // un-dim the background
     self.originalDimmingViewColor = self.windowDimmingView.backgroundColor;
     self.windowDimmingView.backgroundColor = [UIColor clearColor];
 
@@ -324,6 +328,8 @@ static CATransform3D normalizedCATransform3D(CATransform3D d)
                          // because of matrix homogenization and ...? and parts of the rest of the UI framework may
                          // rely on the original transforms numerical value
                          self.dropShadow.layer.transform = self.originalTransform;
+                         self.dropShadow.layer.zPosition = self.originalZPosition;
+                         
                          [self.modalDimmingView removeFromSuperview];
                          if (self.delayedRotationWhileAnimating)
                              [self attemptRotationWithoutAnimation];
