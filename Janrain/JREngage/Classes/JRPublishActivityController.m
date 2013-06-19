@@ -393,7 +393,6 @@ or opacity of our rounded rectangle. */
     DLog(@"");
     if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]))
     {
-
         sessionData     = [JRSessionData jrSessionData];
         currentActivity = [[sessionData activity] retain];
         customInterface = [theCustomInterface retain];
@@ -405,7 +404,6 @@ or opacity of our rounded rectangle. */
 - (void)viewDidLoad
 {
     DLog(@"");
-
     [super viewDidLoad];
 
     alreadyShared     = [[NSMutableSet alloc] initWithCapacity:[sessionData.sharingProviders count]];
@@ -507,10 +505,9 @@ or opacity of our rounded rectangle. */
 - (void)viewWillAppear:(BOOL)animated
 {
     DLog(@"");
-
     [super viewWillAppear:animated];
+    self.contentSizeForViewInPopover = self.view.frame.size;
 
-    self.contentSizeForViewInPopover = CGSizeMake(320, 416);
     if (!titleView)
     {
         UILabel *titleLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 44)] autorelease];

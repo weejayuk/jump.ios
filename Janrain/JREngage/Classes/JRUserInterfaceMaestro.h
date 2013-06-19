@@ -42,6 +42,7 @@
 @class JRWebViewController;
 @class JRPublishActivityController;
 
+#define MODAL_SIZE_FRAME (CGRectMake(0, 0, 320, 548))
 #define JANRAIN_BLUE    ([UIColor colorWithRed:0.102 green:0.33 blue:0.48 alpha:1.0])
 #define JANRAIN_BLUE_20 ([UIColor colorWithRed:0.102 green:0.33 blue:0.48 alpha:0.2])
 #define IS_IPAD ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad))
