@@ -172,7 +172,8 @@ typedef enum CaptureInterfaceStatEnum
     NSMutableURLRequest *request = [JRCaptureData requestWithPath:@"/oauth/auth_native_traditional"];
     [request JR_setBodyWithParams:signInParams];
 
-    NSDictionary *tag = @{cTagAction : cSignInUser, @"delegate" : delegate, @"context" : context };
+    NSMutableDictionary *tag = [[@{cTagAction : cSignInUser, @"delegate" : delegate } mutableCopy] autorelease];
+    if (context) [tag setObject:context forKey:@"context"];
     if (![JRConnectionManager createConnectionFromRequest:request forDelegate:self withTag:tag])
     {
         JRCaptureError *err = [JRCaptureError connectionCreationErr:request forDelegate:self withTag:tag];
@@ -202,8 +203,9 @@ typedef enum CaptureInterfaceStatEnum
 {
     NSMutableURLRequest *request = [self entityRequestForPath:nil token:token];
 
-    NSDictionary *newTag = @{cTagAction : cGetUser, @"delegate" : delegate, @"context" : context,};
-    if (![JRConnectionManager createConnectionFromRequest:request forDelegate:self withTag:newTag])
+    NSMutableDictionary *tag = [[@{cTagAction : cGetUser, @"delegate" : delegate } mutableCopy] autorelease];
+    [tag JR_maybeSetObject:context forKey:@"context"];
+    if (![JRConnectionManager createConnectionFromRequest:request forDelegate:self withTag:tag])
     {
         NSString *errDesc = [NSString stringWithFormat:@"Could not create a connection to %@",
                                                        [[request URL] absoluteString]];
@@ -240,7 +242,8 @@ typedef enum CaptureInterfaceStatEnum
 {
     NSMutableURLRequest *request = [self entityRequestForPath:entityPath token:token];
 
-    NSDictionary *tag = @{cTagAction : cGetObject, @"delegate" : delegate, @"context" : context,};
+    NSMutableDictionary *tag = [[@{cTagAction : cGetObject, @"delegate" : delegate } mutableCopy] autorelease];
+    [tag JR_maybeSetObject:context forKey:@"context"];
     if (![JRConnectionManager createConnectionFromRequest:request forDelegate:self withTag:tag])
     {
         NSString *errDesc = [NSString stringWithFormat:@"Could not create a connection to %@",
@@ -316,11 +319,8 @@ typedef enum CaptureInterfaceStatEnum
     [request setHTTPMethod:@"POST"];
     [request setHTTPBody:body];
 
-    NSDictionary *tag = @{
-            cTagAction : cUpdateObject,
-            @"delegate" : delegate,
-            @"context" : context,
-    };
+    NSMutableDictionary *tag = [[@{cTagAction : cUpdateObject, @"delegate" : delegate} mutableCopy] autorelease];
+    [tag JR_maybeSetObject:context forKey:@"context"];
 
     if (![JRConnectionManager createConnectionFromRequest:request forDelegate:self withTag:tag])
     {
@@ -384,11 +384,8 @@ typedef enum CaptureInterfaceStatEnum
     [request setHTTPMethod:@"POST"];
     [request setHTTPBody:body];
 
-    NSDictionary *tag = @{
-            cTagAction : cReplaceObject,
-            @"delegate" : delegate,
-            @"context" : context,
-    };
+    NSMutableDictionary *tag = [[@{cTagAction : cReplaceObject, @"delegate" : delegate} mutableCopy] autorelease];
+    [tag JR_maybeSetObject:context forKey:@"context"];
 
     if (![JRConnectionManager createConnectionFromRequest:request forDelegate:self withTag:tag])
     {
@@ -449,13 +446,10 @@ typedef enum CaptureInterfaceStatEnum
     [request setHTTPMethod:@"POST"];
     [request setHTTPBody:body];
 
-    NSDictionary *tag = @{
-            cTagAction : cReplaceArray,
-            @"delegate" : delegate,
-            @"context" : context,
-    };
+    NSMutableDictionary *tag = [[@{cTagAction : cReplaceArray, @"delegate" : delegate} mutableCopy] autorelease];
+    [tag JR_maybeSetObject:context forKey:@"context"];
 
-    DLog(@"%@ attributes=%@ access_token=%@ attribute_name=%@", [[request URL] absoluteString], attributes, token, 
+    DLog(@"%@ attributes=%@ access_token=%@ attribute_name=%@", [[request URL] absoluteString], attributes, token,
         entityPath);
 
     /* tag vs context for workaround */

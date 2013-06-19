@@ -1,5 +1,9 @@
 v3.2.0
  - Adds new two-step social registration and tradtional registration support
+v3.1.4
+ - Fixes additional dictionary literal invalid values
+v3.1.3
+ - Fixes a crash involving dictionary literals and invalid values
 v3.1.2
  - Fixes zPosition of the core animation layer used when modally presenting view controllers.
 v3.1.1
