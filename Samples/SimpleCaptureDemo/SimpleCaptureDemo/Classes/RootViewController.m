@@ -99,6 +99,9 @@
         browseButton.enabled = NO;
         browseButton.alpha = 0.5;
     }
+
+    //thirdButton.hidden = NO;
+    //[thirdButton setTitle:@"Share" forState:UIControlStateNormal];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -162,6 +165,13 @@
     //                                                 //{
                                                      //
                                                      //}];
+
+    //JRActivityObject *t = [JRActivityObject activityObjectWithAction:@"tested"];
+    //t.sms = [JRSmsObject smsObjectWithMessage:@"test" andUrlsToBeShortened:nil];
+    //t.email = [JREmailObject emailObjectWithSubject:@"test" andMessageBody:@"test"
+    //                                         isHtml:NO andUrlsToBeShortened:nil];
+    //[JREngage showSharingDialogWithActivity:t];
+
     [JRCapture refreshAccessTokenForDelegate:self context:nil];
 }
 

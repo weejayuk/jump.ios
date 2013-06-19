@@ -30,7 +30,7 @@ Basic use flow:
 
 1. Gather your configuration details
 2. Generate the Objective-C Capture User Model source code
-3. [Add the JUMP for iOS SDK to your Xcode project](http://developers.janrain.com/documentation/mobile-libraries/jump-for-ios/adding-to-xcode/).
+3. [Add the JUMP for iOS SDK to your Xcode project](Xcode%20Project%20Setup.md).
 4. Initialize the library
 5. Start a sign-in
 6. Modify the profile
@@ -74,9 +74,6 @@ Basic use flow:
           The commonly used value for US English is "en-US".
 5. Determine whether your app should use "Thin" social registration, or "two-step" social registration.
 6. Determine the name of the traditional sign-in key attribute (e.g. `email` or `username`)
-
-**Note** The flow version setting is not required. The Capture library will automatically use the latest (`HEAD`)
-version of the flow if it is not initialized with a flow version.
 
 **Warning** You _must_ create a new API client with the correct login_client feature for operation of the JUMP for iOS
 SDK.

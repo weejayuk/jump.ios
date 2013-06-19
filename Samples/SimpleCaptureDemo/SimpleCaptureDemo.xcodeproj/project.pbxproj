@@ -86,15 +86,6 @@
 		C1424EE3FA47A4163FC6BB09 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1424E26376A97DCC6454072 /* Security.framework */; };
 		D806D1B616A7638E008EEF96 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = D806D1B516A7638E008EEF96 /* assets */; };
 		DFB6898C175E8E6C006DFC92 /* JRBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = DFB68874175E8E6C006DFC92 /* JRBase64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		DFB6898D175E8E6C006DFC92 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = DFB68877175E8E6C006DFC92 /* .gitignore */; };
-		DFB6898E175E8E6C006DFC92 /* .name in Resources */ = {isa = PBXBuildFile; fileRef = DFB68879175E8E6C006DFC92 /* .name */; };
-		DFB6898F175E8E6C006DFC92 /* Classes.iml in Resources */ = {isa = PBXBuildFile; fileRef = DFB6887A175E8E6C006DFC92 /* Classes.iml */; };
-		DFB68990175E8E6C006DFC92 /* encodings.xml in Resources */ = {isa = PBXBuildFile; fileRef = DFB6887B175E8E6C006DFC92 /* encodings.xml */; };
-		DFB68991175E8E6C006DFC92 /* misc.xml in Resources */ = {isa = PBXBuildFile; fileRef = DFB6887C175E8E6C006DFC92 /* misc.xml */; };
-		DFB68992175E8E6C006DFC92 /* modules.xml in Resources */ = {isa = PBXBuildFile; fileRef = DFB6887D175E8E6C006DFC92 /* modules.xml */; };
-		DFB68993175E8E6C006DFC92 /* scope_settings.xml in Resources */ = {isa = PBXBuildFile; fileRef = DFB6887F175E8E6C006DFC92 /* scope_settings.xml */; };
-		DFB68994175E8E6C006DFC92 /* vcs.xml in Resources */ = {isa = PBXBuildFile; fileRef = DFB68880175E8E6C006DFC92 /* vcs.xml */; };
-		DFB68995175E8E6C006DFC92 /* workspace.xml in Resources */ = {isa = PBXBuildFile; fileRef = DFB68881175E8E6C006DFC92 /* workspace.xml */; };
 		DFB68996175E8E6C006DFC92 /* JRCapture.m in Sources */ = {isa = PBXBuildFile; fileRef = DFB68884175E8E6C006DFC92 /* JRCapture.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		DFB68997175E8E6C006DFC92 /* JRCaptureApidInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = DFB68886175E8E6C006DFC92 /* JRCaptureApidInterface.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		DFB68998175E8E6C006DFC92 /* JRCaptureData.m in Sources */ = {isa = PBXBuildFile; fileRef = DFB68888175E8E6C006DFC92 /* JRCaptureData.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -105,29 +96,6 @@
 		DFB6899D175E8E6C006DFC92 /* JREngageWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = DFB68894175E8E6C006DFC92 /* JREngageWrapper.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		DFB6899E175E8E6C006DFC92 /* JRNSDate+ISO8601_CaptureDateTimeString.m in Sources */ = {isa = PBXBuildFile; fileRef = DFB68896175E8E6C006DFC92 /* JRNSDate+ISO8601_CaptureDateTimeString.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		DFB6899F175E8E6C006DFC92 /* NSDictionary+JRQueryParams.m in Sources */ = {isa = PBXBuildFile; fileRef = DFB68898175E8E6C006DFC92 /* NSDictionary+JRQueryParams.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		DFB689A0175E8E6C006DFC92 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = DFB6889A175E8E6C006DFC92 /* .gitignore */; };
-		DFB689A1175E8E6C006DFC92 /* .name in Resources */ = {isa = PBXBuildFile; fileRef = DFB6889C175E8E6C006DFC92 /* .name */; };
-		DFB689A2175E8E6C006DFC92 /* encodings.xml in Resources */ = {isa = PBXBuildFile; fileRef = DFB6889D175E8E6C006DFC92 /* encodings.xml */; };
-		DFB689A3175E8E6C006DFC92 /* misc.xml in Resources */ = {isa = PBXBuildFile; fileRef = DFB6889E175E8E6C006DFC92 /* misc.xml */; };
-		DFB689A4175E8E6C006DFC92 /* modules.xml in Resources */ = {isa = PBXBuildFile; fileRef = DFB6889F175E8E6C006DFC92 /* modules.xml */; };
-		DFB689A5175E8E6C006DFC92 /* scope_settings.xml in Resources */ = {isa = PBXBuildFile; fileRef = DFB688A1175E8E6C006DFC92 /* scope_settings.xml */; };
-		DFB689A6175E8E6C006DFC92 /* Script.iml in Resources */ = {isa = PBXBuildFile; fileRef = DFB688A2175E8E6C006DFC92 /* Script.iml */; };
-		DFB689A7175E8E6C006DFC92 /* vcs.xml in Resources */ = {isa = PBXBuildFile; fileRef = DFB688A3175E8E6C006DFC92 /* vcs.xml */; };
-		DFB689A8175E8E6C006DFC92 /* workspace.xml in Resources */ = {isa = PBXBuildFile; fileRef = DFB688A4175E8E6C006DFC92 /* workspace.xml */; };
-		DFB689A9175E8E6C006DFC92 /* CaptureSchemaParser.pl in Resources */ = {isa = PBXBuildFile; fileRef = DFB688A5175E8E6C006DFC92 /* CaptureSchemaParser.pl */; };
-		DFB689AA175E8E6C006DFC92 /* default-schema.json in Resources */ = {isa = PBXBuildFile; fileRef = DFB688A6175E8E6C006DFC92 /* default-schema.json */; };
-		DFB689AB175E8E6C006DFC92 /* fox_dev_oct.json in Resources */ = {isa = PBXBuildFile; fileRef = DFB688A7175E8E6C006DFC92 /* fox_dev_oct.json */; };
-		DFB689AC175E8E6C006DFC92 /* fox_prod_feb.json in Resources */ = {isa = PBXBuildFile; fileRef = DFB688A8175E8E6C006DFC92 /* fox_prod_feb.json */; };
-		DFB689AD175E8E6C006DFC92 /* fox_prod_oct.json in Resources */ = {isa = PBXBuildFile; fileRef = DFB688A9175E8E6C006DFC92 /* fox_prod_oct.json */; };
-		DFB689AE175E8E6C006DFC92 /* fox_user.json in Resources */ = {isa = PBXBuildFile; fileRef = DFB688AA175E8E6C006DFC92 /* fox_user.json */; };
-		DFB689AF175E8E6C006DFC92 /* ObjCMethodParts.pl in Resources */ = {isa = PBXBuildFile; fileRef = DFB688AB175E8E6C006DFC92 /* ObjCMethodParts.pl */; };
-		DFB689B0175E8E6C006DFC92 /* regen_demo.sh in Resources */ = {isa = PBXBuildFile; fileRef = DFB688AC175E8E6C006DFC92 /* regen_demo.sh */; };
-		DFB689B1175E8E6C006DFC92 /* regen_test.sh in Resources */ = {isa = PBXBuildFile; fileRef = DFB688AD175E8E6C006DFC92 /* regen_test.sh */; };
-		DFB689B2175E8E6C006DFC92 /* reserved_attributes.json in Resources */ = {isa = PBXBuildFile; fileRef = DFB688AE175E8E6C006DFC92 /* reserved_attributes.json */; };
-		DFB689B3175E8E6C006DFC92 /* simple_capture_demo_schema.json in Resources */ = {isa = PBXBuildFile; fileRef = DFB688AF175E8E6C006DFC92 /* simple_capture_demo_schema.json */; };
-		DFB689B4175E8E6C006DFC92 /* typemap.txt in Resources */ = {isa = PBXBuildFile; fileRef = DFB688B0175E8E6C006DFC92 /* typemap.txt */; };
-		DFB689B5175E8E6C006DFC92 /* umg_schema.json in Resources */ = {isa = PBXBuildFile; fileRef = DFB688B1175E8E6C006DFC92 /* umg_schema.json */; };
-		DFB689B6175E8E6C006DFC92 /* user_dev.json in Resources */ = {isa = PBXBuildFile; fileRef = DFB688B2175E8E6C006DFC92 /* user_dev.json */; };
 		DFB689B7175E8E6C006DFC92 /* JRConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DFB688B5175E8E6C006DFC92 /* JRConnectionManager.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		DFB689B8175E8E6C006DFC92 /* ATTRIBUTION in Resources */ = {isa = PBXBuildFile; fileRef = DFB688B7175E8E6C006DFC92 /* ATTRIBUTION */; };
 		DFB689B9175E8E6C006DFC92 /* JRActivityObject.m in Sources */ = {isa = PBXBuildFile; fileRef = DFB688BB175E8E6C006DFC92 /* JRActivityObject.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -452,15 +420,6 @@
 		D806D1B516A7638E008EEF96 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = SOURCE_ROOT; };
 		DFB68873175E8E6C006DFC92 /* JRBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRBase64.h; sourceTree = "<group>"; };
 		DFB68874175E8E6C006DFC92 /* JRBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRBase64.m; sourceTree = "<group>"; };
-		DFB68877175E8E6C006DFC92 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		DFB68879175E8E6C006DFC92 /* .name */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .name; sourceTree = "<group>"; };
-		DFB6887A175E8E6C006DFC92 /* Classes.iml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Classes.iml; sourceTree = "<group>"; };
-		DFB6887B175E8E6C006DFC92 /* encodings.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = encodings.xml; sourceTree = "<group>"; };
-		DFB6887C175E8E6C006DFC92 /* misc.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = misc.xml; sourceTree = "<group>"; };
-		DFB6887D175E8E6C006DFC92 /* modules.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = modules.xml; sourceTree = "<group>"; };
-		DFB6887F175E8E6C006DFC92 /* scope_settings.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = scope_settings.xml; sourceTree = "<group>"; };
-		DFB68880175E8E6C006DFC92 /* vcs.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = vcs.xml; sourceTree = "<group>"; };
-		DFB68881175E8E6C006DFC92 /* workspace.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = workspace.xml; sourceTree = "<group>"; };
 		DFB68882175E8E6C006DFC92 /* debug_log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = debug_log.h; sourceTree = "<group>"; };
 		DFB68883175E8E6C006DFC92 /* JRCapture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCapture.h; sourceTree = "<group>"; };
 		DFB68884175E8E6C006DFC92 /* JRCapture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRCapture.m; sourceTree = "<group>"; };
@@ -484,29 +443,6 @@
 		DFB68896175E8E6C006DFC92 /* JRNSDate+ISO8601_CaptureDateTimeString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JRNSDate+ISO8601_CaptureDateTimeString.m"; sourceTree = "<group>"; };
 		DFB68897175E8E6C006DFC92 /* NSDictionary+JRQueryParams.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+JRQueryParams.h"; sourceTree = "<group>"; };
 		DFB68898175E8E6C006DFC92 /* NSDictionary+JRQueryParams.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+JRQueryParams.m"; sourceTree = "<group>"; };
-		DFB6889A175E8E6C006DFC92 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		DFB6889C175E8E6C006DFC92 /* .name */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .name; sourceTree = "<group>"; };
-		DFB6889D175E8E6C006DFC92 /* encodings.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = encodings.xml; sourceTree = "<group>"; };
-		DFB6889E175E8E6C006DFC92 /* misc.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = misc.xml; sourceTree = "<group>"; };
-		DFB6889F175E8E6C006DFC92 /* modules.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = modules.xml; sourceTree = "<group>"; };
-		DFB688A1175E8E6C006DFC92 /* scope_settings.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = scope_settings.xml; sourceTree = "<group>"; };
-		DFB688A2175E8E6C006DFC92 /* Script.iml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Script.iml; sourceTree = "<group>"; };
-		DFB688A3175E8E6C006DFC92 /* vcs.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = vcs.xml; sourceTree = "<group>"; };
-		DFB688A4175E8E6C006DFC92 /* workspace.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = workspace.xml; sourceTree = "<group>"; };
-		DFB688A5175E8E6C006DFC92 /* CaptureSchemaParser.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = CaptureSchemaParser.pl; sourceTree = "<group>"; };
-		DFB688A6175E8E6C006DFC92 /* default-schema.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "default-schema.json"; sourceTree = "<group>"; };
-		DFB688A7175E8E6C006DFC92 /* fox_dev_oct.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = fox_dev_oct.json; sourceTree = "<group>"; };
-		DFB688A8175E8E6C006DFC92 /* fox_prod_feb.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = fox_prod_feb.json; sourceTree = "<group>"; };
-		DFB688A9175E8E6C006DFC92 /* fox_prod_oct.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = fox_prod_oct.json; sourceTree = "<group>"; };
-		DFB688AA175E8E6C006DFC92 /* fox_user.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = fox_user.json; sourceTree = "<group>"; };
-		DFB688AB175E8E6C006DFC92 /* ObjCMethodParts.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = ObjCMethodParts.pl; sourceTree = "<group>"; };
-		DFB688AC175E8E6C006DFC92 /* regen_demo.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = regen_demo.sh; sourceTree = "<group>"; };
-		DFB688AD175E8E6C006DFC92 /* regen_test.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = regen_test.sh; sourceTree = "<group>"; };
-		DFB688AE175E8E6C006DFC92 /* reserved_attributes.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = reserved_attributes.json; sourceTree = "<group>"; };
-		DFB688AF175E8E6C006DFC92 /* simple_capture_demo_schema.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = simple_capture_demo_schema.json; sourceTree = "<group>"; };
-		DFB688B0175E8E6C006DFC92 /* typemap.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = typemap.txt; sourceTree = "<group>"; };
-		DFB688B1175E8E6C006DFC92 /* umg_schema.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = umg_schema.json; sourceTree = "<group>"; };
-		DFB688B2175E8E6C006DFC92 /* user_dev.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = user_dev.json; sourceTree = "<group>"; };
 		DFB688B4175E8E6C006DFC92 /* JRConnectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRConnectionManager.h; sourceTree = "<group>"; };
 		DFB688B5175E8E6C006DFC92 /* JRConnectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRConnectionManager.m; sourceTree = "<group>"; };
 		DFB688B7175E8E6C006DFC92 /* ATTRIBUTION */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ATTRIBUTION; sourceTree = "<group>"; };
@@ -1007,7 +943,6 @@
 			isa = PBXGroup;
 			children = (
 				DFB68876175E8E6C006DFC92 /* Classes */,
-				DFB68899175E8E6C006DFC92 /* Script */,
 			);
 			path = JRCapture;
 			sourceTree = "<group>";
@@ -1015,8 +950,6 @@
 		DFB68876175E8E6C006DFC92 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				DFB68877175E8E6C006DFC92 /* .gitignore */,
-				DFB68878175E8E6C006DFC92 /* .idea */,
 				DFB68882175E8E6C006DFC92 /* debug_log.h */,
 				DFB68883175E8E6C006DFC92 /* JRCapture.h */,
 				DFB68884175E8E6C006DFC92 /* JRCapture.m */,
@@ -1046,75 +979,6 @@
 				6706F079F7EC3C2884AA95DB /* NSMutableURLRequest+JRRequestUtils.h */,
 			);
 			path = Classes;
-			sourceTree = "<group>";
-		};
-		DFB68878175E8E6C006DFC92 /* .idea */ = {
-			isa = PBXGroup;
-			children = (
-				DFB68879175E8E6C006DFC92 /* .name */,
-				DFB6887A175E8E6C006DFC92 /* Classes.iml */,
-				DFB6887B175E8E6C006DFC92 /* encodings.xml */,
-				DFB6887C175E8E6C006DFC92 /* misc.xml */,
-				DFB6887D175E8E6C006DFC92 /* modules.xml */,
-				DFB6887E175E8E6C006DFC92 /* scopes */,
-				DFB68880175E8E6C006DFC92 /* vcs.xml */,
-				DFB68881175E8E6C006DFC92 /* workspace.xml */,
-			);
-			path = .idea;
-			sourceTree = "<group>";
-		};
-		DFB6887E175E8E6C006DFC92 /* scopes */ = {
-			isa = PBXGroup;
-			children = (
-				DFB6887F175E8E6C006DFC92 /* scope_settings.xml */,
-			);
-			path = scopes;
-			sourceTree = "<group>";
-		};
-		DFB68899175E8E6C006DFC92 /* Script */ = {
-			isa = PBXGroup;
-			children = (
-				DFB6889A175E8E6C006DFC92 /* .gitignore */,
-				DFB6889B175E8E6C006DFC92 /* .idea */,
-				DFB688A5175E8E6C006DFC92 /* CaptureSchemaParser.pl */,
-				DFB688A6175E8E6C006DFC92 /* default-schema.json */,
-				DFB688A7175E8E6C006DFC92 /* fox_dev_oct.json */,
-				DFB688A8175E8E6C006DFC92 /* fox_prod_feb.json */,
-				DFB688A9175E8E6C006DFC92 /* fox_prod_oct.json */,
-				DFB688AA175E8E6C006DFC92 /* fox_user.json */,
-				DFB688AB175E8E6C006DFC92 /* ObjCMethodParts.pl */,
-				DFB688AC175E8E6C006DFC92 /* regen_demo.sh */,
-				DFB688AD175E8E6C006DFC92 /* regen_test.sh */,
-				DFB688AE175E8E6C006DFC92 /* reserved_attributes.json */,
-				DFB688AF175E8E6C006DFC92 /* simple_capture_demo_schema.json */,
-				DFB688B0175E8E6C006DFC92 /* typemap.txt */,
-				DFB688B1175E8E6C006DFC92 /* umg_schema.json */,
-				DFB688B2175E8E6C006DFC92 /* user_dev.json */,
-			);
-			path = Script;
-			sourceTree = "<group>";
-		};
-		DFB6889B175E8E6C006DFC92 /* .idea */ = {
-			isa = PBXGroup;
-			children = (
-				DFB6889C175E8E6C006DFC92 /* .name */,
-				DFB6889D175E8E6C006DFC92 /* encodings.xml */,
-				DFB6889E175E8E6C006DFC92 /* misc.xml */,
-				DFB6889F175E8E6C006DFC92 /* modules.xml */,
-				DFB688A0175E8E6C006DFC92 /* scopes */,
-				DFB688A2175E8E6C006DFC92 /* Script.iml */,
-				DFB688A3175E8E6C006DFC92 /* vcs.xml */,
-				DFB688A4175E8E6C006DFC92 /* workspace.xml */,
-			);
-			path = .idea;
-			sourceTree = "<group>";
-		};
-		DFB688A0175E8E6C006DFC92 /* scopes */ = {
-			isa = PBXGroup;
-			children = (
-				DFB688A1175E8E6C006DFC92 /* scope_settings.xml */,
-			);
-			path = scopes;
 			sourceTree = "<group>";
 		};
 		DFB688B3175E8E6C006DFC92 /* JRConnectionManager */ = {
@@ -1547,38 +1411,6 @@
 				6706F18263DF25C5CAEA8F6C /* Engage Custom Provider Guide.md in Resources */,
 				6706F0DA7F5FA9A15B437997 /* Engage-Only Integration Guide.md in Resources */,
 				6706F2F5D380E2BE1B74B0C3 /* JUMP Integration Guide.md in Resources */,
-				DFB6898D175E8E6C006DFC92 /* .gitignore in Resources */,
-				DFB6898E175E8E6C006DFC92 /* .name in Resources */,
-				DFB6898F175E8E6C006DFC92 /* Classes.iml in Resources */,
-				DFB68990175E8E6C006DFC92 /* encodings.xml in Resources */,
-				DFB68991175E8E6C006DFC92 /* misc.xml in Resources */,
-				DFB68992175E8E6C006DFC92 /* modules.xml in Resources */,
-				DFB68993175E8E6C006DFC92 /* scope_settings.xml in Resources */,
-				DFB68994175E8E6C006DFC92 /* vcs.xml in Resources */,
-				DFB68995175E8E6C006DFC92 /* workspace.xml in Resources */,
-				DFB689A0175E8E6C006DFC92 /* .gitignore in Resources */,
-				DFB689A1175E8E6C006DFC92 /* .name in Resources */,
-				DFB689A2175E8E6C006DFC92 /* encodings.xml in Resources */,
-				DFB689A3175E8E6C006DFC92 /* misc.xml in Resources */,
-				DFB689A4175E8E6C006DFC92 /* modules.xml in Resources */,
-				DFB689A5175E8E6C006DFC92 /* scope_settings.xml in Resources */,
-				DFB689A6175E8E6C006DFC92 /* Script.iml in Resources */,
-				DFB689A7175E8E6C006DFC92 /* vcs.xml in Resources */,
-				DFB689A8175E8E6C006DFC92 /* workspace.xml in Resources */,
-				DFB689A9175E8E6C006DFC92 /* CaptureSchemaParser.pl in Resources */,
-				DFB689AA175E8E6C006DFC92 /* default-schema.json in Resources */,
-				DFB689AB175E8E6C006DFC92 /* fox_dev_oct.json in Resources */,
-				DFB689AC175E8E6C006DFC92 /* fox_prod_feb.json in Resources */,
-				DFB689AD175E8E6C006DFC92 /* fox_prod_oct.json in Resources */,
-				DFB689AE175E8E6C006DFC92 /* fox_user.json in Resources */,
-				DFB689AF175E8E6C006DFC92 /* ObjCMethodParts.pl in Resources */,
-				DFB689B0175E8E6C006DFC92 /* regen_demo.sh in Resources */,
-				DFB689B1175E8E6C006DFC92 /* regen_test.sh in Resources */,
-				DFB689B2175E8E6C006DFC92 /* reserved_attributes.json in Resources */,
-				DFB689B3175E8E6C006DFC92 /* simple_capture_demo_schema.json in Resources */,
-				DFB689B4175E8E6C006DFC92 /* typemap.txt in Resources */,
-				DFB689B5175E8E6C006DFC92 /* umg_schema.json in Resources */,
-				DFB689B6175E8E6C006DFC92 /* user_dev.json in Resources */,
 				DFB689B8175E8E6C006DFC92 /* ATTRIBUTION in Resources */,
 				DFB689C6175E8E6C006DFC92 /* JREngage-Info.plist in Resources */,
 				DFB689C8175E8E6C006DFC92 /* button_black_135x40.png in Resources */,
@@ -2001,11 +1833,11 @@
 				GCC_PREFIX_HEADER = "SimpleCaptureDemo/SimpleCaptureDemo-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "JRCAPTURE_CONVENTIONAL_SIGNIN=1";
 				INFOPLIST_FILE = "SimpleCaptureDemo/SimpleCaptureDemo-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -2023,11 +1855,11 @@
 					"DEBUG=1",
 				);
 				INFOPLIST_FILE = "SimpleCaptureDemo/SimpleCaptureDemo-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2096,11 +1928,11 @@
 				GCC_PREFIX_HEADER = "SimpleCaptureDemo/SimpleCaptureDemo-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "JRCAPTURE_CONVENTIONAL_SIGNIN=1";
 				INFOPLIST_FILE = "SimpleCaptureDemo/SimpleCaptureDemo-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = "Ad Hoc";
