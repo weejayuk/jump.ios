@@ -44,8 +44,6 @@
 #import "JRWebViewController.h"
 #import "JRPublishActivityController.h"
 
-#define MODAL_SIZE_FRAME (CGRectMake(0, 0, 320, 548))
-
 static void handleCustomInterfaceException(NSException* exception, NSString* kJRKeyString)
 {
     NSLog (@"*** Exception thrown. Problem is most likely with jrEngage custom interface object %@ : Caught %@ : %@",

@@ -183,6 +183,7 @@
 {
     DLog(@"");
     [super viewWillAppear:animated];
+    self.contentSizeForViewInPopover = self.view.frame.size;
 
     // We need to figure out if the user canceled authentication by hitting the back button or the cancel button,
     // or if it stopped because it failed or completed successfully on its own.  Assume that the user did hit the
@@ -257,8 +258,6 @@
 {
     DLog(@"");
     [super viewDidAppear:animated];
-
-    self.contentSizeForViewInPopover = CGSizeMake(320, 416);
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex

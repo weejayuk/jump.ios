@@ -112,8 +112,7 @@
 {
     DLog(@"");
     [super viewWillAppear:animated];
-
-    self.contentSizeForViewInPopover = CGSizeMake(320, 416);
+    self.contentSizeForViewInPopover = self.view.frame.size;
 
     self.title = (sessionData.currentProvider) ? sessionData.currentProvider.friendlyName : @"Loading";
 
