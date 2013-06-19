@@ -65,6 +65,10 @@ Basic usage flow:
         * The name of the flow's traditional sign-in form
         * The name of the "locale" in the flow your app should use
           The commonly used value for US English is "en-US".
+5. Configure your flow settings:
+    1. Ask your deployment engineer or account manager the name of the "flow" you should use.
+    2. Ask for the appropriate values for default_flow_name and default_flow_version.
+    3. Set those settings for your new API client in the Capture dashboard's "Settings" page.
 6. Determine the name of the traditional sign-in key attribute (e.g. `email` or `username`)
 
 **Warning** You _must_ create a new API client with the correct login_client feature for operation of the JUMP for iOS
