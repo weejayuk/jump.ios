@@ -157,6 +157,7 @@ started:
         NSString *captureTraditionalRegistrationFormName = @"registrationForm"; // e.g.
         NSString *captureSocialRegistrationFormName = @"socialRegistrationForm"; // e.g.
         NSString *captureAppId = @"your_capture_app_id";
+        NSDictionary *customProviders = nil;
 
         JRConventionalSigninType captureTraditionalSignInType = JRConventionalSigninEmailPassword; // e.g.
 
