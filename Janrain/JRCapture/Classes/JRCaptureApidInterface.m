@@ -155,8 +155,6 @@ typedef enum CaptureInterfaceStatEnum
     }
 
     NSMutableDictionary *signInParams = [[@{
-            signInFieldName : [credentials objectForKey:signInFieldName],
-            @"password" : [credentials objectForKey:@"password"],
             @"client_id" : [JRCaptureData sharedCaptureData].clientId,
             @"locale" : [JRCaptureData sharedCaptureData].captureLocale,
             @"form" : [JRCaptureData sharedCaptureData].captureSignInFormName,
@@ -165,9 +163,9 @@ typedef enum CaptureInterfaceStatEnum
             @"refresh_secret" : refreshSecret
     } mutableCopy] autorelease];
 
+    [signInParams addEntriesFromDictionary:credentials];
     [signInParams JR_maybeSetObject:[JRCaptureData sharedCaptureData].bpChannelUrl forKey:@"bp_channel"];
     [signInParams JR_maybeSetObject:[JRCaptureData sharedCaptureData].captureFlowName forKey:@"flow_name"];
-    [signInParams JR_maybeSetObject:[credentials objectForKey:@"token"] forKey:@"merge_token"];
 
     NSMutableURLRequest *request = [JRCaptureData requestWithPath:@"/oauth/auth_native_traditional"];
     [request JR_setBodyWithParams:signInParams];

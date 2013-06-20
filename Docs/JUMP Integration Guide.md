@@ -3,6 +3,8 @@
 This guide describes integrating the Janrain User Management Platform into your iOS app. For Engage-only
 integrations see `Engage-Only Integration Guide.md`
 
+**Warning** You must have a flow configured with your Capture instance in order to use the Capture library.
+
 ## Features
 
 * Engage social sign-in (includes OpenID, and many OAuth identity providers, e.g. Google, Facebook, etc.)
@@ -121,16 +123,15 @@ object that manages your application's state model.
 
 1. In the chosen class's header, import the Capture library header:
 
+
     #import "JRCapture.h"
 
-2. Modify your class's interface declaration to declare conformation to the
-   [JRCaptureSigninDelegate](http://janrain.github.com/jump.ios/gh_docs/capture/html/protocol_j_r_capture_signin_delegate-p.html)
-   protocol. (All of the messages of the protocol are optional.)
+2. Modify your class's interface declaration to declare conformation to the protocol. (All of the messages of the
+   protocol are optional.) So, for example, start your AppDelegate's interface declaration like this:
 
-    @interface MyDataModel : NSObject <JRCaptureSigninDelegate>
+    @interface AppDelegate : UIResponder <JRCaptureSigninDelegate>
 
-3. Add a `JRCaptureUser *` property to your class's interface declaration (see
-   [JRCaptureUser](http://janrain.github.com/jump.ios/gh_docs/capture/html/interface_j_r_capture_user.html)):
+3. Add a `JRCaptureUser *` property to your class's interface declaration:
 
     @property (retain, nonatomic) JRCaptureUser *captureUser;
 
@@ -140,11 +141,8 @@ object that manages your application's state model.
 
 ## Initialize the Library
 
-To configure the library, pass your configuration settings to:
-
-    +[JRCapture setEngageAppId:captureDomain:captureClientId:captureLocale:captureFlowName:captureSignInFormName:captureEnableThinRegistration:captureTraditionalSignInType:captureFlowVersion:captureTraditionalRegistrationFormName:captureSocialRegistrationFormName:captureAppId:customIdentityProviders:]
-
-(You can copy and paste this block to get started:
+To configure the library, pass your configuration settings to the initializer method. Copy and paste this block to get
+started:
 
         ... // Your existing initialization logic here
 
@@ -160,16 +158,17 @@ To configure the library, pass your configuration settings to:
         NSString *captureSocialRegistrationFormName = @"socialRegistrationForm"; // e.g.
         NSString *captureAppId = @"your_capture_app_id";
 
-        JRConventionalSigninType captureTraditionalSignInType =
-            JRConventionalSigninEmailPassword; // e.g.
+        JRConventionalSigninType captureTraditionalSignInType = JRConventionalSigninEmailPassword; // e.g.
 
         [JRCapture setEngageAppId:engageAppId captureDomain:captureDomain captureClientId:captureClientId
                     captureLocale:captureLocale captureFlowName:captureFlowName
-            captureSignInFormName:captureSignInFormName captureEnableThinRegistration:captureEnableThinRegistration
-              captureTraditionalSignInType:captureTraditionalSignInType captureFlowVersion:captureFlowVersion
+                  captureFlowVersion:captureFlowVersion
+    captureTraditionalSignInFormName:captureTraditionalSignInFormName
+       captureEnableThinRegistration:captureEnableThinRegistration
+              captureTraditionalSignInType:captureTraditionalSignInType
     captureTraditionalRegistrationFormName:captureTraditionalRegistrationFormName
          captureSocialRegistrationFormName:captureSocialRegistrationFormName captureAppId:captureAppId
-                   customIdentityProviders:nil];
+                   customIdentityProviders:customProviders];
 
 ...)
 

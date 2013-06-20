@@ -227,7 +227,7 @@ captureTraditionalRegistrationFormName:nil
     NSMutableDictionary *creds = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                                               user, attrName,
                                                               password, @"password", nil];
-    if (mergeToken) [creds setObject:mergeToken forKey:@"token"];
+    if (mergeToken) [creds setObject:mergeToken forKey:@"merge_token"];
 
     [JRCaptureApidInterface signInCaptureUserWithCredentials:creds ofType:attrName forDelegate:delegate
                                                  withContext:nil];
