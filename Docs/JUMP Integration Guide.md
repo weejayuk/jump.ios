@@ -151,7 +151,7 @@ started:
         NSString *captureClientId = @"your_capture_client_id";
         NSString *captureLocale = @"en-US"; // e.g.
         NSString *captureFlowName = nil; // e.g.
-        NSString *captureSignInFormName = @"signinForm"; // e.g.
+        NSString *captureTraditionalSignInFormName = @"signinForm"; // e.g.
         BOOL captureEnableThinRegistration = YES;
         NSString *captureFlowVersion = nil;
         NSString *captureTraditionalRegistrationFormName = @"registrationForm"; // e.g.
