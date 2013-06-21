@@ -178,7 +178,7 @@ started:
 To start the authentication and sign-in flow, send the `startEngageSigninForDelegate:` message to the `JRCapture`
 class:
 
-    [JRCapture startEngageSigninForDelegate:self];
+    [JRCapture startEngageSigninDialogForDelegate:self];
 
 This starts the Engage user authentication flow, the result of which is used to sign-in to Capture. Once a user is
 signed in, the library instantiates a user model object (an instance of
