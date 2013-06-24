@@ -91,7 +91,8 @@ captureTraditionalRegistrationFormName:(NSString *)captureTraditionalRegistratio
 {
     [JRCapture setEngageAppId:engageAppId captureDomain:captureDomain captureClientId:clientId
                 captureLocale:captureLocale captureFlowName:captureFlowName
-           captureFlowVersion:captureFlowVersioncaptureTraditionalSignInFormName :captureSignInFormName
+           captureFlowVersion:captureFlowVersion
+            captureTraditionalSignInFormName :captureSignInFormName
  captureTraditionalSignInType:captureTraditionalSignInType captureEnableThinRegistration:enableThinRegistration
                customIdentityProviders:customProviders
 captureTraditionalRegistrationFormName:captureTraditionalRegistrationFormName
@@ -111,7 +112,8 @@ captureTraditionalRegistrationFormName:(NSString *)captureTraditionalRegistratio
 {
     [JRCapture setEngageAppId:engageAppId captureDomain:captureDomain captureClientId:clientId
                 captureLocale:captureLocale captureFlowName:captureFlowName
-           captureFlowVersion:captureFlowVersioncaptureTraditionalSignInFormName :captureSignInFormName
+           captureFlowVersion:captureFlowVersion
+            captureTraditionalSignInFormName :captureSignInFormName
  captureTraditionalSignInType:captureTraditionalSignInType captureEnableThinRegistration:enableThinRegistration
           customIdentityProviders:nil captureTraditionalRegistrationFormName:captureTraditionalRegistrationFormName
 captureSocialRegistrationFormName:captureSocialRegistrationFormName
@@ -276,7 +278,7 @@ captureTraditionalRegistrationFormName:nil
     NSMutableDictionary *creds = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                                               user, attrName,
                                                               password, @"password", nil];
-    if (mergeToken) [creds setObject:mergeToken forKey:@"token"];
+    if (mergeToken) [creds setObject:mergeToken forKey:@"merge_token"];
 
     [JRCaptureApidInterface signInCaptureUserWithCredentials:creds ofType:attrName forDelegate:delegate
                                                  withContext:nil];

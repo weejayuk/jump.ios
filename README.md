@@ -6,7 +6,7 @@ It supports:
 
  * Authentication with Janrain Engage
  * Sign-in to, and user session management with, Janrain Capture
- * Social two-step and traditional registration with Janrain Capture
+ * Social two-step registration and traditional registration with Janrain Capture
  * Broadcast sharing via Engage
 
 See also:
