@@ -35,11 +35,11 @@
 #import "RootViewController.h"
 #import "JREngage+CustomInterface.h"
 #import "CaptureProfileViewController.h"
-#import "ObjectDrillDownViewController.h"
 #import "AlertViewWithBlocks.h"
 #import "AppDelegate.h"
 #import "CaptureDynamicForm.h"
 #import "JRCaptureError.h"
+#import "JRCaptureObject+Internal.h"
 
 @interface RootViewController ()
 @property(nonatomic, copy) void (^viewDidAppearContinuation)();
@@ -126,13 +126,7 @@
 
 - (IBAction)browseButtonPressed:(id)sender
 {
-    ObjectDrillDownViewController *drillDown =
-            [[ObjectDrillDownViewController alloc] initWithNibName:@"ObjectDrillDownViewController"
-                                                            bundle:[NSBundle mainBundle]
-                                                         forObject:appDelegate.captureUser
-                                               captureParentObject:nil andKey:@"CaptureUser"];
-
-    [[self navigationController] pushViewController:drillDown animated:YES];
+    DLog(@"Capture user record: %@", [appDelegate.captureUser toDictionaryForEncoder:NO]);
 }
 
 - (IBAction)updateButtonPressed:(id)sender

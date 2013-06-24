@@ -32,11 +32,9 @@
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #import <UIKit/UIKit.h>
-#import "JRCaptureUser+Extras.h"
 #import "PickerViewController.h"
 
-@interface CaptureProfileViewController : PickerViewController <UITextViewDelegate, UIAlertViewDelegate,
-        JRCaptureUserDelegate, UITextFieldDelegate>
+@interface CaptureProfileViewController : PickerViewController
 
 @property(nonatomic, retain) IBOutlet UILabel *myFormTitle;
 @property(nonatomic, retain) IBOutlet UITextField *myEmailTextField;
