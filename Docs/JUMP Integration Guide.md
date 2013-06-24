@@ -516,6 +516,11 @@ Likewise, load the saved user record state when your application launches. For e
 **Note** While your application is responsible for saving and restoring the user record, the Capture library will
 automatically save and restore the session token.
 
+## Next: Registration
+
+Once you have sign-in and record updates working, see the `User Registration Guide.md` for a guide to new user
+registration.
+
 ## Troubleshooting
 
 Sign-ins fail with an error message indicating that the client doesn't have the necessary permissions.
