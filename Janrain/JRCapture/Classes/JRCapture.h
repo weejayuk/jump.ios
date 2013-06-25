@@ -33,6 +33,28 @@
  Date:   Tuesday, January 31, 2012
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+#import "JRCaptureTypes.h"
+@class JRCaptureUser;
+
+#define engageSigninDialogDidFailToShowWithError engageAuthenticationDialogDidFailToShowWithError
+#define engageSigninDidNotComplete engageAuthenticationDidCancel
+#define engageSigninDidSucceedForUser engageAuthenticationDidSucceedForUser
+
+#define captureAuthenticationDidSucceedForUser captureSignInDidSucceedForUser
+#define captureAuthenticationDidFailWithError captureSignInDidFailWithError
+
+#define JRConventionalSigninNone JRConventionalSignInNone
+#define JRConventionalSigninEmailPassword JRConventionalSignInEmailPassword
+#define JRConventionalSigninType JRConventionalSignInType
+
+#define JRCaptureSigninDelegate JRCaptureDelegate
+
+#define startEngageSigninDialogForDelegate startEngageSignInDialogForDelegate
+#define startEngageSigninDialogOnProvider startEngageSignInDialogOnProvider
+#define startCaptureConventionalSigninForUser startCaptureConventionalSignInForUser
+#define startEngageSigninDialogWithConventionalSignin startEngageSignInDialogWithConventionalSignIn
+#define withSigninType withSignInType
+
 /**
  * @mainpage Janrain Capture for iOS
  *
