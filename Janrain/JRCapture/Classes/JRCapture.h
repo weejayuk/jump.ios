@@ -47,6 +47,8 @@
 #define JRConventionalSigninEmailPassword JRConventionalSignInEmailPassword
 #define JRConventionalSigninType JRConventionalSignInType
 
+#define JRCaptureSigninDelegate JRCaptureDelegate
+
 #define startEngageSigninDialogForDelegate startEngageSignInDialogForDelegate
 #define startEngageSigninDialogOnProvider startEngageSignInDialogOnProvider
 #define startCaptureConventionalSigninForUser startCaptureConventionalSignInForUser
