@@ -45,6 +45,7 @@
 #import "JRBase64.h"
 #import "JRCaptureError.h"
 #import "JRCaptureUser+Extras.h"
+#import "jumpExampleViewController.h"
 
 @interface JRCapture ()
 + (void)maybeDispatch:(SEL)pSelector forDelegate:(id <JRCaptureDelegate>)delegate withArg:(id)arg;
@@ -489,5 +490,10 @@ captureTraditionalRegistrationFormName:nil
 - (void)dealloc
 {
     [super dealloc];
+}
+
++ (void)startEngageSignInForDelegate:(id <JRCaptureDelegate>)delegate
+{
+    [JRCapture startEngageSignInDialogForDelegate:delegate];
 }
 @end

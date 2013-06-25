@@ -48,6 +48,7 @@
 #define JRConventionalSigninType JRConventionalSignInType
 
 #define JRCaptureSigninDelegate JRCaptureDelegate
+#define startEngageSigninForDelegate startEngageSignInForDelegate
 
 #define startEngageSigninDialogForDelegate startEngageSignInDialogForDelegate
 #define startEngageSigninDialogOnProvider startEngageSignInDialogOnProvider
@@ -458,6 +459,11 @@ captureTraditionalSignInType:(JRConventionalSignInType)captureTraditionalSignInT
 *   The JRCaptureDelegate object that wishes to receive messages regarding user authentication
 **/
 + (void)startEngageSignInDialogForDelegate:(id<JRCaptureDelegate>)delegate __unused;
+
+/**
+ * @deprecated
+ */
++ (void)startEngageSignInForDelegate:(id <JRCaptureDelegate>)controller;
 
 /**
  * Begin authentication for one specific provider. The library will
