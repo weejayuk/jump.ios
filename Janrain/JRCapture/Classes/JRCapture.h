@@ -321,7 +321,7 @@
  * Set the Backplane channel URL to which Capture will post identity/login messages to. For use with third party
  * integrations
  */
-+ (void)setBackplaneChannelUrl:(NSString *)backplaneChannelUrl;
++ (void)setBackplaneChannelUrl:(NSString *)backplaneChannelUrl __unused;
 
 /**
  * Method for configuring the library to work with your Janrain Capture and Engage applications.
@@ -608,7 +608,7 @@ captureTraditionalSignInType:(JRConventionalSignInType)captureTraditionalSignInT
 /**
  * Refreshes the signed-in user's access token
  */
-+ (void)refreshAccessTokenForDelegate:(id <JRCaptureDelegate>)delegate context:(id <NSObject>)context;
++ (void)refreshAccessTokenForDelegate:(id <JRCaptureDelegate>)delegate context:(id <NSObject>)context __unused;
 
 /**
  * Registers a new user.
@@ -628,12 +628,12 @@ captureTraditionalSignInType:(JRConventionalSignInType)captureTraditionalSignInT
  *  events. (A successful registration is considered a sign-in, and results in a valid client-server session.)
  */
 + (void)registerNewUser:(JRCaptureUser *)newUser socialRegistrationToken:(NSString *)socialRegistrationToken
-            forDelegate:(id <JRCaptureDelegate>)delegate;
+            forDelegate:(id <JRCaptureDelegate>)delegate __unused;
 
 /**
  * Signs the currently-signed-in user, if any, out.
  */
-+ (void)clearSignInState;
++ (void)clearSignInState __unused;
 
 @end
 
