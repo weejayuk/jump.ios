@@ -3,11 +3,13 @@
 #import "Utils.h"
 #import "JRCaptureError.h"
 #import "JRCaptureUser+Extras.h"
+#import "debug_log.h"
 
 static NSMutableDictionary *identifierMap = nil;
 
 @interface CaptureDynamicForm ()
 @property(nonatomic, strong) JRCaptureUser *captureUser;
+@property(nonatomic, strong) UIBarButtonItem *registerButton;
 @end
 
 @implementation CaptureDynamicForm
@@ -19,47 +21,59 @@ static NSMutableDictionary *identifierMap = nil;
 
 - (void)loadView
 {
-    self.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
+    CGRect scrollFrame = [[UIScreen mainScreen] applicationFrame];
 
-    //"email",
-    //"displayName",
-    //"firstName",
-    //"lastName",
-    //"password",
-    //"password_confirm"
-    [self addTitleLabel:@"Traditional Registration"];
-    [self addTextFieldFormLabeled:@"Email" forAttrName:@"email"];
-    [self addTextFieldFormLabeled:@"Display Name" forAttrName:@"displayName"];
-    [self addTextFieldFormLabeled:@"First" forAttrName:@"givenName"];
-    [self addTextFieldFormLabeled:@"Last" forAttrName:@"familyName"];
-    [self addTextFieldFormLabeled:@"Password" forAttrName:@"password"];
-    //[self addTextFieldFormLabeled:@"Confirm" forAttrName:@"password"];
+    UIView *formView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)];
+    formView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
 
+    //"email","displayName","firstName","lastName","password","password_confirm"
+    [self addTitleLabel:@"Traditional Registration" view:formView];
+    [self addTextFieldFormLabeled:@"Email" forAttrName:@"email" view:formView];
+    [self addTextFieldFormLabeled:@"Display Name" forAttrName:@"displayName" view:formView];
+    [self addTextFieldFormLabeled:@"First" forAttrName:@"givenName" view:formView];
+    [self addTextFieldFormLabeled:@"Last" forAttrName:@"familyName" view:formView];
+    [self addTextFieldFormLabeled:@"Password" forAttrName:@"password" view:formView];
+    //[self addTextFieldFormLabeled:@"Confirm" forAttrName:@"password" view:formView];
+    CGSize formSize = [formView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+    DLog(@"formSize: %@", NSStringFromCGSize(formSize));
+
+    self.title = @"DEMO";
     [self setupToolbar];
+    //CGRect scrollFrame = [[UIScreen mainScreen] applicationFrame];
+    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:scrollFrame];
+    self.view = scrollView;
+    //scrollView.contentInset = UIEdgeInsetsMake(self.navigationController.navigationBar.frame.size.height, 0,
+    //        self.navigationController.toolbar.frame.size.height, 0);
+    scrollView.contentSize = formSize;
+    [scrollView addSubview:formView];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    self.navigationController.toolbarHidden = YES;
+    [UIView animateWithDuration:0.3 animations:^(){
+        self.navigationController.toolbarHidden = YES;
+    }];
 }
 
 - (void)setupToolbar
 {
     self.navigationController.toolbar.tintColor = [UIColor blackColor];
-    self.navigationController.toolbarHidden = NO;
     UIBarButtonItem *flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
                                                                           target:self action:nil];
-    UIBarButtonItem *registerUser = [[UIBarButtonItem alloc] initWithTitle:@"Register"
-                                                                     style:UIBarButtonItemStyleDone
-                                                                    target:self action:@selector(registerUser)];
-    self.toolbarItems = @[flex, registerUser, flex];
+    self.registerButton = [[UIBarButtonItem alloc] initWithTitle:@"Register"
+                                                           style:UIBarButtonItemStyleDone
+                                                          target:self action:@selector(registerUser)];
+    self.toolbarItems = @[flex, self.registerButton, flex];
+    [UIView animateWithDuration:0.3 animations:^(){
+        self.navigationController.toolbarHidden = NO;
+    }];
 }
 
 - (void)registerUser
 {
     [JRCapture registerNewUser:self.captureUser socialRegistrationToken:nil forDelegate:self];
+    self.registerButton.enabled = NO;
 }
 
 - (void)registerUserDidSucceed:(JRCaptureUser *)registeredUser
@@ -70,7 +84,7 @@ static NSMutableDictionary *identifierMap = nil;
 
 - (void)registerUserDidFailWithError:(NSError *)error
 {
-    [error isJRMergeFlowError];
+    self.registerButton.enabled = YES;
     if ([error isJRFormValidationError])
     {
         NSDictionary *invalidFieldLocalizedFailureMessages = [error JRValidationFailureMessages];
@@ -84,39 +98,39 @@ static NSMutableDictionary *identifierMap = nil;
     }
 }
 
-- (void)addTitleLabel:(NSString *)titleText
+- (void)addTitleLabel:(NSString *)titleText view:(UIView *)view
 {
-    UIView *lastSubView = [self.view.subviews lastObject];
-    UILabel *label = [self addLabelWithText:titleText toSuperView:self.view];
+    UIView *lastSubView = [[view subviews] lastObject];
+    UILabel *label = [self addLabelWithText:titleText toSuperView:view];
     NSDictionary *views = NSDictionaryOfVariableBindings(label);
 
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[label]-|"
-                                                                      options:NSLayoutFormatAlignAllTop
-                                                                      metrics:nil views:views]];
-    [self appendViewToVerticalLayout:label lastSubView:lastSubView];
+    [view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[label]"
+                                                                 options:NSLayoutFormatAlignAllTop
+                                                                 metrics:nil views:views]];
+    [self appendViewToVerticalLayout:label view:view lastSubView:lastSubView];
 }
 
-- (void)appendViewToVerticalLayout:(UIView *)v lastSubView:(UIView *)lastSubView
+- (void)appendViewToVerticalLayout:(UIView *)v view:(UIView *)view lastSubView:(UIView *)lastSubView
 {
     NSDictionary *views = lastSubView ? NSDictionaryOfVariableBindings(v, lastSubView)
             : NSDictionaryOfVariableBindings(v);
 
     if (lastSubView)
     {
-        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[lastSubView]-[v]"
-                                                                          options:(NSLayoutFormatOptions) 0
-                                                                          metrics:nil views:views]];
+        [view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[lastSubView]-[v]"
+                                                                     options:(NSLayoutFormatOptions) 0
+                                                                     metrics:nil views:views]];
     }
     else
     {
-        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[v]"
-                                                                          options:(NSLayoutFormatOptions) 0
-                                                                          metrics:nil views:views]];
+        [view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[v]"
+                                                                     options:(NSLayoutFormatOptions) 0
+                                                                     metrics:nil views:views]];
     }
 }
 
-- (UITextField *)addTextFieldWithSuperView:(UIView *)superview identifier:(NSString *)identifier
-                                  hintText:(NSString *)hintText
+- (UITextField *)addTextFieldToSuperView:(UIView *)superview identifier:(NSString *)identifier
+                                hintText:(NSString *)hintText
 {
     UITextField *textField = [[UITextField alloc] init];
     textField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
@@ -150,25 +164,26 @@ static NSMutableDictionary *identifierMap = nil;
     return [[identifierMap allKeysForObject:[NSNumber numberWithInteger:i]] lastObject];
 }
 
-- (void)addTextFieldFormLabeled:(NSString *)labelText forAttrName:(NSString *)attrName
+- (void)addTextFieldFormLabeled:(NSString *)labelText forAttrName:(NSString *)attrName view:(UIView *)view
 {
-    UIView *lastSubView = [self.view.subviews lastObject];
-    UILabel *label = [self addLabelWithText:labelText toSuperView:self.view];
-    UITextField *field = [self addTextFieldWithSuperView:self.view identifier:attrName hintText:labelText];
+    UIView *lastSubView = [view.subviews lastObject];
+    UILabel *label = [self addLabelWithText:labelText toSuperView:view];
+    UITextField *field = [self addTextFieldToSuperView:view identifier:attrName hintText:labelText];
 
     NSDictionary *views = NSDictionaryOfVariableBindings(label, field);
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[label(100)]-[field]-|"
-                                                                      options:NSLayoutFormatAlignAllBaseline
-                                                                      metrics:nil views:views]];
+    [view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[label(100)]-[field]-|"
+                                                                 options:NSLayoutFormatAlignAllBaseline
+                                                                 metrics:nil views:views]];
 
-    [self appendViewToVerticalLayout:field lastSubView:lastSubView];
+    [self appendViewToVerticalLayout:field view:view lastSubView:lastSubView];
 }
 
 - (UILabel *)addLabelWithText:(NSString *)labelText toSuperView:(UIView *)view
 {
     UILabel *label = [[UILabel alloc] init];
-    label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    [label setTranslatesAutoresizingMaskIntoConstraints:NO];
+    label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin
+            | UIViewAutoresizingFlexibleRightMargin;
+    //[label setTranslatesAutoresizingMaskIntoConstraints:NO];
     [view addSubview:label];
     label.text = labelText;
     label.backgroundColor = [UIColor clearColor];

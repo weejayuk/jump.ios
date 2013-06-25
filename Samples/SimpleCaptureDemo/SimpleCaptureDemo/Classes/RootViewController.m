@@ -45,7 +45,7 @@
 @property(nonatomic, copy) void (^viewDidAppearContinuation)();
 @property(nonatomic) BOOL viewIsApparent;
 
-- (void)configureButtons;
+- (void)configureViews;
 @end
 
 @interface JRCapture (BetaAPIs)
@@ -74,11 +74,12 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [self configureButtons];
+    [self configureViews];
 }
 
-- (void)configureButtons
+- (void)configureViews
 {
+    self.title = @"DEMO";
     [thirdButton setTitle:@"Refresh Access Token" forState:UIControlStateNormal];
     if (appDelegate.captureUser)
     {
@@ -109,7 +110,7 @@
     DLog();
     self.viewIsApparent = YES;
     [self configureUserLabelAndIcon];
-    [self configureButtons];
+    [self configureViews];
     if (viewDidAppearContinuation)
     {
         viewDidAppearContinuation();
@@ -199,7 +200,7 @@
     currentUserLabel.text = @"No current user";
     currentUserProviderIcon.image = nil;
     [self signOutCurrentUser];
-    [self configureButtons];
+    [self configureViews];
 }
 
 - (void)configureUserLabelAndIcon
@@ -411,7 +412,7 @@
     [appDelegate.prefs setObject:[NSKeyedArchiver archivedDataWithRootObject:appDelegate.captureUser]
                           forKey:cJRCaptureUser];
 
-    [self configureButtons];
+    [self configureViews];
     [self configureUserLabelAndIcon];
 
     if (captureRecordStatus == JRCaptureRecordNewlyCreated)

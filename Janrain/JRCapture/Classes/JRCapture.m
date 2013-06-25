@@ -46,10 +46,6 @@
 #import "JRCaptureError.h"
 #import "JRCaptureUser+Extras.h"
 
-@interface JRCapture ()
-+ (void)maybeDispatch:(SEL)pSelector forDelegate:(id <JRCaptureDelegate>)delegate withArg:(id)arg;
-@end
-
 @implementation JRCapture
 
 + (void)setBackplaneChannelUrl:(NSString *)backplaneChannelUrl
