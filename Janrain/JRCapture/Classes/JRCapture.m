@@ -425,4 +425,9 @@ captureTraditionalRegistrationFormName:nil
 {
     [super dealloc];
 }
+
++ (void)startEngageSignInForDelegate:(id <JRCaptureSignInDelegate>)delegate
+{
+    [JRCapture startEngageSignInDialogForDelegate:delegate];
+}
 @end

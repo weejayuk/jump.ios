@@ -47,7 +47,7 @@
 #define JRConventionalSigninEmailPassword JRConventionalSignInEmailPassword
 #define JRConventionalSigninType JRConventionalSignInType
 
-#define JRCaptureSigninDelegate JRCaptureDelegate
+#define startEngageSigninForDelegate startEngageSignInForDelegate
 
 #define startEngageSigninDialogForDelegate startEngageSignInDialogForDelegate
 #define startEngageSigninDialogOnProvider startEngageSignInDialogOnProvider
@@ -360,7 +360,7 @@ typedef enum
  * Set the Backplane channel URL to which Capture will post identity/login messages to. For use with third party
  * integrations
  */
-+ (void)setBackplaneChannelUrl:(NSString *)backplaneChannelUrl;
++ (void)setBackplaneChannelUrl:(NSString *)backplaneChannelUrl __unused;
 
 /**
  * Method for configuring the library to work with your Janrain Capture and Engage applications.
@@ -462,6 +462,11 @@ captureTraditionalSignInType:(JRConventionalSigninType)captureTraditionalSignInT
 *   The JRCaptureSignInDelegate object that wishes to receive messages regarding user authentication
 **/
 + (void)startEngageSigninDialogForDelegate:(id<JRCaptureSignInDelegate>)delegate __unused;
+
+/**
+ * @deprecated
+ */
++ (void)startEngageSignInForDelegate:(id <JRCaptureSignInDelegate>)controller;
 
 /**
  * Begin authentication for one specific provider. The library will
@@ -626,12 +631,12 @@ captureTraditionalSignInType:(JRConventionalSigninType)captureTraditionalSignInT
  *  events. (A successful registration is considered a sign-in, and results in a valid client-server session.)
  */
 + (void)registerNewUser:(JRCaptureUser *)newUser socialRegistrationToken:(NSString *)socialRegistrationToken
-            forDelegate:(id <JRCaptureSignInDelegate>)delegate;
+            forDelegate:(id <JRCaptureSignInDelegate>)delegate __unused;
 
 /**
  * Signs the currently-signed-in user, if any, out.
  */
-+ (void)clearSignInState;
++ (void)clearSignInState __unused;
 
 @end
 
