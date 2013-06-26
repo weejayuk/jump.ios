@@ -374,12 +374,23 @@ captureTraditionalRegistrationFormName:nil
     SEL successMsg = @selector(registerUserDidSucceed:);
 
     NSString *accessToken;
-    if (e || 
-            ![parsedResponse isKindOfClass:[NSDictionary class]] || 
-            ![[parsedResponse objectForKey:@"stat"] isEqual:@"ok"] || 
-            !(accessToken = [parsedResponse objectForKey:@"access_token"]))
+    if (e || ![parsedResponse isKindOfClass:[NSDictionary class]])
     {
         if (!e) e = [JRCaptureError invalidApiResponseErrorWithObject:parsedResponse];
+    }
+
+    if (!e && ![[parsedResponse objectForKey:@"stat"] isEqual:@"ok"])
+    {
+        e = [JRCaptureError errorFromResult:parsedResponse onProvider:nil engageToken:nil];
+    }
+
+    if (!e && !(accessToken = [parsedResponse objectForKey:@"access_token"]))
+    {
+        e = [JRCaptureError invalidApiResponseErrorWithObject:parsedResponse];
+    }
+
+    if (e)
+    {
         ALog(@"%@", e);
         [JRCaptureApidInterface maybeDispatch:failMsg forDelegate:delegate withArg:e];
         return;
@@ -401,7 +412,7 @@ captureTraditionalRegistrationFormName:nil
                                        ![@"ok" isEqual:[entityResponse objectForKey:@"stat"]] ||
                                        ![entityResponse objectForKey:@"result"])
                                {
-                                   if (!e_) e_ = [JRCaptureError invalidApiResponseErrorWithObject:parsedResponse];
+                                   if (!e_) e_ = [JRCaptureError invalidApiResponseErrorWithObject:entityResponse];
                                    ALog(@"%@", e);
                                    [JRCaptureApidInterface maybeDispatch:failMsg forDelegate:delegate withArg:e_];
                                    return;
