@@ -3,15 +3,19 @@
 #import "Utils.h"
 #import "JRCaptureError.h"
 #import "JRCaptureUser+Extras.h"
-#import "debug_log.h"
 
 static NSMutableDictionary *identifierMap = nil;
 
 @interface CaptureDynamicForm ()
 @property(nonatomic, strong) JRCaptureUser *captureUser;
 @property(nonatomic, strong) UIBarButtonItem *registerButton;
+@property(nonatomic, strong) UIScrollView *scrollView;
 @end
 
+/**
+ * This form is a much too complicated sample form, which exercises the autolayout system to dynamically build a view
+ * hierarchy for a statically known set of form fields.
+ */
 @implementation CaptureDynamicForm
 - (void)viewDidLoad
 {
@@ -34,18 +38,19 @@ static NSMutableDictionary *identifierMap = nil;
     [self addTextFieldFormLabeled:@"Last" forAttrName:@"familyName" view:formView];
     [self addTextFieldFormLabeled:@"Password" forAttrName:@"password" view:formView];
     //[self addTextFieldFormLabeled:@"Confirm" forAttrName:@"password" view:formView];
-    CGSize formSize = [formView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-    DLog(@"formSize: %@", NSStringFromCGSize(formSize));
+    //CGSize formSize = [formView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+    CGSize formSize = [formView sizeThatFits:scrollFrame.size];
+    //DLog(@"formSize: %@", NSStringFromCGSize(formSize));
 
     self.title = @"DEMO";
     [self setupToolbar];
-    //CGRect scrollFrame = [[UIScreen mainScreen] applicationFrame];
-    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:scrollFrame];
-    self.view = scrollView;
+    self.scrollView = [[UIScrollView alloc] initWithFrame:scrollFrame];
     //scrollView.contentInset = UIEdgeInsetsMake(self.navigationController.navigationBar.frame.size.height, 0,
     //        self.navigationController.toolbar.frame.size.height, 0);
-    scrollView.contentSize = formSize;
-    [scrollView addSubview:formView];
+    self.scrollView.contentSize = formSize;
+    [self.scrollView addSubview:formView];
+
+    self.view = self.scrollView;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -104,7 +109,7 @@ static NSMutableDictionary *identifierMap = nil;
     UILabel *label = [self addLabelWithText:titleText toSuperView:view];
     NSDictionary *views = NSDictionaryOfVariableBindings(label);
 
-    [view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[label]"
+    [view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[label]-|"
                                                                  options:NSLayoutFormatAlignAllTop
                                                                  metrics:nil views:views]];
     [self appendViewToVerticalLayout:label view:view lastSubView:lastSubView];
@@ -133,11 +138,9 @@ static NSMutableDictionary *identifierMap = nil;
                                 hintText:(NSString *)hintText
 {
     UITextField *textField = [[UITextField alloc] init];
-    textField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     [textField setTranslatesAutoresizingMaskIntoConstraints:NO];
     textField.borderStyle = UITextBorderStyleRoundedRect;
     textField.font = [UIFont systemFontOfSize:15];
-    textField.placeholder = @"enter text";
     textField.autocorrectionType = UITextAutocorrectionTypeNo;
     textField.keyboardType = UIKeyboardTypeDefault;
     textField.returnKeyType = UIReturnKeyDone;
@@ -181,13 +184,20 @@ static NSMutableDictionary *identifierMap = nil;
 - (UILabel *)addLabelWithText:(NSString *)labelText toSuperView:(UIView *)view
 {
     UILabel *label = [[UILabel alloc] init];
-    label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin
-            | UIViewAutoresizingFlexibleRightMargin;
-    //[label setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [label setTranslatesAutoresizingMaskIntoConstraints:NO];
     [view addSubview:label];
     label.text = labelText;
     label.backgroundColor = [UIColor clearColor];
     return label;
+}
+
+static CGPoint oldContentOffset;
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    oldContentOffset = [self.scrollView contentOffset];
+    CGRect rect = textField.frame;
+    [self.scrollView scrollRectToVisible:[self.view convertRect:rect fromView:textField] animated:YES];
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
@@ -195,6 +205,9 @@ static NSMutableDictionary *identifierMap = nil;
     NSString *identifier = [self identifierForIntTag:textField.tag];
     SEL setSel = NSSelectorFromString([NSString stringWithFormat:@"set%@:", upcaseFirst(identifier)]);
     [self.captureUser performSelector:setSel withObject:textField.text];
+    [UIView animateWithDuration:0.3 animations:^(){
+        self.scrollView.contentOffset = oldContentOffset;
+    }];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
