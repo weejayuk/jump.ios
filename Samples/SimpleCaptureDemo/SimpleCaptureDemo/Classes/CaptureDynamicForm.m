@@ -12,6 +12,7 @@ static NSMutableDictionary *identifierMap = nil;
 @property(nonatomic, strong) UIBarButtonItem *registerButton;
 @property(nonatomic, strong) UIScrollView *scrollView;
 @property(nonatomic, strong) UILabel *disclaimer;
+@property(nonatomic, strong) UIView *formView;
 @end
 
 /**
@@ -27,39 +28,43 @@ static NSMutableDictionary *identifierMap = nil;
 
 - (void)loadView
 {
+    [self buildFormView];
+
     CGRect scrollFrame = [[UIScreen mainScreen] applicationFrame];
-
-    UIView *formView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)];
-    formView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
-
-    //"email","displayName","firstName","lastName","password","password_confirm"
-    [self addTitleLabel:@"Traditional Registration" view:formView];
-    [self addTextFieldFormLabeled:@"Email" forAttrName:@"email" view:formView];
-    [self addTextFieldFormLabeled:@"Display Name" forAttrName:@"displayName" view:formView];
-    [self addTextFieldFormLabeled:@"First" forAttrName:@"givenName" view:formView];
-    [self addTextFieldFormLabeled:@"Last" forAttrName:@"familyName" view:formView];
-    [self addTextFieldFormLabeled:@"Password" forAttrName:@"password" view:formView];
-    self.disclaimer =
-            [self addTitleLabel:@"This is just a sample form, it is NOT stock user experience." view:formView];
-    self.disclaimer.lineBreakMode = NSLineBreakByWordWrapping;
-    self.disclaimer.numberOfLines = 0;
-    [self.disclaimer setContentCompressionResistancePriority:UILayoutPriorityRequired
-                                                     forAxis:UILayoutConstraintAxisVertical];
-    //[self addTextFieldFormLabeled:@"Confirm" forAttrName:@"password" view:formView];
-    //CGSize formSize = [formView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-    CGSize formSize = [formView sizeThatFits:scrollFrame.size];
-    DLog(@"formSize: %@", NSStringFromCGSize(formSize));
-    DLog(@"disclaimer: %@", self.disclaimer);
-
+    CGSize formSize = [self.formView sizeThatFits:scrollFrame.size];
+    
     self.title = @"DEMO";
     [self setupToolbar];
     self.scrollView = [[UIScrollView alloc] initWithFrame:scrollFrame];
     //scrollView.contentInset = UIEdgeInsetsMake(self.navigationController.navigationBar.frame.size.height, 0,
     //        self.navigationController.toolbar.frame.size.height, 0);
     self.scrollView.contentSize = formSize;
-    [self.scrollView addSubview:formView];
+    [self.scrollView addSubview:self.formView];
 
     self.view = self.scrollView;
+}
+
+- (void)buildFormView
+{
+    self.formView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)];
+    self.formView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
+
+    //"email","displayName","firstName","lastName","password","password_confirm"
+    [self addTitleLabel:@"Traditional Registration" view:self.formView];
+    [self addTextFieldFormLabeled:@"Email" forAttrName:@"email" view:self.formView];
+    [self addTextFieldFormLabeled:@"Display Name" forAttrName:@"displayName" view:self.formView];
+    [self addTextFieldFormLabeled:@"First" forAttrName:@"givenName" view:self.formView];
+    [self addTextFieldFormLabeled:@"Last" forAttrName:@"familyName" view:self.formView];
+    [self addTextFieldFormLabeled:@"Password" forAttrName:@"password" view:self.formView];
+    NSString *disclaimerText = @"This is just a sample form, it is NOT stock user experience.";
+    self.disclaimer = [self addTitleLabel:disclaimerText view:self.formView];
+    self.disclaimer.lineBreakMode = NSLineBreakByWordWrapping;
+    self.disclaimer.numberOfLines = 0;
+    [self.disclaimer setContentCompressionResistancePriority:UILayoutPriorityRequired
+                                                     forAxis:UILayoutConstraintAxisVertical];
+    //[self addTextFieldFormLabeled:@"Confirm" forAttrName:@"password" view:formView];
+    //CGSize formSize = [formView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];DLog(@"formSize: %@", NSStringFromCGSize(formSize));
+    DLog(@"disclaimer: %@", self.disclaimer);
 }
 
 - (void)viewWillDisappear:(BOOL)animated
