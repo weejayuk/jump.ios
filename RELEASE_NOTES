@@ -1,3 +1,5 @@
+v3.2.1
+ - Fixes form validation failure recognition
 v3.2.0
  - Adds new two-step social registration and tradtional registration support
 v3.1.4
