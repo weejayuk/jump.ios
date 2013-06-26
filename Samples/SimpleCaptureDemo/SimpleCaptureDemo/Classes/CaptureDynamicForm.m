@@ -3,6 +3,7 @@
 #import "Utils.h"
 #import "JRCaptureError.h"
 #import "JRCaptureUser+Extras.h"
+#import "debug_log.h"
 
 static NSMutableDictionary *identifierMap = nil;
 
@@ -10,6 +11,7 @@ static NSMutableDictionary *identifierMap = nil;
 @property(nonatomic, strong) JRCaptureUser *captureUser;
 @property(nonatomic, strong) UIBarButtonItem *registerButton;
 @property(nonatomic, strong) UIScrollView *scrollView;
+@property(nonatomic, strong) UILabel *disclaimer;
 @end
 
 /**
@@ -37,10 +39,17 @@ static NSMutableDictionary *identifierMap = nil;
     [self addTextFieldFormLabeled:@"First" forAttrName:@"givenName" view:formView];
     [self addTextFieldFormLabeled:@"Last" forAttrName:@"familyName" view:formView];
     [self addTextFieldFormLabeled:@"Password" forAttrName:@"password" view:formView];
+    self.disclaimer =
+            [self addTitleLabel:@"This is just a sample form, it is NOT stock user experience." view:formView];
+    self.disclaimer.lineBreakMode = NSLineBreakByWordWrapping;
+    self.disclaimer.numberOfLines = 0;
+    [self.disclaimer setContentCompressionResistancePriority:UILayoutPriorityRequired
+                                                     forAxis:UILayoutConstraintAxisVertical];
     //[self addTextFieldFormLabeled:@"Confirm" forAttrName:@"password" view:formView];
     //CGSize formSize = [formView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
     CGSize formSize = [formView sizeThatFits:scrollFrame.size];
-    //DLog(@"formSize: %@", NSStringFromCGSize(formSize));
+    DLog(@"formSize: %@", NSStringFromCGSize(formSize));
+    DLog(@"disclaimer: %@", self.disclaimer);
 
     self.title = @"DEMO";
     [self setupToolbar];
@@ -59,6 +68,12 @@ static NSMutableDictionary *identifierMap = nil;
     [UIView animateWithDuration:0.3 animations:^(){
         self.navigationController.toolbarHidden = YES;
     }];
+}
+
+- (void)updateViewConstraints
+{
+    [super updateViewConstraints];
+    self.disclaimer.preferredMaxLayoutWidth = self.view.bounds.size.width - 40;
 }
 
 - (void)setupToolbar
@@ -103,7 +118,7 @@ static NSMutableDictionary *identifierMap = nil;
     }
 }
 
-- (void)addTitleLabel:(NSString *)titleText view:(UIView *)view
+- (UILabel *)addTitleLabel:(NSString *)titleText view:(UIView *)view
 {
     UIView *lastSubView = [[view subviews] lastObject];
     UILabel *label = [self addLabelWithText:titleText toSuperView:view];
@@ -113,6 +128,7 @@ static NSMutableDictionary *identifierMap = nil;
                                                                  options:NSLayoutFormatAlignAllTop
                                                                  metrics:nil views:views]];
     [self appendViewToVerticalLayout:label view:view lastSubView:lastSubView];
+    return label;
 }
 
 - (void)appendViewToVerticalLayout:(UIView *)v view:(UIView *)view lastSubView:(UIView *)lastSubView
