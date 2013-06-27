@@ -81,26 +81,39 @@
 {
     self.title = @"DEMO";
     [thirdButton setTitle:@"Refresh Access Token" forState:UIControlStateNormal];
+    [browseButton setTitle:@"Dump User To Log" forState:UIControlStateNormal];
+    //thirdButton.hidden = NO;
+    //[thirdButton setTitle:@"Share" forState:UIControlStateNormal];
+
+    if (!disableOverride)
+    {
+        thirdButton.enabled = signInButton.enabled = browseButton.enabled = signOutButton.enabled = formButton.enabled
+                = YES;
+        thirdButton.alpha = signInButton.alpha = browseButton.alpha = signOutButton.alpha = formButton.alpha = 1;
+    }
+
     if (appDelegate.captureUser)
     {
-        thirdButton.hidden = NO; thirdButton.alpha = 1;
-        signInButton.hidden = YES; signInButton.alpha = 1;
-        signOutButton.hidden = NO; signOutButton.alpha = 1;
+        thirdButton.hidden = NO;
+        signInButton.hidden = YES;
+        signOutButton.hidden = NO;
+
+        formButton.hidden = NO;
         [formButton setTitle:@"Update" forState:UIControlStateNormal];
+
         browseButton.enabled = YES; browseButton.alpha = 1;
     }
     else
     {
-        thirdButton.hidden = YES; thirdButton.alpha = 1;
-        signInButton.hidden = NO; signInButton.alpha = 1;
-        [signInButton setTitle:@"Sign In" forState:UIControlStateNormal];
-        signOutButton.hidden = YES; signOutButton.alpha = 1;
+        thirdButton.hidden = YES;
+        signInButton.hidden = NO;
+        signOutButton.hidden = YES;
+
+        formButton.hidden = NO;
         [formButton setTitle:@"Traditional Registration" forState:UIControlStateNormal];
+
         browseButton.enabled = NO; browseButton.alpha = 0.5;
     }
-
-    //thirdButton.hidden = NO;
-    //[thirdButton setTitle:@"Share" forState:UIControlStateNormal];
 
     if (disableOverride)
     {
@@ -173,7 +186,6 @@
     //[JREngage showSharingDialogWithActivity:t];
 
     [self configureViewsWithDisableOverride:YES];
-
     [JRCapture refreshAccessTokenForDelegate:self context:nil];
 }
 
