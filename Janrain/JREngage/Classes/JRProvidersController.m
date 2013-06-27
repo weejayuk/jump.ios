@@ -66,10 +66,10 @@
 @end
 
 @interface JRProvidersController ()
-- (void)createConventionalSignInLoadingView;
+- (void)createTraditionalSignInLoadingView;
 
 @property(retain) NSMutableArray *providers;
-@property(retain) UIView *myConventionalSignInLoadingView;
+@property(retain) UIView *myTraditionalSignInLoadingView;
 @end
 
 @implementation JRProvidersController
@@ -99,7 +99,7 @@
 @synthesize myTableView;
 @synthesize myLoadingLabel;
 @synthesize myActivitySpinner;
-@synthesize myConventionalSignInLoadingView;
+@synthesize myTraditionalSignInLoadingView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
    andCustomInterface:(NSDictionary *)theCustomInterface
@@ -149,12 +149,12 @@
     myTableView.tableHeaderView = [customInterface objectForKey:kJRProviderTableHeaderView];
     myTableView.tableFooterView = [customInterface objectForKey:kJRProviderTableFooterView];
 
-    id const maybeCaptureSignInVc = [customInterface objectForKey:kJRCaptureConventionalSigninViewController];
+    id const maybeCaptureSignInVc = [customInterface objectForKey:kJRCaptureTraditionalSignInViewController];
     if ([maybeCaptureSignInVc isKindOfClass:NSClassFromString(@"JRTraditionalSignInViewController")])
     {
         [maybeCaptureSignInVc performSelector:NSSelectorFromString(@"setDelegate:") withObject:self];
 
-        [self createConventionalSignInLoadingView];
+        [self createTraditionalSignInLoadingView];
     }
 
     if (!hidesCancelButton)
@@ -342,39 +342,39 @@
 
 - (void)showLoading
 {
-    UIActivityIndicatorView *myConventionalSigninLoadingSpinner =
-            (UIActivityIndicatorView *) [myConventionalSignInLoadingView viewWithTag:LOADING_VIEW_SPINNER_TAG];
+    UIActivityIndicatorView *myTraditionalSignInLoadingSpinner =
+            (UIActivityIndicatorView *) [myTraditionalSignInLoadingView viewWithTag:LOADING_VIEW_SPINNER_TAG];
 
-    [myConventionalSignInLoadingView setHidden:NO];
-    [myConventionalSigninLoadingSpinner startAnimating];
+    [myTraditionalSignInLoadingView setHidden:NO];
+    [myTraditionalSignInLoadingSpinner startAnimating];
 
     [UIView beginAnimations:@"fade" context:nil];
     [UIView setAnimationDuration:0.2];
     [UIView setAnimationDelay:0.0];
-    myConventionalSignInLoadingView.alpha = 0.8;
+    myTraditionalSignInLoadingView.alpha = 0.8;
     [UIView commitAnimations];
 }
 
 - (void)hideLoading
 {
-    UIActivityIndicatorView *myConventionalSigninLoadingSpinner =
-            (UIActivityIndicatorView *) [myConventionalSignInLoadingView viewWithTag:LOADING_VIEW_SPINNER_TAG];
+    UIActivityIndicatorView *myTraditionalSignInLoadingSpinner =
+            (UIActivityIndicatorView *) [myTraditionalSignInLoadingView viewWithTag:LOADING_VIEW_SPINNER_TAG];
 
     [UIView beginAnimations:@"fade" context:nil];
     [UIView setAnimationDuration:0.2];
     [UIView setAnimationDelay:0.0];
-    myConventionalSignInLoadingView.alpha = 0.0;
+    myTraditionalSignInLoadingView.alpha = 0.0;
     [UIView commitAnimations];
 
-    [myConventionalSignInLoadingView setHidden:YES];
-    [myConventionalSigninLoadingSpinner stopAnimating];
+    [myTraditionalSignInLoadingView setHidden:YES];
+    [myTraditionalSignInLoadingSpinner stopAnimating];
 }
 
-- (void)createConventionalSignInLoadingView
+- (void)createTraditionalSignInLoadingView
 {
-    self.myConventionalSignInLoadingView = [[[UIView alloc] initWithFrame:self.view.frame] autorelease];
+    self.myTraditionalSignInLoadingView = [[[UIView alloc] initWithFrame:self.view.frame] autorelease];
 
-    [self.myConventionalSignInLoadingView setBackgroundColor:[UIColor blackColor]];
+    [self.myTraditionalSignInLoadingView setBackgroundColor:[UIColor blackColor]];
 
     UILabel *loadingLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 180, 320, 30)] autorelease];
 
@@ -403,14 +403,14 @@
     [loadingLabel setTag:LOADING_VIEW_LABEL_TAG];
     [loadingSpinner setTag:LOADING_VIEW_SPINNER_TAG];
 
-    [myConventionalSignInLoadingView addSubview:loadingLabel];
-    [myConventionalSignInLoadingView addSubview:loadingSpinner];
+    [myTraditionalSignInLoadingView addSubview:loadingLabel];
+    [myTraditionalSignInLoadingView addSubview:loadingSpinner];
 
-    [myConventionalSignInLoadingView setTag:LOADING_VIEW_TAG];
-    [myConventionalSignInLoadingView setHidden:YES];
-    [myConventionalSignInLoadingView setAlpha:0.0];
+    [myTraditionalSignInLoadingView setTag:LOADING_VIEW_TAG];
+    [myTraditionalSignInLoadingView setHidden:YES];
+    [myTraditionalSignInLoadingView setAlpha:0.0];
 
-    [self.view addSubview:myConventionalSignInLoadingView];
+    [self.view addSubview:myTraditionalSignInLoadingView];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -569,7 +569,7 @@
     [myActivitySpinner release];
     [infoBar release];
     [providers release];
-    [myConventionalSignInLoadingView release];
+    [myTraditionalSignInLoadingView release];
     [super dealloc];
 }
 @end

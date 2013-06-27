@@ -210,15 +210,15 @@ captureTraditionalRegistrationFormName:nil
 
 + (void)startEngageSignInDialogForDelegate:(id <JRCaptureDelegate>)delegate __unused
 {
-    [JREngageWrapper startAuthenticationDialogWithConventionalSignIn:JRTraditionalSignInNone
-                                         andCustomInterfaceOverrides:nil forDelegate:delegate];
+    [JREngageWrapper startAuthenticationDialogWithTraditionalSignIn:JRTraditionalSignInNone
+                                        andCustomInterfaceOverrides:nil forDelegate:delegate];
 }
 
-+ (void)startEngageSignInDialogWithConventionalSignIn:(JRTraditionalSignInType)conventionalSignInType
-                                          forDelegate:(id <JRCaptureDelegate>)delegate __unused
++ (void)startEngageSignInDialogWithTraditionalSignIn:(JRTraditionalSignInType)traditionalSignInType
+                                         forDelegate:(id <JRCaptureDelegate>)delegate __unused
 {
-    [JREngageWrapper startAuthenticationDialogWithConventionalSignIn:conventionalSignInType
-                                         andCustomInterfaceOverrides:nil forDelegate:delegate];
+    [JREngageWrapper startAuthenticationDialogWithTraditionalSignIn:traditionalSignInType
+                                        andCustomInterfaceOverrides:nil forDelegate:delegate];
 }
 
 + (void)startEngageSignInDialogOnProvider:(NSString *)provider
@@ -231,17 +231,17 @@ captureTraditionalRegistrationFormName:nil
 + (void)startEngageSignInDialogWithCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
                                                 forDelegate:(id <JRCaptureDelegate>)delegate __unused
 {
-    [JREngageWrapper startAuthenticationDialogWithConventionalSignIn:JRTraditionalSignInNone
-                                         andCustomInterfaceOverrides:customInterfaceOverrides
-                                                         forDelegate:delegate];
+    [JREngageWrapper startAuthenticationDialogWithTraditionalSignIn:JRTraditionalSignInNone
+                                        andCustomInterfaceOverrides:customInterfaceOverrides
+                                                        forDelegate:delegate];
 }
 
-+ (void)startEngageSignInDialogWithConventionalSignIn:(JRTraditionalSignInType)conventionalSignInType
-                          andCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
-                                          forDelegate:(id <JRCaptureDelegate>)delegate
++ (void)startEngageSignInDialogWithTraditionalSignIn:(JRTraditionalSignInType)traditionalSignInType
+                         andCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
+                                         forDelegate:(id <JRCaptureDelegate>)delegate
 {
-    [JREngageWrapper startAuthenticationDialogWithConventionalSignIn:conventionalSignInType
-                                         andCustomInterfaceOverrides:customInterfaceOverrides forDelegate:delegate];
+    [JREngageWrapper startAuthenticationDialogWithTraditionalSignIn:traditionalSignInType
+                                        andCustomInterfaceOverrides:customInterfaceOverrides forDelegate:delegate];
 }
 
 + (void)startEngageSignInDialogOnProvider:(NSString *)provider

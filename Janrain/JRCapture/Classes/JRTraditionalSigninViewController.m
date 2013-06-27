@@ -34,7 +34,7 @@
 
 #import "debug_log.h"
 #import "JRCaptureApidInterface.h"
-#import "JRConventionalSignInViewController.h"
+#import "JRTraditionalSigninViewController.h"
 #import "JREngage.h"
 #import "JREngageWrapper.h"
 #import "JRUserInterfaceMaestro.h"
@@ -60,9 +60,9 @@
 @synthesize delegate;
 @synthesize firstResponder;
 
-- (id)initWithConventionalSignInType:(JRTraditionalSignInType)theSignInType titleString:(NSString *)theTitleString
-                                                                               titleView:(UIView *)theTitleView
-                                                                           engageWrapper:(JREngageWrapper *)theWrapper
+- (id)initWithTraditionalSignInType:(JRTraditionalSignInType)theSignInType titleString:(NSString *)theTitleString
+                          titleView:(UIView *)theTitleView
+                      engageWrapper:(JREngageWrapper *)theWrapper
 {
     if ((self = [super init]))
     {
@@ -75,13 +75,13 @@
     return self;
 }
 
-+ (id)conventionalSignInViewController:(JRTraditionalSignInType)theSignInType titleString:(NSString *)theTitleString
-                             titleView:(UIView *)theTitleView engageWrapper:(JREngageWrapper *)theWrapper
++ (id)traditionalSignInViewController:(JRTraditionalSignInType)theSignInType titleString:(NSString *)theTitleString
+                            titleView:(UIView *)theTitleView engageWrapper:(JREngageWrapper *)theWrapper
 {
     return [[[JRTraditionalSignInViewController alloc]
-            initWithConventionalSignInType:theSignInType
-                               titleString:theTitleString
-                                 titleView:theTitleView engageWrapper:theWrapper] autorelease];
+            initWithTraditionalSignInType:theSignInType
+                              titleString:theTitleString
+                                titleView:theTitleView engageWrapper:theWrapper] autorelease];
 }
 
 - (void)loadView

@@ -49,7 +49,8 @@
 #define startEngageSigninDialogForDelegate startEngageSignInDialogForDelegate
 #define startEngageSigninDialogOnProvider startEngageSignInDialogOnProvider
 #define startCaptureConventionalSigninForUser startCaptureTraditionalSignInForUser
-#define startEngageSigninDialogWithConventionalSignin startEngageSignInDialogWithConventionalSignIn
+#define startEngageSignInDialogWithConventionalSignIn startEngageSignInDialogWithTraditionalSignIn
+#define startEngageSigninDialogWithConventionalSignin startEngageSignInDialogWithTraditionalSignIn
 #define withSigninType withSignInType
 
 #define startCaptureConventionalSignInForUser startCaptureTraditionalSignInForUser
@@ -205,7 +206,7 @@
  * data accept perhaps update the UI while your user is waiting for authentication to complete.
  *
  * @note
- * If your user signs in to your server directly (conventional sign-in), this message is not sent to your delegate.
+ * If your user signs in to your server directly (traditional sign-in), this message is not sent to your delegate.
  **/
 - (void)engageAuthenticationDidSucceedForUser:(NSDictionary *)engageAuthInfo forProvider:(NSString *)provider;
 
@@ -530,11 +531,11 @@ captureTraditionalSignInType:(JRTraditionalSignInType)captureTraditionalSignInTy
 
 /**
  * Begin authentication, adding the option for your users to log directly into Capture through
- * your conventional sign-in mechanism. By using this method to initiate sign-in, the library automatically adds
+ * your traditional sign-in mechanism. By using this method to initiate sign-in, the library automatically adds
  * a direct login form, above the list of social providers, that allows your users to login with a username/password
  * or email/password combination.
  *
- * @param conventionalSignInType
+ * @param traditionalSignInType
  *   A JRTraditionalSignInType that tells the library to either prompt the user for their username/password
  *   combination or their email/password combination. This value must match what is configured for your Capture UI
  *   application. If you are unsure which one to use, try one, and if sign-in fails, try the other. If you pass in
@@ -545,15 +546,15 @@ captureTraditionalSignInType:(JRTraditionalSignInType)captureTraditionalSignInTy
  * JRTraditionalSignInType of either JRTraditionalSignInUsernamePassword or JRTraditionalSignInEmailPassword.
  * Based on this argument, the dialog will prompt your user to either enter their username or email.
  **/
-+ (void)startEngageSignInDialogWithConventionalSignIn:(JRTraditionalSignInType)conventionalSignInType
-                                          forDelegate:(id<JRCaptureDelegate>)delegate __unused;
++ (void)startEngageSignInDialogWithTraditionalSignIn:(JRTraditionalSignInType)traditionalSignInType
+                                         forDelegate:(id<JRCaptureDelegate>)delegate __unused;
 /**
  * Begin authentication, adding the option for your users to log directly into Capture through
- * your conventional sign-in mechanism. By using this method to initiate sign-in, the library automatically adds
+ * your traditional sign-in mechanism. By using this method to initiate sign-in, the library automatically adds
  * a direct login form, above the list of social providers, that allows your users to login with a username/password
  * or email/password combination.
  *
- * @param conventionalSignInType
+ * @param traditionalSignInType
  *   A JRTraditionalSignInType that tells the library to either prompt the user for their username/password
  *   combination or their email/password combination. This value must match what is configured for your Capture UI
  *   application. If you are unsure which one to use, try one, and if sign-in fails, try the other.
@@ -568,9 +569,9 @@ captureTraditionalSignInType:(JRTraditionalSignInType)captureTraditionalSignInTy
  * JRTraditionalSignInType of either JRTraditionalSignInUsernamePassword or JRTraditionalSignInEmailPassword.
  * Based on this argument, the dialog will prompt your user to either enter their username or email.
  **/
-+ (void)startEngageSignInDialogWithConventionalSignIn:(JRTraditionalSignInType)conventionalSignInType
-                          andCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
-                                          forDelegate:(id<JRCaptureDelegate>)delegate;
++ (void)startEngageSignInDialogWithTraditionalSignIn:(JRTraditionalSignInType)traditionalSignInType
+                         andCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
+                                         forDelegate:(id<JRCaptureDelegate>)delegate;
 
 /**
  * Signs a user in via traditional (username/email and password) authentication on Capture.

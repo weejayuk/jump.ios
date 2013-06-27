@@ -74,24 +74,24 @@ typedef enum
 } JRCaptureRecordStatus;
 
 /**
- * Indicates the kind of conventional sign-in to be used.
+ * Indicates the kind of traditional sign-in to be used.
  **/
 typedef enum
 {
 /**
- * No conventional login dialog added
+ * No traditional login dialog added
  **/
  JRTraditionalSignInNone = 0,
 
 /**
- * Conventional login dialog added prompting the user for their username and
+ * Traditional login dialog added prompting the user for their username and
  * password combination. Use this if your Capture instance is set up to accept a \c username argument when signing in
  * directly to your server
  **/
             JRTraditionalSignInUsernamePassword,
 
 /**
- * Conventional login dialog added prompting the user for their email and password
+ * Traditional login dialog added prompting the user for their email and password
  * combination. Use this if your Capture instance is set up to accept a \c email argument when signing in
  * directly to your server
  **/
