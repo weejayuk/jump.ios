@@ -177,6 +177,8 @@
     {
         [appDelegate.captureUser updateOnCaptureForDelegate:self context:nil];
     }
+
+    self.myDoneButton.enabled = NO;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -223,11 +225,13 @@
 - (void)updateDidSucceedForObject:(JRCaptureObject *)object context:(NSObject *)context
 {
     [Utils handleSuccessWithTitle:@"Profile updated" message:nil forVc:self];
+    self.myDoneButton.enabled = YES;
 }
 
 - (void)updateDidFailForObject:(JRCaptureObject *)object withError:(NSError *)error context:(NSObject *)context
 {
     [Utils handleFailureWithTitle:@"Profile not updated" message:nil];
+    self.myDoneButton.enabled = YES;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -257,6 +261,8 @@
     {
         [Utils handleFailureWithTitle:@"Registration Failed" message:[error localizedDescription]];
     }
+
+    self.myDoneButton.enabled = YES;
 }
 
 @end
