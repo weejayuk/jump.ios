@@ -57,7 +57,7 @@
        captureClientId:(NSString *)clientId captureLocale:(NSString *)captureLocale
                  captureFlowName:(NSString *)captureFlowName captureFlowVersion:(NSString *)captureFlowVersion
 captureTraditionalSignInFormName:(NSString *)captureSignInFormName
-    captureTraditionalSignInType:(__unused JRConventionalSignInType) tradSignInType
+    captureTraditionalSignInType:(__unused JRTraditionalSignInType) tradSignInType
          captureEnableThinRegistration:(BOOL)enableThinRegistration
                customIdentityProviders:(NSDictionary *)customProviders
 captureTraditionalRegistrationFormName:(NSString *)captureTraditionalRegistrationFormName
@@ -79,7 +79,7 @@ captureTraditionalRegistrationFormName:captureTraditionalRegistrationFormName
                  captureFlowName:(NSString *)captureFlowName captureFlowVersion:(NSString *)captureFlowVersion
 captureTraditionalSignInFormName:(NSString *)captureSignInFormName
    captureEnableThinRegistration:(BOOL)enableThinRegistration
-          captureTraditionalSignInType:(__unused JRConventionalSignInType)captureTraditionalSignInType
+          captureTraditionalSignInType:(__unused JRTraditionalSignInType)captureTraditionalSignInType
 captureTraditionalRegistrationFormName:(NSString *)captureTraditionalRegistrationFormName
      captureSocialRegistrationFormName:(NSString *)captureSocialRegistrationFormName
                           captureAppId:(NSString *)captureAppId
@@ -101,7 +101,7 @@ captureTraditionalRegistrationFormName:captureTraditionalRegistrationFormName
                  captureFlowName:(NSString *)captureFlowName captureFlowVersion:(NSString *)captureFlowVersion
 captureTraditionalSignInFormName:(NSString *)captureSignInFormName
    captureEnableThinRegistration:(BOOL)enableThinRegistration
-          captureTraditionalSignInType:(__unused JRConventionalSignInType)captureTraditionalSignInType
+          captureTraditionalSignInType:(__unused JRTraditionalSignInType)captureTraditionalSignInType
 captureTraditionalRegistrationFormName:(NSString *)captureTraditionalRegistrationFormName
      captureSocialRegistrationFormName:(NSString *)captureSocialRegistrationFormName
                           captureAppId:(NSString *)captureAppId
@@ -121,7 +121,7 @@ captureSocialRegistrationFormName:captureSocialRegistrationFormName
        captureClientId:(NSString *)clientId captureLocale:(NSString *)captureLocale
                  captureFlowName:(NSString *)captureFlowName captureFlowVersion:(NSString *)captureFlowVersion
 captureTraditionalSignInFormName:(NSString *)captureSignInFormName
-    captureTraditionalSignInType:(JRConventionalSignInType)captureTraditionalSignInType
+    captureTraditionalSignInType:(JRTraditionalSignInType)captureTraditionalSignInType
                     captureAppId:(NSString *)captureAppId customIdentityProviders:(NSDictionary *)customProviders
 {
     [JRCapture setEngageAppId:engageAppId captureDomain:captureDomain
@@ -139,7 +139,7 @@ captureTraditionalRegistrationFormName:nil
 + (void)setEngageAppId:(NSString *)engageAppId captureDomain:(NSString *)captureDomain
        captureClientId:(NSString *)clientId captureLocale:(NSString *)captureLocale
              captureFlowName:(NSString *)captureFlowName captureFormName:(NSString *)captureFormName
-captureTraditionalSignInType:(JRConventionalSignInType)captureTraditionalSignInType
+captureTraditionalSignInType:(JRTraditionalSignInType)captureTraditionalSignInType
 {
     [JRCapture setEngageAppId:engageAppId captureDomain:captureDomain
               captureClientId:clientId captureLocale:captureLocale
@@ -156,7 +156,7 @@ captureTraditionalRegistrationFormName:nil
 + (void)setEngageAppId:(NSString *)engageAppId captureDomain:(NSString *)captureDomain
        captureClientId:(NSString *)clientId captureLocale:(NSString *)captureLocale
              captureFlowName:(NSString *)captureFlowName captureFormName:(NSString *)captureFormName
-captureTraditionalSignInType:(JRConventionalSignInType)captureTraditionalSignInType
+captureTraditionalSignInType:(JRTraditionalSignInType)captureTraditionalSignInType
      customIdentityProviders:(NSDictionary *)customProviders
 {
     [JRCapture setEngageAppId:engageAppId captureDomain:captureDomain
@@ -210,11 +210,11 @@ captureTraditionalRegistrationFormName:nil
 
 + (void)startEngageSignInDialogForDelegate:(id <JRCaptureDelegate>)delegate __unused
 {
-    [JREngageWrapper startAuthenticationDialogWithConventionalSignIn:JRConventionalSignInNone
+    [JREngageWrapper startAuthenticationDialogWithConventionalSignIn:JRTraditionalSignInNone
                                          andCustomInterfaceOverrides:nil forDelegate:delegate];
 }
 
-+ (void)startEngageSignInDialogWithConventionalSignIn:(JRConventionalSignInType)conventionalSignInType
++ (void)startEngageSignInDialogWithConventionalSignIn:(JRTraditionalSignInType)conventionalSignInType
                                           forDelegate:(id <JRCaptureDelegate>)delegate __unused
 {
     [JREngageWrapper startAuthenticationDialogWithConventionalSignIn:conventionalSignInType
@@ -231,12 +231,12 @@ captureTraditionalRegistrationFormName:nil
 + (void)startEngageSignInDialogWithCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
                                                 forDelegate:(id <JRCaptureDelegate>)delegate __unused
 {
-    [JREngageWrapper startAuthenticationDialogWithConventionalSignIn:JRConventionalSignInNone
+    [JREngageWrapper startAuthenticationDialogWithConventionalSignIn:JRTraditionalSignInNone
                                          andCustomInterfaceOverrides:customInterfaceOverrides
                                                          forDelegate:delegate];
 }
 
-+ (void)startEngageSignInDialogWithConventionalSignIn:(JRConventionalSignInType)conventionalSignInType
++ (void)startEngageSignInDialogWithConventionalSignIn:(JRTraditionalSignInType)conventionalSignInType
                           andCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
                                           forDelegate:(id <JRCaptureDelegate>)delegate
 {
@@ -263,12 +263,12 @@ captureTraditionalRegistrationFormName:nil
                                              forDelegate:delegate];
 }
 
-+ (void)startCaptureConventionalSignInForUser:(NSString *)user withPassword:(NSString *)password
-                               withSignInType:(JRConventionalSignInType)conventionalSignInType
-                                   mergeToken:(NSString *)mergeToken forDelegate:(id <JRCaptureDelegate>)delegate
++ (void)startCaptureTraditionalSignInForUser:(NSString *)user withPassword:(NSString *)password
+                              withSignInType:(JRTraditionalSignInType)traditionalSignInTypeSignInType
+                                  mergeToken:(NSString *)mergeToken forDelegate:(id <JRCaptureDelegate>)delegate
 {
-    NSString *attrName = conventionalSignInType == JRConventionalSignInEmailPassword ? @"email" :
-            conventionalSignInType == JRConventionalSignInUsernamePassword ? @"username" : nil;
+    NSString *attrName = traditionalSignInTypeSignInType == JRTraditionalSignInEmailPassword ? @"email" :
+            traditionalSignInTypeSignInType == JRTraditionalSignInUsernamePassword ? @"username" : nil;
     if (!attrName) return;
 
     NSMutableDictionary *creds = [NSMutableDictionary dictionaryWithObjectsAndKeys:
@@ -280,12 +280,12 @@ captureTraditionalRegistrationFormName:nil
                                                  withContext:nil];
 }
 
-+ (void)startCaptureConventionalSignInForUser:(NSString *)user withPassword:(NSString *)password
-                               withSignInType:(JRConventionalSignInType)conventionalSignInType
-                                  forDelegate:(id <JRCaptureDelegate>)delegate __unused
++ (void)startCaptureTraditionalSignInForUser:(NSString *)user withPassword:(NSString *)password
+                              withSignInType:(JRTraditionalSignInType)traditionalSignInTypeSignInType
+                                 forDelegate:(id <JRCaptureDelegate>)delegate __unused
 {
-    [self startCaptureConventionalSignInForUser:user withPassword:password withSignInType:conventionalSignInType
-                                     mergeToken:nil forDelegate:delegate];
+    [self startCaptureTraditionalSignInForUser:user withPassword:password withSignInType:traditionalSignInTypeSignInType
+                                    mergeToken:nil forDelegate:delegate];
 }
 
 + (void)refreshAccessTokenForDelegate:(id <JRCaptureDelegate>)delegate context:(id <NSObject>)context

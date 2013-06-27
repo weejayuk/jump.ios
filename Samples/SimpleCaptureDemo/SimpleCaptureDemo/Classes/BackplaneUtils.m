@@ -155,8 +155,8 @@
         NSString *captureAppId = @"your_capture_app_id";
         NSDictionary *customProviders = nil; // e.g.
 
-        JRConventionalSignInType captureTraditionalSignInType =
-                JRConventionalSignInEmailPassword; // e.g.
+        JRTraditionalSignInType captureTraditionalSignInType =
+                JRTraditionalSignInEmailPassword; // e.g.
 
         [JRCapture setEngageAppId:engageAppId captureDomain:captureDomain captureClientId:captureClientId
                     captureLocale:captureLocale captureFlowName:captureFlowName

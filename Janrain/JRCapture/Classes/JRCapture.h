@@ -43,18 +43,16 @@
 #define captureAuthenticationDidSucceedForUser captureSignInDidSucceedForUser
 #define captureAuthenticationDidFailWithError captureSignInDidFailWithError
 
-#define JRConventionalSigninNone JRConventionalSignInNone
-#define JRConventionalSigninEmailPassword JRConventionalSignInEmailPassword
-#define JRConventionalSigninType JRConventionalSignInType
-
 #define JRCaptureSigninDelegate JRCaptureDelegate
 #define startEngageSigninForDelegate startEngageSignInForDelegate
 
 #define startEngageSigninDialogForDelegate startEngageSignInDialogForDelegate
 #define startEngageSigninDialogOnProvider startEngageSignInDialogOnProvider
-#define startCaptureConventionalSigninForUser startCaptureConventionalSignInForUser
+#define startCaptureConventionalSigninForUser startCaptureTraditionalSignInForUser
 #define startEngageSigninDialogWithConventionalSignin startEngageSignInDialogWithConventionalSignIn
 #define withSigninType withSignInType
+
+#define startCaptureConventionalSignInForUser startCaptureTraditionalSignInForUser
 
 /**
  * @mainpage Janrain Capture for iOS
@@ -379,7 +377,7 @@
        captureClientId:(NSString *)clientId captureLocale:(NSString *)captureLocale
                  captureFlowName:(NSString *)captureFlowName captureFlowVersion:(NSString *)captureFlowVersion
 captureTraditionalSignInFormName:(NSString *)captureSignInFormName
-    captureTraditionalSignInType:(__unused JRConventionalSignInType)captureTraditionalSignInType
+    captureTraditionalSignInType:(__unused JRTraditionalSignInType)captureTraditionalSignInType
          captureEnableThinRegistration:(BOOL)enableThinRegistration
                customIdentityProviders:(NSDictionary *)customProviders
 captureTraditionalRegistrationFormName:(NSString *)captureTraditionalRegistrationFormName
@@ -394,7 +392,7 @@ captureTraditionalRegistrationFormName:(NSString *)captureTraditionalRegistratio
                  captureFlowName:(NSString *)captureFlowName captureFlowVersion:(NSString *)captureFlowVersion
 captureTraditionalSignInFormName:(NSString *)captureSignInFormName
    captureEnableThinRegistration:(BOOL)enableThinRegistration
-          captureTraditionalSignInType:(__unused JRConventionalSignInType)captureTraditionalSignInType
+          captureTraditionalSignInType:(__unused JRTraditionalSignInType)captureTraditionalSignInType
 captureTraditionalRegistrationFormName:(NSString *)captureTraditionalRegistrationFormName
      captureSocialRegistrationFormName:(NSString *)captureSocialRegistrationFormName
                           captureAppId:(NSString *)captureAppId;
@@ -407,7 +405,7 @@ captureTraditionalRegistrationFormName:(NSString *)captureTraditionalRegistratio
        captureFlowName:(NSString *)captureFlowName
               captureFlowVersion:(NSString *)captureFlowVersion
 captureTraditionalSignInFormName:(NSString *)captureSignInFormName
-    captureTraditionalSignInType:(__unused JRConventionalSignInType)captureTraditionalSignInType
+    captureTraditionalSignInType:(__unused JRTraditionalSignInType)captureTraditionalSignInType
                     captureAppId:(NSString *)captureAppId customIdentityProviders:(NSDictionary *)customProviders;
 
 /**
@@ -417,7 +415,7 @@ captureTraditionalSignInFormName:(NSString *)captureSignInFormName
        captureClientId:(NSString *)clientId captureLocale:(NSString *)captureLocale
        captureFlowName:(NSString *)captureFlowName
              captureFormName:(NSString *)captureFormName
-captureTraditionalSignInType:(JRConventionalSignInType)captureTraditionalSignInType;
+captureTraditionalSignInType:(JRTraditionalSignInType)captureTraditionalSignInType;
 
 /**
  * @deprecated
@@ -425,7 +423,7 @@ captureTraditionalSignInType:(JRConventionalSignInType)captureTraditionalSignInT
 + (void)setEngageAppId:(NSString *)engageAppId captureDomain:(NSString *)captureDomain
        captureClientId:(NSString *)clientId captureLocale:(NSString *)captureLocale
              captureFlowName:(NSString *)captureFlowName captureFormName:(NSString *)captureFormName
-captureTraditionalSignInType:(JRConventionalSignInType)captureTraditionalSignInType
+captureTraditionalSignInType:(JRTraditionalSignInType)captureTraditionalSignInType
      customIdentityProviders:(NSDictionary *)customProviders;
 
 /**
@@ -537,17 +535,17 @@ captureTraditionalSignInType:(JRConventionalSignInType)captureTraditionalSignInT
  * or email/password combination.
  *
  * @param conventionalSignInType
- *   A JRConventionalSignInType that tells the library to either prompt the user for their username/password
+ *   A JRTraditionalSignInType that tells the library to either prompt the user for their username/password
  *   combination or their email/password combination. This value must match what is configured for your Capture UI
  *   application. If you are unsure which one to use, try one, and if sign-in fails, try the other. If you pass in
- *   JRConventionalSignInNone, this method will do exactly what the startEngageSignInDialogForDelegate:() method does
+ *   JRTraditionalSignInNone, this method will do exactly what the startEngageSignInDialogForDelegate:() method does
  *
  * @note
  * Depending on how your Capture application is configured, you pass to this method a
- * JRConventionalSignInType of either JRConventionalSignInUsernamePassword or JRConventionalSignInEmailPassword.
+ * JRTraditionalSignInType of either JRTraditionalSignInUsernamePassword or JRTraditionalSignInEmailPassword.
  * Based on this argument, the dialog will prompt your user to either enter their username or email.
  **/
-+ (void)startEngageSignInDialogWithConventionalSignIn:(JRConventionalSignInType)conventionalSignInType
++ (void)startEngageSignInDialogWithConventionalSignIn:(JRTraditionalSignInType)conventionalSignInType
                                           forDelegate:(id<JRCaptureDelegate>)delegate __unused;
 /**
  * Begin authentication, adding the option for your users to log directly into Capture through
@@ -556,7 +554,7 @@ captureTraditionalSignInType:(JRConventionalSignInType)captureTraditionalSignInT
  * or email/password combination.
  *
  * @param conventionalSignInType
- *   A JRConventionalSignInType that tells the library to either prompt the user for their username/password
+ *   A JRTraditionalSignInType that tells the library to either prompt the user for their username/password
  *   combination or their email/password combination. This value must match what is configured for your Capture UI
  *   application. If you are unsure which one to use, try one, and if sign-in fails, try the other.
  *
@@ -567,10 +565,10 @@ captureTraditionalSignInType:(JRConventionalSignInType)captureTraditionalSignInT
  *
  * @note
  * Depending on how your Capture application is configured, you pass to this method a
- * JRConventionalSignInType of either JRConventionalSignInUsernamePassword or JRConventionalSignInEmailPassword.
+ * JRTraditionalSignInType of either JRTraditionalSignInUsernamePassword or JRTraditionalSignInEmailPassword.
  * Based on this argument, the dialog will prompt your user to either enter their username or email.
  **/
-+ (void)startEngageSignInDialogWithConventionalSignIn:(JRConventionalSignInType)conventionalSignInType
++ (void)startEngageSignInDialogWithConventionalSignIn:(JRTraditionalSignInType)conventionalSignInType
                           andCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
                                           forDelegate:(id<JRCaptureDelegate>)delegate;
 
@@ -581,15 +579,15 @@ captureTraditionalSignInType:(JRConventionalSignInType)captureTraditionalSignInT
  *  The username or the email address
  * @param password
  *  The password
- * @param conventionalSignInType
- *  A JRConventionalSignInType value used to indicate whether the user parameter is a username or an email address
+ * @param traditionalSignInTypeSignInType
+ *  A JRTraditionalSignInType value used to indicate whether the user parameter is a username or an email address
  * @param mergeToken
  *  The Engage token to merge with, retrieved from the merge error
  */
-+ (void)startCaptureConventionalSignInForUser:(NSString *)user withPassword:(NSString *)password
-                               withSignInType:(JRConventionalSignInType)conventionalSignInType
-                                   mergeToken:(NSString *)mergeToken
-                                  forDelegate:(id <JRCaptureDelegate>)delegate;
++ (void)startCaptureTraditionalSignInForUser:(NSString *)user withPassword:(NSString *)password
+                              withSignInType:(JRTraditionalSignInType)traditionalSignInTypeSignInType
+                                  mergeToken:(NSString *)mergeToken
+                                 forDelegate:(id <JRCaptureDelegate>)delegate;
 
 /**
  * Signs a user in via traditional (username/email and password) authentication on Capture.
@@ -598,12 +596,12 @@ captureTraditionalSignInType:(JRConventionalSignInType)captureTraditionalSignInT
  *  The username or the email address
  * @param password
  *  The password
- * @param conventionalSignInType
- *  A JRConventionalSignInType value used to indicate whether the user parameter is a username or an email address
+ * @param traditionalSignInTypeSignInType
+ *  A JRTraditionalSignInType value used to indicate whether the user parameter is a username or an email address
  */
-+ (void)startCaptureConventionalSignInForUser:(NSString *)user withPassword:(NSString *)password
-                               withSignInType:(JRConventionalSignInType)conventionalSignInType
-                                  forDelegate:(id <JRCaptureDelegate>)delegate __unused;
++ (void)startCaptureTraditionalSignInForUser:(NSString *)user withPassword:(NSString *)password
+                              withSignInType:(JRTraditionalSignInType)traditionalSignInTypeSignInType
+                                 forDelegate:(id <JRCaptureDelegate>)delegate __unused;
 
 /**
  * Refreshes the signed-in user's access token

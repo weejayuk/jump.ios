@@ -28,6 +28,17 @@
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+#define JRConventionalSigninNone JRTraditionalSignInNone
+#define JRConventionalSigninEmailPassword JRTraditionalSignInEmailPassword
+#define JRConventionalSigninUsernamePassword JRTraditionalSignInUsernamePassword
+#define JRConventionalSigninType JRTraditionalSignInType
+
+#define JRConventionalSignInEmailPassword JRTraditionalSignInEmailPassword
+#define JRConventionalSignInUsernamePassword JRTraditionalSignInUsernamePassword
+#define JRConventionalSignInNone JRTraditionalSignInNone
+#define JRConventionalSignInType JRTraditionalSignInType
+
+
 /**
  * Indicates the type of the user record as an argument to your
  * JRCaptureDelegate#captureAuthenticationDidSucceedForUser:status: delegate method.
@@ -70,22 +81,22 @@ typedef enum
 /**
  * No conventional login dialog added
  **/
- JRConventionalSignInNone = 0,
+ JRTraditionalSignInNone = 0,
 
 /**
  * Conventional login dialog added prompting the user for their username and
  * password combination. Use this if your Capture instance is set up to accept a \c username argument when signing in
  * directly to your server
  **/
- JRConventionalSignInUsernamePassword,
+            JRTraditionalSignInUsernamePassword,
 
 /**
  * Conventional login dialog added prompting the user for their email and password
  * combination. Use this if your Capture instance is set up to accept a \c email argument when signing in
  * directly to your server
  **/
- JRConventionalSignInEmailPassword
-} JRConventionalSignInType;
+            JRTraditionalSignInEmailPassword
+} JRTraditionalSignInType;
 
 /**
  * @file

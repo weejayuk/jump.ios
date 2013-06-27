@@ -212,7 +212,7 @@
 
     [self signOutCurrentUser];
 
-    [JRCapture startEngageSignInDialogWithConventionalSignIn:JRConventionalSignInEmailPassword
+    [JRCapture startEngageSignInDialogWithConventionalSignIn:JRTraditionalSignInEmailPassword
                                  andCustomInterfaceOverrides:self.customUi forDelegate:self];
 }
 
@@ -295,10 +295,10 @@
                 if (cancelled_) return;
                 NSString *user = [[alertView_ textFieldAtIndex:0] text];
                 NSString *password = [[alertView_ textFieldAtIndex:1] text];
-                [JRCapture startCaptureConventionalSignInForUser:user withPassword:password
-                                                  withSignInType:JRConventionalSignInEmailPassword
-                                                      mergeToken:[error JRMergeToken]
-                                                     forDelegate:self];
+                [JRCapture startCaptureTraditionalSignInForUser:user withPassword:password
+                                                 withSignInType:JRTraditionalSignInEmailPassword
+                                                     mergeToken:[error JRMergeToken]
+                                                    forDelegate:self];
             };
 
     [[[AlertViewWithBlocks alloc] initWithTitle:@"Sign in" message:nil completion:signInCompletion

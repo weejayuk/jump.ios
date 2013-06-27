@@ -45,10 +45,10 @@
 @property(nonatomic, retain) id <JRExternalDialogControllerDelegate> delegate;
 @property(nonatomic, strong) UITextField *firstResponder;
 
-- (id)initWithConventionalSignInType:(JRConventionalSignInType)theSignInType titleString:(NSString *)theTitleString
+- (id)initWithConventionalSignInType:(JRTraditionalSignInType)theSignInType titleString:(NSString *)theTitleString
                            titleView:(UIView *)theTitleView engageWrapper:(JREngageWrapper *)theWrapper;
 
-+ (id)conventionalSignInViewController:(JRConventionalSignInType)theSignInType titleString:(NSString *)theTitleString
++ (id)conventionalSignInViewController:(JRTraditionalSignInType)theSignInType titleString:(NSString *)theTitleString
                              titleView:(UIView *)theTitleView
                          engageWrapper:(JREngageWrapper *)theWrapper;
 @end

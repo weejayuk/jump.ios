@@ -109,7 +109,7 @@ static JREngageWrapper *singleton = nil;
     JREngage.customProviders = customProviders;
 }
 
-+ (void)startAuthenticationDialogWithConventionalSignIn:(JRConventionalSignInType)nativeSignInType
++ (void)startAuthenticationDialogWithConventionalSignIn:(JRTraditionalSignInType)nativeSignInType
                             andCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
                                             forDelegate:(id <JRCaptureDelegate>)delegate
 {
@@ -122,7 +122,7 @@ static JREngageWrapper *singleton = nil;
     NSMutableDictionary *expandedCustomInterfaceOverrides =
             [NSMutableDictionary dictionaryWithDictionary:customInterfaceOverrides];
 
-    if (nativeSignInType != JRConventionalSignInNone)
+    if (nativeSignInType != JRTraditionalSignInNone)
     {
         [self configureTradSignIn:nativeSignInType expandedCustomInterfaceOverrides:expandedCustomInterfaceOverrides];
     }
@@ -130,13 +130,13 @@ static JREngageWrapper *singleton = nil;
     [JREngage showAuthenticationDialogWithCustomInterfaceOverrides:expandedCustomInterfaceOverrides];
 }
 
-+ (void)     configureTradSignIn:(JRConventionalSignInType)nativeSigninType
++ (void)     configureTradSignIn:(JRTraditionalSignInType)nativeSigninType
 expandedCustomInterfaceOverrides:(NSMutableDictionary *)expandedCustomInterfaceOverrides
 {
     NSString *nativeSignInTitleString =
             ([expandedCustomInterfaceOverrides objectForKey:kJRCaptureConventionalSigninTitleString] ?
                     [expandedCustomInterfaceOverrides objectForKey:kJRCaptureConventionalSigninTitleString] :
-                    (nativeSigninType == JRConventionalSignInEmailPassword ?
+                    (nativeSigninType == JRTraditionalSignInEmailPassword ?
                             @"Sign In With Your Email and Password" :
                             @"Sign In With Your Username and Password"));
 

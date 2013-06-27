@@ -367,7 +367,7 @@ Example:
                     NSString *user = [[alertView_ textFieldAtIndex:0] text];
                     NSString *password = [[alertView_ textFieldAtIndex:1] text];
                     [JRCapture startCaptureConventionalSigninForUser:user withPassword:password
-                                                      withSigninType:JRConventionalSignInEmailPassword
+                                                      withSigninType:JRTraditionalSignInEmailPassword
                                                           mergeToken:[error JRMergeToken]
                                                          forDelegate:self];
                 };
