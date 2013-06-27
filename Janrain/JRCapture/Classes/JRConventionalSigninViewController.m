@@ -45,14 +45,14 @@
                             andPayload:(NSData *)tokenUrlPayload forProvider:(NSString *)provider;
 @end
 
-@interface JRConventionalSignInViewController ()
+@interface JRTraditionalSignInViewController ()
 @property (retain) NSString *titleString;
 @property (retain) UIView   *titleView;
 @property JRTraditionalSignInType signInType;
 @property (retain) JREngageWrapper *wrapper;
 @end
 
-@implementation JRConventionalSignInViewController
+@implementation JRTraditionalSignInViewController
 @synthesize signInType;
 @synthesize titleString;
 @synthesize titleView;
@@ -78,7 +78,7 @@
 + (id)conventionalSignInViewController:(JRTraditionalSignInType)theSignInType titleString:(NSString *)theTitleString
                              titleView:(UIView *)theTitleView engageWrapper:(JREngageWrapper *)theWrapper
 {
-    return [[[JRConventionalSignInViewController alloc]
+    return [[[JRTraditionalSignInViewController alloc]
             initWithConventionalSignInType:theSignInType
                                titleString:theTitleString
                                  titleView:theTitleView engageWrapper:theWrapper] autorelease];

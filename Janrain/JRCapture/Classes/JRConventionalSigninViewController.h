@@ -37,7 +37,7 @@
 @class JREngageWrapper;
 @protocol JRExternalDialogControllerDelegate, JRCaptureInternalDelegate;
 
-@interface JRConventionalSignInViewController : UIViewController <UITableViewDelegate, UITableViewDataSource,
+@interface JRTraditionalSignInViewController : UIViewController <UITableViewDelegate, UITableViewDataSource,
         UITextFieldDelegate, JRCaptureInternalDelegate>
 {
     UITableView *myTableView;

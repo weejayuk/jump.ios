@@ -150,7 +150,7 @@
     myTableView.tableFooterView = [customInterface objectForKey:kJRProviderTableFooterView];
 
     id const maybeCaptureSignInVc = [customInterface objectForKey:kJRCaptureConventionalSigninViewController];
-    if ([maybeCaptureSignInVc isKindOfClass:NSClassFromString(@"JRConventionalSignInViewController")])
+    if ([maybeCaptureSignInVc isKindOfClass:NSClassFromString(@"JRTraditionalSignInViewController")])
     {
         [maybeCaptureSignInVc performSelector:NSSelectorFromString(@"setDelegate:") withObject:self];
 

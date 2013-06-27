@@ -47,7 +47,7 @@ typedef enum
 
 @interface JREngageWrapper ()
 @property(retain) NSString *engageToken;
-@property(retain) JRConventionalSignInViewController *nativeSignInViewController;
+@property(retain) JRTraditionalSignInViewController *nativeSignInViewController;
 @property(retain) id <JRCaptureDelegate> delegate;
 @property JREngageDialogState dialogState;
 @end
@@ -145,11 +145,11 @@ expandedCustomInterfaceOverrides:(NSMutableDictionary *)expandedCustomInterfaceO
                                              forKey:kJRProviderTableSectionHeaderTitleString];
 
     UIView *const titleView = [expandedCustomInterfaceOverrides objectForKey:kJRCaptureConventionalSigninTitleView];
-    JRConventionalSignInViewController *controller =
-            [JRConventionalSignInViewController conventionalSignInViewController:nativeSigninType
-                                                                     titleString:nativeSignInTitleString
-                                                                       titleView:titleView
-                                                                   engageWrapper:singleton];
+    JRTraditionalSignInViewController *controller =
+            [JRTraditionalSignInViewController conventionalSignInViewController:nativeSigninType
+                                                                    titleString:nativeSignInTitleString
+                                                                      titleView:titleView
+                                                                  engageWrapper:singleton];
     singleton.nativeSignInViewController = controller;
 
     [expandedCustomInterfaceOverrides setObject:[singleton nativeSignInViewController].view
