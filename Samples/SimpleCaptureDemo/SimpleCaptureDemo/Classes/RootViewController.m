@@ -45,7 +45,7 @@
 @property(nonatomic, copy) void (^viewDidAppearContinuation)();
 @property(nonatomic) BOOL viewIsApparent;
 
-- (void)configureViews;
+- (void)configureViewsWithDisableOverride:(BOOL)disableOverride;
 @end
 
 @interface JRCapture (BetaAPIs)
@@ -74,35 +74,40 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [self configureViews];
+    [self configureViewsWithDisableOverride:NO ];
 }
 
-- (void)configureViews
+- (void)configureViewsWithDisableOverride:(BOOL)disableOverride
 {
     self.title = @"DEMO";
     [thirdButton setTitle:@"Refresh Access Token" forState:UIControlStateNormal];
     if (appDelegate.captureUser)
     {
-        thirdButton.hidden = NO;
-        signInButton.hidden = YES;
-        signOutButton.hidden = NO;
+        thirdButton.hidden = NO; thirdButton.alpha = 1;
+        signInButton.hidden = YES; signInButton.alpha = 1;
+        signOutButton.hidden = NO; signOutButton.alpha = 1;
         [formButton setTitle:@"Update" forState:UIControlStateNormal];
-        browseButton.enabled = YES;
-        browseButton.alpha = 1;
+        browseButton.enabled = YES; browseButton.alpha = 1;
     }
     else
     {
-        thirdButton.hidden = YES;
-        signInButton.hidden = NO;
+        thirdButton.hidden = YES; thirdButton.alpha = 1;
+        signInButton.hidden = NO; signInButton.alpha = 1;
         [signInButton setTitle:@"Sign In" forState:UIControlStateNormal];
-        signOutButton.hidden = YES;
+        signOutButton.hidden = YES; signOutButton.alpha = 1;
         [formButton setTitle:@"Traditional Registration" forState:UIControlStateNormal];
-        browseButton.enabled = NO;
-        browseButton.alpha = 0.5;
+        browseButton.enabled = NO; browseButton.alpha = 0.5;
     }
 
     //thirdButton.hidden = NO;
     //[thirdButton setTitle:@"Share" forState:UIControlStateNormal];
+
+    if (disableOverride)
+    {
+        thirdButton.enabled = signInButton.enabled = browseButton.enabled = signOutButton.enabled = formButton.enabled
+                = NO;
+        thirdButton.alpha = signInButton.alpha = browseButton.alpha = signOutButton.alpha = formButton.alpha = 0.5;
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -110,7 +115,7 @@
     DLog();
     self.viewIsApparent = YES;
     [self configureUserLabelAndIcon];
-    [self configureViews];
+    [self configureViewsWithDisableOverride:NO];
     if (viewDidAppearContinuation)
     {
         viewDidAppearContinuation();
@@ -167,6 +172,8 @@
     //                                         isHtml:NO andUrlsToBeShortened:nil];
     //[JREngage showSharingDialogWithActivity:t];
 
+    [self configureViewsWithDisableOverride:YES];
+
     [JRCapture refreshAccessTokenForDelegate:self context:nil];
 }
 
@@ -176,6 +183,7 @@
                                                                delegate:nil cancelButtonTitle:@"Dismiss"
                                                       otherButtonTitles:nil];
             [alertView show];
+    [self configureViewsWithDisableOverride:NO];
 }
 
 - (void)refreshAccessTokenDidSucceedWithContext:(id <NSObject>)context
@@ -183,6 +191,7 @@
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Success" message:nil delegate:nil
                                               cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
     [alertView show];
+    [self configureViewsWithDisableOverride:NO];
 }
 
 - (IBAction)signInButtonPressed:(id)sender
@@ -200,7 +209,7 @@
     currentUserLabel.text = @"No current user";
     currentUserProviderIcon.image = nil;
     [self signOutCurrentUser];
-    [self configureViews];
+    [self configureViewsWithDisableOverride:NO];
 }
 
 - (void)configureUserLabelAndIcon
@@ -412,7 +421,7 @@
     [appDelegate.prefs setObject:[NSKeyedArchiver archivedDataWithRootObject:appDelegate.captureUser]
                           forKey:cJRCaptureUser];
 
-    [self configureViews];
+    [self configureViewsWithDisableOverride:NO ];
     [self configureUserLabelAndIcon];
 
     if (captureRecordStatus == JRCaptureRecordNewlyCreated)

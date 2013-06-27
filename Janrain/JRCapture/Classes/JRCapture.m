@@ -481,7 +481,6 @@ captureTraditionalRegistrationFormName:nil
     if ([delegate respondsToSelector:pSelector])
     {
         [delegate performSelector:pSelector withObject:arg1 withObject:arg2];
-        [delegate performSelector:pSelector withObject:arg1];
     }
 }
 
