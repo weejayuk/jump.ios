@@ -87,6 +87,7 @@ static NSString *const FLOW_KEY = @"JR_capture_flow";
 @property(nonatomic) BOOL captureEnableThinRegistration;
 
 @property(nonatomic, retain) NSDictionary *captureFlow;
+@property(nonatomic) BOOL initialized;
 @end
 
 @implementation JRCaptureData
@@ -246,7 +247,12 @@ captureTraditionalRegistrationFormName:(NSString *)captureTraditionalRegistratio
                     captureFlowVersion:(NSString *)captureFlowVersion captureAppId:(NSString *)captureAppId
 {
     JRCaptureData *captureDataInstance = [JRCaptureData sharedCaptureData];
-
+    if (captureDataInstance.initialized)
+    {
+        [NSException raiseJRDebugException:@"JRCaptureDuplicateInitializationException" format:@"Repeated "
+                "initialization of JRCapture is unsafe"];
+    }
+    captureDataInstance.initialized = YES;
     captureDataInstance.captureBaseUrl = [captureDomain urlStringFromBaseDomain];
     captureDataInstance.clientId = clientId;
     captureDataInstance.captureLocale = captureLocale;

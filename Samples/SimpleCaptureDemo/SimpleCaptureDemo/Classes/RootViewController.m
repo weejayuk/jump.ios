@@ -210,8 +210,8 @@
 
     [self signOutCurrentUser];
 
-    [JRCapture startEngageSignInDialogWithConventionalSignIn:JRTraditionalSignInEmailPassword
-                                 andCustomInterfaceOverrides:self.customUi forDelegate:self];
+    [JRCapture startEngageSignInDialogWithTraditionalSignIn:JRTraditionalSignInEmailPassword
+                                andCustomInterfaceOverrides:self.customUi forDelegate:self];
 }
 
 - (IBAction)signOutButtonPressed:(id)sender

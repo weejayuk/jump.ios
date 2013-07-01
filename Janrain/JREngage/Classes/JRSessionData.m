@@ -715,8 +715,6 @@ static JRSessionData *singleton = nil;
                                               forKey:cJRProvidersWithIcons];
 
     [engageAuthenticationProviders release];
-    [self.sharingProviders release];
-
     engageAuthenticationProviders =
             [[NSArray arrayWithArray:[configDict objectForKey:CONFIG_KEY_SIGNIN_PROVIDERS]] retain];
     self.sharingProviders = [NSArray arrayWithArray:[configDict objectForKey:CONFIG_KEY_SHARING_PROVIDERS]];

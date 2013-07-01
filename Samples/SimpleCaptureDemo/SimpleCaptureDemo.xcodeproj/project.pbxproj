@@ -38,6 +38,7 @@
 		6706F8EE5E155E0D9ECD31E4 /* JROrganizationsElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706F0B859D457B27C961482 /* JROrganizationsElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6706F90A407358D95D3AA880 /* JRTournamentsPlayedElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706FE7192712069057BD307 /* JRTournamentsPlayedElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6706F93B33D4BDC335A65E73 /* JRAccountsElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706F9DFA7DB9FB63A900826 /* JRAccountsElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		6706F9D176696C20B6536FAF /* debug_log.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706F0C90B84193A41624A52 /* debug_log.m */; };
 		6706FA0C11E307CD1E14A434 /* JRCaptureUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706F741E3C0974B48210B00 /* JRCaptureUser.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6706FA339F5E863C7F6536E3 /* JRObjectLevelTwo.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706F004B5721D364A0105AB /* JRObjectLevelTwo.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6706FB96928B72AC8E95BBBE /* JRStatusesElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706FF3CCE2C8CFDA5DDE468 /* JRStatusesElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -289,10 +290,12 @@
 		6706F01AA24E373956F9C20D /* JRProfilePhotosElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRProfilePhotosElement.h; sourceTree = "<group>"; };
 		6706F079F7EC3C2884AA95DB /* NSMutableURLRequest+JRRequestUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableURLRequest+JRRequestUtils.h"; sourceTree = "<group>"; };
 		6706F0B859D457B27C961482 /* JROrganizationsElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JROrganizationsElement.m; sourceTree = "<group>"; };
+		6706F0C90B84193A41624A52 /* debug_log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = debug_log.m; sourceTree = "<group>"; };
 		6706F0F2E34793CE47A59E50 /* JROnipLevelThree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JROnipLevelThree.h; sourceTree = "<group>"; };
 		6706F14EBCBB93C923B336B4 /* JRLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRLocation.m; sourceTree = "<group>"; };
 		6706F177967F38CF7CA5D0FC /* CaptureDynamicForm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CaptureDynamicForm.h; path = ../../../../jump.ios/Samples/SimpleCaptureDemo/SimpleCaptureDemo/Classes/CaptureDynamicForm.h; sourceTree = "<group>"; };
 		6706F1A44624C7575D0E75DA /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Utils.m; path = ../../../../jump.ios/Samples/SimpleCaptureDemo/SimpleCaptureDemo/Classes/Utils.m; sourceTree = "<group>"; };
+		6706F1B01392D85DC9179C4A /* debug_log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = debug_log.h; sourceTree = "<group>"; };
 		6706F1D869841D7DDAD98738 /* JRBestHand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRBestHand.m; sourceTree = "<group>"; };
 		6706F1FB3600926EFC36AB15 /* JRPinoLevelOne.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRPinoLevelOne.h; sourceTree = "<group>"; };
 		6706F24261C9D663CA951A9E /* JRTournamentsPlayedElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRTournamentsPlayedElement.h; sourceTree = "<group>"; };
@@ -405,7 +408,6 @@
 		D806D1B516A7638E008EEF96 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = SOURCE_ROOT; };
 		DFB68873175E8E6C006DFC92 /* JRBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRBase64.h; sourceTree = "<group>"; };
 		DFB68874175E8E6C006DFC92 /* JRBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRBase64.m; sourceTree = "<group>"; };
-		DFB68882175E8E6C006DFC92 /* debug_log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = debug_log.h; sourceTree = "<group>"; };
 		DFB68883175E8E6C006DFC92 /* JRCapture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCapture.h; sourceTree = "<group>"; };
 		DFB68884175E8E6C006DFC92 /* JRCapture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRCapture.m; sourceTree = "<group>"; };
 		DFB68885175E8E6C006DFC92 /* JRCaptureApidInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCaptureApidInterface.h; sourceTree = "<group>"; };
@@ -431,7 +433,6 @@
 		DFB688B4175E8E6C006DFC92 /* JRConnectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRConnectionManager.h; sourceTree = "<group>"; };
 		DFB688B5175E8E6C006DFC92 /* JRConnectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRConnectionManager.m; sourceTree = "<group>"; };
 		DFB688B7175E8E6C006DFC92 /* ATTRIBUTION */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ATTRIBUTION; sourceTree = "<group>"; };
-		DFB688B9175E8E6C006DFC92 /* debug_log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = debug_log.h; sourceTree = "<group>"; };
 		DFB688BA175E8E6C006DFC92 /* JRActivityObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRActivityObject.h; sourceTree = "<group>"; };
 		DFB688BB175E8E6C006DFC92 /* JRActivityObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRActivityObject.m; sourceTree = "<group>"; };
 		DFB688BC175E8E6C006DFC92 /* JREngage+CustomInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JREngage+CustomInterface.h"; sourceTree = "<group>"; };
@@ -926,7 +927,6 @@
 		DFB68876175E8E6C006DFC92 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				DFB68882175E8E6C006DFC92 /* debug_log.h */,
 				DFB68883175E8E6C006DFC92 /* JRCapture.h */,
 				DFB68884175E8E6C006DFC92 /* JRCapture.m */,
 				DFB68885175E8E6C006DFC92 /* JRCaptureApidInterface.h */,
@@ -981,7 +981,6 @@
 		DFB688B8175E8E6C006DFC92 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				DFB688B9175E8E6C006DFC92 /* debug_log.h */,
 				DFB688BA175E8E6C006DFC92 /* JRActivityObject.h */,
 				DFB688BB175E8E6C006DFC92 /* JRActivityObject.m */,
 				DFB688BC175E8E6C006DFC92 /* JREngage+CustomInterface.h */,
@@ -1008,6 +1007,8 @@
 				DFB688D1175E8E6C006DFC92 /* JRUserLandingController.m */,
 				DFB688D2175E8E6C006DFC92 /* JRWebViewController.h */,
 				DFB688D3175E8E6C006DFC92 /* JRWebViewController.m */,
+				6706F1B01392D85DC9179C4A /* debug_log.h */,
+				6706F0C90B84193A41624A52 /* debug_log.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1659,6 +1660,7 @@
 				6706F90A407358D95D3AA880 /* JRTournamentsPlayedElement.m in Sources */,
 				6706F25635854015FA49B820 /* NSMutableDictionary+JRDictionaryUtils.m in Sources */,
 				6706F82FFE78F5E382D1348F /* NSMutableURLRequest+JRRequestUtils.m in Sources */,
+				6706F9D176696C20B6536FAF /* debug_log.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

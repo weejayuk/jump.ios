@@ -40,7 +40,9 @@
 #ifdef PHONEGAP_FRAMEWORK
 #import <PhoneGap/JSONKit.h>
 #else
+
 #import "JSONKit.h"
+
 #endif
 #endif
 
@@ -50,6 +52,7 @@
 
 @protocol JRUserInterfaceDelegate <NSObject>
 - (void)userInterfaceWillClose;
+
 - (void)userInterfaceDidClose;
 @end
 
@@ -62,12 +65,12 @@
     NSString *_providerName;
     NSString *_welcomeString;
 }
-@property (readonly) NSString *photo;
-@property (readonly) NSString *displayName;
-@property (readonly) NSString *preferredUsername;
-@property (readonly) NSString *deviceToken;
-@property (readonly) NSString *providerName;
-@property (copy)     NSString *welcomeString;
+@property(readonly) NSString *photo;
+@property(readonly) NSString *displayName;
+@property(readonly) NSString *preferredUsername;
+@property(readonly) NSString *deviceToken;
+@property(readonly) NSString *providerName;
+@property(copy) NSString *welcomeString;
 @end
 
 @interface JRProvider : NSObject <NSCoding>
@@ -77,105 +80,117 @@
     NSString *_friendlyName;
     NSString *_placeholderText;
     NSString *_shortText;
-    BOOL      _requiresInput;
+    BOOL _requiresInput;
 
     NSString *_openIdIdentifier; // already URL encoded
     NSString *_relativeUrl;
-    BOOL      _forceReauth;
+    BOOL _forceReauth;
 
     NSString *_userInput;
 
     NSDictionary *_socialSharingProperties;
-    BOOL          _social;
+    BOOL _social;
 
     NSArray *_cookieDomains;
 }
 
-@property (readonly) NSString     *name;
-@property (readonly) NSString     *friendlyName;
-@property (readonly) NSString     *shortText;
-@property (readonly) NSString     *placeholderText;
-@property (readonly) BOOL          requiresInput;
-@property            BOOL          forceReauth;
-@property (retain)   NSString     *userInput;
-@property (readonly) NSDictionary *socialSharingProperties;
-@property (readonly) NSArray      *cookieDomains;
+@property(readonly) NSString *name;
+@property(readonly) NSString *friendlyName;
+@property(readonly) NSString *shortText;
+@property(readonly) NSString *placeholderText;
+@property(readonly) BOOL requiresInput;
+@property BOOL forceReauth;
+@property(retain) NSString *userInput;
+@property(readonly) NSDictionary *socialSharingProperties;
+@property(readonly) NSArray *cookieDomains;
 @property(nonatomic, retain) NSString *customUserAgentString;
 @property(nonatomic) BOOL usesPhoneUserAgentString;
 @property(nonatomic, retain) NSString *samlName;
 
 @property(nonatomic, retain) NSString *opxBlob; // already URL encoded
 
-- (BOOL)isEqualToReturningProvider:(NSString*)returningProvider;
+- (BOOL)isEqualToReturningProvider:(NSString *)returningProvider;
 @end
 
 @protocol JRSessionDelegate <NSObject>
 @optional
 - (void)authenticationDidRestart;
+
 - (void)authenticationDidCancel;
 
-- (void)authenticationDidCompleteForUser:(NSDictionary*)profile forProvider:(NSString*)provider;
-- (void)authenticationDidFailWithError:(NSError*)error forProvider:(NSString*)provider;
+- (void)authenticationDidCompleteForUser:(NSDictionary *)profile forProvider:(NSString *)provider;
 
-- (void)authenticationDidReachTokenUrl:(NSString*)tokenUrl withResponse:(NSURLResponse*)response
-                            andPayload:(NSData*)tokenUrlPayload forProvider:(NSString*)provider;
-- (void)authenticationCallToTokenUrl:(NSString*)tokenUrl didFailWithError:(NSError*)error
-                         forProvider:(NSString*)provider;
+- (void)authenticationDidFailWithError:(NSError *)error forProvider:(NSString *)provider;
+
+- (void)authenticationDidReachTokenUrl:(NSString *)tokenUrl withResponse:(NSURLResponse *)response
+                            andPayload:(NSData *)tokenUrlPayload forProvider:(NSString *)provider;
+
+- (void)authenticationCallToTokenUrl:(NSString *)tokenUrl didFailWithError:(NSError *)error
+                         forProvider:(NSString *)provider;
 
 //- (void)publishingDidRestart;
 - (void)publishingDidCancel;
+
 - (void)publishingDidComplete;
 
-- (void)publishingActivityDidSucceed:(JRActivityObject*)activity forProvider:(NSString*)provider;
-- (void)publishingActivity:(JRActivityObject*)activity didFailWithError:(NSError*)error forProvider:(NSString*)provider;
+- (void)publishingActivityDidSucceed:(JRActivityObject *)activity forProvider:(NSString *)provider;
 
-- (void)urlShortenedToNewUrl:(NSString*)url forActivity:(JRActivityObject*)activity;
+- (void)publishingActivity:(JRActivityObject *)activity didFailWithError:(NSError *)error
+               forProvider:(NSString *)provider;
+
+- (void)urlShortenedToNewUrl:(NSString *)url forActivity:(JRActivityObject *)activity;
 @end
 
 @class JRActivityObject;
 
 @interface JRSessionData : NSObject <JRConnectionManagerDelegate>
-@property (retain)   JRProvider *currentProvider;
-@property (readonly) NSString   *returningAuthenticationProvider;
-@property (readonly) NSString   *returningSharingProvider;
+@property(retain) JRProvider *currentProvider;
+@property(readonly) NSString *returningAuthenticationProvider;
+@property(readonly) NSString *returningSharingProvider;
 
 /** engageProviders is a dictionary of JRProviders, where each JRProvider contains the information specific to that
     provider. authenticationProviders and sharingProviders are arrays of NSStrings, each string being the primary key
     in engageProviders for that provider, representing the list of providers to be used in authentication and social
     publishing. The arrays are in the order configured by the RP on http://rpxnow.com. */
-@property (readonly, retain) NSMutableDictionary *engageProviders;
-@property (readonly, retain) NSArray             *authenticationProviders;
-@property (readonly, retain) NSArray             *sharingProviders;
+@property(readonly, retain) NSMutableDictionary *engageProviders;
+@property(readonly, retain) NSArray *authenticationProviders;
+@property(readonly, retain) NSArray *sharingProviders;
 
-@property (copy)     JRActivityObject *activity;
+@property(copy) JRActivityObject *activity;
 
-@property (copy)     NSString *tokenUrl;
-@property (readonly) NSString *baseUrl;
+@property(copy) NSString *tokenUrl;
+@property(readonly) NSString *baseUrl;
 
-@property (readonly) BOOL hidePoweredBy;
-@property            BOOL alwaysForceReauth;
+@property(readonly) BOOL hidePoweredBy;
+@property BOOL alwaysForceReauth;
 //@property            BOOL forceReauthJustThisTime;
 //@property            BOOL authenticatingDirectlyOnThisProvider;
-@property            BOOL socialSharing;
-@property            BOOL dialogIsShowing;
-@property (retain, readonly) NSError *error;
+@property BOOL socialSharing;
+@property BOOL dialogIsShowing;
+@property(retain, readonly) NSError *error;
 
 + (id)jrSessionData;
-+ (id)jrSessionDataWithAppId:(NSString*)newAppId tokenUrl:(NSString*)newTokenUrl
-                 andDelegate:(id<JRSessionDelegate>)newDelegate;
+
++ (id)jrSessionDataWithAppId:(NSString *)newAppId tokenUrl:(NSString *)newTokenUrl
+                 andDelegate:(id <JRSessionDelegate>)newDelegate;
 
 - (void)tryToReconfigureLibrary;
-- (id)reconfigureWithAppId:(NSString*)newAppId tokenUrl:(NSString*)newTokenUrl;
 
-- (void)addDelegate:(id<JRSessionDelegate>)delegateToAdd;
-- (void)removeDelegate:(id<JRSessionDelegate>)delegateToRemove;
+- (id)reconfigureWithAppId:(NSString *)newAppId tokenUrl:(NSString *)newTokenUrl;
 
-- (NSURL*)startUrlForCurrentProvider;
-- (JRProvider*)getProviderNamed:(NSString*)name;
+- (void)addDelegate:(id <JRSessionDelegate>)delegateToAdd;
 
-- (JRAuthenticatedUser*)authenticatedUserForProvider:(JRProvider*)provider;
-- (JRAuthenticatedUser*)authenticatedUserForProviderNamed:(NSString*)provider;
-- (void)forgetAuthenticatedUserForProvider:(NSString*)providerName;
+- (void)removeDelegate:(id <JRSessionDelegate>)delegateToRemove;
+
+- (NSURL *)startUrlForCurrentProvider;
+
+- (JRProvider *)getProviderNamed:(NSString *)name;
+
+- (JRAuthenticatedUser *)authenticatedUserForProvider:(JRProvider *)provider;
+
+- (JRAuthenticatedUser *)authenticatedUserForProviderNamed:(NSString *)provider;
+
+- (void)forgetAuthenticatedUserForProvider:(NSString *)providerName;
 
 - (NSDictionary *)allProviders;
 
@@ -183,22 +198,32 @@
 
 - (BOOL)weShouldBeFirstResponder;
 
-- (void)shareActivityForUser:(JRAuthenticatedUser*)user;
-- (void)setStatusForUser:(JRAuthenticatedUser*)user;
+- (void)shareActivityForUser:(JRAuthenticatedUser *)user;
 
-- (void)triggerAuthenticationDidCompleteWithPayload:(NSDictionary*)payloadDict;
+- (void)setStatusForUser:(JRAuthenticatedUser *)user;
+
+- (void)triggerAuthenticationDidCompleteWithPayload:(NSDictionary *)payloadDict;
+
 - (void)triggerAuthenticationDidStartOver:(id)sender;
+
 - (void)triggerAuthenticationDidCancel;
+
 - (void)triggerAuthenticationDidCancel:(id)sender;
+
 - (void)triggerAuthenticationDidTimeOutConfiguration;
-- (void)triggerAuthenticationDidFailWithError:(NSError*)theError;
+
+- (void)triggerAuthenticationDidFailWithError:(NSError *)theError;
 
 - (void)triggerPublishingDidCancel;
+
 - (void)triggerPublishingDidCancel:(id)sender;
+
 - (void)triggerPublishingDidTimeOutConfiguration;
-- (void)triggerPublishingDidFailWithError:(NSError*)theError;
+
+- (void)triggerPublishingDidFailWithError:(NSError *)theError;
 
 - (void)triggerEmailSharingDidComplete;
+
 - (void)triggerSmsSharingDidComplete;
 
 - (void)setCustomProvidersWithDictionary:(NSDictionary *)customProviders __unused;
