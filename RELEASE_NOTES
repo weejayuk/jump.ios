@@ -1,3 +1,5 @@
+v3.2.6
+ - Fixes Engage library re-initialization bug
 v3.2.5
  - Adds access token refresh support
 v3.2.1
