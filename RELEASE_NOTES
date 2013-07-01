@@ -1,3 +1,5 @@
+v3.2.5
+ - Adds access token refresh support
 v3.2.1
  - Fixes form validation failure recognition
 v3.2.0
