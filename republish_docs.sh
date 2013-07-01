@@ -23,5 +23,5 @@ mv gh_docs/engage_temp gh_docs/engage
 git add gh_docs/capture
 git add gh_docs/engage
 git commit -am "republish docs from $gh_docs_from_branch"
-git checkout --
+git checkout -
 
