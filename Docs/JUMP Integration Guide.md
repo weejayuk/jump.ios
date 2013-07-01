@@ -18,13 +18,13 @@ user registration system. For Engage-only (i.e. social-authentication-only) inte
     * Social accounts (with pre-populated registration forms.)
     * "Thin" social registration -- automatic account creation for social sign-in users without a registration form.
 * Capture account record updates
+* Session refreshing
 
 ### In the Pipeline
 
 * Profile updates (including password and email address updates)
 * In app forgot-password-flow initiation
 * Social account linking (like the "merge account" sign-in flow, but after a user is signed in.)
-* Session refreshing.
 
 ## 10,000' View
 
@@ -174,8 +174,6 @@ started:
          captureSocialRegistrationFormName:captureSocialRegistrationFormName captureAppId:captureAppId
                    customIdentityProviders:customProviders];
 
-...)
-
 ## Start the User Sign-In Flow
 
 To start the authentication and sign-in flow, send the `startEngageSigninForDelegate:` message to the `JRCapture`
@@ -197,30 +195,18 @@ when Engage authentication is complete. At this point, the library will close th
 complete sign-in to Capture headlessly. This message contains limited data which can be used to update UI while your
 app waits for Capture to complete authentication.
 
-To receive the user's basic profile data (the
-[auth_info](http://developers.janrain.com/documentation/api/auth_info/) data) have your delegate respond to
-[engageSigninDidSucceedForUser:forProvider:](http://janrain.github.com/jump.ios/gh_docs/capture/html/protocol_j_r_capture_signin_delegate-p.html#a39eb082986c4a029cbc8545cc8029c18):
-
     - (void)engageSigninDidSucceedForUser:(NSDictionary *)engageAuthInfo
                               forProvider:(NSString *)provider
     {
         self.currentDisplayName = [self getDisplayNameFromProfile:engageAuthInfo];
     
         // Update the UI to show that authentication is completing...
-        [self showCompletingSigninVisualAffordance];
+        [self showCompletingSigninVisualAffordance]; // E.g. a UIActivityIndicator
     
         [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     }
 
-The basic profile data is included for your information while sign-in completes. Once the authentication token reaches
-Capture, Capture automatically adds the profile data to the Capture record.
-
-### More
-
-- For more information on what is returned by Engage, please see the
-  [auth_info](http://developers.janrain.com/documentation/api/auth_info/) section of the Engage API docs.
-- For a broader look at the Capture sign-in flow, please see
-  [Capture Sign-In Flow](http://developers.janrain.com/documentation/mobile-libraries/#capture-sign-in).
+Once the authentication token reaches Capture, Capture automatically adds the profile data to the Capture record.
 
 ## Finish the User Sign-In Flow
 
@@ -286,28 +272,30 @@ with a stock traditional sign-in UI.
 
 The merge token parameters are used in the second part of the Merge Account Flow, described below.
 
-### Handling the Merge Sign-In Flow
+### Handling the Merge Account Sign-In Flow
 
 Sometimes a user will have created a record with one means of sign-in (e.g. a traditional username and password record)
 and will later attempt to sign-in with a different means (e.g. with Facebook.)
 
-When this happens the sign-in does not succeed, because there is no Capture record associated with the Social sign-in
-identity and the email address from the identity is already in use. Before being able to sign-in with the identity,
-the user must merge the identity into their existing record. This is called the "Merge Account Flow."
+When this happens the sign-in cannot succeed, because there is no Capture record associated with the social sign-in
+identity, and the email address from the identity is already in use.
+
+Before being able to sign-in with the social identity, the user must merge the identity into their existing record.
+This is called the "Merge Account Flow."
 
 The merge is achieved at the conclusion of a second sign-in flow authenticated by the record's existing associated
 identity. The second sign-in is initiated upon the failure of the first sign-in flow, and also includes a merge token
 which Capture uses to merge the identity from the first (failed) sign-in into the record.
 
-Capture SDK time-line for Merge Account Flow:
+Capture SDK event sequence for Merge Account Flow:
 
- 1. User attempts to sign-in with a social identity, "identity A".
- 2. Capture sign-in fails because there is an existing Capture record connected to "identity B", which shares some
-    constrained attributes with "identity A". E.g. the two identities have the same email address.
- 3. The `-[JRCaptureSigninDelegate captureAuthenticationDidFailWithError:]` delegate message is sent with an error
-    representing this state. This state is to be discerned via the `-[NSError isJRMergeFlowError]` class category
-    message.
- 4. The host application (your iOS app) notifies the user of the conflict and advises the user to merge the accounts
+ 1. User attempts to sign-in with a social identity, "identity F".
+ 2. Capture sign-in fails because there is an existing Capture record connected to "identity G", which shares some
+    constrained attributes with "identity F". E.g. the two identities have the same email address.
+ 3. The `-[JRCaptureSigninDelegate captureAuthenticationDidFailWithError:]` delegate message is sent with an
+    error representing this state. This state is to be discerned via the `-[NSError isJRMergeFlowError]`
+    class category message.
+ 4. The host application (your mobile app) notifies the user of the conflict and advises the user to merge the accounts
  5. The user elects to take action
  6. The merge sign-in is started by invoking either
     `+[JRCapture startEngageSignInDialogOnProvider:withCustomInterfaceOverrides:mergeToken:forDelegate:]` or
@@ -330,7 +318,7 @@ Example:
             [self handleMergeFlowError:error];
         }
     }
-    
+
     - (void)handleMergeFlowError:(NSError *)error
     {
         NSString *existingAccountProvider = [error JRMergeFlowExistingProvider];
@@ -390,6 +378,8 @@ method.
 
 ## Making Changes in a Capture User Record
 
+### Capture Schema Basics
+
 Capture user records are defined by the Capture schema, which defines the attributes of the record. An attribute is
 either a primitive value (a number, a string, a date, or similar) an object, or a plural.
 
@@ -416,13 +406,13 @@ you must replace the plural. For example, `JRName` (the user's name) is an objec
 part of their name, but `JRInterests` (a plural of strings holding the user's interests) must be replaced if the user
 adds or removes an interest.
 
-### Updating Record Entities (Non-plurals)
+### Updating Record Entities (Non-Plurals)
 
 Conform to the
 [JRCaptureObjectDelegate](http://janrain.github.com/jump.ios/gh_docs/capture/html/protocol_j_r_capture_object_delegate-p.html)
 protocol in your class:
 
-    @interface MyDataModel : UIResponder <JRCaptureSigninDelegate, JRCaptureObjectDelegate>
+    @interface MyClass : MySuperClass <JRCaptureObjectDelegate>
 
 Update the object's non-plural properties, and then send the object the
 [updateOnCaptureForDelegate:context:](http://janrain.github.com/jump.ios/gh_docs/capture/html/interface_j_r_capture_object.html#a307b20b8cb70eec684e7197550c9f4c3)
@@ -522,7 +512,7 @@ automatically save and restore the session token.
 ### Refreshing the User's Access Token
 
 Call `+[JRCapture refreshAccessTokenForDelegate:context:]` to refresh the signed-in-user's access token. Access tokens
-last one hour.
+last one hour. They may be refreshed after expiration. The underlying refreshing system lasts "a long time".
 
 ## Next: Registration
 
@@ -531,13 +521,13 @@ registration.
 
 ## Troubleshooting
 
-Sign-ins fail with an error message indicating that the client doesn't have the necessary permissions.
+  Sign-ins fail with an error message indicating that the client doesn't have the necessary permissions.
 
 Ensure that the API client ID you are using is for an API client with the "login_client" API client feature. To
 configure this see the clients/set_features Capture API and also the clients/list Capture API to get the set of
 configured API client features.
 
-`code: 223 error: unknown_attribute description: attribute does not exist: /your_attr_name`
+  `code: 223 error: unknown_attribute description: attribute does not exist: /your_attr_name`
 
 Use [entityType.setAccessSchema](http://developers.janrain.com/documentation/api-methods/capture/entitytype/setaccessschema)
 to add write-access to this attribute to your native API client.
