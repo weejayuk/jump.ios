@@ -40,6 +40,7 @@
 #import "CaptureDynamicForm.h"
 #import "JRCaptureError.h"
 #import "JRCaptureObject+Internal.h"
+#import "JRActivityObject.h"
 
 @interface RootViewController ()
 @property(nonatomic, copy) void (^viewDidAppearContinuation)();
@@ -61,7 +62,7 @@
 @synthesize formButton;
 @synthesize signInButton;
 @synthesize signOutButton;
-@synthesize shareWidgetButton;
+@synthesize shareButton;
 @synthesize customUi;
 
 - (void)viewDidLoad
@@ -97,6 +98,7 @@
         thirdButton.hidden = NO;
         signInButton.hidden = YES;
         signOutButton.hidden = NO;
+        shareButton.hidden = NO;
 
         formButton.hidden = NO;
         [formButton setTitle:@"Update" forState:UIControlStateNormal];
@@ -108,6 +110,7 @@
         thirdButton.hidden = YES;
         signInButton.hidden = NO;
         signOutButton.hidden = YES;
+        shareButton.hidden = YES;
 
         formButton.hidden = NO;
         [formButton setTitle:@"Traditional Registration" forState:UIControlStateNormal];
@@ -179,11 +182,6 @@
                                                      //
                                                      //}];
 
-    //JRActivityObject *t = [JRActivityObject activityObjectWithAction:@"tested"];
-    //t.sms = [JRSmsObject smsObjectWithMessage:@"test" andUrlsToBeShortened:nil];
-    //t.email = [JREmailObject emailObjectWithSubject:@"test" andMessageBody:@"test"
-    //                                         isHtml:NO andUrlsToBeShortened:nil];
-    //[JREngage showSharingDialogWithActivity:t];
 
     [self configureViewsWithDisableOverride:YES];
     [JRCapture refreshAccessTokenForDelegate:self context:nil];
@@ -222,6 +220,14 @@
     currentUserProviderIcon.image = nil;
     [self signOutCurrentUser];
     [self configureViewsWithDisableOverride:NO];
+}
+
+- (IBAction)shareButtonPressed:(id)sender {
+    JRActivityObject *t = [JRActivityObject activityObjectWithAction:@"tested"];
+    t.sms = [JRSmsObject smsObjectWithMessage:@"test" andUrlsToBeShortened:nil];
+    t.email = [JREmailObject emailObjectWithSubject:@"test" andMessageBody:@"test"
+                                             isHtml:NO andUrlsToBeShortened:nil];
+    [JREngage showSharingDialogWithActivity:t];
 }
 
 - (void)configureUserLabelAndIcon

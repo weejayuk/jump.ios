@@ -42,7 +42,8 @@
 - (IBAction)thirdButtonPressed:(id)sender;
 - (IBAction)signInButtonPressed:(id)sender;
 - (IBAction)signOutButtonPressed:(id)sender;
-@property (weak, nonatomic) IBOutlet UIButton *shareWidgetButton;
+- (IBAction)shareButtonPressed:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *shareButton;
 @property (weak) IBOutlet UILabel *currentUserLabel;
 @property (weak) IBOutlet UIImageView *currentUserProviderIcon;
 @property (weak) IBOutlet UIButton *browseButton;
