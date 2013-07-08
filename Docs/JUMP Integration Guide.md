@@ -531,3 +531,12 @@ configured API client features.
 
 Use [entityType.setAccessSchema](http://developers.janrain.com/documentation/api-methods/capture/entitytype/setaccessschema)
 to add write-access to this attribute to your native API client.
+
+  `Undefined symbols for architecture i386: "_CATransform3DConcat", referenced from: " ...
+
+Add the QuartzCore framework to the build target for the project.
+
+  `Undefined symbols for architecture i386: "_OBJC_CLASS_$_MFMailComposeViewController", referenced from: " ...
+
+Add the MessageUI framework to the build target for the project (set it to "Optional").
+
