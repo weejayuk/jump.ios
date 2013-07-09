@@ -831,8 +831,9 @@ static JRSessionData *singleton = nil;
     if (!providerName) return;
     JRProvider* provider = [engageProviders objectForKey:providerName];
     if (!provider) return;
-    //provider.forceReauth = YES;
-    [self deleteWebViewCookiesForDomains:provider.cookieDomains];
+    if (provider.cookieDomains)
+        [self deleteWebViewCookiesForDomains:provider.cookieDomains];
+    else provider.forceReauth = YES; // MOB-135
 
     [authenticatedUsersByProvider removeObjectForKey:providerName];
     NSData *usersData = [NSKeyedArchiver archivedDataWithRootObject:authenticatedUsersByProvider];

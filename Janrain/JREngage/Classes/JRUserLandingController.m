@@ -576,7 +576,6 @@ enum
     DLog(@"");
 
     /* This should work, because this button will only be visible during the return experience of a basic provider */
-    //sessionData.currentProvider.forceReauth = YES;
     [sessionData forgetAuthenticatedUserForProvider:sessionData.currentProvider.name];
 
     [sessionData setCurrentProvider:nil];
