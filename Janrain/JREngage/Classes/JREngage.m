@@ -36,6 +36,7 @@
 #import "JRSessionData.h"
 #import "JRUserInterfaceMaestro.h"
 #import "JREngageError.h"
+#import "JRNativeAuth.h"
 
 @interface JREngageError (JREngageError_setError)
 + (NSError *)setError:(NSString *)message withCode:(NSInteger)code;
@@ -207,6 +208,11 @@ static JREngage* singleton = nil;
         [self engageDidFailWithError:[JREngageError setError:message withCode:JRProviderNotConfiguredError]];
         return;
     }
+
+    if ([JRNativeAuth canHandlerProvider:provider])
+        [JRNativeAuth authOnProvider:provider completion:^(){
+
+        }];
 
     if (provider)
         interfaceMaestro.directProvider = provider;
