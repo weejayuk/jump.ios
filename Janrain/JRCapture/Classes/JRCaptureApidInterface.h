@@ -34,6 +34,8 @@
 
 #import <Foundation/Foundation.h>
 
+#define JRCaptureInterfaceDelegate JRCaptureInternalDelegate;
+
 @protocol JRCaptureDelegate;
 
 /**
