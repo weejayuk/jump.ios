@@ -33,12 +33,12 @@
 #import "JREngageWrapper.h"
 #import "JRCaptureData.h"
 #import "JREngage+CustomInterface.h"
-#import "JSONKit.h"
 #import "JRCaptureError.h"
 #import "JRConnectionManager.h"
 #import "JRCaptureApidInterface.h"
 #import "JRTraditionalSigninViewController.h"
 #import "JRCapture.h"
+#import "JRJsonUtils.h"
 
 typedef enum
 {
@@ -213,7 +213,7 @@ expandedCustomInterfaceOverrides:(NSMutableDictionary *)expandedCustomInterfaceO
                             andPayload:(NSData *)tokenUrlPayload forProvider:(NSString *)provider
 {
     NSString *payload = [[[NSString alloc] initWithData:tokenUrlPayload encoding:NSUTF8StringEncoding] autorelease];
-    NSDictionary *payloadDict = [payload objectFromJSONString];
+    NSDictionary *payloadDict = [payload JR_objectFromJSONString];
 
     DLog(@"%@", payload);
 

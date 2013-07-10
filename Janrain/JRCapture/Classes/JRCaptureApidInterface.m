@@ -37,11 +37,11 @@
 #import "JRConnectionManager.h"
 #import "JRCaptureApidInterface.h"
 #import "JRCaptureData.h"
-#import "JSONKit.h"
 #import "NSMutableDictionary+JRDictionaryUtils.h"
 #import "NSMutableURLRequest+JRRequestUtils.h"
 #import "JRCaptureError.h"
 #import "JRCaptureUser+Extras.h"
+#import "JRJsonUtils.h"
 
 static NSString *const cSignInUser = @"signinUser";
 static NSString *const cGetUser = @"getUser";
@@ -126,9 +126,7 @@ typedef enum CaptureInterfaceStatEnum
             [delegate respondsToSelector:@selector(captureSignInDidSucceedForUser:status:)])
     {
         BOOL respondsToFail = [delegate respondsToSelector:@selector(captureSignInDidFailWithError:)];
-        NSData *jsonData = [result dataUsingEncoding:NSUTF8StringEncoding];
-        NSDictionary *resultDict = [NSJSONSerialization JSONObjectWithData:jsonData options:(NSJSONReadingOptions) 0
-                                                                     error:nil];
+        NSDictionary *resultDict = [result JR_objectFromJSONString];
 
         FinishSignInError err = [JRCaptureApidInterface finishSignInWithPayload:resultDict forDelegate:delegate];
 
@@ -297,8 +295,8 @@ typedef enum CaptureInterfaceStatEnum
 {
     DLog(@"");
 
-    NSString      *attributes = [[captureObject JSONString] stringByAddingUrlPercentEscapes];
-    NSMutableData *body       = [NSMutableData data];
+    NSString *attributes = [[captureObject JR_jsonString] stringByAddingUrlPercentEscapes];
+    NSMutableData *body = [NSMutableData data];
 
     NSString *attrArgString = [NSString stringWithFormat:@"&attributes=%@", attributes];
     [body appendData:[attrArgString dataUsingEncoding:NSUTF8StringEncoding]];
@@ -363,8 +361,8 @@ typedef enum CaptureInterfaceStatEnum
 {
     DLog(@"");
 
-    NSString      *attributes = [[captureObject JSONString] stringByAddingUrlPercentEscapes];
-    NSMutableData *body       = [NSMutableData data];
+    NSString *attributes = [[captureObject JR_jsonString] stringByAddingUrlPercentEscapes];
+    NSMutableData *body = [NSMutableData data];
 
     [body appendData:[[NSString stringWithFormat:@"&attributes=%@", attributes] dataUsingEncoding:NSUTF8StringEncoding]];
     [body appendData:[[NSString stringWithFormat:@"&access_token=%@", token] dataUsingEncoding:NSUTF8StringEncoding]];
@@ -428,8 +426,8 @@ typedef enum CaptureInterfaceStatEnum
 {
     DLog(@"");
 
-    NSString      *attributes = [[captureArray JSONString] stringByAddingUrlPercentEscapes];
-    NSMutableData *body       = [NSMutableData data];
+    NSString *attributes = [[captureArray JR_jsonString] stringByAddingUrlPercentEscapes];
+    NSMutableData *body = [NSMutableData data];
 
     [body appendData:[[NSString stringWithFormat:@"&attributes=%@", attributes] 
             dataUsingEncoding:NSUTF8StringEncoding]];
@@ -524,7 +522,7 @@ typedef enum CaptureInterfaceStatEnum
     NSString     *action    = [tag objectForKey:cTagAction];
     NSObject     *context   = [tag objectForKey:@"context"];
 
-    NSDictionary *response    = [payload objectFromJSONString];
+    NSDictionary *response    = [payload JR_objectFromJSONString];
     CaptureInterfaceStat stat = [[response objectForKey:@"stat"] isEqualToString:@"ok"] ? StatOk : StatFail;
 
     id<JRCaptureInternalDelegate> delegate = [tag objectForKey:@"delegate"];
