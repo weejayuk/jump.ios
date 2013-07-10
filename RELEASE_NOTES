@@ -1,4 +1,5 @@
 v3.2.7
+ - merge in topic/remove-jsonkit
  - merge in topic/compatibility-defines
  - merge in topic/MOB-135-fix-cookie-auto-auth
 v3.2.6
