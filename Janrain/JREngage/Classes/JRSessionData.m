@@ -420,7 +420,7 @@ static NSString *applicationBundleDisplayName()
     JRActivityObject *activity;
 
     NSString *tokenUrl;
-    NSString *baseUrl;
+    //NSString *baseUrl;
     NSString *appId;
 
     BOOL hidePoweredBy;

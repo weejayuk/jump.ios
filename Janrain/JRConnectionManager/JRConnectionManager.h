@@ -73,4 +73,7 @@
 + (void)stopConnectionsForDelegate:(id <JRConnectionManagerDelegate>)delegate;
 
 + (NSUInteger)openConnections;
+
++ (void)jsonRequestToUrl:(NSString *)url params:(NSDictionary *)params
+       completionHandler:(void (^)(id, NSError *))handler;
 @end

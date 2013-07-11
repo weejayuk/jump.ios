@@ -45,6 +45,7 @@
 #import "JRBase64.h"
 #import "JRCaptureError.h"
 #import "JRCaptureUser+Extras.h"
+#import "JRConnectionManager.h"
 
 @implementation JRCapture
 
@@ -315,7 +316,7 @@ captureTraditionalRegistrationFormName:nil
             @"locale" : [JRCaptureData sharedCaptureData].captureLocale,
     };
 
-    [JRCaptureApidInterface jsonRequestToUrl:refreshUrl params:params completionHandler:^(id r, NSError *e)
+    [JRConnectionManager jsonRequestToUrl:refreshUrl params:params completionHandler:^(id r, NSError *e)
     {
         if (e)
         {
@@ -414,7 +415,7 @@ captureTraditionalRegistrationFormName:nil
         urlString = [NSString stringWithFormat:@"%@/oauth/register_native_traditional", config.captureBaseUrl];
     }
 
-    [JRCaptureApidInterface jsonRequestToUrl:urlString params:params completionHandler:^(id parsedResponse, NSError *e)
+    [JRConnectionManager jsonRequestToUrl:urlString params:params completionHandler:^(id parsedResponse, NSError *e)
     {
         [self handleRegistrationResponse:parsedResponse orError:e delegate:delegate];
     }];
@@ -458,21 +459,21 @@ captureTraditionalRegistrationFormName:nil
 
     JRCaptureData *config = [JRCaptureData sharedCaptureData];
     NSString *entityUrl = [NSString stringWithFormat:@"%@/entity", config.captureBaseUrl];
-    [JRCaptureApidInterface jsonRequestToUrl:entityUrl params:@{@"access_token" : accessToken}
-                           completionHandler:^(id entityResponse, NSError *e_)
-                           {
-                               if (e_ || ![entityResponse isKindOfClass:[NSDictionary class]] ||
-                                       ![@"ok" isEqual:[entityResponse objectForKey:@"stat"]] ||
-                                       ![entityResponse objectForKey:@"result"])
-                               {
-                                   if (!e_) e_ = [JRCaptureError invalidApiResponseErrorWithObject:entityResponse];
-                                   ALog(@"%@", e);
-                                   [JRCapture maybeDispatch:failMsg forDelegate:delegate withArg:e_];
-                                   return;
-                               }
+    [JRConnectionManager jsonRequestToUrl:entityUrl params:@{@"access_token" : accessToken}
+                        completionHandler:^(id entityResponse, NSError *e_)
+                        {
+                            if (e_ || ![entityResponse isKindOfClass:[NSDictionary class]] ||
+                                    ![@"ok" isEqual:[entityResponse objectForKey:@"stat"]] ||
+                                    ![entityResponse objectForKey:@"result"])
+                            {
+                                if (!e_) e_ = [JRCaptureError invalidApiResponseErrorWithObject:entityResponse];
+                                ALog(@"%@", e);
+                                [JRCapture maybeDispatch:failMsg forDelegate:delegate withArg:e_];
+                                return;
+                            }
 
-                               userDictHandler([entityResponse objectForKey:@"result"], nil);
-                           }];
+                            userDictHandler([entityResponse objectForKey:@"result"], nil);
+                        }];
 }
 
 + (void)maybeDispatch:(SEL)pSelector forDelegate:(id <JRCaptureDelegate>)delegate withArg:(id)arg1

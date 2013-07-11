@@ -71,7 +71,6 @@
 		6706F47BAAA33176C30137E4 /* JRBodyType.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706F48EF1DDDD75A9A55C71 /* JRBodyType.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6706F4B0B7A60336EB97164A /* icon_paypal_30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = 6706FA664F2B68C7A31221FD /* icon_paypal_30x30.png */; };
 		6706F4B1D897BABAF4E420F4 /* JRObjectLevelThree.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706F3299EC3D64CF869984F /* JRObjectLevelThree.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		6706F4BAF2008FBD038681F1 /* NSMutableURLRequest+JRRequestUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706F76C59A61F0D51D35EA2 /* NSMutableURLRequest+JRRequestUtils.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6706F4FE2B5229D057E57A56 /* icon_verisign_30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = 6706F168D68EFF486200BC33 /* icon_verisign_30x30.png */; };
 		6706F5180B60F3C21E369095 /* JRTraditionalSigninViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706FD9C3EB271E8906ABCB1 /* JRTraditionalSigninViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6706F51DA2621CA468C6CA40 /* JRPublishActivityController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6706F18A7D292D5A046B3C40 /* JRPublishActivityController.xib */; };
@@ -134,6 +133,7 @@
 		6706F8EE5E155E0D9ECD31E4 /* JROrganizationsElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706F0B859D457B27C961482 /* JROrganizationsElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6706F8EE629CBF998E70F30A /* icon_bw_mail_sms_30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = 6706F5A0B43F3795577531EC /* icon_bw_mail_sms_30x30.png */; };
 		6706F8F6711B9459CD62D5ED /* JRCaptureError.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706F5BA230D6A3B39FC97C0 /* JRCaptureError.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		6706F8F9C8361D9933408E32 /* NSDictionary+JRQueryParams.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706F8C068B6FE9BAB261D07 /* NSDictionary+JRQueryParams.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6706F90A407358D95D3AA880 /* JRTournamentsPlayedElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706FE7192712069057BD307 /* JRTournamentsPlayedElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6706F91565973A66F6A5B41F /* button_myspace_135x40.png in Resources */ = {isa = PBXBuildFile; fileRef = 6706FFDE402C3492AE88B14C /* button_myspace_135x40.png */; };
 		6706F93B33D4BDC335A65E73 /* JRAccountsElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706F9DFA7DB9FB63A900826 /* JRAccountsElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -146,6 +146,7 @@
 		6706F98A8A66BBF412D7F410 /* JRNSDate+ISO8601_CaptureDateTimeString.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706F50AC9AFB5A186E3A30D /* JRNSDate+ISO8601_CaptureDateTimeString.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6706F98D8437BA049C988412 /* icon_facebook_30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = 6706F6BFD6617C192949EA4F /* icon_facebook_30x30.png */; };
 		6706F98F9627869F79B19456 /* icon_yahoo_30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = 6706FCA69AF6C59788B0D620 /* icon_yahoo_30x30.png */; };
+		6706F9A92F7FBA67A461C106 /* NSMutableURLRequest+JRRequestUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706F2460DE9DDC762C7C805 /* NSMutableURLRequest+JRRequestUtils.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6706F9CCF3029574306AC0F5 /* logo_linkedin_280x65@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6706F83CD33F14AF5F76023D /* logo_linkedin_280x65@2x.png */; };
 		6706F9E1685F832B69CCA003 /* JRConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706FDE07F4A7E564BF9D3FC /* JRConnectionManager.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6706F9FEB20C8E148586ECFD /* icon_google_30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = 6706FB841DDC1183BCE93E72 /* icon_google_30x30.png */; };
@@ -233,7 +234,6 @@
 		6706FE379371D5F08FD33EF5 /* button_twitter_135x40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6706FD940D4F6D01970A0707 /* button_twitter_135x40@2x.png */; };
 		6706FE53BD1D4F0D929C2AE1 /* JREngageError.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706F81193D7F18536778048 /* JREngageError.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6706FE902C67FED23EA2E5D7 /* logo_orkut_280x65.png in Resources */ = {isa = PBXBuildFile; fileRef = 6706F4EEB9B3786866ED1017 /* logo_orkut_280x65.png */; };
-		6706FEA206AE3A537CABDAD8 /* NSDictionary+JRQueryParams.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706F39436211FF904AC6377 /* NSDictionary+JRQueryParams.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6706FEB3546DDC64145F85BD /* JROnipLevelOneElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706F5A485C883A6BE20BF64 /* JROnipLevelOneElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6706FEC65547514C1A718244 /* icon_twitter_30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = 6706F0262A2597734EA24FA8 /* icon_twitter_30x30.png */; };
 		6706FECDA2F54957AD06836B /* JRCaptureUser+Extras.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706F03E5ECBAD745FC87645 /* JRCaptureUser+Extras.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -310,6 +310,7 @@
 		6706F1693F2475200916C223 /* triangle_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = triangle_icon.png; sourceTree = "<group>"; };
 		6706F176EA48D9D35C38C34D /* icon_salesforce_30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_salesforce_30x30.png; sourceTree = "<group>"; };
 		6706F177967F38CF7CA5D0FC /* CaptureDynamicForm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CaptureDynamicForm.h; path = ../../../../jump.ios/Samples/SimpleCaptureDemo/SimpleCaptureDemo/Classes/CaptureDynamicForm.h; sourceTree = "<group>"; };
+		6706F178669778DCC3A8D13C /* NSMutableURLRequest+JRRequestUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableURLRequest+JRRequestUtils.h"; sourceTree = "<group>"; };
 		6706F186D9275E78ECC38C03 /* button_yahoo_135x40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_yahoo_135x40.png; sourceTree = "<group>"; };
 		6706F18A7D292D5A046B3C40 /* JRPublishActivityController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = JRPublishActivityController.xib; sourceTree = "<group>"; };
 		6706F194F5B8D928175A5599 /* button_google_280x40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_google_280x40.png; sourceTree = "<group>"; };
@@ -328,6 +329,7 @@
 		6706F23AA741E4B456631BB9 /* icon_bw_myspace_30x30@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_bw_myspace_30x30@2x.png"; sourceTree = "<group>"; };
 		6706F24261C9D663CA951A9E /* JRTournamentsPlayedElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRTournamentsPlayedElement.h; sourceTree = "<group>"; };
 		6706F243FF1B1D4DBFCE6B5D /* Engage-Only Integration Guide.md */ = {isa = PBXFileReference; lastKnownFileType = file.md; name = "Engage-Only Integration Guide.md"; path = "../../../jump.ios/Docs/Engage-Only Integration Guide.md"; sourceTree = "<group>"; };
+		6706F2460DE9DDC762C7C805 /* NSMutableURLRequest+JRRequestUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableURLRequest+JRRequestUtils.m"; sourceTree = "<group>"; };
 		6706F249E44D8295BBF7C18B /* JRPublishActivityController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRPublishActivityController.m; sourceTree = "<group>"; };
 		6706F258F34EC9D14EEFD739 /* JRAccountsElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRAccountsElement.h; sourceTree = "<group>"; };
 		6706F259715FBD48ED872EA4 /* logo_paypal_280x65.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_paypal_280x65.png; sourceTree = "<group>"; };
@@ -357,7 +359,6 @@
 		6706F3716B6626009BD9A3EE /* JRWebViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = JRWebViewController.xib; sourceTree = "<group>"; };
 		6706F3857857370B94F93090 /* button_facebook_280x40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_facebook_280x40.png; sourceTree = "<group>"; };
 		6706F38A10B52016531F8F57 /* logo_tumblr_280x65.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_tumblr_280x65.png; sourceTree = "<group>"; };
-		6706F39436211FF904AC6377 /* NSDictionary+JRQueryParams.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+JRQueryParams.m"; sourceTree = "<group>"; };
 		6706F39D56CA252D2415997F /* CaptureDynamicForm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CaptureDynamicForm.m; path = ../../../../jump.ios/Samples/SimpleCaptureDemo/SimpleCaptureDemo/Classes/CaptureDynamicForm.m; sourceTree = "<group>"; };
 		6706F3A45EA8CB3D5E262C4C /* media_view_background_bottom@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "media_view_background_bottom@2x.png"; sourceTree = "<group>"; };
 		6706F3B05FD68239BC406711 /* button_twitter_135x40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_twitter_135x40.png; sourceTree = "<group>"; };
@@ -436,7 +437,6 @@
 		6706F747B5BDBE51FA89920C /* logo_aol_280x65.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_aol_280x65.png; sourceTree = "<group>"; };
 		6706F75D5CA795B97AB4161F /* JRStatusesElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRStatusesElement.h; sourceTree = "<group>"; };
 		6706F766163B15001749C685 /* icon_live_id_30x30@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_live_id_30x30@2x.png"; sourceTree = "<group>"; };
-		6706F76C59A61F0D51D35EA2 /* NSMutableURLRequest+JRRequestUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableURLRequest+JRRequestUtils.m"; sourceTree = "<group>"; };
 		6706F76FC3C761BE09D02FAC /* JRProvidersController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = JRProvidersController.xib; sourceTree = "<group>"; };
 		6706F77765FFD28061AFDD94 /* icon_vzn_30x30@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_vzn_30x30@2x.png"; sourceTree = "<group>"; };
 		6706F781010D0F7E2ACA4D4D /* JRCaptureObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCaptureObject.h; sourceTree = "<group>"; };
@@ -468,6 +468,7 @@
 		6706F894E1DC97BDBDFA315F /* JRPreviewLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRPreviewLabel.h; sourceTree = "<group>"; };
 		6706F8A4034EED1BB662F581 /* media_view_background_top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = media_view_background_top.png; sourceTree = "<group>"; };
 		6706F8B2DA7DCD60A3C52709 /* JRPluralLevelTwoElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRPluralLevelTwoElement.h; sourceTree = "<group>"; };
+		6706F8C068B6FE9BAB261D07 /* NSDictionary+JRQueryParams.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+JRQueryParams.m"; sourceTree = "<group>"; };
 		6706F8C477420511948B8256 /* JREngage+CustomInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JREngage+CustomInterface.m"; sourceTree = "<group>"; };
 		6706F8DC695A7C334ED89DD5 /* button_black_135x40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_black_135x40.png; sourceTree = "<group>"; };
 		6706F8DC7856E86A423C2108 /* PickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PickerViewController.m; path = ../../../../jump.ios/Samples/SimpleCaptureDemo/SimpleCaptureDemo/Classes/PickerViewController.m; sourceTree = "<group>"; };
@@ -485,9 +486,7 @@
 		6706F988C7BD0E9068184943 /* JRPluralLevelOneElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRPluralLevelOneElement.m; sourceTree = "<group>"; };
 		6706F9A251B77741FC5D40CA /* JROnipLevelTwo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JROnipLevelTwo.h; sourceTree = "<group>"; };
 		6706F9A650E3C645B229DD9F /* JRActivityObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRActivityObject.m; sourceTree = "<group>"; };
-		6706F9AF71E2DF4C941FA4A2 /* NSMutableURLRequest+JRRequestUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableURLRequest+JRRequestUtils.h"; sourceTree = "<group>"; };
 		6706F9D3A7235BE0C257BC0E /* JREngage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JREngage.h; sourceTree = "<group>"; };
-		6706F9DDB540753AD723781B /* NSDictionary+JRQueryParams.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+JRQueryParams.h"; sourceTree = "<group>"; };
 		6706F9DFA7DB9FB63A900826 /* JRAccountsElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRAccountsElement.m; sourceTree = "<group>"; };
 		6706F9EA5375984D6DBED418 /* JRCaptureData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCaptureData.h; sourceTree = "<group>"; };
 		6706F9F00E2522E7E182F8EF /* JRUrlsElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRUrlsElement.h; sourceTree = "<group>"; };
@@ -544,6 +543,7 @@
 		6706FCFEDDFDF424291AA9FC /* icon_google_30x30@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_google_30x30@2x.png"; sourceTree = "<group>"; };
 		6706FD10F869D8065C4E265B /* JRCaptureApidInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRCaptureApidInterface.m; sourceTree = "<group>"; };
 		6706FD20C6645C8BDF7CFE7A /* logo_aol_280x65@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo_aol_280x65@2x.png"; sourceTree = "<group>"; };
+		6706FD2C86CC026472C41D0F /* NSDictionary+JRQueryParams.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+JRQueryParams.h"; sourceTree = "<group>"; };
 		6706FD4AABF71AD4ED239885 /* logo_linkedin_280x65.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_linkedin_280x65.png; sourceTree = "<group>"; };
 		6706FD4BED1E91E2972C3D25 /* logo_myopenid_280x65.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_myopenid_280x65.png; sourceTree = "<group>"; };
 		6706FD5578AC320A22CAAA89 /* icon_foursquare_30x30@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_foursquare_30x30@2x.png"; sourceTree = "<group>"; };
@@ -793,12 +793,8 @@
 				6706F46C95D7E6E8AB1D9618 /* JRCaptureApidInterface.h */,
 				6706FD10F869D8065C4E265B /* JRCaptureApidInterface.m */,
 				6706FC75D01477EC6FE6AE1B /* JRCaptureObject+Internal.h */,
-				6706F9DDB540753AD723781B /* NSDictionary+JRQueryParams.h */,
-				6706F39436211FF904AC6377 /* NSDictionary+JRQueryParams.m */,
 				6706FB4E74D2753F355FAAC6 /* JRTraditionalSigninViewController.h */,
 				6706FD9C3EB271E8906ABCB1 /* JRTraditionalSigninViewController.m */,
-				6706F9AF71E2DF4C941FA4A2 /* NSMutableURLRequest+JRRequestUtils.h */,
-				6706F76C59A61F0D51D35EA2 /* NSMutableURLRequest+JRRequestUtils.m */,
 				6706F2C651DD35F6FF46C01F /* NSMutableDictionary+JRDictionaryUtils.h */,
 				6706FCE728DD4948D665F8B3 /* NSMutableDictionary+JRDictionaryUtils.m */,
 				6706FEFD5D410909D2C22AAC /* JRNSDate+ISO8601_CaptureDateTimeString.h */,
@@ -1125,6 +1121,10 @@
 			children = (
 				6706F83B489B8FCE688F7202 /* JRConnectionManager.h */,
 				6706FDE07F4A7E564BF9D3FC /* JRConnectionManager.m */,
+				6706FD2C86CC026472C41D0F /* NSDictionary+JRQueryParams.h */,
+				6706F8C068B6FE9BAB261D07 /* NSDictionary+JRQueryParams.m */,
+				6706F2460DE9DDC762C7C805 /* NSMutableURLRequest+JRRequestUtils.m */,
+				6706F178669778DCC3A8D13C /* NSMutableURLRequest+JRRequestUtils.h */,
 			);
 			path = JRConnectionManager;
 			sourceTree = "<group>";
@@ -1657,12 +1657,12 @@
 				6706F700388F4DA76956FC83 /* JREngageWrapper.m in Sources */,
 				6706FECDA2F54957AD06836B /* JRCaptureUser+Extras.m in Sources */,
 				6706FB9DAEB7B619DCA3E792 /* JRCaptureApidInterface.m in Sources */,
-				6706FEA206AE3A537CABDAD8 /* NSDictionary+JRQueryParams.m in Sources */,
 				6706F5180B60F3C21E369095 /* JRTraditionalSigninViewController.m in Sources */,
-				6706F4BAF2008FBD038681F1 /* NSMutableURLRequest+JRRequestUtils.m in Sources */,
 				6706F652B5465CC3E95C9AC8 /* NSMutableDictionary+JRDictionaryUtils.m in Sources */,
 				6706F98A8A66BBF412D7F410 /* JRNSDate+ISO8601_CaptureDateTimeString.m in Sources */,
 				6706F9E1685F832B69CCA003 /* JRConnectionManager.m in Sources */,
+				6706F8F9C8361D9933408E32 /* NSDictionary+JRQueryParams.m in Sources */,
+				6706F9A92F7FBA67A461C106 /* NSMutableURLRequest+JRRequestUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

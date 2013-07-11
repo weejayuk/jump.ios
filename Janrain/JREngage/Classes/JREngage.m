@@ -210,9 +210,10 @@ static JREngage* singleton = nil;
     }
 
     if ([JRNativeAuth canHandlerProvider:provider])
-        [JRNativeAuth authOnProvider:provider completion:^(){
-
-        }];
+    {
+        [JRNativeAuth authOnProvider:provider completion:^(NSString *result){ }];
+        return;
+    }
 
     if (provider)
         interfaceMaestro.directProvider = provider;

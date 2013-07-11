@@ -169,9 +169,9 @@
 @property BOOL dialogIsShowing;
 @property(retain, readonly) NSError *error;
 
-+ (id)jrSessionData;
++ (JRSessionData *)jrSessionData;
 
-+ (id)jrSessionDataWithAppId:(NSString *)newAppId tokenUrl:(NSString *)newTokenUrl
++ (JRSessionData *)jrSessionDataWithAppId:(NSString *)newAppId tokenUrl:(NSString *)newTokenUrl
                  andDelegate:(id <JRSessionDelegate>)newDelegate;
 
 - (void)tryToReconfigureLibrary;

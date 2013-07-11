@@ -117,6 +117,4 @@ typedef enum
 + (FinishSignInError)finishSignInWithPayload:(NSDictionary *)payloadDict
                                  forDelegate:(id <JRCaptureDelegate>)delegate;
 
-+ (void)jsonRequestToUrl:(NSString *)url params:(NSDictionary *)params
-       completionHandler:(void (^)(id, NSError *))handler;
 @end

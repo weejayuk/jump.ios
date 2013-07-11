@@ -641,43 +641,5 @@ typedef enum CaptureInterfaceStatEnum
     return cJRNoError;
 }
 
-+ (void)jsonRequestToUrl:(NSString *)url params:(NSDictionary *)params
-     completionHandler:(void(^)(id parsedResponse, NSError *e))handler
-{
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
-    [request JR_setBodyWithParams:params];
-    NSString *p = [[[NSString alloc] initWithData:[request HTTPBody] encoding:NSUTF8StringEncoding] autorelease];
-    DLog(@"URL: \"%@\" params: \"%@\"", url, p);
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue]
-                           completionHandler:^(NSURLResponse *r, NSData *d, NSError *e)
-                           {
-                               if (e)
-                               {
-                                   ALog(@"Error fetching JSON: %@", e);
-                                   handler(nil, e);
-                               }
-                               else
-                               {
-                                   NSString *bodyString =
-                                           [[[NSString alloc] initWithData:d
-                                                                  encoding:NSUTF8StringEncoding] autorelease];
-                                   NSError *err;
-                                   id parsedJson = [NSJSONSerialization JSONObjectWithData:d
-                                                                                   options:(NSJSONReadingOptions) 0
-                                                                                     error:&err];
-                                   ALog(@"Fetched: \"%@\"", bodyString);
-                                   if (err)
-                                   {
-                                       ALog(@"Parse err: \"%@\"", err);
-                                       handler(nil, e);
-                                   }
-                                   else
-                                   {
-                                       handler(parsedJson, nil);
-                                   }
-                               }
-                           }];
-}
-
 - (void)connectionWasStoppedWithTag:(id)userData { }
 @end
