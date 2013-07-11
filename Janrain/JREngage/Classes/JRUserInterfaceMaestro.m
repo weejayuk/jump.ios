@@ -896,6 +896,8 @@ static JRUserInterfaceMaestro* singleton = nil;
 {
     DLog(@"");
 
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"JRTearingDownViewControllers" object:self];
+
     [delegates removeAllObjects];
     [delegates release], delegates = nil;
 

@@ -34,6 +34,9 @@
 @protocol JRCaptureDelegate;
 
 @interface JREngageWrapper : NSObject <JREngageSigninDelegate>
+
+@property bool didTearDownViewControllers;
+
 + (void)configureEngageWithAppId:(NSString *)appId customIdentityProviders:(NSDictionary *)customProviders;
 
 + (void)startAuthenticationDialogWithTraditionalSignIn:(JRTraditionalSignInType)nativeSignInType

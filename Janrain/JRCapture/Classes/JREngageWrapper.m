@@ -62,7 +62,14 @@ static JREngageWrapper *singleton = nil;
 
 - (JREngageWrapper *)init
 {
-    if ((self = [super init])) { }
+    if ((self = [super init])) {
+        [[NSNotificationCenter defaultCenter]
+            addObserver:self selector:@selector(tearingDownViewControllers:)
+                   name:@"JRTearingDownViewControllers" object:nil];
+
+        self.didTearDownViewControllers = NO;
+
+    }
 
     return self;
 }
@@ -173,12 +180,20 @@ expandedCustomInterfaceOverrides:(NSMutableDictionary *)expandedCustomInterfaceO
     [JREngage showAuthenticationDialogForProvider:provider withCustomInterfaceOverrides:customInterfaceOverrides];
 }
 
+- (void)tearingDownViewControllers:(NSNotification *)notification {
+    self.didTearDownViewControllers = YES;
+}
+
 - (void)engageLibraryTearDown
 {
-    [JREngage updateTokenUrl:nil];
-    self.delegate = nil;
-    self.nativeSignInViewController = nil;
-    self.engageToken = nil;
+    if (self.didTearDownViewControllers) {
+        [JREngage updateTokenUrl:nil];
+        self.delegate = nil;
+        self.nativeSignInViewController = nil;
+        self.engageToken = nil;
+        self.didTearDownViewControllers = NO;
+
+    }
 }
 
 - (void)authenticationCallToTokenUrl:(NSString *)tokenUrl didFailWithError:(NSError *)error
@@ -264,6 +279,8 @@ expandedCustomInterfaceOverrides:(NSMutableDictionary *)expandedCustomInterfaceO
 
 - (void)dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+
     [delegate release];
 
     [nativeSignInViewController release];
