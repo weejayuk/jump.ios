@@ -1,9 +1,9 @@
 #import <objc/message.h>
-#import <FacebookSDK/FacebookSDK.h>
 #import "JRNativeAuth.h"
 #import "debug_log.h"
 #import "JRConnectionManager.h"
 #import "JRSessionData.h"
+#import "JREngageError.h"
 
 @implementation JRNativeAuth
 static Class fbSession;
@@ -30,7 +30,7 @@ static SEL openActiveSessionWithReadPermissionsSel;
     return NO;
 }
 
-+ (void)authOnProvider:(NSString *)provider completion:(void (^)(NSString *))completion
++ (void)authOnProvider:(NSString *)provider completion:(void (^)(id, NSError *))completion
 {
     if ([provider isEqual:@"facebook"])
     {
@@ -38,7 +38,7 @@ static SEL openActiveSessionWithReadPermissionsSel;
     }
 }
 
-+ (void)fbNativeAuthWithCompletion:(void (^)(NSString *))completion
++ (void)fbNativeAuthWithCompletion:(void (^)(id, NSError *))completion
 {
     [self initGlobals];
 
@@ -64,12 +64,13 @@ static SEL openActiveSessionWithReadPermissionsSel;
     }
 }
 
-+ (void)processAccessToken:(id)token completion:(void (^)(NSString *))completion
++ (void)processAccessToken:(id)token completion:(void (^)(id, NSError *))completion
 {
     DLog(@"token %@", token);
     if (![token isKindOfClass:[NSString class]])
     {
-        completion(nil);
+        completion(nil, [NSError errorWithDomain:JREngageErrorDomain code:JRAuthenticationNativeAuthError
+                                        userInfo:nil]);
         return;
     }
 
@@ -78,7 +79,7 @@ static SEL openActiveSessionWithReadPermissionsSel;
 
     void (^responseHandler)(id, NSError *) = ^(id o, NSError *error)
     {
-        DLog(@"%@", o);
+        completion(o, error);
     };
     [JRConnectionManager jsonRequestToUrl:url params:params completionHandler:responseHandler];
 }

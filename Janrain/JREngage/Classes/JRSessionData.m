@@ -1575,23 +1575,27 @@ CALL_DELEGATE_SELECTOR:
 #pragma mark trigger_methods
 - (void)triggerAuthenticationDidCompleteWithPayload:(NSDictionary *)payloadDict
 {
- /* This value will be nil if authentication was canceled after the user authenticated in the
-    WebView, but before the authentication call was completed, like in the case where the calling
-    application issues the cancelAuthentication command. */
+    // This value will be nil if authentication was canceled after the user authenticated in the
+    // WebView, but before the authentication call was completed, like in the case where the calling
+    // application issues the cancelAuthentication command.
     if (!currentProvider)
         return;
 
-    NSDictionary *goodies = [payloadDict objectForKey:@"rpx_result"];
-    NSString *token = [goodies objectForKey:@"token"];
-    NSMutableDictionary *auth_info = [NSMutableDictionary dictionaryWithDictionary:[goodies objectForKey:@"auth_info"]];
+    NSDictionary *rpxResult = [payloadDict objectForKey:@"rpx_result"];
+    NSString *token = [rpxResult objectForKey:@"token"];
+    NSMutableDictionary *authInfo = [[[rpxResult objectForKey:@"auth_info"] mutableCopy] autorelease];
 
-    [auth_info setObject:token forKey:@"token"];
+    [authInfo setObject:token forKey:@"token"];
 
-    DLog (@"Authentication completed for user: %@", [goodies description]);
+    DLog (@"Authentication completed for user: %@", [rpxResult description]);
 
-    JRAuthenticatedUser *user = [[[JRAuthenticatedUser alloc] initUserWithDictionary:goodies
-                                                                    andWelcomeString:[self getWelcomeMessageFromCookie]
-                                                                    forProviderNamed:currentProvider.name] autorelease];
+    JRAuthenticatedUser *user = nil;
+    if ([authInfo count] > 0) // native auth only provides an empty auth_info blob
+    {
+        user = [[[JRAuthenticatedUser alloc] initUserWithDictionary:rpxResult
+                                                   andWelcomeString:[self getWelcomeMessageFromCookie]
+                                                   forProviderNamed:currentProvider.name] autorelease];
+    }
 
     if (user)
     {
@@ -1599,10 +1603,6 @@ CALL_DELEGATE_SELECTOR:
         NSData *usersData = [NSKeyedArchiver archivedDataWithRootObject:authenticatedUsersByProvider];
         [[NSUserDefaults standardUserDefaults] setObject:usersData forKey:cJRAuthenticatedUsersByProvider];
         [[NSUserDefaults standardUserDefaults] synchronize];
-    }
-    else
-    {
-        // TODO: There could be some kind of error initializing the user!
     }
 
     if ([self.authenticationProviders containsObject:currentProvider.name] && !socialSharing)
@@ -1615,14 +1615,13 @@ CALL_DELEGATE_SELECTOR:
     for (id <JRSessionDelegate> delegate in delegatesCopy)
     {
         if ([delegate respondsToSelector:@selector(authenticationDidCompleteForUser:forProvider:)])
-            [delegate authenticationDidCompleteForUser:auth_info forProvider:currentProvider.name];
+            [delegate authenticationDidCompleteForUser:authInfo forProvider:currentProvider.name];
     }
 
     if (tokenUrl)
         [self startMakeCallToTokenUrl:tokenUrl withToken:token forProvider:currentProvider.name];
 
-    [currentProvider release];
-    currentProvider = nil;
+    self.currentProvider = nil;
 }
 
 - (void)triggerAuthenticationDidFailWithError:(NSError *)authError

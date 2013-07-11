@@ -211,10 +211,34 @@ static JREngage* singleton = nil;
 
     if ([JRNativeAuth canHandlerProvider:provider])
     {
-        [JRNativeAuth authOnProvider:provider completion:^(NSString *result){ }];
+        [JRNativeAuth authOnProvider:provider completion:^(id result, NSError *error){
+            NSString *token;
+            if (error || ![result isKindOfClass:[NSDictionary class]]
+                    || ![[((NSDictionary *) result) objectForKey:@"stat"] isEqual:@"ok"]
+                    || ![token = [((NSDictionary *) result) objectForKey:@"token"] isKindOfClass:[NSString class]])
+            {
+                DLog(@"Falling back to web auth. Native result: %@ Native error: %@", result, error);
+                goto web_auth;
+            }
+
+            [sessionData setCurrentProvider:[sessionData getProviderNamed:provider]];
+            [sessionData triggerAuthenticationDidCompleteWithPayload:@{
+                    @"rpx_result" : @{@"token" : token},
+                    @"auth_info" : @{}
+            }];
+            return;
+
+            web_auth:
+            [self startWebAuthWithCustomInterface:customInterfaceOverrides provider:provider];
+        }];
         return;
     }
 
+    [self startWebAuthWithCustomInterface:customInterfaceOverrides provider:provider];
+}
+
+- (void)startWebAuthWithCustomInterface:(NSDictionary *)customInterfaceOverrides provider:(NSString *)provider
+{
     if (provider)
         interfaceMaestro.directProvider = provider;
 
