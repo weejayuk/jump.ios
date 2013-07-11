@@ -49,7 +49,7 @@ static SEL openActiveSessionWithReadPermissionsSel;
     if (fbState & 1<<9)
     {
         id accessToken = [self getAccessToken:fbActiveSession];
-        [self processAccessToken:accessToken completion:completion];
+        [self getAuthInfoTokenForAccessToken:accessToken completion:completion];
     }
     else
     {
@@ -58,13 +58,13 @@ static SEL openActiveSessionWithReadPermissionsSel;
                 {
                     DLog(@"session %@ status %i error %@", session, status, error);
                     id accessToken = [self getAccessToken:session];
-                    [self processAccessToken:accessToken completion:completion];
+                    [self getAuthInfoTokenForAccessToken:accessToken completion:completion];
                 };
         objc_msgSend(fbSession, openActiveSessionWithReadPermissionsSel, @[], YES, handler);
     }
 }
 
-+ (void)processAccessToken:(id)token completion:(void (^)(id, NSError *))completion
++ (void)getAuthInfoTokenForAccessToken:(id)token completion:(void (^)(id, NSError *))completion
 {
     DLog(@"token %@", token);
     if (![token isKindOfClass:[NSString class]])
@@ -77,11 +77,7 @@ static SEL openActiveSessionWithReadPermissionsSel;
     NSString *url = [[JRSessionData jrSessionData].baseUrl stringByAppendingString:@"/signin/oauth_token"];
     NSDictionary *params = @{@"token" : token, @"provider" : @"facebook"};
 
-    void (^responseHandler)(id, NSError *) = ^(id o, NSError *error)
-    {
-        completion(o, error);
-    };
-    [JRConnectionManager jsonRequestToUrl:url params:params completionHandler:responseHandler];
+    [JRConnectionManager jsonRequestToUrl:url params:params completionHandler:completion];
 }
 
 + (id)getAccessToken:(id)fbActiveSession
