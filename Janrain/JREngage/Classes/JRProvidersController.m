@@ -40,6 +40,7 @@
 #import "JRInfoBar.h"
 #import "JRUserLandingController.h"
 #import "JRWebViewController.h"
+#import "JRNativeAuth.h"
 
 @interface UITableViewCellProviders : UITableViewCell
 {
@@ -526,6 +527,20 @@
 
     // Let sessionData know which provider the user selected
     JRProvider *provider = [sessionData getProviderNamed:[providers objectAtIndex:(NSUInteger) indexPath.row]];
+    if ([JRNativeAuth canHandleProvider:provider.name])
+    {
+        [JRNativeAuth startAuthOnProvider:provider.name completion:^(NSError *e) {
+            if (e) [self startWebViewAuthOnProvider:provider];
+        }];
+    }
+    else
+    {
+        [self startWebViewAuthOnProvider:provider];
+    }
+}
+
+- (void)startWebViewAuthOnProvider:(JRProvider *)provider
+{
     [sessionData setCurrentProvider:provider];
 
     DLog(@"cell for %@ was selected", provider);

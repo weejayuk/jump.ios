@@ -21,16 +21,16 @@ static SEL openActiveSessionWithReadPermissionsSel;
     accessTokenDataSel = NSSelectorFromString(@"accessTokenData");
     accessTokenSel = NSSelectorFromString(@"accessToken");
     openActiveSessionWithReadPermissionsSel =
-                NSSelectorFromString(@"openActiveSessionWithReadPermissions:allowLoginUI:completionHandler:");
+            NSSelectorFromString(@"openActiveSessionWithReadPermissions:allowLoginUI:completionHandler:");
 }
 
-+ (BOOL)canHandlerProvider:(NSString *)provider
++ (BOOL)canHandleProvider:(NSString *)provider
 {
     if ([provider isEqual:@"facebook"]) return YES;
     return NO;
 }
 
-+ (void)authOnProvider:(NSString *)provider completion:(void (^)(id, NSError *))completion
++ (void)startAuthOnProvider:(NSString *)provider completion:(void (^)(NSError *))completion
 {
     if ([provider isEqual:@"facebook"])
     {
@@ -38,7 +38,7 @@ static SEL openActiveSessionWithReadPermissionsSel;
     }
 }
 
-+ (void)fbNativeAuthWithCompletion:(void (^)(id, NSError *))completion
++ (void)fbNativeAuthWithCompletion:(void (^)(NSError *))completion
 {
     [self initGlobals];
 
@@ -46,10 +46,10 @@ static SEL openActiveSessionWithReadPermissionsSel;
     int64_t fbState = (BOOL) [fbActiveSession performSelector:stateSel]; //[FBSession activeSession].state;
 
     //#define FB_SESSIONSTATEOPENBIT (1 << 9)
-    if (fbState & 1<<9)
+    if (fbState & 1 << 9)
     {
         id accessToken = [self getAccessToken:fbActiveSession];
-        [self getAuthInfoTokenForAccessToken:accessToken completion:completion];
+        [self getAuthInfoTokenForAccessToken:accessToken onProvider:@"facebook" completion:completion];
     }
     else
     {
@@ -58,26 +58,48 @@ static SEL openActiveSessionWithReadPermissionsSel;
                 {
                     DLog(@"session %@ status %i error %@", session, status, error);
                     id accessToken = [self getAccessToken:session];
-                    [self getAuthInfoTokenForAccessToken:accessToken completion:completion];
+                    [self getAuthInfoTokenForAccessToken:accessToken onProvider:@"facebook" completion:completion];
                 };
         objc_msgSend(fbSession, openActiveSessionWithReadPermissionsSel, @[], YES, handler);
     }
 }
 
-+ (void)getAuthInfoTokenForAccessToken:(id)token completion:(void (^)(id, NSError *))completion
++ (void)getAuthInfoTokenForAccessToken:(id)token onProvider:(NSString *)provider
+                            completion:(void (^)(NSError *))completion
 {
     DLog(@"token %@", token);
     if (![token isKindOfClass:[NSString class]])
     {
-        completion(nil, [NSError errorWithDomain:JREngageErrorDomain code:JRAuthenticationNativeAuthError
-                                        userInfo:nil]);
+        NSError *error = [NSError errorWithDomain:JREngageErrorDomain code:JRAuthenticationNativeAuthError
+                                       userInfo:nil];
+        DLog(@"Native auth error: %@", error);
+        completion(error);
         return;
     }
 
     NSString *url = [[JRSessionData jrSessionData].baseUrl stringByAppendingString:@"/signin/oauth_token"];
-    NSDictionary *params = @{@"token" : token, @"provider" : @"facebook"};
+    NSDictionary *params = @{@"token" : token, @"provider" : provider};
 
-    [JRConnectionManager jsonRequestToUrl:url params:params completionHandler:completion];
+
+    void (^responseHandler)(id, NSError *) = ^(id result, NSError *error)
+    {
+        NSString *authInfoToken;
+        if (error || ![result isKindOfClass:[NSDictionary class]]
+                || ![[((NSDictionary *) result) objectForKey:@"stat"] isEqual:@"ok"]
+                || ![authInfoToken = [((NSDictionary *) result) objectForKey:@"token"] isKindOfClass:[NSString class]])
+        {
+        }
+
+        JRSessionData *sessionData = [JRSessionData jrSessionData];
+        [sessionData setCurrentProvider:[sessionData getProviderNamed:provider]];
+        [sessionData triggerAuthenticationDidCompleteWithPayload:@{
+                @"rpx_result" : @{@"token" : authInfoToken},
+                @"auth_info" : @{}
+        }];
+
+        completion(nil);
+    };
+    [JRConnectionManager jsonRequestToUrl:url params:params completionHandler:responseHandler];
 }
 
 + (id)getAccessToken:(id)fbActiveSession

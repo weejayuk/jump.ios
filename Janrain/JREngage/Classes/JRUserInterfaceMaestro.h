@@ -103,6 +103,8 @@ typedef enum
 - (void)publishingCanceled;
 //- (void)publishingFailed;
 
+- (void)startWebAuthWithCustomInterface:(NSDictionary *)customInterfaceOverrides provider:(NSString *)provider;
+
 @property(copy) NSMutableDictionary *customInterfaceDefaults;
 @property(readonly) JRProvidersController *myProvidersController;
 @property(readonly) JRUserLandingController *myUserLandingController;

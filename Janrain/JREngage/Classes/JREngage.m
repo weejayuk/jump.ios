@@ -209,40 +209,24 @@ static JREngage* singleton = nil;
         return;
     }
 
-    if ([JRNativeAuth canHandlerProvider:provider])
+    if ([JRNativeAuth canHandleProvider:provider])
     {
-        [JRNativeAuth authOnProvider:provider completion:^(id result, NSError *error){
-            NSString *token;
-            if (error || ![result isKindOfClass:[NSDictionary class]]
-                    || ![[((NSDictionary *) result) objectForKey:@"stat"] isEqual:@"ok"]
-                    || ![token = [((NSDictionary *) result) objectForKey:@"token"] isKindOfClass:[NSString class]])
-            {
-                DLog(@"Falling back to web auth. Native result: %@ Native error: %@", result, error);
-                goto web_auth;
-            }
-
-            [sessionData setCurrentProvider:[sessionData getProviderNamed:provider]];
-            [sessionData triggerAuthenticationDidCompleteWithPayload:@{
-                    @"rpx_result" : @{@"token" : token},
-                    @"auth_info" : @{}
-            }];
-            return;
-
-            web_auth:
-            [self startWebAuthWithCustomInterface:customInterfaceOverrides provider:provider];
-        }];
-        return;
+        [self startNativeAuthWithCustomInterface:customInterfaceOverrides provider:provider];
     }
-
-    [self startWebAuthWithCustomInterface:customInterfaceOverrides provider:provider];
+    else
+    {
+        [interfaceMaestro startWebAuthWithCustomInterface:customInterfaceOverrides provider:provider];
+    }
 }
 
-- (void)startWebAuthWithCustomInterface:(NSDictionary *)customInterfaceOverrides provider:(NSString *)provider
+- (void)startNativeAuthWithCustomInterface:(NSDictionary *)customInterfaceOverrides provider:(NSString *)provider
 {
-    if (provider)
-        interfaceMaestro.directProvider = provider;
-
-    [interfaceMaestro showAuthenticationDialogWithCustomInterface:customInterfaceOverrides];
+    [JRNativeAuth startAuthOnProvider:provider completion:^(NSError *error)
+    {
+        if (!error) return;
+        [interfaceMaestro startWebAuthWithCustomInterface:customInterfaceOverrides
+                                                 provider:provider];
+    }];
 }
 
 //- (void)showAuthenticationDialogForProvider:(NSString *)provider

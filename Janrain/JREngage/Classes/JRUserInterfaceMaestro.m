@@ -32,6 +32,7 @@
  Date:   Tuesday, August 24, 2010
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+#import "JREngage.h"
 #import "debug_log.h"
 #import "QuartzCore/QuartzCore.h"
 
@@ -1256,4 +1257,12 @@ static JRUserInterfaceMaestro* singleton = nil;
     [customInterface release];
     [super dealloc];
 }
+
+- (void)startWebAuthWithCustomInterface:(NSDictionary *)customInterfaceOverrides provider:(NSString *)provider
+{
+    if (provider) self.directProvider = provider;
+
+    [self showAuthenticationDialogWithCustomInterface:customInterfaceOverrides];
+}
+
 @end

@@ -10,7 +10,8 @@
 
 
 @interface JRNativeAuth : NSObject
-+ (BOOL)canHandlerProvider:(NSString *)provider;
++ (BOOL)canHandleProvider:(NSString *)provider;
 
-+ (void)authOnProvider:(NSString *)provider completion:(void (^)(id, NSError *))completion;
++ (void)startAuthOnProvider:(NSString *)provider completion:(void (^)(NSError *))completion;
+
 @end
