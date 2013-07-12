@@ -43,8 +43,6 @@
 #import "JRNativeAuth.h"
 
 @interface UITableViewCellProviders : UITableViewCell
-{
-}
 @end
 
 @implementation UITableViewCellProviders
@@ -78,12 +76,7 @@
     JRSessionData   *sessionData;
     NSDictionary    *customInterface;
 
-    //BOOL iPad;
-    //BOOL hidesCancelButton;
-    //BOOL userHitTheBackButton;
-
     UIView      *titleView;
-    //UIView      *myBackgroundView;
     UITableView *myTableView;
 
     /* Activity Spinner and Label displayed while the list of configured providers is empty */
@@ -186,11 +179,6 @@
     [super viewWillAppear:animated];
     self.contentSizeForViewInPopover = self.view.frame.size;
 
-    // We need to figure out if the user canceled authentication by hitting the back button or the cancel button,
-    // or if it stopped because it failed or completed successfully on its own.  Assume that the user did hit the
-    // back button until told otherwise.
-    //userHitTheBackButton = YES;
-
     // Load the custom background view, if there is one.
     if ([customInterface objectForKey:kJRAuthenticationBackgroundImageView])
         [myBackgroundView addSubview:[customInterface objectForKey:kJRAuthenticationBackgroundImageView]];
@@ -203,30 +191,27 @@
 
     if (tableAndSectionHeaderHeight)
     {
-        DLog ("self.frame: %f %f", self.view.frame.size.width, self.view.frame.size.height);
+        //DLog ("self.frame: %f %f", self.view.frame.size.width, self.view.frame.size.height);
 
         CGFloat loadingLabelAndSpinnerVerticalOffset =
                 ((self.view.frame.size.height - tableAndSectionHeaderHeight) / 2) + tableAndSectionHeaderHeight;
 
-        [myLoadingLabel setFrame:
-                                CGRectMake(myLoadingLabel.frame.origin.x,
-                                        loadingLabelAndSpinnerVerticalOffset - 40,
-                                        myLoadingLabel.frame.size.width,
-                                        myLoadingLabel.frame.size.height)];
-        [myActivitySpinner setFrame:
-                                   CGRectMake(myActivitySpinner.frame.origin.x,
-                                           loadingLabelAndSpinnerVerticalOffset,
-                                           myActivitySpinner.frame.size.width,
-                                           myActivitySpinner.frame.size.height)];
+        [myLoadingLabel setFrame:CGRectMake(myLoadingLabel.frame.origin.x,
+                loadingLabelAndSpinnerVerticalOffset - 40,
+                myLoadingLabel.frame.size.width,
+                myLoadingLabel.frame.size.height)];
+        [myActivitySpinner setFrame:CGRectMake(myActivitySpinner.frame.origin.x,
+                loadingLabelAndSpinnerVerticalOffset,
+                myActivitySpinner.frame.size.width,
+                myActivitySpinner.frame.size.height)];
 
-        DLog ("label.frame: %f, %f", myLoadingLabel.frame.origin.x, myLoadingLabel.frame.origin.y);
+        //DLog ("label.frame: %f, %f", myLoadingLabel.frame.origin.x, myLoadingLabel.frame.origin.y);
     }
 
     if ([sessionData.authenticationProviders count] > 0)
     {
         self.providers = [NSMutableArray arrayWithArray:sessionData.authenticationProviders];
         [providers removeObjectsInArray:[customInterface objectForKey:kJRRemoveProvidersFromAuthentication]];
-        // the new providers are not strings they are JRProvider instances
         [myActivitySpinner stopAnimating];
         [myActivitySpinner setHidden:YES];
         [myLoadingLabel setHidden:YES];
@@ -236,7 +221,7 @@
     }
     else
     {
-        DLog(@"prov count = %d", [sessionData.authenticationProviders count]);
+        //DLog(@"prov count = %d", [sessionData.authenticationProviders count]);
 
         // If the user calls the library before the session data object is done initializing -
         // because either the requests for the base URL or provider list haven't returned -
@@ -248,7 +233,7 @@
 
         [myActivitySpinner startAnimating];
 
-        // Now poll every few milliseconds, for about 16 seconds, until the provider list is loaded or we time out.
+        // Poll
         timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self
                                                selector:@selector(checkSessionDataAndProviders:)
                                                userInfo:nil repeats:NO];
@@ -257,7 +242,7 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    DLog(@"");
+    //DLog(@"");
     [super viewDidAppear:animated];
 }
 
@@ -266,10 +251,6 @@
     [sessionData triggerAuthenticationDidTimeOutConfiguration];
 }
 
-/* If the user calls the library before the session data object is done initializing -
-   because either the requests for the base URL or provider list haven't returned -
-   keep polling every few milliseconds, for about 16 seconds,
-   until the provider list is loaded or we time out. */
 - (void)checkSessionDataAndProviders:(NSTimer *)theTimer
 {
     DLog(@"");
@@ -281,9 +262,9 @@
     DLog(@"prov count = %d", [sessionData.authenticationProviders count]);
     DLog(@"interval = %f", interval);
 
-    // If we have our list of providers, stop the progress indicators and load the table.
     if ([sessionData.authenticationProviders count] > 0)
     {
+        // Stop polling
         self.providers = [NSMutableArray arrayWithArray:sessionData.authenticationProviders];
         [providers removeObjectsInArray:[customInterface objectForKey:kJRRemoveProvidersFromAuthentication]];
 
@@ -296,10 +277,10 @@
         return;
     }
 
-    // Otherwise, keep polling until we've timed out.
     if (interval >= 16.0)
     {
-        DLog(@"No Available Providers");
+        // Polling has timed out
+        //DLog(@"No Available Providers");
 
         [myActivitySpinner setHidden:YES];
         [myLoadingLabel setHidden:YES];
@@ -330,16 +311,6 @@
 {
     [sessionData triggerAuthenticationDidCancel];
 }
-
-//- (void)authenticationDidCancel
-//{
-//
-//}
-//
-//- (void)authenticationDidFail
-//{
-//
-//}
 
 - (void)showLoading
 {
@@ -529,8 +500,25 @@
     JRProvider *provider = [sessionData getProviderNamed:[providers objectAtIndex:(NSUInteger) indexPath.row]];
     if ([JRNativeAuth canHandleProvider:provider.name])
     {
+        [UIView animateWithDuration:0.3 animations:^() {
+            myTableView.hidden = YES;
+            [myActivitySpinner setHidden:NO];
+            [myLoadingLabel setHidden:NO];
+            [myActivitySpinner startAnimating];
+            myLoadingLabel.text = @"Signing in ...";
+        }];
         [JRNativeAuth startAuthOnProvider:provider.name completion:^(NSError *e) {
-            if (e) [self startWebViewAuthOnProvider:provider];
+            if (e)
+            {
+                [UIView animateWithDuration:0.3 animations:^() {
+                    myTableView.hidden = NO;
+                    [myActivitySpinner setHidden:YES];
+                    [myLoadingLabel setHidden:YES];
+                    [myActivitySpinner stopAnimating];
+                }];
+
+                [self startWebViewAuthOnProvider:provider];
+            }
         }];
     }
     else

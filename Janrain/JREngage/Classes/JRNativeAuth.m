@@ -12,6 +12,7 @@ static SEL stateSel = nil;
 static SEL accessTokenDataSel = nil;
 static SEL accessTokenSel = nil;
 static SEL openActiveSessionWithReadPermissionsSel = nil;
+static SEL appIdSel = nil;
 
 + (void)initGlobals
 {
@@ -23,6 +24,7 @@ static SEL openActiveSessionWithReadPermissionsSel = nil;
     accessTokenSel = NSSelectorFromString(@"accessToken");
     openActiveSessionWithReadPermissionsSel =
             NSSelectorFromString(@"openActiveSessionWithReadPermissions:allowLoginUI:completionHandler:");
+    appIdSel = NSSelectorFromString(@"appID");
 }
 
 + (BOOL)canHandleProvider:(NSString *)provider
@@ -30,6 +32,11 @@ static SEL openActiveSessionWithReadPermissionsSel = nil;
     [self initGlobals];
     if ([provider isEqual:@"facebook"] && fbSession != nil) return YES;
     return NO;
+}
+
++ (id)fbSessionAppId
+{
+    return [fbSession performSelector:appIdSel];
 }
 
 + (void)startAuthOnProvider:(NSString *)provider completion:(void (^)(NSError *))completion
