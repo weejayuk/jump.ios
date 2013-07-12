@@ -88,6 +88,14 @@ static SEL openActiveSessionWithReadPermissionsSel;
                 || ![[((NSDictionary *) result) objectForKey:@"stat"] isEqual:@"ok"]
                 || ![authInfoToken = [((NSDictionary *) result) objectForKey:@"token"] isKindOfClass:[NSString class]])
         {
+            NSObject *error_ = error; if (error_ == nil) error_ = [NSNull null];
+            NSObject *result_ = result; if (result_ == nil) result_ = [NSNull null];
+            NSError *nativeAuthError = [NSError errorWithDomain:JREngageErrorDomain
+                                                           code:JRAuthenticationNativeAuthError
+                                                       userInfo:@{@"result": result_, @"error": error_}];
+            DLog(@"Native auth error: %@", nativeAuthError);
+            completion(nativeAuthError);
+            return;
         }
 
         JRSessionData *sessionData = [JRSessionData jrSessionData];
