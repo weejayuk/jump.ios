@@ -831,7 +831,7 @@ static JRSessionData *singleton = nil;
     if (!providerName) return;
     JRProvider* provider = [engageProviders objectForKey:providerName];
     if (!provider) return;
-    if (provider.cookieDomains)
+    if ([provider.cookieDomains count])
         [self deleteWebViewCookiesForDomains:provider.cookieDomains];
     else provider.forceReauth = YES; // MOB-135
 
