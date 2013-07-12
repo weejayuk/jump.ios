@@ -30,6 +30,7 @@
 		6706F6C9CCA93049E2DD46F1 /* JRPhoneNumbersElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706FCDF3C4BFCE94A74821A /* JRPhoneNumbersElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6706F700FAE5868FC2D862CD /* JRGamesElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706F2B069F76782B811AC30 /* JRGamesElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6706F703B6354B06184299F9 /* JRPinoLevelTwo.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706F8159E042B9C1F319848 /* JRPinoLevelTwo.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		6706F732A0A621361A87781A /* JRJsonUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706F1A973DBA90EA873505C /* JRJsonUtils.m */; };
 		6706F7D2AD38880277E93C75 /* JRPluralLevelOneElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706F988C7BD0E9068184943 /* JRPluralLevelOneElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6706F804BE0D11162F86EDCF /* JRPhotosElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706F820C3C8CE99DFB170A7 /* JRPhotosElement.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6706F807C0F81A6265AEC637 /* JROnipLevelThree.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706F59D9D3295A67BA7C029 /* JROnipLevelThree.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -270,7 +271,6 @@
 		DFB68A67175E8E6C006DFC92 /* JRPublishActivityController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFB68983175E8E6C006DFC92 /* JRPublishActivityController.xib */; };
 		DFB68A68175E8E6C006DFC92 /* JRUserLandingController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFB68984175E8E6C006DFC92 /* JRUserLandingController.xib */; };
 		DFB68A69175E8E6C006DFC92 /* JRWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFB68985175E8E6C006DFC92 /* JRWebViewController.xib */; };
-		DFB68A6A175E8E6C006DFC92 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = DFB68988175E8E6C006DFC92 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		DFB68A6B175E8E6C006DFC92 /* SFHFKeychainUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = DFB6898B175E8E6C006DFC92 /* SFHFKeychainUtils.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
 
@@ -295,6 +295,7 @@
 		6706F14EBCBB93C923B336B4 /* JRLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRLocation.m; sourceTree = "<group>"; };
 		6706F177967F38CF7CA5D0FC /* CaptureDynamicForm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CaptureDynamicForm.h; path = ../../../../jump.ios/Samples/SimpleCaptureDemo/SimpleCaptureDemo/Classes/CaptureDynamicForm.h; sourceTree = "<group>"; };
 		6706F1A44624C7575D0E75DA /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Utils.m; path = ../../../../jump.ios/Samples/SimpleCaptureDemo/SimpleCaptureDemo/Classes/Utils.m; sourceTree = "<group>"; };
+		6706F1A973DBA90EA873505C /* JRJsonUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRJsonUtils.m; sourceTree = "<group>"; };
 		6706F1B01392D85DC9179C4A /* debug_log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = debug_log.h; sourceTree = "<group>"; };
 		6706F1D869841D7DDAD98738 /* JRBestHand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRBestHand.m; sourceTree = "<group>"; };
 		6706F1FB3600926EFC36AB15 /* JRPinoLevelOne.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRPinoLevelOne.h; sourceTree = "<group>"; };
@@ -340,6 +341,7 @@
 		6706F87C6A4B4FD6C8CC8A21 /* JRPrimaryAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRPrimaryAddress.h; sourceTree = "<group>"; };
 		6706F8B2DA7DCD60A3C52709 /* JRPluralLevelTwoElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRPluralLevelTwoElement.h; sourceTree = "<group>"; };
 		6706F8DC7856E86A423C2108 /* PickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PickerViewController.m; path = ../../../../jump.ios/Samples/SimpleCaptureDemo/SimpleCaptureDemo/Classes/PickerViewController.m; sourceTree = "<group>"; };
+		6706F8DCD9116713FAE436AF /* JRJsonUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRJsonUtils.h; sourceTree = "<group>"; };
 		6706F920C40BBE03BA15B200 /* JRObjectLevelTwo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRObjectLevelTwo.h; sourceTree = "<group>"; };
 		6706F93CA7BAF08BF58DBCC7 /* JRBestHand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRBestHand.h; sourceTree = "<group>"; };
 		6706F95D30DAADB12FD4D8E9 /* JRProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRProfile.m; sourceTree = "<group>"; };
@@ -623,8 +625,6 @@
 		DFB68983175E8E6C006DFC92 /* JRPublishActivityController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JRPublishActivityController.xib; sourceTree = "<group>"; };
 		DFB68984175E8E6C006DFC92 /* JRUserLandingController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JRUserLandingController.xib; sourceTree = "<group>"; };
 		DFB68985175E8E6C006DFC92 /* JRWebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JRWebViewController.xib; sourceTree = "<group>"; };
-		DFB68987175E8E6C006DFC92 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
-		DFB68988175E8E6C006DFC92 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		DFB6898A175E8E6C006DFC92 /* SFHFKeychainUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFHFKeychainUtils.h; sourceTree = "<group>"; };
 		DFB6898B175E8E6C006DFC92 /* SFHFKeychainUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFHFKeychainUtils.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -900,7 +900,6 @@
 				DFB68875175E8E6C006DFC92 /* JRCapture */,
 				DFB688B3175E8E6C006DFC92 /* JRConnectionManager */,
 				DFB688B6175E8E6C006DFC92 /* JREngage */,
-				DFB68986175E8E6C006DFC92 /* JSONKit */,
 				DFB68989175E8E6C006DFC92 /* Security */,
 			);
 			name = Janrain;
@@ -953,6 +952,8 @@
 				6706F5D7449BACDDFF31B22D /* NSMutableDictionary+JRDictionaryUtils.h */,
 				6706F7526EE28D3FBB733500 /* NSMutableURLRequest+JRRequestUtils.m */,
 				6706F079F7EC3C2884AA95DB /* NSMutableURLRequest+JRRequestUtils.h */,
+				6706F1A973DBA90EA873505C /* JRJsonUtils.m */,
+				6706F8DCD9116713FAE436AF /* JRJsonUtils.h */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1286,15 +1287,6 @@
 			path = xibs;
 			sourceTree = "<group>";
 		};
-		DFB68986175E8E6C006DFC92 /* JSONKit */ = {
-			isa = PBXGroup;
-			children = (
-				DFB68987175E8E6C006DFC92 /* JSONKit.h */,
-				DFB68988175E8E6C006DFC92 /* JSONKit.m */,
-			);
-			path = JSONKit;
-			sourceTree = "<group>";
-		};
 		DFB68989175E8E6C006DFC92 /* Security */ = {
 			isa = PBXGroup;
 			children = (
@@ -1348,7 +1340,7 @@
 		90C36B6B7717AA0C893E08DA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0460;
 			};
 			buildConfigurationList = 90C36B6B7717AA0C893E08DB /* Build configuration list for PBXProject "SimpleCaptureDemo" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1623,7 +1615,6 @@
 				DFB689C4175E8E6C006DFC92 /* JRUserLandingController.m in Sources */,
 				DFB689C5175E8E6C006DFC92 /* JRWebViewController.m in Sources */,
 				DFB689C7175E8E6C006DFC92 /* JREngagePlugin.js in Sources */,
-				DFB68A6A175E8E6C006DFC92 /* JSONKit.m in Sources */,
 				DFB68A6B175E8E6C006DFC92 /* SFHFKeychainUtils.m in Sources */,
 				6706F446D8EB217902A2C066 /* JRName.m in Sources */,
 				6706FC9ADF58CE9FFB52EC5D /* JRProfile.m in Sources */,
@@ -1661,6 +1652,7 @@
 				6706F25635854015FA49B820 /* NSMutableDictionary+JRDictionaryUtils.m in Sources */,
 				6706F82FFE78F5E382D1348F /* NSMutableURLRequest+JRRequestUtils.m in Sources */,
 				6706F9D176696C20B6536FAF /* debug_log.m in Sources */,
+				6706F732A0A621361A87781A /* JRJsonUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1732,6 +1724,10 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1752,6 +1748,10 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1852,6 +1852,10 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;

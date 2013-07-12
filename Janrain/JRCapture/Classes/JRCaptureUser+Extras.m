@@ -30,13 +30,10 @@
 
 #import "debug_log.h"
 #import "JRCaptureData.h"
-#import "JRConnectionManager.h"
 #import "JRCaptureApidInterface.h"
-#import "JSONKit.h"
 #import "JRCaptureObject.h"
 #import "JRCaptureUser+Extras.h"
 #import "JRCaptureError.h"
-#import "JRCaptureUser.h"
 #import "JRCaptureObject+Internal.h"
 
 @interface JRCaptureUserApidHandler : NSObject <JRCaptureInternalDelegate>
@@ -69,7 +66,11 @@
 
     NSDictionary *resultDictionary;
     if ([result isKindOfClass:[NSString class]])
-        resultDictionary = [(NSString *)result objectFromJSONString];
+    {
+        NSData *data = [((NSString *) result) dataUsingEncoding:NSUTF8StringEncoding];
+        NSError *jsonErr = nil;
+        resultDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonErr];
+    }
     else
         return [self getCaptureUserDidFailWithResult:[JRCaptureError invalidClassErrorDictForResult:result]
                                              context:context];
