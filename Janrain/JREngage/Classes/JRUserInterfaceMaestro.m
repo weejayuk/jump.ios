@@ -1260,7 +1260,7 @@ static JRUserInterfaceMaestro* singleton = nil;
 
 - (void)startWebAuthWithCustomInterface:(NSDictionary *)customInterfaceOverrides provider:(NSString *)provider
 {
-    if (provider) self.directProvider = provider;
+    self.directProvider = provider;
 
     [self showAuthenticationDialogWithCustomInterface:customInterfaceOverrides];
 }

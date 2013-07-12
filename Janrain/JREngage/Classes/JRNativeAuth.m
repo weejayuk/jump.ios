@@ -6,15 +6,16 @@
 #import "JREngageError.h"
 
 @implementation JRNativeAuth
-static Class fbSession;
-static SEL activeSessionSel;
-static SEL stateSel;
-static SEL accessTokenDataSel;
-static SEL accessTokenSel;
-static SEL openActiveSessionWithReadPermissionsSel;
+static Class fbSession = nil;
+static SEL activeSessionSel = nil;
+static SEL stateSel = nil;
+static SEL accessTokenDataSel = nil;
+static SEL accessTokenSel = nil;
+static SEL openActiveSessionWithReadPermissionsSel = nil;
 
 + (void)initGlobals
 {
+    if (fbSession != nil) return;
     fbSession = NSClassFromString(@"FBSession");
     activeSessionSel = NSSelectorFromString(@"activeSession");
     stateSel = NSSelectorFromString(@"state");
@@ -26,7 +27,8 @@ static SEL openActiveSessionWithReadPermissionsSel;
 
 + (BOOL)canHandleProvider:(NSString *)provider
 {
-    if ([provider isEqual:@"facebook"]) return YES;
+    [self initGlobals];
+    if ([provider isEqual:@"facebook"] && fbSession != nil) return YES;
     return NO;
 }
 
