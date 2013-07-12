@@ -1,10 +1,12 @@
 #import "JRJsonUtils.h"
+#import "debug_log.h"
 
 @implementation JRJsonUtils
 + (NSString *)jsonStringForJsonObject:(id)jsonObject
 {
     NSError *jsonErr = nil;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonObject options:0 error:&jsonErr];
+    if (jsonErr) ALog("WARNING, JSON serialization error: %@", jsonErr);
     NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
 #if !__has_feature(objc_arc)
     [jsonString autorelease];
@@ -20,7 +22,10 @@
 
 + (id)jsonObjectWithData:(NSData *)jsonData
 {
-    return [NSJSONSerialization JSONObjectWithData:jsonData options:(NSJSONReadingOptions) 0 error:nil];
+    NSError *jsonErr = nil;
+    id jsonObject = [NSJSONSerialization JSONObjectWithData:jsonData options:(NSJSONReadingOptions) 0 error:&jsonErr];
+    if (jsonErr) ALog("WARNING, JSON parse error: %@", jsonErr);
+    return jsonObject;
 }
 @end
 
