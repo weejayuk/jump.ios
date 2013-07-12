@@ -1,6 +1,9 @@
 v3.2.7
- - merge in topic/compatibility-defines
- - merge in topic/MOB-135-fix-cookie-auto-auth
+ - Fixes a bug causing a failed first attempt at authentication preventing a successful
+   second attempt.
+ - Add more backwards-compatibility for symbol renames
+ - Fixes a bug related to some IDP session cookies and switching to a different identity
+   on the same IDP.
 v3.2.6
  - Fixes Engage library re-initialization bug
 v3.2.5
