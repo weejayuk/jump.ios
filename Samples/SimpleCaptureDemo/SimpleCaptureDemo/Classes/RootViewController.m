@@ -145,7 +145,6 @@
     [super viewDidDisappear:animated];
 }
 
-
 - (IBAction)browseButtonPressed:(id)sender
 {
     DLog(@"Capture user record: %@", [appDelegate.captureUser toDictionaryForEncoder:NO]);
