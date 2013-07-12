@@ -76,6 +76,7 @@
 		6706F51DA2621CA468C6CA40 /* JRPublishActivityController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6706F18A7D292D5A046B3C40 /* JRPublishActivityController.xib */; };
 		6706F51EE167DE5FFF64E224 /* CaptureDynamicForm.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706F39D56CA252D2415997F /* CaptureDynamicForm.m */; };
 		6706F5208EB1BBE7BAA7FB2F /* logo_paypal_280x65@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6706F526F0E88344093F4D4C /* logo_paypal_280x65@2x.png */; };
+		6706F52701257613FCA991EE /* Native Authentication Guide.md in Resources */ = {isa = PBXBuildFile; fileRef = 6706F4758D314BC5E4A1FF31 /* Native Authentication Guide.md */; };
 		6706F5309ADDBC848447724E /* music_note@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6706FC9E3E3FDEA6AA2247F6 /* music_note@2x.jpg */; };
 		6706F5400059D77BC34C4715 /* JRBestHand.m in Sources */ = {isa = PBXBuildFile; fileRef = 6706F1D869841D7DDAD98738 /* JRBestHand.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6706F541B91DCAD38ED78528 /* logo_salesforce_280x65@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6706F3264D343DF8D94989D0 /* logo_salesforce_280x65@2x.png */; };
@@ -378,6 +379,7 @@
 		6706F44FA150C2CB167814E4 /* button_janrain_135x40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_janrain_135x40.png; sourceTree = "<group>"; };
 		6706F46C95D7E6E8AB1D9618 /* JRCaptureApidInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCaptureApidInterface.h; sourceTree = "<group>"; };
 		6706F4723D28D385805BF6B3 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Utils.h; path = ../../../../jump.ios/Samples/SimpleCaptureDemo/SimpleCaptureDemo/Classes/Utils.h; sourceTree = "<group>"; };
+		6706F4758D314BC5E4A1FF31 /* Native Authentication Guide.md */ = {isa = PBXFileReference; lastKnownFileType = file.md; name = "Native Authentication Guide.md"; path = "../../Docs/Native Authentication Guide.md"; sourceTree = "<group>"; };
 		6706F48794E72EF1AAA12F65 /* JRCurrentLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRCurrentLocation.m; sourceTree = "<group>"; };
 		6706F48E1DE5F3B9000A640E /* JRCaptureError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCaptureError.h; sourceTree = "<group>"; };
 		6706F48EF1DDDD75A9A55C71 /* JRBodyType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRBodyType.m; sourceTree = "<group>"; };
@@ -1302,6 +1304,7 @@
 				6706FE4A749862BF082D2831 /* README.md */,
 				6706FB16669AD7166E82DB51 /* RELEASE_NOTES */,
 				6706FCAB908800A9FF445D4B /* Upgrade Guide.md */,
+				6706F4758D314BC5E4A1FF31 /* Native Authentication Guide.md */,
 			);
 			name = Docs;
 			sourceTree = "<group>";
@@ -1555,6 +1558,7 @@
 				6706FF1F0672DF963C7A8361 /* icon_bw_linkedin_30x30@2x.png in Resources */,
 				6706FD9CE3F1D2E2728BFA8E /* icon_bw_mail_sms_30x30@2x.png in Resources */,
 				6706F5D8E3C9383514BF867F /* JREngage-Info.plist in Resources */,
+				6706F52701257613FCA991EE /* Native Authentication Guide.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
