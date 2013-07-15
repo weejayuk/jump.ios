@@ -4,6 +4,7 @@ v3.2.7
  - Add more backwards-compatibility for symbol renames
  - Fixes a bug related to some IDP session cookies and switching to a different identity
    on the same IDP.
+ - Removes JSONkit dependency
 v3.2.6
  - Fixes Engage library re-initialization bug
 v3.2.5
