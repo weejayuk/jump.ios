@@ -32,7 +32,7 @@
 #import "JRCaptureObject.h"
 #import "JRCaptureUser+Extras.h"
 #import "JRCaptureObject+Internal.h"
-#import "JRConnectionManager.h"
+#import <objc/runtime.h>
 #import "JRCaptureApidInterface.h"
 #import "JRCaptureData.h"
 #import "JSONKit.h"
@@ -346,7 +346,7 @@
 
 @interface JRCaptureObject ()
 @property(nonatomic, readwrite, retain) NSString *captureObjectPath;
-@property(nonatomic, readwrite) BOOL canBeUpdatedOnCapture;
+@property(readwrite) BOOL canBeUpdatedOnCapture;
 @property(nonatomic, readwrite, retain) NSMutableSet *dirtyPropertySet;
 @end
 
@@ -445,6 +445,26 @@
 {
     [NSException raise:NSInternalInconsistencyException
                 format:@"You must override %@ in a subclass", NSStringFromSelector(_cmd)];
+}
+
+- (void)deepClearDirtyProperties
+{
+    [self.dirtyPropertySet removeAllObjects];
+    unsigned int pCount;
+    objc_property_t *properties = class_copyPropertyList([self class], &pCount);
+    for (int i=0; i<pCount; i++)
+    {
+        NSString *pName = [NSString stringWithUTF8String:property_getName(properties[i])];
+        NSString *pAttr = [NSString stringWithUTF8String:property_getAttributes(properties[i])];
+
+        SEL pSel = NSSelectorFromString(pName);
+        if (![self respondsToSelector:pSel]) continue;
+        id pVal = [self performSelector:pSel];
+
+        if ([pAttr characterAtIndex:1] != '@' || ![pVal isKindOfClass:[JRCaptureObject class]]) continue;
+        [pVal deepClearDirtyProperties];
+    }
+    free(properties);
 }
 
 - (NSDictionary *)snapshotDictionaryFromDirtyPropertySet

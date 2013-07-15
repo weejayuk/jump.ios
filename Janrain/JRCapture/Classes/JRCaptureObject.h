@@ -158,7 +158,7 @@
  * Replacing the array will also update any local changes to the properties of a the array's elements, including
  * sub-arrays and sub-objects.
  **/
-@property (readonly, nonatomic) BOOL canBeUpdatedOnCapture;
+@property (readonly) BOOL canBeUpdatedOnCapture;
 
 /**
  * Use this method to determine if the object or element needs to be updated remotely.

@@ -76,7 +76,7 @@ didSucceedWithResult:(NSString *)result context:(NSObject *)context;
 @interface JRCaptureObject (Private) <NSCoding>
 @property(readwrite, retain, nonatomic) NSString *captureObjectPath;
 @property(readwrite, retain, nonatomic) NSMutableSet *dirtyPropertySet;
-@property(readwrite, nonatomic) BOOL canBeUpdatedOnCapture;
+@property(readwrite) BOOL canBeUpdatedOnCapture;
 
 - (NSDictionary *)toDictionaryForEncoder:(BOOL)forEncoder;
 - (NSDictionary *)toUpdateDictionary;
@@ -85,6 +85,7 @@ didSucceedWithResult:(NSString *)result context:(NSObject *)context;
 
 - (NSSet *)updatablePropertySet;
 - (void)setAllPropertiesToDirty;
+- (void)deepClearDirtyProperties;
 - (NSDictionary *)snapshotDictionaryFromDirtyPropertySet;
 - (void)restoreDirtyPropertiesFromSnapshotDictionary:(NSDictionary *)snapshot;
 
