@@ -32,7 +32,7 @@
 #import "JRCaptureObject.h"
 #import "JRCaptureUser+Extras.h"
 #import "JRCaptureObject+Internal.h"
-#import "JRConnectionManager.h"
+#import <objc/runtime.h>
 #import "JRCaptureApidInterface.h"
 #import "JRCaptureData.h"
 #import "JRCaptureError.h"
@@ -344,20 +344,18 @@
 }
 @end
 
-@interface JRCaptureObject (JRCaptureObject_Private)
-@property BOOL canBeUpdatedOnCapture;
+@interface JRCaptureObject ()
+@property(nonatomic, readwrite, retain) NSString *captureObjectPath;
+@property(readwrite) BOOL canBeUpdatedOnCapture;
+@property(nonatomic, readwrite, retain) NSMutableSet *dirtyPropertySet;
 @end
 
 @implementation JRCaptureObject
-@synthesize captureObjectPath;
-@synthesize dirtyPropertySet;
-@synthesize canBeUpdatedOnCapture;
-
 - (id)init
 {
     if ((self = [super init]))
     {
-        dirtyPropertySet = [[NSMutableSet alloc] init];
+        self.dirtyPropertySet = [NSMutableSet setWithCapacity:0];
     }
     return self;
 }
@@ -385,7 +383,7 @@
 {
     if (self = [self init])
     {
-        [dirtyPropertySet removeAllObjects];
+        [self.dirtyPropertySet removeAllObjects];
         NSDictionary *dictionary = [coder decodeObjectForKey:cJREncodedCaptureUser];
         if ([self isKindOfClass:[JRCaptureUser class]])
             [((JRCaptureUser *) self) decodeFromDictionary:dictionary];
@@ -447,6 +445,26 @@
 {
     [NSException raise:NSInternalInconsistencyException
                 format:@"You must override %@ in a subclass", NSStringFromSelector(_cmd)];
+}
+
+- (void)deepClearDirtyProperties
+{
+    [self.dirtyPropertySet removeAllObjects];
+    unsigned int pCount;
+    objc_property_t *properties = class_copyPropertyList([self class], &pCount);
+    for (int i=0; i<pCount; i++)
+    {
+        NSString *pName = [NSString stringWithUTF8String:property_getName(properties[i])];
+        NSString *pAttr = [NSString stringWithUTF8String:property_getAttributes(properties[i])];
+
+        SEL pSel = NSSelectorFromString(pName);
+        if (![self respondsToSelector:pSel]) continue;
+        id pVal = [self performSelector:pSel];
+
+        if ([pAttr characterAtIndex:1] != '@' || ![pVal isKindOfClass:[JRCaptureObject class]]) continue;
+        [pVal deepClearDirtyProperties];
+    }
+    free(properties);
 }
 
 - (NSDictionary *)snapshotDictionaryFromDirtyPropertySet
@@ -650,9 +668,8 @@
 
 - (void)dealloc
 {
-    [captureObjectPath release];
-    [dirtyPropertySet release];
-
+    [self.dirtyPropertySet release];
+    [self.captureObjectPath release];
     [super dealloc];
 }
 @end

@@ -1781,7 +1781,7 @@
 				GCC_PREFIX_HEADER = "SimpleCaptureDemo/SimpleCaptureDemo-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "JRCAPTURE_CONVENTIONAL_SIGNIN=1";
 				INFOPLIST_FILE = "SimpleCaptureDemo/SimpleCaptureDemo-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -1803,7 +1803,7 @@
 					"DEBUG=1",
 				);
 				INFOPLIST_FILE = "SimpleCaptureDemo/SimpleCaptureDemo-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -1880,7 +1880,7 @@
 				GCC_PREFIX_HEADER = "SimpleCaptureDemo/SimpleCaptureDemo-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "JRCAPTURE_CONVENTIONAL_SIGNIN=1";
 				INFOPLIST_FILE = "SimpleCaptureDemo/SimpleCaptureDemo-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";

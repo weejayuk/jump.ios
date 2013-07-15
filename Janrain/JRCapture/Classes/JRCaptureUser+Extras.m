@@ -113,7 +113,10 @@
 
 + (id)captureUserObjectFromDictionary:(NSDictionary *)dictionary
 {
-    return [JRCaptureUser captureUserObjectFromDictionary:dictionary withPath:@""];
+    JRCaptureUser *user = [JRCaptureUser captureUserObjectFromDictionary:dictionary withPath:@""];
+    // MOB-143, clear DPS on all sub-objects
+    [user deepClearDirtyProperties];
+    return user;
 }
 
 + (void)testCaptureUserApidHandlerGetCaptureUserDidFailWithResult:(NSDictionary *)result
