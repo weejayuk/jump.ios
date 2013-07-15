@@ -344,20 +344,18 @@
 }
 @end
 
-@interface JRCaptureObject (JRCaptureObject_Private)
-@property BOOL canBeUpdatedOnCapture;
+@interface JRCaptureObject ()
+@property(nonatomic, readwrite, retain) NSString *captureObjectPath;
+@property(nonatomic, readwrite) BOOL canBeUpdatedOnCapture;
+@property(nonatomic, readwrite, retain) NSMutableSet *dirtyPropertySet;
 @end
 
 @implementation JRCaptureObject
-@synthesize captureObjectPath;
-@synthesize dirtyPropertySet;
-@synthesize canBeUpdatedOnCapture;
-
 - (id)init
 {
     if ((self = [super init]))
     {
-        dirtyPropertySet = [[NSMutableSet alloc] init];
+        self.dirtyPropertySet = [NSMutableSet setWithCapacity:0];
     }
     return self;
 }
@@ -385,7 +383,7 @@
 {
     if (self = [self init])
     {
-        [dirtyPropertySet removeAllObjects];
+        [self.dirtyPropertySet removeAllObjects];
         NSDictionary *dictionary = [coder decodeObjectForKey:cJREncodedCaptureUser];
         if ([self isKindOfClass:[JRCaptureUser class]])
             [((JRCaptureUser *) self) decodeFromDictionary:dictionary];
@@ -650,9 +648,8 @@
 
 - (void)dealloc
 {
-    [captureObjectPath release];
-    [dirtyPropertySet release];
-
+    [self.dirtyPropertySet release];
+    [self.captureObjectPath release];
     [super dealloc];
 }
 @end
