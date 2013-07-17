@@ -74,7 +74,7 @@ Basic use flow:
         * The name of the flow's traditional registration form
         * The name of the "locale" in the flow your app should use
           The commonly used value for US English is "en-US".
-5. Determine whether your app should use "Thin" social registration, or "two-step" social registration.
+5. Determine whether your app should use "thin" social registration, or "two-step" social registration.
 6. Determine the name of the traditional sign-in key attribute (e.g. `email` or `username`)
 
 **Warning** You _must_ create a new API client with the correct login_client feature for operation of the JUMP for iOS
