@@ -41,8 +41,6 @@
 #import <PhoneGap/JSONKit.h>
 #else
 
-#import "JSONKit.h"
-
 #endif
 #endif
 

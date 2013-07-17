@@ -93,6 +93,8 @@ static NSString *const ENGAGE_TOKEN_KEY = @"merge_token";
     return [self.userInfo objectForKey:ENGAGE_TOKEN_KEY];
 }
 
+// XXX Capture may only be returning one or the other of [prereg_attributes, prereg_fields]
+// So, this method may not be used
 - (JRCaptureUser *)preRegistrationRecord
 {
     NSDictionary *preregAttrs = [self.userInfo objectForKey:@"prereg_attributes"];

@@ -32,11 +32,11 @@
 #import "JRCaptureObject.h"
 #import "JRCaptureUser+Extras.h"
 #import "JRCaptureObject+Internal.h"
-#import "JRConnectionManager.h"
+#import <objc/runtime.h>
 #import "JRCaptureApidInterface.h"
 #import "JRCaptureData.h"
-#import "JSONKit.h"
 #import "JRCaptureError.h"
+#import "JRJsonUtils.h"
 
 @implementation NSArray (JRArray_StringArray)
 // TODO: Test this!
@@ -86,7 +86,7 @@
             [((id <JRCaptureObjectTesterDelegate>) delegate) respondsToSelector:testerSelector])
     {
         [((id <JRCaptureObjectTesterDelegate>) delegate) updateCaptureObject:captureObject
-                                                           didFailWithResult:[result JSONString] context:callerContext];
+                                                           didFailWithResult:[result JR_jsonString] context:callerContext];
     }
 
     if ([delegate respondsToSelector:@selector(updateDidFailForObject:withError:context:)]) 
@@ -110,12 +110,12 @@
     if ([result isKindOfClass:[NSDictionary class]])
     {
         resultDictionary = (NSDictionary *)result;
-        resultString     = [(NSDictionary *)result JSONString];
+        resultString     = [(NSDictionary *)result JR_jsonString];
     }
     else if ([result isKindOfClass:[NSString class]])
     {
         resultString     = (NSString *)result;
-        resultDictionary = [(NSString *)result objectFromJSONString];
+        resultDictionary = [(NSString *)result JR_objectFromJSONString];
     }
     else /* Uh-oh!! */
     {
@@ -157,7 +157,7 @@
             [delegate respondsToSelector:selector])
     {
         [((id <JRCaptureObjectTesterDelegate>) delegate) replaceCaptureObject:captureObject
-                                                            didFailWithResult:[result JSONString]
+                                                            didFailWithResult:[result JR_jsonString]
                                                                       context:callerContext];
     }
 
@@ -185,12 +185,12 @@
     if ([result isKindOfClass:[NSDictionary class]])
     {
         resultDictionary = (NSDictionary *)result;
-        resultString     = [(NSDictionary *)result JSONString];
+        resultString     = [(NSDictionary *)result JR_jsonString];
     }
     else if ([result isKindOfClass:[NSString class]])
     {
         resultString     = (NSString *)result;
-        resultDictionary = [(NSString *)result objectFromJSONString];
+        resultDictionary = [(NSString *)result JR_objectFromJSONString];
     }
     else
     {
@@ -245,7 +245,7 @@
     if ([delegate conformsToProtocol:@protocol(JRCaptureObjectTesterDelegate)] &&
             [delegate respondsToSelector:testSelector])
     {
-        NSString *resultString = [result JSONString];
+        NSString *resultString = [result JR_jsonString];
         [((id <JRCaptureObjectTesterDelegate>) delegate) replaceArrayNamed:arrayName onCaptureObject:captureObject
                                                          didFailWithResult:resultString
                                                                    context:callerContext];
@@ -276,12 +276,12 @@
     if ([result isKindOfClass:[NSDictionary class]])
     {
         resultDictionary = (NSDictionary *)result;
-        resultString     = [(NSDictionary *)result JSONString];
+        resultString     = [(NSDictionary *)result JR_jsonString];
     }
     else if ([result isKindOfClass:[NSString class]])
     {
         resultString     = (NSString *)result;
-        resultDictionary = [(NSString *)result objectFromJSONString];
+        resultDictionary = [(NSString *)result JR_objectFromJSONString];
     }
     else
     {
@@ -344,20 +344,18 @@
 }
 @end
 
-@interface JRCaptureObject (JRCaptureObject_Private)
-@property BOOL canBeUpdatedOnCapture;
+@interface JRCaptureObject ()
+@property(nonatomic, readwrite, retain) NSString *captureObjectPath;
+@property(readwrite) BOOL canBeUpdatedOnCapture;
+@property(nonatomic, readwrite, retain) NSMutableSet *dirtyPropertySet;
 @end
 
 @implementation JRCaptureObject
-@synthesize captureObjectPath;
-@synthesize dirtyPropertySet;
-@synthesize canBeUpdatedOnCapture;
-
 - (id)init
 {
     if ((self = [super init]))
     {
-        dirtyPropertySet = [[NSMutableSet alloc] init];
+        self.dirtyPropertySet = [NSMutableSet setWithCapacity:0];
     }
     return self;
 }
@@ -385,7 +383,7 @@
 {
     if (self = [self init])
     {
-        [dirtyPropertySet removeAllObjects];
+        [self.dirtyPropertySet removeAllObjects];
         NSDictionary *dictionary = [coder decodeObjectForKey:cJREncodedCaptureUser];
         if ([self isKindOfClass:[JRCaptureUser class]])
             [((JRCaptureUser *) self) decodeFromDictionary:dictionary];
@@ -398,49 +396,49 @@
 {
     [NSException raise:NSInternalInconsistencyException
                 format:@"You must override %@ in a subclass", NSStringFromSelector(_cmd)];
-    //return nil;
+    return nil;
 }
 
 - (NSDictionary *)toUpdateDictionary
 {
     [NSException raise:NSInternalInconsistencyException
                 format:@"You must override %@ in a subclass", NSStringFromSelector(_cmd)];
-    //return nil;
+    return nil;
 }
 
 - (NSDictionary *)toReplaceDictionary
 {
     [NSException raise:NSInternalInconsistencyException
                 format:@"You must override %@ in a subclass", NSStringFromSelector(_cmd)];
-    //return nil;
+    return nil;
 }
 
 - (NSDictionary*)objectProperties
 {
     [NSException raise:NSInternalInconsistencyException
                 format:@"You must override %@ in a subclass", NSStringFromSelector(_cmd)];
-    //return nil;
+    return nil;
 }
 
 - (NSSet *)setOfAllUpdatableProperties __unused
 {
     [NSException raise:NSInternalInconsistencyException
                 format:@"You must override %@ in a subclass", NSStringFromSelector(_cmd)];
-    //return nil;
+    return nil;
 }
 
 - (BOOL)needsUpdate
 {
     [NSException raise:NSInternalInconsistencyException
                 format:@"You must override %@ in a subclass", NSStringFromSelector(_cmd)];
-    //return nil;
+    return NO;
 }
 
 - (NSSet *)updatablePropertySet
 {
     [NSException raise:NSInternalInconsistencyException
                 format:@"You must override %@ in a subclass", NSStringFromSelector(_cmd)];
-    //return nil;
+    return nil;
 }
 
 - (void)setAllPropertiesToDirty
@@ -449,11 +447,31 @@
                 format:@"You must override %@ in a subclass", NSStringFromSelector(_cmd)];
 }
 
+- (void)deepClearDirtyProperties
+{
+    [self.dirtyPropertySet removeAllObjects];
+    unsigned int pCount;
+    objc_property_t *properties = class_copyPropertyList([self class], &pCount);
+    for (int i=0; i<pCount; i++)
+    {
+        NSString *pName = [NSString stringWithUTF8String:property_getName(properties[i])];
+        NSString *pAttr = [NSString stringWithUTF8String:property_getAttributes(properties[i])];
+
+        SEL pSel = NSSelectorFromString(pName);
+        if (![self respondsToSelector:pSel]) continue;
+        id pVal = [self performSelector:pSel];
+
+        if ([pAttr characterAtIndex:1] != '@' || ![pVal isKindOfClass:[JRCaptureObject class]]) continue;
+        [pVal deepClearDirtyProperties];
+    }
+    free(properties);
+}
+
 - (NSDictionary *)snapshotDictionaryFromDirtyPropertySet
 {
     [NSException raise:NSInternalInconsistencyException
                 format:@"You must override %@ in a subclass", NSStringFromSelector(_cmd)];
-    //return nil;
+    return nil;
 }
 
 
@@ -650,9 +668,8 @@
 
 - (void)dealloc
 {
-    [captureObjectPath release];
-    [dirtyPropertySet release];
-
+    [self.dirtyPropertySet release];
+    [self.captureObjectPath release];
     [super dealloc];
 }
 @end

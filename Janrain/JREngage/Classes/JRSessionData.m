@@ -37,6 +37,7 @@
 #import "JREngageError.h"
 #import "JRUserInterfaceMaestro.h"
 #import "JREngage+CustomInterface.h"
+#import "JRJsonUtils.h"
 
 static NSString *serverUrl = @"https://rpxnow.com";
 
@@ -740,7 +741,7 @@ static JRSessionData *singleton = nil;
     if (max > MAX_LOGGED_CONFIG_RESPONSE_LENGTH) max = MAX_LOGGED_CONFIG_RESPONSE_LENGTH;
     ALog (@"Configuration information downloaded (%d): %@", [response statusCode], [configJson substringToIndex:max]);
 
-    NSDictionary *configDict = (NSDictionary *)[configJson objectFromJSONString];
+    NSDictionary *configDict = [configJson JR_objectFromJSONString];
     NSString *err = @"There was a problem communicating with the Janrain server while configuring authentication.";
     if (!configDict)
     {
@@ -826,8 +827,9 @@ static JRSessionData *singleton = nil;
     if (!providerName) return;
     JRProvider* provider = [engageProviders objectForKey:providerName];
     if (!provider) return;
-    //provider.forceReauth = YES;
-    [self deleteWebViewCookiesForDomains:provider.cookieDomains];
+    if ([provider.cookieDomains count])
+        [self deleteWebViewCookiesForDomains:provider.cookieDomains];
+    else provider.forceReauth = YES; // MOB-135
 
     [authenticatedUsersByProvider removeObjectForKey:providerName];
     NSData *usersData = [NSKeyedArchiver archivedDataWithRootObject:authenticatedUsersByProvider];
@@ -1001,7 +1003,7 @@ static JRSessionData *singleton = nil;
     }
 
 
-    NSString *activityContent = [[activityDictionary JSONString] stringByAddingUrlPercentEscapes];
+    NSString *activityContent = [[activityDictionary JR_jsonString] stringByAddingUrlPercentEscapes];
     NSString *deviceToken = user.deviceToken;
 
     DLog(@"activity json string \n %@", activityContent);
@@ -1092,7 +1094,7 @@ static JRSessionData *singleton = nil;
 {
     ALog (@"Activity sharing response: %@", response);
 
-    NSDictionary *responseDict = [response objectFromJSONString];
+    NSDictionary *responseDict = [response JR_objectFromJSONString];
 
     if (!responseDict)
     {
@@ -1306,9 +1308,9 @@ static JRSessionData *singleton = nil;
     if (theActivity.sms.urls)   [urls setObject:theActivity.email.urls forKey:@"sms"];
     if (theActivity.url)        [urls setObject:[NSArray arrayWithObject:theActivity.url] forKey:@"activity"];
 
+    NSString *urlsArg = [[urls JR_jsonString] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSString *urlString = [NSString stringWithFormat:@"%@/openid/get_urls?urls=%@&app_name=%@&device=%@",
-                           baseUrl, [[urls JSONString]/*JSONRepresentation]*/ stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],
-                            [self appNameAndVersion], [self device]];
+                                                     baseUrl, urlsArg, [self appNameAndVersion], [self device]];
 
     DLog (@"Getting shortened URLs: %@", urlString);
 
@@ -1324,7 +1326,7 @@ static JRSessionData *singleton = nil;
 {
     DLog ("Shortened Urls: %@", urls);
 
-    NSDictionary *dict = [urls objectFromJSONString];
+    NSDictionary *dict = [urls JR_objectFromJSONString];
 
     if (!dict)
         goto CALL_DELEGATE_SELECTOR;
