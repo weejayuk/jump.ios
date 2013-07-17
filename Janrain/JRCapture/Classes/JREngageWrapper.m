@@ -34,7 +34,6 @@
 #import "JRCaptureData.h"
 #import "JREngage+CustomInterface.h"
 #import "JRCaptureError.h"
-#import "JRConnectionManager.h"
 #import "JRCaptureApidInterface.h"
 #import "JRTraditionalSigninViewController.h"
 #import "JRCapture.h"
