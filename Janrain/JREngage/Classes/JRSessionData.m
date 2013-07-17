@@ -420,13 +420,10 @@ static NSString *applicationBundleDisplayName()
     JRActivityObject *activity;
 
     NSString *tokenUrl;
-    //NSString *baseUrl;
     NSString *appId;
 
     BOOL hidePoweredBy;
-    //BOOL authenticatingDirectlyOnThisProvider;
     BOOL alwaysForceReauth;
-    //BOOL forceReauthJustThisTime;
 
     BOOL socialSharing;
     BOOL dialogIsShowing;
@@ -471,8 +468,6 @@ static NSString *applicationBundleDisplayName()
 @synthesize returningSharingProvider;
 @synthesize returningAuthenticationProvider;
 @synthesize currentProvider;
-//@synthesize authenticatingDirectlyOnThisProvider;
-//@synthesize forceReauthJustThisTime;
 @synthesize socialSharing;
 
 @synthesize alwaysForceReauth;

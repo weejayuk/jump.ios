@@ -191,8 +191,6 @@
 
     if (tableAndSectionHeaderHeight)
     {
-        //DLog ("self.frame: %f %f", self.view.frame.size.width, self.view.frame.size.height);
-
         CGFloat loadingLabelAndSpinnerVerticalOffset =
                 ((self.view.frame.size.height - tableAndSectionHeaderHeight) / 2) + tableAndSectionHeaderHeight;
 
@@ -204,8 +202,6 @@
                 loadingLabelAndSpinnerVerticalOffset,
                 myActivitySpinner.frame.size.width,
                 myActivitySpinner.frame.size.height)];
-
-        //DLog ("label.frame: %f, %f", myLoadingLabel.frame.origin.x, myLoadingLabel.frame.origin.y);
     }
 
     if ([sessionData.authenticationProviders count] > 0)
@@ -242,7 +238,6 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    //DLog(@"");
     [super viewDidAppear:animated];
 }
 
@@ -280,7 +275,7 @@
     if (interval >= 16.0)
     {
         // Polling has timed out
-        //DLog(@"No Available Providers");
+        DLog(@"No Available Providers");
 
         [myActivitySpinner setHidden:YES];
         [myLoadingLabel setHidden:YES];
