@@ -351,7 +351,7 @@ captureTraditionalRegistrationFormName:(NSString *)captureTraditionalRegistratio
 
 + (void)storeTokenInKeychain:(NSString *)token name:(NSString *)name
 {
-    NSError  *error = nil;
+    NSError *error = nil;
 
     [SFHFKeychainUtils storeUsername:cJRCaptureKeychainUserName andPassword:token
                       forServiceName:[JRCaptureData serviceNameForTokenName:name]
