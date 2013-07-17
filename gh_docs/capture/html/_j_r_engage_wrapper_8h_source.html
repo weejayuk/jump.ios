@@ -91,17 +91,20 @@
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">@protocol </span><a class="code" href="protocol_j_r_capture_delegate-p.html" title="Protocol adopted to receive notifications when, and information about, a user that signs in to your a...">JRCaptureDelegate</a>;</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">@interface </span>JREngageWrapper : NSObject &lt;JREngageSigninDelegate&gt;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;+ (void)configureEngageWithAppId:(NSString *)appId customIdentityProviders:(NSDictionary *)customProviders;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;+ (void)startAuthenticationDialogWithTraditionalSignIn:(<a class="code" href="_j_r_capture_types_8h.html#af9b5dc1a6961545439ac9fbddcf7ddb8">JRTraditionalSignInType</a>)nativeSignInType</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;                           andCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;                                           forDelegate:(<span class="keywordtype">id</span> &lt;<a class="code" href="protocol_j_r_capture_delegate-p.html" title="Protocol adopted to receive notifications when, and information about, a user that signs in to your a...">JRCaptureDelegate</a>&gt;)delegate;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;+ (void)startAuthenticationDialogOnProvider:(NSString *)provider</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;               withCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;                                 mergeToken:(NSString *)mergeToken</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;                                forDelegate:(<span class="keywordtype">id</span> &lt;<a class="code" href="protocol_j_r_capture_delegate-p.html" title="Protocol adopted to receive notifications when, and information about, a user that signs in to your a...">JRCaptureDelegate</a>&gt;)delegate;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="keyword">@end</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keyword">@property</span> <span class="keywordtype">bool</span> didTearDownViewControllers;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;+ (void)configureEngageWithAppId:(NSString *)appId customIdentityProviders:(NSDictionary *)customProviders;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;+ (void)startAuthenticationDialogWithTraditionalSignIn:(<a class="code" href="_j_r_capture_types_8h.html#af9b5dc1a6961545439ac9fbddcf7ddb8">JRTraditionalSignInType</a>)nativeSignInType</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;                           andCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;                                           forDelegate:(<span class="keywordtype">id</span> &lt;<a class="code" href="protocol_j_r_capture_delegate-p.html" title="Protocol adopted to receive notifications when, and information about, a user that signs in to your a...">JRCaptureDelegate</a>&gt;)delegate;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;+ (void)startAuthenticationDialogOnProvider:(NSString *)provider</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;               withCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;                                 mergeToken:(NSString *)mergeToken</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;                                forDelegate:(<span class="keywordtype">id</span> &lt;<a class="code" href="protocol_j_r_capture_delegate-p.html" title="Protocol adopted to receive notifications when, and information about, a user that signs in to your a...">JRCaptureDelegate</a>&gt;)delegate;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keyword">@end</span></div>
 </div><!-- fragment --></div><!-- contents -->
             </div>
            <!-- end -->
