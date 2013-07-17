@@ -55,7 +55,7 @@ static SEL appIdSel = nil;
     int64_t fbState = (BOOL) [fbActiveSession performSelector:stateSel]; //[FBSession activeSession].state;
 
     //#define FB_SESSIONSTATEOPENBIT (1 << 9)
-    if (fbState & 1 << 9)
+    if (fbState & (1 << 9))
     {
         id accessToken = [self getAccessToken:fbActiveSession];
         [self getAuthInfoTokenForAccessToken:accessToken onProvider:@"facebook" completion:completion];
