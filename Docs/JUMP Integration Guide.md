@@ -150,7 +150,7 @@ started:
         NSString *captureDomain = @"your_capture_ui_base_url";
         NSString *captureClientId = @"your_capture_client_id";
         NSString *captureLocale = @"en-US"; // e.g.
-        NSString *captureFlowName = nil; // e.g.
+        NSString *captureFlowName = @"signIn"; // e.g.
         NSString *captureTraditionalSignInFormName = @"signinForm"; // e.g.
         BOOL captureEnableThinRegistration = YES;
         NSString *captureFlowVersion = nil;
@@ -159,17 +159,17 @@ started:
         NSString *captureAppId = @"your_capture_app_id";
         NSDictionary *customProviders = nil;
 
-        JRConventionalSigninType captureTraditionalSignInType = JRConventionalSigninEmailPassword; // e.g.
+        JRTraditionalSignInType captureTraditionalSignInType = JRTraditionalSignInEmailPassword; // e.g.
 
-        [JRCapture setEngageAppId:engageAppId captureDomain:captureDomain captureClientId:captureClientId
-                    captureLocale:captureLocale captureFlowName:captureFlowName
-                  captureFlowVersion:captureFlowVersion
+        [JRCapture setEngageAppId:engageAppId captureDomain:captureDomain
+                  captureClientId:captureClientId captureLocale:captureLocale
+                     captureFlowName:captureFlowName captureFlowVersion:captureFlowVersion
     captureTraditionalSignInFormName:captureTraditionalSignInFormName
        captureEnableThinRegistration:captureEnableThinRegistration
               captureTraditionalSignInType:captureTraditionalSignInType
     captureTraditionalRegistrationFormName:captureTraditionalRegistrationFormName
-         captureSocialRegistrationFormName:captureSocialRegistrationFormName captureAppId:captureAppId
-                   customIdentityProviders:customProviders];
+         captureSocialRegistrationFormName:captureSocialRegistrationFormName
+                              captureAppId:captureAppId];
 
 ## Start the User Sign-In Flow
 
