@@ -1,3 +1,5 @@
+v3.2.8
+ - Documentation bug fixes (symbol name updates)
 v3.2.7
  - Fixes a bug causing a failed first attempt at authentication preventing a successful
    second attempt.
