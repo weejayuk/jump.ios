@@ -125,7 +125,7 @@ object that manages your application's state model.
 1. In the chosen class's header, import the Capture library header:
 
 
-    #import "JRCapture.h"
+     #import "JRCapture.h"
 
 2. Modify your class's interface declaration to declare conformation to the protocol. (All of the messages of the
    protocol are optional.) So, for example, start your AppDelegate's interface declaration like this:
