@@ -224,8 +224,7 @@ static CGPoint oldContentOffset;
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
     NSString *identifier = [self identifierForIntTag:textField.tag];
-    SEL setSel = NSSelectorFromString([NSString stringWithFormat:@"set%@:", upcaseFirst(identifier)]);
-    [self.captureUser performSelector:setSel withObject:textField.text];
+    [self.captureUser setValue:textField.text forKey:identifier];
     [UIView animateWithDuration:0.3 animations:^(){
         self.scrollView.contentOffset = oldContentOffset;
     }];

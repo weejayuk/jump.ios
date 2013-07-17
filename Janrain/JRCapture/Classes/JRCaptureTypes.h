@@ -132,7 +132,8 @@ typedef enum
  * @sa
  *   For more information, please see the \ref typesTable "Type Mapping Reference Page".
  **/
-typedef NSNumber JRBoolean;
+//typedef NSNumber JRBoolean;
+#define JRBoolean NSNumber
 
 /**
  * Some types do not perfectly map between Objective-C and Capture. For example, a \e decimal on Capture is more or
@@ -151,7 +152,8 @@ typedef NSNumber JRBoolean;
  * @sa
  *   For more information, please see the \ref typesTable "Type Mapping Reference Page".
  **/
-typedef NSNumber JRDecimal;
+//typedef NSNumber JRDecimal;
+#define JRDecimal NSNumber
 
 /**
  * Some types do not perfectly map between Objective-C and Capture. For example, a \e integer on Capture can hold
@@ -183,7 +185,8 @@ typedef NSNumber JRDecimal;
  * @sa
  *   For more information, please see the \ref typesTable "Type Mapping Reference Page".
  **/
-typedef NSNumber JRInteger;
+//typedef NSNumber JRInteger;
+#define JRInteger NSNumber
 
 /**
  * Some types do not perfectly map between Objective-C and Capture. For example, a property of type \e date on Capture
@@ -208,7 +211,8 @@ typedef NSNumber JRInteger;
  * @sa
  *   For more information, please see the \ref typesTable "Type Mapping Reference Page".
  **/
-typedef NSDate   JRDate;
+//typedef NSDate   JRDate;
+#define JRDate NSDate
 
 /**
  * Some types do not perfectly map between Objective-C and Capture. For example, a property of type \e dateTime on
@@ -234,7 +238,8 @@ typedef NSDate   JRDate;
  * @sa
  *   For more information, please see the \ref typesTable "Type Mapping Reference Page".
  **/
-typedef NSDate   JRDateTime;
+//typedef NSDate   JRDateTime;
+#define JRDateTime NSDate
 
 /**
  * Some types do not perfectly map between Objective-C and Capture. For example, a property of type \e ipAddress on
@@ -253,7 +258,8 @@ typedef NSDate   JRDateTime;
  * @sa
  *   For more information, please see the \ref typesTable "Type Mapping Reference Page".
  **/
-typedef NSString JRIpAddress;
+//typedef NSString JRIpAddress;
+#define JRIpAddress NSString
 
 /**
  * Some types do not perfectly map between Objective-C and Capture. For example, a property of type \e password on
@@ -272,7 +278,8 @@ typedef NSString JRIpAddress;
  * @sa
  *   For more information, please see the \ref typesTable "Type Mapping Reference Page".
  **/
-typedef NSObject JRPassword;
+//typedef NSObject JRPassword;
+#define JRPassword NSObject
 
 /**
  * Some types do not perfectly map between Objective-C and Capture. For example, a property of type \e json on
@@ -301,7 +308,8 @@ typedef NSObject JRPassword;
  * @sa
  *   For more information, please see the \ref typesTable "Type Mapping Reference Page".
  **/
-typedef NSObject JRJsonObject;
+//typedef NSObject JRJsonObject;
+#define JRJsonObject NSObject
 
 /**
  * Plurals contain collections of elements, where an element is just an object stored in a plural. Like objects, plural
@@ -334,7 +342,8 @@ typedef NSObject JRJsonObject;
  * @sa
  *   For more information, please see the \ref typesTable "Type Mapping Reference Page"
  **/
-typedef NSArray  JRStringArray;
+//typedef NSArray  JRStringArray;
+#define JRStringArray NSArray
 
 /**
  * Some types do not perfectly map between Objective-C and Capture. For example, a property of type \e uuid on
@@ -344,7 +353,8 @@ typedef NSArray  JRStringArray;
  * @sa
  *   For more information, please see the \ref typesTable "Type Mapping Reference Page".
  **/
-typedef NSString JRUuid;
+//typedef NSString JRUuid;
+#define JRUuid NSString
 
 /**
  * Some types do not perfectly map between Objective-C and Capture. For example, a property of type \e id on
@@ -357,7 +367,8 @@ typedef NSString JRUuid;
  * @sa
  *   For more information, please see the \ref typesTable "Type Mapping Reference Page".
  **/
-typedef NSNumber JRObjectId;
+//typedef NSNumber JRObjectId;
+#define JRObjectId NSNumber
 
 /**
  * @page Types Mapping Reference
