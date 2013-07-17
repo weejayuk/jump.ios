@@ -124,23 +124,20 @@ object that manages your application's state model.
 
 1. In the chosen class's header, import the Capture library header:
 
-
-     #import "JRCapture.h"
+        #import "JRCapture.h"
 
 2. Modify your class's interface declaration to declare conformation to the protocol. (All of the messages of the
    protocol are optional.) So, for example, start your AppDelegate's interface declaration like this:
 
-    @interface AppDelegate : UIResponder <JRCaptureSigninDelegate>
+        @interface AppDelegate : UIResponder <JRCaptureSigninDelegate>
 
 3. Add a `JRCaptureUser *` property to your class's interface declaration:
 
-
-    @property (retain, nonatomic) JRCaptureUser *captureUser;
+        @property (retain, nonatomic) JRCaptureUser *captureUser;
 
 4. In your class's implementation synthesize that property:
 
-
-    @synthesize captureUser;
+        @synthesize captureUser;
 
 ## Initialize the Library
 
