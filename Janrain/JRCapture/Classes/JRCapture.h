@@ -34,6 +34,7 @@
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #import "JRCaptureTypes.h"
+
 @class JRCaptureUser;
 
 #define engageSigninDialogDidFailToShowWithError engageAuthenticationDialogDidFailToShowWithError
@@ -150,7 +151,7 @@
  * is based on the possibility that your application may preemptively configure Capture and Engage, but never
  * actually use it. If that is the case, then you won't get any error.
  **/
-- (void)engageAuthenticationDialogDidFailToShowWithError:(NSError*)error;
+- (void)engageAuthenticationDialogDidFailToShowWithError:(NSError *)error;
 /*@}*/
 
 /**
@@ -226,7 +227,7 @@
  * This message is not sent if authentication was canceled. To be notified of a canceled authentication,
  * see engageSignInDidCancel
  **/
-- (void)engageAuthenticationDidFailWithError:(NSError*)error forProvider:(NSString *)provider;
+- (void)engageAuthenticationDidFailWithError:(NSError *)error forProvider:(NSString *)provider;
 
 /**
  * Sent after authentication has successfully reached the Capture server. Capture will attempt to sign the user in,
@@ -267,7 +268,7 @@
  *   The error that occurred during Capture authentication. Please see the list of \ref captureErrors "Capture Errors"
  *   for more information
  **/
-- (void)captureSignInDidFailWithError:(NSError*)error;
+- (void)captureSignInDidFailWithError:(NSError *)error;
 
 /**
  * Sent when a registration has succeeded
@@ -379,7 +380,7 @@
                  captureFlowName:(NSString *)captureFlowName captureFlowVersion:(NSString *)captureFlowVersion
 captureTraditionalSignInFormName:(NSString *)captureSignInFormName
     captureTraditionalSignInType:(__unused JRTraditionalSignInType)captureTraditionalSignInType
-         captureEnableThinRegistration:(BOOL)enableThinRegistration
+   captureEnableThinRegistration:(BOOL)enableThinRegistration
                customIdentityProviders:(NSDictionary *)customProviders
 captureTraditionalRegistrationFormName:(NSString *)captureTraditionalRegistrationFormName
      captureSocialRegistrationFormName:(NSString *)captureSocialRegistrationFormName
@@ -433,17 +434,17 @@ captureTraditionalSignInType:(JRTraditionalSignInType)captureTraditionalSignInTy
 + (void)setAccessToken:(NSString *)newAccessToken __unused;
 
 /**
+ * Get the Capture access token
+ */
++ (NSString *)getAccessToken __unused;
+
+/**
  * Sets the "redirect URI" supplied Capture when registering and signing in.
  *
  * This parameter is used by Capture in the email-verification and password-reset emails sent by Capture.
  */
 + (void)setRedirectUri:(NSString *)redirectUri __unused;
 /*@}*/
-
-/**
- * Get the Capture access token
- */
-+ (NSString *)getAccessToken __unused;
 
 /**
  * @name Sign in with the Engage for iOS dialogs
@@ -457,7 +458,7 @@ captureTraditionalSignInType:(JRTraditionalSignInType)captureTraditionalSignInTy
 * @param delegate
 *   The JRCaptureDelegate object that wishes to receive messages regarding user authentication
 **/
-+ (void)startEngageSignInDialogForDelegate:(id<JRCaptureDelegate>)delegate __unused;
++ (void)startEngageSignInDialogForDelegate:(id <JRCaptureDelegate>)delegate __unused;
 
 /**
  * @deprecated
@@ -474,7 +475,7 @@ captureTraditionalSignInType:(JRTraditionalSignInType)captureTraditionalSignInTy
  *   please see the \ref authenticationProviders "List of Providers"
  **/
 + (void)startEngageSignInDialogOnProvider:(NSString *)provider
-                              forDelegate:(id<JRCaptureDelegate>)delegate __unused;
+                              forDelegate:(id <JRCaptureDelegate>)delegate __unused;
 
 /**
  * Begin authentication. The Engage for iOS portion of the library will
@@ -486,7 +487,7 @@ captureTraditionalSignInType:(JRTraditionalSignInType)captureTraditionalSignInTy
  *   look and feel of the user interface and/or add a native login experience
  **/
 + (void)startEngageSignInDialogWithCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
-                                                forDelegate:(id<JRCaptureDelegate>)delegate __unused;
+                                                forDelegate:(id <JRCaptureDelegate>)delegate __unused;
 
 /**
  * Begin authentication for one specific provider. The library will
@@ -503,8 +504,8 @@ captureTraditionalSignInType:(JRTraditionalSignInType)captureTraditionalSignInTy
  *   and feel of the user interface and/or add a native login experience
  **/
 + (void)startEngageSignInDialogOnProvider:(NSString *)provider
-             withCustomInterfaceOverrides:(NSDictionary*)customInterfaceOverrides
-                              forDelegate:(id<JRCaptureDelegate>)delegate __unused;
+             withCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
+                              forDelegate:(id <JRCaptureDelegate>)delegate __unused;
 
 
 /**
@@ -547,7 +548,8 @@ captureTraditionalSignInType:(JRTraditionalSignInType)captureTraditionalSignInTy
  * Based on this argument, the dialog will prompt your user to either enter their username or email.
  **/
 + (void)startEngageSignInDialogWithTraditionalSignIn:(JRTraditionalSignInType)traditionalSignInType
-                                         forDelegate:(id<JRCaptureDelegate>)delegate __unused;
+                                         forDelegate:(id <JRCaptureDelegate>)delegate __unused;
+
 /**
  * Begin authentication, adding the option for your users to log directly into Capture through
  * your traditional sign-in mechanism. By using this method to initiate sign-in, the library automatically adds
@@ -571,7 +573,7 @@ captureTraditionalSignInType:(JRTraditionalSignInType)captureTraditionalSignInTy
  **/
 + (void)startEngageSignInDialogWithTraditionalSignIn:(JRTraditionalSignInType)traditionalSignInType
                          andCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
-                                         forDelegate:(id<JRCaptureDelegate>)delegate;
+                                         forDelegate:(id <JRCaptureDelegate>)delegate;
 
 /**
  * Signs a user in via traditional (username/email and password) authentication on Capture.
