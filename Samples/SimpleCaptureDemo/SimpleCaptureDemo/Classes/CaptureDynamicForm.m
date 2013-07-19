@@ -16,7 +16,7 @@ static NSMutableDictionary *identifierMap = nil;
 @end
 
 /**
- * This form is a much too complicated sample form, which exercises the autolayout system to dynamically build a view
+ * This form is a too-complicated sample form, which uses autolayout to programmatically build a view
  * hierarchy for a statically known set of form fields.
  */
 @implementation CaptureDynamicForm

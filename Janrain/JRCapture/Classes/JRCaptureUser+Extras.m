@@ -165,7 +165,6 @@
 
 - (NSString *)valueForAttrByDotPath:(NSString *)dotPath
 {
-
     NSArray *pathComponents = [dotPath componentsSeparatedByString:@"."];
     return [JRCaptureUser valueForAttrByDotPathComponents:pathComponents userDict:[self toDictionaryForEncoder:NO]];
 }
