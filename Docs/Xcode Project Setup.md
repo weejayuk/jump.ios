@@ -35,15 +35,14 @@ Clone the JUMP for iOS library from GitHub: `git clone git://github.com/janrain/
 
 The JUMP for iOS library does not, itself, use Automatic Reference Counting
 ([ARC](http://developer.apple.com/library/ios/#releasenotes/ObjectiveC/RN-TransitioningToARC/Introduction/Introduction.html#//apple_ref/doc/uid/TP40011226-CH1-SW13)),
-but you can easily add the library to a project that does. To do so:
+but you can add the library to a project that does by disabling ARC for the JUMP library. To do so:
 
-1. Add the Janrain files to your project by following the instructions above
-2. Go to your project settings, select your application’s target, and select the **Build Phases** tab.
-3. Expand the section named **Compile Sources**.
-4. Select all the files from the **Janrain** library, including `SFHFKeychainUtils.m` and `JSONKit.m`.
-5. Press **Return** to edit all the files at once, and, in the floating text-box, add the `-fno-objc-arc` compiler
+1. Go to your project settings, select your application’s target, and select the **Build Phases** tab.
+2. Expand the section named **Compile Sources**.
+3. Select all the files from the **Janrain** folder, including `SFHFKeychainUtils.m`
+4. Press **Return** to edit all the files at once, and, in the floating text-box, add the `-fno-objc-arc` compiler
    flag.
-6. After adding the compiler flag, either click **Done** in the input bubble, or press Return.
+5. After adding the compiler flag, either click **Done** in the input bubble, or press Return.
 
 ## Generating the Capture User Model
 
