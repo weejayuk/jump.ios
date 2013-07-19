@@ -13,13 +13,13 @@ Clone the JUMP for iOS library from GitHub: `git clone git://github.com/janrain/
 3. Open the **Finder** and navigate to the location where you cloned the repository. Drag the **Janrain**
    folder into your Xcode project’s **Project Navigator** pane, and drop it below the root project node.
    **Warning**: Do not drag the `jump.ios` folder into your project, drag the `Janrain` folder in.
-4. In the dialog, do not check the **Copy items into destination group’s folder (if needed)** box. Ensure that the
+4. In the dialog, do **not** check the **Copy items into destination group’s folder (if needed)** box. Ensure that the
    **Create groups for any added folders** radio button is selected, and that the **Add to targets** check box is
    selected for your application’s targets.
-5. **Warning**: If you are doing a social-sign-in-only (i.e. Engage-only) integration, you must now remove the
-   JRCapture project group from the Janrain project group.
 5. Click **Finish**.
-6. You must also add the **Security** framework, **QuartzCore** framework, and the **MessageUI** framework to your 
+6. **Warning**: If you are doing a social-sign-in-only (i.e. Engage-only) integration, you must now remove the
+   JRCapture project group from the Janrain project group.
+7. You must also add the **Security** framework, **QuartzCore** framework, and the **MessageUI** framework to your
    project. As the **MessageUI** framework is not available on all iOS devices and versions, you must designate the
    framework as "optional."
 

@@ -137,7 +137,7 @@
 - (NSArray *)tail;
 @end
 
-@implementation JRCaptureUser (JRCaptureUser_Internal)
+@implementation JRCaptureUser (JRCaptureUser_Internal_Extras)
 - (NSMutableDictionary *)toFormFieldsForForm:(NSString *)formName withFlow:(NSDictionary *)flow
 {
     if (!formName || !flow) return nil;

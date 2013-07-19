@@ -34,7 +34,7 @@
 /**
  * @internal
  */
-@interface JRCaptureUser ()
+@interface JRCaptureUser (Private)
 + (id)captureUserObjectFromDictionary:(NSDictionary *)dictionary withPath:(NSString *)capturePath;
 
 - (void)decodeFromDictionary:(NSDictionary *)dictionary;
@@ -43,7 +43,7 @@
 /**
  * @internal
  */
-@interface JRCaptureUser (JRCaptureUser_Internal)
+@interface JRCaptureUser (JRCaptureUser_Internal_Extras)
 - (NSMutableDictionary *)toFormFieldsForForm:(NSString *)formName withFlow:(NSDictionary *)flow;
 
 + (JRCaptureUser *)captureUserObjectWithPrefilledFields:(NSDictionary *)prefilledFields flow:(NSDictionary *)flow;
