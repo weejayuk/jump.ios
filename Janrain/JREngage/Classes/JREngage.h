@@ -61,6 +61,11 @@
  *   JRCapture API</a> documentation.
  **/
 
+#if  __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_5_0
+#error Incompatible deployment target - should be 5.0 or higher
+#endif
+
+
 /* Preprocessor directive that conditionally compiles the code that uses the weakly-linked MessageUI.Framework.
  This framework is required if you want to include the ability to share activities with email or SMS. By default
  the JRENGAGE_INCLUDE_EMAIL_SMS flag should always be set to "1", which can cause errors with the linker if the
