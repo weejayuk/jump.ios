@@ -1,6 +1,7 @@
 v3.2.10
  - Fixes incorrect file organization, breaking Engage-only builds
    This fix requires removing and re-adding the Janrain project group in the Project
+ - Adds minimum deployment target check (iOS 5.0 or above is required.)
 v3.2.9
  - Fixes an uninitialized error return value, which can cause erroneous API errors
 v3.2.8
