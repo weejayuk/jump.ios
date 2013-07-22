@@ -136,13 +136,13 @@ static JREngageWrapper *singleton = nil;
     [JREngage showAuthenticationDialogWithCustomInterfaceOverrides:expandedCustomInterfaceOverrides];
 }
 
-+ (void)     configureTradSignIn:(JRTraditionalSignInType)nativeSigninType
++ (void)     configureTradSignIn:(JRTraditionalSignInType)nativeSignInType
 expandedCustomInterfaceOverrides:(NSMutableDictionary *)expandedCustomInterfaceOverrides
 {
     NSString *nativeSignInTitleString =
             ([expandedCustomInterfaceOverrides objectForKey:kJRCaptureTraditionalSignInTitleString] ?
                     [expandedCustomInterfaceOverrides objectForKey:kJRCaptureTraditionalSignInTitleString] :
-                    (nativeSigninType == JRTraditionalSignInEmailPassword ?
+                    (nativeSignInType == JRTraditionalSignInEmailPassword ?
                             @"Sign In With Your Email and Password" :
                             @"Sign In With Your Username and Password"));
 
@@ -152,7 +152,7 @@ expandedCustomInterfaceOverrides:(NSMutableDictionary *)expandedCustomInterfaceO
 
     UIView *const titleView = [expandedCustomInterfaceOverrides objectForKey:kJRCaptureTraditionalSignInTitleView];
     JRTraditionalSignInViewController *controller =
-            [JRTraditionalSignInViewController traditionalSignInViewController:nativeSigninType
+            [JRTraditionalSignInViewController traditionalSignInViewController:nativeSignInType
                                                                    titleString:nativeSignInTitleString
                                                                      titleView:titleView
                                                                  engageWrapper:singleton];
