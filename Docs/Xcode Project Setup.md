@@ -2,7 +2,7 @@ First, get the library.
 
 ## Get the Library
 
-Clone the JUMP for iOS library from GitHub: `git clone git://github.com/janrain/jump.ios.git`
+If you haven't already, clone the JUMP for iOS library from GitHub: `git clone git://github.com/janrain/jump.ios.git`
 
 **Important**: If you are upgrading from an earlier version of the library, see the `Upgrade Guide.md`.
 
@@ -49,7 +49,7 @@ but you can add the library to a project that does by disabling ARC for the JUMP
 **Warning**: If you are integrating with social-sign-in-only (i.e. Engage-only), or integrating via the Phonegap
 plugin, you do not generate the Capture User Model. Instead, proceed to `Engage-Only Integration Guide.md`.
 
-You will need the [JSON-2.53+](http://search.cpan.org/~makamaka/JSON-2.53/lib/JSON.pm "JSON-2.53+") perl module. To
+You will need the [JSON](http://search.cpan.org/~makamaka/JSON-2.53/lib/JSON.pm (version 2.53 or above) perl module. To
 install the perl JSON module:
 
 1. Make sure that perl is installed on your system. Open a command terminal and type `perl -v`. If perl is installed

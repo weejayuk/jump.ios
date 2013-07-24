@@ -50,8 +50,7 @@ Basic use flow:
 3. Create a new Capture API client for your mobile app:
     1. Sign in to the Capture dashboard and provision a new API client for your mobile app (https://janraincapture.com)
        (Copy down the new API client's client ID, you will need this.)
-    2. Use the [set_features API](http://developers.janrain.com/documentation/api-methods/capture/clients/set_features/)
-       to add the "login_client" feature to your new API client.
+    2. Use the dashboard to add the "login_client" feature to your new API client.
 
        **Warning** `login_client` is mutually exclusive with all other API client features, which means only login
        clients can be used to sign users in, and only non-login-clients can perform client_id and client_secret
@@ -64,7 +63,7 @@ Basic use flow:
        **Warning** Do not use the "write" schema type with login clients, use "write_with_token"
 
        **Warning** If you do set the write_with_token access schema for your API client to include the attributes your
-       client will write to in the its write access schema you will receive `missing attribute` errors when attempting
+       client will write to in its write access schema you will receive `missing attribute` errors when attempting
        to update attributes.
 4. Discover your flow settings:
     Ask your deployment engineer for:
