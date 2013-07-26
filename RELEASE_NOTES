@@ -1,3 +1,6 @@
+v3.2.12
+ - Fixes flow name parameter name, previously had relied on defaul_flow_name setting in
+   the dashboard for operation when a flow-name had been set.
 v3.2.11
  - Fixes display of logged in user in sharing controller
 v3.2.10
