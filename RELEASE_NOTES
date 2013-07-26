@@ -1,3 +1,5 @@
+v3.2.11
+ - Fixes display of logged in user in sharing controller
 v3.2.10
  - Fixes incorrect file organization, breaking Engage-only builds
    This fix requires removing and re-adding the Janrain project group in the Project
