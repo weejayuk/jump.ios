@@ -936,7 +936,7 @@ or opacity of our rounded rectangle. */
         self.selectedProvider = [[self.sessionData allProviders] objectForKey:key];
         [self.sessionData setCurrentProvider:selectedProvider];
 
-        //self.loggedInUser = [sessionData authenticatedUserForProvider:selectedProvider];
+        self.loggedInUser = [self.sessionData authenticatedUserForProvider:selectedProvider];
 
         self.selectedTab = (NSUInteger) item.tag;
 
@@ -957,25 +957,23 @@ or opacity of our rounded rectangle. */
             [myPreviewContainerRoundedRect setNeedsDisplay];
         }
 
-        [myConnectAndShareButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:
-                                                                                          @"button_%@_280x40.png",
-                                                                                          selectedProvider.name]]
-                                           forState:UIControlStateNormal];
+        NSString *buttonFileName = [NSString stringWithFormat:@"button_%@_280x40.png", selectedProvider.name];
+        [myConnectAndShareButton setBackgroundImage:[UIImage imageNamed:buttonFileName] forState:UIControlStateNormal];
 
-        [myJustShareButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:
-                                                                                    @"button_%@_135x40.png",
-                                                                                    selectedProvider.name]]
-                                     forState:UIControlStateNormal];
+        NSString *buttonFileName2 = [NSString stringWithFormat:@"button_%@_135x40.png", selectedProvider.name];
+        [myJustShareButton setBackgroundImage:[UIImage imageNamed:buttonFileName2] forState:UIControlStateNormal];
 
-        myProviderIcon.image = [UIImage imageNamed:[NSString stringWithFormat:
-                                                                     @"icon_%@_30x30.png",
-                                                                     selectedProvider.name]];
+        NSString *providerIconFileName = [NSString stringWithFormat:@"icon_%@_30x30.png", selectedProvider.name];
+        myProviderIcon.image = [UIImage imageNamed:providerIconFileName];
 
         if (![self.customInterface objectForKey:kJRSocialSharingTitleString] &&
                 ![self.customInterface objectForKey:kJRSocialSharingTitleView])
+        {
             ((UILabel *) self.titleView).text = [NSString stringWithFormat:@"%@ %@",
                                                                            NSLocalizedString(@"Share on", @""),
                                                                            selectedProvider.friendlyName];
+        }
+;
 
         self.currentActivity.userGeneratedContent = myUserCommentTextView.text;
 
