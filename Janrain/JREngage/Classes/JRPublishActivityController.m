@@ -52,17 +52,6 @@
 #define JRR_INNER_RECT_INSET      6
 
 @interface JRRoundedRect : UIView
-//{
-//    UIColor *outerStrokeColor;
-//    UIColor *innerStrokeColor;
-//    UIColor *outerFillColor;
-//    UIColor *innerFillColor;
-//    CGFloat  outerStrokeWidth;
-//    CGFloat  innerStrokeWidth;
-//    CGFloat  outerCornerRadius;
-//    CGFloat  innerCornerRadius;
-//    BOOL     drawInnerRect;
-//}
 @property(nonatomic, retain) UIColor *outerStrokeColor;
 @property(nonatomic, retain) UIColor *innerStrokeColor;
 @property(nonatomic, retain) UIColor *outerFillColor;
@@ -397,10 +386,8 @@ or opacity of our rounded rectangle. */
     UIImageView *mySharedCheckMark;
     UILabel *mySharedLabel;
 }
-//@synthesize hidesCancelButton;
 @synthesize selectedProvider;
-//@synthesize loggedInUser;
-@synthesize myBackgroundView, myTabBar, myLoadingLabel, myLoadingActivitySpinner, myLoadingGrayView, 
+@synthesize myBackgroundView, myTabBar, myLoadingLabel, myLoadingActivitySpinner, myLoadingGrayView,
 myPadGrayEditingViewTop, myPadGrayEditingViewMiddle, myPadGrayEditingViewBottom, myContentView, myScrollView, 
 myUserCommentTextView, myUserCommentBoundingBox, myRemainingCharactersLabel, myEntirePreviewContainer, 
 myPreviewContainerRoundedRect, myPreviewOfTheUserCommentLabel, myRichDataContainer, myMediaThumbnailView, 
@@ -895,10 +882,6 @@ myUserName, mySignOutButton, mySharedCheckMark, mySharedLabel;
 #define USER_CONTENT_BOUNDING_BOX_EDITING_HEIGHT (USER_CONTENT_BOUNDING_BOX_DEFAULT_HEIGHT + EDITING_HEIGHT_OFFSET)
 #define CHARACTER_COUNT_DEFAULT_Y_ORIGIN          90
 #define CHARACTER_COUNT_EDITING_Y_ORIGIN         (CHARACTER_COUNT_DEFAULT_Y_ORIGIN         + EDITING_HEIGHT_OFFSET)
-//#define SCROLL_VIEW_DEFAULT_HEIGHT_PORTRAIT       264
-//#define SCROLL_VIEW_DEFAULT_HEIGHT_LANDSCAPE      116
-//#define SCROLL_VIEW_EDITING_HEIGHT_PORTRAIT       200
-//#define SCROLL_VIEW_EDITING_HEIGHT_LANDSCAPE      106
 
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
 {
@@ -1735,8 +1718,6 @@ myUserName, mySignOutButton, mySharedCheckMark, mySharedLabel;
            user canceled, etc), the view will know that we just went through the authentication process. */
         weHaveJustAuthenticated = YES;
 
-//        userHitTheBackButton = NO;
-
         /* If the selected provider requires input from the user, go to the user landing view. Or if
            the user started on the user landing page, went back to the list of providers, then selected
            the same provider as their last-used provider, go back to the user landing view. */
@@ -1906,7 +1887,6 @@ myUserName, mySignOutButton, mySharedCheckMark, mySharedLabel;
     weHaveJustAuthenticated = NO;
 }
 
-//- (void)publishingDidRestart  { weAreCurrentlyPostingSomething = NO; }
 - (void)publishingDidCancel
 {
     weAreCurrentlyPostingSomething = NO;
@@ -1956,16 +1936,6 @@ myUserName, mySignOutButton, mySharedCheckMark, mySharedLabel;
                                              @"There was an error while sharing this activity."];
             break;
         default:
-            /* JRPublishErrorBadConnection,
-               JRPublishErrorActivityNil,
-               JRPublishErrorFacebookGeneric,
-               JRPublishErrorInvalidFacebookSession,
-               JRPublishErrorInvalidFacebookMedia,
-               JRPublishErrorTwitterGeneric,
-               JRPublishErrorLinkedInGeneric,
-               JRPublishErrorMyspaceGeneric,
-               JRPublishErrorYahooGeneric */
-
             errorMessage = [NSString stringWithFormat:
                                              @"There was an error while sharing this activity."];
             break;
@@ -2003,10 +1973,6 @@ myUserName, mySignOutButton, mySharedCheckMark, mySharedLabel;
     UIAlertView *alert;
     switch (result)
     {
-//        case MFMailComposeResultCancelled:
-//            break;
-//        case MFMailComposeResultSaved:
-//            break;
         case MFMailComposeResultSent:
             [sessionData triggerEmailSharingDidComplete];
             alert = [[[UIAlertView alloc] initWithTitle:@"Success"
@@ -2040,8 +2006,6 @@ myUserName, mySignOutButton, mySharedCheckMark, mySharedLabel;
     UIAlertView *alert;
     switch (result)
     {
-//        case MessageComposeResultCancelled:
-//            break;
         case MessageComposeResultSent:
             [sessionData triggerSmsSharingDidComplete];
             alert = [[[UIAlertView alloc] initWithTitle:@"Success"
