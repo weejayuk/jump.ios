@@ -395,7 +395,7 @@ captureTraditionalRegistrationFormName:nil
             @"locale" : config.captureLocale,
             @"response_type" : @"token",
             @"redirect_uri" : [config redirectUri],
-            @"flow_name" : config.captureFlowName,
+            @"flow" : config.captureFlowName,
             @"form" : registrationForm,
             @"refresh_secret" : refreshSecret,
     }];

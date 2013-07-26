@@ -168,7 +168,7 @@ typedef enum CaptureInterfaceStatEnum
 
     [signInParams addEntriesFromDictionary:credentials];
     [signInParams JR_maybeSetObject:[JRCaptureData sharedCaptureData].bpChannelUrl forKey:@"bp_channel"];
-    [signInParams JR_maybeSetObject:[JRCaptureData sharedCaptureData].captureFlowName forKey:@"flow_name"];
+    [signInParams JR_maybeSetObject:[JRCaptureData sharedCaptureData].captureFlowName forKey:@"flow"];
 
     NSMutableURLRequest *request = [JRCaptureData requestWithPath:@"/oauth/auth_native_traditional"];
     [request JR_setBodyWithParams:signInParams];

@@ -166,17 +166,6 @@ static JRCaptureData *singleton = nil;
 
 + (NSString *)captureTokenUrlWithMergeToken:(NSString *)mergeToken
 {
-    /**
-    * client_id
-    * locale
-    * response_type
-    * redirect_uri
-    * token
-    * attributeUpdates
-    * thin_registration
-    * flow_name
-    */
-
     JRCaptureData *captureData = [JRCaptureData sharedCaptureData];
     NSString *redirectUri = [singleton redirectUri];
     NSString *thinReg = [JRCaptureData sharedCaptureData].captureEnableThinRegistration ? @"true" : @"false";
@@ -190,7 +179,7 @@ static JRCaptureData *singleton = nil;
                     @"refresh_secret" : [self generateAndStoreRefreshSecret],
             }];
 
-    if (captureData.captureFlowName) [urlArgs setObject:captureData.captureFlowName forKey:@"flow_name"];
+    if (captureData.captureFlowName) [urlArgs setObject:captureData.captureFlowName forKey:@"flow"];
     if ([captureData downloadedFlowVersion])
         [urlArgs setObject:[captureData downloadedFlowVersion] forKey:@"flow_version"];
     if (captureData.bpChannelUrl) [urlArgs setObject:captureData.bpChannelUrl forKey:@"bp_channel"];
