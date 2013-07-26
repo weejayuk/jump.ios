@@ -1256,7 +1256,7 @@ or opacity of our rounded rectangle. */
     [self.cachedProfilePics removeObjectForKey:selectedProvider.name];
     [self.alreadyShared removeObject:provider];
 
-    [self.loggedInUser release], self.loggedInUser = nil;
+    self.loggedInUser = nil;
 
     [self showUserAsLoggedIn:NO];
     [self showActivityAsShared:NO];
@@ -1450,8 +1450,7 @@ or opacity of our rounded rectangle. */
     [self updatePreviewTextWhenContentReplacesAction];
 
     /* Determine if the activity has rich data (media, a title, or a description) or not */
-    if ((!self.currentActivity.resourceTitle || [self.currentActivity.resourceTitle isEqualToString:@""]) &&
-            (!self.currentActivity.resourceDescription || [self.currentActivity.resourceDescription isEqualToString:@""]) &&
+    if (![self.currentActivity.resourceTitle length] && (![self.currentActivity.resourceDescription length]) &&
             ([self.currentActivity.media count] == 0 || self.mediaThumbnailFailedToDownload))
         self.activityHasRichData = NO;
     else
@@ -1470,9 +1469,10 @@ or opacity of our rounded rectangle. */
     /* Set up the default coordinates for the title and description and default height of the media box */
     CGFloat title_x = 46.0, title_y = 5.0, title_w = 224.0, title_h = 15.0;
     CGFloat descr_x = 46.0, descr_y = 22.0, descr_w = 224.0, descr_h = 56.0;
-    self.mediaBoxHeight = 48.0; /* This is the minimum height of the media box needed for the media thumbnail and padding
-                              If the title and descr are large enough, this size grows, and if there is no media
-                              and the title and descr are small, it shrinks. */
+
+    /* This is the minimum height of the media box needed for the media thumbnail and padding If the title and descr
+    are large enough, this size grows, and if there is no media and the title and descr are small, it shrinks. */
+    self.mediaBoxHeight = 48.0;
 
     /* If we have media, and downloading its thumbnail hasn't failed, download it */
     if ([self.currentActivity.media count] > 0 && !self.mediaThumbnailFailedToDownload)
@@ -2103,10 +2103,9 @@ or opacity of our rounded rectangle. */
     DLog(@"");
 
     [selectedProvider release];
-    [self.loggedInUser release];
-    [self.currentActivity release];
-    [self.customInterface release];
-    //[colorsDictionary release];
+    self.loggedInUser = nil;
+    self.currentActivity = nil;
+    self.customInterface = nil;
     [myBackgroundView release];
     [myTabBar release];
     [myLoadingLabel release];
@@ -2141,9 +2140,9 @@ or opacity of our rounded rectangle. */
     [mySharedCheckMark release];
     [mySharedLabel release];
     [mySignOutButton release];
-    [self.cachedProfilePics release];
-    [self.alreadyShared release];
-    [self.titleView release];
+    self.cachedProfilePics = nil;
+    self.alreadyShared = nil;
+    self.titleView = nil;
 
     [_timer release];
     [_shortenedActivityUrl release];

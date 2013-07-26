@@ -55,52 +55,24 @@
 @end
 
 @interface JRAuthenticatedUser : NSObject <NSCoding>
-{
-    NSString *_photo;
-    NSString *_displayName;
-    NSString *_preferredUsername;
-    NSString *_deviceToken;
-    NSString *_providerName;
-    NSString *_welcomeString;
-}
-@property(readonly) NSString *photo;
-@property(readonly) NSString *displayName;
-@property(readonly) NSString *preferredUsername;
-@property(readonly) NSString *deviceToken;
-@property(readonly) NSString *providerName;
-@property(copy) NSString *welcomeString;
+@property(nonatomic, readonly) NSString *photo;
+@property(nonatomic, readonly) NSString *displayName;
+@property(nonatomic, readonly) NSString *preferredUsername;
+@property(nonatomic, readonly) NSString *deviceToken;
+@property(nonatomic, readonly) NSString *providerName;
+@property(nonatomic, copy) NSString *welcomeString;
 @end
 
 @interface JRProvider : NSObject <NSCoding>
-{
-    NSString *_name;
-
-    NSString *_friendlyName;
-    NSString *_placeholderText;
-    NSString *_shortText;
-    BOOL _requiresInput;
-
-    NSString *_openIdIdentifier; // already URL encoded
-    NSString *_relativeUrl;
-    BOOL _forceReauth;
-
-    NSString *_userInput;
-
-    NSDictionary *_socialSharingProperties;
-    BOOL _social;
-
-    NSArray *_cookieDomains;
-}
-
-@property(readonly) NSString *name;
-@property(readonly) NSString *friendlyName;
-@property(readonly) NSString *shortText;
-@property(readonly) NSString *placeholderText;
-@property(readonly) BOOL requiresInput;
-@property BOOL forceReauth;
-@property(retain) NSString *userInput;
-@property(readonly) NSDictionary *socialSharingProperties;
-@property(readonly) NSArray *cookieDomains;
+@property(nonatomic, readonly) NSString *name;
+@property(nonatomic, readonly) NSString *friendlyName;
+@property(nonatomic, readonly) NSString *shortText;
+@property(nonatomic, readonly) NSString *placeholderText;
+@property(nonatomic, readonly) BOOL requiresInput;
+@property(nonatomic) BOOL forceReauth;
+@property(nonatomic, retain) NSString *userInput;
+@property(nonatomic, readonly) NSDictionary *socialSharingProperties;
+@property(nonatomic, readonly) NSArray *cookieDomains;
 @property(nonatomic, retain) NSString *customUserAgentString;
 @property(nonatomic) BOOL usesPhoneUserAgentString;
 @property(nonatomic, retain) NSString *samlName;
