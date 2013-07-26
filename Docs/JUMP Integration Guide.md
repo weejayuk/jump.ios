@@ -65,6 +65,15 @@ Basic use flow:
        **Warning** If you do set the write_with_token access schema for your API client to include the attributes your
        client will write to in its write access schema you will receive `missing attribute` errors when attempting
        to update attributes.
+
+       asldkfjasldkfjalkdsfjlaskdfj you can't do this from the dashboard
+       elaborate on the assumptions that I am making of the audience WRT what the purpose of the integration and
+       therefore *why* they would want to write / set a write schema
+
+       maybe talk about what attributes are suitable / profile edit API
+
+       clarify that the adding to xcode guide needs to come first
+
 4. Discover your flow settings:
     Ask your deployment engineer for:
         * The name of the Capture "flow" you should use
@@ -80,6 +89,8 @@ Basic use flow:
 SDK.
 
 ## Generating the Capture User Model
+
+TODO DELETE THIS OR THE COPY IN THE XCODE GUIDE
 
 1. Make sure that perl is installed on your system. If it is not, consider using MacPorts or Homebrew to install perl.
 2. With perl installed, install cpanm `sudo cpan App::cpanminus`
@@ -128,7 +139,7 @@ object that manages your application's state model.
 2. Modify your class's interface declaration to declare conformation to the protocol. (All of the messages of the
    protocol are optional.) So, for example, start your AppDelegate's interface declaration like this:
 
-        @interface AppDelegate : UIResponder <JRCaptureSigninDelegate>
+        @interface AppDelegate : UIResponder <UIApplicationDelegate, JRCaptureDelegate>
 
 3. Add a `JRCaptureUser *` property to your class's interface declaration:
 
@@ -142,6 +153,8 @@ object that manages your application's state model.
 
 To configure the library, pass your configuration settings to the initializer method. Copy and paste this block to get
 started:
+
+TODO DESCRIBE CALLING THIS FROM APPLICATIONDIDFINISHLAUNCHING
 
         ... // Your existing initialization logic here
 
@@ -175,7 +188,9 @@ started:
 To start the authentication and sign-in flow, send the `startEngageSignInDialogForDelegate:` message to the `JRCapture`
 class:
 
-    [JRCapture startEngageSignInDialogForDelegate:self];
+TODO DESCRIBE RUNNING THIS FROM VIEW CONTROLLER AND USING APP DELEGATE AS CAPTURE DELEGATE
+
+    [JRCapture startEngageSignInForDelegate:self];
 
 This starts the Engage user authentication flow, the result of which is used to sign-in to Capture. Once a user is
 signed in, the library instantiates a user model object (an instance of `JRCaptureUser`.)

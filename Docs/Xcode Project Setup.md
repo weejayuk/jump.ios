@@ -1,4 +1,6 @@
-First, get the library.
+# Xcode Project Integration Guide
+
+This guide describes the process of integrating the JUMP SDK into an existing Xcode project.
 
 ## Get the Library
 
@@ -12,6 +14,7 @@ If you haven't already, clone the JUMP for iOS library from GitHub: `git clone g
 2. Make sure that the **Project Navigator** pane is showing. (**View > Navigators > Show Project Navigator**)
 3. Open the **Finder** and navigate to the location where you cloned the repository. Drag the **Janrain**
    folder into your Xcode project’s **Project Navigator** pane, and drop it below the root project node.
+
    **Warning**: Do not drag the `jump.ios` folder into your project, drag the `Janrain` folder in.
 4. In the dialog, do **not** check the **Copy items into destination group’s folder (if needed)** box. Ensure that the
    **Create groups for any added folders** radio button is selected, and that the **Add to targets** check box is
@@ -23,26 +26,13 @@ If you haven't already, clone the JUMP for iOS library from GitHub: `git clone g
    project. As the **MessageUI** framework is not available on all iOS devices and versions, you must designate the
    framework as "optional."
 
-### Framworks:
+### Frameworks:
 
 * Security - This framework is used to store session tokens in the devices security framework so that they are stored
   securely.
 * QuartCore - This framework is used for animations when running on the iPad.
 * MessageUI - This framework is used to integrate with the iOS device's native SMS and email capabilities, to allow
   your end-user's to share your content via email or SMS.
-
-## Working with ARC
-
-The JUMP for iOS library does not, itself, use Automatic Reference Counting
-([ARC](http://developer.apple.com/library/ios/#releasenotes/ObjectiveC/RN-TransitioningToARC/Introduction/Introduction.html#//apple_ref/doc/uid/TP40011226-CH1-SW13)),
-but you can add the library to a project that does by disabling ARC for the JUMP library. To do so:
-
-1. Go to your project settings, select your application’s target, and select the **Build Phases** tab.
-2. Expand the section named **Compile Sources**.
-3. Select all the files from the **Janrain** folder, including `SFHFKeychainUtils.m`
-4. Press **Return** to edit all the files at once, and, in the floating text-box, add the `-fno-objc-arc` compiler
-   flag.
-5. After adding the compiler flag, either click **Done** in the input bubble, or press Return.
 
 ## Generating the Capture User Model
 
@@ -75,6 +65,9 @@ Once you have downloaded your schema, you will need to run it through the perl s
 2. Change into the script directory:  `$ cd jump.ios/Janrain/JRCapture/Script`
 3. Run the `CaptureSchemaParser.pl` script, passing in your Capture schema as an argument with the `-f` flag and the
    path to your Xcode project with the -o flag, as shown here:
+
+   **Warning** `CaptureSchemaParser.pl` must be executed while from its directory.
+
 `$ ./CaptureSchemaParser.pl -f PATH_TO_YOUR_SCHEMA.JSON -o PATH_TO_YOUR_XCODE_PROJECT_DIRECTORY`
 
 The script writes its output to:
@@ -87,17 +80,26 @@ That directory contains the Janrain Capture user record model for your iOS appli
 
 Follow these steps to add the generated Capture User Model to your project.
 
-1. If you have already added the JUMP for iOS library source code to your Xcode project, remove the project group
-   which contains the generated user model first (select **Remove References** when prompted, do not move the files to
-   the trash).
-2. Now, choose **File** > **Add Files to "Your Project Name"...** then select the folder containing the generated user
-   model, then ensure that the **Destination** checkbox (**Copy items into Destination group's folder**) is not
-   checked.
-3. Click **Add**.
-4. Follow the instructions for disabling ARC above, for the project group that you just added.
-5. Make sure that your project builds.
+1. Choose **File** > **Add Files to "Your Project Name"...** then select the folder containing the generated user
+   model.
+2. Click **Add**.
+3. Make sure that your project builds.
 
-## Upgrading the Library from a Previous Version
+## Working with ARC
+
+The JUMP for iOS library does not, itself, use Automatic Reference Counting
+([ARC](http://developer.apple.com/library/ios/#releasenotes/ObjectiveC/RN-TransitioningToARC/Introduction/Introduction.html#//apple_ref/doc/uid/TP40011226-CH1-SW13)),
+but you can add the library to a project that does by disabling ARC for the JUMP library. To do so:
+
+1. Go to your project settings, select your application’s target, and select the **Build Phases** tab.
+2. Expand the section named **Compile Sources**.
+3. Select all the files from the **Janrain** folder, including `SFHFKeychainUtils.m`
+   Also select the generated user model files, if you added them.
+4. Press **Return** to edit all the files at once, and, in the floating text-box, add the `-fno-objc-arc` compiler
+   flag.
+5. After adding the compiler flag, either click **Done** in the input bubble, or press Return.
+
+## Upgrading from an Earlier Version of the JUMP SDK
 
 To update the library references in Xcode, remove the JREngage group and re-add it.
 
