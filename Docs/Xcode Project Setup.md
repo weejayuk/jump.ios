@@ -1,6 +1,6 @@
-# Xcode Project Integration Guide
+# Xcode Project Setup Guide
 
-This guide describes the process of integrating the JUMP SDK into an existing Xcode project.
+This guide guides you through integrating the JUMP SDK into an existing Xcode project.
 
 ## Get the Library
 
@@ -37,59 +37,51 @@ If you haven't already, clone the JUMP for iOS library from GitHub: `git clone g
 ## Generating the Capture User Model
 
 **Warning**: If you are integrating with social-sign-in-only (i.e. Engage-only), or integrating via the Phonegap
-plugin, you do not generate the Capture User Model. Instead, proceed to `Engage-Only Integration Guide.md`.
+plugin, you do not generate the Capture user model. Instead, follow `Engage-Only Integration Guide.md`.
 
 You will need the [JSON](http://search.cpan.org/~makamaka/JSON-2.53/lib/JSON.pm (version 2.53 or above) perl module. To
 install the perl JSON module:
 
-1. Make sure that perl is installed on your system. Open a command terminal and type `perl -v`. If perl is installed
-   it will report the installed version. If it is not installed, consider using [MacPorts](http://www.macports.org) or
-   [Homebrew](http://mxcl.github.io/homebrew/) to install it.
-2. After you install perl you will need to install cpanminus. Go [here](http://www.cpan.org/modules/INSTALL.html), and
-   follow the instructions to install cpanminus (typically `sudo cpan App::cpanminus`).
-3. Once cpanminus is installed, use cpanminus to install the JSON module, `sudo cpanm JSON`
+1. Make sure that perl is installed on your system. If it is not, consider using MacPorts or Homebrew to install perl.
+2. With perl installed, install cpanm: `sudo cpan App::cpanminus`
+3. Install the JSON perl module by running `sudo cpanm Module::JSON`
 
 Once you have the perl JSON module installed you will run the schema parsing perl script to generate the Capture user
 model:
 
-1. Go to the Capture dashboard, and sign-in.
+1. Go to the Capture dashboard, and sign-in. (https://janraincapture.com)
 2. Use the **App** drop-down menu to select your Capture app.
 3. Select the **Schema** tab.
 4. Use the Entity Types drop-down menu to select the correct schema. Wait for the page to reload. (If you are already
    on the correct schema, the page will not reload.)
 5. Click **Download schema**.
 
-Once you have downloaded your schema, you will need to run it through the perl script:
+With the schema downloaded, generate the user model:
 
-1. Open a terminal window.
-2. Change into the script directory:  `$ cd jump.ios/Janrain/JRCapture/Script`
-3. Run the `CaptureSchemaParser.pl` script, passing in your Capture schema as an argument with the `-f` flag and the
-   path to your Xcode project with the -o flag, as shown here:
-
+1. Change into the script directory: `$ cd jump.ios/Janrain/JRCapture/Script`
    **Warning** `CaptureSchemaParser.pl` must be executed while from its directory.
+2. Run the `CaptureSchemaParser.pl` script, passing in your Capture schema as an argument with the `-f` flag, and the
+   path to your Xcode project with the `-o` flag:
 
-`$ ./CaptureSchemaParser.pl -f PATH_TO_YOUR_SCHEMA.JSON -o PATH_TO_YOUR_XCODE_PROJECT_DIRECTORY`
+   `$ ./CaptureSchemaParser.pl -f PATH_TO_YOUR_SCHEMA.JSON -o PATH_TO_YOUR_XCODE_PROJECT_DIRECTORY`
 
 The script writes its output to:
 
-`path_to_your_xcode_project_directory/JRCapture/Generated/`
-
-That directory contains the Janrain Capture user record model for your iOS application.
+`PATH_TO_YOUR_XCODE_PROJECT_DIRECTORY/JRCapture/Generated/`
 
 ## Adding the Generated Capture User Model
 
-Follow these steps to add the generated Capture User Model to your project.
+Once generated, the user model must be added to your Xcode project:
 
-1. Choose **File** > **Add Files to "Your Project Name"...** then select the folder containing the generated user
+1. Choose **File** > **Add Files to "Project Name"...** then select the folder containing the generated user
    model.
 2. Click **Add**.
 3. Make sure that your project builds.
 
 ## Working with ARC
 
-The JUMP for iOS library does not, itself, use Automatic Reference Counting
-([ARC](http://developer.apple.com/library/ios/#releasenotes/ObjectiveC/RN-TransitioningToARC/Introduction/Introduction.html#//apple_ref/doc/uid/TP40011226-CH1-SW13)),
-but you can add the library to a project that does by disabling ARC for the JUMP library. To do so:
+The JUMP for iOS library does not, itself, use Automatic Reference Counting, but you can add the library to a project
+that does by disabling ARC when compliling the JUMP library source code. To do so:
 
 1. Go to your project settings, select your application’s target, and select the **Build Phases** tab.
 2. Expand the section named **Compile Sources**.
