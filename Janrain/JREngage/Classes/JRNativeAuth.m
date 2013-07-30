@@ -1,3 +1,37 @@
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ Copyright (c) 2010, Janrain, Inc.
+
+ All rights reserved.
+
+ Redistribution and use in source and binary forms, with or without modification,
+ are permitted provided that the following conditions are met:
+
+ * Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the following disclaimer.
+ * Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation and/or
+   other materials provided with the distribution.
+ * Neither the name of the Janrain, Inc. nor the names of its
+   contributors may be used to endorse or promote products derived from this
+   software without specific prior written permission.
+
+
+ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+ ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+ File:   JRActivityObject.h
+ Author: Lilli Szafranski - lilli@janrain.com, lillialexis@gmail.com
+ Date:   Tuesday, August 24, 2010
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 #import <objc/message.h>
 #import "JRNativeAuth.h"
 #import "debug_log.h"
@@ -13,6 +47,8 @@ static SEL accessTokenDataSel = nil;
 static SEL accessTokenSel = nil;
 static SEL openActiveSessionWithReadPermissionsSel = nil;
 static SEL appIdSel = nil;
+static Class fbErrorUtilityClass = nil;
+static SEL fbErrorCategoryForErrorSel = nil;
 
 + (void)initGlobals
 {
@@ -25,6 +61,8 @@ static SEL appIdSel = nil;
     openActiveSessionWithReadPermissionsSel =
             NSSelectorFromString(@"openActiveSessionWithReadPermissions:allowLoginUI:completionHandler:");
     appIdSel = NSSelectorFromString(@"appID");
+    fbErrorUtilityClass = NSClassFromString(@"FBErrorUtility");
+    fbErrorCategoryForErrorSel = NSSelectorFromString(@"errorCategoryForError:");
 }
 
 + (BOOL)canHandleProvider:(NSString *)provider
@@ -66,8 +104,20 @@ static SEL appIdSel = nil;
                 ^(id session, BOOL status, NSError *error)
                 {
                     DLog(@"session %@ status %i error %@", session, status, error);
-                    id accessToken = [self getAccessToken:session];
-                    [self getAuthInfoTokenForAccessToken:accessToken onProvider:@"facebook" completion:completion];
+                    //error.fberrorCategory == FBErrorCategoryUserCancelled
+                    int t = (int) [fbErrorUtilityClass performSelector:fbErrorCategoryForErrorSel withObject:error];
+                    //FBErrorCategoryUserCancelled                = 6,
+                    if (t == 6)
+                    {
+                        NSError *err = [JREngageError errorWithMessage:@"native fb auth canceled"
+                                                               andCode:JRAuthenticationCanceledError];
+                        completion(err);
+                    }
+                    else
+                    {
+                        id accessToken = [self getAccessToken:session];
+                        [self getAuthInfoTokenForAccessToken:accessToken onProvider:@"facebook" completion:completion];
+                    }
                 };
         objc_msgSend(fbSession, openActiveSessionWithReadPermissionsSel, @[], YES, handler);
     }
@@ -79,8 +129,9 @@ static SEL appIdSel = nil;
     DLog(@"token %@", token);
     if (![token isKindOfClass:[NSString class]])
     {
+        id userInfo = @{@"description":@"invalid token", @"token":[NSValue valueWithPointer:token]};
         NSError *error = [NSError errorWithDomain:JREngageErrorDomain code:JRAuthenticationNativeAuthError
-                                       userInfo:nil];
+                                         userInfo:userInfo];
         DLog(@"Native auth error: %@", error);
         completion(error);
         return;
@@ -88,7 +139,6 @@ static SEL appIdSel = nil;
 
     NSString *url = [[JRSessionData jrSessionData].baseUrl stringByAppendingString:@"/signin/oauth_token"];
     NSDictionary *params = @{@"token" : token, @"provider" : provider};
-
 
     void (^responseHandler)(id, NSError *) = ^(id result, NSError *error)
     {

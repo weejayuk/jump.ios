@@ -108,5 +108,6 @@ typedef enum
 extern NSString * JREngageErrorDomain;
 
 @interface JREngageError : NSObject
++ (NSError *)errorWithMessage:(NSString *)message andCode:(NSInteger)code;
 @end
 /** @}*/

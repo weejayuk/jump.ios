@@ -38,10 +38,6 @@
 #import "JREngageError.h"
 #import "JRNativeAuth.h"
 
-@interface JREngageError (JREngageError_setError)
-+ (NSError *)setError:(NSString *)message withCode:(NSInteger)code;
-@end
-
 @interface JREngage () <JRSessionDelegate>
 /** \internal Class that handles customizations to the library's UI */
 @property (nonatomic, retain) JRUserInterfaceMaestro *interfaceMaestro;
@@ -196,8 +192,8 @@ static JREngage* singleton = nil;
     if (sessionData.dialogIsShowing)
     {
         [self engageDidFailWithError:
-              [JREngageError setError:@"The dialog failed to show because there is already a JREngage dialog loaded."
-                             withCode:JRDialogShowingError]];
+                      [JREngageError errorWithMessage:@"The dialog failed to show because there is already a JREngage dialog loaded."
+                                              andCode:JRDialogShowingError]];
         return;
     }
 
@@ -205,7 +201,7 @@ static JREngage* singleton = nil;
     {
         NSString *message =
                 @"You tried to authenticate on a specific provider, but this provider has not yet been configured.";
-        [self engageDidFailWithError:[JREngageError setError:message withCode:JRProviderNotConfiguredError]];
+        [self engageDidFailWithError:[JREngageError errorWithMessage:message andCode:JRProviderNotConfiguredError]];
         return;
     }
 
@@ -224,8 +220,15 @@ static JREngage* singleton = nil;
     [JRNativeAuth startAuthOnProvider:provider completion:^(NSError *error)
     {
         if (!error) return;
-        [interfaceMaestro startWebAuthWithCustomInterface:customInterfaceOverrides
-                                                 provider:provider];
+        if ([error.domain isEqualToString:JREngageErrorDomain] && error.code == JRAuthenticationCanceledError)
+        {
+            [self authenticationDidCancel];
+        }
+        else
+        {
+            [interfaceMaestro startWebAuthWithCustomInterface:customInterfaceOverrides
+                                                     provider:provider];
+        }
     }];
 }
 
@@ -312,16 +315,16 @@ static JREngage* singleton = nil;
     if (sessionData.dialogIsShowing)
     {
         [self engageDidFailWithError:
-              [JREngageError setError:@"The dialog failed to show because there is already a JREngage dialog loaded."
-                             withCode:JRDialogShowingError]];
+                      [JREngageError errorWithMessage:@"The dialog failed to show because there is already a JREngage dialog loaded."
+                                              andCode:JRDialogShowingError]];
         return;
     }
 
     if (!activity)
     {
         [self engageDidFailWithError:
-              [JREngageError setError:@"Activity object can't be nil."
-                             withCode:JRPublishErrorActivityNil]];
+                      [JREngageError errorWithMessage:@"Activity object can't be nil."
+                                              andCode:JRPublishErrorActivityNil]];
         return;
     }
 

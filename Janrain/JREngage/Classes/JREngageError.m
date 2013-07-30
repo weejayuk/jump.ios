@@ -34,11 +34,11 @@
 NSString *JREngageErrorDomain = @"JREngage.ErrorDomain";
 
 @implementation JREngageError
-+ (NSError*)setError:(NSString*)message withCode:(NSInteger)code
++ (NSError *)errorWithMessage:(NSString *)message andCode:(NSInteger)code
 {
     ALog (@"An error occured (%d): %@", code, message);
     NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-                              [NSString stringWithString:message], NSLocalizedDescriptionKey, nil];
+                                                   [NSString stringWithString:message], NSLocalizedDescriptionKey, nil];
 
     return [[[NSError alloc] initWithDomain:JREngageErrorDomain
                                        code:code

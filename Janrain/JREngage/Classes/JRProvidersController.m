@@ -41,6 +41,7 @@
 #import "JRUserLandingController.h"
 #import "JRWebViewController.h"
 #import "JRNativeAuth.h"
+#import "JREngageError.h"
 
 @interface UITableViewCellProviders : UITableViewCell
 @end
@@ -505,14 +506,21 @@
         [JRNativeAuth startAuthOnProvider:provider.name completion:^(NSError *e) {
             if (e)
             {
-                [UIView animateWithDuration:0.3 animations:^() {
-                    myTableView.hidden = NO;
-                    [myActivitySpinner setHidden:YES];
-                    [myLoadingLabel setHidden:YES];
-                    [myActivitySpinner stopAnimating];
-                }];
+                if ([e.domain isEqualToString:JREngageErrorDomain] && e.code == JRAuthenticationCanceledError)
+                {
+                    [sessionData triggerAuthenticationDidCancel];
+                }
+                else
+                {
+                    [UIView animateWithDuration:0.3 animations:^() {
+                        myTableView.hidden = NO;
+                        [myActivitySpinner setHidden:YES];
+                        [myLoadingLabel setHidden:YES];
+                        [myActivitySpinner stopAnimating];
+                    }];
 
-                [self startWebViewAuthOnProvider:provider];
+                    [self startWebViewAuthOnProvider:provider];
+                }
             }
         }];
     }

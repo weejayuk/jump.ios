@@ -30,6 +30,19 @@ and the Facebook iOS SDK must be configured to use the same "Facebook applicatio
 
 Make sure that you use the same Facebook app ID as is configured in your Engage application's dashboard.
 
+### Ensure the Linker Does Not Discard The Symbols
+
+If the symbols used in the Facebook SDK are not directly referenced by the host application they will be disacarded
+by the linker. (The JUMP SDK does not reference them directly.)
+
+To ensure that the symbols won't be discarded add a reference to them in your AppDelegate:
+
+    #import "FacebookSDK/FacebookSDK.h"
+
+    // ...
+
+        FBSession *linkerGuard = FBSession.activeSession;
+
 ## Begin Sign-In or Authentication
 
 Start authentication or sign-in as normal (described in `JUMP Integration Guide.md` and

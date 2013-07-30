@@ -44,7 +44,7 @@
 //        "AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8J2 Safari/6533.18.5";
 
 @interface JREngageError (JREngageError_setError)
-+ (NSError*)setError:(NSString*)message withCode:(NSInteger)code;
++ (NSError*)errorWithMessage:(NSString *)message andCode:(NSInteger)code;
 @end
 
 @interface JRWebViewController ()
@@ -166,8 +166,8 @@
 
     if (!sessionData.currentProvider)
     {
-        NSError *error = [JREngageError setError:@"There was an error authenticating with the selected provider."
-                                        withCode:JRAuthenticationFailedError];
+        NSError *error = [JREngageError errorWithMessage:@"There was an error authenticating with the selected provider."
+                                                 andCode:JRAuthenticationFailedError];
 
         [sessionData triggerAuthenticationDidFailWithError:error];
 
@@ -312,8 +312,9 @@
 
         if(!payloadDict)
         {
-            NSError *error = [JREngageError setError:[NSString stringWithFormat:@"Authentication failed: %@", payload]
-                                            withCode:JRAuthenticationFailedError];
+            NSError *error = [JREngageError errorWithMessage:[NSString stringWithFormat:@"Authentication failed: %@",
+                                                                                        payload]
+                                                     andCode:JRAuthenticationFailedError];
 
             UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Log In Failed"
                                                              message:@"An error occurred while attempting to sign you "
@@ -383,16 +384,18 @@
             else if ([((NSString*)[((NSDictionary*)[payloadDict objectForKey:@"rpx_result"]) objectForKey:@"error"])
                     isEqualToString:@"Please enter your OpenID"])
             {
-                NSError *error = [JREngageError setError:[NSString stringWithFormat:@"Authentication failed: %@", payload]
-                                                withCode:JRAuthenticationFailedError];
+                NSError *error = [JREngageError errorWithMessage:[NSString stringWithFormat:@"Authentication failed: %@",
+                                                                                            payload]
+                                                         andCode:JRAuthenticationFailedError];
 
                 userHitTheBackButton = NO; /* Because authentication failed for whatever reason. */
                 [sessionData triggerAuthenticationDidFailWithError:error];
             }
             else
             {
-                NSError *error = [JREngageError setError:[NSString stringWithFormat:@"Authentication failed: %@", payload]
-                                                withCode:JRAuthenticationFailedError];
+                NSError *error = [JREngageError errorWithMessage:[NSString stringWithFormat:@"Authentication failed: %@",
+                                                                                            payload]
+                                                         andCode:JRAuthenticationFailedError];
 
                 UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Log In Failed"
                                                                  message:@"An error occurred while attempting to sign you in.  Please try again."
@@ -488,9 +491,9 @@
     {
         [self stopProgress];
 
-        NSError *newError = [JREngageError setError:[NSString stringWithFormat:@"Authentication failed: %@",
-                                                              [error localizedDescription]]
-                                           withCode:JRAuthenticationFailedError];
+        NSError *newError = [JREngageError errorWithMessage:[NSString stringWithFormat:@"Authentication failed: %@",
+                                                                                       [error localizedDescription]]
+                                                    andCode:JRAuthenticationFailedError];
 
         UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Log In Failed"
                                                          message:@"An error occurred while attempting to sign you in.  Please try again."

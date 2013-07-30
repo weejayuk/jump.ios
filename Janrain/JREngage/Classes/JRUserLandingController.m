@@ -47,7 +47,7 @@
 //#define frame_a(a) frame_x(a), frame_y(a), frame_w(a), frame_h(a)
 
 @interface JREngageError (JREngageError_setError)
-+ (NSError*)setError:(NSString*)message withCode:(NSInteger)code;
++ (NSError*)errorWithMessage:(NSString *)message andCode:(NSInteger)code;
 @end
 
 @interface JRUserLandingController ()
@@ -138,8 +138,8 @@
 
     if (!sessionData.currentProvider)
     {
-        NSError *error = [JREngageError setError:@"There was an error authenticating with the selected provider."
-                                        withCode:JRAuthenticationFailedError];
+        NSError *error = [JREngageError errorWithMessage:@"There was an error authenticating with the selected provider."
+                                                 andCode:JRAuthenticationFailedError];
 
         [sessionData triggerAuthenticationDidFailWithError:error];
 

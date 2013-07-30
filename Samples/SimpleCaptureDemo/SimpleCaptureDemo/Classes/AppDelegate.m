@@ -28,6 +28,7 @@
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+//#import <FacebookSDK/FacebookSDK.h>
 #import "AppDelegate.h"
 #import "JRCapture.h"
 #import "BackplaneUtils.h"
@@ -111,6 +112,9 @@ captureTraditionalRegistrationFormName:captureTraditionalRegistrationFormName
     {
         self.captureUser = [NSKeyedUnarchiver unarchiveObjectWithData:archivedCaptureUser];
     }
+
+    //FBSession *t = [FBSession activeSession];
+    //DLog(@"%@", t);
 
     return YES;
 }
