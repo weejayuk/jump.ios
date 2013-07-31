@@ -101,9 +101,10 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Lxu-X3-tcS">
                                 <rect key="frame" x="20" y="217" width="280" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.0" green="0.35294118523597717" blue="0.458823561668396" alpha="1" colorSpace="deviceRGB"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Sharing Dialog">
-                                    <color key="titleColor" red="0.027450980619999999" green="0.27843138579999999" blue="0.39215686919999998" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="0.0" green="0.35294118523597717" blue="0.458823561668396" alpha="1" colorSpace="deviceRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <state key="highlighted">
@@ -122,14 +123,29 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Direct Traditional Sign-In">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="0.027450980619999999" green="0.27843138579999999" blue="0.39215686919999998" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="directTradAuthButtonPressed:" destination="2" eventType="touchUpInside" id="fc4-Su-QOV"/>
+                                    <action selector="tradAuthButtonPressed:" destination="2" eventType="touchUpInside" id="h8B-BN-B7L"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="FmY-Nl-bUq">
+                                <rect key="frame" x="20" y="251" width="280" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Direct Facebook Sign-In">
+                                    <color key="titleColor" red="0.027450980619999999" green="0.27843138579999999" blue="0.39215686919999998" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="facebookAuthButtonPressed:" destination="2" eventType="touchUpInside" id="XLo-Yd-MxK"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -140,6 +156,7 @@
                         <outlet property="browseButton" destination="Sdc-xo-ZC1" id="3Sx-RY-vcP"/>
                         <outlet property="currentUserLabel" destination="Hq8-yJ-Rmg" id="hGr-bA-Zvn"/>
                         <outlet property="currentUserProviderIcon" destination="PZq-1X-zH2" id="vdO-gn-iv0"/>
+                        <outlet property="directFacebookAuthButton" destination="FmY-Nl-bUq" id="ocV-yU-NfD"/>
                         <outlet property="formButton" destination="3Ab-Cb-7AE" id="ewh-dj-wSs"/>
                         <outlet property="refreshButton" destination="9l8-Zj-RBh" id="FEg-vq-zM3"/>
                         <outlet property="shareButton" destination="Lxu-X3-tcS" id="6WO-eE-sYh"/>
@@ -178,15 +195,17 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/RootViewController.h"/>
             <relationships>
                 <relationship kind="action" name="browseButtonPressed:"/>
-                <relationship kind="action" name="directTradAuthButtonPressed:"/>
+                <relationship kind="action" name="facebookAuthButtonPressed:"/>
                 <relationship kind="action" name="shareButtonPressed:"/>
                 <relationship kind="action" name="signInButtonPressed:"/>
                 <relationship kind="action" name="signOutButtonPressed:"/>
                 <relationship kind="action" name="thirdButtonPressed:"/>
+                <relationship kind="action" name="tradAuthButtonPressed:"/>
                 <relationship kind="action" name="updateButtonPressed:"/>
                 <relationship kind="outlet" name="browseButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="currentUserLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="currentUserProviderIcon" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="directFacebookAuthButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="formButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="refreshButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="shareButton" candidateClass="UIButton"/>

@@ -36,6 +36,10 @@
 #import "JRSessionData.h"
 #import "JRCaptureData.h"
 
+#ifdef JR_FACEBOOK_TEST
+#  import "FacebookSDK/FacebookSDK.h"
+#endif
+
 @interface JRSessionData (Internal)
 + (void)setServerUrl:(NSString *)serverUrl_;
 @end
@@ -113,11 +117,20 @@ captureTraditionalRegistrationFormName:captureTraditionalRegistrationFormName
         self.captureUser = [NSKeyedUnarchiver unarchiveObjectWithData:archivedCaptureUser];
     }
 
-    //FBSession *t = [FBSession activeSession];
-    //DLog(@"%@", t);
+#   ifdef JR_FACEBOOK_TEST
+        FBSession *t = [FBSession activeSession];
+#   endif
 
     return YES;
 }
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation
+{
+    [FBSession.activeSession handleOpenURL:url];
+}
+
+
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
@@ -142,7 +155,7 @@ captureTraditionalRegistrationFormName:captureTraditionalRegistrationFormName
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-
+    [FBSession.activeSession handleDidBecomeActive];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

@@ -74,8 +74,6 @@
     self.title = @"DEMO";
     [self.refreshButton setTitle:@"Refresh Access Token" forState:UIControlStateNormal];
     [self.browseButton setTitle:@"Dump User To Log" forState:UIControlStateNormal];
-    //refreshButton.hidden = NO;
-    //[refreshButton setTitle:@"Share" forState:UIControlStateNormal];
 
     if (!disableOverride)
     {
@@ -90,6 +88,7 @@
         self.refreshButton.hidden = NO;
         self.signInButton.hidden = YES;
         self.tradAuthButton.hidden = YES;
+        self.directFacebookAuthButton.hidden = YES;
         self.signOutButton.hidden = NO;
         self.shareButton.hidden = NO;
 
@@ -104,6 +103,7 @@
         self.refreshButton.hidden = YES;
         self.signInButton.hidden = NO;
         self.tradAuthButton.hidden = NO;
+        self.directFacebookAuthButton.hidden = NO;
         self.signOutButton.hidden = YES;
         self.shareButton.hidden = YES;
 
@@ -202,15 +202,33 @@
 
 - (IBAction)signInButtonPressed:(id)sender
 {
+    [self startSignInForProvider:nil];
+}
+
+- (IBAction)facebookAuthButtonPressed:(id)sender
+{
+    [self startSignInForProvider:@"facebook"];
+}
+
+- (void)startSignInForProvider:(NSString *)provider
+{
     self.currentUserProviderIcon.image = nil;
 
     [self signOutCurrentUser];
 
-    [JRCapture startEngageSignInDialogWithTraditionalSignIn:JRTraditionalSignInEmailPassword
-                                andCustomInterfaceOverrides:self.customUi forDelegate:self];
+    if (provider)
+    {
+        [JRCapture startEngageSignInDialogOnProvider:provider withCustomInterfaceOverrides:self.customUi
+                                         forDelegate:self];
+    }
+    else
+    {
+        [JRCapture startEngageSignInDialogWithTraditionalSignIn:JRTraditionalSignInEmailPassword
+                                    andCustomInterfaceOverrides:self.customUi forDelegate:self];
+    }
 }
 
-- (IBAction)directTradAuthButtonPressed:(id)sender
+- (IBAction)tradAuthButtonPressed:(id)sender
 {
     [self performTradAuthWithMergeToken:nil];
 }
@@ -462,6 +480,7 @@
 
 - (void)viewDidUnload {
     [self setTradAuthButton:nil];
+    [self setDirectFacebookAuthButton:nil];
     [super viewDidUnload];
 }
 @end
