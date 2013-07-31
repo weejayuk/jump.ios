@@ -101,7 +101,6 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Lxu-X3-tcS">
                                 <rect key="frame" x="20" y="217" width="280" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.0" green="0.35294118523597717" blue="0.458823561668396" alpha="1" colorSpace="deviceRGB"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Sharing Dialog">
                                     <color key="titleColor" red="0.0" green="0.35294118523597717" blue="0.458823561668396" alpha="1" colorSpace="deviceRGB"/>
