@@ -1,3 +1,6 @@
+v3.2.13
+ - Emits less logging, adds support for a JR_NO_RELEASE_LOGGING #define to disable
+   error logging. Eliminates some compiler warnings from logging macros.
 v3.2.12
  - Fixes flow name parameter name, previously had relied on defaul_flow_name setting in
    the dashboard for operation when a flow-name had been set.
