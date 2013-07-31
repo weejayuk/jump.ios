@@ -77,7 +77,6 @@
 		C1424E3B144EDDE0ABA1E0E7 /* AlertViewWithBlocks.m in Sources */ = {isa = PBXBuildFile; fileRef = C1424FEDA9B53C3B9EE9AB6E /* AlertViewWithBlocks.m */; };
 		C1424EE3FA47A4163FC6BB09 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1424E26376A97DCC6454072 /* Security.framework */; };
 		D806D1B616A7638E008EEF96 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = D806D1B516A7638E008EEF96 /* assets */; };
-		DF0F92DE17A9927C0079B5E9 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF0F92DD17A9927C0079B5E9 /* FacebookSDK.framework */; };
 		DF315E8E17A988E100703C83 /* JRConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DF315E8917A988E100703C83 /* JRConnectionManager.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		DF315E8F17A988E100703C83 /* NSDictionary+JRQueryParams.m in Sources */ = {isa = PBXBuildFile; fileRef = DF315E8B17A988E100703C83 /* NSDictionary+JRQueryParams.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		DF315E9017A988E100703C83 /* NSMutableURLRequest+JRRequestUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = DF315E8D17A988E100703C83 /* NSMutableURLRequest+JRRequestUtils.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -403,7 +402,6 @@
 		C1424E26376A97DCC6454072 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		C1424FEDA9B53C3B9EE9AB6E /* AlertViewWithBlocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlertViewWithBlocks.m; path = Classes/AlertViewWithBlocks.m; sourceTree = "<group>"; };
 		D806D1B516A7638E008EEF96 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = SOURCE_ROOT; };
-		DF0F92DD17A9927C0079B5E9 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../../../Documents/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 		DF315E8817A988E100703C83 /* JRConnectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRConnectionManager.h; sourceTree = "<group>"; };
 		DF315E8917A988E100703C83 /* JRConnectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRConnectionManager.m; sourceTree = "<group>"; };
 		DF315E8A17A988E100703C83 /* NSDictionary+JRQueryParams.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+JRQueryParams.h"; sourceTree = "<group>"; };
@@ -647,7 +645,6 @@
 				C1424EE3FA47A4163FC6BB09 /* Security.framework in Frameworks */,
 				C1424348AA5C311E306A242D /* MessageUI.framework in Frameworks */,
 				C142424E43DA098E32674AE7 /* QuartzCore.framework in Frameworks */,
-				DF0F92DE17A9927C0079B5E9 /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -748,7 +745,6 @@
 		90C36B6B7717AA0C893E08DC = {
 			isa = PBXGroup;
 			children = (
-				DF0F92DD17A9927C0079B5E9 /* FacebookSDK.framework */,
 				DFB68871175E8E6C006DFC92 /* Janrain */,
 				90C36B6B7717AA0C893E08DD /* Products */,
 				90C36B6B7717AA0C893E08E8 /* Frameworks */,
@@ -1798,7 +1794,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SimpleCaptureDemo/SimpleCaptureDemo-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = "JR_FACEBOOK_TEST=1";
+				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "SimpleCaptureDemo/SimpleCaptureDemo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
@@ -1826,10 +1822,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SimpleCaptureDemo/SimpleCaptureDemo-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"JR_FACEBOOK_TEST=1",
-					"DEBUG=1",
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = "DEBUG=1";
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "SimpleCaptureDemo/SimpleCaptureDemo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
@@ -1916,7 +1909,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SimpleCaptureDemo/SimpleCaptureDemo-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = "JRCAPTURE_CONVENTIONAL_SIGNIN=1";
+				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "SimpleCaptureDemo/SimpleCaptureDemo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;

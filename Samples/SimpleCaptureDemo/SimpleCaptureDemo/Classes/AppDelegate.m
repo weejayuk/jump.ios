@@ -127,7 +127,9 @@ captureTraditionalRegistrationFormName:captureTraditionalRegistrationFormName
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation
 {
-    [FBSession.activeSession handleOpenURL:url];
+#   ifdef JR_FACEBOOK_TEST
+        [FBSession.activeSession handleOpenURL:url];
+#   endif
 }
 
 
@@ -155,7 +157,9 @@ captureTraditionalRegistrationFormName:captureTraditionalRegistrationFormName
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    [FBSession.activeSession handleDidBecomeActive];
+#   ifdef JR_FACEBOOK_TEST
+        [FBSession.activeSession handleDidBecomeActive];
+#   endif
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
