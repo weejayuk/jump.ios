@@ -46,7 +46,6 @@ AppDelegate *appDelegate;
 @property(strong) JRCaptureUser *captureUser;
 @property BOOL isNotYetCreated;
 @property(strong) NSString *currentProvider;
-//@property BOOL engageSignInWasCanceled;
 @property(nonatomic, strong) NSString *captureClientId;
 @property(nonatomic, strong) NSString *captureDomain;
 @property(nonatomic, strong) NSString *captureLocale;

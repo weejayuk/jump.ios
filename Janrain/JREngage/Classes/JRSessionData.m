@@ -239,9 +239,9 @@ static NSString *applicationBundleDisplayName()
 
 #pragma mark JRProvider
 @interface JRProvider ()
-@property (readonly) BOOL      social;
-@property (readonly) NSString *openIdIdentifier; // already URL encoded
-@property (readonly) NSString *relativeUrl;
+@property (nonatomic, readonly) BOOL      social;
+@property (nonatomic, readonly) NSString *openIdIdentifier; // already URL encoded
+@property (nonatomic, readonly) NSString *relativeUrl;
 - (JRProvider *)initWithName:(NSString *)name andDictionary:(NSDictionary *)dictionary;
 @end
 
@@ -258,7 +258,6 @@ static NSString *applicationBundleDisplayName()
 @synthesize cookieDomains           = _cookieDomains;
 @synthesize customUserAgentString;
 
-- (NSString *)userInput { return _userInput; }
 - (void)setUserInput:(NSString *)userInput
 {
     [userInput retain], [_userInput release];
@@ -269,7 +268,6 @@ static NSString *applicationBundleDisplayName()
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-- (BOOL)forceReauth { return _forceReauth; }
 - (void)setForceReauth:(BOOL)forceReauth
 {
     _forceReauth = forceReauth;

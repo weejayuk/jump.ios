@@ -41,6 +41,7 @@
 - (IBAction)updateButtonPressed:(id)sender;
 - (IBAction)thirdButtonPressed:(id)sender;
 - (IBAction)signInButtonPressed:(id)sender;
+- (IBAction)directTradAuthButtonPressed:(id)sender;
 - (IBAction)signOutButtonPressed:(id)sender;
 - (IBAction)shareButtonPressed:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *shareButton;
@@ -48,8 +49,9 @@
 @property (weak) IBOutlet UIImageView *currentUserProviderIcon;
 @property (weak) IBOutlet UIButton *browseButton;
 @property (weak) IBOutlet UIButton *formButton;
-@property (weak) IBOutlet UIButton *thirdButton;
+@property (weak) IBOutlet UIButton *refreshButton;
 @property (weak) IBOutlet UIButton *signInButton;
 @property (weak) IBOutlet UIButton *signOutButton;
+@property (weak, nonatomic) IBOutlet UIButton *tradAuthButton;
 @property(nonatomic, strong) NSDictionary *customUi;
 @end

@@ -39,6 +39,7 @@
 #import "AppDelegate.h"
 #import "CaptureDynamicForm.h"
 #import "JRCaptureError.h"
+#import "JRCaptureUser+Extras.h"
 #import "JRCaptureObject+Internal.h"
 #import "JRActivityObject.h"
 
@@ -54,22 +55,12 @@
 @end
 
 @implementation RootViewController
-@synthesize viewDidAppearContinuation;
-@synthesize currentUserLabel;
-@synthesize currentUserProviderIcon;
-@synthesize browseButton;
-@synthesize thirdButton;
-@synthesize formButton;
-@synthesize signInButton;
-@synthesize signOutButton;
-@synthesize shareButton;
-@synthesize customUi;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
-    self.customUi =  @{kJRApplicationNavigationController : self.navigationController};
+    self.customUi = @{kJRApplicationNavigationController : self.navigationController};
     [self configureUserLabelAndIcon];
 }
 
@@ -81,48 +72,54 @@
 - (void)configureViewsWithDisableOverride:(BOOL)disableOverride
 {
     self.title = @"DEMO";
-    [thirdButton setTitle:@"Refresh Access Token" forState:UIControlStateNormal];
-    [browseButton setTitle:@"Dump User To Log" forState:UIControlStateNormal];
-    //thirdButton.hidden = NO;
-    //[thirdButton setTitle:@"Share" forState:UIControlStateNormal];
+    [self.refreshButton setTitle:@"Refresh Access Token" forState:UIControlStateNormal];
+    [self.browseButton setTitle:@"Dump User To Log" forState:UIControlStateNormal];
+    //refreshButton.hidden = NO;
+    //[refreshButton setTitle:@"Share" forState:UIControlStateNormal];
 
     if (!disableOverride)
     {
-        thirdButton.enabled = signInButton.enabled = browseButton.enabled = signOutButton.enabled = formButton.enabled
-                = YES;
-        thirdButton.alpha = signInButton.alpha = browseButton.alpha = signOutButton.alpha = formButton.alpha = 1;
+        self.refreshButton.enabled = self.signInButton.enabled = self.browseButton.enabled =
+                self.signOutButton.enabled = self.formButton.enabled = YES;
+        self.refreshButton.alpha = self.signInButton.alpha = self.browseButton.alpha = self.signOutButton.alpha =
+                self.formButton.alpha = 1;
     }
 
     if (appDelegate.captureUser)
     {
-        thirdButton.hidden = NO;
-        signInButton.hidden = YES;
-        signOutButton.hidden = NO;
-        shareButton.hidden = NO;
+        self.refreshButton.hidden = NO;
+        self.signInButton.hidden = YES;
+        self.tradAuthButton.hidden = YES;
+        self.signOutButton.hidden = NO;
+        self.shareButton.hidden = NO;
 
-        formButton.hidden = NO;
-        [formButton setTitle:@"Update" forState:UIControlStateNormal];
+        self.formButton.hidden = NO;
+        [self.formButton setTitle:@"Update" forState:UIControlStateNormal];
 
-        browseButton.enabled = YES; browseButton.alpha = 1;
+        self.browseButton.enabled = YES;
+        self.browseButton.alpha = 1;
     }
     else
     {
-        thirdButton.hidden = YES;
-        signInButton.hidden = NO;
-        signOutButton.hidden = YES;
-        shareButton.hidden = YES;
+        self.refreshButton.hidden = YES;
+        self.signInButton.hidden = NO;
+        self.tradAuthButton.hidden = NO;
+        self.signOutButton.hidden = YES;
+        self.shareButton.hidden = YES;
 
-        formButton.hidden = NO;
-        [formButton setTitle:@"Traditional Registration" forState:UIControlStateNormal];
+        self.formButton.hidden = NO;
+        [self.formButton setTitle:@"Traditional Registration" forState:UIControlStateNormal];
 
-        browseButton.enabled = NO; browseButton.alpha = 0.5;
+        self.browseButton.enabled = NO;
+        self.browseButton.alpha = 0.5;
     }
 
     if (disableOverride)
     {
-        thirdButton.enabled = signInButton.enabled = browseButton.enabled = signOutButton.enabled = formButton.enabled
-                = NO;
-        thirdButton.alpha = signInButton.alpha = browseButton.alpha = signOutButton.alpha = formButton.alpha = 0.5;
+        self.refreshButton.enabled = self.signInButton.enabled = self.browseButton.enabled =
+                self.tradAuthButton.enabled = self.signOutButton.enabled = self.formButton.enabled = NO;
+        self.refreshButton.alpha = self.signInButton.alpha = self.browseButton.alpha = self.signOutButton.alpha =
+                self.tradAuthButton.alpha = self.formButton.alpha = 0.5;
     }
 }
 
@@ -132,9 +129,9 @@
     self.viewIsApparent = YES;
     [self configureUserLabelAndIcon];
     [self configureViewsWithDisableOverride:NO];
-    if (viewDidAppearContinuation)
+    if (self.viewDidAppearContinuation)
     {
-        viewDidAppearContinuation();
+        self.viewDidAppearContinuation();
         self.viewDidAppearContinuation = nil;
     }
 }
@@ -165,7 +162,7 @@
 - (void)showRegistrationForm
 {
     CaptureDynamicForm *viewController = [[CaptureDynamicForm alloc] initWithNibName:nil
-                                                                                        bundle:[NSBundle mainBundle]];
+                                                                              bundle:[NSBundle mainBundle]];
 
     [self.navigationController pushViewController:viewController animated:YES];
 }
@@ -178,8 +175,8 @@
     //                                           backplaneChannel:appDelegate.bpChannelUrl
     //                                                 completion:^(NSString *string, NSError *err)
     //                                                 //{
-                                                     //
-                                                     //}];
+    //
+    //}];
 
 
     [self configureViewsWithDisableOverride:YES];
@@ -188,10 +185,10 @@
 
 - (void)refreshAccessTokenDidFailWithError:(NSError *)error context:(id <NSObject>)context
 {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:[error description]
-                                                               delegate:nil cancelButtonTitle:@"Dismiss"
-                                                      otherButtonTitles:nil];
-            [alertView show];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:[error description]
+                                                       delegate:nil cancelButtonTitle:@"Dismiss"
+                                              otherButtonTitles:nil];
+    [alertView show];
     [self configureViewsWithDisableOverride:NO];
 }
 
@@ -205,7 +202,7 @@
 
 - (IBAction)signInButtonPressed:(id)sender
 {
-    currentUserProviderIcon.image = nil;
+    self.currentUserProviderIcon.image = nil;
 
     [self signOutCurrentUser];
 
@@ -213,15 +210,21 @@
                                 andCustomInterfaceOverrides:self.customUi forDelegate:self];
 }
 
+- (IBAction)directTradAuthButtonPressed:(id)sender
+{
+    [self performTradAuthWithMergeToken:nil];
+}
+
 - (IBAction)signOutButtonPressed:(id)sender
 {
-    currentUserLabel.text = @"No current user";
-    currentUserProviderIcon.image = nil;
+    self.currentUserLabel.text = @"No current user";
+    self.currentUserProviderIcon.image = nil;
     [self signOutCurrentUser];
     [self configureViewsWithDisableOverride:NO];
 }
 
-- (IBAction)shareButtonPressed:(id)sender {
+- (IBAction)shareButtonPressed:(id)sender
+{
     JRActivityObject *t = [JRActivityObject activityObjectWithAction:@"tested"];
     t.sms = [JRSmsObject smsObjectWithMessage:@"test" andUrlsToBeShortened:nil];
     t.email = [JREmailObject emailObjectWithSubject:@"test" andMessageBody:@"test"
@@ -233,11 +236,11 @@
 {
     if (appDelegate.captureUser)
     {
-        currentUserLabel.text = [NSString stringWithFormat:@"Email: %@", appDelegate.captureUser.email];
+        self.currentUserLabel.text = [NSString stringWithFormat:@"Email: %@", appDelegate.captureUser.email];
     }
     else
     {
-        currentUserLabel.text = @"No current user";
+        self.currentUserLabel.text = @"No current user";
     }
 
     [self configureProviderIcon];
@@ -246,7 +249,7 @@
 - (void)configureProviderIcon
 {
     NSString *icon = [NSString stringWithFormat:@"icon_%@_30x30@2x.png", appDelegate.currentProvider];
-    currentUserProviderIcon.image = [UIImage imageNamed:icon];
+    self.currentUserProviderIcon.image = [UIImage imageNamed:icon];
 }
 
 - (void)engageSignInDidFailWithError:(NSError *)error
@@ -261,8 +264,8 @@
 - (void)handleBadPasswordError
 {
     [[[UIAlertView alloc] initWithTitle:@"Access Denied" message:@"Invalid password for email@address.com"
-                                  delegate:nil cancelButtonTitle:@"Dismiss"
-                         otherButtonTitles:nil] show];
+                               delegate:nil cancelButtonTitle:@"Dismiss"
+                      otherButtonTitles:nil] show];
 }
 
 - (void)handleMergeFlowError:(NSError *)error
@@ -275,16 +278,16 @@
 
                 if ([existingAccountProvider isEqualToString:@"capture"]) // Traditional sign-in required
                 {
-                    [self handleTradMerge:error];
+                    [self performTradAuthWithMergeToken:[error JRMergeToken]];
 
                 }
                 else
                 {
                     // Social sign-in required:
                     [JRCapture startEngageSignInDialogOnProvider:existingAccountProvider
-                                                                withCustomInterfaceOverrides:self.customUi
-                                                                                  mergeToken:[error JRMergeToken]
-                                                                                 forDelegate:self];
+                                    withCustomInterfaceOverrides:self.customUi
+                                                      mergeToken:[error JRMergeToken]
+                                                     forDelegate:self];
                 }
             };
 
@@ -292,7 +295,7 @@
 
 }
 
-- (void)handleTradMerge:(NSError *)error
+- (void)performTradAuthWithMergeToken:(NSString *)mergeToken
 {
     void (^signInCompletion)(UIAlertView *, BOOL, NSInteger) =
             ^(UIAlertView *alertView_, BOOL cancelled_, NSInteger buttonIndex_)
@@ -302,7 +305,7 @@
                 NSString *password = [[alertView_ textFieldAtIndex:1] text];
                 [JRCapture startCaptureTraditionalSignInForUser:user withPassword:password
                                                  withSignInType:JRTraditionalSignInEmailPassword
-                                                     mergeToken:[error JRMergeToken]
+                                                     mergeToken:mergeToken
                                                     forDelegate:self];
             };
 
@@ -352,8 +355,8 @@
 
 - (void)signOutCurrentUser
 {
-    appDelegate.currentProvider  = nil;
-    appDelegate.captureUser      = nil;
+    appDelegate.currentProvider = nil;
+    appDelegate.captureUser = nil;
 
     appDelegate.isNotYetCreated = NO;
 
@@ -416,7 +419,7 @@
 {
     [self setProviderAndConfigureIcon:provider];
 
-    currentUserLabel.text = @"Signing in...";
+    self.currentUserLabel.text = @"Signing in...";
 
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 }
@@ -429,7 +432,7 @@
 }
 
 - (void)captureSignInDidSucceedForUser:(JRCaptureUser *)newCaptureUser
-                                        status:(JRCaptureRecordStatus)captureRecordStatus
+                                status:(JRCaptureRecordStatus)captureRecordStatus
 {
     DLog(@"");
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
@@ -457,4 +460,8 @@
     [controller pushViewController:viewController animated:YES];
 }
 
+- (void)viewDidUnload {
+    [self setTradAuthButton:nil];
+    [super viewDidUnload];
+}
 @end

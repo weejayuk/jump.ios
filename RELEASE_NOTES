@@ -1,3 +1,17 @@
+v3.2.13
+ - Emits less logging, adds support for a JR_NO_RELEASE_LOGGING #define to disable
+   error logging. Eliminates some compiler warnings from logging macros.
+v3.2.12
+ - Fixes flow name parameter name, previously had relied on defaul_flow_name setting in
+   the dashboard for operation when a flow-name had been set.
+v3.2.11
+ - Fixes display of logged in user in sharing controller
+v3.2.10
+ - Fixes incorrect file organization, breaking Engage-only builds
+   This fix requires removing and re-adding the Janrain project group in the Project
+ - Adds minimum deployment target check (iOS 5.0 or above is required.)
+v3.2.9
+ - Fixes an uninitialized error return value, which can cause erroneous API errors
 v3.2.8
  - Documentation bug fixes (symbol name updates)
 v3.2.7

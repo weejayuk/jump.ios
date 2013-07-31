@@ -1,4 +1,3 @@
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  Copyright (c) 2010, Janrain, Inc.
 
@@ -53,39 +52,33 @@
 #define JRR_INNER_RECT_INSET      6
 
 @interface JRRoundedRect : UIView
-//{
-//    UIColor *outerStrokeColor;
-//    UIColor *innerStrokeColor;
-//    UIColor *outerFillColor;
-//    UIColor *innerFillColor;
-//    CGFloat  outerStrokeWidth;
-//    CGFloat  innerStrokeWidth;
-//    CGFloat  outerCornerRadius;
-//    CGFloat  innerCornerRadius;
-//    BOOL     drawInnerRect;
-//}
-@property (nonatomic, retain) UIColor *outerStrokeColor;
-@property (nonatomic, retain) UIColor *innerStrokeColor;
-@property (nonatomic, retain) UIColor *outerFillColor;
-@property (nonatomic, retain) UIColor *innerFillColor;
+@property(nonatomic, retain) UIColor *outerStrokeColor;
+@property(nonatomic, retain) UIColor *innerStrokeColor;
+@property(nonatomic, retain) UIColor *outerFillColor;
+@property(nonatomic, retain) UIColor *innerFillColor;
 @property CGFloat outerStrokeWidth;
 @property CGFloat innerStrokeWidth;
 @property CGFloat outerCornerRadius;
 @property CGFloat innerCornerRadius;
-@property BOOL    drawInnerRect;
+@property BOOL drawInnerRect;
 @end
 
 @interface JRProvider (JRProvider_SocialSharingProperties)
-- (BOOL)willThunkPublishToStatusForActivity:(JRActivityObject*)activity;
+- (BOOL)willThunkPublishToStatusForActivity:(JRActivityObject *)activity;
+
 - (BOOL)isActivityUrlPartOfUserContent;
-- (BOOL)canShareRichDataForActivity:(JRActivityObject*)activity;
+
+- (BOOL)canShareRichDataForActivity:(JRActivityObject *)activity;
+
 - (BOOL)doesContentReplaceAction;
+
 - (NSInteger)maxCharactersForSetStatus;
+
 - (NSInteger)maxCharactersForPublishActivity;
 @end
 
 @implementation JRProvider (JRProvider_SocialSharingProperties)
-- (BOOL)willThunkPublishToStatusForActivity:(JRActivityObject*)activity
+- (BOOL)willThunkPublishToStatusForActivity:(JRActivityObject *)activity
 {
     /* Right now, LinkedIn and Yahoo! */
     /* If the activity url is nil (or empty) certain providers will thunk from publish activity to set_status */
@@ -96,19 +89,20 @@
 
 - (BOOL)isActivityUrlPartOfUserContent
 {
-    BOOL url_reduces_max_chars = [[self.socialSharingProperties objectForKey:@"url_reduces_max_chars"] isEqualToString:@"YES"];
+    BOOL url_reduces_max_chars =
+            [[self.socialSharingProperties objectForKey:@"url_reduces_max_chars"] isEqualToString:@"YES"];
     BOOL shows_url_as_url = [[self.socialSharingProperties objectForKey:@"shows_url_as"] isEqualToString:@"url"];
 
     /* Twitter/MySpace -> true */
     return (url_reduces_max_chars && shows_url_as_url);
 }
 
-- (BOOL)canShareRichDataForActivity:(JRActivityObject*)activity
+- (BOOL)canShareRichDataForActivity:(JRActivityObject *)activity
 {
- /* If the provider can share media (Facebook and LinkedIn) and we're not going to thunk
-    to set_status (Yahoo! and LinkedIn when there's no activity url) */
+    /* If the provider can share media (Facebook and LinkedIn) and we're not going to thunk
+       to set_status (Yahoo! and LinkedIn when there's no activity url) */
     if ([[self.socialSharingProperties objectForKey:@"can_share_media"] isEqualToString:@"YES"] &&
-        ![self willThunkPublishToStatusForActivity:activity])
+            ![self willThunkPublishToStatusForActivity:activity])
         return YES;
 
     return NO;
@@ -124,12 +118,13 @@
 
 - (NSInteger)maxCharactersForSetStatus
 {
-    return [((NSString*)[((NSDictionary*)[[self socialSharingProperties] objectForKey:@"set_status_properties"]) objectForKey:@"max_characters"]) intValue];
+    id socialSharingProps = [[self socialSharingProperties] objectForKey:@"set_status_properties"];
+    return [((NSString *) [((NSDictionary *) socialSharingProps) objectForKey:@"max_characters"]) intValue];
 }
 
 - (NSInteger)maxCharactersForPublishActivity
 {
-    return [((NSString*)[[self socialSharingProperties] objectForKey:@"max_characters"]) intValue];
+    return [((NSString *) [[self socialSharingProperties] objectForKey:@"max_characters"]) intValue];
 }
 
 
@@ -151,55 +146,61 @@
     DLog(@"");
     if ((self = [super initWithCoder:decoder]))
     {
-        self.outerStrokeColor  = JRR_OUTER_STROKE_COLOR;
-        self.innerStrokeColor  = JRR_INNER_STROKE_COLOR;
-        self.outerFillColor    = JRR_OUTER_FILL_COLOR;
-        self.innerFillColor    = JRR_INNER_FILL_COLOR;
-        self.outerStrokeWidth  = JRR_OUTER_STROKE_WIDTH;
-        self.innerStrokeWidth  = JRR_INNER_STROKE_WIDTH;
+        self.outerStrokeColor = JRR_OUTER_STROKE_COLOR;
+        self.innerStrokeColor = JRR_INNER_STROKE_COLOR;
+        self.outerFillColor = JRR_OUTER_FILL_COLOR;
+        self.innerFillColor = JRR_INNER_FILL_COLOR;
+        self.outerStrokeWidth = JRR_OUTER_STROKE_WIDTH;
+        self.innerStrokeWidth = JRR_INNER_STROKE_WIDTH;
         self.outerCornerRadius = JRR_OUTER_CORNER_RADIUS;
         self.innerCornerRadius = JRR_INNER_CORNER_RADIUS;
-        self.backgroundColor   = [UIColor clearColor];
+        self.backgroundColor = [UIColor clearColor];
     }
     return self;
 }
+
 - (id)initWithFrame:(CGRect)frame
 {
     DLog(@"");
     if ((self = [super initWithFrame:frame]))
     {
-        self.opaque            = NO;
-        self.outerStrokeColor  = JRR_OUTER_STROKE_COLOR;
-        self.innerStrokeColor  = JRR_INNER_STROKE_COLOR;
-        self.outerFillColor    = JRR_OUTER_FILL_COLOR;
-        self.innerFillColor    = JRR_INNER_FILL_COLOR;
-        self.outerStrokeWidth  = JRR_OUTER_STROKE_WIDTH;
-        self.innerStrokeWidth  = JRR_INNER_STROKE_WIDTH;
+        self.opaque = NO;
+        self.outerStrokeColor = JRR_OUTER_STROKE_COLOR;
+        self.innerStrokeColor = JRR_INNER_STROKE_COLOR;
+        self.outerFillColor = JRR_OUTER_FILL_COLOR;
+        self.innerFillColor = JRR_INNER_FILL_COLOR;
+        self.outerStrokeWidth = JRR_OUTER_STROKE_WIDTH;
+        self.innerStrokeWidth = JRR_INNER_STROKE_WIDTH;
         self.outerCornerRadius = JRR_OUTER_CORNER_RADIUS;
         self.innerCornerRadius = JRR_INNER_CORNER_RADIUS;
-        self.backgroundColor   = [UIColor clearColor];
+        self.backgroundColor = [UIColor clearColor];
     }
     return self;
 }
 
 /* Functions are necessary for Interface Builder, but we want to ignore any attempt at changing the background color
 or opacity of our rounded rectangle. */
-- (void)setBackgroundColor:(UIColor *)newBackgroundColor { }
-- (void)setOpaque:(BOOL)newIsOpaque                      { }
+- (void)setBackgroundColor:(UIColor *)newBackgroundColor
+{
+}
+
+- (void)setOpaque:(BOOL)newIsOpaque
+{
+}
 
 - (void)drawRoundedRect:(CGRect)roundedRect withRadius:(CGFloat)radius strokeWidth:(CGFloat)strokeWidth
-            strokeColor:(UIColor*)strokeColor andFillColor:(UIColor*)fillColor
+            strokeColor:(UIColor *)strokeColor andFillColor:(UIColor *)fillColor
 {
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSetLineWidth(context, strokeWidth);
     CGContextSetStrokeColorWithColor(context, strokeColor.CGColor);
     CGContextSetFillColorWithColor(context, fillColor.CGColor);
 
-    CGFloat width  = CGRectGetWidth(roundedRect);
+    CGFloat width = CGRectGetWidth(roundedRect);
     CGFloat height = CGRectGetHeight(roundedRect);
 
- /* We need to make sure corner radius isn't larger than half of the shorter side, or else we need to
-    set that as the corner radius*/
+    /* We need to make sure corner radius isn't larger than half of the shorter side, or else we need to
+       set that as the corner radius*/
     if (radius > width / 2.0)
         radius = width / 2.0;
     if (radius > height / 2.0)
@@ -231,8 +232,8 @@ or opacity of our rounded rectangle. */
 
     if (drawInnerRect)
         [self drawRoundedRect:CGRectMake(JRR_INNER_RECT_INSET, JRR_INNER_RECT_INSET,
-                                         self.bounds.size.width - (2 * JRR_INNER_RECT_INSET),
-                                         self.bounds.size.height - (2 * JRR_INNER_RECT_INSET))
+                self.bounds.size.width - (2 * JRR_INNER_RECT_INSET),
+                self.bounds.size.height - (2 * JRR_INNER_RECT_INSET))
                    withRadius:innerCornerRadius strokeWidth:innerStrokeWidth
                   strokeColor:innerStrokeColor andFillColor:innerFillColor];
 }
@@ -248,144 +249,167 @@ or opacity of our rounded rectangle. */
 @end
 
 @interface JRPublishActivityController ()
-@property (nonatomic, retain) IBOutlet UIView                  *myBackgroundView;
-@property (nonatomic, retain) IBOutlet UITabBar                *myTabBar;
-@property (nonatomic, retain) IBOutlet UILabel                 *myLoadingLabel;
-@property (nonatomic, retain) IBOutlet UIActivityIndicatorView *myLoadingActivitySpinner;
-@property (nonatomic, retain) IBOutlet UIView                  *myLoadingGrayView;
-@property (nonatomic, retain) IBOutlet UIView                  *myPadGrayEditingViewTop;
-@property (nonatomic, retain) IBOutlet UIView                  *myPadGrayEditingViewMiddle;
-@property (nonatomic, retain) IBOutlet UIView                  *myPadGrayEditingViewBottom;
-@property (nonatomic, retain) IBOutlet UIView                  *myContentView;
-@property (nonatomic, retain) IBOutlet UIScrollView            *myScrollView;
-@property (nonatomic, retain) IBOutlet UITextView              *myUserCommentTextView;
-@property (nonatomic, retain) IBOutlet JRRoundedRect           *myUserCommentBoundingBox;
-@property (nonatomic, retain) IBOutlet UILabel                 *myRemainingCharactersLabel;
-@property (nonatomic, retain) IBOutlet UIView                  *myEntirePreviewContainer;
-@property (nonatomic, retain) IBOutlet JRRoundedRect           *myPreviewContainerRoundedRect;
-@property (nonatomic, retain) IBOutlet JRPreviewLabel          *myPreviewOfTheUserCommentLabel;
-@property (nonatomic, retain) IBOutlet JRRoundedRect           *myRichDataContainer;
-@property (nonatomic, retain) IBOutlet UIButton                *myMediaThumbnailView;
-@property (nonatomic, retain) IBOutlet UIActivityIndicatorView *myMediaThumbnailActivityIndicator;
-@property (nonatomic, retain) IBOutlet UILabel                 *myTitleLabel;
-@property (nonatomic, retain) IBOutlet UILabel                 *myDescriptionLabel;
-@property (nonatomic, retain) IBOutlet UIButton                *myInfoButton;
-@property (nonatomic, retain) IBOutlet UILabel                 *myPoweredByLabel;
-@property (nonatomic, retain) IBOutlet UIImageView             *myProviderIcon;
-@property (nonatomic, retain) IBOutlet UIView                  *myShareToView;
-@property (nonatomic, retain) IBOutlet UIImageView             *myTriangleIcon;
-@property (nonatomic, retain) IBOutlet UIButton                *myConnectAndShareButton;
-@property (nonatomic, retain) IBOutlet UIButton                *myJustShareButton;
-@property (nonatomic, retain) IBOutlet UIButton                *myProfilePic;
-@property (nonatomic, retain) IBOutlet UIActivityIndicatorView *myProfilePicActivityIndicator;
-@property (nonatomic, retain) IBOutlet UILabel                 *myUserName;
-@property (nonatomic, retain) IBOutlet UIButton                *mySignOutButton;
-@property (nonatomic, retain) IBOutlet UIImageView             *mySharedCheckMark;
-@property (nonatomic, retain) IBOutlet UILabel                 *mySharedLabel;
-@property (retain) JRProvider *selectedProvider;
-//@property (retain) JRAuthenticatedUser *loggedInUser;
+@property(nonatomic, retain) IBOutlet UIView *myBackgroundView;
+@property(nonatomic, retain) IBOutlet UITabBar *myTabBar;
+@property(nonatomic, retain) IBOutlet UILabel *myLoadingLabel;
+@property(nonatomic, retain) IBOutlet UIActivityIndicatorView *myLoadingActivitySpinner;
+@property(nonatomic, retain) IBOutlet UIView *myLoadingGrayView;
+@property(nonatomic, retain) IBOutlet UIView *myPadGrayEditingViewTop;
+@property(nonatomic, retain) IBOutlet UIView *myPadGrayEditingViewMiddle;
+@property(nonatomic, retain) IBOutlet UIView *myPadGrayEditingViewBottom;
+@property(nonatomic, retain) IBOutlet UIView *myContentView;
+@property(nonatomic, retain) IBOutlet UIScrollView *myScrollView;
+@property(nonatomic, retain) IBOutlet UITextView *myUserCommentTextView;
+@property(nonatomic, retain) IBOutlet JRRoundedRect *myUserCommentBoundingBox;
+@property(nonatomic, retain) IBOutlet UILabel *myRemainingCharactersLabel;
+@property(nonatomic, retain) IBOutlet UIView *myEntirePreviewContainer;
+@property(nonatomic, retain) IBOutlet JRRoundedRect *myPreviewContainerRoundedRect;
+@property(nonatomic, retain) IBOutlet JRPreviewLabel *myPreviewOfTheUserCommentLabel;
+@property(nonatomic, retain) IBOutlet JRRoundedRect *myRichDataContainer;
+@property(nonatomic, retain) IBOutlet UIButton *myMediaThumbnailView;
+@property(nonatomic, retain) IBOutlet UIActivityIndicatorView *myMediaThumbnailActivityIndicator;
+@property(nonatomic, retain) IBOutlet UILabel *myTitleLabel;
+@property(nonatomic, retain) IBOutlet UILabel *myDescriptionLabel;
+@property(nonatomic, retain) IBOutlet UIButton *myInfoButton;
+@property(nonatomic, retain) IBOutlet UILabel *myPoweredByLabel;
+@property(nonatomic, retain) IBOutlet UIImageView *myProviderIcon;
+@property(nonatomic, retain) IBOutlet UIView *myShareToView;
+@property(nonatomic, retain) IBOutlet UIImageView *myTriangleIcon;
+@property(nonatomic, retain) IBOutlet UIButton *myConnectAndShareButton;
+@property(nonatomic, retain) IBOutlet UIButton *myJustShareButton;
+@property(nonatomic, retain) IBOutlet UIButton *myProfilePic;
+@property(nonatomic, retain) IBOutlet UIActivityIndicatorView *myProfilePicActivityIndicator;
+@property(nonatomic, retain) IBOutlet UILabel *myUserName;
+@property(nonatomic, retain) IBOutlet UIButton *mySignOutButton;
+@property(nonatomic, retain) IBOutlet UIImageView *mySharedCheckMark;
+@property(nonatomic, retain) IBOutlet UILabel *mySharedLabel;
+@property(nonatomic, retain) JRProvider *selectedProvider;
+@property(nonatomic, retain) JRAuthenticatedUser *loggedInUser;
+@property(nonatomic, retain) JRSessionData *sessionData;
+@property(nonatomic, retain) JRActivityObject *currentActivity;
+@property(nonatomic, retain) NSDictionary *customInterface;
+@property(nonatomic, retain) NSMutableSet *alreadyShared;
+@property(nonatomic, retain) NSMutableDictionary *cachedProfilePics;
+@property(nonatomic, retain) UIView *titleView;
+@property(nonatomic, retain) NSTimer *timer;
+@property(nonatomic) BOOL weAreCurrentlyPostingSomething;
+@property(nonatomic, copy) NSString *shortenedActivityUrl;
+@property(nonatomic) int maxCharacters;
+@property(nonatomic) BOOL activityHasRichData;
+@property(nonatomic) float mediaBoxHeight;
+@property(nonatomic) float previewLabelHeight;
+@property(nonatomic) NSUInteger selectedTab;
+@property(nonatomic) BOOL weAreCurrentlyEditing;
+@property(nonatomic) BOOL hasEditedUserContentForActivityAlready;
+@property(nonatomic) BOOL userIsAttemptingToSignOut;
+@property(nonatomic) BOOL mediaThumbnailFailedToDownload;
+@property(nonatomic) BOOL weHaveJustAuthenticated;
+@property(nonatomic) int emailAndOrSmsIndex;
+@property(nonatomic) BOOL weAreStillWaitingOnSocialProviders;
+
 - (void)addProvidersToTabBar;
+
 - (void)determineIfWeCanShareViaEmailAndOrSMS;
+
 - (void)loadActivityToViewForFirstTime;
+
 - (void)sendEmail;
+
 - (void)sendSMS;
+
 - (void)showViewIsLoading:(BOOL)loading;
+
 - (void)setProfilePicToDefaultPic;
-- (void)fetchProfilePicFromUrl:(NSString*)profilePicUrl forProvider:(NSString*)providerName;
-- (void)setButtonImage:(UIButton*)button toData:(NSData*)data andSetLoading:(UIActivityIndicatorView*)actIndicator toLoading:(BOOL)loading;
+
+- (void)fetchProfilePicFromUrl:(NSString *)profilePicUrl forProvider:(NSString *)providerName;
+
+- (void)setButtonImage:(UIButton *)button toData:(NSData *)data andSetLoading:(UIActivityIndicatorView *)actIndicator
+             toLoading:(BOOL)loading;
 @end
 
 @implementation JRPublishActivityController
-{
-    JRSessionData    *sessionData;
-    JRActivityObject *currentActivity;
-
-    JRProvider          *selectedProvider;
-    JRAuthenticatedUser *loggedInUser;
-
-    //BOOL hidesCancelButton;
-    //BOOL hasCoreText;
-
-    EmailOrSms emailAndOrSmsIndex;
-    NSUInteger selectedTab;
-
-    NSString *shortenedActivityUrl;
-    NSInteger maxCharacters;
-
-    NSMutableDictionary *cachedProfilePics;
-    NSMutableSet        *alreadyShared;
-
-    BOOL weAreStillWaitingOnSocialProviders;
-    BOOL weHaveJustAuthenticated;
-    BOOL weAreCurrentlyPostingSomething;
-    BOOL weAreCurrentlyEditing;
-    BOOL hasEditedUserContentForActivityAlready;
-    BOOL userIsAttemptingToSignOut;
-    BOOL mediaThumbnailFailedToDownload;
-    BOOL activityHasRichData;
-
-    CGFloat previewLabelHeight;
-    CGFloat mediaBoxHeight;
-
-    NSDictionary *customInterface;
-    NSDictionary *colorsDictionary;
-    UIView       *titleView;
-
-    UIView     *myBackgroundView;
-    UITabBar   *myTabBar;
-
-    /* Activity Spinner and Label displayed while the list of configured providers is empty */
-    NSTimer *timer;
-    UILabel                 *myLoadingLabel;
-    UIActivityIndicatorView *myLoadingActivitySpinner;
-    UIView                  *myLoadingGrayView;
-
-    UIView *myPadGrayEditingViewTop;
-    UIView *myPadGrayEditingViewMiddle;
-    UIView *myPadGrayEditingViewBottom;
-
-    UIView       *myContentView;
-    UIScrollView *myScrollView;
-
-    UITextView      *myUserCommentTextView;
-    JRRoundedRect   *myUserCommentBoundingBox;
-
-    UILabel *myRemainingCharactersLabel;
-
-    UIView                  *myEntirePreviewContainer;
-    JRRoundedRect           *myPreviewContainerRoundedRect;
-    JRPreviewLabel          *myPreviewOfTheUserCommentLabel;
-    JRRoundedRect           *myRichDataContainer;
-    UIButton                *myMediaThumbnailView;
-    UIActivityIndicatorView *myMediaThumbnailActivityIndicator;
-    UILabel                 *myTitleLabel;
-    UILabel                 *myDescriptionLabel;
-
-    UIButton    *myInfoButton;
-    UILabel     *myPoweredByLabel;
-    UIImageView *myProviderIcon;
-
-    UIView                  *myShareToView;
-    UIImageView             *myTriangleIcon;
-    UIButton                *myConnectAndShareButton;
-    UIButton                *myJustShareButton;
-    UIButton                *myProfilePic;
-    UIActivityIndicatorView *myProfilePicActivityIndicator;
-    UILabel                 *myUserName;
-    UIButton                *mySignOutButton;
-    UIImageView             *mySharedCheckMark;
-    UILabel                 *mySharedLabel;
-}
-//@synthesize hidesCancelButton;
+//{
+//    JRSessionData *sessionData;
+//    JRActivityObject *currentActivity;
+//
+//    JRProvider *selectedProvider;
+//    JRAuthenticatedUser *loggedInUser;
+//
+//    //BOOL hidesCancelButton;
+//    //BOOL hasCoreText;
+//
+//    EmailOrSms emailAndOrSmsIndex;
+//    NSUInteger selectedTab;
+//
+//    NSString *shortenedActivityUrl;
+//    NSInteger maxCharacters;
+//
+//    NSMutableDictionary *cachedProfilePics;
+//    NSMutableSet *alreadyShared;
+//
+//    BOOL weAreStillWaitingOnSocialProviders;
+//    BOOL weHaveJustAuthenticated;
+//    BOOL weAreCurrentlyPostingSomething;
+//    BOOL weAreCurrentlyEditing;
+//    BOOL hasEditedUserContentForActivityAlready;
+//    BOOL userIsAttemptingToSignOut;
+//    BOOL mediaThumbnailFailedToDownload;
+//    BOOL activityHasRichData;
+//
+//    CGFloat previewLabelHeight;
+//    CGFloat mediaBoxHeight;
+//
+//    NSDictionary *customInterface;
+//    NSDictionary *colorsDictionary;
+//    UIView *titleView;
+//
+//    UIView *myBackgroundView;
+//    UITabBar *myTabBar;
+//
+//    /* Activity Spinner and Label displayed while the list of configured providers is empty */
+//    NSTimer *timer;
+//    UILabel *myLoadingLabel;
+//    UIActivityIndicatorView *myLoadingActivitySpinner;
+//    UIView *myLoadingGrayView;
+//
+//    UIView *myPadGrayEditingViewTop;
+//    UIView *myPadGrayEditingViewMiddle;
+//    UIView *myPadGrayEditingViewBottom;
+//
+//    UIView *myContentView;
+//    UIScrollView *myScrollView;
+//
+//    UITextView *myUserCommentTextView;
+//    JRRoundedRect *myUserCommentBoundingBox;
+//
+//    UILabel *myRemainingCharactersLabel;
+//
+//    UIView *myEntirePreviewContainer;
+//    JRRoundedRect *myPreviewContainerRoundedRect;
+//    JRPreviewLabel *myPreviewOfTheUserCommentLabel;
+//    JRRoundedRect *myRichDataContainer;
+//    UIButton *myMediaThumbnailView;
+//    UIActivityIndicatorView *myMediaThumbnailActivityIndicator;
+//    UILabel *myTitleLabel;
+//    UILabel *myDescriptionLabel;
+//
+//    UIButton *myInfoButton;
+//    UILabel *myPoweredByLabel;
+//    UIImageView *myProviderIcon;
+//
+//    UIView *myShareToView;
+//    UIImageView *myTriangleIcon;
+//    UIButton *myConnectAndShareButton;
+//    UIButton *myJustShareButton;
+//    UIButton *myProfilePic;
+//    UIActivityIndicatorView *myProfilePicActivityIndicator;
+//    UILabel *myUserName;
+//    UIButton *mySignOutButton;
+//    UIImageView *mySharedCheckMark;
+//    UILabel *mySharedLabel;
+//}
 @synthesize selectedProvider;
-//@synthesize loggedInUser;
-@synthesize myBackgroundView, myTabBar, myLoadingLabel, myLoadingActivitySpinner, myLoadingGrayView,
-            myPadGrayEditingViewTop, myPadGrayEditingViewMiddle, myPadGrayEditingViewBottom, myContentView, myScrollView,
-            myUserCommentTextView, myUserCommentBoundingBox, myRemainingCharactersLabel, myEntirePreviewContainer,
-            myPreviewContainerRoundedRect, myPreviewOfTheUserCommentLabel, myRichDataContainer, myMediaThumbnailView,
-            myMediaThumbnailActivityIndicator, myTitleLabel, myDescriptionLabel, myInfoButton, myPoweredByLabel,
-            myProviderIcon, myShareToView, myTriangleIcon, myConnectAndShareButton, myJustShareButton, myProfilePic,
-            myProfilePicActivityIndicator, myUserName, mySignOutButton, mySharedCheckMark, mySharedLabel;
+@synthesize myBackgroundView, myTabBar, myLoadingLabel, myLoadingActivitySpinner, myLoadingGrayView, myPadGrayEditingViewTop, myPadGrayEditingViewMiddle, myPadGrayEditingViewBottom, myContentView, myScrollView, myUserCommentTextView, myUserCommentBoundingBox, myRemainingCharactersLabel, myEntirePreviewContainer, myPreviewContainerRoundedRect, myPreviewOfTheUserCommentLabel, myRichDataContainer, myMediaThumbnailView, myMediaThumbnailActivityIndicator, myTitleLabel, myDescriptionLabel, myInfoButton, myPoweredByLabel, myProviderIcon, myShareToView, myTriangleIcon, myConnectAndShareButton, myJustShareButton, myProfilePic, myProfilePicActivityIndicator, myUserName, mySignOutButton, mySharedCheckMark, mySharedLabel;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
    andCustomInterface:(NSDictionary *)theCustomInterface
@@ -393,9 +417,9 @@ or opacity of our rounded rectangle. */
     DLog(@"");
     if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]))
     {
-        sessionData     = [JRSessionData jrSessionData];
-        currentActivity = [[sessionData activity] retain];
-        customInterface = [theCustomInterface retain];
+        self.sessionData = [JRSessionData jrSessionData];
+        self.currentActivity = [self.sessionData activity];
+        self.customInterface = theCustomInterface;
     }
 
     return self;
@@ -406,53 +430,53 @@ or opacity of our rounded rectangle. */
     DLog(@"");
     [super viewDidLoad];
 
-    alreadyShared     = [[NSMutableSet alloc] initWithCapacity:[sessionData.sharingProviders count]];
-    cachedProfilePics = [[NSMutableDictionary alloc] initWithCapacity:[sessionData.sharingProviders count]];
+    self.alreadyShared = [[[NSMutableSet alloc] initWithCapacity:[self.sessionData.sharingProviders count]] autorelease];
+    self.cachedProfilePics = [[[NSMutableDictionary alloc] initWithCapacity:[self.sessionData.sharingProviders count]] autorelease];
 
-    if ([[customInterface objectForKey:kJRSocialSharingTitleString] isKindOfClass:[NSString class]])
-        self.title = NSLocalizedString([customInterface objectForKey:kJRSocialSharingTitleString], @"");
+    if ([[self.customInterface objectForKey:kJRSocialSharingTitleString] isKindOfClass:[NSString class]])
+        self.title = NSLocalizedString([self.customInterface objectForKey:kJRSocialSharingTitleString], @"");
     else
         self.title = NSLocalizedString(@"Share", @"");
 
     /* Load the custom background view, if there is one. */
-    if ([customInterface objectForKey:kJRSocialSharingBackgroundImageView])
-        [myBackgroundView addSubview:[customInterface objectForKey:kJRSocialSharingBackgroundImageView]];
+    if ([self.customInterface objectForKey:kJRSocialSharingBackgroundImageView])
+        [myBackgroundView addSubview:[self.customInterface objectForKey:kJRSocialSharingBackgroundImageView]];
 
     [myBackgroundView setAlpha:0.3];
 
     /* If there is a UIColor object set for the background color, use this */
-    if ([customInterface objectForKey:kJRSocialSharingBackgroundColor])
-        myBackgroundView.backgroundColor = [customInterface objectForKey:kJRSocialSharingBackgroundColor];
+    if ([self.customInterface objectForKey:kJRSocialSharingBackgroundColor])
+        myBackgroundView.backgroundColor = [self.customInterface objectForKey:kJRSocialSharingBackgroundColor];
 
-    titleView = [[customInterface objectForKey:kJRSocialSharingTitleView] retain];
+    self.titleView = [[[self.customInterface objectForKey:kJRSocialSharingTitleView] retain] autorelease];
 
-    if (titleView)
-        self.navigationItem.titleView = titleView;
+    if (self.titleView)
+        self.navigationItem.titleView = self.titleView;
 
     if (!self.hidesCancelButton)
     {
         UIBarButtonItem *cancelButton = [[[UIBarButtonItem alloc]
-                                initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
-                                                     target:sessionData
-                                                     action:@selector(triggerPublishingDidCancel:)] autorelease];
+                initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
+                                     target:self.sessionData
+                                     action:@selector(triggerPublishingDidCancel:)] autorelease];
 
-        self.navigationItem.leftBarButtonItem         = cancelButton;
+        self.navigationItem.leftBarButtonItem = cancelButton;
         self.navigationItem.leftBarButtonItem.enabled = YES;
 
-        self.navigationItem.leftBarButtonItem.style   = UIBarButtonItemStyleBordered;
+        self.navigationItem.leftBarButtonItem.style = UIBarButtonItemStyleBordered;
     }
 
     UIBarButtonItem *editButton = [[[UIBarButtonItem alloc]
-                                initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
-                                                     target:self
-                                                     action:@selector(editButtonPressed:)] autorelease];
+            initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
+                                 target:self
+                                 action:@selector(editButtonPressed:)] autorelease];
 
-    self.navigationItem.rightBarButtonItem         = editButton;
+    self.navigationItem.rightBarButtonItem = editButton;
     self.navigationItem.rightBarButtonItem.enabled = YES;
 
-    self.navigationItem.rightBarButtonItem.style   = UIBarButtonItemStyleBordered;
+    self.navigationItem.rightBarButtonItem.style = UIBarButtonItemStyleBordered;
 
-    if ([sessionData hidePoweredBy])
+    if ([self.sessionData hidePoweredBy])
     {
         [myPoweredByLabel setHidden:YES];
         [myInfoButton setHidden:YES];
@@ -480,10 +504,10 @@ or opacity of our rounded rectangle. */
     display the "Loading Providers" label and activity spinner.
     sessionData = nil when the call to get the base URL hasn't returned
     [sessionData.configuredProviders count] = 0 when the provider list hasn't returned */
-    if ([sessionData.sharingProviders count] == 0)
+    if ([self.sessionData.sharingProviders count] == 0)
     {
         DLog(@"[[sessionData socialProviders] count] == 0");
-        weAreStillWaitingOnSocialProviders = YES;
+        self.weAreStillWaitingOnSocialProviders = YES;
 
         myLoadingLabel.font = [UIFont systemFontOfSize:18.0];
         myLoadingLabel.text = NSLocalizedString(@"Loading providers. Please wait...", @"");
@@ -493,11 +517,13 @@ or opacity of our rounded rectangle. */
         self.navigationItem.leftBarButtonItem.enabled = YES;
 
         /* Now poll every few milliseconds, for about 16 seconds, until the provider list is loaded or we time out. */
-        timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(checkSessionDataAndProviders:) userInfo:nil repeats:NO];
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self
+                                                    selector:@selector(checkSessionDataAndProviders:) userInfo:nil
+                                                     repeats:NO];
     }
     else
     {
-        weAreStillWaitingOnSocialProviders = NO;
+        self.weAreStillWaitingOnSocialProviders = NO;
         [self addProvidersToTabBar];
     }
 }
@@ -508,27 +534,27 @@ or opacity of our rounded rectangle. */
     [super viewWillAppear:animated];
     self.contentSizeForViewInPopover = self.view.frame.size;
 
-    if (!titleView)
+    if (!self.titleView)
     {
         UILabel *titleLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 44)] autorelease];
-        titleLabel.backgroundColor           = [UIColor clearColor];
-        titleLabel.font                      = [UIFont boldSystemFontOfSize:20.0];
-        titleLabel.shadowColor               = [UIColor colorWithWhite:0.0 alpha:0.5];
-        titleLabel.textAlignment             = JR_TEXT_ALIGN_CENTER;
-        titleLabel.textColor                 = [UIColor whiteColor];
+        titleLabel.backgroundColor = [UIColor clearColor];
+        titleLabel.font = [UIFont boldSystemFontOfSize:20.0];
+        titleLabel.shadowColor = [UIColor colorWithWhite:0.0 alpha:0.5];
+        titleLabel.textAlignment = JR_TEXT_ALIGN_CENTER;
+        titleLabel.textColor = [UIColor whiteColor];
         titleLabel.adjustsFontSizeToFitWidth = YES;
-        titleLabel.minimumFontSize           = 18.0;
+        titleLabel.minimumFontSize = 18.0;
 
-        if ([customInterface objectForKey:kJRSocialSharingTitleString])
-            titleLabel.text = NSLocalizedString([customInterface objectForKey:kJRSocialSharingTitleString], @"");
+        if ([self.customInterface objectForKey:kJRSocialSharingTitleString])
+            titleLabel.text = NSLocalizedString([self.customInterface objectForKey:kJRSocialSharingTitleString], @"");
         else if (selectedProvider)
             titleLabel.text = [NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"Share on", @""),
-                                        selectedProvider.friendlyName];
+                                                         selectedProvider.friendlyName];
         else
             titleLabel.text = NSLocalizedString(@"Share", @"");
 
-        titleView = [titleLabel retain];
-        self.navigationItem.titleView = titleView;
+        self.titleView = titleLabel;
+        self.navigationItem.titleView = self.titleView;
     }
 }
 
@@ -537,14 +563,14 @@ or opacity of our rounded rectangle. */
     DLog(@"");
     [super viewDidAppear:animated];
 
-    if (!weAreStillWaitingOnSocialProviders && !weAreCurrentlyPostingSomething)
+    if (!self.weAreStillWaitingOnSocialProviders && !self.weAreCurrentlyPostingSomething)
         [self showViewIsLoading:NO];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     DLog(@"");
-    [sessionData triggerPublishingDidTimeOutConfiguration];
+    [self.sessionData triggerPublishingDidTimeOutConfiguration];
 }
 
 #define CONFIGURATION_TIMEOUT 32.0
@@ -553,23 +579,23 @@ or opacity of our rounded rectangle. */
  because either the requests for the base URL or provider list haven't returned -
  keep polling every few milliseconds, for about 16 seconds,
  until the provider list is loaded or we time out. */
-- (void)checkSessionDataAndProviders:(NSTimer*)theTimer
+- (void)checkSessionDataAndProviders:(NSTimer *)theTimer
 {
     static NSTimeInterval interval = 0.5;
     interval = interval + 0.5;
 
-    timer = nil;
+    self.timer = nil;
 
-    DLog (@"Social Providers so far: %d", [sessionData.sharingProviders count]);
+    DLog (@"Social Providers so far: %d", [self.sessionData.sharingProviders count]);
 
     /* If we have our list of providers, stop the progress indicators and load the table. */
-    if ([sessionData.sharingProviders count] > 0)
+    if ([self.sessionData.sharingProviders count] > 0)
     {
-        weAreStillWaitingOnSocialProviders = NO;
+        self.weAreStillWaitingOnSocialProviders = NO;
 
         [self showViewIsLoading:NO];
 
-     /* Set the loading label font/text back to default "Sharing..." */
+        /* Set the loading label font/text back to default "Sharing..." */
         myLoadingLabel.font = [UIFont systemFontOfSize:24.0];
         myLoadingLabel.text = NSLocalizedString(@"Sharing...", @"");
 
@@ -585,11 +611,9 @@ or opacity of our rounded rectangle. */
 
         [self showViewIsLoading:NO];
 
-        UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"No Available Providers" message:
-@"There are no available providers. \
-Either there is a problem connecting \
-or no providers have been configured. \
-Please try again later."
+        NSString *message = @"There are no available providers. Either there is a problem connecting or no providers "
+                "have been configured. Please try again later.";
+        UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"No Available Providers" message:message
                                                         delegate:self
                                                cancelButtonTitle:@"OK"
                                                otherButtonTitles:nil] autorelease];
@@ -598,8 +622,9 @@ Please try again later."
         return;
     }
 
-    timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(checkSessionDataAndProviders:)
-                                           userInfo:nil repeats:NO];
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self
+                                                selector:@selector(checkSessionDataAndProviders:)
+                                                userInfo:nil repeats:NO];
 }
 
 /* That is, cover the view with a transparent gray box and a large white activity indicator. */
@@ -608,10 +633,10 @@ Please try again later."
     DLog(@"");
 
     /* Don't let the user edit or cancel while the activity is being shared */
-    self.navigationItem.leftBarButtonItem.enabled  = !loading;
+    self.navigationItem.leftBarButtonItem.enabled = !loading;
     self.navigationItem.rightBarButtonItem.enabled = !loading;
 
-    UIApplication* app = [UIApplication sharedApplication];
+    UIApplication *app = [UIApplication sharedApplication];
     app.networkActivityIndicatorVisible = loading;
 
     /* Gray/un-gray out the window */
@@ -627,18 +652,18 @@ Please try again later."
 - (NSString *)uiName
 {
     NSString *const provName = self.selectedProvider.name;
-    if ([provName isEqualToString:@"facebook"] && loggedInUser.displayName)
-        return loggedInUser.displayName;
+    if ([provName isEqualToString:@"facebook"] && self.loggedInUser.displayName)
+        return self.loggedInUser.displayName;
     else if ([provName isEqualToString:@"twitter"])
-        return loggedInUser.preferredUsername;
+        return self.loggedInUser.preferredUsername;
     else // not sure what would be best for yahoo, linkedin, myspace
-        return loggedInUser.preferredUsername;
+        return self.loggedInUser.preferredUsername;
 }
 
 - (void)showUserAsLoggedIn:(BOOL)loggedIn
 {
     if (loggedIn)
-        [myPreviewOfTheUserCommentLabel setUsername: [self uiName]];
+        [myPreviewOfTheUserCommentLabel setUsername:[self uiName]];
     else
         [myPreviewOfTheUserCommentLabel setUsername:@"You"];
 
@@ -662,12 +687,12 @@ Please try again later."
     [mySharedLabel setHidden:!shared];
     [mySharedCheckMark setHidden:!shared];
 
-    if (loggedInUser)
+    if (self.loggedInUser)
         [myJustShareButton setHidden:shared];
     else
         [myConnectAndShareButton setHidden:shared];
 
-    [myTriangleIcon setFrame:CGRectMake(shared ? 25 : ((loggedInUser) ?
+    [myTriangleIcon setFrame:CGRectMake(shared ? 25 : ((self.loggedInUser) ?
             ([myTriangleIcon superview].frame.size.width - 90) :
             ([myTriangleIcon superview].frame.size.width / 2) - 9), 0, 18, 18)];
 
@@ -678,18 +703,19 @@ Please try again later."
         {
             barButton = [[[UIBarButtonItem alloc] initWithTitle:@"Close"
                                                           style:UIBarButtonItemStyleDone
-                                                         target:sessionData
+                                                         target:self.sessionData
                                                          action:@selector(triggerPublishingDidComplete:)] autorelease];
         }
         else
         {
+            SEL cancelSel = @selector(triggerPublishingDidCancel:);
             barButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
-                                                                       target:sessionData
-                                                                       action:@selector(triggerPublishingDidCancel:)] autorelease];
+                                                                       target:self.sessionData
+                                                                       action:cancelSel] autorelease];
             self.navigationItem.leftBarButtonItem.style = UIBarButtonItemStyleBordered;
         }
 
-        self.navigationItem.leftBarButtonItem         = barButton;
+        self.navigationItem.leftBarButtonItem = barButton;
         self.navigationItem.leftBarButtonItem.enabled = YES;
     }
 }
@@ -697,15 +723,15 @@ Please try again later."
 - (void)updatePreviewTextWhenContentReplacesAction
 {
     DLog(@"");
-    NSString *username = (loggedInUser) ? [self uiName] : @"You";
+    NSString *username = (self.loggedInUser) ? [self uiName] : @"You";
 
-    NSString *url = (shortenedActivityUrl) ?
-                                shortenedActivityUrl :
-                                @"shortening url...";
+    NSString *url = (self.shortenedActivityUrl) ?
+            self.shortenedActivityUrl :
+            @"shortening url...";
 
-    NSString *text     = (![[myUserCommentTextView text] isEqualToString:@""]) ?
-                                [myUserCommentTextView text] :
-                                [currentActivity action];
+    NSString *text = (![[myUserCommentTextView text] isEqualToString:@""]) ?
+            [myUserCommentTextView text] :
+            [self.currentActivity action];
 
     [myPreviewOfTheUserCommentLabel setUsername:username];
     [myPreviewOfTheUserCommentLabel setUserText:text];
@@ -726,8 +752,8 @@ Please try again later."
 - (void)updatePreviewTextWhenContentDoesNotReplaceAction
 {
     DLog(@"");
-    NSString *username = (loggedInUser) ? [self uiName] : @"You";
-    NSString *text     = currentActivity.action;
+    NSString *username = (self.loggedInUser) ? [self uiName] : @"You";
+    NSString *text = self.currentActivity.action;
 
     [myPreviewOfTheUserCommentLabel setUsername:username];
     myPreviewOfTheUserCommentLabel.userText = text;
@@ -736,7 +762,7 @@ Please try again later."
 
 - (BOOL)shouldHideRemainingCharacterCount
 {
-    if (maxCharacters == -1 || maxCharacters > 500)
+    if (self.maxCharacters == -1 || self.maxCharacters > 500)
         return YES;
 
     return NO;
@@ -754,7 +780,7 @@ Please try again later."
     if ([selectedProvider doesContentReplaceAction])
     {
         /* Twitter, MySpace, LinkedIn */
-        if ([selectedProvider isActivityUrlPartOfUserContent] && shortenedActivityUrl == nil)
+        if ([selectedProvider isActivityUrlPartOfUserContent] && self.shortenedActivityUrl == nil)
         {
             /* Twitter, MySpace */
             characterCountText = @"Calculating remaining characters";
@@ -762,23 +788,28 @@ Please try again later."
         else
         {
             int preview_length = [[myPreviewOfTheUserCommentLabel text] length];
-            chars_remaining    = maxCharacters - preview_length;
+            chars_remaining = self.maxCharacters - preview_length;
 
-            characterCountText = [NSString stringWithFormat:@"Remaining characters: %d", chars_remaining]; // TODO: Make just character number red
+            characterCountText = [NSString stringWithFormat:@"Remaining characters: %d",
+                                                            chars_remaining]; // TODO: Make just character number red
         }
     }
     else
     { /* Facebook, Yahoo */
         int comment_length = [[myUserCommentTextView text] length];
-        chars_remaining    = maxCharacters - comment_length;
+        chars_remaining = self.maxCharacters - comment_length;
 
-        characterCountText = [NSString stringWithFormat:@"Remaining characters: %d", chars_remaining]; // TODO: Make just character number red
+        characterCountText = [NSString stringWithFormat:@"Remaining characters: %d",
+                                                        chars_remaining]; // TODO: Make just character number red
     }
 
     [myRemainingCharactersLabel setText:characterCountText];
 
     if (chars_remaining < 0)
-        [myRemainingCharactersLabel setTextColor:[UIColor redColor]]; // TODO: Make just character number red with attributed label
+    {
+        // TODO: Make just character number red with attributed label
+        [myRemainingCharactersLabel setTextColor:[UIColor redColor]];
+    }
     else
         [myRemainingCharactersLabel setTextColor:[UIColor darkGrayColor]];
 
@@ -789,27 +820,27 @@ Please try again later."
 {
     DLog(@"");
 
-    if ([selectedProvider canShareRichDataForActivity:currentActivity] && activityHasRichData)
+    if ([selectedProvider canShareRichDataForActivity:self.currentActivity] && self.activityHasRichData)
     {
         [myEntirePreviewContainer setFrame:
-                CGRectMake(myEntirePreviewContainer.frame.origin.x,
-                           myEntirePreviewContainer.frame.origin.y,
-                           myEntirePreviewContainer.frame.size.width,
-                           mediaBoxHeight + previewLabelHeight + 32.0)];
+                                          CGRectMake(myEntirePreviewContainer.frame.origin.x,
+                                                  myEntirePreviewContainer.frame.origin.y,
+                                                  myEntirePreviewContainer.frame.size.width,
+                                                  self.mediaBoxHeight + self.previewLabelHeight + 32.0)];
         [myRichDataContainer setHidden:NO];
     }
     else
     {
         [myRichDataContainer setHidden:YES];
         [myEntirePreviewContainer setFrame:
-                CGRectMake(myEntirePreviewContainer.frame.origin.x,
-                           myEntirePreviewContainer.frame.origin.y,
-                           myEntirePreviewContainer.frame.size.width,
-                           previewLabelHeight + 28.0)];
+                                          CGRectMake(myEntirePreviewContainer.frame.origin.x,
+                                                  myEntirePreviewContainer.frame.origin.y,
+                                                  myEntirePreviewContainer.frame.size.width,
+                                                  self.previewLabelHeight + 28.0)];
     }
 
     CGFloat scrollViewContentHeight = myEntirePreviewContainer.frame.origin.y +
-                                      myEntirePreviewContainer.frame.size.height + 10;
+            myEntirePreviewContainer.frame.size.height + 10;
 
     if (IS_IPAD && (scrollViewContentHeight < myScrollView.frame.size.height))
         scrollViewContentHeight = myScrollView.frame.size.height;
@@ -817,10 +848,10 @@ Please try again later."
     if (IS_IPAD)
     {
         [myPadGrayEditingViewTop setFrame:
-                CGRectMake(myPadGrayEditingViewTop.frame.origin.x,
-                           myPadGrayEditingViewTop.frame.origin.y,
-                           myPadGrayEditingViewTop.frame.size.width,
-                           scrollViewContentHeight)];
+                                         CGRectMake(myPadGrayEditingViewTop.frame.origin.x,
+                                                 myPadGrayEditingViewTop.frame.origin.y,
+                                                 myPadGrayEditingViewTop.frame.size.width,
+                                                 scrollViewContentHeight)];
     }
 
     [myScrollView setContentSize:CGSizeMake(myScrollView.frame.size.width, scrollViewContentHeight)];
@@ -828,29 +859,31 @@ Please try again later."
     [myPreviewContainerRoundedRect setNeedsDisplay];
 }
 
-- (void)previewLabel:(JRPreviewLabel*)previewLabel didChangeContentHeightFrom:(CGFloat)fromHeight to:(CGFloat)toHeight;
+- (void)previewLabel:(JRPreviewLabel *)previewLabel didChangeContentHeightFrom:(CGFloat)fromHeight
+                  to:(CGFloat)toHeight;
 {
     DLog(@"fromHeight: %f toHeight: %f", fromHeight, toHeight);
-    previewLabelHeight = toHeight;
+    self.previewLabelHeight = toHeight;
     [myRichDataContainer setFrame:
-                CGRectMake(myRichDataContainer.frame.origin.x,
-                           myRichDataContainer.frame.origin.y + (toHeight - fromHeight),
-                           myRichDataContainer.frame.size.width,
-                           myRichDataContainer.frame.size.height)];
+                                 CGRectMake(myRichDataContainer.frame.origin.x,
+                                         myRichDataContainer.frame.origin.y + (toHeight - fromHeight),
+                                         myRichDataContainer.frame.size.width,
+                                         myRichDataContainer.frame.size.height)];
     [self adjustPreviewContainerLayout];
 
 
 }
 
-- (void)loadUserNameAndProfilePicForUser:(JRAuthenticatedUser*)user forProvider:(NSString*)providerName
+- (void)loadUserNameAndProfilePicForUser:(JRAuthenticatedUser *)user forProvider:(NSString *)providerName
 {
     DLog(@"");
     myUserName.text = [self uiName];
 
-    NSData *cachedProfilePic = [cachedProfilePics objectForKey:providerName];
+    NSData *cachedProfilePic = [self.cachedProfilePics objectForKey:providerName];
 
     if (cachedProfilePic)
-        [self setButtonImage:myProfilePic toData:cachedProfilePic andSetLoading:myProfilePicActivityIndicator toLoading:NO];
+        [self setButtonImage:myProfilePic toData:cachedProfilePic andSetLoading:myProfilePicActivityIndicator
+                   toLoading:NO];
     else if (user.photo)
         [self fetchProfilePicFromUrl:user.photo forProvider:providerName];
     else
@@ -866,20 +899,16 @@ Please try again later."
 #define USER_CONTENT_BOUNDING_BOX_EDITING_HEIGHT (USER_CONTENT_BOUNDING_BOX_DEFAULT_HEIGHT + EDITING_HEIGHT_OFFSET)
 #define CHARACTER_COUNT_DEFAULT_Y_ORIGIN          90
 #define CHARACTER_COUNT_EDITING_Y_ORIGIN         (CHARACTER_COUNT_DEFAULT_Y_ORIGIN         + EDITING_HEIGHT_OFFSET)
-//#define SCROLL_VIEW_DEFAULT_HEIGHT_PORTRAIT       264
-//#define SCROLL_VIEW_DEFAULT_HEIGHT_LANDSCAPE      116
-//#define SCROLL_VIEW_EDITING_HEIGHT_PORTRAIT       200
-//#define SCROLL_VIEW_EDITING_HEIGHT_LANDSCAPE      106
 
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
 {
     DLog(@"");
 
 #if JRENGAGE_INCLUDE_EMAIL_SMS
-    if (item.tag == [sessionData.sharingProviders count])
+    if (item.tag == [self.sessionData.sharingProviders count])
     {
         UIActionSheet *action;
-        switch (emailAndOrSmsIndex)
+        switch (self.emailAndOrSmsIndex)
         {
             case JR_EMAIL_ONLY:
                 [self sendEmail];
@@ -903,86 +932,89 @@ Please try again later."
     else
 #endif
     {
-        id key = [sessionData.sharingProviders objectAtIndex:(NSUInteger) item.tag];
-        self.selectedProvider = [[sessionData allProviders] objectForKey:key];
-        [sessionData setCurrentProvider:selectedProvider];
+        id key = [self.sessionData.sharingProviders objectAtIndex:(NSUInteger) item.tag];
+        self.selectedProvider = [[self.sessionData allProviders] objectForKey:key];
+        [self.sessionData setCurrentProvider:selectedProvider];
 
-        //self.loggedInUser = [sessionData authenticatedUserForProvider:selectedProvider];
+        self.loggedInUser = [self.sessionData authenticatedUserForProvider:selectedProvider];
 
-        selectedTab = (NSUInteger) item.tag;
+        self.selectedTab = (NSUInteger) item.tag;
 
         NSArray *colorArray = [selectedProvider.socialSharingProperties objectForKey:@"color_values"];
         if ([colorArray count] == 4)
         {
-            myShareToView.backgroundColor = [UIColor colorWithRed:[((NSString*)[colorArray objectAtIndex:0]) floatValue]
-                                                            green:[((NSString*)[colorArray objectAtIndex:1]) floatValue]
-                                                             blue:[((NSString*)[colorArray objectAtIndex:2]) floatValue]
-                                                            alpha:0.2];
+            UIColor *bgColor = [UIColor colorWithRed:[((NSString *) [colorArray objectAtIndex:0]) floatValue]
+                                               green:[((NSString *) [colorArray objectAtIndex:1]) floatValue]
+                                                blue:[((NSString *) [colorArray objectAtIndex:2]) floatValue]
+                                               alpha:0.2];
+            myShareToView.backgroundColor = bgColor;
 
-            myPreviewContainerRoundedRect.innerStrokeColor = [UIColor colorWithRed:[((NSString*)[colorArray objectAtIndex:0]) floatValue]
-                                                                    green:[((NSString*)[colorArray objectAtIndex:1]) floatValue]
-                                                                     blue:[((NSString*)[colorArray objectAtIndex:2]) floatValue]
-                                                                    alpha:1.0];
+            UIColor *innerColor = [UIColor colorWithRed:[((NSString *) [colorArray objectAtIndex:0]) floatValue]
+                                                  green:[((NSString *) [colorArray objectAtIndex:1]) floatValue]
+                                                   blue:[((NSString *) [colorArray objectAtIndex:2]) floatValue]
+                                                  alpha:1.0];
+            myPreviewContainerRoundedRect.innerStrokeColor = innerColor;
             [myPreviewContainerRoundedRect setNeedsDisplay];
         }
 
-        [myConnectAndShareButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:
-                                                                         @"button_%@_280x40.png",
-                                                                         selectedProvider.name]]
-                                           forState:UIControlStateNormal];
+        NSString *buttonFileName = [NSString stringWithFormat:@"button_%@_280x40.png", selectedProvider.name];
+        [myConnectAndShareButton setBackgroundImage:[UIImage imageNamed:buttonFileName] forState:UIControlStateNormal];
 
-        [myJustShareButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:
-                                                                   @"button_%@_135x40.png",
-                                                                   selectedProvider.name]]
-                                     forState:UIControlStateNormal];
+        NSString *buttonFileName2 = [NSString stringWithFormat:@"button_%@_135x40.png", selectedProvider.name];
+        [myJustShareButton setBackgroundImage:[UIImage imageNamed:buttonFileName2] forState:UIControlStateNormal];
 
-        myProviderIcon.image = [UIImage imageNamed:[NSString stringWithFormat:
-                                                    @"icon_%@_30x30.png",
-                                                    selectedProvider.name]];
+        NSString *providerIconFileName = [NSString stringWithFormat:@"icon_%@_30x30.png", selectedProvider.name];
+        myProviderIcon.image = [UIImage imageNamed:providerIconFileName];
 
-        if (![customInterface objectForKey:kJRSocialSharingTitleString] &&
-            ![customInterface objectForKey:kJRSocialSharingTitleView])
-            ((UILabel*)titleView).text = [NSString stringWithFormat:@"%@ %@",
-                                          NSLocalizedString(@"Share on", @""),
-                                          selectedProvider.friendlyName];
+        if (![self.customInterface objectForKey:kJRSocialSharingTitleString] &&
+                ![self.customInterface objectForKey:kJRSocialSharingTitleView])
+        {
+            ((UILabel *) self.titleView).text = [NSString stringWithFormat:@"%@ %@",
+                                                                           NSLocalizedString(@"Share on", @""),
+                                                                           selectedProvider.friendlyName];
+        }
+;
 
-        currentActivity.userGeneratedContent = myUserCommentTextView.text;
+        self.currentActivity.userGeneratedContent = myUserCommentTextView.text;
 
-        if (loggedInUser)
+        if (self.loggedInUser)
         {
             [self showUserAsLoggedIn:YES];
-            [self loadUserNameAndProfilePicForUser:loggedInUser forProvider:selectedProvider.name];
+            [self loadUserNameAndProfilePicForUser:self.loggedInUser forProvider:selectedProvider.name];
         }
         else
         {
             [self showUserAsLoggedIn:NO];
         }
 
-        if ([selectedProvider willThunkPublishToStatusForActivity:currentActivity])
-            maxCharacters = [selectedProvider maxCharactersForSetStatus];
+        BOOL thunkable = [selectedProvider willThunkPublishToStatusForActivity:self.currentActivity];
+        if (thunkable)
+            self.maxCharacters = [selectedProvider maxCharactersForSetStatus];
         else
-            maxCharacters = [selectedProvider maxCharactersForPublishActivity];
+            self.maxCharacters = [selectedProvider maxCharactersForPublishActivity];
 
+        CGFloat editing = self.weAreCurrentlyEditing ? PREVIEW_BOX_EDITING_Y_ORIGIN : PREVIEW_BOX_DEFAULT_Y_ORIGIN;
         if ([self shouldHideRemainingCharacterCount])
         {
             [myRemainingCharactersLabel setHidden:YES];
-            [myEntirePreviewContainer setFrame:
-                    CGRectMake(myEntirePreviewContainer.frame.origin.x,
-                               (weAreCurrentlyEditing ? PREVIEW_BOX_EDITING_Y_ORIGIN : PREVIEW_BOX_DEFAULT_Y_ORIGIN),
-                               myEntirePreviewContainer.frame.size.width,
-                               myEntirePreviewContainer.frame.size.height)];
+            CGRect frame = CGRectMake(myEntirePreviewContainer.frame.origin.x,
+                    editing,
+                    myEntirePreviewContainer.frame.size.width,
+                    myEntirePreviewContainer.frame.size.height);
+            [myEntirePreviewContainer setFrame:frame];
         }
         else
         {
             [myRemainingCharactersLabel setHidden:NO];
+            CGRect frame = CGRectMake(myEntirePreviewContainer.frame.origin.x,
+                    editing + 10,
+                    myEntirePreviewContainer.frame.size.width,
+                    myEntirePreviewContainer.frame.size.height);
             [myEntirePreviewContainer setFrame:
-                    CGRectMake(myEntirePreviewContainer.frame.origin.x,
-                               (weAreCurrentlyEditing ? PREVIEW_BOX_EDITING_Y_ORIGIN : PREVIEW_BOX_DEFAULT_Y_ORIGIN) + 10,
-                               myEntirePreviewContainer.frame.size.width,
-                               myEntirePreviewContainer.frame.size.height)];
+                                              frame];
         }
 
-        if ([selectedProvider doesContentReplaceAction] || [selectedProvider willThunkPublishToStatusForActivity:currentActivity])
+        if ([selectedProvider doesContentReplaceAction] || thunkable)
             [self updatePreviewTextWhenContentReplacesAction];
         else
             [self updatePreviewTextWhenContentDoesNotReplaceAction];
@@ -990,7 +1022,7 @@ Please try again later."
         [self updateCharacterCount];
 
         [self adjustPreviewContainerLayout];
-        [self showActivityAsShared:([alreadyShared containsObject:selectedProvider.name] ? YES : NO)];
+        [self showActivityAsShared:([self.alreadyShared containsObject:selectedProvider.name] ? YES : NO)];
     }
 }
 
@@ -1008,59 +1040,54 @@ Please try again later."
 {
     DLog(@"");
 
-    weAreCurrentlyEditing = YES;
+    self.weAreCurrentlyEditing = YES;
 
- /* If the user hasn't entered their own content already, then clear the text view.
-    Otherwise, just leave what they've already written. */
-    if (!hasEditedUserContentForActivityAlready)
+    /* If the user hasn't entered their own content already, then clear the text view.
+       Otherwise, just leave what they've already written. */
+    if (!self.hasEditedUserContentForActivityAlready)
     {
         myUserCommentTextView.text = @"";
-        hasEditedUserContentForActivityAlready = YES;
+        self.hasEditedUserContentForActivityAlready = YES;
     }
 
     CGFloat remainingCharacterOffset =
-                ([self shouldHideRemainingCharacterCount] ? 0 : 10);
+            ([self shouldHideRemainingCharacterCount] ? 0 : 10);
 
-    [alreadyShared removeAllObjects];
+    [self.alreadyShared removeAllObjects];
     [self showActivityAsShared:NO];
 
     [UIView beginAnimations:@"editing" context:nil];
 
-    [myUserCommentTextView setFrame:
-            CGRectMake(myUserCommentTextView.frame.origin.x,
-                       myUserCommentTextView.frame.origin.y,
-                       myUserCommentTextView.frame.size.width,
-                       USER_CONTENT_TEXT_VIEW_EDITING_HEIGHT)];
+    [myUserCommentTextView setFrame:CGRectMake(myUserCommentTextView.frame.origin.x,
+            myUserCommentTextView.frame.origin.y,
+            myUserCommentTextView.frame.size.width,
+            USER_CONTENT_TEXT_VIEW_EDITING_HEIGHT)];
 
-    [myUserCommentBoundingBox setFrame:
-            CGRectMake(myUserCommentBoundingBox.frame.origin.x,
-                       myUserCommentBoundingBox.frame.origin.y,
-                       myUserCommentBoundingBox.frame.size.width,
-                       USER_CONTENT_BOUNDING_BOX_EDITING_HEIGHT)];
+    [myUserCommentBoundingBox setFrame:CGRectMake(myUserCommentBoundingBox.frame.origin.x,
+            myUserCommentBoundingBox.frame.origin.y,
+            myUserCommentBoundingBox.frame.size.width,
+            USER_CONTENT_BOUNDING_BOX_EDITING_HEIGHT)];
 
-    [myRemainingCharactersLabel setFrame:
-            CGRectMake(myRemainingCharactersLabel.frame.origin.x,
-                       CHARACTER_COUNT_EDITING_Y_ORIGIN,
-                       myRemainingCharactersLabel.frame.size.width,
-                       myRemainingCharactersLabel.frame.size.height)];
+    [myRemainingCharactersLabel setFrame:CGRectMake(myRemainingCharactersLabel.frame.origin.x,
+            CHARACTER_COUNT_EDITING_Y_ORIGIN,
+            myRemainingCharactersLabel.frame.size.width,
+            myRemainingCharactersLabel.frame.size.height)];
 
-    [myEntirePreviewContainer setFrame:
-            CGRectMake(myEntirePreviewContainer.frame.origin.x,
-                       PREVIEW_BOX_EDITING_Y_ORIGIN + remainingCharacterOffset,
-                       myEntirePreviewContainer.frame.size.width,
-                       myEntirePreviewContainer.frame.size.height)];
+    [myEntirePreviewContainer setFrame:CGRectMake(myEntirePreviewContainer.frame.origin.x,
+            PREVIEW_BOX_EDITING_Y_ORIGIN + remainingCharacterOffset,
+            myEntirePreviewContainer.frame.size.width,
+            myEntirePreviewContainer.frame.size.height)];
 
     CGFloat scrollViewContentHeight = myEntirePreviewContainer.frame.origin.y +
-                                      myEntirePreviewContainer.frame.size.height + 10;
+            myEntirePreviewContainer.frame.size.height + 10;
 
     if (IS_IPAD && (scrollViewContentHeight < myScrollView.frame.size.height))
         scrollViewContentHeight = myScrollView.frame.size.height;
 
-    [myPadGrayEditingViewTop setFrame:
-            CGRectMake(myPadGrayEditingViewTop.frame.origin.x,
-                       myPadGrayEditingViewTop.frame.origin.y,
-                       myPadGrayEditingViewTop.frame.size.width,
-                       scrollViewContentHeight)];
+    [myPadGrayEditingViewTop setFrame:CGRectMake(myPadGrayEditingViewTop.frame.origin.x,
+            myPadGrayEditingViewTop.frame.origin.y,
+            myPadGrayEditingViewTop.frame.size.width,
+            scrollViewContentHeight)];
 
     [myScrollView setContentSize:CGSizeMake(myScrollView.frame.size.width, scrollViewContentHeight)];
 
@@ -1072,22 +1099,22 @@ Please try again later."
     }
     else
     {
-        [myPadGrayEditingViewTop    setHidden:NO];
+        [myPadGrayEditingViewTop setHidden:NO];
         [myPadGrayEditingViewBottom setHidden:NO];
-        [myPadGrayEditingViewTop    setAlpha:0.6];
+        [myPadGrayEditingViewTop setAlpha:0.6];
         [myPadGrayEditingViewBottom setAlpha:0.6];
-        [myUserCommentBoundingBox   setAlpha:1.0];
+        [myUserCommentBoundingBox setAlpha:1.0];
         [UIView commitAnimations];
     }
 
     UIBarButtonItem *doneButton = [[[UIBarButtonItem alloc]
-                        initWithBarButtonSystemItem:UIBarButtonSystemItemDone
-                                             target:self
-                                             action:@selector(doneButtonPressed:)] autorelease];
+            initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                                 target:self
+                                 action:@selector(doneButtonPressed:)] autorelease];
 
-    self.navigationItem.rightBarButtonItem         = doneButton;
+    self.navigationItem.rightBarButtonItem = doneButton;
     self.navigationItem.rightBarButtonItem.enabled = YES;
-    self.navigationItem.rightBarButtonItem.style   = UIBarButtonItemStyleDone;
+    self.navigationItem.rightBarButtonItem.style = UIBarButtonItemStyleDone;
 
     return YES;
 }
@@ -1096,7 +1123,7 @@ Please try again later."
 {
     DLog(@"");
 
-    weAreCurrentlyEditing = NO;
+    self.weAreCurrentlyEditing = NO;
 
     /* If the user started to enter something, but didn't end up keeping anything, set
     the text back to what the activity's action was. (Aside: We could also set
@@ -1104,38 +1131,34 @@ Please try again later."
     they go to edit.  Currently, on second edit, the action stays, which I kinda like) */
     if (myUserCommentTextView.text.length == 0)
     {
-        myUserCommentTextView.text = currentActivity.action;
+        myUserCommentTextView.text = self.currentActivity.action;
     }
 
     CGFloat remainingCharacterOffset = ([self shouldHideRemainingCharacterCount] ? 0 : 10);
 
     [UIView beginAnimations:@"editing" context:nil];
-    [myUserCommentTextView setFrame:
-            CGRectMake(myUserCommentTextView.frame.origin.x,
-                       myUserCommentTextView.frame.origin.y,
-                       myUserCommentTextView.frame.size.width,
-                       USER_CONTENT_TEXT_VIEW_DEFAULT_HEIGHT)];
+    [myUserCommentTextView setFrame:CGRectMake(myUserCommentTextView.frame.origin.x,
+            myUserCommentTextView.frame.origin.y,
+            myUserCommentTextView.frame.size.width,
+            USER_CONTENT_TEXT_VIEW_DEFAULT_HEIGHT)];
 
-    [myUserCommentBoundingBox setFrame:
-            CGRectMake(myUserCommentBoundingBox.frame.origin.x,
-                       myUserCommentBoundingBox.frame.origin.y,
-                       myUserCommentBoundingBox.frame.size.width,
-                       USER_CONTENT_BOUNDING_BOX_DEFAULT_HEIGHT)];
+    [myUserCommentBoundingBox setFrame:CGRectMake(myUserCommentBoundingBox.frame.origin.x,
+            myUserCommentBoundingBox.frame.origin.y,
+            myUserCommentBoundingBox.frame.size.width,
+            USER_CONTENT_BOUNDING_BOX_DEFAULT_HEIGHT)];
 
-    [myRemainingCharactersLabel setFrame:
-            CGRectMake(myRemainingCharactersLabel.frame.origin.x,
-                       CHARACTER_COUNT_DEFAULT_Y_ORIGIN,
-                       myRemainingCharactersLabel.frame.size.width,
-                       myRemainingCharactersLabel.frame.size.height)];
+    [myRemainingCharactersLabel setFrame:CGRectMake(myRemainingCharactersLabel.frame.origin.x,
+            CHARACTER_COUNT_DEFAULT_Y_ORIGIN,
+            myRemainingCharactersLabel.frame.size.width,
+            myRemainingCharactersLabel.frame.size.height)];
 
-    [myEntirePreviewContainer setFrame:
-            CGRectMake(myEntirePreviewContainer.frame.origin.x,
-                       PREVIEW_BOX_DEFAULT_Y_ORIGIN + remainingCharacterOffset,
-                       myEntirePreviewContainer.frame.size.width,
-                       myEntirePreviewContainer.frame.size.height)];
+    [myEntirePreviewContainer setFrame:CGRectMake(myEntirePreviewContainer.frame.origin.x,
+            PREVIEW_BOX_DEFAULT_Y_ORIGIN + remainingCharacterOffset,
+            myEntirePreviewContainer.frame.size.width,
+            myEntirePreviewContainer.frame.size.height)];
 
     CGFloat scrollViewContentHeight = myEntirePreviewContainer.frame.origin.y +
-                                      myEntirePreviewContainer.frame.size.height + 10;
+            myEntirePreviewContainer.frame.size.height + 10;
 
     if (IS_IPAD && (scrollViewContentHeight < myScrollView.frame.size.height))
         scrollViewContentHeight = myScrollView.frame.size.height;
@@ -1143,10 +1166,10 @@ Please try again later."
     DLog(@"scrollViewContentHeight: %f", scrollViewContentHeight);
 
     [myPadGrayEditingViewTop setFrame:
-             CGRectMake(myPadGrayEditingViewTop.frame.origin.x,
-                        myPadGrayEditingViewTop.frame.origin.y,
-                        myPadGrayEditingViewTop.frame.size.width,
-                        scrollViewContentHeight)];
+                                     CGRectMake(myPadGrayEditingViewTop.frame.origin.x,
+                                             myPadGrayEditingViewTop.frame.origin.y,
+                                             myPadGrayEditingViewTop.frame.size.width,
+                                             scrollViewContentHeight)];
 
     [myScrollView setContentSize:CGSizeMake(myScrollView.frame.size.width, scrollViewContentHeight)];
 
@@ -1167,18 +1190,18 @@ Please try again later."
     [myPreviewContainerRoundedRect setNeedsDisplay];
 
     UIBarButtonItem *editButton = [[[UIBarButtonItem alloc]
-                        initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
-                                             target:self
-                                             action:@selector(editButtonPressed:)] autorelease];
+            initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
+                                 target:self
+                                 action:@selector(editButtonPressed:)] autorelease];
 
-    self.navigationItem.rightBarButtonItem         = editButton;
+    self.navigationItem.rightBarButtonItem = editButton;
     self.navigationItem.rightBarButtonItem.enabled = YES;
-    self.navigationItem.rightBarButtonItem.style   = UIBarButtonItemStyleBordered;
+    self.navigationItem.rightBarButtonItem.style = UIBarButtonItemStyleBordered;
 
     if (myUserCommentTextView.text.length > 0)
         [myUserCommentTextView scrollRangeToVisible:NSMakeRange(0, 1)];
 
-    currentActivity.userGeneratedContent = myUserCommentTextView.text;
+    self.currentActivity.userGeneratedContent = myUserCommentTextView.text;
 
     return YES;
 }
@@ -1186,7 +1209,7 @@ Please try again later."
 - (void)textViewDidChange:(UITextView *)textView
 {
     if ([selectedProvider doesContentReplaceAction] ||
-            [selectedProvider willThunkPublishToStatusForActivity:currentActivity])
+            [selectedProvider willThunkPublishToStatusForActivity:self.currentActivity])
         [self updatePreviewTextWhenContentReplacesAction];
     else
         [self updatePreviewTextWhenContentDoesNotReplaceAction];
@@ -1204,8 +1227,8 @@ Please try again later."
 
     email.mailComposeDelegate = self;
 
-    [email setSubject:currentActivity.email.subject];
-    [email setMessageBody:currentActivity.email.messageBody isHTML:currentActivity.email.isHtml];
+    [email setSubject:self.currentActivity.email.subject];
+    [email setMessageBody:self.currentActivity.email.messageBody isHTML:self.currentActivity.email.isHtml];
 
     [self presentModalViewController:email animated:YES];
 #endif
@@ -1220,20 +1243,20 @@ Please try again later."
         return;
 
     sms.messageComposeDelegate = self;
-    sms.body = currentActivity.sms.message;
+    sms.body = self.currentActivity.sms.message;
 
     [self presentModalViewController:sms animated:YES];
 
 #endif
 }
 
-- (void)logUserOutForProvider:(NSString*)provider
+- (void)logUserOutForProvider:(NSString *)provider
 {
-    [sessionData forgetAuthenticatedUserForProvider:selectedProvider.name];
-    [cachedProfilePics removeObjectForKey:selectedProvider.name];
-    [alreadyShared removeObject:provider];
+    [self.sessionData forgetAuthenticatedUserForProvider:selectedProvider.name];
+    [self.cachedProfilePics removeObjectForKey:selectedProvider.name];
+    [self.alreadyShared removeObject:provider];
 
-    [loggedInUser release], loggedInUser = nil;
+    self.loggedInUser = nil;
 
     [self showUserAsLoggedIn:NO];
     [self showActivityAsShared:NO];
@@ -1243,13 +1266,13 @@ Please try again later."
 {
     DLog(@"");
 
-    userIsAttemptingToSignOut = YES;
+    self.userIsAttemptingToSignOut = YES;
 
-    UIActionSheet *action = [[[UIActionSheet alloc] initWithTitle:[NSString stringWithFormat:
-                                                                   @"You are currently signed in to %@%@. Would you like to sign out?",
-                                                                   selectedProvider.friendlyName,
-                                                                   ([self uiName]) ?
-                                                                   [NSString stringWithFormat:@" as %@", [self uiName]] : @""]
+    NSObject *nameString = ([self uiName]) ? [NSString stringWithFormat:@" as %@", [self uiName]] : @"";
+    NSString *title = [NSString stringWithFormat:@"You are currently signed in to %@%@. Would you like to sign out?",
+                                                 selectedProvider.friendlyName,
+                                                 nameString];
+    UIActionSheet *action = [[[UIActionSheet alloc] initWithTitle:title
                                                          delegate:self
                                                 cancelButtonTitle:@"Cancel"
                                            destructiveButtonTitle:@"Sign Out"
@@ -1258,48 +1281,48 @@ Please try again later."
     [action showFromTabBar:myTabBar];
 }
 
-- (void)actionSheet:(UIActionSheet*)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     switch (buttonIndex)
     {
         case 0:
-            if (!userIsAttemptingToSignOut)
+            if (!self.userIsAttemptingToSignOut)
                 [self sendEmail];
             else
                 [self logUserOutForProvider:selectedProvider.name];
             break;
         case 1:
-            if (!userIsAttemptingToSignOut)
+            if (!self.userIsAttemptingToSignOut)
                 [self sendSMS];
             break;
         case 2:
-            myTabBar.selectedItem = [myTabBar.items objectAtIndex:selectedTab];
-            [self tabBar:myTabBar didSelectItem:[myTabBar.items objectAtIndex:selectedTab]];
+            myTabBar.selectedItem = [myTabBar.items objectAtIndex:self.selectedTab];
+            [self tabBar:myTabBar didSelectItem:[myTabBar.items objectAtIndex:self.selectedTab]];
         default:
             break;
     }
 
-    userIsAttemptingToSignOut = NO;
+    self.userIsAttemptingToSignOut = NO;
 }
 
-- (void)actionSheetCancel:(UIActionSheet*)actionSheet
+- (void)actionSheetCancel:(UIActionSheet *)actionSheet
 {
-    if (!userIsAttemptingToSignOut)
+    if (!self.userIsAttemptingToSignOut)
     {
-        myTabBar.selectedItem = [myTabBar.items objectAtIndex:selectedTab];
-        [self tabBar:myTabBar didSelectItem:[myTabBar.items objectAtIndex:selectedTab]];
+        myTabBar.selectedItem = [myTabBar.items objectAtIndex:self.selectedTab];
+        [self tabBar:myTabBar didSelectItem:[myTabBar.items objectAtIndex:self.selectedTab]];
     }
 
-    userIsAttemptingToSignOut = NO;
+    self.userIsAttemptingToSignOut = NO;
 }
 
-- (void)setButtonImage:(UIButton*)button toData:(NSData*)data andSetLoading:(UIActivityIndicatorView*)actIndicator
+- (void)setButtonImage:(UIButton *)button toData:(NSData *)data andSetLoading:(UIActivityIndicatorView *)actIndicator
              toLoading:(BOOL)loading
 {
     DLog (@"");
 
     if (!data && !loading)
-        DLog (@"Problem downloading image");
+    DLog (@"Problem downloading image");
 
     if (!data)
     {
@@ -1326,14 +1349,14 @@ Please try again later."
     [myProfilePicActivityIndicator stopAnimating];
 }
 
-- (void)fetchProfilePicFromUrl:(NSString*)profilePicUrl forProvider:(NSString*)providerName
+- (void)fetchProfilePicFromUrl:(NSString *)profilePicUrl forProvider:(NSString *)providerName
 {
     DLog(@"");
     [self setButtonImage:myProfilePic toData:nil andSetLoading:myProfilePicActivityIndicator toLoading:YES];
 
-    NSURL        *url     = [NSURL URLWithString:profilePicUrl];
+    NSURL *url = [NSURL URLWithString:profilePicUrl];
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
-    NSString     *tag     = [[providerName copy] autorelease];
+    NSString *tag = [[providerName copy] autorelease];
 
     if (![JRConnectionManager createConnectionFromRequest:request forDelegate:self returnFullResponse:YES withTag:tag])
         [self setProfilePicToDefaultPic];
@@ -1343,31 +1366,36 @@ Please try again later."
 
 - (void)downloadMediaThumbnailsForActivity
 {
-    JRMediaObject *media = [currentActivity.media objectAtIndex:0];
+    JRMediaObject *media = [self.currentActivity.media objectAtIndex:0];
     if ([media isKindOfClass:[JRImageMediaObject class]])
     {
-        DLog (@"Downloading image thumbnail: %@", ((JRImageMediaObject*)media).src);
+        DLog (@"Downloading image thumbnail: %@", ((JRImageMediaObject *) media).src);
         [self setButtonImage:myMediaThumbnailView toData:nil andSetLoading:myMediaThumbnailActivityIndicator
                    toLoading:YES];
 
-        NSURL        *url     = [NSURL URLWithString:((JRImageMediaObject *) media).src];
+        NSURL *url = [NSURL URLWithString:((JRImageMediaObject *) media).src];
         NSURLRequest *request = [[[NSURLRequest alloc] initWithURL:url] autorelease];
-        NSString     *tag     = @"getThumbnail";
+        NSString *tag = @"getThumbnail";
 
-        if (![JRConnectionManager createConnectionFromRequest:request forDelegate:self returnFullResponse:YES withTag:tag])
-            [self setButtonImage:myMediaThumbnailView toData:nil andSetLoading:myMediaThumbnailActivityIndicator toLoading:NO];
+        if (![JRConnectionManager createConnectionFromRequest:request forDelegate:self returnFullResponse:YES
+                                                      withTag:tag])
+            [self setButtonImage:myMediaThumbnailView toData:nil andSetLoading:myMediaThumbnailActivityIndicator
+                       toLoading:NO];
     }
     else if ([media isKindOfClass:[JRFlashMediaObject class]])
     {
-        DLog (@"Downloading image thumbnail: %@", ((JRFlashMediaObject*)media).imgsrc);
-        [self setButtonImage:myMediaThumbnailView toData:nil andSetLoading:myMediaThumbnailActivityIndicator toLoading:YES];
+        DLog (@"Downloading image thumbnail: %@", ((JRFlashMediaObject *) media).imgsrc);
+        [self setButtonImage:myMediaThumbnailView toData:nil andSetLoading:myMediaThumbnailActivityIndicator
+                   toLoading:YES];
 
-        NSURL        *url     = [NSURL URLWithString:((JRFlashMediaObject *) media).imgsrc];
+        NSURL *url = [NSURL URLWithString:((JRFlashMediaObject *) media).imgsrc];
         NSURLRequest *request = [[[NSURLRequest alloc] initWithURL:url] autorelease];
-        NSString     *tag     = @"getThumbnail";
+        NSString *tag = @"getThumbnail";
 
-        if (![JRConnectionManager createConnectionFromRequest:request forDelegate:self returnFullResponse:YES withTag:tag])
-            [self setButtonImage:myMediaThumbnailView toData:nil andSetLoading:myMediaThumbnailActivityIndicator toLoading:NO];
+        if (![JRConnectionManager createConnectionFromRequest:request forDelegate:self returnFullResponse:YES
+                                                      withTag:tag])
+            [self setButtonImage:myMediaThumbnailView toData:nil andSetLoading:myMediaThumbnailActivityIndicator
+                       toLoading:NO];
     }
     else
     {
@@ -1390,10 +1418,10 @@ Please try again later."
 
     /* Check if the activity has an email object, sms string, or both and if we can send either or both.
      If so, emailOrSms will be 0, 1, 2, or 3, accordingly. */
-    if (currentActivity.email && [mailClass canSendMail])  /* Add 1. */
-        emailAndOrSmsIndex += JR_EMAIL;
-    if (currentActivity.sms && [messageClass canSendText]) /* Add 2. */
-        emailAndOrSmsIndex += JR_SMS;
+    if (self.currentActivity.email && [mailClass canSendMail])  /* Add 1. */
+        self.emailAndOrSmsIndex += JR_EMAIL;
+    if (self.currentActivity.sms && [messageClass canSendText]) /* Add 2. */
+        self.emailAndOrSmsIndex += JR_SMS;
 
     return;// emailAndOrSmsIndex;
 }
@@ -1405,84 +1433,86 @@ Please try again later."
 #define MBC_MAX_HEIGHT       73.0
 #define MBC_EXTERIOR_PADDING 10.0
 #define MBC_INTERIOR_PADDING 2.0
+
 - (void)loadActivityToViewForFirstTime
 {
     DLog(@"");
 
- /* If the activity doesn't have a url, set the shortened url to an empty string,
-  * otherwise, if it's nil, the updatePreviewText func will say "shortening url..." */
-    if (!currentActivity.url)
-        shortenedActivityUrl = @"";
+    /* If the activity doesn't have a url, set the shortened url to an empty string,
+     * otherwise, if it's nil, the updatePreviewText func will say "shortening url..." */
+    if (!self.currentActivity.url)
+        self.shortenedActivityUrl = @"";
 
- /* Set the user-comment text view's text and preview label to the activity's action.
-  * We are safe using "updatePreviewTextWhenContentReplacesAction" here, because at
-  * this point the content IS the action*/
-    myUserCommentTextView.text = currentActivity.action;
+    /* Set the user-comment text view's text and preview label to the activity's action.
+     * We are safe using "updatePreviewTextWhenContentReplacesAction" here, because at
+     * this point the content IS the action*/
+    myUserCommentTextView.text = self.currentActivity.action;
     [self updatePreviewTextWhenContentReplacesAction];
 
- /* Determine if the activity has rich data (media, a title, or a description) or not */
-    if ((!currentActivity.resourceTitle || [currentActivity.resourceTitle isEqualToString:@""]) &&
-        (!currentActivity.resourceDescription || [currentActivity.resourceDescription isEqualToString:@""]) &&
-        ([currentActivity.media count] == 0 || mediaThumbnailFailedToDownload))
-        activityHasRichData = NO;
+    /* Determine if the activity has rich data (media, a title, or a description) or not */
+    if (![self.currentActivity.resourceTitle length] && (![self.currentActivity.resourceDescription length]) &&
+            ([self.currentActivity.media count] == 0 || self.mediaThumbnailFailedToDownload))
+        self.activityHasRichData = NO;
     else
-        activityHasRichData = YES;
+        self.activityHasRichData = YES;
 
- /* If it doesn't, we're done */
-    if (activityHasRichData == NO)
+    /* If it doesn't, we're done */
+    if (self.activityHasRichData == NO)
     {
         [myRichDataContainer setHidden:YES];
         return;
     }
 
- /* Now, determine the sizes and appearance of the media box components (title, description, and media) based on
-    their size and presence */
+    /* Now, determine the sizes and appearance of the media box components (title, description, and media) based on
+       their size and presence */
 
- /* Set up the default coordinates for the title and description and default height of the media box */
+    /* Set up the default coordinates for the title and description and default height of the media box */
     CGFloat title_x = 46.0, title_y = 5.0, title_w = 224.0, title_h = 15.0;
     CGFloat descr_x = 46.0, descr_y = 22.0, descr_w = 224.0, descr_h = 56.0;
-    mediaBoxHeight = 48.0; /* This is the minimum height of the media box needed for the media thumbnail and padding
-                              If the title and descr are large enough, this size grows, and if there is no media
-                              and the title and descr are small, it shrinks. */
 
- /* If we have media, and downloading its thumbnail hasn't failed, download it */
-    if ([currentActivity.media count] > 0 && !mediaThumbnailFailedToDownload)
+    /* This is the minimum height of the media box needed for the media thumbnail and padding If the title and descr
+    are large enough, this size grows, and if there is no media and the title and descr are small, it shrinks. */
+    self.mediaBoxHeight = 48.0;
+
+    /* If we have media, and downloading its thumbnail hasn't failed, download it */
+    if ([self.currentActivity.media count] > 0 && !self.mediaThumbnailFailedToDownload)
     {
         [self downloadMediaThumbnailsForActivity];
     }
 
- /* Otherwise, reposition the title and descr so that their x position equals 8.0 and their width is 262.0 */
+            /* Otherwise, reposition the title and descr so that their x position equals 8.0 and their width is 262.0 */
     else
     {
         title_x = descr_x = 8.0;
         title_w = descr_w = 262.0;
     }
 
- /* If there is a title, set the title label's text and determine how much space the
-    activity's title will potentially need */
+    /* If there is a title, set the title label's text and determine how much space the
+       activity's title will potentially need */
     CGFloat shouldBeTitleHeight = 0;
-    if (currentActivity.resourceTitle)
+    if (self.currentActivity.resourceTitle)
     {
-        myTitleLabel.text = currentActivity.resourceTitle;
+        myTitleLabel.text = self.currentActivity.resourceTitle;
 
+        // TODO: Verify change made below
         CGSize shouldBeTitleSize =
-                       [myTitleLabel.text sizeWithFont:myTitleLabel.font                        // TODO: Verify change made below
-                                     constrainedToSize:CGSizeMake(title_w, MBC_MAX_HEIGHT)//([currentActivity.media count] > 0 && !mediaThumbnailFailedToDownload) ? 224 : 262, 73)
-                                         lineBreakMode:JR_LINE_BREAK_MODE_TAIL_TRUNCATION];
+                [myTitleLabel.text sizeWithFont:myTitleLabel.font
+                              constrainedToSize:CGSizeMake(title_w, MBC_MAX_HEIGHT)
+                                  lineBreakMode:JR_LINE_BREAK_MODE_TAIL_TRUNCATION];
         shouldBeTitleHeight = shouldBeTitleSize.height;
     }
 
- /* If there is a description, set the description label's text and determine how much
-    space the activity's description will potentially need */
+    /* If there is a description, set the description label's text and determine how much
+       space the activity's description will potentially need */
     CGFloat shouldBeDescriptionHeight = 0;
-    if (currentActivity.resourceDescription)
+    if (self.currentActivity.resourceDescription)
     {
-        myDescriptionLabel.text = currentActivity.resourceDescription;
+        myDescriptionLabel.text = self.currentActivity.resourceDescription;
 
         CGSize shouldBeDescriptionSize =
-                       [myDescriptionLabel.text sizeWithFont:myDescriptionLabel.font
-                                           constrainedToSize:CGSizeMake(descr_w, MBC_MAX_HEIGHT)//([currentActivity.media count] > 0 && !mediaThumbnailFailedToDownload) ? 224 : 262, 73)
-                                               lineBreakMode:JR_LINE_BREAK_MODE_TAIL_TRUNCATION];
+                [myDescriptionLabel.text sizeWithFont:myDescriptionLabel.font
+                                    constrainedToSize:CGSizeMake(descr_w, MBC_MAX_HEIGHT)
+                                        lineBreakMode:JR_LINE_BREAK_MODE_TAIL_TRUNCATION];
         shouldBeDescriptionHeight = shouldBeDescriptionSize.height;
     }
 
@@ -1495,8 +1525,8 @@ Please try again later."
         //return;
     }
 
-    /* There is no title but there is a description */
-    else if (shouldBeTitleHeight == 0 && shouldBeDescriptionHeight != 0 )
+            /* There is no title but there is a description */
+    else if (shouldBeTitleHeight == 0 && shouldBeDescriptionHeight != 0)
     {
         descr_y = 5.0;
 
@@ -1508,14 +1538,15 @@ Please try again later."
 
         /* If the description label is taller than our media thumbnail, or if we don't have a media thumbnail, set the
         media box height to the description label plus padding */
-        if ((descr_h > 38.0) || ([currentActivity.media count] == 0))
-            mediaBoxHeight = descr_h + MBC_EXTERIOR_PADDING; /* The padding above and below the title/description */
+        if ((descr_h > 38.0) || ([self.currentActivity.media count] == 0))
+            self.mediaBoxHeight = descr_h + MBC_EXTERIOR_PADDING; /* The padding above and below the
+            title/description */
 
         [myTitleLabel setHidden:YES];
     }
 
-    /* There is no description but there is a title */
-    else if (shouldBeDescriptionHeight == 0 && shouldBeTitleHeight != 0 )
+            /* There is no description but there is a title */
+    else if (shouldBeDescriptionHeight == 0 && shouldBeTitleHeight != 0)
     {
         if (shouldBeTitleHeight <= MBC_MAX_HEIGHT)
             title_h = shouldBeTitleHeight;
@@ -1523,45 +1554,46 @@ Please try again later."
             title_h = 60.0; /* The height of 4 lines of 12.0 pt. bold font, which is the most we can fit when we
                                don't have a title */
 
-     /* If the title label is taller than our media thumbnail, or if we don't have a media thumbnail, set the media
-        box height to the title label plus padding */
-        if ((title_h > 38.0) || ([currentActivity.media count] == 0))
-            mediaBoxHeight = title_h + MBC_EXTERIOR_PADDING; /* The padding above and below the title/description */
+        /* If the title label is taller than our media thumbnail, or if we don't have a media thumbnail, set the media
+           box height to the title label plus padding */
+        if ((title_h > 38.0) || ([self.currentActivity.media count] == 0))
+            self.mediaBoxHeight = title_h + MBC_EXTERIOR_PADDING; /* The padding above and below the title / 
+            description */
 
         [myDescriptionLabel setHidden:YES];
     }
 
-    /* There is a title and a description*/
+            /* There is a title and a description*/
     else /* if (shouldBeDescriptionHeight != 0 && shouldBeTitleHeight !=0 ) */
     {
         /* If both the title and description labels fit into the media box content height */
         if (shouldBeTitleHeight + shouldBeDescriptionHeight + MBC_INTERIOR_PADDING < MBC_MAX_HEIGHT) //71)
         {
-          /* Let them keep their heights, and position the description label */
+            /* Let them keep their heights, and position the description label */
             title_h = shouldBeTitleHeight;
             descr_h = shouldBeDescriptionHeight;
             descr_y = shouldBeTitleHeight + 7.0; /* Title height + top padding + interior padding */
 
-         /* If the title label and description labels are together taller than our media thumbnail, or if we don't
-            have a media thumbnail, set the media box height to the title label height plus the description label
-            height plus padding */
-            if ((shouldBeTitleHeight + shouldBeDescriptionHeight > 38.0) || ([currentActivity.media count] == 0))
-                mediaBoxHeight = shouldBeTitleHeight + shouldBeDescriptionHeight + MBC_EXTERIOR_PADDING +
+            /* If the title label and description labels are together taller than our media thumbnail, or if we don't
+               have a media thumbnail, set the media box height to the title label height plus the description label
+               height plus padding */
+            if ((shouldBeTitleHeight + shouldBeDescriptionHeight > 38.0) || ([self.currentActivity.media count] == 0))
+                self.mediaBoxHeight = shouldBeTitleHeight + shouldBeDescriptionHeight + MBC_EXTERIOR_PADDING +
                         MBC_INTERIOR_PADDING;
         }
 
-        /* If both the title and description labels DON'T fit into the media box content height */
+                /* If both the title and description labels DON'T fit into the media box content height */
         else if (shouldBeTitleHeight + shouldBeDescriptionHeight + MBC_INTERIOR_PADDING >= MBC_MAX_HEIGHT)
         {
-         /* If the title height is taller than one line of text and the description height is taller than four
-         lines... */
+            /* If the title height is taller than one line of text and the description height is taller than four
+            lines... */
             if (shouldBeTitleHeight >= 15 && shouldBeDescriptionHeight >= 56)
             {
                 /* ... then keep things as they are (i.e., 1 line and 4 lines) */
             }
 
-         /* If the title height is taller than one line of text and the description height is SHORTER than four
-         lines... */
+                    /* If the title height is taller than one line of text and the description height is SHORTER than 
+                    four lines... */
             else if (shouldBeTitleHeight >= 15 && shouldBeDescriptionHeight < 56)
             {
                 /* ... then make the description as tall as it needs to be and adjust the title to fit (e.g., 2 lines
@@ -1569,9 +1601,9 @@ Please try again later."
                 CGSize titleSize =
                         CGSizeMake(title_w, MBC_MAX_HEIGHT - MBC_INTERIOR_PADDING - shouldBeDescriptionHeight);
                 CGSize shouldBeTitleSize =
-                               [myTitleLabel.text sizeWithFont:myTitleLabel.font
-                                             constrainedToSize:titleSize
-                                                 lineBreakMode:JR_LINE_BREAK_MODE_TAIL_TRUNCATION];
+                        [myTitleLabel.text sizeWithFont:myTitleLabel.font
+                                      constrainedToSize:titleSize
+                                          lineBreakMode:JR_LINE_BREAK_MODE_TAIL_TRUNCATION];
                 shouldBeTitleHeight = shouldBeTitleSize.height;
 
                 title_h = shouldBeTitleHeight;
@@ -1587,8 +1619,8 @@ Please try again later."
                 /* moot case */
             }
 
-         /* Because when we have both a title and descr, their combined height will always be more than 30?? */
-            mediaBoxHeight = title_h + descr_h + 12.0;
+            /* Because when we have both a title and descr, their combined height will always be more than 30?? */
+            self.mediaBoxHeight = title_h + descr_h + 12.0;
         }
     }
 
@@ -1596,14 +1628,14 @@ Please try again later."
     [myTitleLabel setFrame:CGRectMake(title_x, title_y, title_w, title_h)];
     [myDescriptionLabel setFrame:CGRectMake(descr_x, descr_y, descr_w, descr_h)];
     [myRichDataContainer setFrame:CGRectMake(myRichDataContainer.frame.origin.x,
-                                             previewLabelHeight + 20.0,
-                                             myRichDataContainer.frame.size.width,
-                                             mediaBoxHeight)];
+            self.previewLabelHeight + 20.0,
+            myRichDataContainer.frame.size.width,
+            self.mediaBoxHeight)];
     [myRichDataContainer setNeedsDisplay];
     [myEntirePreviewContainer setFrame:CGRectMake(myEntirePreviewContainer.frame.origin.x,
-                                            myEntirePreviewContainer.frame.origin.y,
-                                            myEntirePreviewContainer.frame.size.width,
-                                            mediaBoxHeight + previewLabelHeight + 37.0)];
+            myEntirePreviewContainer.frame.origin.y,
+            myEntirePreviewContainer.frame.size.width,
+            self.mediaBoxHeight + self.previewLabelHeight + 37.0)];
 
     [self adjustPreviewContainerLayout];
 }
@@ -1612,18 +1644,19 @@ Please try again later."
 {
     DLog(@"");
 
-    NSUInteger numberOfTabs = [sessionData.sharingProviders count];
+    NSUInteger numberOfTabs = [self.sessionData.sharingProviders count];
     NSUInteger indexOfLastUsedProvider = 0;
-    BOOL weShouldAddTabForEmailAndOrSms = (BOOL)emailAndOrSmsIndex;
+    BOOL weShouldAddTabForEmailAndOrSms = (BOOL) self.emailAndOrSmsIndex;
 
     if (weShouldAddTabForEmailAndOrSms)
         numberOfTabs++;
 
     NSMutableArray *providerTabArr = [[NSMutableArray alloc] initWithCapacity:numberOfTabs];
 
-    for (NSUInteger i = 0; i < [sessionData.sharingProviders count]; i++)
+    for (NSUInteger i = 0; i < [self.sessionData.sharingProviders count]; i++)
     {
-        JRProvider *provider = [sessionData.allProviders objectForKey:[sessionData.sharingProviders objectAtIndex:i]];
+        JRProvider *provider =
+                [self.sessionData.allProviders objectForKey:[self.sessionData.sharingProviders objectAtIndex:i]];
 
         if (!provider)
             break;
@@ -1635,20 +1668,20 @@ Please try again later."
 
         [providerTabArr insertObject:providerTab atIndex:[providerTabArr count]];
 
-        if ([provider isEqualToReturningProvider:[sessionData returningSharingProvider]])
+        if ([provider isEqualToReturningProvider:[self.sessionData returningSharingProvider]])
             indexOfLastUsedProvider = i;
     }
 
     if (weShouldAddTabForEmailAndOrSms)
     {
 
-        NSString *simpleStrArray[6] = { @"Email", @"Sms", @"Email/SMS", @"mail", @"sms", @"mail_sms" };
+        NSString *simpleStrArray[6] = {@"Email", @"Sms", @"Email/SMS", @"mail", @"sms", @"mail_sms"};
 
-        UITabBarItem *emailTab =  [[[UITabBarItem alloc] initWithTitle:simpleStrArray[((int)emailAndOrSmsIndex - 1)]
-                                                                 image:[UIImage imageNamed:
-                                                                        [NSString stringWithFormat:@"icon_bw_%@_30x30.png",
-                                                                         simpleStrArray[((int)emailAndOrSmsIndex + 2)]]]
-                                                                   tag:[providerTabArr count]] autorelease];
+        NSString *fileName = [NSString stringWithFormat:@"icon_bw_%@_30x30.png",
+                                                        simpleStrArray[self.emailAndOrSmsIndex + 2]];
+        UITabBarItem *emailTab = [[[UITabBarItem alloc] initWithTitle:simpleStrArray[self.emailAndOrSmsIndex - 1]
+                                                                image:[UIImage imageNamed:fileName]
+                                                                  tag:[providerTabArr count]] autorelease];
 
         [providerTabArr insertObject:emailTab atIndex:[providerTabArr count]];
     }
@@ -1660,7 +1693,7 @@ Please try again later."
     {
         myTabBar.selectedItem = [providerTabArr objectAtIndex:indexOfLastUsedProvider];
         [self tabBar:myTabBar didSelectItem:[providerTabArr objectAtIndex:indexOfLastUsedProvider]];
-        selectedTab = indexOfLastUsedProvider;
+        self.selectedTab = indexOfLastUsedProvider;
     }
 
     [providerTabArr release];
@@ -1670,41 +1703,39 @@ Please try again later."
 {
     DLog(@"");
 
-    if ([selectedProvider willThunkPublishToStatusForActivity:currentActivity])
-        [sessionData setStatusForUser:loggedInUser];
+    if ([selectedProvider willThunkPublishToStatusForActivity:self.currentActivity])
+        [self.sessionData setStatusForUser:self.loggedInUser];
     else
-        [sessionData shareActivityForUser:loggedInUser];
+        [self.sessionData shareActivityForUser:self.loggedInUser];
 }
 
 - (IBAction)shareButtonPressed:(id)sender
 {
     DLog(@"");
 
-    weAreCurrentlyPostingSomething = YES;
+    self.weAreCurrentlyPostingSomething = YES;
 
-    if (myUserCommentTextView.text && hasEditedUserContentForActivityAlready)
-        currentActivity.userGeneratedContent = myUserCommentTextView.text;
+    if (myUserCommentTextView.text && self.hasEditedUserContentForActivityAlready)
+        self.currentActivity.userGeneratedContent = myUserCommentTextView.text;
 
-    [sessionData setCurrentProvider:selectedProvider];
+    [self.sessionData setCurrentProvider:selectedProvider];
     [self showViewIsLoading:YES];
 
-    if (!loggedInUser)
+    if (!self.loggedInUser)
     {
-     /* Set weHaveJustAuthenticated to YES, so that when this view returns (for whatever reason... successful auth
-        user canceled, etc), the view will know that we just went through the authentication process. */
-        weHaveJustAuthenticated = YES;
+        /* Set weHaveJustAuthenticated to YES, so that when this view returns (for whatever reason... successful auth
+           user canceled, etc), the view will know that we just went through the authentication process. */
+        self.weHaveJustAuthenticated = YES;
 
-//        userHitTheBackButton = NO;
-
-     /* If the selected provider requires input from the user, go to the user landing view. Or if
-        the user started on the user landing page, went back to the list of providers, then selected
-        the same provider as their last-used provider, go back to the user landing view. */
+        /* If the selected provider requires input from the user, go to the user landing view. Or if
+           the user started on the user landing page, went back to the list of providers, then selected
+           the same provider as their last-used provider, go back to the user landing view. */
         if (selectedProvider.requiresInput)
         {
-            [[self navigationController] pushViewController:[JRUserInterfaceMaestro sharedMaestro].myUserLandingController
-                                                   animated:YES];
+            JRUserLandingController *landing = [JRUserInterfaceMaestro sharedMaestro].myUserLandingController;
+            [[self navigationController] pushViewController:landing animated:YES];
         }
-     /* Otherwise, go straight to the web view. */
+                /* Otherwise, go straight to the web view. */
         else
         {
             [[self navigationController] pushViewController:[JRUserInterfaceMaestro sharedMaestro].myWebViewController
@@ -1722,18 +1753,21 @@ Please try again later."
     [[JRInfoBar getInfoSheet:nil] showFromTabBar:myTabBar];
 }
 
-- (void)connectionDidFinishLoadingWithPayload:(NSString*)payload request:(NSURLRequest*)request
-                                       andTag:(id)userdata { }
+- (void)connectionDidFinishLoadingWithPayload:(NSString *)payload request:(NSURLRequest *)request
+                                       andTag:(id)userdata
+{
+}
 
-- (void)connectionDidFinishLoadingWithFullResponse:(NSURLResponse*)fullResponse unencodedPayload:(NSData*)payload
-                                           request:(NSURLRequest*)request andTag:(id)userdata
+- (void)connectionDidFinishLoadingWithFullResponse:(NSURLResponse *)fullResponse unencodedPayload:(NSData *)payload
+                                           request:(NSURLRequest *)request andTag:(id)userdata
 {
     DLog(@"");
-    NSString* tag = (NSString*)userdata;
+    NSString *tag = (NSString *) userdata;
 
     if ([tag isEqualToString:@"getThumbnail"])
     {
-        [self setButtonImage:myMediaThumbnailView toData:payload andSetLoading:myMediaThumbnailActivityIndicator toLoading:NO];
+        [self setButtonImage:myMediaThumbnailView toData:payload andSetLoading:myMediaThumbnailActivityIndicator
+                   toLoading:NO];
     }
     else
     {
@@ -1742,19 +1776,20 @@ Please try again later."
             [self setButtonImage:myProfilePic toData:payload andSetLoading:myProfilePicActivityIndicator toLoading:NO];
         }
 
-        [cachedProfilePics setValue:payload forKey:tag];
+        [self.cachedProfilePics setValue:payload forKey:tag];
     }
 }
 
-- (void)connectionDidFailWithError:(NSError*)error request:(NSURLRequest*)request andTag:(id)userdata
+- (void)connectionDidFailWithError:(NSError *)error request:(NSURLRequest *)request andTag:(id)userdata
 {
     DLog(@"");
-    NSString* tag = (NSString*)userdata;
+    NSString *tag = (NSString *) userdata;
 
     if ([tag isEqualToString:@"getThumbnail"])
     {
-        [self setButtonImage:myMediaThumbnailView toData:nil andSetLoading:myMediaThumbnailActivityIndicator toLoading:NO];
-        mediaThumbnailFailedToDownload = YES;
+        [self setButtonImage:myMediaThumbnailView toData:nil andSetLoading:myMediaThumbnailActivityIndicator
+                   toLoading:NO];
+        self.mediaThumbnailFailedToDownload = YES;
     }
     else
     {
@@ -1765,19 +1800,22 @@ Please try again later."
     }
 }
 
-- (void)connectionWasStoppedWithTag:(id)userdata { }
+- (void)connectionWasStoppedWithTag:(id)userdata
+{
+}
 
-- (void)urlShortenedToNewUrl:(NSString*)url forActivity:(JRActivityObject*)activity
+- (void)urlShortenedToNewUrl:(NSString *)url forActivity:(JRActivityObject *)activity
 {
     DLog(@"");
-    if (currentActivity == activity && url != nil)
+    if (self.currentActivity == activity && url != nil)
     {
-        shortenedActivityUrl = url;
+        self.shortenedActivityUrl = url;
 
         if (selectedProvider == nil)
             return;
 
-        if ([selectedProvider doesContentReplaceAction] || [selectedProvider willThunkPublishToStatusForActivity:currentActivity])
+        BOOL willThunk = [selectedProvider willThunkPublishToStatusForActivity:self.currentActivity];
+        if ([selectedProvider doesContentReplaceAction] || willThunk)
             [self updatePreviewTextWhenContentReplacesAction];
         else
             [self updatePreviewTextWhenContentDoesNotReplaceAction];
@@ -1788,37 +1826,37 @@ Please try again later."
 
 - (void)authenticationDidRestart
 {
-    weAreCurrentlyPostingSomething = NO;
-    weHaveJustAuthenticated = NO;
+    self.weAreCurrentlyPostingSomething = NO;
+    self.weHaveJustAuthenticated = NO;
 }
 
 // Note to self: Probably need to comment this out, as authenticationDidCancel is something that publish activity
 // should never have to worry about
 - (void)authenticationDidCancel
 {
-    weAreCurrentlyPostingSomething = NO;
-    weHaveJustAuthenticated = NO;
+    self.weAreCurrentlyPostingSomething = NO;
+    self.weHaveJustAuthenticated = NO;
 }
 
-- (void)authenticationDidFailWithError:(NSError*)error forProvider:(NSString*)provider
+- (void)authenticationDidFailWithError:(NSError *)error forProvider:(NSString *)provider
 {
-    weHaveJustAuthenticated = NO;
-    weAreCurrentlyPostingSomething = NO;
+    self.weHaveJustAuthenticated = NO;
+    self.weAreCurrentlyPostingSomething = NO;
 }
 
-- (void)authenticationDidCompleteForUser:(NSDictionary*)profile forProvider:(NSString*)provider
+- (void)authenticationDidCompleteForUser:(NSDictionary *)profile forProvider:(NSString *)provider
 {
     DLog(@"");
 
     myLoadingLabel.text = @"Sharing...";
 
-    loggedInUser = [[sessionData authenticatedUserForProvider:selectedProvider] retain];
+    self.loggedInUser = [self.sessionData authenticatedUserForProvider:selectedProvider];
 
     // Question to self: Would we ever expect this to not be the case?
-    if (loggedInUser)
+    if (self.loggedInUser)
     {
         [self showViewIsLoading:YES];
-        [self loadUserNameAndProfilePicForUser:loggedInUser forProvider:provider];
+        [self loadUserNameAndProfilePicForUser:self.loggedInUser forProvider:provider];
         [self showUserAsLoggedIn:YES];
 
         [self shareActivity];
@@ -1832,37 +1870,44 @@ Please try again later."
                                                otherButtonTitles:nil] autorelease];
         [alert show];
         [self showViewIsLoading:NO];
-        weAreCurrentlyPostingSomething = NO;
-        weHaveJustAuthenticated = NO;
+        self.weAreCurrentlyPostingSomething = NO;
+        self.weHaveJustAuthenticated = NO;
     }
 }
 
-- (void)publishingActivityDidSucceed:(JRActivityObject*)theActivity forProvider:(NSString*)provider;
+- (void)publishingActivityDidSucceed:(JRActivityObject *)theActivity forProvider:(NSString *)provider;
 {
     DLog(@"");
 
+    NSString *message = [NSString stringWithFormat:@"You have successfully shared this activity."];
     UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Shared"
-                                                     message:[NSString stringWithFormat:
-                                                              @"You have successfully shared this activity."]
+                                                     message:message
                                                     delegate:nil
                                            cancelButtonTitle:@"OK"
                                            otherButtonTitles:nil] autorelease];
     [alert show];
 
-    [alreadyShared addObject:provider];
+    [self.alreadyShared addObject:provider];
 
     [self showViewIsLoading:NO];
     [self showActivityAsShared:YES];
 
-    weAreCurrentlyPostingSomething = NO;
-    weHaveJustAuthenticated = NO;
+    self.weAreCurrentlyPostingSomething = NO;
+    self.weHaveJustAuthenticated = NO;
 }
 
-//- (void)publishingDidRestart  { weAreCurrentlyPostingSomething = NO; }
-- (void)publishingDidCancel   { weAreCurrentlyPostingSomething = NO; }
-- (void)publishingDidComplete { weAreCurrentlyPostingSomething = NO; }
+- (void)publishingDidCancel
+{
+    self.weAreCurrentlyPostingSomething = NO;
+}
 
-- (void)publishingActivity:(JRActivityObject*)activity didFailWithError:(NSError*)error forProvider:(NSString*)provider
+- (void)publishingDidComplete
+{
+    self.weAreCurrentlyPostingSomething = NO;
+}
+
+- (void)publishingActivity:(JRActivityObject *)activity didFailWithError:(NSError *)error
+               forProvider:(NSString *)provider
 {
     DLog(@"");
     NSString *errorMessage = nil;
@@ -1874,54 +1919,45 @@ Please try again later."
     {
         case JRPublishFailedError:
             errorMessage = [NSString stringWithFormat:
-                            @"There was an error while sharing this activity."];
+                                             @"There was an error while sharing this activity."];
             break;
         case JRPublishErrorDuplicateTwitter:
             errorMessage = [NSString stringWithFormat:
-                            @"There was an error while sharing this activity: Twitter does not allow duplicate status updates."];
+                                             @"There was an error while sharing this activity: Twitter does not allow "
+                                                     "duplicate status updates."];
             break;
         case JRPublishErrorCharacterLimitExceeded: /* ... was "JRPublishErrorLinkedInCharacterExceeded" */
             errorMessage = [NSString stringWithFormat:
-                            @"There was an error while sharing this activity: Status was too long."];
+                                             @"There was an error while sharing this activity: Status was too long."];
             break;
         case JRPublishErrorMissingApiKey:
             errorMessage = [NSString stringWithFormat:
-                            @"There was an error while sharing this activity."];
+                                             @"There was an error while sharing this activity."];
             reauthenticate = YES;
             break;
         case JRPublishErrorInvalidFacebookSession:  /* ... was "JRPublishErrorInvalidOauthKey" */
             errorMessage = [NSString stringWithFormat:
-                            @"There was an error while sharing this activity."];
+                                             @"There was an error while sharing this activity."];
             reauthenticate = YES;
             break;
         case JRPublishErrorMissingParameter:
             errorMessage = [NSString stringWithFormat:
-                            @"There was an error while sharing this activity."];
+                                             @"There was an error while sharing this activity."];
             break;
         default:
-         /* JRPublishErrorBadConnection,
-            JRPublishErrorActivityNil,
-            JRPublishErrorFacebookGeneric,
-            JRPublishErrorInvalidFacebookSession,
-            JRPublishErrorInvalidFacebookMedia,
-            JRPublishErrorTwitterGeneric,
-            JRPublishErrorLinkedInGeneric,
-            JRPublishErrorMyspaceGeneric,
-            JRPublishErrorYahooGeneric */
-
             errorMessage = [NSString stringWithFormat:
-                            @"There was an error while sharing this activity."];
+                                             @"There was an error while sharing this activity."];
             break;
     }
 
- /* OK, if this gets called right after authentication succeeds, then the navigation controller won't be done
-    animating back to this view.  If this view isn't loaded yet, and we call shareButtonPressed, then the library
-    will end up trying to push the webview controller onto the navigation controller while the navigation controller
-    is still trying to pop the webview.  This creates craziness, hence we check for [self isViewLoaded].
-    Also, this prevents an infinite loop of reauthing-failed publishing-reauthing-failed publishing.
-    So, only try and reauthenticate is the publishing activity view is already loaded, which will only happen if we didn't
-    JUST try and authorize, or if sharing took longer than the time it takes to pop the view controller. */
-    if (reauthenticate && !weHaveJustAuthenticated)
+    /* OK, if this gets called right after authentication succeeds, then the navigation controller won't be done
+       animating back to this view.  If this view isn't loaded yet, and we call shareButtonPressed, then the library
+       will end up trying to push the WebView controller onto the navigation controller while the navigation controller
+       is still trying to pop the WebView.  This creates craziness, hence we check for [self isViewLoaded].
+       Also, this prevents an infinite loop of reauthing-failed publishing-reauthing-failed publishing.
+       So, only try and reauthenticate is the publishing activity view is already loaded, which will only happen if we
+       didn't JUST try and authorize, or if sharing took longer than the time it takes to pop the view controller. */
+    if (reauthenticate && !self.weHaveJustAuthenticated)
     {
         [self logUserOutForProvider:provider];
         [self shareButtonPressed:nil];
@@ -1929,8 +1965,8 @@ Please try again later."
         return;
     }
 
-    weAreCurrentlyPostingSomething = NO;
-    weHaveJustAuthenticated = NO;
+    self.weAreCurrentlyPostingSomething = NO;
+    self.weHaveJustAuthenticated = NO;
 
     UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Error"
                                                      message:errorMessage
@@ -1940,17 +1976,14 @@ Please try again later."
     [alert show];
 }
 
-- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result
+                        error:(NSError *)error
 {
     UIAlertView *alert;
     switch (result)
     {
-//        case MFMailComposeResultCancelled:
-//            break;
-//        case MFMailComposeResultSaved:
-//            break;
         case MFMailComposeResultSent:
-            [sessionData triggerEmailSharingDidComplete];
+            [self.sessionData triggerEmailSharingDidComplete];
             alert = [[[UIAlertView alloc] initWithTitle:@"Success"
                                                 message:@"You have successfully sent this email."
                                                delegate:nil
@@ -1970,8 +2003,8 @@ Please try again later."
             break;
     }
 
-    myTabBar.selectedItem = [myTabBar.items objectAtIndex:selectedTab];
-    [self tabBar:myTabBar didSelectItem:[myTabBar.items objectAtIndex:selectedTab]];
+    myTabBar.selectedItem = [myTabBar.items objectAtIndex:self.selectedTab];
+    [self tabBar:myTabBar didSelectItem:[myTabBar.items objectAtIndex:self.selectedTab]];
 
     [self dismissModalViewControllerAnimated:YES];
 }
@@ -1982,10 +2015,8 @@ Please try again later."
     UIAlertView *alert;
     switch (result)
     {
-//        case MessageComposeResultCancelled:
-//            break;
         case MessageComposeResultSent:
-            [sessionData triggerSmsSharingDidComplete];
+            [self.sessionData triggerSmsSharingDidComplete];
             alert = [[[UIAlertView alloc] initWithTitle:@"Success"
                                                 message:@"You have successfully sent this text."
                                                delegate:nil
@@ -2005,8 +2036,8 @@ Please try again later."
             break;
     }
 
-    myTabBar.selectedItem = [myTabBar.items objectAtIndex:selectedTab];
-    [self tabBar:myTabBar didSelectItem:[myTabBar.items objectAtIndex:selectedTab]];
+    myTabBar.selectedItem = [myTabBar.items objectAtIndex:self.selectedTab];
+    [self tabBar:myTabBar didSelectItem:[myTabBar.items objectAtIndex:self.selectedTab]];
 
     [self dismissModalViewControllerAnimated:YES];
 }
@@ -2025,11 +2056,11 @@ Please try again later."
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
                                          duration:(NSTimeInterval)duration
 {
-    [myTriangleIcon setFrame:CGRectMake([alreadyShared containsObject:selectedProvider.name] ?
+    [myTriangleIcon setFrame:CGRectMake([self.alreadyShared containsObject:selectedProvider.name] ?
             25 :
-            ((loggedInUser) ?
-                ([myTriangleIcon superview].frame.size.width - 90) :
-                ([myTriangleIcon superview].frame.size.width / 2) - 9), 0, 18, 18)];
+            ((self.loggedInUser) ?
+                    ([myTriangleIcon superview].frame.size.width - 90) :
+                    ([myTriangleIcon superview].frame.size.width / 2) - 9), 0, 18, 18)];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
@@ -2058,22 +2089,23 @@ Please try again later."
     DLog(@"");
 
     [self showViewIsLoading:NO];
-    [timer invalidate];
+    [self.timer invalidate];
 
     [self loadActivityToViewForFirstTime];
 }
 
-- (void)userInterfaceDidClose { }
+- (void)userInterfaceDidClose
+{
+}
 
 - (void)dealloc
 {
     DLog(@"");
 
     [selectedProvider release];
-    [loggedInUser release];
-    [currentActivity release];
-    [customInterface release];
-    [colorsDictionary release];
+    self.loggedInUser = nil;
+    self.currentActivity = nil;
+    self.customInterface = nil;
     [myBackgroundView release];
     [myTabBar release];
     [myLoadingLabel release];
@@ -2108,10 +2140,12 @@ Please try again later."
     [mySharedCheckMark release];
     [mySharedLabel release];
     [mySignOutButton release];
-    [cachedProfilePics release];
-    [alreadyShared release];
-    [titleView release];
+    self.cachedProfilePics = nil;
+    self.alreadyShared = nil;
+    self.titleView = nil;
 
+    [_timer release];
+    [_shortenedActivityUrl release];
     [super dealloc];
 }
 @end

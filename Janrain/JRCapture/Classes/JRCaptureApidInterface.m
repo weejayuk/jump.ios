@@ -143,8 +143,8 @@ typedef enum CaptureInterfaceStatEnum
 }
 
 
-- (void)signInCaptureUserWithCredentials:(NSDictionary *)credentials ofType:(NSString *)signInFieldName
-                             forDelegate:(id)delegate withContext:(NSObject *)context
+- (void)signInCaptureUserWithCredentials:(NSDictionary *)credentials forDelegate:(id)delegate
+                             withContext:(NSObject *)context
 {
     DLog(@"");
     NSString *refreshSecret = [JRCaptureData generateAndStoreRefreshSecret];
@@ -168,7 +168,7 @@ typedef enum CaptureInterfaceStatEnum
 
     [signInParams addEntriesFromDictionary:credentials];
     [signInParams JR_maybeSetObject:[JRCaptureData sharedCaptureData].bpChannelUrl forKey:@"bp_channel"];
-    [signInParams JR_maybeSetObject:[JRCaptureData sharedCaptureData].captureFlowName forKey:@"flow_name"];
+    [signInParams JR_maybeSetObject:[JRCaptureData sharedCaptureData].captureFlowName forKey:@"flow"];
 
     NSMutableURLRequest *request = [JRCaptureData requestWithPath:@"/oauth/auth_native_traditional"];
     [request JR_setBodyWithParams:signInParams];
@@ -473,9 +473,8 @@ typedef enum CaptureInterfaceStatEnum
 + (void)signInCaptureUserWithCredentials:(NSDictionary *)credentials ofType:(NSString *)signInType
                              forDelegate:(id)delegate withContext:(NSObject *)context
 {
-    [[JRCaptureApidInterface captureInterfaceInstance]
-            signInCaptureUserWithCredentials:credentials ofType:signInType forDelegate:delegate
-                                 withContext:context];
+    [[JRCaptureApidInterface captureInterfaceInstance] signInCaptureUserWithCredentials:credentials forDelegate:delegate
+                                                                            withContext:context];
 }
 
 + (void)getCaptureUserWithToken:(NSString *)token

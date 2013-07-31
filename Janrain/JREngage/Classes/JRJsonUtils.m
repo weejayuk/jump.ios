@@ -28,30 +28,54 @@
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#import <Foundation/Foundation.h>
+#import "JRJsonUtils.h"
+#import "debug_log.h"
 
-#ifndef DLog
-  #ifdef DEBUG
-    #define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-  #else
-    #define DLog(fmt, ...) JRLogExpressionSink((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-  #endif
+@implementation JRJsonUtils
++ (NSString *)jsonStringForJsonObject:(id)jsonObject
+{
+    NSError *jsonErr = nil;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonObject options:0 error:&jsonErr];
+    if (jsonErr) ALog("WARNING, JSON serialization error: %@", jsonErr);
+    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+#if !__has_feature(objc_arc)
+    [jsonString autorelease];
 #endif
+    return jsonString;
+}
 
-#ifndef ALog
-  #ifdef DEBUG
-    #define ALog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-  #else
-    #ifdef JR_NO_RELEASE_LOGGING
-      #define ALog(fmt, ...) JRLogExpressionSink((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-    #else
-      #define ALog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-    #endif
-  #endif
-#endif
++ (id)jsonObjectWithString:(NSString *)jsonString
+{
+    NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+    return [self jsonObjectWithData:jsonData];
+}
 
-void JRLogExpressionSink(NSString *format, ...);
++ (id)jsonObjectWithData:(NSData *)jsonData
+{
+    NSError *jsonErr = nil;
+    id jsonObject = [NSJSONSerialization JSONObjectWithData:jsonData options:(NSJSONReadingOptions) 0 error:&jsonErr];
+    if (jsonErr) ALog("WARNING, JSON parse error: %@", jsonErr);
+    return jsonObject;
+}
+@end
 
-@interface NSException (JR_raiseDebugException)
-+ (void)raiseJRDebugException:(NSString *)name format:(NSString *)format, ...;
+@implementation NSString (JRJsonUtils)
+- (id)JR_objectFromJSONString
+{
+    return [JRJsonUtils jsonObjectWithString:self];
+}
+@end
+
+@implementation NSDictionary (JRJsonUtils)
+- (NSString *)JR_jsonString
+{
+    return [JRJsonUtils jsonStringForJsonObject:self];
+}
+@end
+
+@implementation NSArray (JRJsonUtils)
+- (NSString *)JR_jsonString
+{
+    return [JRJsonUtils jsonStringForJsonObject:self];
+}
 @end
