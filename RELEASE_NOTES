@@ -1,3 +1,8 @@
+v3.3.0
+ - Adds support for Facebook native authentication, i.e. via the iOS Social and Accounts
+   framework, or via the Facebook SDK. See 'Docs/Native Authentication Guide.md' for 
+   details.
+ - Adds support for Key Value Coding to the JRCaptureUser record model.
 v3.2.13
  - Emits less logging, adds support for a JR_NO_RELEASE_LOGGING #define to disable
    error logging. Eliminates some compiler warnings from logging macros.
