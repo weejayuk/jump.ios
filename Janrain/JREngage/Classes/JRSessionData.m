@@ -60,6 +60,8 @@ static NSString *const CONFIG_KEY_SHARING_PROVIDERS = @"social_providers";
 #define cJRLastUsedSharingProvider       @"jrengage.sessionData.lastUsedSocialProvider"
 #define cJRLastUsedAuthenticationProvider        @"jrengage.sessionData.lastUsedBasicProvider"
 
+#define cJRUserDefaultsUuidName @"jrUserDefaultsUuidName"
+
 #define cJREngageKeychainIdentifier     @"device_tokens.janrain"
 
 #define cJRProviderName                     @"jrengage.provider.name"
@@ -971,19 +973,41 @@ static JRSessionData *singleton = nil;
         extraParamString = [NSString stringWithFormat:@"saml_provider=%@&", provider.samlName];
     }
 
+    NSString *uuid = [[self deviceIdentifier] stringByAddingUrlPercentEscapes];
+
     BOOL forceReauth = (alwaysForceReauth || currentProvider.forceReauth) ? YES : NO;
 
     if (forceReauth)
         [self deleteWebViewCookiesForDomains:provider.cookieDomains];
 
-    NSString *urlString = [NSString stringWithFormat:@"%@%@?%@%@device=%@&extended=true",
+    NSString *urlString = [NSString stringWithFormat:@"%@%@?%@%@device=%@&extended=true&installation_id=%@",
                                                      baseUrl, provider.relativeUrl, extraParamString,
-                                                     forceReauth ? @"force_reauth=true&" : @"", [self device]];
+                                                     forceReauth ? @"force_reauth=true&" : @"", [self device], uuid];
 
     provider.forceReauth = NO;
-
     ALog (@"Starting authentication for %@:\n%@", provider.name, urlString);
     return [NSURL URLWithString:urlString];
+}
+
+- (NSString *)deviceIdentifier
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *uuid = [defaults objectForKey:cJRUserDefaultsUuidName];
+
+    if (!uuid)
+    {
+        // Using the core foundation version of UUID because NSUUID is only supported
+        // in iOS 6.0+. CFUUIDRef is supported all the way back to iOS 2.0.
+        CFUUIDRef cfUUID = CFUUIDCreate(NULL);
+        uuid = [(NSString *)CFUUIDCreateString(NULL, cfUUID) autorelease];
+
+        [defaults setObject:uuid forKey:cJRUserDefaultsUuidName];
+        [defaults synchronize];
+
+        CFRelease(cfUUID);
+    }
+
+    return uuid;
 }
 
 #pragma mark sharing
