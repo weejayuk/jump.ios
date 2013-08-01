@@ -3,6 +3,8 @@ v3.3.0
    framework, or via the Facebook SDK. See 'Docs/Native Authentication Guide.md' for 
    details.
  - Adds support for Key Value Coding to the JRCaptureUser record model.
+ - Adds support for users having multiple active sharing sessions across separate iOS
+   devices.
 v3.2.13
  - Emits less logging, adds support for a JR_NO_RELEASE_LOGGING #define to disable
    error logging. Eliminates some compiler warnings from logging macros.
