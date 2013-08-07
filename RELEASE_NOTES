@@ -1,3 +1,6 @@
+v3.3.1
+ - Fixes +[JRCaptureUser fetchCaptureUserFromServerForDelegate:context:], which had been
+   broken in an earlier refactoring 
 v3.3.0
  - Adds support for Facebook native authentication, i.e. via the iOS Social and Accounts
    framework, or via the Facebook SDK. See 'Docs/Native Authentication Guide.md' for 
