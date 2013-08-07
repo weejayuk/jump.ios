@@ -57,33 +57,22 @@
                                     context:callerContext];
 }
 
-- (void)getCaptureUserDidSucceedWithResult:(NSObject *)result context:(NSObject *)context
+- (void)getCaptureUserDidSucceedWithResult:(NSDictionary *)result context:(NSObject *)context
 {
     DLog(@"");
     NSDictionary *myContext = (NSDictionary *) context;
     NSObject *callerContext = [myContext objectForKey:@"callerContext"];
     id <JRCaptureUserDelegate> delegate = [myContext objectForKey:@"delegate"];
 
-    NSDictionary *resultDictionary;
-    if ([result isKindOfClass:[NSString class]])
-    {
-        NSData *data = [((NSString *) result) dataUsingEncoding:NSUTF8StringEncoding];
-        NSError *jsonErr = nil;
-        resultDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonErr];
-    }
-    else
-        return [self getCaptureUserDidFailWithResult:[JRCaptureError invalidClassErrorDictForResult:result]
-                                             context:context];
-
-    if (!resultDictionary)
+    if (!result)
         return [self getCaptureUserDidFailWithResult:[JRCaptureError invalidDataErrorDictForResult:result]
                                              context:context];
 
-    if (![((NSString *)[resultDictionary objectForKey:@"stat"]) isEqualToString:@"ok"])
+    if (![((NSString *)[result objectForKey:@"stat"]) isEqualToString:@"ok"])
         return [self getCaptureUserDidFailWithResult:[JRCaptureError invalidStatErrorDictForResult:result]
                                              context:context];
 
-    NSDictionary *result_ = [resultDictionary objectForKey:@"result"];
+    NSDictionary *result_ = [result objectForKey:@"result"];
     if (!result_ || ![result_ isKindOfClass:[NSDictionary class]])
         return [self getCaptureUserDidFailWithResult:[JRCaptureError invalidDataErrorDictForResult:result]
                                              context:context];

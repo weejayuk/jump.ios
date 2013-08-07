@@ -576,10 +576,12 @@ typedef enum CaptureInterfaceStatEnum
     NSObject     *context   = [tag objectForKey:@"context"];
     id<JRCaptureInternalDelegate> delegate = [tag objectForKey:@"delegate"];
 
+    NSString *localizedFailureReason = [error localizedFailureReason];
+    localizedFailureReason = localizedFailureReason ? localizedFailureReason : @"";
     NSDictionary *errDict = @{
             @"stat" : @"error",
             @"error" : [error localizedDescription],
-            @"error_description" : [error localizedFailureReason],
+            @"error_description" : localizedFailureReason,
             @"code" : [NSNumber numberWithInteger:JRCaptureLocalApidErrorConnectionDidFail],
             @"wrapped_error" : error,
     };

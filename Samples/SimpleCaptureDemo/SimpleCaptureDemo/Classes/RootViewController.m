@@ -41,11 +41,11 @@
 #import "JRCaptureObject+Internal.h"
 #import "JRActivityObject.h"
 
-@interface RootViewController ()
+@interface RootViewController () <JRCaptureUserDelegate>
 @property(nonatomic, copy) void (^viewDidAppearContinuation)();
 @property(nonatomic) BOOL viewIsApparent;
 
-- (void)configureViewsWithDisableOverride:(BOOL)disableOverride;
+- (void)configureViewsWithDisableOverride:(BOOL)disableAllButtons;
 @end
 
 @interface JRCapture (BetaAPIs)
@@ -67,18 +67,15 @@
     [self configureViewsWithDisableOverride:NO ];
 }
 
-- (void)configureViewsWithDisableOverride:(BOOL)disableOverride
+- (void)configureViewsWithDisableOverride:(BOOL)disableAllButtons
 {
     self.title = @"DEMO";
     [self.refreshButton setTitle:@"Refresh Access Token" forState:UIControlStateNormal];
     [self.browseButton setTitle:@"Dump User To Log" forState:UIControlStateNormal];
 
-    if (!disableOverride)
+    if (!disableAllButtons)
     {
-        self.refreshButton.enabled = self.signInButton.enabled = self.browseButton.enabled =
-                self.signOutButton.enabled = self.formButton.enabled = YES;
-        self.refreshButton.alpha = self.signInButton.alpha = self.browseButton.alpha = self.signOutButton.alpha =
-                self.formButton.alpha = 1;
+        [self setAllButtonsEnabled:YES];
     }
 
     if (appDelegate.captureUser)
@@ -89,6 +86,7 @@
         self.directFacebookAuthButton.hidden = YES;
         self.signOutButton.hidden = NO;
         self.shareButton.hidden = NO;
+        self.refetchButton.hidden = NO;
 
         self.formButton.hidden = NO;
         [self.formButton setTitle:@"Update" forState:UIControlStateNormal];
@@ -104,6 +102,7 @@
         self.directFacebookAuthButton.hidden = NO;
         self.signOutButton.hidden = YES;
         self.shareButton.hidden = YES;
+        self.refetchButton.hidden = YES;
 
         self.formButton.hidden = NO;
         [self.formButton setTitle:@"Traditional Registration" forState:UIControlStateNormal];
@@ -112,13 +111,20 @@
         self.browseButton.alpha = 0.5;
     }
 
-    if (disableOverride)
+    if (disableAllButtons)
     {
-        self.refreshButton.enabled = self.signInButton.enabled = self.browseButton.enabled =
-                self.tradAuthButton.enabled = self.signOutButton.enabled = self.formButton.enabled = NO;
-        self.refreshButton.alpha = self.signInButton.alpha = self.browseButton.alpha = self.signOutButton.alpha =
-                self.tradAuthButton.alpha = self.formButton.alpha = 0.5;
+        [self setAllButtonsEnabled:NO];
     }
+}
+
+- (void)setAllButtonsEnabled:(BOOL)b
+{
+    self.refreshButton.enabled = self.signInButton.enabled = self.browseButton.enabled =
+                self.signOutButton.enabled = self.formButton.enabled = self.refetchButton.enabled =
+                        self.shareButton.enabled = self.directFacebookAuthButton.enabled = b;
+    self.refreshButton.alpha = self.signInButton.alpha = self.browseButton.alpha = self.signOutButton.alpha =
+                self.formButton.alpha = self.refetchButton.alpha = self.shareButton.alpha =
+                        self.directFacebookAuthButton.alpha  = 0.5 + b * 0.5;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -165,18 +171,32 @@
     [self.navigationController pushViewController:viewController animated:YES];
 }
 
-- (IBAction)thirdButtonPressed:(id)sender
+- (IBAction)refetchButtonPressed:(id)sender
 {
-    //[BackplaneUtils asyncFetchNewLiveFyreUserTokenWithArticleId:appDelegate.liveFyreArticleId
-    //                                                     network:appDelegate.liveFyreNetwork
-    //                                                     siteId:appDelegate.liveFyreSiteId
-    //                                           backplaneChannel:appDelegate.bpChannelUrl
-    //                                                 completion:^(NSString *string, NSError *err)
-    //                                                 //{
-    //
-    //}];
+    [JRCaptureUser fetchCaptureUserFromServerForDelegate:self context:nil];
+    [self configureViewsWithDisableOverride:YES];
+}
 
+- (void)fetchUserDidFailWithError:(NSError *)error context:(NSObject *)context
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:[error description]
+                                                       delegate:nil cancelButtonTitle:@"Dismiss"
+                                              otherButtonTitles:nil];
+    [alertView show];
+    [self configureViewsWithDisableOverride:NO];
+}
 
+- (void)fetchUserDidSucceed:(JRCaptureUser *)fetchedUser context:(NSObject *)context
+{
+    [self configureViewsWithDisableOverride:NO];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Success" message:nil
+                                                       delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
+    [alertView show];
+    [self configureViewsWithDisableOverride:NO];
+}
+
+- (IBAction)refreshButtonPressed:(id)sender
+{
     [self configureViewsWithDisableOverride:YES];
     [JRCapture refreshAccessTokenForDelegate:self context:nil];
 }
@@ -295,7 +315,6 @@
                 if ([existingAccountProvider isEqualToString:@"capture"]) // Traditional sign-in required
                 {
                     [self performTradAuthWithMergeToken:[error JRMergeToken]];
-
                 }
                 else
                 {
@@ -327,7 +346,7 @@
 
     [[[AlertViewWithBlocks alloc] initWithTitle:@"Sign in" message:nil completion:signInCompletion
                                           style:UIAlertViewStyleLoginAndPasswordInput cancelButtonTitle:@"Cancel"
-                              otherButtonTitles:@"Sign-in", nil] show];
+                              otherButtonTitles:@"Sign in", nil] show];
 }
 
 - (void)showMergeAlertDialog:(NSString *)existingAccountProvider
@@ -479,6 +498,7 @@
 - (void)viewDidUnload {
     [self setTradAuthButton:nil];
     [self setDirectFacebookAuthButton:nil];
+    [self setRefetchButton:nil];
     [super viewDidUnload];
 }
 @end

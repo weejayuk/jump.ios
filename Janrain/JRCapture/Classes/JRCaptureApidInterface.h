@@ -57,7 +57,7 @@ typedef enum
 
 - (void)signInCaptureUserDidFailWithResult:(NSError *)error context:(NSObject *)context;
 
-- (void)getCaptureUserDidSucceedWithResult:(NSObject *)result context:(NSObject *)context;
+- (void)getCaptureUserDidSucceedWithResult:(NSDictionary *)result context:(NSObject *)context;
 
 - (void)getCaptureUserDidFailWithResult:(NSDictionary *)result context:(NSObject *)context;
 
