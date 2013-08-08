@@ -157,8 +157,8 @@ static JREngage* singleton = nil;
     }
 }
 
-- (void)showAuthenticationDialogWithCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
-                          orAuthenticatingOnJustThisProvider:(NSString *)provider
+- (void)showAuthenticationDialogForProvider:(NSString *)provider
+                            customInterface:(NSDictionary *)customInterfaceOverrides
 {
     ALog (@"");
 
@@ -242,8 +242,8 @@ static JREngage* singleton = nil;
 + (void)showAuthenticationDialogForProvider:(NSString *)provider
                withCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides __unused
 {
-    [[JREngage singletonInstance] showAuthenticationDialogWithCustomInterfaceOverrides:customInterfaceOverrides
-                            orAuthenticatingOnJustThisProvider:provider];
+    [[JREngage singletonInstance] showAuthenticationDialogForProvider:provider
+                                                      customInterface:customInterfaceOverrides];
 }
 
 //- (void)showAuthenticationDialogWithCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
@@ -254,8 +254,8 @@ static JREngage* singleton = nil;
 
 + (void)showAuthenticationDialogWithCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides __unused
 {
-    [[JREngage singletonInstance] showAuthenticationDialogWithCustomInterfaceOverrides:customInterfaceOverrides 
-                            orAuthenticatingOnJustThisProvider:nil];
+    [[JREngage singletonInstance] showAuthenticationDialogForProvider:nil
+                                                      customInterface:customInterfaceOverrides];
 }
 
 //- (void)showAuthenticationDialogForProvider:(NSString *)provider
@@ -266,14 +266,13 @@ static JREngage* singleton = nil;
 
 + (void)showAuthenticationDialogForProvider:(NSString *)provider
 {
-    [[JREngage singletonInstance] showAuthenticationDialogWithCustomInterfaceOverrides:nil
-                            orAuthenticatingOnJustThisProvider:provider];
+    [[JREngage singletonInstance] showAuthenticationDialogForProvider:provider
+                                                      customInterface:nil ];
 }
 
 - (void)showAuthenticationDialog
 {
-    [self showAuthenticationDialogWithCustomInterfaceOverrides:nil
-                            orAuthenticatingOnJustThisProvider:nil];
+    [self showAuthenticationDialogForProvider:nil customInterface:nil ];
 }
 
 + (void)showAuthenticationDialog __unused

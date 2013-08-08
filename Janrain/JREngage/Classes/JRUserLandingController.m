@@ -132,15 +132,14 @@
     DLog(@"");
     [super viewWillAppear:animated];
 
- /* Load the custom background view, if there is one. */
+   /* Load the custom background view, if there is one. */
     if ([customInterface objectForKey:kJRAuthenticationBackgroundImageView])
         [myBackgroundView addSubview:[customInterface objectForKey:kJRAuthenticationBackgroundImageView]];
 
     if (!sessionData.currentProvider)
     {
-        NSError *error = [JREngageError errorWithMessage:@"There was an error authenticating with the selected provider."
-                                                 andCode:JRAuthenticationFailedError];
-
+        NSString *message = @"There was an error authenticating with the selected provider.";
+        NSError *error = [JREngageError errorWithMessage:message andCode:JRAuthenticationFailedError];
         [sessionData triggerAuthenticationDidFailWithError:error];
 
         return;

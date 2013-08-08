@@ -1,3 +1,5 @@
+v3.3.2
+ - Fixes some UI state transition bugs involving provider-direct authentication flows
 v3.3.1
  - Fixes +[JRCaptureUser fetchCaptureUserFromServerForDelegate:context:], which had been
    broken in an earlier refactoring 

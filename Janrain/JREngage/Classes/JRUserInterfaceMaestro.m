@@ -1067,7 +1067,10 @@ static JRUserInterfaceMaestro* singleton = nil;
 {
     DLog(@"");
     if (!viewControllerToPopTo)
+    {
         viewControllerToPopTo = [[applicationNavigationController topViewController] retain];
+        //DLog(@"vCTPT: %@", viewControllerToPopTo);
+    }
 
     if ([self shouldOpenToUserLandingPage])
     {
@@ -1172,7 +1175,12 @@ static JRUserInterfaceMaestro* singleton = nil;
         originalRootViewController = myProvidersController;
 
     if (usingAppNav && applicationNavigationController && [applicationNavigationController isViewLoaded])
-        [applicationNavigationController popToViewController:originalRootViewController animated:YES];
+    {
+        if ([[applicationNavigationController viewControllers] containsObject:originalRootViewController])
+            [applicationNavigationController popToViewController:originalRootViewController animated:YES];
+        else
+            [self unloadUserInterfaceWithTransitionStyle:UIModalTransitionStyleCoverVertical];
+    }
     else
         [jrModalViewController.myNavigationController popToRootViewControllerAnimated:YES];
 }

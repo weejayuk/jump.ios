@@ -34,14 +34,10 @@
 
 #import "debug_log.h"
 #import "JRWebViewController.h"
-//#import "JRSessionData.h"
 #import "JRInfoBar.h"
 #import "JREngageError.h"
 #import "JRUserInterfaceMaestro.h"
 #import "JRJsonUtils.h"
-
-//static NSString *const iPhoneUserAgent = @"Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3_3 like Mac OS X; en-us) "
-//        "AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8J2 Safari/6533.18.5";
 
 @interface JREngageError (JREngageError_setError)
 + (NSError*)errorWithMessage:(NSString *)message andCode:(NSInteger)code;
@@ -56,7 +52,6 @@
     JRSessionData   *sessionData;
     NSDictionary    *customInterface;
 
-    //UIView    *titleView;
     UIView    *myBackgroundView;
     UIWebView *myWebView;
 
@@ -64,7 +59,6 @@
 
     BOOL keepProgress;
     BOOL userHitTheBackButton;
-    //BOOL connectionDataAlreadyDownloadedThis;
 }
 
 @synthesize myBackgroundView;
@@ -217,8 +211,13 @@
     // "YES"),
     // send the triggerAuthenticationDidStartOver message.  Otherwise, hitting the back button should just pop back
     // to the last controller, the providers or userLanding controller (i.e., behave normally)
-    if (userHitTheBackButton && [sessionData socialSharing])
-        [sessionData triggerAuthenticationDidStartOver:nil];
+    if (userHitTheBackButton)
+    {
+        if ([sessionData socialSharing])
+            [sessionData triggerAuthenticationDidStartOver:nil];
+        else if ([JRUserInterfaceMaestro sharedMaestro].directProvider)
+            [sessionData triggerAuthenticationDidCancel];
+    }
 
     [super viewWillDisappear:animated];
 }
@@ -227,7 +226,6 @@
 {
     DLog(@"");
 
-    //[JRWebViewController setUserAgentDefault:self.originalCustomUserAgent];
     [myWebView loadHTMLString:@"" baseURL:[NSURL URLWithString:@"/"]];
 
     [super viewDidDisappear:animated];
@@ -273,8 +271,6 @@
 //    [sessionData triggerAuthenticationDidStartOver:sender];
 //}
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex { }
-
 - (void)startProgress
 {
     UIApplication* app = [UIApplication sharedApplication];
@@ -319,7 +315,7 @@
             UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Log In Failed"
                                                              message:@"An error occurred while attempting to sign you "
                                                                      "in.  Please try again."
-                                                            delegate:self
+                                                            delegate:nil
                                                    cancelButtonTitle:@"OK"
                                                    otherButtonTitles:nil] autorelease];
             [alert show];
@@ -349,7 +345,7 @@
 
                 UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Invalid Input"
                                                                  message:message
-                                                                delegate:self
+                                                                delegate:nil
                                                        cancelButtonTitle:@"OK"
                                                        otherButtonTitles:nil] autorelease];
 
@@ -399,7 +395,7 @@
 
                 UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Log In Failed"
                                                                  message:@"An error occurred while attempting to sign you in.  Please try again."
-                                                                delegate:self
+                                                                delegate:nil
                                                        cancelButtonTitle:@"OK"
                                                        otherButtonTitles:nil] autorelease];
                 [alert show];
@@ -497,7 +493,7 @@
 
         UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Log In Failed"
                                                          message:@"An error occurred while attempting to sign you in.  Please try again."
-                                                        delegate:self
+                                                        delegate:nil
                                                cancelButtonTitle:@"OK"
                                                otherButtonTitles:nil] autorelease];
         [alert show];

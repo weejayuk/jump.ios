@@ -1646,12 +1646,6 @@ CALL_DELEGATE_SELECTOR:
 
 - (void)triggerAuthenticationDidFailWithError:(NSError *)authError
 {
-    // TODO: Set force_reauth for the provider instead!!!
-//    if ([currentProvider.name isEqualToString:@"facebook"])
-//        [self deleteFacebookCookies];
-//    else if ([currentProvider.name isEqualToString:@"live_id"])
-//        [self deleteLiveCookies];
-
     NSArray *delegatesCopy = [NSArray arrayWithArray:delegates];
     for (id<JRSessionDelegate> delegate in delegatesCopy)
     {
