@@ -654,7 +654,7 @@ static CATransform3D normalizedCATransform3D(CATransform3D d)
 @synthesize savedNavigationController;
 @synthesize customInterfaceDefaults;
 @synthesize janrainInterfaceDefaults;
-@synthesize directProvider;
+@synthesize directProviderName;
 @synthesize customInterface = customInterface;
 
 static JRUserInterfaceMaestro *singleton = nil;
@@ -876,7 +876,7 @@ static JRUserInterfaceMaestro *singleton = nil;
     [customModalNavigationController release], customModalNavigationController = nil;
 
     self.customInterface = nil;
-    [directProvider release], directProvider = nil;
+    [directProviderName release], directProviderName = nil;
 
     sessionData.dialogIsShowing = NO;
 }
@@ -1048,14 +1048,11 @@ static JRUserInterfaceMaestro *singleton = nil;
     }
 }
 
-- (JRProvider *)weAreOnlyAuthenticatingOnThisProvider
+- (JRProvider *)directProvider
 {
-    //sessionData.authenticatingDirectlyOnThisProvider = YES;
+    if (directProviderName)
+        return [sessionData getProviderNamed:directProviderName];
 
-    if (directProvider)
-        return [sessionData getProviderNamed:directProvider];
-
-    //sessionData.authenticatingDirectlyOnThisProvider = NO;
     return nil;
 }
 
@@ -1067,7 +1064,7 @@ static JRUserInterfaceMaestro *singleton = nil;
     [self setUpViewControllers];
 
     UIViewController *dialogVcToPresent;
-    if ((sessionData.currentProvider = [self weAreOnlyAuthenticatingOnThisProvider]))
+    if ((sessionData.currentProvider = [self directProvider]))
         dialogVcToPresent = sessionData.currentProvider.requiresInput ? myUserLandingController : myWebViewController;
     else
         dialogVcToPresent = myProvidersController;
@@ -1216,14 +1213,14 @@ static JRUserInterfaceMaestro *singleton = nil;
     [applicationNavigationController release];
     [savedNavigationController release];
     [customInterfaceDefaults release];
-    [directProvider release];
+    [directProviderName release];
     [customInterface release];
     [super dealloc];
 }
 
 - (void)startWebAuthWithCustomInterface:(NSDictionary *)customInterfaceOverrides provider:(NSString *)provider
 {
-    self.directProvider = provider;
+    self.directProviderName = provider;
 
     [self showAuthenticationDialogWithCustomInterface:customInterfaceOverrides];
 }

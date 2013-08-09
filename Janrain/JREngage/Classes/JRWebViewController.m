@@ -216,7 +216,7 @@
     {
         if ([sessionData socialSharing])
             [sessionData triggerAuthenticationDidStartOver:nil];
-        else if ([JRUserInterfaceMaestro sharedMaestro].directProvider)
+        else if ([JRUserInterfaceMaestro sharedMaestro].directProviderName)
             [sessionData triggerAuthenticationDidCancel];
     }
 

@@ -108,7 +108,7 @@ typedef enum
 @property(readonly) JRUserLandingController *myUserLandingController;
 @property(readonly) JRWebViewController *myWebViewController;
 @property(readonly) JRPublishActivityController *myPublishActivityController;
-@property(copy) NSString *directProvider;
+@property(copy) NSString *directProviderName;
 
 - (void)buildCustomInterface:(NSDictionary *)customizations;
 
