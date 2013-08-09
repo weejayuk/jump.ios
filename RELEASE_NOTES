@@ -1,3 +1,6 @@
+v3.3.3
+ - Fixes another state transition bug, enlarges cookie-clearing-conditions (to cover
+   the direct-to-provider auth flows)
 v3.3.2
  - Fixes some UI state transition bugs involving provider-direct authentication flows
 v3.3.1

@@ -225,7 +225,8 @@
 
 - (IBAction)facebookAuthButtonPressed:(id)sender
 {
-    [self startSignInForProvider:@"facebook"];
+    //[self startSignInForProvider:@"facebook"];
+    [JRCapture startEngageSignInDialogOnProvider:@"facebook" forDelegate:self];
 }
 
 - (void)startSignInForProvider:(NSString *)provider
@@ -243,6 +244,8 @@
     {
         [JRCapture startEngageSignInDialogWithTraditionalSignIn:JRTraditionalSignInEmailPassword
                                     andCustomInterfaceOverrides:self.customUi forDelegate:self];
+        //[JRCapture startEngageSignInDialogWithTraditionalSignIn:JRTraditionalSignInEmailPassword
+        //                            andCustomInterfaceOverrides:nil forDelegate:self];
     }
 }
 
@@ -403,12 +406,6 @@
     [JRCapture clearSignInState];
 }
 
-- (void)engageAuthenticationDidCancel
-{
-    DLog(@"");
-    //appDelegate.engageSignInWasCanceled = YES;
-}
-
 - (void)engageAuthenticationDialogDidFailToShowWithError:(NSError *)error
 {
     DLog(@"error: %@", [error description]);
@@ -483,8 +480,6 @@
     {
         [RootViewController showProfileForm:self.navigationController];
     }
-
-    //appDelegate.engageSignInWasCanceled = NO;
 }
 
 + (void)showProfileForm:(UINavigationController *)controller
