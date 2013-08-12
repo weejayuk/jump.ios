@@ -272,10 +272,14 @@ captureTraditionalRegistrationFormName:nil
             traditionalSignInTypeSignInType == JRTraditionalSignInUsernamePassword ? @"username" : nil;
     if (!attrName) return;
 
+    JRCaptureData *data = [JRCaptureData sharedCaptureData];
+
     NSMutableDictionary *creds = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                                               user, attrName,
                                                               password, @"password", nil];
     if (mergeToken) [creds setObject:mergeToken forKey:@"merge_token"];
+    NSString *flowVersion = data.downloadedFlowVersion;
+    if (flowVersion) [creds setObject:flowVersion forKey:@"flow_version"];
 
     [JRCaptureApidInterface signInCaptureUserWithCredentials:creds ofType:attrName forDelegate:delegate
                                                  withContext:nil];

@@ -330,7 +330,6 @@
             };
 
     [self showMergeAlertDialog:existingAccountProvider mergeAlertCompletion:mergeAlertCompletion];
-
 }
 
 - (void)performTradAuthWithMergeToken:(NSString *)mergeToken

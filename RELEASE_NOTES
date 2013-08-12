@@ -1,3 +1,5 @@
+v3.3.4
+ - Fixes flow_version parameter passing for traditional authentication
 v3.3.3
  - Fixes another state transition bug, enlarges cookie-clearing-conditions (to cover
    the direct-to-provider auth flows)
