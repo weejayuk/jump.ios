@@ -41,15 +41,18 @@
 #import "JRCaptureObject+Internal.h"
 #import "JRActivityObject.h"
 
-@interface RootViewController () <JRCaptureUserDelegate>
-@property(nonatomic, copy) void (^viewDidAppearContinuation)();
-@property(nonatomic) BOOL viewIsApparent;
+@interface MyCaptureDelegate : NSObject <JRCaptureDelegate, JRCaptureUserDelegate>
+@property RootViewController *rvc;
 
-- (void)configureViewsWithDisableOverride:(BOOL)disableAllButtons;
+- (id)initWithRootViewController:(RootViewController *)rvc;
 @end
 
-@interface JRCapture (BetaAPIs)
-+ (void)refreshAccessTokenForDelegate:(id <JRCaptureDelegate>)delegate context:(id <NSObject>)context;
+@interface RootViewController () <UIAlertViewDelegate>
+@property(nonatomic, copy) void (^viewDidAppearContinuation)();
+@property(nonatomic) BOOL viewIsApparent;
+@property MyCaptureDelegate *captureDelegate;
+
+- (void)configureViewsWithDisableOverride:(BOOL)disableAllButtons;
 @end
 
 @implementation RootViewController
@@ -57,6 +60,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    self.captureDelegate = [[MyCaptureDelegate alloc] initWithRootViewController:self];
 
     self.customUi = @{kJRApplicationNavigationController : self.navigationController};
     [self configureUserLabelAndIcon];
@@ -173,49 +178,14 @@
 
 - (IBAction)refetchButtonPressed:(id)sender
 {
-    [JRCaptureUser fetchCaptureUserFromServerForDelegate:self context:nil];
+    [JRCaptureUser fetchCaptureUserFromServerForDelegate:self.captureDelegate context:nil];
     [self configureViewsWithDisableOverride:YES];
-}
-
-- (void)fetchUserDidFailWithError:(NSError *)error context:(NSObject *)context
-{
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:[error description]
-                                                       delegate:nil cancelButtonTitle:@"Dismiss"
-                                              otherButtonTitles:nil];
-    [alertView show];
-    [self configureViewsWithDisableOverride:NO];
-}
-
-- (void)fetchUserDidSucceed:(JRCaptureUser *)fetchedUser context:(NSObject *)context
-{
-    [self configureViewsWithDisableOverride:NO];
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Success" message:nil
-                                                       delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
-    [alertView show];
-    [self configureViewsWithDisableOverride:NO];
 }
 
 - (IBAction)refreshButtonPressed:(id)sender
 {
     [self configureViewsWithDisableOverride:YES];
-    [JRCapture refreshAccessTokenForDelegate:self context:nil];
-}
-
-- (void)refreshAccessTokenDidFailWithError:(NSError *)error context:(id <NSObject>)context
-{
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:[error description]
-                                                       delegate:nil cancelButtonTitle:@"Dismiss"
-                                              otherButtonTitles:nil];
-    [alertView show];
-    [self configureViewsWithDisableOverride:NO];
-}
-
-- (void)refreshAccessTokenDidSucceedWithContext:(id <NSObject>)context
-{
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Success" message:nil delegate:nil
-                                              cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
-    [alertView show];
-    [self configureViewsWithDisableOverride:NO];
+    [JRCapture refreshAccessTokenForDelegate:self.captureDelegate context:nil];
 }
 
 - (IBAction)signInButtonPressed:(id)sender
@@ -226,7 +196,7 @@
 - (IBAction)facebookAuthButtonPressed:(id)sender
 {
     //[self startSignInForProvider:@"facebook"];
-    [JRCapture startEngageSignInDialogOnProvider:@"facebook" forDelegate:self];
+    [JRCapture startEngageSignInDialogOnProvider:@"facebook" forDelegate:self.captureDelegate];
 }
 
 - (void)startSignInForProvider:(NSString *)provider
@@ -238,14 +208,14 @@
     if (provider)
     {
         [JRCapture startEngageSignInDialogOnProvider:provider withCustomInterfaceOverrides:self.customUi
-                                         forDelegate:self];
+                                         forDelegate:self.captureDelegate];
     }
     else
     {
         [JRCapture startEngageSignInDialogWithTraditionalSignIn:JRTraditionalSignInEmailPassword
-                                    andCustomInterfaceOverrides:self.customUi forDelegate:self];
+                                    andCustomInterfaceOverrides:self.customUi forDelegate:self.captureDelegate];
         //[JRCapture startEngageSignInDialogWithTraditionalSignIn:JRTraditionalSignInEmailPassword
-        //                            andCustomInterfaceOverrides:nil forDelegate:self];
+        //                            andCustomInterfaceOverrides:nil forDelegate:self.captureDelegate];
     }
 }
 
@@ -325,7 +295,7 @@
                     [JRCapture startEngageSignInDialogOnProvider:existingAccountProvider
                                     withCustomInterfaceOverrides:self.customUi
                                                       mergeToken:[error JRMergeToken]
-                                                     forDelegate:self];
+                                                     forDelegate:self.captureDelegate];
                 }
             };
 
@@ -343,7 +313,7 @@
                 [JRCapture startCaptureTraditionalSignInForUser:user withPassword:password
                                                  withSignInType:JRTraditionalSignInEmailPassword
                                                      mergeToken:mergeToken
-                                                    forDelegate:self];
+                                                    forDelegate:self.captureDelegate];
             };
 
     [[[AlertViewWithBlocks alloc] initWithTitle:@"Sign in" message:nil completion:signInCompletion
@@ -405,80 +375,11 @@
     [JRCapture clearSignInState];
 }
 
-- (void)engageAuthenticationDialogDidFailToShowWithError:(NSError *)error
-{
-    DLog(@"error: %@", [error description]);
-    [self engageSignInDidFailWithError:error];
-}
-
-- (void)engageAuthenticationDidFailWithError:(NSError *)error
-                                 forProvider:(NSString *)provider
-{
-    DLog(@"error: %@", [error description]);
-    [self engageSignInDidFailWithError:error];
-}
-
-- (void)captureSignInDidFailWithError:(NSError *)error
-{
-    [self setProviderAndConfigureIcon:nil];
-
-    DLog(@"error: %@", [error description]);
-    if ([error code] == JRCaptureErrorGenericBadPassword)
-    {
-        [self handleBadPasswordError];
-    }
-    else if ([error isJRMergeFlowError])
-    {
-        [self handleMergeFlowError:error];
-    }
-    else if ([error isJRTwoStepRegFlowError])
-    {
-        [self handleTwoStepRegFlowError:error];
-    }
-    else
-    {
-        DLog(@"error: %@", [error description]);
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                            message:[error description]
-                                                           delegate:nil cancelButtonTitle:@"Dismiss"
-                                                  otherButtonTitles:nil];
-        [alertView show];
-    }
-}
-
-- (void)engageAuthenticationDidSucceedForUser:(NSDictionary *)engageAuthInfo forProvider:(NSString *)provider
-{
-    [self setProviderAndConfigureIcon:provider];
-
-    self.currentUserLabel.text = @"Signing in...";
-
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-}
-
 - (void)setProviderAndConfigureIcon:(NSString *)provider
 {
     appDelegate.currentProvider = provider;
     [appDelegate.prefs setObject:appDelegate.currentProvider forKey:cJRCurrentProvider];
     [self configureProviderIcon];
-}
-
-- (void)captureSignInDidSucceedForUser:(JRCaptureUser *)newCaptureUser
-                                status:(JRCaptureRecordStatus)captureRecordStatus
-{
-    DLog(@"");
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-
-    appDelegate.captureUser = newCaptureUser;
-    [appDelegate.prefs setObject:[NSKeyedArchiver archivedDataWithRootObject:appDelegate.captureUser]
-                          forKey:cJRCaptureUser];
-
-    [self configureViewsWithDisableOverride:NO ];
-    [self configureUserLabelAndIcon];
-
-    if (captureRecordStatus == JRCaptureRecordNewlyCreated)
-    {
-        [RootViewController showProfileForm:self.navigationController];
-    }
 }
 
 + (void)showProfileForm:(UINavigationController *)controller
@@ -495,4 +396,128 @@
     [self setRefetchButton:nil];
     [super viewDidUnload];
 }
+@end
+
+@implementation MyCaptureDelegate
+
+- (id)initWithRootViewController:(RootViewController *)rvc
+{
+    self = [super init];
+    if (self)
+    {
+        self.rvc = rvc;
+    }
+
+    return self;
+}
+
+- (void)fetchUserDidFailWithError:(NSError *)error context:(NSObject *)context
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:[error description]
+                                                       delegate:nil cancelButtonTitle:@"Dismiss"
+                                              otherButtonTitles:nil];
+    [alertView show];
+    [self.rvc configureViewsWithDisableOverride:NO];
+}
+
+- (void)fetchUserDidSucceed:(JRCaptureUser *)fetchedUser context:(NSObject *)context
+{
+    [self.rvc configureViewsWithDisableOverride:NO];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Success" message:nil
+                                                       delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
+    [alertView show];
+    [self.rvc configureViewsWithDisableOverride:NO];
+}
+
+- (void)engageAuthenticationDialogDidFailToShowWithError:(NSError *)error
+{
+    DLog(@"error: %@", [error description]);
+    [self.rvc engageSignInDidFailWithError:error];
+}
+
+- (void)engageAuthenticationDidFailWithError:(NSError *)error
+                                 forProvider:(NSString *)provider
+{
+    DLog(@"error: %@", [error description]);
+    [self.rvc engageSignInDidFailWithError:error];
+}
+
+- (void)captureSignInDidFailWithError:(NSError *)error
+{
+    [self.rvc setProviderAndConfigureIcon:nil];
+
+    DLog(@"error: %@", [error description]);
+    if ([error code] == JRCaptureErrorGenericBadPassword)
+    {
+        [self.rvc handleBadPasswordError];
+    }
+    else if ([error isJRMergeFlowError])
+    {
+        [self.rvc handleMergeFlowError:error];
+    }
+    else if ([error isJRTwoStepRegFlowError])
+    {
+        [self.rvc handleTwoStepRegFlowError:error];
+    }
+    else
+    {
+        DLog(@"error: %@", [error description]);
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                            message:[error description]
+                                                           delegate:nil cancelButtonTitle:@"Dismiss"
+                                                  otherButtonTitles:nil];
+        [alertView show];
+    }
+}
+
+- (void)engageAuthenticationDidSucceedForUser:(NSDictionary *)engageAuthInfo forProvider:(NSString *)provider
+{
+    [self.rvc setProviderAndConfigureIcon:provider];
+
+    self.rvc.currentUserLabel.text = @"Signing in...";
+
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+}
+
+- (void)captureSignInDidSucceedForUser:(JRCaptureUser *)newCaptureUser
+                                status:(JRCaptureRecordStatus)captureRecordStatus
+{
+    DLog(@"");
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+
+    appDelegate.captureUser = newCaptureUser;
+    [appDelegate.prefs setObject:[NSKeyedArchiver archivedDataWithRootObject:appDelegate.captureUser]
+                          forKey:cJRCaptureUser];
+
+    [self.rvc configureViewsWithDisableOverride:NO ];
+    [self.rvc configureUserLabelAndIcon];
+
+    if (captureRecordStatus == JRCaptureRecordNewlyCreated)
+    {
+        [RootViewController showProfileForm:self.rvc.navigationController];
+    }
+}
+
+- (void)refreshAccessTokenDidFailWithError:(NSError *)error context:(id <NSObject>)context
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:[error description]
+                                                       delegate:nil cancelButtonTitle:@"Dismiss"
+                                              otherButtonTitles:nil];
+    [alertView show];
+    [self.rvc configureViewsWithDisableOverride:NO];
+}
+
+- (void)refreshAccessTokenDidSucceedWithContext:(id <NSObject>)context
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Success" message:nil delegate:nil
+                                              cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
+    [alertView show];
+    [self.rvc configureViewsWithDisableOverride:NO];
+}
+
+- (void)engageAuthenticationDidCancel
+{
+
+}
+
 @end
