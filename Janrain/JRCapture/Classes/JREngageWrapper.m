@@ -49,6 +49,7 @@ typedef enum
 @property(retain) JRTraditionalSignInViewController *nativeSignInViewController;
 @property(retain) id <JRCaptureDelegate> delegate;
 @property JREngageDialogState dialogState;
+@property bool didTearDownViewControllers;
 @end
 
 @implementation JREngageWrapper
