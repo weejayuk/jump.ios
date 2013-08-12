@@ -483,6 +483,7 @@ captureTraditionalRegistrationFormName:nil
 + (void)maybeDispatch:(SEL)pSelector forDelegate:(id <JRCaptureDelegate>)delegate withArg:(id)arg1
               withArg:(id)arg2
 {
+    DLog(@"Dispatching %@ with %@, %@", NSStringFromSelector(pSelector), arg1, arg2);
     if ([delegate respondsToSelector:pSelector])
     {
         [delegate performSelector:pSelector withObject:arg1 withObject:arg2];
@@ -491,6 +492,7 @@ captureTraditionalRegistrationFormName:nil
 
 + (void)maybeDispatch:(SEL)pSelector forDelegate:(id <JRCaptureDelegate>)delegate withArg:(id)arg
 {
+    DLog(@"Dispatching %@ with %@", NSStringFromSelector(pSelector), arg);
     if ([delegate respondsToSelector:pSelector])
     {
         [delegate performSelector:pSelector withObject:arg];
