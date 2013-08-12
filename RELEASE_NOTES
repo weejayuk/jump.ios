@@ -1,3 +1,5 @@
+v3.3.5
+ - Adds additional debug logging for troubleshooting UI state transitions
 v3.3.4
  - Fixes flow_version parameter passing for traditional authentication
 v3.3.3
