@@ -1,3 +1,7 @@
+v3.3.6
+ - Fixes an unitialized variable error which causes erroneous JSON parsing errors
+ - Factors Capture delegate protocols into a separate class in SimpleCaptureDemo in
+   order to clarify what delegate messages, exactly, need to be responded to.
 v3.3.5
  - Adds additional debug logging for troubleshooting UI state transitions
 v3.3.4
