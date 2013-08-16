@@ -46,6 +46,7 @@
 #import "JRCaptureError.h"
 #import "JRCaptureUser+Extras.h"
 #import "JRConnectionManager.h"
+#import "NSMutableDictionary+JRDictionaryUtils.h"
 
 @implementation JRCapture
 
@@ -268,29 +269,32 @@ captureTraditionalRegistrationFormName:nil
                               withSignInType:(JRTraditionalSignInType)traditionalSignInTypeSignInType
                                   mergeToken:(NSString *)mergeToken forDelegate:(id <JRCaptureDelegate>)delegate
 {
-    NSString *attrName = traditionalSignInTypeSignInType == JRTraditionalSignInEmailPassword ? @"email" :
-            traditionalSignInTypeSignInType == JRTraditionalSignInUsernamePassword ? @"username" : nil;
-    if (!attrName) return;
+    [self startCaptureTraditionalSignInForUser:user withPassword:password mergeToken:mergeToken forDelegate:delegate];
+}
 
-    JRCaptureData *data = [JRCaptureData sharedCaptureData];
++ (void)startCaptureTraditionalSignInForUser:(NSString *)user withPassword:(NSString *)password
+                                  mergeToken:(NSString *)mergeToken forDelegate:(id <JRCaptureDelegate>)delegate
+{
+    if (!user || !password) {
+        [self maybeDispatch:@selector(captureSignInDidFailWithError:) forDelegate:delegate
+                    withArg:[JRCaptureError invalidArgumentErrorWithParameterName:@"nil username or password"]];
+        return;
+    }
 
-    NSMutableDictionary *creds = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                                              user, attrName,
-                                                              password, @"password", nil];
-    if (mergeToken) [creds setObject:mergeToken forKey:@"merge_token"];
-    NSString *flowVersion = data.downloadedFlowVersion;
-    if (flowVersion) [creds setObject:flowVersion forKey:@"flow_version"];
+    NSMutableDictionary *params = [[@{@"user" : user, @"password" : password} mutableCopy] autorelease];
+    [params JR_maybeSetObject:mergeToken forKey:@"merge_token"];
 
-    [JRCaptureApidInterface signInCaptureUserWithCredentials:creds ofType:attrName forDelegate:delegate
-                                                 withContext:nil];
+    NSString *secret = [JRCaptureData generateAndStoreRefreshSecret];
+    NSURLRequest *authRequest = [JRCaptureApidInterface tradAuthRequestWithParams:params refreshSecret:secret];
+    // XXX the response handler needs to be factored out of JRCaptureApidInterface
+    [JRCaptureApidInterface startTradAuthForDelegate:delegate context:nil request:authRequest];
 }
 
 + (void)startCaptureTraditionalSignInForUser:(NSString *)user withPassword:(NSString *)password
                               withSignInType:(JRTraditionalSignInType)traditionalSignInTypeSignInType
-                                 forDelegate:(id <JRCaptureDelegate>)delegate __unused
+                                 forDelegate:(id <JRCaptureDelegate>)delegate
 {
-    [self startCaptureTraditionalSignInForUser:user withPassword:password withSignInType:traditionalSignInTypeSignInType
-                                    mergeToken:nil forDelegate:delegate];
+    [self startCaptureTraditionalSignInForUser:user withPassword:password mergeToken:nil forDelegate:delegate];
 }
 
 + (void)refreshAccessTokenForDelegate:(id <JRCaptureDelegate>)delegate context:(id <NSObject>)context

@@ -84,10 +84,20 @@ typedef enum
  * @internal
  */
 @interface JRCaptureApidInterface : NSObject
+
+/**
+ * @deprecated
+ * Use +[JRCaptureApidInterface signInCaptureUserWithCredentials:forDelegate:withContext:] instead
+ */
 + (void)signInCaptureUserWithCredentials:(NSDictionary *)credentials
                                   ofType:(NSString *)signInType
                              forDelegate:(id)delegate
-                             withContext:(NSObject *)context;
+                             withContext:(NSObject *)context __attribute__((deprecated));
+
++ (void)signInCaptureUserWithCredentials:(NSDictionary *)credentials forDelegate:(id)delegate
+                                                                     withContext:(NSObject *)context;
+
++ (void)startTradAuthForDelegate:(id)delegate context:(NSObject *)context request:(NSURLRequest *)request;
 
 + (void)getCaptureUserWithToken:(NSString *)token
                     forDelegate:(id <JRCaptureInternalDelegate>)delegate
@@ -119,4 +129,6 @@ typedef enum
 + (FinishSignInError)finishSignInWithPayload:(NSDictionary *)payloadDict
                                  forDelegate:(id <JRCaptureDelegate>)delegate;
 
++ (NSMutableURLRequest *)tradAuthRequestWithParams:(NSDictionary *)paramsDict
+                                     refreshSecret:(NSString *)refreshSecret;
 @end

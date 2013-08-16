@@ -325,7 +325,7 @@ Example:
     {
         if ([error code] == JRCaptureErrorGenericBadPassword)
         {
-            [self handleBadPasswordError]; // Advises the user to try again.
+            [self handleBadPasswordError:error]; // Advises the user to try again.
         }
         else if ([error isJRMergeFlowError])
         {
