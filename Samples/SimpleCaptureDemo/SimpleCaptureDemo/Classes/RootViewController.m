@@ -195,8 +195,8 @@
 
 - (IBAction)facebookAuthButtonPressed:(id)sender
 {
-    //[self startSignInForProvider:@"facebook"];
-    [JRCapture startEngageSignInDialogOnProvider:@"facebook" forDelegate:self.captureDelegate];
+    [self startSignInForProvider:@"facebook"];
+    //[JRCapture startEngageSignInDialogOnProvider:@"facebook" forDelegate:self.captureDelegate];
 }
 
 - (void)startSignInForProvider:(NSString *)provider
@@ -517,7 +517,7 @@
 
 - (void)engageAuthenticationDidCancel
 {
-
+    1;
 }
 
 @end

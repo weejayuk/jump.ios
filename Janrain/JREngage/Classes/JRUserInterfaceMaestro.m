@@ -854,8 +854,6 @@ static JRUserInterfaceMaestro *singleton = nil;
                  myUserLandingController,
                  myWebViewController,
                  myPublishActivityController, nil];
-
-    sessionData.dialogIsShowing = YES;
 }
 
 - (void)tearDownViewControllers
@@ -878,7 +876,7 @@ static JRUserInterfaceMaestro *singleton = nil;
     self.customInterface = nil;
     [directProviderName release], directProviderName = nil;
 
-    sessionData.dialogIsShowing = NO;
+    sessionData.authenticationFlowIsInFlight = NO;
 }
 
 - (void)setUpSocialPublishing
@@ -1101,7 +1099,7 @@ static JRUserInterfaceMaestro *singleton = nil;
 - (void)unloadUserInterfaceWithTransitionStyle:(UIModalTransitionStyle)style
 {
     DLog(@"");
-    if (!sessionData.dialogIsShowing)
+    if (!sessionData.authenticationFlowIsInFlight)
         return;
 
     if ([sessionData socialSharing])
@@ -1110,10 +1108,9 @@ static JRUserInterfaceMaestro *singleton = nil;
     for (id <JRUserInterfaceDelegate> delegate in delegates)
         [delegate userInterfaceWillClose];
 
-    if (usingAppNav)
+    if (usingAppNav) {
         [self unloadApplicationNavigationController];
-    else
-    {
+    } else {
         DLog(@"");
         [jrModalViewController dismissModalNavigationController:style];
     }
@@ -1169,10 +1166,11 @@ static JRUserInterfaceMaestro *singleton = nil;
 - (void)authenticationCompleted
 {
     DLog(@"");
-    if (![sessionData socialSharing])
+    if (![sessionData socialSharing]) {
         [self unloadUserInterfaceWithTransitionStyle:UIModalTransitionStyleCrossDissolve];
-    else
+    } else {
         [self popToOriginalRootViewController];
+    }
 }
 
 - (void)authenticationFailed
@@ -1221,6 +1219,7 @@ static JRUserInterfaceMaestro *singleton = nil;
 - (void)startWebAuthWithCustomInterface:(NSDictionary *)customInterfaceOverrides provider:(NSString *)provider
 {
     self.directProviderName = provider;
+    sessionData.authenticationFlowIsInFlight = YES;
 
     [self showAuthenticationDialogWithCustomInterface:customInterfaceOverrides];
 }

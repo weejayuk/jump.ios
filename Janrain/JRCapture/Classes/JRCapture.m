@@ -256,8 +256,8 @@ captureTraditionalRegistrationFormName:nil
 }
 
 + (void)startEngageSignInDialogOnProvider:(NSString *)provider
-               withCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
-                                forDelegate:(id <JRCaptureDelegate>)delegate __unused
+             withCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
+                              forDelegate:(id <JRCaptureDelegate>)delegate __unused
 {
     [JREngageWrapper startAuthenticationDialogOnProvider:provider
                             withCustomInterfaceOverrides:customInterfaceOverrides mergeToken:nil
