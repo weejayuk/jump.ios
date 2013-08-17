@@ -38,15 +38,7 @@
 
 @protocol JRCaptureDelegate;
 
-/**
- * @internal
- */
-typedef enum
-{
-    cJRNoError,
-    cJRInvalidResponse,
-    cJRInvalidCaptureUser
-} FinishSignInError;
+NSString *const kJRTradAuthUrlPath;
 
 /**
  * @internal
@@ -94,10 +86,8 @@ typedef enum
                              forDelegate:(id)delegate
                              withContext:(NSObject *)context __attribute__((deprecated));
 
-+ (void)signInCaptureUserWithCredentials:(NSDictionary *)credentials forDelegate:(id)delegate
-                                                                     withContext:(NSObject *)context;
-
-+ (void)startTradAuthForDelegate:(id)delegate context:(NSObject *)context request:(NSURLRequest *)request;
++ (void)signInCaptureUserWithCredentials:(NSDictionary *)credentials
+                             forDelegate:(id <JRCaptureInternalDelegate>)delegate withContext:(NSObject *)context;
 
 + (void)getCaptureUserWithToken:(NSString *)token
                     forDelegate:(id <JRCaptureInternalDelegate>)delegate
@@ -126,9 +116,5 @@ typedef enum
                 forDelegate:(id <JRCaptureInternalDelegate>)delegate
                 withContext:(NSObject *)context;
 
-+ (FinishSignInError)finishSignInWithPayload:(NSDictionary *)payloadDict
-                                 forDelegate:(id <JRCaptureDelegate>)delegate;
-
-+ (NSMutableURLRequest *)tradAuthRequestWithParams:(NSDictionary *)paramsDict
-                                     refreshSecret:(NSString *)refreshSecret;
++ (NSMutableDictionary *)tradAuthParamsWithParams:(NSDictionary *)paramsDict refreshSecret:(NSString *)refreshSecret;
 @end

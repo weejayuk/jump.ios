@@ -422,12 +422,8 @@ captureTraditionalRegistrationFormName:(NSString *)captureTraditionalRegistratio
 
 + (NSMutableURLRequest *)requestWithPath:(NSString *)path
 {
-    return [[JRCaptureData sharedCaptureData] urlForPath:path];
-}
-
-- (NSMutableURLRequest *)urlForPath:(NSString *)path
-{
-    NSString *urlString = [[self captureBaseUrl] stringByAppendingString:path];
+    JRCaptureData *data = [JRCaptureData sharedCaptureData];
+    NSString *urlString = [[data captureBaseUrl] stringByAppendingString:path];
     return [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
 }
 

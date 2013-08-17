@@ -769,15 +769,14 @@ static JRUserInterfaceMaestro *singleton = nil;
         else
             padPopoverMode = PadPopoverModeNone;
 
-        @try
-        {
+        @try {
             if (customModalNavigationController)
                 usingCustomNav = YES;
             else
                 usingCustomNav = NO;
+        } @catch (NSException *exception) {
+            handleCustomInterfaceException(exception, @"kJRUseCustomModalNavigationController");
         }
-        @catch (NSException *exception)
-        { handleCustomInterfaceException(exception, @"kJRUseCustomModalNavigationController"); }
     }
     else
     {

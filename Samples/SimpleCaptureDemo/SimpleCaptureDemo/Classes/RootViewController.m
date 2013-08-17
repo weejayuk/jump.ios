@@ -522,7 +522,6 @@
 
 - (void)engageAuthenticationDidCancel
 {
-    1;
 }
 
 @end

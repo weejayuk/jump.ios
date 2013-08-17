@@ -32,7 +32,6 @@
  Date:   Thursday, January 26, 2012
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#import "JRCapture.h"
 #import "debug_log.h"
 #import "JRConnectionManager.h"
 #import "JRCaptureApidInterface.h"
@@ -40,7 +39,6 @@
 #import "NSMutableDictionary+JRDictionaryUtils.h"
 #import "NSMutableURLRequest+JRRequestUtils.h"
 #import "JRCaptureError.h"
-#import "JRCaptureUser+Extras.h"
 #import "JRJsonUtils.h"
 
 static NSString *const cSignInUser = @"signinUser";
@@ -50,6 +48,8 @@ static NSString *const cUpdateObject = @"updateObject";
 static NSString *const cReplaceObject = @"replaceObject";
 static NSString *const cReplaceArray = @"replaceArray";
 static NSString *const cTagAction = @"action";
+
+NSString *const kJRTradAuthUrlPath = @"/oauth/auth_native_traditional";
 
 @interface JRCaptureApidInterface ()  <JRConnectionManagerDelegate>
 @end
@@ -113,37 +113,9 @@ typedef enum CaptureInterfaceStatEnum
 + (void)finishSignInFailureWithError:(JRCaptureError *)error forDelegate:(id)delegate
                          withContext:(NSObject *)context
 {
-    if ([delegate conformsToProtocol:@protocol(JRCaptureDelegate)] &&
-            [delegate respondsToSelector:@selector(captureSignInDidFailWithError:)])
-    {
-        [delegate captureSignInDidFailWithError:error];
-    }
-
     if ([delegate conformsToProtocol:@protocol(JRCaptureInternalDelegate)] &&
             [delegate respondsToSelector:@selector(signInCaptureUserDidFailWithResult:context:)])
         [delegate signInCaptureUserDidFailWithResult:error context:context];
-}
-
-- (void)finishSignInSuccessWithResult:(NSString *)result forDelegate:(id)delegate withContext:(NSObject *)context
-{
-    if ([delegate conformsToProtocol:@protocol(JRCaptureDelegate)] &&
-            [delegate respondsToSelector:@selector(captureSignInDidSucceedForUser:status:)])
-    {
-        BOOL respondsToFail = [delegate respondsToSelector:@selector(captureSignInDidFailWithError:)];
-        NSDictionary *resultDict = [result JR_objectFromJSONString];
-
-        FinishSignInError err = [JRCaptureApidInterface finishSignInWithPayload:resultDict forDelegate:delegate];
-
-        if ((err == cJRInvalidResponse || err == cJRInvalidCaptureUser) && respondsToFail)
-        {
-            [delegate captureSignInDidFailWithError:[JRCaptureError invalidApiResponseErrorWithString:result]];
-            return;
-        }
-    }
-
-    if ([delegate conformsToProtocol:@protocol(JRCaptureInternalDelegate)] &&
-            [delegate respondsToSelector:@selector(signInCaptureUserDidSucceedWithResult:context:)])
-        [delegate signInCaptureUserDidSucceedWithResult:result context:context];
 }
 
 + (void)signInCaptureUserWithCredentials:(NSDictionary *)credentials forDelegate:(id)delegate
@@ -160,9 +132,10 @@ typedef enum CaptureInterfaceStatEnum
         return;
     }
 
-    NSURLRequest *request = [JRCaptureApidInterface tradAuthRequestWithParams:credentials
-                                                                refreshSecret:refreshSecret];
-
+    NSMutableDictionary *signInParams = [[JRCaptureApidInterface class] tradAuthParamsWithParams:credentials
+                                                                                   refreshSecret:refreshSecret];
+    NSMutableURLRequest *request = [JRCaptureData requestWithPath:kJRTradAuthUrlPath];
+    [request JR_setBodyWithParams:signInParams];
     [self startTradAuthForDelegate:delegate context:context request:request];
 }
 
@@ -472,15 +445,15 @@ typedef enum CaptureInterfaceStatEnum
     [JRCaptureApidInterface signInCaptureUserWithCredentials:credentials forDelegate:delegate withContext:context];
 }
 
-+ (void)getCaptureUserWithToken:(NSString *)token
-                    forDelegate:(id <JRCaptureInternalDelegate>)delegate withContext:(NSObject *)context
++ (void)getCaptureUserWithToken:(NSString *)token forDelegate:(id <JRCaptureInternalDelegate>)delegate
+                    withContext:(NSObject *)context
 {
     [[JRCaptureApidInterface sharedCaptureApidInterface]
             getCaptureUserWithToken:token forDelegate:delegate withContext:context];
 }
 
 + (void)getCaptureObjectAtPath:(NSString *)entityPath withToken:(NSString *)token
-                   forDelegate:(id <JRCaptureInternalDelegate>)delegate withContext:(NSObject *)context __unused
+                   forDelegate:(id <JRCaptureInternalDelegate>)delegate withContext:(NSObject *)context
 {
     [[JRCaptureApidInterface sharedCaptureApidInterface]
             getCaptureObjectAtPath:entityPath withToken:token forDelegate:delegate withContext:context];
@@ -550,11 +523,12 @@ typedef enum CaptureInterfaceStatEnum
 - (void)finishSignInUserWithPayload:(NSString *)payload context:(NSObject *)context response:(NSDictionary *)response
                                stat:(CaptureInterfaceStat)stat delegate:(id)delegate
 {
-    if (stat == StatOk)
-        [self finishSignInSuccessWithResult:payload forDelegate:delegate withContext:context];
-    else
-    {
-        JRCaptureError *error = [JRCaptureError errorFromResult:response onProvider:nil engageToken:nil];
+    if (stat == StatOk) {
+        if ([delegate conformsToProtocol:@protocol(JRCaptureInternalDelegate)] &&
+                [delegate respondsToSelector:@selector(signInCaptureUserDidSucceedWithResult:context:)])
+            [delegate signInCaptureUserDidSucceedWithResult:payload context:context];
+    } else {
+        JRCaptureError *error = [JRCaptureError errorFromResult:response onProvider:nil engageToken:nil];    
         [JRCaptureApidInterface finishSignInFailureWithError:error forDelegate:delegate withContext:context];
     }
 }
@@ -609,36 +583,7 @@ typedef enum CaptureInterfaceStatEnum
     }
 }
 
-+ (FinishSignInError)finishSignInWithPayload:(NSDictionary *)payloadDict
-                                 forDelegate:(id<JRCaptureDelegate>)delegate
-{
-    NSString *accessToken   = [payloadDict objectForKey:@"access_token"];
-    BOOL      isNew         = [(NSNumber*)[payloadDict objectForKey:@"is_new"] boolValue];
-
-    NSDictionary *captureRecord = [payloadDict objectForKey:@"capture_user"];
-
-    if (!captureRecord || !accessToken) return cJRInvalidResponse;
-
-    JRCaptureUser *captureUser = [JRCaptureUser captureUserObjectFromDictionary:captureRecord];
-
-    if (!captureUser) return cJRInvalidCaptureUser;
-
-    [JRCaptureData setAccessToken:accessToken];
-
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-
-    JRCaptureRecordStatus recordStatus = isNew ? JRCaptureRecordNewlyCreated : JRCaptureRecordExists;
-
-    if ([delegate respondsToSelector:@selector(captureSignInDidSucceedForUser:status:)])
-        [delegate captureSignInDidSucceedForUser:captureUser status:recordStatus];
-
-    return cJRNoError;
-}
-
-/*
- * XXX this should be moved into a "JRCaptureAuthUtils" util class for 3.4
- */
-+ (NSMutableURLRequest *)tradAuthRequestWithParams:(NSDictionary *)paramsDict refreshSecret:(NSString *)refreshSecret
++ (NSMutableDictionary *)tradAuthParamsWithParams:(NSDictionary *)paramsDict refreshSecret:(NSString *)refreshSecret
 {
     NSDictionary *flowCreds = [self flowCredentialsFromStaticCredentials:paramsDict];
     NSDictionary *credsParams = flowCreds ? flowCreds : paramsDict;
@@ -656,10 +601,7 @@ typedef enum CaptureInterfaceStatEnum
     [signInParams JR_maybeSetObject:[JRCaptureData sharedCaptureData].bpChannelUrl forKey:@"bp_channel"];
     [signInParams JR_maybeSetObject:[JRCaptureData sharedCaptureData].captureFlowName forKey:@"flow"];
     [signInParams JR_maybeSetObject:[JRCaptureData sharedCaptureData].downloadedFlowVersion forKey:@"flow_version"];
-
-    NSMutableURLRequest *request = [JRCaptureData requestWithPath:@"/oauth/auth_native_traditional"];
-    [request JR_setBodyWithParams:signInParams];
-    return request;
+    return signInParams;
 }
 
 /*

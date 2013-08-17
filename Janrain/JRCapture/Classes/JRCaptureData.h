@@ -76,5 +76,4 @@ captureTraditionalRegistrationFormName:(NSString *)captureTraditionalRegistratio
 
 - (void)loadFlow;
 
-- (NSMutableURLRequest *)urlForPath:(NSString *)path;
 @end

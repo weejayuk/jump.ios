@@ -34,6 +34,7 @@
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #import "JRCaptureTypes.h"
+#import "JRCaptureApidInterface.h"
 
 @class JRCaptureUser;
 

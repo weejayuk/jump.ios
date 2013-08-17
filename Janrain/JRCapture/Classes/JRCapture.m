@@ -285,9 +285,46 @@ captureTraditionalRegistrationFormName:nil
     [params JR_maybeSetObject:mergeToken forKey:@"merge_token"];
 
     NSString *secret = [JRCaptureData generateAndStoreRefreshSecret];
-    NSURLRequest *authRequest = [JRCaptureApidInterface tradAuthRequestWithParams:params refreshSecret:secret];
-    // XXX the response handler needs to be factored out of JRCaptureApidInterface
-    [JRCaptureApidInterface startTradAuthForDelegate:delegate context:nil request:authRequest];
+    NSDictionary *tradAuthParams = [JRCaptureApidInterface tradAuthParamsWithParams:params refreshSecret:secret];
+    NSString *tradAuthUrl = [[[JRCaptureData requestWithPath:kJRTradAuthUrlPath] URL] absoluteString];
+
+    [JRConnectionManager jsonRequestToUrl:tradAuthUrl params:tradAuthParams
+                        completionHandler:^(id json, NSError *error) {
+                            [self signInHandler:json error:error delegate:delegate];
+                        }];
+}
+
++ (void)signInHandler:(id)json error:(NSError *)error delegate:(id <JRCaptureDelegate>)delegate
+{
+    if (error || ![json isKindOfClass:[NSDictionary class]] || ![[json objectForKey:@"stat"] isEqual:@"ok"]) {
+        if (!error) error = [JRCaptureError errorFromResult:json onProvider:nil engageToken:nil];
+        [self maybeDispatch:@selector(captureSignInDidFailWithError:) forDelegate:delegate withArg:error];
+        return;
+    }
+
+    NSString *accessToken = [json objectForKey:@"access_token"];
+    BOOL isNew = [(NSNumber *) [json objectForKey:@"is_new"] boolValue];
+    NSDictionary *captureUserJson = [json objectForKey:@"capture_user"];
+    JRCaptureUser *captureUser = [JRCaptureUser captureUserObjectFromDictionary:captureUserJson];
+
+    if (!captureUserJson || !captureUser || !accessToken) {
+        JRCaptureError *captureError = [JRCaptureError invalidApiResponseErrorWithString:json];
+        [self maybeDispatch:@selector(captureSignInDidFailWithError:) forDelegate:delegate withArg:captureError];
+        return;
+    }
+
+    [JRCaptureData setAccessToken:accessToken];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+
+    JRCaptureRecordStatus recordStatus = isNew ? JRCaptureRecordNewlyCreated : JRCaptureRecordExists;
+    // XXX maybeDispatch inlined here because the second arg is actually an enum and logging it as an object will
+    // seg fault, so the log statement is one-off modified here
+    DLog(@"Dispatching %@ with %@, %i", NSStringFromSelector(@selector(captureSignInDidSucceedForUser:status:)),
+        captureUser, recordStatus);
+    if ([delegate respondsToSelector:@selector(captureSignInDidSucceedForUser:status:)]) {
+        [delegate performSelector:@selector(captureSignInDidSucceedForUser:status:) withObject:captureUser
+                       withObject:(id) recordStatus];
+    }
 }
 
 + (void)startCaptureTraditionalSignInForUser:(NSString *)user withPassword:(NSString *)password
@@ -488,8 +525,7 @@ captureTraditionalRegistrationFormName:nil
               withArg:(id)arg2
 {
     DLog(@"Dispatching %@ with %@, %@", NSStringFromSelector(pSelector), arg1, arg2);
-    if ([delegate respondsToSelector:pSelector])
-    {
+    if ([delegate respondsToSelector:pSelector]) {
         [delegate performSelector:pSelector withObject:arg1 withObject:arg2];
     }
 }
@@ -512,4 +548,5 @@ captureTraditionalRegistrationFormName:nil
 {
     [JRCapture startEngageSignInDialogForDelegate:delegate];
 }
+
 @end
