@@ -1,3 +1,8 @@
+v3.3.8
+ - Updates traditional sign-in APIs to be compatible with Janrain's "standard
+   user registration flow".
+ - Traditional sign-in APIs now require a Capture app ID and flow name to be
+   configured, so that a local copy of the flow can be downloaded by the SDK.
 v3.3.7
  - Fixes a bug in native authentication, which rendered it incompatible with 
    registration
