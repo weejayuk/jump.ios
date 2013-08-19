@@ -614,6 +614,8 @@ typedef enum CaptureInterfaceStatEnum
  *     @"traditionalSignIn_email" : @"a@a.com",
  *     @"traditionalSignIn_password" : @"a"
  * }
+ *
+ * The "name"~ field must be named either "email", "username", or "user". No other field name is allowable.
 */
 + (NSDictionary *)flowCredentialsFromStaticCredentials:(NSDictionary *)dictionary {
     NSString *password = [dictionary objectForKey:@"password"];
@@ -637,6 +639,11 @@ typedef enum CaptureInterfaceStatEnum
     NSString *tradSignInFormName = [data captureTraditionalSignInFormName];
     NSDictionary *tradSignInForm = [fields objectForKey:tradSignInFormName];
     NSArray *tradSignInFields = [tradSignInForm objectForKey:@"fields"];
+
+    if ([tradSignInFields count] > 2) [NSException raiseJRDebugException:@"unsupportedFormException"
+                                                                  format:@"the traditional sign-in form configured in"
+                                                                          " your flow uses more than two fields, which"
+                                                                          " is unsupported in the native clients."];
 
     NSString *passwordFieldName = nil;
     NSString *anyOtherFieldName = nil;
