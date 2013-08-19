@@ -642,8 +642,8 @@ typedef enum CaptureInterfaceStatEnum
 
     if ([tradSignInFields count] > 2) [NSException raiseJRDebugException:@"unsupportedFormException"
                                                                   format:@"the traditional sign-in form configured in"
-                                                                          "your flow uses more than two fields, which"
-                                                                          "is unsupported in the native clients."];
+                                                                          " your flow uses more than two fields, which"
+                                                                          " is unsupported in the native clients."];
 
     NSString *passwordFieldName = nil;
     NSString *anyOtherFieldName = nil;
