@@ -854,8 +854,6 @@ static JRSessionData *singleton = nil;
 - (void)forgetAuthenticatedUserForProvider:(NSString *)providerName
 {
     DLog (@"");
-
-    if (!providerName) return;
     JRProvider* provider = [engageProviders objectForKey:providerName];
 
     if (!provider) return;
