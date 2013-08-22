@@ -3,7 +3,7 @@
 branch=$(git rev-parse --symbolic --abbrev-ref HEAD)
 describe=$(git describe --always)
 
-if [ "$branch" == "jumpios-master" ]
+if [ "$branch" == "internal-master" ]
 then
   cat > JREngage-Info.plist <<PLIST
 <?xml version="1.0" encoding="UTF-8"?>
