@@ -325,7 +325,7 @@ Example:
     {
         if ([error code] == JRCaptureErrorGenericBadPassword)
         {
-            [self handleBadPasswordError]; // Advises the user to try again.
+            [self handleBadPasswordError:error]; // Advises the user to try again.
         }
         else if ([error isJRMergeFlowError])
         {
@@ -495,7 +495,7 @@ property.) See the above example for an example of this technique.
 ## Persisting the Capture User Record
 
 When your application terminates, you should save your active user record to local storage. For example, from your
-[UIApplicationDelegate](http://developer.apple.com/library/ios/#DOCUMENTATION/UIKit/Reference/UIApplicationDelegate_Protocol/Reference/Reference.html):
+UIApplicationDelegate:
 
     #define cJRCaptureUser @"jr_capture_user"
     
@@ -509,7 +509,7 @@ When your application terminates, you should save your active user record to loc
                           forKey:cJRCaptureUser];
     }
 
-Likewise, load the saved user record state when your application launches. For example, from the
+Likewise, load the saved user record state when your application launches. For example, from your
 `UIApplicationDelegate`:
 
     - (BOOL)          application:(UIApplication *)application
@@ -520,7 +520,7 @@ Likewise, load the saved user record state when your application launches. For e
         self.captureUser = [NSKeyedUnarchiver unarchiveObjectWithData:encodedUser];
     }
 
-**Note** While your application is responsible for saving and restoring the user record, the Capture library will
+**Warning** While your application is responsible for saving and restoring the user record, the Capture library will
 automatically save and restore the session token.
 
 ### Refreshing the User's Access Token
@@ -550,13 +550,9 @@ configured API client features.
 Use [entityType.setAccessSchema](http://developers.janrain.com/documentation/api-methods/capture/entitytype/setaccessschema)
 to add write-access to this attribute to your native API client.
 
-<<<<<<< HEAD
-  `Undefined symbols for architecture i386: "_CATransform3DConcat", referenced from: " ...
-=======
 #### Undefined Symbol _CATransform3DConcat
 
     Undefined symbols for architecture i386: "_CATransform3DConcat", referenced from:
->>>>>>> jumpios-master
 
 Add the QuartzCore framework to the build target for the project.
 

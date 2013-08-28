@@ -46,6 +46,7 @@
 #import "JRCaptureError.h"
 #import "JRCaptureUser+Extras.h"
 #import "JRConnectionManager.h"
+#import "NSMutableDictionary+JRDictionaryUtils.h"
 
 @implementation JRCapture
 
@@ -256,8 +257,8 @@ captureTraditionalRegistrationFormName:nil
 }
 
 + (void)startEngageSignInDialogOnProvider:(NSString *)provider
-               withCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
-                                forDelegate:(id <JRCaptureDelegate>)delegate __unused
+             withCustomInterfaceOverrides:(NSDictionary *)customInterfaceOverrides
+                              forDelegate:(id <JRCaptureDelegate>)delegate __unused
 {
     [JREngageWrapper startAuthenticationDialogOnProvider:provider
                             withCustomInterfaceOverrides:customInterfaceOverrides mergeToken:nil
@@ -268,29 +269,69 @@ captureTraditionalRegistrationFormName:nil
                               withSignInType:(JRTraditionalSignInType)traditionalSignInTypeSignInType
                                   mergeToken:(NSString *)mergeToken forDelegate:(id <JRCaptureDelegate>)delegate
 {
-    NSString *attrName = traditionalSignInTypeSignInType == JRTraditionalSignInEmailPassword ? @"email" :
-            traditionalSignInTypeSignInType == JRTraditionalSignInUsernamePassword ? @"username" : nil;
-    if (!attrName) return;
+    [self startCaptureTraditionalSignInForUser:user withPassword:password mergeToken:mergeToken forDelegate:delegate];
+}
 
-    JRCaptureData *data = [JRCaptureData sharedCaptureData];
++ (void)startCaptureTraditionalSignInForUser:(NSString *)user withPassword:(NSString *)password
+                                  mergeToken:(NSString *)mergeToken forDelegate:(id <JRCaptureDelegate>)delegate
+{
+    if (!user || !password) {
+        [self maybeDispatch:@selector(captureSignInDidFailWithError:) forDelegate:delegate
+                    withArg:[JRCaptureError invalidArgumentErrorWithParameterName:@"nil username or password"]];
+        return;
+    }
 
-    NSMutableDictionary *creds = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                                              user, attrName,
-                                                              password, @"password", nil];
-    if (mergeToken) [creds setObject:mergeToken forKey:@"merge_token"];
-    NSString *flowVersion = data.downloadedFlowVersion;
-    if (flowVersion) [creds setObject:flowVersion forKey:@"flow_version"];
+    NSMutableDictionary *params = [[@{@"user" : user, @"password" : password} mutableCopy] autorelease];
+    [params JR_maybeSetObject:mergeToken forKey:@"merge_token"];
 
-    [JRCaptureApidInterface signInCaptureUserWithCredentials:creds ofType:attrName forDelegate:delegate
-                                                 withContext:nil];
+    NSString *secret = [JRCaptureData generateAndStoreRefreshSecret];
+    NSDictionary *tradAuthParams = [JRCaptureApidInterface tradAuthParamsWithParams:params refreshSecret:secret];
+    NSString *tradAuthUrl = [[[JRCaptureData requestWithPath:kJRTradAuthUrlPath] URL] absoluteString];
+
+    [JRConnectionManager jsonRequestToUrl:tradAuthUrl params:tradAuthParams
+                        completionHandler:^(id json, NSError *error) {
+                            [self signInHandler:json error:error delegate:delegate];
+                        }];
+}
+
++ (void)signInHandler:(id)json error:(NSError *)error delegate:(id <JRCaptureDelegate>)delegate
+{
+    if (error || ![json isKindOfClass:[NSDictionary class]] || ![[json objectForKey:@"stat"] isEqual:@"ok"]) {
+        if (!error) error = [JRCaptureError errorFromResult:json onProvider:nil engageToken:nil];
+        [self maybeDispatch:@selector(captureSignInDidFailWithError:) forDelegate:delegate withArg:error];
+        return;
+    }
+
+    NSString *accessToken = [json objectForKey:@"access_token"];
+    BOOL isNew = [(NSNumber *) [json objectForKey:@"is_new"] boolValue];
+    NSDictionary *captureUserJson = [json objectForKey:@"capture_user"];
+    JRCaptureUser *captureUser = [JRCaptureUser captureUserObjectFromDictionary:captureUserJson];
+
+    if (!captureUserJson || !captureUser || !accessToken) {
+        JRCaptureError *captureError = [JRCaptureError invalidApiResponseErrorWithString:json];
+        [self maybeDispatch:@selector(captureSignInDidFailWithError:) forDelegate:delegate withArg:captureError];
+        return;
+    }
+
+    [JRCaptureData setAccessToken:accessToken];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+
+    JRCaptureRecordStatus recordStatus = isNew ? JRCaptureRecordNewlyCreated : JRCaptureRecordExists;
+    // XXX maybeDispatch inlined here because the second arg is actually an enum and logging it as an object will
+    // seg fault, so the log statement is one-off modified here
+    DLog(@"Dispatching %@ with %@, %i", NSStringFromSelector(@selector(captureSignInDidSucceedForUser:status:)),
+        captureUser, recordStatus);
+    if ([delegate respondsToSelector:@selector(captureSignInDidSucceedForUser:status:)]) {
+        [delegate performSelector:@selector(captureSignInDidSucceedForUser:status:) withObject:captureUser
+                       withObject:(id) recordStatus];
+    }
 }
 
 + (void)startCaptureTraditionalSignInForUser:(NSString *)user withPassword:(NSString *)password
                               withSignInType:(JRTraditionalSignInType)traditionalSignInTypeSignInType
-                                 forDelegate:(id <JRCaptureDelegate>)delegate __unused
+                                 forDelegate:(id <JRCaptureDelegate>)delegate
 {
-    [self startCaptureTraditionalSignInForUser:user withPassword:password withSignInType:traditionalSignInTypeSignInType
-                                    mergeToken:nil forDelegate:delegate];
+    [self startCaptureTraditionalSignInForUser:user withPassword:password mergeToken:nil forDelegate:delegate];
 }
 
 + (void)refreshAccessTokenForDelegate:(id <JRCaptureDelegate>)delegate context:(id <NSObject>)context
@@ -483,14 +524,15 @@ captureTraditionalRegistrationFormName:nil
 + (void)maybeDispatch:(SEL)pSelector forDelegate:(id <JRCaptureDelegate>)delegate withArg:(id)arg1
               withArg:(id)arg2
 {
-    if ([delegate respondsToSelector:pSelector])
-    {
+    DLog(@"Dispatching %@ with %@, %@", NSStringFromSelector(pSelector), arg1, arg2);
+    if ([delegate respondsToSelector:pSelector]) {
         [delegate performSelector:pSelector withObject:arg1 withObject:arg2];
     }
 }
 
 + (void)maybeDispatch:(SEL)pSelector forDelegate:(id <JRCaptureDelegate>)delegate withArg:(id)arg
 {
+    DLog(@"Dispatching %@ with %@", NSStringFromSelector(pSelector), arg);
     if ([delegate respondsToSelector:pSelector])
     {
         [delegate performSelector:pSelector withObject:arg];
@@ -506,4 +548,5 @@ captureTraditionalRegistrationFormName:nil
 {
     [JRCapture startEngageSignInDialogForDelegate:delegate];
 }
+
 @end

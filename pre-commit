@@ -1,11 +1,19 @@
+#!/bin/sh
+
+branch=$(git rev-parse --symbolic --abbrev-ref HEAD)
+describe=$(git describe --always)
+
+if [ "$branch" == "internal-master" ]
+then
+  cat > JREngage-Info.plist <<PLIST
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
 	<key>CFBundleShortVersionString</key>
-	<string>v3.3.9</string>
+	<string>$describe</string>
 	<key>JREngage.GitCommit</key>
-	<string>v3.3.9</string>
+	<string>$describe</string>
 	<key>JREngage.CustomInterface</key>
 	<dict>
 		<key>DefaultValues</key>
@@ -23,3 +31,12 @@
 	</dict>
 </dict>
 </plist>
+PLIST
+
+  if [ -d ./Janrain/JREngage/ ]
+  then
+    mv JREngage-Info.plist ./Janrain/JREngage/
+    git add ./Janrain/JREngage/JREngage-Info.plist
+  fi
+fi
+

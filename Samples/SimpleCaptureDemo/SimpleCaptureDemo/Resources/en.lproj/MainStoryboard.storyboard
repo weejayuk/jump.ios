@@ -212,10 +212,10 @@
                 <relationship kind="action" name="browseButtonPressed:"/>
                 <relationship kind="action" name="facebookAuthButtonPressed:"/>
                 <relationship kind="action" name="refetchButtonPressed:"/>
+                <relationship kind="action" name="refreshButtonPressed:"/>
                 <relationship kind="action" name="shareButtonPressed:"/>
                 <relationship kind="action" name="signInButtonPressed:"/>
                 <relationship kind="action" name="signOutButtonPressed:"/>
-                <relationship kind="action" name="thirdButtonPressed:"/>
                 <relationship kind="action" name="tradAuthButtonPressed:"/>
                 <relationship kind="action" name="updateButtonPressed:"/>
                 <relationship kind="outlet" name="browseButton" candidateClass="UIButton"/>

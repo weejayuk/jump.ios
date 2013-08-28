@@ -79,7 +79,7 @@ static NSString *const FLOW_KEY = @"JR_capture_flow";
 @property(nonatomic, retain) NSString *captureFlowName;
 @property(nonatomic, retain) NSString *captureFlowVersion;
 @property(nonatomic, retain) NSString *captureLocale;
-@property(nonatomic, retain) NSString *captureSignInFormName;
+@property(nonatomic, retain) NSString *captureTraditionalSignInFormName;
 @property(nonatomic, retain) NSString *captureTraditionalRegistrationFormName;
 @property(nonatomic, retain) NSString *captureSocialRegistrationFormName;
 
@@ -99,7 +99,7 @@ static JRCaptureData *singleton = nil;
 @synthesize refreshSecret;
 @synthesize bpChannelUrl;
 @synthesize captureLocale;
-@synthesize captureSignInFormName;
+@synthesize captureTraditionalSignInFormName;
 //@synthesize captureTradSignInType;
 @synthesize captureFlowName;
 @synthesize captureTraditionalRegistrationFormName;
@@ -228,8 +228,9 @@ static JRCaptureData *singleton = nil;
 }
 
 + (void)setCaptureDomain:(NSString *)captureDomain captureClientId:(NSString *)clientId
-           captureLocale:(NSString *)captureLocale captureTraditionalSignInFormName:(NSString *)captureSignInFormName
-                                                                    captureFlowName:(NSString *)captureFlowName
+                   captureLocale:(NSString *)captureLocale
+captureTraditionalSignInFormName:(NSString *)captureTraditionalSignInFormName
+                       captureFlowName:(NSString *)captureFlowName
          captureEnableThinRegistration:(BOOL)enableThinRegistration
 captureTraditionalRegistrationFormName:(NSString *)captureTraditionalRegistrationFormName
      captureSocialRegistrationFormName:(NSString *)captureSocialRegistrationFormName
@@ -245,7 +246,7 @@ captureTraditionalRegistrationFormName:(NSString *)captureTraditionalRegistratio
     captureDataInstance.captureBaseUrl = [captureDomain urlStringFromBaseDomain];
     captureDataInstance.clientId = clientId;
     captureDataInstance.captureLocale = captureLocale;
-    captureDataInstance.captureSignInFormName = captureSignInFormName;
+    captureDataInstance.captureTraditionalSignInFormName = captureTraditionalSignInFormName;
     captureDataInstance.captureFlowName = captureFlowName;
     captureDataInstance.captureEnableThinRegistration = enableThinRegistration;
     //captureDataInstance.captureTradSignInType = tradSignInType;
@@ -396,7 +397,7 @@ captureTraditionalRegistrationFormName:(NSString *)captureTraditionalRegistratio
     [captureBaseUrl release];
     [captureFlowName release];
     [captureLocale release];
-    [captureSignInFormName release];
+    [captureTraditionalSignInFormName release];
     [bpChannelUrl release];
     [captureTraditionalRegistrationFormName release];
     [captureFlowVersion release];
@@ -421,12 +422,8 @@ captureTraditionalRegistrationFormName:(NSString *)captureTraditionalRegistratio
 
 + (NSMutableURLRequest *)requestWithPath:(NSString *)path
 {
-    return [[JRCaptureData sharedCaptureData] urlForPath:path];
-}
-
-- (NSMutableURLRequest *)urlForPath:(NSString *)path
-{
-    NSString *urlString = [[self captureBaseUrl] stringByAppendingString:path];
+    JRCaptureData *data = [JRCaptureData sharedCaptureData];
+    NSString *urlString = [[data captureBaseUrl] stringByAppendingString:path];
     return [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
 }
 

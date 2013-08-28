@@ -45,7 +45,7 @@
                             andPayload:(NSData *)tokenUrlPayload forProvider:(NSString *)provider;
 @end
 
-@interface JRTraditionalSignInViewController ()
+@interface JRTraditionalSignInViewController () <JRCaptureInternalDelegate>
 @property (retain) NSString *titleString;
 @property (retain) UIView   *titleView;
 @property JRTraditionalSignInType signInType;
@@ -232,20 +232,15 @@
 {
     UITableViewCell *nameCell = [myTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
     UITableViewCell *pwdCell  = [myTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
-    NSString *nameOrEmail = ((UITextField *) [nameCell viewWithTag:NAME_TEXTFIELD_TAG]).text;
+    NSString *user = ((UITextField *) [nameCell viewWithTag:NAME_TEXTFIELD_TAG]).text;
     NSString *password = ((UITextField *) [pwdCell viewWithTag:PWD_TEXTFIELD_TAG]).text;
-    if (!nameOrEmail) nameOrEmail = @"";
+    if (!user) user = @"";
     if (!password) password = @"";
 
-    NSString *const signInTypeString = (self.signInType == JRTraditionalSignInEmailPassword) ? @"email" : @"username";
-    NSDictionary *credentials = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                      nameOrEmail, signInTypeString,
-                                                      password, @"password", nil];
+    NSDictionary *credentials = [NSDictionary dictionaryWithObjectsAndKeys:user, @"user",
+                                                                           password, @"password", nil];
 
-    [JRCaptureApidInterface signInCaptureUserWithCredentials:credentials
-                                                      ofType:signInTypeString
-                                                 forDelegate:self
-                                                 withContext:nil];
+    [JRCaptureApidInterface signInCaptureUserWithCredentials:credentials forDelegate:self withContext:nil];
 
     [self.firstResponder resignFirstResponder];
     [self setFirstResponder:nil];
